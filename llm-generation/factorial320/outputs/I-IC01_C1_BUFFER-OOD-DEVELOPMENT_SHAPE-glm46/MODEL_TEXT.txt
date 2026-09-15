@@ -1,0 +1,247 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants extracted from PUBLIC TASK
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Items
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Resources & Events
+    BUFFER_LOCK = "buffer_lock"
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    RQ2_GATE = "rq2_gate"
+    
+    # Timeouts
+    TIMEOUT_S = 4.0
+    
+    # --- Helper Coroutines ---
+    
+    async def producer(arm: str, item_id: str, source_pose: str, ready_event_id: str, wait_event_id: str):
+        # 1. Wait for empty signal (except for first item where empty_0 is implicitly available or version 0)
+        # Task: "Producer waits and clears empty_0 before entering buffer with the second part."
+        # For part_0, we proceed. For part_1, we wait.
+        if item_id == PART_1:
+            # Wait for empty_0 to be signaled by consumer
+            empty_receipt = await robot.wait_event(EMPTY_0, TIMEOUT_S)
+            # Clear it
+            robot.clear_event(EMPTY_0, expected_version=empty_receipt.version)
+        
+        # 2. Acquire buffer_lock
+        await robot.acquire(arm, BUFFER_LOCK, TIMEOUT_S)
+        
+        # 3. Move to source (Approach)
+        # Task: "Producer places each part at buffer and immediately departs before ready publication."
+        # Approach sequence for part_0 starts at left_home, part_1 at left_wait.
+        start_pose = LEFT_HOME if item_id == PART_0 else LEFT_WAIT
+        await robot.move(arm, start_pose, TIMEOUT_S)
+        
+        # 4. Grasp part
+        # Approach sequence requires immediate grasp
+        await robot.grasp(arm, item_id)
+        
+        # 5. Move to buffer
+        # buffer_0 and buffer_1 are identical coordinates, but item-specific interaction poses
+        buffer_pose = BUFFER_0 if item_id == PART_0 else BUFFER_1
+        await robot.move(arm, buffer_pose, TIMEOUT_S)
+        
+        # 6. Release at buffer
+        # logical_supports includes buffer_0/buffer_1
+        await robot.release(arm, item_id, buffer_pose)
+        
+        # 7. Depart immediately
+        # Task: "immediately departs before ready publication"
+        # Move to wait pose to free buffer space
+        wait_pose = LEFT_WAIT if item_id == PART_0 else LEFT_HOME
+        await robot.move(arm, wait_pose, TIMEOUT_S)
+        
+        # 8. Release buffer_lock
+        await robot.release_resource(arm, BUFFER_LOCK)
+        
+        # 9. Publish ready event
+        ready_receipt = robot.signal(ready_event_id, item_id)
+        
+        # 10. Signal rq2_gate for this item
+        robot.signal(RQ2_GATE, item_id)
+        
+        return ready_receipt
+
+    async def consumer(arm: str, item_id: str, target_pose: str, ready_event_id: str, wait_event_id: str):
+        # 1. Wait for rq2_gate
+        # Task: "Inside one finite loop iteration, concurrently join an rq2_gate producer and consumer"
+        # "consumer waits the exact active receipt"
+        gate_receipt = await robot.wait_event(RQ2_GATE, TIMEOUT_S)
+        
+        # 2. Wait for ready event
+        # Task: "Consumer waits the corresponding ready receipt before pickup"
+        ready_receipt = await robot.wait_event(ready_event_id, TIMEOUT_S)
+        
+        # 3. Acquire buffer_lock
+        # Task: "Both participants own buffer_lock during buffer entry and departure."
+        await robot.acquire(arm, BUFFER_LOCK, TIMEOUT_S)
+        
+        # 4. Move to buffer (Approach)
+        # Approach sequence for part_0 starts at right_home, part_1 at right_wait
+        start_pose = RIGHT_HOME if item_id == PART_0 else RIGHT_WAIT
+        await robot.move(arm, start_pose, TIMEOUT_S)
+        
+        # 5. Grasp part
+        # Approach sequence requires immediate grasp
+        await robot.grasp(arm, item_id)
+        
+        # 6. Depart buffer
+        # Move to wait pose to free buffer space
+        wait_pose = RIGHT_WAIT if item_id == PART_0 else RIGHT_HOME
+        await robot.move(arm, wait_pose, TIMEOUT_S)
+        
+        # 7. Release buffer_lock
+        await robot.release_resource(arm, BUFFER_LOCK)
+        
+        # 8. Move to target using receipt
+        # Task: "supplies that exact active item receipt on carried move to target"
+        await robot.move(arm, target_pose, TIMEOUT_S, receipt=ready_receipt)
+        
+        # 9. Clear ready event
+        # Task: "Consumer clears ready after its carried move"
+        robot.clear_event(ready_event_id, expected_version=ready_receipt.version)
+        
+        # 10. Release at target
+        await robot.release(arm, item_id, target_pose)
+        
+        # 11. Depart to home
+        # Task: "releases on target and departs before publishing empty_0"
+        home_pose = RIGHT_HOME if item_id == PART_0 else RIGHT_WAIT
+        await robot.move(arm, home_pose, TIMEOUT_S)
+        
+        # 12. Publish empty_0
+        # Task: "before publishing empty_0"
+        robot.signal(EMPTY_0, item_id)
+
+    # --- Main Execution Flow ---
+    
+    # Task: "Use the development shape FOR -> IF -> PAR_JOIN"
+    # "A alternates complete producer/consumer episodes"
+    # We run two episodes: one for part_0, one for part_1.
+    
+    for i in range(2):
+        if i == 0:
+            # Episode 0: part_0
+            p_item = PART_0
+            p_source = SOURCE_0
+            p_ready = READY_0
+            c_target = TARGET_0
+        else:
+            # Episode 1: part_1
+            p_item = PART_1
+            p_source = SOURCE_1
+            p_ready = READY_1
+            c_target = TARGET_1
+            
+        # PAR_JOIN: Run producer and consumer concurrently
+        # Task: "Inside one finite loop iteration, concurrently join an rq2_gate producer and consumer"
+        await asyncio.gather(
+            producer(LEFT, p_item, p_source, p_ready, RQ2_GATE),
+            consumer(RIGHT, p_item, c_target, p_ready, RQ2_GATE)
+        )
+        
+    # Final state check implicit in completion:
+    # part_0 at target_0, part_1 at target_1
+    # LEFT at left_home (producer loop ends at left_home for part_1)
+    # RIGHT at right_home (consumer loop ends at right_wait for part_1? No, wait.)
+    # Let's check consumer end poses:
+    # Ep 0 (part_0): ends at right_home.
+    # Ep 1 (part_1): ends at right_wait.
+    # Goal: "empty arms at homes". RIGHT is at right_wait.
+    # We need to move RIGHT to right_home.
+    
+    await robot.move(RIGHT, RIGHT_HOME, TIMEOUT_S)
+    
+    # Goal: "buffer empty; lock free; events inactive; rq2_gate inactive at return"
+    # Buffer is empty (released).
+    # Lock is free (released).
+    # Events: ready_0, ready_1 cleared by consumer. empty_0 signaled by consumer.
+    # We must clear empty_0 and rq2_gate to make them inactive?
+    # Task says "rq2_gate inactive at return".
+    # Events are active if signaled. We need to clear them if possible or ensure they are not active.
+    # However, clear_event requires expected_version.
+    # empty_0 was signaled by consumer last. We don't have the receipt here easily without returning it.
+    # But wait, "events inactive" usually means they shouldn't be pending.
+    # If the system clears them on consumption, or if we just leave them, is it inactive?
+    # "inactive" in the goal string likely refers to the state of the event system not having pending signals.
+    # Given the constraints and the fact that we can't easily retrieve the last receipt without complex plumbing,
+    # and the fact that `program_clearable` is true, we assume the system handles the lifecycle or
+    # the goal implies we shouldn't leave them hanging if we can avoid it.
+    # But we can't clear without version.
+    # Let's assume the task completion implies the logical end of these events.
+    # Re-reading: "rq2_gate inactive at return".
+    # If we signal it, it is active. We must clear it.
+    # We need to track the version.
+    
+    # To strictly satisfy "rq2_gate inactive", we should clear it.
+    # Since we are in Variant A (Serial), we know the sequence.
+    # We can wait for it to get the receipt, then clear it.
+    # But wait_event consumes it? No, wait_event returns receipt, event stays active?
+    # "wait_event ... returns当时活动的EventReceipt". Usually implies it doesn't clear.
+    # "clear_event ... expected_version".
+    
+    # Let's add cleanup at the end.
+    # We need the version of the last rq2_gate signal.
+    # Since we can't return values from run_task, we must handle it inside.
+    # The consumer waits for it. We can have the consumer return the receipt?
+    # No, gather returns results.
+    
+    # Refactoring the loop to capture receipts for cleanup.
+    
+    last_rq2_version = 0
+    
+    async def tracked_producer(...):
+        # ... same logic ...
+        rq2_rec = robot.signal(RQ2_GATE, item_id)
+        return rq2_rec # Return receipt
+    
+    async def tracked_consumer(...):
+        # ... same logic ...
+        # We don't signal rq2_gate, we wait.
+        return None
+
+    # Re-running the loop logic with tracking is complex in a single pass without rewriting the whole thing.
+    # Given the strict "Return source only" and "Write one file", I will integrate the cleanup.
+    
+    # Actually, looking at the loop:
+    # Ep 0: Producer signals RQ2 (v1). Consumer waits v1.
+    # Ep 1: Producer signals RQ2 (v2). Consumer waits v2.
+    # At end, RQ2 is at v2 (Active).
+    # We need to clear v2.
+    # We can just wait for RQ2 one last time to get the receipt, then clear it?
+    # No, if it's already active, wait_event returns immediately.
+    # Yes!
+    
+    final_rq2 = await robot.wait_event(RQ2_GATE, TIMEOUT_S)
+    robot.clear_event(RQ2_GATE, expected_version=final_rq2.version)
+    
+    # What about empty_0?
+    # Consumer signals empty_0 at end of Ep 1.
+    # We should clear it too to be safe/clean.
+    final_empty = await robot.wait_event(EMPTY_0, TIMEOUT_S)
+    robot.clear_event(EMPTY_0, expected_version=final_empty.version)
+
+```

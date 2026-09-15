@@ -1,0 +1,22 @@
+section,metric,machine,Reviewer1,Reviewer2,interpretation
+review,all_2240_exact_agreement,,0.9334821429,0.9334821429,two-human-payload agreement
+review,P_direct_base_exact_agreement,,0.9875,0.9875,kappa 0.9618 and zero direct C/V conflicts
+review,structure_fidelity_exact_agreement,,0.775,0.775,kappa 0.5772
+rq2_factorial,P_V_count_of_256,36,30,26,confirmed direct-base violation lower bound
+rq2_factorial,P_exposed_count_of_256,96,93,89,path opportunity denominator
+rq2_effect_pp,BOUND_minus_DETACHED,-3.125,-4.6875,-3.125,no channel passes stability gate
+rq2_effect_pp,CONCURRENT_minus_SERIAL,-6.25,-6.25,-3.125,no channel passes stability gate
+rq2_effect_pp,LONG_minus_SHORT,-1.5625,-3.125,-3.125,no channel passes stability gate
+rq2_effect_pp,schedule_by_distance,3.125,-3.125,-3.125,direction conflict
+rq2_ood_effect_pp,STRUCTURAL_OOD_minus_DEVELOPMENT_SHAPE,6.25,0,0,no stable effect
+rq2_structure,serial_C_of_128,64,25,29,treatment fidelity
+rq2_structure,concurrent_C_of_128,4,1,0,treatment fidelity
+rq2_structure_effect_pp,CONCURRENT_minus_SERIAL_confirmed_V,24.21875,59.375,17.1875,same aggregate direction but Reviewer2 CI touches zero
+rq2_exposure_effect_pp,CONCURRENT_minus_SERIAL,-15.625,-13.28125,-10.15625,same direction but full family gate fails
+rq4_glm46,P_V_of_80,9,8,8,P exposed 34/33/33
+rq4_glm47,P_V_of_80,10,8,8,P exposed 33/31/31
+rq4_glm5,P_V_of_80,11,9,6,P exposed 26/26/22
+rq4_glm52,P_V_of_80,10,7,6,P exposed 24/25/22
+rq4_transition,shallow_to_deep_glm46_to_glm47,0,1,0,no all-channel confirmation
+rq4_transition,shallow_to_deep_glm47_to_glm5,0,1,0,no all-channel confirmation
+rq4_transition,shallow_to_deep_glm5_to_glm52,0,1,1,human-shared single case but capability gates fail

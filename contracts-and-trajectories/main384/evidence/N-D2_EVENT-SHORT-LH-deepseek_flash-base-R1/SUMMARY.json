@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-D2_EVENT-SHORT-LH-deepseek_flash-base-R1",
+  "task_id": "D2_EVENT-SHORT-LH",
+  "executed": true,
+  "generation_source_sha256": "3ad255b27c92c2c117518256b38e6426a418a44ada756ef7bb18762398731ecc",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 32,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "EXCHANGE_PROTOCOL": "C",
+    "EXCHANGE_RECEIPT": "U"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "1e8dc8dcea0462f4f2bbda10bd8b995f1cef401b05a0671a390a62136f157507",
+  "task_evidence_sha256": "be0b65e614bb44bcccbbe57beec9f13b68f573c08067ae5a16220778cdfc8974",
+  "grammar_evidence_sha256": "15888c34db3147e0f6b1284256f89665fbb600f55f76c18278d03273bf6a2e18",
+  "geometry_sha256": "7de20633af3767052dd318c899e8e46708a96c3d323fc0dcd92777e1264f1fd5",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

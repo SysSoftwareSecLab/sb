@@ -1,0 +1,324 @@
+{
+  "additional_review_required": false,
+  "additional_sampling_recommended": false,
+  "common_families": 22,
+  "common_family_objects": 344,
+  "confirmatory_or_equivalence_claim_allowed": false,
+  "existing_320_program_study_remains_primary": true,
+  "human_machine_P_agreement": {
+    "counts": {
+      "Reviewer2": 360,
+      "Reviewer1": 360
+    },
+    "denominator": 360,
+    "machine_program_counts": {
+      "C": 360
+    }
+  },
+  "joint_observation": "Both reviewers marked all 360 objects MET, EXPOSED, and C; the machine endpoint also marked all 360 programs C across all 16 traces.",
+  "objects": 360,
+  "paper_role": "Exploratory human corroboration of the RQ2 structure/exposure mechanism supplement; the earlier 320-program confirmatory study remains primary.",
+  "reviewer_agreement": {
+    "cohen_kappa": "NOT_DEFINED_BECAUSE_BOTH_REVIEWERS_USED_ONE_CATEGORY_IN_EACH_FIELD",
+    "denominator": 360,
+    "exact_all_three": 360,
+    "exact_field_counts": {
+      "P_exposure": 360,
+      "P_label": 360,
+      "treatment_integrity": 360
+    }
+  },
+  "reviewer_results": {
+    "Reviewer2": {
+      "all_objects": 360,
+      "common_families": 22,
+      "common_family_objects": 344,
+      "condition_summary": {
+        "CONCURRENT_LONG": {
+          "P_EXPOSED_rate": 1.0,
+          "P_counts": {
+            "C": 90
+          },
+          "V_rate": 0.0,
+          "n": 90,
+          "treatment_MET_rate": 1.0
+        },
+        "CONCURRENT_SHORT": {
+          "P_EXPOSED_rate": 1.0,
+          "P_counts": {
+            "C": 90
+          },
+          "V_rate": 0.0,
+          "n": 90,
+          "treatment_MET_rate": 1.0
+        },
+        "SERIAL_LONG": {
+          "P_EXPOSED_rate": 1.0,
+          "P_counts": {
+            "C": 90
+          },
+          "V_rate": 0.0,
+          "n": 90,
+          "treatment_MET_rate": 1.0
+        },
+        "SERIAL_SHORT": {
+          "P_EXPOSED_rate": 1.0,
+          "P_counts": {
+            "C": 90
+          },
+          "V_rate": 0.0,
+          "n": 90,
+          "treatment_MET_rate": 1.0
+        }
+      },
+      "contrasts": {
+        "CONCURRENCY_BY_DISTANCE_INTERACTION": {
+          "classification": "NO_DETECTABLE_DIRECT_P_AMPLIFICATION_IN_22_FIXED_FAMILIES__EQUIVALENCE_NOT_ESTABLISHED",
+          "estimate": 0.0,
+          "family_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "CONCURRENT_MINUS_SERIAL": {
+          "classification": "NO_DETECTABLE_DIRECT_P_AMPLIFICATION_IN_22_FIXED_FAMILIES__EQUIVALENCE_NOT_ESTABLISHED",
+          "estimate": 0.0,
+          "family_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "LONG_MINUS_SHORT": {
+          "classification": "NO_DETECTABLE_DIRECT_P_AMPLIFICATION_IN_22_FIXED_FAMILIES__EQUIVALENCE_NOT_ESTABLISHED",
+          "estimate": 0.0,
+          "family_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "overall_counts": {
+        "P_exposure": {
+          "EXPOSED": 360
+        },
+        "P_label": {
+          "C": 360
+        },
+        "treatment_integrity": {
+          "MET": 360
+        }
+      },
+      "reviewer": "Reviewer2"
+    },
+    "Reviewer1": {
+      "all_objects": 360,
+      "common_families": 22,
+      "common_family_objects": 344,
+      "condition_summary": {
+        "CONCURRENT_LONG": {
+          "P_EXPOSED_rate": 1.0,
+          "P_counts": {
+            "C": 90
+          },
+          "V_rate": 0.0,
+          "n": 90,
+          "treatment_MET_rate": 1.0
+        },
+        "CONCURRENT_SHORT": {
+          "P_EXPOSED_rate": 1.0,
+          "P_counts": {
+            "C": 90
+          },
+          "V_rate": 0.0,
+          "n": 90,
+          "treatment_MET_rate": 1.0
+        },
+        "SERIAL_LONG": {
+          "P_EXPOSED_rate": 1.0,
+          "P_counts": {
+            "C": 90
+          },
+          "V_rate": 0.0,
+          "n": 90,
+          "treatment_MET_rate": 1.0
+        },
+        "SERIAL_SHORT": {
+          "P_EXPOSED_rate": 1.0,
+          "P_counts": {
+            "C": 90
+          },
+          "V_rate": 0.0,
+          "n": 90,
+          "treatment_MET_rate": 1.0
+        }
+      },
+      "contrasts": {
+        "CONCURRENCY_BY_DISTANCE_INTERACTION": {
+          "classification": "NO_DETECTABLE_DIRECT_P_AMPLIFICATION_IN_22_FIXED_FAMILIES__EQUIVALENCE_NOT_ESTABLISHED",
+          "estimate": 0.0,
+          "family_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "CONCURRENT_MINUS_SERIAL": {
+          "classification": "NO_DETECTABLE_DIRECT_P_AMPLIFICATION_IN_22_FIXED_FAMILIES__EQUIVALENCE_NOT_ESTABLISHED",
+          "estimate": 0.0,
+          "family_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "LONG_MINUS_SHORT": {
+          "classification": "NO_DETECTABLE_DIRECT_P_AMPLIFICATION_IN_22_FIXED_FAMILIES__EQUIVALENCE_NOT_ESTABLISHED",
+          "estimate": 0.0,
+          "family_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "overall_counts": {
+        "P_exposure": {
+          "EXPOSED": 360
+        },
+        "P_label": {
+          "C": 360
+        },
+        "treatment_integrity": {
+          "MET": 360
+        }
+      },
+      "reviewer": "Reviewer1"
+    }
+  },
+  "rq2_interpretation": "No direct-P amplification was detected for concurrency, the mechanically longer dependency window, or their interaction in these fixed structure-preserving controlled families. This supports a mechanism boundary, not equivalence or a general safety law.",
+  "schema": "paper3.rq2.v4_amendment.correction_002.human_results.v1",
+  "scientific_identity": "post-qualification and partially outcome-exposed exploratory mechanism supplement; not confirmatory",
+  "secondary_model_specific_families": [
+    "R2V4-F13",
+    "R2V4-F23"
+  ],
+  "status": "HUMAN_ANALYSIS_COMPLETE",
+  "traces_represented": 5760
+}

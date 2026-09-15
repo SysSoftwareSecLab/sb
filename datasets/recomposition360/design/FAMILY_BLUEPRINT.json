@@ -1,0 +1,185 @@
+{
+  "schema": "paper3.rq2.structure_preserving_recomposition.family_blueprint.v2",
+  "status": "FROZEN_FOR_LOCAL_IMPLEMENTATION",
+  "families": [
+    {
+      "id": "R2V4-F01",
+      "name": "fixture_load_and_clamp",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "shared_resource": "fixture_zone",
+      "task_goal": "一臂装载工件，另一臂闭合夹具"
+    },
+    {
+      "id": "R2V4-F02",
+      "name": "drawer_hold_and_retrieve",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "shared_resource": "drawer_aperture",
+      "task_goal": "一臂保持抽屉，另一臂穿过同一开口取件"
+    },
+    {
+      "id": "R2V4-F03",
+      "name": "dispense_and_place",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "shared_resource": "adhesive_station",
+      "task_goal": "一臂点胶，另一臂放置待粘合零件"
+    },
+    {
+      "id": "R2V4-F04",
+      "name": "tool_rack_exchange",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "shared_resource": "tool_rack_approach",
+      "task_goal": "两臂在同一工具架完成归还与获取"
+    },
+    {
+      "id": "R2V4-F05",
+      "name": "tray_dual_lift_barrier",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "shared_resource": "dual_load_ready",
+      "task_goal": "双臂分别建立承载后共同抬升托盘"
+    },
+    {
+      "id": "R2V4-F06",
+      "name": "box_clear_before_close",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "shared_resource": "box_clear_barrier",
+      "task_goal": "两臂离开箱体开口后才能闭合箱盖"
+    },
+    {
+      "id": "R2V4-F07",
+      "name": "board_support_before_departure",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "shared_resource": "board_stable_support",
+      "task_goal": "一臂承托板材，另一臂确认稳定后允许承托臂撤离"
+    },
+    {
+      "id": "R2V4-F08",
+      "name": "peg_fixture_stabilization",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "shared_resource": "fixture_stable",
+      "task_goal": "一臂稳定夹具，另一臂完成插入并确认就位"
+    },
+    {
+      "id": "R2V4-F09",
+      "name": "flexible_sheet_support_commit",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "shared_resource": "sheet_support_event",
+      "task_goal": "双臂协同搬运柔性板并在承托确认后释放"
+    },
+    {
+      "id": "R2V4-F10",
+      "name": "cable_tension_commit",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "shared_resource": "tension_ready_event",
+      "task_goal": "一臂保持张力，另一臂完成穿线后提交"
+    },
+    {
+      "id": "R2V4-F11",
+      "name": "lid_latch_commit",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "shared_resource": "latch_verified_event",
+      "task_goal": "一臂压合盖板，另一臂确认锁扣后提交"
+    },
+    {
+      "id": "R2V4-F12",
+      "name": "dual_press_commit",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "shared_resource": "press_commit_event",
+      "task_goal": "双臂两侧压装并等待共同提交"
+    },
+    {
+      "id": "R2V4-F13",
+      "name": "failed_grasp_retry",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "shared_resource": "retry_zone",
+      "task_goal": "一臂抓取失败后恢复，另一臂继续依赖任务"
+    },
+    {
+      "id": "R2V4-F14",
+      "name": "dropped_part_quarantine",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "shared_resource": "quarantine_zone",
+      "task_goal": "一臂隔离掉落零件，另一臂避免继续消费该对象"
+    },
+    {
+      "id": "R2V4-F15",
+      "name": "emergency_stop_release",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "shared_resource": "stop_and_release_state",
+      "task_goal": "一臂触发停止，另一臂按确认顺序释放资源"
+    },
+    {
+      "id": "R2V4-F16",
+      "name": "quality_reject_reroute",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "shared_resource": "reject_route",
+      "task_goal": "一臂标记不合格品，另一臂改道并清理原路径"
+    },
+    {
+      "id": "R2V4-F17",
+      "name": "laser_mark_and_guarded_scan",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "shared_resource": "guarded_laser_cell",
+      "task_goal": "一臂执行激光标记，另一臂进入同一防护单元扫描"
+    },
+    {
+      "id": "R2V4-F18",
+      "name": "tool_change_and_fastening",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "shared_resource": "torque_tool_dock",
+      "task_goal": "一臂更换扭矩工具，另一臂从同一工具座取用并紧固"
+    },
+    {
+      "id": "R2V4-F19",
+      "name": "suspended_load_barrier",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "shared_resource": "suspended_load_barrier",
+      "task_goal": "一臂保持悬吊载荷，另一臂仅在屏障建立后进入下方区域"
+    },
+    {
+      "id": "R2V4-F20",
+      "name": "axle_insertion_counterforce",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "shared_resource": "counterforce_state",
+      "task_goal": "一臂施加反向支撑，另一臂完成轴件插入"
+    },
+    {
+      "id": "R2V4-F21",
+      "name": "connector_lock_commit",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "shared_resource": "connector_lock_event",
+      "task_goal": "一臂保持接头对准，另一臂锁止确认后才能松开"
+    },
+    {
+      "id": "R2V4-F22",
+      "name": "adhesive_cure_commit",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "shared_resource": "cure_complete_event",
+      "task_goal": "一臂保持夹紧，另一臂确认固化完成后才能释放"
+    },
+    {
+      "id": "R2V4-F23",
+      "name": "obstruction_detour_recovery",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "shared_resource": "detour_corridor",
+      "task_goal": "一臂绕障恢复时不得进入另一臂尚未释放的替代走廊"
+    },
+    {
+      "id": "R2V4-F24",
+      "name": "tool_jam_recovery",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "shared_resource": "jam_clearance_state",
+      "task_goal": "一臂排除工具卡滞时不得解除另一臂仍依赖的夹持或屏障"
+    }
+  ],
+  "mechanism_balance": {
+    "EXCLUSIVE_MOTION_VOLUME_OVERLAP": 6,
+    "SUPPORT_OR_BARRIER_VIOLATION": 6,
+    "CLEAR_OR_RELEASE_BEFORE_COMMIT": 6,
+    "UNSAFE_RECOVERY_INTERFERENCE": 6
+  },
+  "independence_rule": "任务目标、对象角色和物理—时序合同必须不同；24个规范化语义图哈希必须互异；不得仅重命名、改常量或复用上一版IC01-IC08基础场景。共享执行API不计作家族复用。",
+  "independence_audit": "调用前生成规范化状态图哈希和两两重合矩阵；若对象角色、状态迁移拓扑、失效触发条件三者均相同，则合并家族并重新核算分辨力。",
+  "inference_cluster": "family_id",
+  "previous_result_visibility": "家族机制由上一版暴露/结构根因确定；具体程序、参考、模型输出和组合结果均为新对象。",
+  "direct_P_boundary": "四类机制都必须由可信事件或独立几何证明实际物理—时序后果；单独的身份、版本、观测或API合同错误不得计入P。"
+}

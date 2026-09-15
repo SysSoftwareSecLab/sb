@@ -1,0 +1,162 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    # Constants from task spec
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Items
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Resources
+    BUFFER_LOCK = "buffer_lock"
+    TOOL = "tool"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Durations
+    TIMEOUT_MOVE = 4.0
+    TIMEOUT_EVENT = 10.0
+    
+    # Helper to release tool safely
+    async def release_tool_safely(arm: str):
+        try:
+            await robot.set_mode(arm, TOOL, "OFF")
+            await robot.release_resource(arm, TOOL)
+        except Exception:
+            pass
+
+    # --- Helper Coroutines for Producer (LEFT) ---
+    
+    async def producer_episode(item_id: str, source_pose: str, buffer_pose: str, ready_event: str, is_second: bool):
+        # 1. Acquire tool (SHORT variant: only for second item)
+        if is_second:
+            await robot.acquire(LEFT, TOOL, TIMEOUT_EVENT)
+            await robot.set_mode(LEFT, TOOL, "LEFT_PROFILE")
+        
+        # 2. Pick up from source
+        await robot.move(LEFT, source_pose, timeout_s=TIMEOUT_MOVE)
+        await robot.grasp(LEFT, item_id)
+        
+        # 3. Acquire buffer lock
+        await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_EVENT)
+        
+        # 4. Move to buffer and release
+        await robot.move(LEFT, buffer_pose, timeout_s=TIMEOUT_MOVE)
+        await robot.release(LEFT, item_id, buffer_pose)
+        
+        # 5. Depart buffer (immediate separating departure)
+        # Move to left_home or left_wait depending on item
+        depart_pose = LEFT_WAIT if is_second else LEFT_HOME
+        await robot.move(LEFT, depart_pose, timeout_s=TIMEOUT_MOVE)
+        
+        # 6. Release buffer lock
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # 7. Release tool (SHORT variant: only for second item)
+        if is_second:
+            await release_tool_safely(LEFT)
+        
+        # 8. Signal ready
+        robot.signal(ready_event, item_id)
+        
+        # 9. Wait for empty_0 (only for second item)
+        if is_second:
+            empty_receipt = await robot.wait_event(EMPTY_0, TIMEOUT_EVENT)
+            robot.clear_event(EMPTY_0, expected_version=empty_receipt.version)
+
+    # --- Helper Coroutines for Consumer (RIGHT) ---
+    
+    async def consumer_episode(item_id: str, buffer_pose: str, target_pose: str, ready_event: str, is_second: bool):
+        # 1. Wait for ready
+        ready_receipt = await robot.wait_event(ready_event, TIMEOUT_EVENT)
+        
+        # 2. Acquire buffer lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT_EVENT)
+        
+        # 3. Move to buffer and grasp
+        await robot.move(RIGHT, buffer_pose, timeout_s=TIMEOUT_MOVE)
+        await robot.grasp(RIGHT, item_id)
+        
+        # 4. Depart buffer (immediate separating departure)
+        await robot.move(RIGHT, RIGHT_WAIT, timeout_s=TIMEOUT_MOVE)
+        
+        # 5. Release buffer lock
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # 6. Second item checks (D4: gather)
+        if is_second:
+            # Acquire tool (SHORT variant: after wait/checks)
+            await robot.acquire(RIGHT, TOOL, TIMEOUT_EVENT)
+            await robot.set_mode(RIGHT, TOOL, "RIGHT_PROFILE")
+            
+            # Perform checks in parallel
+            await asyncio.gather(
+                robot.inspect(RIGHT, FACT_LINE_CLEAR),
+                robot.inspect(RIGHT, FACT_RECEIVER_READY)
+            )
+        
+        # 7. Move to target with receipt
+        await robot.move(RIGHT, target_pose, timeout_s=TIMEOUT_MOVE, receipt=ready_receipt)
+        
+        # 8. Clear ready event
+        robot.clear_event(ready_event, expected_version=ready_receipt.version)
+        
+        # 9. Release at target
+        await robot.release(RIGHT, item_id, target_pose)
+        
+        # 10. Depart target
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_MOVE)
+        
+        # 11. Release tool (SHORT variant)
+        if is_second:
+            await release_tool_safely(RIGHT)
+        
+        # 12. Signal empty_0 (only for second item)
+        if is_second:
+            robot.signal(EMPTY_0)
+
+    # --- Main Execution ---
+    
+    # Episode 0: part_0
+    # Producer runs, Consumer waits. 
+    # Producer signals ready_0, Consumer picks up.
+    # Consumer signals empty_0.
+    await asyncio.gather(
+        producer_episode(PART_0, SOURCE_0, BUFFER_0, READY_0, is_second=False),
+        consumer_episode(PART_0, BUFFER_0, TARGET_0, READY_0, is_second=False)
+    )
+    
+    # Episode 1: part_1
+    # Producer waits for empty_0 (cleared by Consumer in Ep 0).
+    # Consumer waits for ready_1.
+    # Producer signals ready_1.
+    # Consumer picks up, performs checks (gather), moves to target, clears ready_1, signals empty_0.
+    await asyncio.gather(
+        producer_episode(PART_1, SOURCE_1, BUFFER_1, READY_1, is_second=True),
+        consumer_episode(PART_1, BUFFER_1, TARGET_1, READY_1, is_second=True)
+    )
+```

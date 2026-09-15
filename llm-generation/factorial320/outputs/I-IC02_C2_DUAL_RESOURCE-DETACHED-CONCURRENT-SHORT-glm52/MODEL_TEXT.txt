@@ -1,0 +1,40 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # Phase 1: rq2_gap_0/1/2 checks with LEFT in numeric order, then signal rq2_gate.
+    for gap in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", gap, 5)
+        try:
+            await robot.release_resource("LEFT", gap)
+        finally:
+            pass
+
+    gate_receipt = robot.signal("rq2_gate")
+    waited_receipt = await robot.wait_event("rq2_gate", 5)
+    clear_event = waited_receipt if waited_receipt.version == gate_receipt.version else gate_receipt
+    robot.clear_event("rq2_gate", expected_version=clear_event.version)
+
+    # Phase 2: inherited dual-arm mission (variant B = concurrent workers).
+    async def worker(arm: str, part: str, source: str, target: str, depart: str, home: str) -> None:
+        await robot.move(arm, source, 4)
+        await robot.grasp(arm, part)
+        await robot.acquire(arm, "fixture", 5)
+        try:
+            await robot.acquire(arm, "tool", 5)
+            try:
+                await robot.move(arm, target, 4)
+                await robot.release(arm, part, target)
+                await robot.move(arm, depart, 4)
+            finally:
+                await robot.release_resource(arm, "tool")
+        finally:
+            await robot.release_resource(arm, "fixture")
+
+    await asyncio.gather(
+        worker("LEFT", "left_part", "left_source", "left_target", "left_depart", "left_home"),
+        worker("RIGHT", "right_part", "right_source", "right_target", "right_depart", "right_home"),
+    )
+```

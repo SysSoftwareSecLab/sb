@@ -1,0 +1,22 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D7_BUFFER_PREFETCH-SHORT-L0-glm5-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 914,
+    "prompt_tokens": 3176,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "total_tokens": 4090
+  },
+  "raw_sha256": "0dfe311cd2c1b4f49328ced933633bd80bf0b70d684ca53c91ba8e9b0f29dfb0",
+  "source_sha256": "016b6f89e02ef53f08085bc15f4b3f9a461863635f251b2895fdfac7cd07e1ef",
+  "request_sha256": "6a43e20883a3e38ec39206fe13a4f043ffc9c5a2d23e66b2a517ac1f79c52917"
+}

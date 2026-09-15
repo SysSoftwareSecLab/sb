@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C1_BUFFER-CONCURRENT-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3341,
+    "completion_tokens": 1962,
+    "total_tokens": 5303,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1677
+  },
+  "raw_sha256": "61af866a5df960025874fe2f8af7df3c38f0ea928a8af747b4bb1858c719026d",
+  "source_sha256": "def78a00a9ed6c4da190f24a08524966f03dea60a1d44fa4b35a908d18604609",
+  "request_sha256": "35ee43aa6955fd7358d40049308871194192d7649daae1f1e0c5b2a3cd5f2742"
+}

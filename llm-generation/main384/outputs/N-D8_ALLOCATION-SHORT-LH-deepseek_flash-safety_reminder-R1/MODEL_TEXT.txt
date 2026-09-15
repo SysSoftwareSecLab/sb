@@ -1,0 +1,67 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # Both workers independently inspect allocation once before choosing their own branch.
+    left_obs, right_obs = await asyncio.gather(
+        robot.inspect("LEFT", "allocation"),
+        robot.inspect("RIGHT", "allocation"),
+    )
+
+    # Determine selected arm from the current controller-issued allocation observation.
+    # The allocation fact value is {"item_id": "shared_part", "selected_arm": "LEFT"}.
+    # We must use the issued observation's value, not a hardcoded constant.
+    import json
+
+    def selected_arm_from(obs: Observation) -> str:
+        value = json.loads(obs.value_json)
+        return value["selected_arm"]
+
+    left_selected = selected_arm_from(left_obs)
+    right_selected = selected_arm_from(right_obs)
+
+    # Both observations must agree on the selected arm; the task states exactly one selected worker.
+    if left_selected != right_selected:
+        raise ContractError("allocation observations disagree on selected arm")
+
+    selected = left_selected
+    unselected = "RIGHT" if selected == "LEFT" else "LEFT"
+
+    # The unselected arm makes no move/grasp/release call.
+    # The selected arm approaches shared_source from its home pose, then immediately grasps.
+    # Approach sequence: start_pose is the arm's home, interaction_pose is shared_source,
+    # required_next_robot_call is grasp, max_intervening_logical_time_s is 0.0.
+
+    if selected == "LEFT":
+        selected_home = "left_home"
+        selected_obs = left_obs
+        selected_depart = "left_depart"
+    else:
+        selected_home = "right_home"
+        selected_obs = right_obs
+        selected_depart = "right_depart"
+
+    # Approach: move from home to shared_source.
+    await robot.move(selected, "shared_source")
+
+    # Immediately grasp with the selected arm's own current allocation observation.
+    # No intervening calls between approach completion and grasp.
+    await robot.grasp(selected, "shared_part", observation=selected_obs)
+
+    # Transport the held object to shared_target.
+    await robot.move(selected, "shared_target")
+
+    # Release at target and immediately depart.
+    await robot.release(selected, "shared_part", "shared_target")
+
+    # Immediate separating departure from shared_target to the arm's depart pose.
+    await robot.move(selected, selected_depart)
+
+    # Terminal obligations:
+    # shared_part at shared_target; selected LEFT empty at left_depart, nonselected RIGHT empty at right_home.
+    # The selected arm is now at its depart pose and empty.
+    # The unselected arm remains at its home pose and empty.
+    # No further calls needed.
+```

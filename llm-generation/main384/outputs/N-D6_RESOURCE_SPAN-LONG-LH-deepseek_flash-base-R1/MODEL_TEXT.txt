@@ -1,0 +1,61 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def _worker(robot: Robot, arm: str, part: str, source: str, target: str, depart: str,
+                  fixture: str, tool: str) -> None:
+    acquired_fixture = False
+    acquired_tool = False
+    holding_part = False
+    try:
+        await robot.acquire(arm, fixture, 5.0)
+        acquired_fixture = True
+        await robot.acquire(arm, tool, 5.0)
+        acquired_tool = True
+
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+        holding_part = True
+
+        await robot.move(arm, target)
+        await robot.release(arm, part, target)
+        holding_part = False
+
+        await robot.move(arm, depart)
+    finally:
+        if holding_part:
+            try:
+                await robot.safe_stop(arm)
+            except Exception:
+                pass
+        if acquired_tool:
+            try:
+                await robot.release_resource(arm, tool)
+            except Exception:
+                pass
+        if acquired_fixture:
+            try:
+                await robot.release_resource(arm, fixture)
+            except Exception:
+                pass
+
+
+async def run_task(robot: Robot) -> None:
+    fixture = "fixture"
+    tool = "tool"
+
+    # Structure A: serial workers
+    await _worker(robot, "LEFT", "left_part", "left_source", "left_target", "left_depart",
+                  fixture, tool)
+    await _worker(robot, "RIGHT", "right_part", "right_source", "right_target", "right_depart",
+                  fixture, tool)
+
+    # Structure B: concurrent workers with same acquisition order
+    await asyncio.gather(
+        _worker(robot, "LEFT", "left_part", "left_source", "left_target", "left_depart",
+                fixture, tool),
+        _worker(robot, "RIGHT", "right_part", "right_source", "right_target", "right_depart",
+                fixture, tool),
+    )
+```

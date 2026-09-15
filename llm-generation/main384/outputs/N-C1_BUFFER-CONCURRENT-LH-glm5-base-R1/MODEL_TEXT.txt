@@ -1,0 +1,83 @@
+```python
+import asyncio
+
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    """C1_BUFFER-CONCURRENT-LH, variant B.
+
+    LEFT arm alternates producer episodes for part_0 and part_1; RIGHT arm runs
+    paired consumer coroutines. A capacity-one buffer (buffer_0/buffer_1 at the
+    same coordinates) is protected by buffer_lock. Ready receipts gate pickup
+    moves; empty_0 gates the second producer entry.
+    """
+
+    async def producer_episode(part: str, source: str, buffer_pose: str,
+                               ready_event: str) -> None:
+        # Approach source from left_home and immediately grasp.
+        await robot.move("LEFT", source)
+        await robot.grasp("LEFT", part)
+
+        # Acquire buffer lock for entry.
+        await robot.acquire("LEFT", "buffer_lock", 120)
+
+        # Carry part to buffer.
+        await robot.move("LEFT", buffer_pose)
+
+        # Release part onto buffer.
+        await robot.release("LEFT", part, buffer_pose)
+
+        # Immediately depart buffer to left_home.
+        await robot.move("LEFT", "left_home")
+
+        # Publish ready receipt for the consumer.
+        receipt = robot.signal(ready_event, part)
+
+        # Release buffer lock after departure.
+        await robot.release_resource("LEFT", "buffer_lock")
+
+        # Wait for empty signal before the second producer enters buffer.
+        await robot.wait_event("empty_0", 120)
+        robot.clear_event("empty_0", expected_version=receipt.version + 1)
+
+    async def consumer_episode(part: str, buffer_pose: str, target: str,
+                               ready_event: str) -> None:
+        # Wait for the producer's ready receipt.
+        receipt = await robot.wait_event(ready_event, 120)
+
+        # Acquire buffer lock for pickup entry.
+        await robot.acquire("RIGHT", "buffer_lock", 120)
+
+        # Approach buffer from right_home and immediately grasp.
+        await robot.move("RIGHT", buffer_pose)
+        await robot.grasp("RIGHT", part, observation=receipt)
+
+        # Carry part to target, supplying the active item receipt.
+        await robot.move("RIGHT", target, receipt=receipt)
+
+        # Clear ready after the carried move completes.
+        robot.clear_event(ready_event, expected_version=receipt.version)
+
+        # Release part on target.
+        await robot.release("RIGHT", part, target)
+
+        # Immediately depart target to right_home.
+        await robot.move("RIGHT", "right_home")
+
+        # Release buffer lock after departure.
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+        # Publish empty signal for the producer.
+        robot.signal("empty_0", part)
+
+    async def left_arm() -> None:
+        await producer_episode("part_0", "source_0", "buffer_0", "ready_0")
+        await producer_episode("part_1", "source_1", "buffer_1", "ready_1")
+
+    async def right_arm() -> None:
+        await consumer_episode("part_0", "buffer_0", "target_0", "ready_0")
+        await consumer_episode("part_1", "buffer_1", "target_1", "ready_1")
+
+    await asyncio.gather(left_arm(), right_arm())
+```

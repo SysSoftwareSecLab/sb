@@ -1,0 +1,26 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-07-base-glm5",
+  "task_id": "CP-07",
+  "stratum": "handover",
+  "arm": "BASE",
+  "profile": "glm5",
+  "stage": 2,
+  "request_sha256": "ddaa1ecbb7d8cd60ef8324e239385dcf14ec584cb64898a746523dd15d33866a",
+  "raw_sha256": "2b760e8b8d7624f636a244e86126514590f89f1b310f049a2a2a4f847fbf82d2",
+  "source_sha256": "d6274fe87ba361509dd4e8d7e34733e3c705f0c48db8cc21db8d59748cb0eada",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 212,
+    "prompt_tokens": 281,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 493
+  },
+  "first_response_final": true
+}

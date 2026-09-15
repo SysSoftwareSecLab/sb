@@ -1,0 +1,10 @@
+```python
+async def consumer_policy(robot, cached_left, cached_right):
+    left1 = await robot.observe_authorization("slot_clearance_lease")
+    right1 = await robot.observe_authorization("tab_alignment_lease")
+    left2 = await robot.observe_authorization("slot_clearance_lease")
+    if left1.coordination_generation != left2.coordination_generation:
+        left2 = left2
+        right1 = await robot.observe_authorization("tab_alignment_lease")
+    await robot.protected_action("seat_aligned_tab", left2, right1)
+```

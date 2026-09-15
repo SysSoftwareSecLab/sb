@@ -1,0 +1,76 @@
+import asyncio
+
+from bridge_robot_api import Robot
+
+
+async def _deposit_own(arm: str, part: str, home: str, source: str, pad: str,
+                       depart: str, ready_event: str, robot: Robot) -> None:
+    """Deposit own part on own pad, clear pad, publish own ready event."""
+    await robot.move(arm, home)
+    await robot.move(arm, source)
+    await robot.grasp(arm, part)
+    await robot.move(arm, pad)
+    await robot.release(arm, part, pad)
+    await robot.move(arm, depart)
+    robot.signal(ready_event, part)
+
+
+async def _consume_peer(arm: str, peer_part: str, peer_ready_event: str,
+                        depart: str, pickup_wait: str, peer_pad: str,
+                        target: str, robot: Robot) -> None:
+    """Wait for peer ready, pick up peer item, carry to own target, clear event."""
+    receipt = await robot.wait_event(peer_ready_event, 30)
+    await robot.move(arm, pickup_wait, receipt=receipt)
+    await robot.grasp(arm, peer_part)
+    await robot.move(arm, target, receipt=receipt)
+    robot.clear_event(peer_ready_event, expected_version=receipt.version)
+
+
+async def _left_worker(robot: Robot) -> None:
+    await _deposit_own("LEFT", "left_part", "left_home", "left_source",
+                       "left_pad", "left_depart", "left_ready", robot)
+    await _consume_peer("LEFT", "right_part", "right_ready", "left_depart",
+                        "left_pickup_wait", "right_pad", "left_target", robot)
+
+
+async def _right_worker(robot: Robot) -> None:
+    await _deposit_own("RIGHT", "right_part", "right_home", "right_source",
+                       "right_pad", "right_depart", "right_ready", robot)
+    await _consume_peer("RIGHT", "left_part", "left_ready", "right_depart",
+                        "right_pickup_wait", "left_pad", "right_target", robot)
+
+
+async def _rq2_gate_producer(robot: Robot) -> None:
+    """Produce rq2_gate event for the consumer to wait and clear."""
+    receipt = robot.signal("rq2_gate")
+    await asyncio.sleep(0)  # yield so consumer can start waiting
+    return receipt
+
+
+async def _rq2_gate_consumer(gate_receipt, robot: Robot) -> None:
+    """Consumer waits the exact active rq2_gate receipt, executes mission, clears."""
+    waited = await robot.wait_event("rq2_gate", 30)
+    if waited.version != gate_receipt.version:
+        raise RuntimeError("rq2_gate version mismatch")
+    await _left_worker(robot)
+    await _right_worker(robot)
+    robot.clear_event("rq2_gate", expected_version=waited.version)
+
+
+async def run_task(robot: Robot) -> None:
+    """Implement the structural-OOD FOR -> PAR_JOIN -> consumer IF shape.
+
+    One finite loop iteration: concurrently join an rq2_gate producer and
+    consumer; the consumer waits the exact active receipt, executes the
+    complete inherited mission (deposit LEFT, deposit RIGHT, consume LEFT,
+    consume RIGHT), then clears that version.
+    """
+    for _ in range(1):
+        producer_task = asyncio.create_task(_rq2_gate_producer(robot))
+        consumer_task = asyncio.create_task(_rq2_gate_consumer(None, robot))
+
+        # FOR -> PAR_JOIN: join producer and consumer concurrently.
+        producer_result = await producer_task
+
+        # consumer IF guards the complete mission (already started above).
+        await consumer_task

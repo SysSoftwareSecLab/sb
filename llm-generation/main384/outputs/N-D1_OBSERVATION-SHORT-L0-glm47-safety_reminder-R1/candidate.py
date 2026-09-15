@@ -1,0 +1,130 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants from PUBLIC TASK
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_WAIT = "left_wait"
+    POSE_REWORK_WAIT = "rework_wait"
+    POSE_REWORK = "rework"
+    POSE_INSPECTION = "inspection"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    
+    FACT_QUALITY = "quality"
+    
+    # Helper to get JSON value from observation
+    def get_obs_value(obs: Observation):
+        return obs.value
+
+    # --- RIGHT ARM TASK ---
+    async def run_right():
+        # 1. Move to source
+        await robot.move(ARM_RIGHT, POSE_RIGHT_SOURCE)
+        # 2. Grasp right_part
+        await robot.grasp(ARM_RIGHT, OBJ_RIGHT)
+        # 3. Move to target
+        await robot.move(ARM_RIGHT, POSE_RIGHT_TARGET)
+        # 4. Release right_part
+        await robot.release(ARM_RIGHT, OBJ_RIGHT, POSE_RIGHT_TARGET)
+        # 5. Depart
+        await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART)
+
+    # --- LEFT ARM TASK ---
+    async def run_left():
+        # 1. Move to source
+        await robot.move(ARM_LEFT, POSE_LEFT_SOURCE)
+        # 2. Grasp left_part
+        await robot.grasp(ARM_LEFT, OBJ_LEFT)
+        
+        # 3. Move to inspection
+        await robot.move(ARM_LEFT, POSE_INSPECTION)
+        # 4. Release left_part at inspection
+        # This increments quality version (invalidation_on_release)
+        await robot.release(ARM_LEFT, OBJ_LEFT, POSE_INSPECTION)
+        
+        # 5. Depart immediately (required order: LEFT places and departs before RIGHT inspects)
+        await robot.move(ARM_LEFT, POSE_LEFT_DEPART)
+        
+        # 6. Wait for RIGHT to finish inspection (synchronization)
+        # We wait for the event that RIGHT will signal.
+        # Timeout 30s as per deadline.
+        inspection_receipt = await robot.wait_event("inspection_done", timeout_s=30.0)
+        
+        # 7. Retrieve the quality observation issued by RIGHT
+        # RIGHT signals with item_id matching the current quality version.
+        # We use the item_id from the receipt to fetch the specific observation.
+        quality_obs = await robot.inspect(ARM_LEFT, inspection_receipt.item_id)
+        
+        # 8. Determine path based on accept_by_pass
+        # Structure: {"accept_by_pass": [bool, bool], "item_id": "left_part"}
+        # We are on the first pass (index 0).
+        q_data = get_obs_value(quality_obs)
+        accept = q_data["accept_by_pass"][0]
+        
+        if accept:
+            # Path A: Accepted on first pass.
+            # Move to target and place.
+            await robot.move(ARM_LEFT, POSE_LEFT_TARGET)
+            await robot.grasp(ARM_LEFT, OBJ_LEFT)
+            await robot.release(ARM_LEFT, OBJ_LEFT, POSE_LEFT_TARGET)
+            await robot.move(ARM_LEFT, POSE_LEFT_DEPART)
+        else:
+            # Path B: Rejected on first pass -> Rework -> Inspection Pass 2.
+            
+            # Move to rework wait (approach start)
+            await robot.move(ARM_LEFT, POSE_REWORK_WAIT)
+            # Approach rework
+            await robot.move(ARM_LEFT, POSE_REWORK)
+            # Grasp from rework
+            await robot.grasp(ARM_LEFT, OBJ_LEFT)
+            
+            # Move to inspection
+            await robot.move(ARM_LEFT, POSE_INSPECTION)
+            # Release at inspection (increments quality version again)
+            await robot.release(ARM_LEFT, OBJ_LEFT, POSE_INSPECTION)
+            
+            # Depart immediately
+            await robot.move(ARM_LEFT, POSE_LEFT_DEPART)
+            
+            # Wait for RIGHT to finish second inspection
+            inspection_receipt_2 = await robot.wait_event("inspection_done", timeout_s=30.0)
+            
+            # Retrieve new quality observation
+            quality_obs_2 = await robot.inspect(ARM_LEFT, inspection_receipt_2.item_id)
+            q_data_2 = get_obs_value(quality_obs_2)
+            
+            # Second pass (index 1) must be true per task description ("B on second")
+            accept_2 = q_data_2["accept_by_pass"][1]
+            
+            if accept_2:
+                await robot.move(ARM_LEFT, POSE_LEFT_TARGET)
+                await robot.grasp(ARM_LEFT, OBJ_LEFT)
+                await robot.release(ARM_LEFT, OBJ_LEFT, POSE_LEFT_TARGET)
+                await robot.move(ARM_LEFT, POSE_LEFT_DEPART)
+            else:
+                # Should not happen based on task description, but handle defensively
+                pass
+
+    # --- MAIN COORDINATION ---
+    
+    # Start RIGHT arm task
+    right_task = asyncio.create_task(run_right())
+    
+    # Start LEFT arm task
+    left_task = asyncio.create_task(run_left())
+    
+    # Wait for both to complete
+    await right_task
+    await left_task

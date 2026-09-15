@@ -1,0 +1,114 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    """
+    Executes the D2_EVENT-SHORT-L0 task.
+    Sequence:
+    1. LEFT deposits left_part to left_pad, clears pad, signals left_ready.
+    2. RIGHT deposits right_part to right_pad, clears pad, signals right_ready.
+    3. LEFT waits for right_ready, picks up right_part, moves to left_target (carrying receipt), clears right_ready.
+    4. RIGHT waits for left_ready, picks up left_part, moves to right_target (carrying receipt), clears left_ready.
+    5. Both arms depart to their respective depart poses.
+    """
+
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    RIGHT_HOME = "right_home"
+    LEFT_SOURCE = "left_source"
+    RIGHT_SOURCE = "right_source"
+    LEFT_PAD = "left_pad"
+    RIGHT_PAD = "right_pad"
+    LEFT_TARGET = "left_target"
+    RIGHT_TARGET = "right_target"
+    LEFT_DEPART = "left_depart"
+    RIGHT_DEPART = "right_depart"
+    LEFT_CLEAR = "left_clear"
+    RIGHT_CLEAR = "right_clear"
+
+    # Events
+    EVT_LEFT_READY = "left_ready"
+    EVT_RIGHT_READY = "right_ready"
+
+    # Timeout
+    MOVE_TIMEOUT = 4.0
+    WAIT_TIMEOUT = 30.0
+
+    async def left_arm_logic():
+        # 1. Move to source and grasp own part
+        await robot.move(LEFT, LEFT_SOURCE, timeout_s=MOVE_TIMEOUT)
+        await robot.grasp(LEFT, LEFT_PART)
+
+        # 2. Move to pad and release own part
+        await robot.move(LEFT, LEFT_PAD, timeout_s=MOVE_TIMEOUT)
+        await robot.release(LEFT, LEFT_PART, LEFT_PAD)
+
+        # 3. Clear pad immediately
+        await robot.move(LEFT, LEFT_CLEAR, timeout_s=MOVE_TIMEOUT)
+
+        # 4. Signal own ready event
+        robot.signal(EVT_LEFT_READY, item_id=LEFT_PART)
+
+        # 5. Wait for peer ready event
+        peer_receipt = await robot.wait_event(EVT_RIGHT_READY, timeout_s=WAIT_TIMEOUT)
+
+        # 6. Move to pickup wait and grasp peer part
+        await robot.move(LEFT, "left_pickup_wait", timeout_s=MOVE_TIMEOUT)
+        await robot.grasp(LEFT, RIGHT_PART)
+
+        # 7. Move to own target carrying peer receipt
+        await robot.move(LEFT, LEFT_TARGET, timeout_s=MOVE_TIMEOUT, receipt=peer_receipt)
+
+        # 8. Clear peer event
+        robot.clear_event(EVT_RIGHT_READY, expected_version=peer_receipt.version)
+
+        # 9. Release peer part at target
+        await robot.release(LEFT, RIGHT_PART, LEFT_TARGET)
+
+        # 10. Depart
+        await robot.move(LEFT, LEFT_DEPART, timeout_s=MOVE_TIMEOUT)
+
+    async def right_arm_logic():
+        # 1. Move to source and grasp own part
+        await robot.move(RIGHT, RIGHT_SOURCE, timeout_s=MOVE_TIMEOUT)
+        await robot.grasp(RIGHT, RIGHT_PART)
+
+        # 2. Move to pad and release own part
+        await robot.move(RIGHT, RIGHT_PAD, timeout_s=MOVE_TIMEOUT)
+        await robot.release(RIGHT, RIGHT_PART, RIGHT_PAD)
+
+        # 3. Clear pad immediately
+        await robot.move(RIGHT, RIGHT_CLEAR, timeout_s=MOVE_TIMEOUT)
+
+        # 4. Signal own ready event
+        robot.signal(EVT_RIGHT_READY, item_id=RIGHT_PART)
+
+        # 5. Wait for peer ready event
+        peer_receipt = await robot.wait_event(EVT_LEFT_READY, timeout_s=WAIT_TIMEOUT)
+
+        # 6. Move to pickup wait and grasp peer part
+        await robot.move(RIGHT, "right_pickup_wait", timeout_s=MOVE_TIMEOUT)
+        await robot.grasp(RIGHT, LEFT_PART)
+
+        # 7. Move to own target carrying peer receipt
+        await robot.move(RIGHT, RIGHT_TARGET, timeout_s=MOVE_TIMEOUT, receipt=peer_receipt)
+
+        # 8. Clear peer event
+        robot.clear_event(EVT_LEFT_READY, expected_version=peer_receipt.version)
+
+        # 9. Release peer part at target
+        await robot.release(RIGHT, LEFT_PART, RIGHT_TARGET)
+
+        # 10. Depart
+        await robot.move(RIGHT, RIGHT_DEPART, timeout_s=MOVE_TIMEOUT)
+
+    # Run both arms concurrently
+    await asyncio.gather(left_arm_logic(), right_arm_logic())
+```

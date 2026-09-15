@@ -1,0 +1,140 @@
+from __future__ import annotations
+
+import asyncio
+
+from bridge_robot_api import (
+    ActionReceipt,
+    ContractError,
+    EventReceipt,
+    MotionFault,
+    Observation,
+    Robot,
+    run_task as _unused,
+)
+
+
+async def run_task(robot: Robot) -> None:
+    left = "LEFT"
+    right = "RIGHT"
+
+    part_0 = "part_0"
+    part_1 = "part_1"
+
+    left_home = "left_home"
+    right_home = "right_home"
+    left_wait = "left_wait"
+    right_wait = "right_wait"
+
+    source_0 = "source_0"
+    source_1 = "source_1"
+    buffer_0 = "buffer_0"
+    buffer_1 = "buffer_1"
+    target_0 = "target_0"
+    target_1 = "target_1"
+
+    buffer_lock = "buffer_lock"
+    tool = "tool"
+
+    empty_0 = "empty_0"
+    ready_0 = "ready_0"
+    ready_1 = "ready_1"
+
+    line_clear = "line_clear"
+    receiver_ready = "receiver_ready"
+
+    timeout = 4.0
+    resource_timeout = 10.0
+    event_timeout = 10.0
+
+    async def acquire_tool() -> None:
+        await robot.acquire(left, tool, resource_timeout)
+
+    async def release_tool() -> None:
+        try:
+            await robot.release_resource(left, tool)
+        except Exception:
+            pass
+
+    async def acquire_buffer_lock() -> None:
+        await robot.acquire(left, buffer_lock, resource_timeout)
+
+    async def release_buffer_lock() -> None:
+        try:
+            await robot.release_resource(left, buffer_lock)
+        except Exception:
+            pass
+
+    async def acquire_buffer_lock_right() -> None:
+        await robot.acquire(right, buffer_lock, resource_timeout)
+
+    async def release_buffer_lock_right() -> None:
+        try:
+            await robot.release_resource(right, buffer_lock)
+        except Exception:
+            pass
+
+    async def producer_episode(item_id: str, source: str, buffer_pose: str, ready_event: str) -> None:
+        await robot.move(left, left_home, timeout)
+        await robot.move(left, source, timeout)
+        await robot.grasp(left, item_id)
+        await robot.move(left, buffer_pose, timeout)
+        await acquire_buffer_lock()
+        try:
+            await robot.release(left, item_id, buffer_pose)
+        finally:
+            await release_buffer_lock()
+        await robot.move(left, left_wait, timeout)
+        robot.signal(ready_event, item_id)
+
+    async def consumer_episode(
+        item_id: str,
+        buffer_pose: str,
+        target_pose: str,
+        ready_event: str,
+        wait_empty: bool,
+    ) -> None:
+        if wait_empty:
+            receipt = await robot.wait_event(empty_0, event_timeout)
+            robot.clear_event(empty_0, expected_version=receipt.version)
+
+        ready_receipt = await robot.wait_event(ready_event, event_timeout)
+
+        await robot.move(right, right_home, timeout)
+        await robot.move(right, buffer_pose, timeout)
+        await robot.grasp(right, item_id)
+        await robot.move(right, target_pose, timeout, receipt=ready_receipt)
+        await robot.release(right, item_id, target_pose)
+        await robot.move(right, right_home, timeout)
+
+        robot.clear_event(ready_event, expected_version=ready_receipt.version)
+        robot.signal(empty_0, item_id)
+
+    async def second_item_checks() -> None:
+        obs_line, obs_recv = await asyncio.gather(
+            robot.inspect(left, line_clear),
+            robot.inspect(right, receiver_ready),
+        )
+        line_val = obs_line.value
+        recv_val = obs_recv.value
+        if not isinstance(line_val, dict) or not line_val.get("clear"):
+            raise ContractError("line_clear not clear")
+        if not isinstance(recv_val, dict) or not recv_val.get("ready"):
+            raise ContractError("receiver_ready not ready")
+
+    async def run_short() -> None:
+        await acquire_tool()
+        try:
+            await producer_episode(part_0, source_0, buffer_0, ready_0)
+            await consumer_episode(part_0, buffer_0, target_0, ready_0, wait_empty=False)
+
+            receipt = await robot.wait_event(empty_0, event_timeout)
+            robot.clear_event(empty_0, expected_version=receipt.version)
+
+            await second_item_checks()
+
+            await producer_episode(part_1, source_1, buffer_1, ready_1)
+            await consumer_episode(part_1, buffer_1, target_1, ready_1, wait_empty=False)
+        finally:
+            await release_tool()
+
+    await run_short()

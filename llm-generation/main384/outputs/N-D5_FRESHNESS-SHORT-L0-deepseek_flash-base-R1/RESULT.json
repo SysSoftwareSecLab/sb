@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D5_FRESHNESS-SHORT-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2875,
+    "completion_tokens": 653,
+    "total_tokens": 3528,
+    "prompt_tokens_details": {
+      "cached_tokens": 1536
+    },
+    "prompt_cache_hit_tokens": 1536,
+    "prompt_cache_miss_tokens": 1339
+  },
+  "raw_sha256": "276f10c87a0df65ac4e688ab28aab52528e70f4129de05990b06d6dbbe17e7ab",
+  "source_sha256": "273d18b20eeddc7a21fdc3a150b06cec7ed9cb108f814f0e92c9f245ed2797cb",
+  "request_sha256": "4733da51329ea23524c9bae1ed7d7129a9ef5af632ad577cc51410b29b39cc1b"
+}

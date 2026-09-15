@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C8_ATTR_NESTED-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3519,
+    "completion_tokens": 1353,
+    "total_tokens": 4872,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1855
+  },
+  "raw_sha256": "f6f6e655376b9ed101663aff3385fe63af3de7c3b2470f48cf71236fc60ecb8c",
+  "source_sha256": "44f01404603cdff660cf6a6b8da902464012565d06b291f11eb76bfb8194b5c6",
+  "request_sha256": "9b7aefb67108639c95d319597ec7ceca25e084a3b129fb4afcab76d0fa1edd74"
+}

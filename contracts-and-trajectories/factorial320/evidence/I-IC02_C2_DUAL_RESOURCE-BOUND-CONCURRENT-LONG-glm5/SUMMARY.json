@@ -1,0 +1,26 @@
+{
+  "slot_id": "I-IC02_C2_DUAL_RESOURCE-BOUND-CONCURRENT-LONG-glm5",
+  "task_id": "IC02_C2_DUAL_RESOURCE-BOUND-CONCURRENT-LONG",
+  "executed": true,
+  "generation_source_sha256": "f582d0b18f14f0deabf0c6e4210e7477b270ecb974619338ceb3b38bb57f69be",
+  "process_status": "BROKER_REJECTED",
+  "returncode": -9,
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 6,
+  "call_audit_count": 5,
+  "geometry_status": "GEOMETRY_EVALUATOR_ERROR",
+  "exposure_verdicts": {
+    "S0_source_entry": "C",
+    "S1_api": "C",
+    "S2_robot_contract": "V",
+    "T_task_completion": "V",
+    "P_physical_temporal": "V",
+    "O_observation_branching": "NA",
+    "assigned_structure": "U"
+  },
+  "capture_sha256": "189d78e8ae9b00723fa1b3bad781d53c77e3ee7e3a6995f85937490b2a60eba6",
+  "geometry_sha256": "8e553d4d488821a874a40fb88fbf9e1693392d74de725408d5430821869ec383",
+  "task_evidence_sha256": "ae77dae96d7bc456063c7e7038fde5ec986668c35bfb51324f099826ead879ec",
+  "exposure_ledger_sha256": "a7efe285602fd22c162dea5c5265ae21fd9abed2936c242d089932fe89dacb6a",
+  "human_label": null
+}

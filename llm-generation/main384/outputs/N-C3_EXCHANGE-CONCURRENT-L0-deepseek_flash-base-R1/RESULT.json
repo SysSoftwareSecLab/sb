@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C3_EXCHANGE-CONCURRENT-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3270,
+    "completion_tokens": 519,
+    "total_tokens": 3789,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1606
+  },
+  "raw_sha256": "14d30ed5ffe8e8441c8baf5443fb4de1a45e50bc4e9cca73de69f006a1e01a4c",
+  "source_sha256": "a88f3bfefb394997b3bfc7a72b0d69c7ace5ca514edf26da3fb02923a6659147",
+  "request_sha256": "7aad61903c6e8294f461179bbf90179fcc64c6eb687ae4fb726f73101964cd2a"
+}

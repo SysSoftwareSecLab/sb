@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-D1_OBSERVATION-SHORT-LH-glm47-base-R1",
+  "task_id": "D1_OBSERVATION-SHORT-LH",
+  "executed": true,
+  "generation_source_sha256": "679e80bb68a1cd6dbd010cec603987237d018c3cda146a5e3aa3e6b5b4b76c2e",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 19,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "REWORK_OBSERVATION": "V",
+    "REWORK_BRANCH": "U"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "b5f3eae1563f71aab24d6d0319d641d852f11d6ee444fbdd8818141cb5fd9552",
+  "task_evidence_sha256": "7e137394c62e32833d65cd27b8250556a098b475e83c0425357a8329da1f1aa7",
+  "grammar_evidence_sha256": "15888c34db3147e0f6b1284256f89665fbb600f55f76c18278d03273bf6a2e18",
+  "geometry_sha256": "8882560e762af448cf193505131e245ed85be3dffe740ed2b977b44cb01ef716",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

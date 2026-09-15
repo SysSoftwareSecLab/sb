@@ -1,0 +1,26 @@
+{
+  "status": "VALID_ATOMIC_SOURCE",
+  "syntax_valid": true,
+  "interface_valid": true,
+  "slot_id": "R2V4-F15--glm5--R2",
+  "family_id": "R2V4-F15",
+  "profile": "glm5",
+  "repeat": 2,
+  "request_sha256": "98713ca80d2f6e6ad57ce6c6315f3420a3f21162a6700ce9fe58975258e2600c",
+  "raw_sha256": "e1de7c3d022e291d88d0cf1010304aa03849598dfe21c58d9634043aa84ae001",
+  "source_sha256": "6d19f6cae5950aff3d47fce48e9a6904a37e392f03ef19c7f8a03d86dbcf5f46",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 336,
+    "prompt_tokens": 1773,
+    "prompt_tokens_details": {
+      "cached_tokens": 1536
+    },
+    "total_tokens": 2109
+  },
+  "candidate_executed_by_collector": false
+}

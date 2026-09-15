@@ -1,0 +1,68 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _acquire_gap(robot: Robot, resource_id: str) -> None:
+    await robot.acquire("LEFT", resource_id, 5)
+    try:
+        await robot.release_resource("LEFT", resource_id)
+    except Exception:
+        try:
+            await robot.release_resource("LEFT", resource_id)
+        except Exception:
+            pass
+        raise
+
+
+async def _gap_checks(robot: Robot) -> None:
+    for gid in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await _acquire_gap(robot, gid)
+
+
+async def _worker(robot: Robot, arm: str, part: str, source: str,
+                  target: str, depart: str, home: str) -> None:
+    fixture_owned = False
+    tool_owned = False
+    try:
+        await robot.acquire(arm, "fixture", 5)
+        fixture_owned = True
+        await robot.acquire(arm, "tool", 5)
+        tool_owned = True
+
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+        await robot.move(arm, target)
+        await robot.release(arm, part, target)
+        await robot.move(arm, depart)
+
+        await robot.release_resource(arm, "tool")
+        tool_owned = False
+        await robot.release_resource(arm, "fixture")
+        fixture_owned = False
+    finally:
+        if tool_owned:
+            try:
+                await robot.release_resource(arm, "tool")
+            except Exception:
+                pass
+        if fixture_owned:
+            try:
+                await robot.release_resource(arm, "fixture")
+            except Exception:
+                pass
+
+
+async def run_task(robot: Robot) -> None:
+    gate_receipt = robot.signal("rq2_gate")
+
+    await _gap_checks(robot)
+
+    gate_wait = await robot.wait_event("rq2_gate", 5)
+
+    try:
+        await _worker(robot, "LEFT", "left_part", "left_source",
+                      "left_target", "left_depart", "left_home")
+        await _worker(robot, "RIGHT", "right_part", "right_source",
+                      "right_target", "right_depart", "right_home")
+    finally:
+        robot.clear_event("rq2_gate", expected_version=gate_receipt.version)

@@ -1,0 +1,30 @@
+{
+  "slot_id": "N-C8_ATTR_NESTED-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "task_id": "C8_ATTR_NESTED-SERIAL-LH",
+  "executed": true,
+  "generation_source_sha256": "b378f0d7f664d8c4c2cf0c8dc5cf2064d7d7bfe084373a7fa3c0bef2fd17e6fa",
+  "process_status": "BROKER_REJECTED",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 45,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "U",
+    "GEOMETRY": "U",
+    "BUFFER_OCCUPANCY_OWNER": "C",
+    "BUFFER_EVENT_PROTOCOL": "C",
+    "BUFFER_RECEIPT": "C"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "C",
+    "ATTRIBUTE_COMBINATION": "U",
+    "CONTROL_FLOW_HOLDOUT": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "3bb43ba05fa694a1d6832066b6b0438e03a11bfd54e42e1ed310eb9adef8b2b2",
+  "task_evidence_sha256": "0b736943ce7e9c27da7b992a83d63ee1a895212a7b28644e63d9116ff66bbbd8",
+  "grammar_evidence_sha256": "78059bf882f562a582c22dce8e5da06ea40683f91d1748ede59b40f362734b67",
+  "geometry_sha256": "4a1955f23938d94bbfcef2131e7664025cf1cb818278d94b6e4afb8e149380f0",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

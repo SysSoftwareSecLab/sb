@@ -1,0 +1,22 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C2_DUAL_RESOURCE-CONCURRENT-L0-glm5-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 1007,
+    "prompt_tokens": 2756,
+    "prompt_tokens_details": {
+      "cached_tokens": 1536
+    },
+    "total_tokens": 3763
+  },
+  "raw_sha256": "390b77d41f0e4d548987fd219720ed0c5a2cebfdd8546c3438f9f8d2a0d1eba6",
+  "source_sha256": "f8c424812d2ef3a75179aa30a80e9eb4afa6f874d77e7aa1325cb04dc95597c8",
+  "request_sha256": "96ad890ea777dd06397313b47bb2f64b419e73b7901157185d2bd0c82b71abce"
+}

@@ -1,0 +1,5884 @@
+{
+  "N-00CFE24F525BEE": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          1.6925000125,
+          1.7074999875
+        ],
+        "event_indices": [
+          21,
+          25
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(1.6925000,1.7075000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          1.6912500125,
+          1.7087499875
+        ],
+        "event_indices": [
+          21,
+          25
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(1.6912500,1.7087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          1.6912500125,
+          1.7087499875
+        ],
+        "event_indices": [
+          21,
+          25
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(1.6912500,1.7087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          1.6900000125,
+          1.7099999875
+        ],
+        "event_indices": [
+          21,
+          25
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(1.6900000,1.7100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-0137E2B9E8781C": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-0143BEEEEA89A3": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-0332A22764D28F": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-03C3150823D483": {
+    "checked_pair_intervals": 12,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-044307EA777F48": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-05FD4001885F7A": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-06F473D6C25651": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-0A66987791DF41": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-0A7F90DB431921": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-0AA6D3FFB97012": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-0B9389E5160027": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-0BAFD941DC5600": {
+    "checked_pair_intervals": 198,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-0BEDDD6FB561B9": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-0CC989FF9AE725": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-0DC31D38ACCF0C": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-0DE1EECC820BC7": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-0E950BECA02848": {
+    "checked_pair_intervals": 54,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-108B265399CF6D": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-10A4B1FDA15A61": {
+    "checked_pair_intervals": 72,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-10B40DC66D399A": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-1169CBE7D36330": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-14C7BD848F750D": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-1632EA82526E09": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-1641BD499B9D31": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-16B9AE29664865": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-17362693670C77": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-17C1E307E1AD3F": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-18E4E6F9CC4D8C": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-192DE534F791D8": {
+    "checked_pair_intervals": 90,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-1AEF0B5C105990": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-1B1EB54FC0932B": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-1B3EEA98EE0AD2": {
+    "checked_pair_intervals": 144,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-1BC6390A4035F4": {
+    "checked_pair_intervals": 204,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-1D84C7BEB98D21": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-1D88A88C706DFF": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-1E7A3257096359": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-1F5B6D981B89AB": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-2012A77A7AC747": {
+    "checked_pair_intervals": 9,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-20AD7F63E186E9": {
+    "checked_pair_intervals": 96,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-21CC0E973EC8E0": {
+    "checked_pair_intervals": 72,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-2461AB2B627F2D": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-255E828471C7CA": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-2589A67A3F113D": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-26D2B80D4CE982": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          3.3,
+          3.4
+        ],
+        "event_indices": [
+          12,
+          14
+        ],
+        "request_ids": [
+          7
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(3.3000000,3.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          3.4,
+          4.4
+        ],
+        "event_indices": [
+          14,
+          16
+        ],
+        "request_ids": [
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(3.4000000,4.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          4.4,
+          4.5
+        ],
+        "event_indices": [
+          16,
+          18
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(4.4000000,4.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          4.5,
+          5.5
+        ],
+        "event_indices": [
+          18,
+          20
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(4.5000000,5.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          5.5,
+          5.6399998
+        ],
+        "event_indices": [
+          20,
+          22
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(5.5000000,5.6399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-26DFE0472C0389": {
+    "checked_pair_intervals": 198,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-27BEF3D8521BBA": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-2871C32187B662": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-28AF1E17990CF7": {
+    "checked_pair_intervals": 54,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-2AF65BFC3CD39A": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-2B3EC98375FE9C": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-2BB1AE4E05A779": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-2BD29F8C93D3DA": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          1.5925000125,
+          1.6074999875000002
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(1.5925000,1.6075000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          1.5912500125000002,
+          1.6087499875
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(1.5912500,1.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          1.5912500125000002,
+          1.6087499875
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(1.5912500,1.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          1.5900000125,
+          1.6099999875000002
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(1.5900000,1.6100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-2C3861BB21B403": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-2C9F45304226FF": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-2CC5A9B358D360": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-2D672473AC9D31": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-2E6534CA3FB8B2": {
+    "checked_pair_intervals": 12,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-2ED7F801B19135": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-2F6B115FA96391": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-2FD565DF0F2A77": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-2FF9750B44F5AF": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-3117C6B70D5B5A": {
+    "checked_pair_intervals": 54,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-3297C5C79AF647": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-34893D62AA366F": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-3495E7F250A126": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-36092183E91FF0": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-363BAAB5481CF1": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-3659851C3B7CE2": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-365A8F27DCE934": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-3667331BB4AE15": {
+    "checked_pair_intervals": 12,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-37C77411843606": {
+    "checked_pair_intervals": 162,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-3942C5B35A2CDC": {
+    "checked_pair_intervals": 96,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-399F5C59CF3F99": {
+    "checked_pair_intervals": 54,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-39AFF5E9C3703C": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-39B5D0C704251E": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-3AAD44159033F7": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-3C4D9E700BC6A1": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-3D6DC25F838AC0": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          4.3,
+          4.4
+        ],
+        "event_indices": [
+          32,
+          34
+        ],
+        "request_ids": [
+          18
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(4.3000000,4.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          4.4,
+          4.5399998
+        ],
+        "event_indices": [
+          34,
+          36
+        ],
+        "request_ids": [
+          19
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(4.4000000,4.5399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          4.4,
+          5.4
+        ],
+        "event_indices": [
+          34,
+          36
+        ],
+        "request_ids": [
+          19
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(4.4000000,5.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          5.4,
+          5.5399998
+        ],
+        "event_indices": [
+          36,
+          38
+        ],
+        "request_ids": [
+          20
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(5.4000000,5.5399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-3E8A7055B7CFF7": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-3F0F195AF67AE3": {
+    "checked_pair_intervals": 168,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-42B6193C70B16C": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-44FE466FD606E0": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          1.5925000125,
+          1.6074999875000002
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(1.5925000,1.6075000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          1.5912500125000002,
+          1.6087499875
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(1.5912500,1.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          1.5912500125000002,
+          1.6087499875
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(1.5912500,1.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          1.5900000125,
+          1.6099999875000002
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(1.5900000,1.6100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-4507C77423FCED": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-453935A5E6A306": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-454F6007FFF17F": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-46649070373792": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-49DFAEF9A36EEC": {
+    "checked_pair_intervals": 9,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-4ADFF8B8AC3A1D": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-4B4CD9387D0249": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-4B54134BB07257": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-4C170C57F5B864": {
+    "checked_pair_intervals": 180,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-4C64DD209266D7": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-4CACD8EF25A6B7": {
+    "checked_pair_intervals": 54,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-4CC2574CB014F4": {
+    "checked_pair_intervals": 72,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-4D1C72A2AF862D": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-4D5960FDC30E44": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-4D8EDD48DB8C61": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-4D933645B044E6": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-4ECA4CBDF05064": {
+    "checked_pair_intervals": 24,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-4ED6513A8BEE6B": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-4FA4BD189CC753": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-505BC53F60A85D": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-515E4217E698C4": {
+    "checked_pair_intervals": 120,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-51AABFC837CF16": {
+    "checked_pair_intervals": 102,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-52167E8D4C867E": {
+    "checked_pair_intervals": 9,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-52947AF574EB38": {
+    "checked_pair_intervals": 54,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-529636332BB6CC": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-529F8CD44F64E0": {
+    "checked_pair_intervals": 168,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-54722EE646C8D3": {
+    "checked_pair_intervals": 216,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-54AB76C80A5667": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_interval": [
+          3.2,
+          3.3
+        ],
+        "event_indices": [
+          17,
+          19
+        ],
+        "request_ids": [
+          6,
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与part_0在t∈(3.2000000,3.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_interval": [
+          3.3,
+          3.3699999
+        ],
+        "event_indices": [
+          19,
+          24
+        ],
+        "request_ids": [
+          6,
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与part_0在t∈(3.3000000,3.3699999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-556A19047F5B1F": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-5595EF604C7B92": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-56E37074BCDA95": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-57A9E0E971FA57": {
+    "checked_pair_intervals": 72,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-57D35BBA531F73": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-5849210033DCF5": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-58757D3FC20659": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-598902055AE1AB": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-5999964E910B83": {
+    "checked_pair_intervals": 72,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.282500025,
+          5.3
+        ],
+        "event_indices": [
+          15,
+          17
+        ],
+        "request_ids": [
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(5.2825000,5.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          5.280000025,
+          5.3
+        ],
+        "event_indices": [
+          15,
+          17
+        ],
+        "request_ids": [
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(5.2800000,5.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.3,
+          5.4
+        ],
+        "event_indices": [
+          17,
+          19
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(5.3000000,5.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          5.3,
+          5.4
+        ],
+        "event_indices": [
+          17,
+          19
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(5.3000000,5.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.4,
+          5.4699999
+        ],
+        "event_indices": [
+          19,
+          21
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(5.4000000,5.4699999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          5.4,
+          6.4
+        ],
+        "event_indices": [
+          19,
+          21
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(5.4000000,6.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          6.4,
+          7.4
+        ],
+        "event_indices": [
+          21,
+          23
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(6.4000000,7.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          8.3300001,
+          8.4
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(8.3300001,8.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          7.4,
+          8.4
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(7.4000000,8.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-5A8F83C7266E5C": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-5B05E4669892D0": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-5B1801FCF36E86": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-5B7D635E26F66D": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-5CB0FEAA6EAC0A": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-5DBD404B8B44C0": {
+    "checked_pair_intervals": 72,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-5E3C5054295CD5": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-5E69FDD4244B1E": {
+    "checked_pair_intervals": 54,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-5F32125B5729A9": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-5F477BC9EED06D": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-603A6E68C92F5D": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-614F68E295424F": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-61C18048F902A8": {
+    "checked_pair_intervals": 24,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-62DA7A02C516CC": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-631F36B4F7BD42": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-637A881AA19576": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-639A84BC8648C1": {
+    "checked_pair_intervals": 3,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-656A7A9770DD4B": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-6585BC7D501C6F": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-66F8FB7B2DB779": {
+    "checked_pair_intervals": 126,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-670FAA72E4CA68": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-67D30A1BAEC125": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-69022A66F780E7": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-6918EF1EA2E016": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-69489FB7A7A554": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-695E4C8A4FB224": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-6A185FBCF9B101": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-6A1D5F44878E40": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-6AA19C4D0B7EA3": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-6AFC502139735C": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-6B5AC77B261521": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-6B5ECC2345AEEA": {
+    "checked_pair_intervals": 96,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-6BADB73F16CC9E": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-6C4FFFE4ED4503": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-6C81CF92EC54FD": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.282500025,
+          5.3
+        ],
+        "event_indices": [
+          15,
+          17
+        ],
+        "request_ids": [
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(5.2825000,5.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          5.280000025,
+          5.3
+        ],
+        "event_indices": [
+          15,
+          17
+        ],
+        "request_ids": [
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(5.2800000,5.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.3,
+          5.4
+        ],
+        "event_indices": [
+          17,
+          19
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(5.3000000,5.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          5.3,
+          5.4
+        ],
+        "event_indices": [
+          17,
+          19
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(5.3000000,5.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.4,
+          6.4
+        ],
+        "event_indices": [
+          19,
+          21
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(5.4000000,6.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          5.4,
+          6.4
+        ],
+        "event_indices": [
+          19,
+          21
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(5.4000000,6.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          7.3400001,
+          7.4
+        ],
+        "event_indices": [
+          21,
+          23
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(7.3400001,7.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          7.3300001,
+          7.4
+        ],
+        "event_indices": [
+          21,
+          23
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(7.3300001,7.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          6.4,
+          7.4
+        ],
+        "event_indices": [
+          21,
+          23
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(6.4000000,7.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          6.4,
+          7.4
+        ],
+        "event_indices": [
+          21,
+          23
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(6.4000000,7.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          7.4,
+          7.5
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(7.4000000,7.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          7.4,
+          7.5
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(7.4000000,7.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          7.4,
+          7.5
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(7.4000000,7.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          7.4,
+          7.5
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(7.4000000,7.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          7.5,
+          7.5599999
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          13
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(7.5000000,7.5599999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          7.5,
+          7.5699999
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          13
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(7.5000000,7.5699999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          7.5,
+          7.5699999
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          13
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(7.5000000,7.5699999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          7.5,
+          7.5799999
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          13
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(7.5000000,7.5799999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          8.6,
+          9.6
+        ],
+        "event_indices": [
+          29,
+          31
+        ],
+        "request_ids": [
+          15
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(8.6000000,9.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          9.6,
+          9.7
+        ],
+        "event_indices": [
+          31,
+          33
+        ],
+        "request_ids": [
+          16
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(9.6000000,9.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          9.7,
+          9.8399998
+        ],
+        "event_indices": [
+          33,
+          35
+        ],
+        "request_ids": [
+          17
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(9.7000000,9.8399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          9.7,
+          10.7
+        ],
+        "event_indices": [
+          33,
+          35
+        ],
+        "request_ids": [
+          17
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(9.7000000,10.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          10.7,
+          10.8399998
+        ],
+        "event_indices": [
+          35,
+          37
+        ],
+        "request_ids": [
+          18
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(10.7000000,10.8399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-6D761517CAAEDF": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-6F1ADDCBA10836": {
+    "checked_pair_intervals": 96,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-6F1C046C3BB6C5": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-6F94E64A97A1AD": {
+    "checked_pair_intervals": 198,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-6FB7CAB049818D": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-708320B87594AF": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-71005765A3BD2C": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-7152AF420E1312": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-71540CF90D0FB1": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-7185050A3F0D0B": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-73911743CFD4CE": {
+    "checked_pair_intervals": 24,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-744F0217D71463": {
+    "checked_pair_intervals": 126,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-74A74E8E77CD58": {
+    "checked_pair_intervals": 180,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-768CFE0EB6EAF0": {
+    "checked_pair_intervals": 120,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-78C10B15A293CE": {
+    "checked_pair_intervals": 9,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-7A80DC7777FF4D": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-7AB6DBEEEFE61C": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-7B33C49FC579C9": {
+    "checked_pair_intervals": 96,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-7BBF6FA259884E": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-7BEA48FB0E93F3": {
+    "checked_pair_intervals": 12,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-7BEE236403E0BA": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-7CE38EDBC95171": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-7EADA64ADA062F": {
+    "checked_pair_intervals": 156,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-7F389239B405CC": {
+    "checked_pair_intervals": 126,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-7F58C24248F0E8": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-801598F50AF03A": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-803F4CC7A5AAB1": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-81BF268A04A6FC": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-8244C4D44FAA30": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-824529D8FD32A9": {
+    "checked_pair_intervals": 168,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-82CF979F42DB97": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-82F3E11C0CE32D": {
+    "checked_pair_intervals": 2628,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          3.41,
+          4.41
+        ],
+        "event_indices": [
+          14,
+          16
+        ],
+        "request_ids": [
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(3.4100000,4.4100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          4.41,
+          4.51
+        ],
+        "event_indices": [
+          16,
+          18
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(4.4100000,4.5100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          4.51,
+          5.51
+        ],
+        "event_indices": [
+          18,
+          20
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(4.5100000,5.5100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          4.51,
+          4.6499998
+        ],
+        "event_indices": [
+          18,
+          20
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(4.5100000,4.6499998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.51,
+          5.6499998
+        ],
+        "event_indices": [
+          20,
+          22
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(5.5100000,5.6499998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-8305316EF35E3C": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-837A5D8C2E7FBF": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-8381E4454BD0E9": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-8387BDD31B2A5E": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-84201F2E6CDD39": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          1.6925000125,
+          1.7074999875
+        ],
+        "event_indices": [
+          19,
+          23
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(1.6925000,1.7075000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          1.6912500125,
+          1.7087499875
+        ],
+        "event_indices": [
+          19,
+          23
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(1.6912500,1.7087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          1.6912500125,
+          1.7087499875
+        ],
+        "event_indices": [
+          19,
+          23
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(1.6912500,1.7087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          1.6900000125,
+          1.7099999875
+        ],
+        "event_indices": [
+          19,
+          23
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(1.6900000,1.7100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-84EEB5DF14B522": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.3,
+          6.3
+        ],
+        "event_indices": [
+          16,
+          18
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(5.3000000,6.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          6.3,
+          6.4
+        ],
+        "event_indices": [
+          18,
+          20
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(6.3000000,6.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          6.4,
+          6.5
+        ],
+        "event_indices": [
+          20,
+          22
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(6.4000000,6.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          6.4,
+          6.5
+        ],
+        "event_indices": [
+          20,
+          22
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(6.4000000,6.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          6.5,
+          6.6399998
+        ],
+        "event_indices": [
+          22,
+          24
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(6.5000000,6.6399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          6.5,
+          7.5
+        ],
+        "event_indices": [
+          22,
+          24
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(6.5000000,7.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          7.5,
+          7.6399998
+        ],
+        "event_indices": [
+          24,
+          26
+        ],
+        "request_ids": [
+          13
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(7.5000000,7.6399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-85121715F5D887": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-858DDDA66E4E7A": {
+    "checked_pair_intervals": 186,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-89038D9F798CDC": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-894C0048461D7E": {
+    "checked_pair_intervals": 216,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-8AF6C8CAFDB2C6": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-8B0DFF4DA003BE": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.282500025,
+          5.3
+        ],
+        "event_indices": [
+          15,
+          17
+        ],
+        "request_ids": [
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(5.2825000,5.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          5.280000025,
+          5.3
+        ],
+        "event_indices": [
+          15,
+          17
+        ],
+        "request_ids": [
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(5.2800000,5.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.3,
+          5.4
+        ],
+        "event_indices": [
+          17,
+          19
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(5.3000000,5.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          5.3,
+          5.4
+        ],
+        "event_indices": [
+          17,
+          19
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(5.3000000,5.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          5.4,
+          6.4
+        ],
+        "event_indices": [
+          19,
+          21
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(5.4000000,6.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          5.4,
+          6.4
+        ],
+        "event_indices": [
+          19,
+          21
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(5.4000000,6.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-8C11D0F76AFCDA": {
+    "checked_pair_intervals": 12,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-8CA49765E4B73A": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-8CEA1B54CF6496": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-8CF859570D4B6D": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-8D0933D7EE5D73": {
+    "checked_pair_intervals": 186,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-8D7DA7504A89A6": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-8F35D46DBF178B": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-8F608236156611": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-8F73230A2461BB": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-8F889A9ABF4753": {
+    "checked_pair_intervals": 180,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-9004683CF5A2F4": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-90A8A3B73867D1": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-90EA1D1314D420": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-910B2F638A642A": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-915216E48FE7FD": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_interval": [
+          0.98600002,
+          1.0
+        ],
+        "event_indices": [
+          2,
+          6
+        ],
+        "request_ids": [
+          1,
+          2,
+          3
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与part_1在t∈(0.9860000,1.0000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_interval": [
+          1.0,
+          1.1
+        ],
+        "event_indices": [
+          6,
+          12
+        ],
+        "request_ids": [
+          3,
+          4,
+          5
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与part_1在t∈(1.0000000,1.1000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_interval": [
+          4.265000049999999,
+          4.3
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          3,
+          13,
+          14
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与part_0在t∈(4.2650000,4.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_interval": [
+          4.2600000499999995,
+          4.3
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          3,
+          13,
+          14
+        ],
+        "reason": "公开固定朝向AABB模型中part_0与part_1在t∈(4.2600000,4.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_interval": [
+          4.3,
+          4.4
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          3,
+          13,
+          15
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与part_0在t∈(4.3000000,4.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_interval": [
+          4.3,
+          4.4
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          3,
+          13,
+          15
+        ],
+        "reason": "公开固定朝向AABB模型中part_0与part_1在t∈(4.3000000,4.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_interval": [
+          4.4,
+          4.4699999
+        ],
+        "event_indices": [
+          27,
+          29
+        ],
+        "request_ids": [
+          3,
+          13,
+          16
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与part_0在t∈(4.4000000,4.4699999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_interval": [
+          4.4,
+          5.4
+        ],
+        "event_indices": [
+          27,
+          29
+        ],
+        "request_ids": [
+          3,
+          13,
+          16
+        ],
+        "reason": "公开固定朝向AABB模型中part_0与part_1在t∈(4.4000000,5.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_interval": [
+          5.4,
+          5.5
+        ],
+        "event_indices": [
+          29,
+          36
+        ],
+        "request_ids": [
+          3,
+          13,
+          17
+        ],
+        "reason": "公开固定朝向AABB模型中part_0与part_1在t∈(5.4000000,5.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_interval": [
+          6.4300001,
+          6.5
+        ],
+        "event_indices": [
+          36,
+          37
+        ],
+        "request_ids": [
+          13,
+          19,
+          21
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与part_0在t∈(6.4300001,6.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_interval": [
+          5.5,
+          6.5
+        ],
+        "event_indices": [
+          36,
+          37
+        ],
+        "request_ids": [
+          13,
+          19,
+          21
+        ],
+        "reason": "公开固定朝向AABB模型中part_0与part_1在t∈(5.5000000,6.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-91C64DDF96C32D": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-92BB8BBE0EA4B9": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-9359E5139D7CF6": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-93D99D24338451": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-94B29CF76DF1C3": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-94C3F1D0E339FF": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-94D172BC2D82B7": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-95A12DD34B2B30": {
+    "checked_pair_intervals": 96,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-965577B9F9553A": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-96A7649B26EEBE": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-96E0E6C04295E0": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-96F0436D3E8FFA": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-973D203B3322F3": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-975D7245039A9E": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-977CA7DB981729": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-9925597D8D0DB2": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-99517EA7D039D0": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          1.6925000125,
+          1.7074999875
+        ],
+        "event_indices": [
+          19,
+          23
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(1.6925000,1.7075000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          1.6912500125,
+          1.7087499875
+        ],
+        "event_indices": [
+          19,
+          23
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(1.6912500,1.7087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          1.6912500125,
+          1.7087499875
+        ],
+        "event_indices": [
+          19,
+          23
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(1.6912500,1.7087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          1.6900000125,
+          1.7099999875
+        ],
+        "event_indices": [
+          19,
+          23
+        ],
+        "request_ids": [
+          11,
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(1.6900000,1.7100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-9BA56675DC92F2": {
+    "checked_pair_intervals": 138,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-9BD950701EC07A": {
+    "checked_pair_intervals": 54,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-9BE794E69620CF": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-9C0F4C1E7AFAAF": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-9C10BBD6AD563A": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-9D5C0A8B3D2117": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-9E0ADC6E7F39B4": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-9F44FDFAF562D8": {
+    "checked_pair_intervals": 138,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-9F523028E42766": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-9FD3A74AF5C7C9": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-9FF456B1E0A2E0": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-A04BB1B127DE61": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          6.282500025,
+          6.3
+        ],
+        "event_indices": [
+          17,
+          19
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(6.2825000,6.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          6.280000025,
+          6.3
+        ],
+        "event_indices": [
+          17,
+          19
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(6.2800000,6.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          6.3,
+          6.4
+        ],
+        "event_indices": [
+          19,
+          21
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(6.3000000,6.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          6.3,
+          6.4
+        ],
+        "event_indices": [
+          19,
+          21
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(6.3000000,6.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          6.4,
+          7.4
+        ],
+        "event_indices": [
+          21,
+          23
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(6.4000000,7.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          6.4,
+          7.4
+        ],
+        "event_indices": [
+          21,
+          23
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(6.4000000,7.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          8.340000100000001,
+          8.4
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(8.3400001,8.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          8.3300001,
+          8.4
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(8.3300001,8.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          7.4,
+          8.4
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(7.4000000,8.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          7.4,
+          8.4
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(7.4000000,8.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          8.4,
+          8.5
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          13
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(8.4000000,8.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          8.4,
+          8.5
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          13
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(8.4000000,8.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          8.4,
+          8.5
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          13
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(8.4000000,8.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          8.4,
+          8.5
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          13
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(8.4000000,8.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          8.5,
+          8.514999975
+        ],
+        "event_indices": [
+          27,
+          29
+        ],
+        "request_ids": [
+          14
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(8.5000000,8.5150000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          8.5,
+          8.517499975
+        ],
+        "event_indices": [
+          27,
+          29
+        ],
+        "request_ids": [
+          14
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(8.5000000,8.5175000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          8.5,
+          8.517499975
+        ],
+        "event_indices": [
+          27,
+          29
+        ],
+        "request_ids": [
+          14
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(8.5000000,8.5175000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          8.5,
+          8.519999975
+        ],
+        "event_indices": [
+          27,
+          29
+        ],
+        "request_ids": [
+          14
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(8.5000000,8.5200000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-A1F78D2B43223B": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-A33114EBD896F5": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          2.5925000125,
+          2.6074999875000002
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(2.5925000,2.6075000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          2.5912500125,
+          2.6087499875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(2.5912500,2.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          2.5912500125,
+          2.6087499875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(2.5912500,2.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          2.5900000125,
+          2.6099999875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(2.5900000,2.6100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-A350DF42CA6D91": {
+    "checked_pair_intervals": 24,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-A4238487B2EC7E": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-A428CEC1F9DBFA": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-A54F604417DCC2": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-A572E031CADD5B": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-A5A8FEAA5581CA": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-A5FDF40095B76A": {
+    "checked_pair_intervals": 96,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-A63724DA68B2CE": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-A64440B422082B": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-A67EBFAC543997": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-A693ED7552D90C": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-A6DCA84E9F812C": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-A6E286A9850867": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-A7061E38F3DE7E": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          2.5925000125,
+          2.6074999875000002
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(2.5925000,2.6075000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          2.5912500125,
+          2.6087499875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(2.5912500,2.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          2.5912500125,
+          2.6087499875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(2.5912500,2.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          2.5900000125,
+          2.6099999875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(2.5900000,2.6100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-A79F6679541B7B": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-A8077802532100": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-A86C90B53A5036": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-A98FDFC7C443F4": {
+    "checked_pair_intervals": 54,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-AA04F8BA29062E": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-AA35398ABC839E": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-AA9502D53B0454": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-AB2F171E5D16C4": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-AC3C3941A5E829": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-ACB3DD28F7433B": {
+    "checked_pair_intervals": 288,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-AD3E91D8CD3010": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-AF838858AFD4BC": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-B155A1017B813C": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-B1A901B64D0D7F": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-B298C207936521": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-B2D61977383927": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-B473CE67F54103": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-B7DB7E0065EF76": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          9.6,
+          10.6
+        ],
+        "event_indices": [
+          38,
+          40
+        ],
+        "request_ids": [
+          21
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(9.6000000,10.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          10.6,
+          11.6
+        ],
+        "event_indices": [
+          40,
+          42
+        ],
+        "request_ids": [
+          22
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(10.6000000,11.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          11.6,
+          11.7
+        ],
+        "event_indices": [
+          42,
+          45
+        ],
+        "request_ids": [
+          23
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(11.6000000,11.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          11.7,
+          12.7
+        ],
+        "event_indices": [
+          45,
+          47
+        ],
+        "request_ids": [
+          24
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(11.7000000,12.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          12.7,
+          12.8
+        ],
+        "event_indices": [
+          47,
+          50
+        ],
+        "request_ids": [
+          25
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(12.7000000,12.8000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          12.8,
+          12.8699999
+        ],
+        "event_indices": [
+          50,
+          52
+        ],
+        "request_ids": [
+          27
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(12.8000000,12.8699999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          12.8,
+          13.8
+        ],
+        "event_indices": [
+          50,
+          52
+        ],
+        "request_ids": [
+          27
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(12.8000000,13.8000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          13.8,
+          13.8699999
+        ],
+        "event_indices": [
+          52,
+          54
+        ],
+        "request_ids": [
+          28
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(13.8000000,13.8699999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-B7FC665A64D865": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-B8781D92CDD10D": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-B886B04F044EEC": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-B96A2180E5533F": {
+    "checked_pair_intervals": 180,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-BB7430E06FFECF": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-BBF38A96B111F6": {
+    "checked_pair_intervals": 102,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-BC37DF54F4DEFA": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-BCB2D54F28DD9D": {
+    "checked_pair_intervals": 72,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-BCC29093AA2200": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-BCD8F5AE4C1C4B": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-BD8FD45604C236": {
+    "checked_pair_intervals": 120,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-BD9E6D16E49D9F": {
+    "checked_pair_intervals": 24,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-BDA058C2C853FC": {
+    "checked_pair_intervals": 12,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-BDF15F0ABE214A": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-BE24142A1DA0C6": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-BE89B610C3B1A7": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          6.895000008333334,
+          6.904999991666667
+        ],
+        "event_indices": [
+          51,
+          54
+        ],
+        "request_ids": [
+          27,
+          28
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(6.8950000,6.9050000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-BE931C49F3D98C": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-BFCCE2AB256F4C": {
+    "checked_pair_intervals": 24,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-BFF17FF389ACE0": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-C1EE0F64407CAA": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          2.2,
+          3.2
+        ],
+        "event_indices": [
+          8,
+          10
+        ],
+        "request_ids": [
+          5
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(2.2000000,3.2000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          3.2,
+          3.3
+        ],
+        "event_indices": [
+          10,
+          12
+        ],
+        "request_ids": [
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(3.2000000,3.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          3.3,
+          3.4
+        ],
+        "event_indices": [
+          12,
+          14
+        ],
+        "request_ids": [
+          7
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(3.3000000,3.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          3.4,
+          4.4
+        ],
+        "event_indices": [
+          14,
+          16
+        ],
+        "request_ids": [
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(3.4000000,4.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          4.4,
+          4.5
+        ],
+        "event_indices": [
+          16,
+          18
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(4.4000000,4.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          4.5,
+          5.5
+        ],
+        "event_indices": [
+          18,
+          20
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(4.5000000,5.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          5.5,
+          5.6399998
+        ],
+        "event_indices": [
+          20,
+          22
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(5.5000000,5.6399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-C22952CAD5A501": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-C2D042A9914967": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-C388F5D4439E98": {
+    "checked_pair_intervals": 168,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-C391E6B5F5B142": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-C51C6A642A39AF": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          1.6925000125,
+          1.7074999875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(1.6925000,1.7075000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          1.6912500125,
+          1.7087499875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(1.6912500,1.7087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          1.6912500125,
+          1.7087499875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(1.6912500,1.7087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          1.6900000125,
+          1.7099999875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(1.6900000,1.7100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-C59C6FF9D6C1E0": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-C68C827EF7ADB8": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-C6D8BAEA4FF21F": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-C7B90D572843EB": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-C820CB7F9B0DF5": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-C851A8B71ACFD6": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-C9280F5175483A": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          2.2,
+          2.3
+        ],
+        "event_indices": [
+          8,
+          10
+        ],
+        "request_ids": [
+          5
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(2.2000000,2.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          2.3,
+          3.3
+        ],
+        "event_indices": [
+          10,
+          12
+        ],
+        "request_ids": [
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(2.3000000,3.3000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          3.3,
+          3.4
+        ],
+        "event_indices": [
+          12,
+          14
+        ],
+        "request_ids": [
+          7
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(3.3000000,3.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          3.4,
+          4.4
+        ],
+        "event_indices": [
+          14,
+          16
+        ],
+        "request_ids": [
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(3.4000000,4.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          4.4,
+          4.5
+        ],
+        "event_indices": [
+          16,
+          19
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(4.4000000,4.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          4.5,
+          4.6399998
+        ],
+        "event_indices": [
+          19,
+          22
+        ],
+        "request_ids": [
+          10,
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(4.5000000,4.6399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          4.5,
+          4.6399998
+        ],
+        "event_indices": [
+          19,
+          22
+        ],
+        "request_ids": [
+          10,
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(4.5000000,4.6399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-C9F7B0FDBF07D3": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_interval": [
+          7.3300001,
+          7.4
+        ],
+        "event_indices": [
+          28,
+          30
+        ],
+        "request_ids": [
+          11,
+          16
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与part_0在t∈(7.3300001,7.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_interval": [
+          7.320000100000001,
+          7.4
+        ],
+        "event_indices": [
+          28,
+          30
+        ],
+        "request_ids": [
+          11,
+          16
+        ],
+        "reason": "公开固定朝向AABB模型中part_0与part_1在t∈(7.3200001,7.4000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_interval": [
+          7.4,
+          7.5
+        ],
+        "event_indices": [
+          30,
+          32
+        ],
+        "request_ids": [
+          11,
+          17
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与part_0在t∈(7.4000000,7.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_interval": [
+          7.4,
+          7.5
+        ],
+        "event_indices": [
+          30,
+          32
+        ],
+        "request_ids": [
+          11,
+          17
+        ],
+        "reason": "公开固定朝向AABB模型中part_0与part_1在t∈(7.4000000,7.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_interval": [
+          7.5,
+          7.5233333
+        ],
+        "event_indices": [
+          32,
+          34
+        ],
+        "request_ids": [
+          11,
+          18
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与part_0在t∈(7.5000000,7.5233333)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_interval": [
+          7.5,
+          8.5
+        ],
+        "event_indices": [
+          32,
+          34
+        ],
+        "request_ids": [
+          11,
+          18
+        ],
+        "reason": "公开固定朝向AABB模型中part_0与part_1在t∈(7.5000000,8.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_interval": [
+          8.5,
+          8.6
+        ],
+        "event_indices": [
+          34,
+          37
+        ],
+        "request_ids": [
+          11,
+          19
+        ],
+        "reason": "公开固定朝向AABB模型中part_0与part_1在t∈(8.5000000,8.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-CA9B1EB4213D58": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-CAAA1DFFD0DAB5": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-CCF9AAC947E484": {
+    "checked_pair_intervals": 120,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-CE16BFE351BBB7": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-CE38B5AA1EA6D5": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-CE795834C774AE": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-CEF96484231E06": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-CFF7807F672F6F": {
+    "checked_pair_intervals": 96,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-D0A2D90D1A3A22": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-D437C49218ADF2": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-D43A77BFFD26E3": {
+    "checked_pair_intervals": 96,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-D48E503B30E2A8": {
+    "checked_pair_intervals": 90,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-D4919EFB745DE0": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-D57E86E1ABC9A6": {
+    "checked_pair_intervals": 42,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-D5D479CB868A40": {
+    "checked_pair_intervals": 144,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-D6AF33610C12C0": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-D6B115A8AB4D09": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-D71E96E47F52FE": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-D8D0BA97C5CED2": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-D8E37631893392": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-D920D97B4425FF": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-D96393F496AFA1": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          9.6,
+          10.6
+        ],
+        "event_indices": [
+          38,
+          40
+        ],
+        "request_ids": [
+          21
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(9.6000000,10.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          10.6,
+          11.6
+        ],
+        "event_indices": [
+          40,
+          42
+        ],
+        "request_ids": [
+          22
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(10.6000000,11.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          11.6,
+          11.7
+        ],
+        "event_indices": [
+          42,
+          45
+        ],
+        "request_ids": [
+          23
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(11.6000000,11.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          11.7,
+          12.7
+        ],
+        "event_indices": [
+          45,
+          47
+        ],
+        "request_ids": [
+          24
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(11.7000000,12.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          12.7,
+          12.8
+        ],
+        "event_indices": [
+          47,
+          50
+        ],
+        "request_ids": [
+          25
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(12.7000000,12.8000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          12.8,
+          12.8699999
+        ],
+        "event_indices": [
+          50,
+          52
+        ],
+        "request_ids": [
+          27
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(12.8000000,12.8699999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          12.8,
+          13.8
+        ],
+        "event_indices": [
+          50,
+          52
+        ],
+        "request_ids": [
+          27
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(12.8000000,13.8000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          13.8,
+          13.8699999
+        ],
+        "event_indices": [
+          52,
+          54
+        ],
+        "request_ids": [
+          28
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(13.8000000,13.8699999)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-D9CCCB9EA498D1": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-DA5C3FD319FBAB": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-DA6C2B28830A4A": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-DAAB0C80D9E989": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-DB3F20F7924CCE": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-DBD9D21CBDFDC1": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-DC419E98E9F490": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-DD3184A02A9763": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-DE7AC84603A3CC": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-DF5D72F1FB898D": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-DFAECB0E03C828": {
+    "checked_pair_intervals": 192,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-E006F7962B38CE": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-E098F2EDDB1350": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-E11027D02FE898": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-E15E5670517176": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-E23CDE2E7D8229": {
+    "checked_pair_intervals": 21,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-E349096623EE72": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-E37836195DEC8F": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          9.6,
+          10.6
+        ],
+        "event_indices": [
+          38,
+          40
+        ],
+        "request_ids": [
+          21
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(9.6000000,10.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          10.6,
+          11.6
+        ],
+        "event_indices": [
+          40,
+          42
+        ],
+        "request_ids": [
+          22
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(10.6000000,11.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          11.6,
+          11.7
+        ],
+        "event_indices": [
+          42,
+          45
+        ],
+        "request_ids": [
+          23
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(11.6000000,11.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          11.7,
+          12.7
+        ],
+        "event_indices": [
+          45,
+          47
+        ],
+        "request_ids": [
+          24
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(11.7000000,12.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          12.7,
+          12.8
+        ],
+        "event_indices": [
+          47,
+          50
+        ],
+        "request_ids": [
+          25
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(12.7000000,12.8000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          12.8,
+          13.8
+        ],
+        "event_indices": [
+          50,
+          52
+        ],
+        "request_ids": [
+          27
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(12.8000000,13.8000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          13.8,
+          13.811666650000001
+        ],
+        "event_indices": [
+          52,
+          54
+        ],
+        "request_ids": [
+          28
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(13.8000000,13.8116667)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-E5493BFAC854C0": {
+    "checked_pair_intervals": 54,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-E5C838D3FF94A1": {
+    "checked_pair_intervals": 12,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-E76879CFCCFEC1": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          1.5925000125,
+          1.6074999875000002
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(1.5925000,1.6075000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          1.5912500125000002,
+          1.6087499875
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(1.5912500,1.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          1.5912500125000002,
+          1.6087499875
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(1.5912500,1.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          1.5900000125,
+          1.6099999875000002
+        ],
+        "event_indices": [
+          9,
+          13
+        ],
+        "request_ids": [
+          5,
+          6
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(1.5900000,1.6100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-E7D3531077A5BE": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-E8C35A88756464": {
+    "checked_pair_intervals": 168,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-E9635B9ECF7523": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-E9B897B0E9EBFF": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-E9F6D73691BD6B": {
+    "checked_pair_intervals": 72,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-EA5BF316F13BBF": {
+    "checked_pair_intervals": 30,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-EA661FB2F4BF62": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-EA9D5CFBE06013": {
+    "checked_pair_intervals": 48,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-ED1A44222A0E80": {
+    "checked_pair_intervals": 168,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-EDEBDFC2769205": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-EE490DBA7832DC": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-EE55915A2FD38C": {
+    "checked_pair_intervals": 24,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-EF3CBFF3370784": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-F0BC58A8B9E67B": {
+    "checked_pair_intervals": 66,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          4.4,
+          4.5
+        ],
+        "event_indices": [
+          16,
+          18
+        ],
+        "request_ids": [
+          9
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(4.4000000,4.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          4.5,
+          4.6399998
+        ],
+        "event_indices": [
+          18,
+          20
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与left_part在t∈(4.5000000,4.6399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          4.5,
+          5.5
+        ],
+        "event_indices": [
+          18,
+          20
+        ],
+        "request_ids": [
+          10
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(4.5000000,5.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          5.5,
+          5.6399998
+        ],
+        "event_indices": [
+          20,
+          22
+        ],
+        "request_ids": [
+          11
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(5.5000000,5.6399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-F1A9783A34322C": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-F2CE18EC0907F8": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-F2DCBA24ACAFF8": {
+    "checked_pair_intervals": 36,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_interval": [
+          2.5925000125,
+          2.6074999875000002
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与RIGHT_gripper在t∈(2.5925000,2.6075000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          2.5912500125,
+          2.6087499875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中LEFT_gripper与right_part在t∈(2.5912500,2.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          2.5912500125,
+          2.6087499875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(2.5912500,2.6087500)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "left_part",
+          "right_part"
+        ],
+        "time_interval": [
+          2.5900000125,
+          2.6099999875
+        ],
+        "event_indices": [
+          13,
+          17
+        ],
+        "request_ids": [
+          7,
+          8
+        ],
+        "reason": "公开固定朝向AABB模型中left_part与right_part在t∈(2.5900000,2.6100000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-F373AE70D25ED2": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-F44F4CF819EF54": {
+    "checked_pair_intervals": 60,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-F5B9AE0E3B7801": {
+    "checked_pair_intervals": 132,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          9.6,
+          10.6
+        ],
+        "event_indices": [
+          38,
+          40
+        ],
+        "request_ids": [
+          21
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(9.6000000,10.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          10.6,
+          11.6
+        ],
+        "event_indices": [
+          40,
+          42
+        ],
+        "request_ids": [
+          22
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(10.6000000,11.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          11.6,
+          11.7
+        ],
+        "event_indices": [
+          42,
+          45
+        ],
+        "request_ids": [
+          23
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(11.6000000,11.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          11.7,
+          12.7
+        ],
+        "event_indices": [
+          45,
+          47
+        ],
+        "request_ids": [
+          24
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(11.7000000,12.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          12.7,
+          12.8
+        ],
+        "event_indices": [
+          47,
+          50
+        ],
+        "request_ids": [
+          25
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(12.7000000,12.8000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          12.8,
+          13.8
+        ],
+        "event_indices": [
+          50,
+          52
+        ],
+        "request_ids": [
+          27
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(12.8000000,13.8000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "left_part"
+        ],
+        "time_interval": [
+          13.8,
+          13.811666650000001
+        ],
+        "event_indices": [
+          52,
+          54
+        ],
+        "request_ids": [
+          28
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与left_part在t∈(13.8000000,13.8116667)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-F74E579035D355": {
+    "checked_pair_intervals": 6,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-F83B356959B287": {
+    "checked_pair_intervals": 96,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-F8674FC8C940C7": {
+    "checked_pair_intervals": 108,
+    "missing_intervals": [],
+    "violations": [
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          7.4,
+          7.5
+        ],
+        "event_indices": [
+          23,
+          25
+        ],
+        "request_ids": [
+          12
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(7.4000000,7.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          7.5,
+          8.5
+        ],
+        "event_indices": [
+          25,
+          27
+        ],
+        "request_ids": [
+          13
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(7.5000000,8.5000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          8.5,
+          8.6
+        ],
+        "event_indices": [
+          27,
+          29
+        ],
+        "request_ids": [
+          14
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(8.5000000,8.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          8.6,
+          9.6
+        ],
+        "event_indices": [
+          29,
+          31
+        ],
+        "request_ids": [
+          15
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(8.6000000,9.6000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          9.6,
+          9.7
+        ],
+        "event_indices": [
+          31,
+          33
+        ],
+        "request_ids": [
+          16
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(9.6000000,9.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          9.7,
+          10.7
+        ],
+        "event_indices": [
+          33,
+          35
+        ],
+        "request_ids": [
+          17
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(9.7000000,10.7000000)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "right_part"
+        ],
+        "time_interval": [
+          10.7,
+          10.8399998
+        ],
+        "event_indices": [
+          35,
+          37
+        ],
+        "request_ids": [
+          18
+        ],
+        "reason": "公开固定朝向AABB模型中RIGHT_gripper与right_part在t∈(10.7000000,10.8399998)存在正体积重叠，且不属于已声明接近/抓取、持有、释放后立即撤离的接触允许条件。"
+      }
+    ],
+    "finite_geometry_supported": false
+  },
+  "N-F869AFF2134361": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-F8B29D6CBD1695": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-FC76DC24E82EBC": {
+    "checked_pair_intervals": 0,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-FD48093C17F9B1": {
+    "checked_pair_intervals": 114,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-FE6B2B5BAE9C77": {
+    "checked_pair_intervals": 72,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-FEB35C9D6F4391": {
+    "checked_pair_intervals": 84,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": true
+  },
+  "N-FF0143BE2446E1": {
+    "checked_pair_intervals": 18,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  },
+  "N-FF6B4DD4C52A22": {
+    "checked_pair_intervals": 78,
+    "missing_intervals": [],
+    "violations": [],
+    "finite_geometry_supported": false
+  }
+}

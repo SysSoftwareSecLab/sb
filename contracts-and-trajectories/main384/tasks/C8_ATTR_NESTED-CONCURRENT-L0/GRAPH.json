@@ -1,0 +1,37 @@
+{
+  "axis": "CONCURRENCY",
+  "level": "CONCURRENT",
+  "layout_relation": "DEVELOPMENT_BASELINE",
+  "object_count": 2,
+  "resource_count": 2,
+  "event_count": 3,
+  "observation_count": 0,
+  "state_count": 2,
+  "cross_arm_dependency": true,
+  "reachable_functions": [
+    "check_left",
+    "check_right",
+    "consume",
+    "consumer",
+    "produce",
+    "producer",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 6,
+    "clear_event": 4,
+    "grasp": 4,
+    "inspect": 6,
+    "move": 14,
+    "release": 4,
+    "release_resource": 6,
+    "signal": 4,
+    "wait_event": 4
+  },
+  "for_nodes": 4,
+  "if_nodes": 8,
+  "gather_nodes": 3,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": true,
+  "signature": "34fa9e300e3e58071b91e0eebbd1b889e4e5e753184157f28cca6ad1b35a0074"
+}

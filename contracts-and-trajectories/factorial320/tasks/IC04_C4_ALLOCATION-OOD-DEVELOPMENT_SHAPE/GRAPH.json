@@ -1,0 +1,31 @@
+{
+  "task_id": "IC04_C4_ALLOCATION-OOD-DEVELOPMENT_SHAPE",
+  "family_cluster": "IC04_C4_ALLOCATION",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "DEVELOPMENT_SHAPE",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "run_task",
+    "worker"
+  ],
+  "robot_call_multiset": {
+    "clear_event": 1,
+    "grasp": 1,
+    "inspect": 1,
+    "move": 3,
+    "release": 1,
+    "signal": 1,
+    "wait_event": 1
+  },
+  "for_nodes": 1,
+  "if_nodes": 2,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": true,
+  "ast_nodes": 170,
+  "source_chars": 985,
+  "source_lines": 22,
+  "signature": "debae9b22d14c019166b3c5adb9e387d5dc8ea6d7bd57e787ed7699119761d09"
+}

@@ -1,0 +1,69 @@
+```python
+async def run_task(robot):
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    ITEM = "shared_part"
+    ALLOC_FACT = "allocation"
+    GATE = "rq2_gate"
+    GAPS = ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]
+    SOURCE = "shared_source"
+    TARGET = "shared_target"
+    LEFT_HOME = "left_home"
+    LEFT_DEPART = "left_depart"
+    RIGHT_HOME = "right_home"
+
+    # Both workers independently inspect allocation once before choosing branch.
+    left_alloc = await robot.inspect(LEFT, ALLOC_FACT)
+    right_alloc = await robot.inspect(RIGHT, ALLOC_FACT)
+
+    try:
+        selected = left_alloc.value.get("selected_arm", LEFT)
+    except Exception:
+        selected = LEFT
+    if selected != LEFT and selected != RIGHT:
+        selected = LEFT
+
+    # Signal rq2_gate exactly once.
+    gate_receipt = robot.signal(GATE)
+
+    # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, numeric order.
+    for gap in GAPS:
+        await robot.acquire(LEFT, gap, 5)
+        await robot.release_resource(LEFT, gap)
+
+    # Only then wait for rq2_gate exactly once.
+    await robot.wait_event(GATE, 5)
+
+    # Keep rq2_gate active while executing the complete inherited dual-arm mission.
+    # Serial scheduling for inherited dual-arm mission and rq2_gate producer/consumer.
+
+    if selected == LEFT:
+        # Selected LEFT: approach shared_source from left_home, immediately grasp.
+        await robot.move(LEFT, SOURCE)
+        grasp_obs = await robot.grasp(LEFT, ITEM, observation=left_alloc)
+
+        # Carry transport to shared_target; move receipt uses active gate receipt.
+        await robot.move(LEFT, TARGET, receipt=gate_receipt)
+
+        # Release at target and immediately depart.
+        await robot.release(LEFT, ITEM, TARGET)
+        await robot.move(LEFT, LEFT_DEPART)
+
+        # Nonselected RIGHT makes no move/grasp/release call; remains at right_home.
+    else:
+        # Selected RIGHT: approach shared_source from right_home, immediately grasp.
+        await robot.move(RIGHT, SOURCE)
+        grasp_obs = await robot.grasp(RIGHT, ITEM, observation=right_alloc)
+
+        # Carry transport to shared_target; move receipt uses active gate receipt.
+        await robot.move(RIGHT, TARGET, receipt=gate_receipt)
+
+        # Release at target and immediately depart.
+        await robot.release(RIGHT, ITEM, TARGET)
+        await robot.move(RIGHT, "right_depart")
+
+        # Nonselected LEFT makes no move/grasp/release call; remains at left_home.
+
+    # Clear rq2_gate only after the mission, using exact version.
+    robot.clear_event(GATE, expected_version=gate_receipt.version)
+```

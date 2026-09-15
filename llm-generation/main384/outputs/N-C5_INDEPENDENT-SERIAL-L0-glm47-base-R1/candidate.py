@@ -1,0 +1,41 @@
+import asyncio
+
+async def run_task(robot):
+    """
+    Task: C5_INDEPENDENT-SERIAL-L0
+    Structure: Serial execution of two independent attachment chains.
+    Goal: Both parts at their own target; both arms at departure and empty.
+    """
+
+    # --- LEFT ARM CHAIN ---
+    # 1. Approach: Move from left_home to left_source
+    await robot.move("LEFT", "left_home")
+    
+    # 2. Grasp: Pick up left_part at left_source
+    #    Observation is optional as none are declared in observation_facts
+    await robot.grasp("LEFT", "left_part")
+    
+    # 3. Transport: Move from left_source to left_target
+    await robot.move("LEFT", "left_target")
+    
+    # 4. Release: Place left_part at left_target
+    await robot.release("LEFT", "left_part", "left_target")
+    
+    # 5. Depart: Move from left_target to left_depart
+    await robot.move("LEFT", "left_depart")
+
+    # --- RIGHT ARM CHAIN ---
+    # 1. Approach: Move from right_home to right_source
+    await robot.move("RIGHT", "right_home")
+    
+    # 2. Grasp: Pick up right_part at right_source
+    await robot.grasp("RIGHT", "right_part")
+    
+    # 3. Transport: Move from right_source to right_target
+    await robot.move("RIGHT", "right_target")
+    
+    # 4. Release: Place right_part at right_target
+    await robot.release("RIGHT", "right_part", "right_target")
+    
+    # 5. Depart: Move from right_target to right_depart
+    await robot.move("RIGHT", "right_depart")

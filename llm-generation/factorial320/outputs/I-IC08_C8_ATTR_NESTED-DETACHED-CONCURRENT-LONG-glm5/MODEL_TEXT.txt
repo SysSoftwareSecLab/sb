@@ -1,0 +1,100 @@
+```python
+import asyncio
+from bridge_robot_api import MotionFault, ContractError
+
+async def run_task(robot):
+    # ---- rq2_gate protocol (must complete before inherited mission) ----
+    gate_receipt = robot.signal("rq2_gate")
+    await _rq2_gap_checks(robot)
+    await robot.wait_event("rq2_gate", 5)
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # ---- inherited dual-arm buffer mission (concurrent) ----
+    await asyncio.gather(_producer_consumer_episode_a(robot), _producer_consumer_episode_b(robot))
+
+    # ---- final cleanup of inherited events ----
+    for ev in ("ready_0", "ready_1", "empty_0"):
+        try:
+            r = await robot.wait_event(ev, 5)
+            robot.clear_event(ev, expected_version=r.version)
+        except (TimeoutError, ContractError):
+            pass
+
+
+async def _rq2_gap_checks(robot):
+    for gap in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", gap, 5)
+        await robot.release_resource("LEFT", gap)
+
+
+async def _producer_consumer_episode_a(robot):
+    """Episode A: part_0 LEFT producer -> RIGHT consumer via buffer_0."""
+    # Producer (LEFT): source_0 pickup -> buffer_0 deposit -> depart -> ready_0
+    await robot.acquire("LEFT", "tool", 5)
+    await robot.move("LEFT", "source_0", 4)
+    await robot.grasp("LEFT", "part_0")
+    await robot.move("LEFT", "buffer_0", 4)
+    await robot.acquire("LEFT", "buffer_lock", 5)
+    await robot.release("LEFT", "part_0", "buffer_0")
+    await robot.move("LEFT", "left_home", 4)
+    await robot.release_resource("LEFT", "buffer_lock")
+    await robot.release_resource("LEFT", "tool")
+    ready_receipt = robot.signal("ready_0", "part_0")
+
+    # Consumer (RIGHT): wait ready_0 -> buffer_0 pickup -> target_0 -> depart -> empty_0
+    await robot.wait_event("ready_0", 30)
+    await robot.move("RIGHT", "buffer_0", 4)
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+    await robot.grasp("RIGHT", "part_0")
+    await robot.move("RIGHT", "target_0", 4, receipt=ready_receipt)
+    robot.clear_event("ready_0", expected_version=ready_receipt.version)
+    await robot.release("RIGHT", "part_0", "target_0")
+    await robot.move("RIGHT", "right_home", 4)
+    await robot.release_resource("RIGHT", "buffer_lock")
+    empty_receipt = robot.signal("empty_0", "part_0")
+
+    # Producer waits and clears empty_0 before second part
+    await robot.wait_event("empty_0", 30)
+    robot.clear_event("empty_0", expected_version=empty_receipt.version)
+
+
+async def _producer_consumer_episode_b(robot):
+    """Episode B: part_1 LEFT producer -> RIGHT consumer via buffer_1."""
+    # Producer (LEFT): left_home -> left_wait -> source_1 pickup -> buffer_1 deposit -> depart -> ready_1
+    await robot.move("LEFT", "left_wait", 4)
+    await robot.acquire("LEFT", "tool", 5)
+    await robot.move("LEFT", "source_1", 4)
+    await robot.grasp("LEFT", "part_1")
+    await robot.move("LEFT", "buffer_1", 4)
+    await robot.acquire("LEFT", "buffer_lock", 5)
+    await robot.release("LEFT", "part_1", "buffer_1")
+    await robot.move("LEFT", "left_home", 4)
+    await robot.release_resource("LEFT", "buffer_lock")
+    await robot.release_resource("LEFT", "tool")
+    ready_receipt = robot.signal("ready_1", "part_1")
+
+    # Consumer (RIGHT): wait ready_1 -> inspect both readiness facts -> buffer_1 pickup -> target_1 -> depart -> empty_0
+    await robot.wait_event("ready_1", 30)
+    await _inspect_readiness_facts(robot)
+    await robot.move("RIGHT", "right_wait", 4)
+    await robot.move("RIGHT", "buffer_1", 4)
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+    await robot.grasp("RIGHT", "part_1")
+    await robot.move("RIGHT", "target_1", 4, receipt=ready_receipt)
+    robot.clear_event("ready_1", expected_version=ready_receipt.version)
+    await robot.release("RIGHT", "part_1", "target_1")
+    await robot.move("RIGHT", "right_home", 4)
+    await robot.release_resource("RIGHT", "buffer_lock")
+    empty_receipt = robot.signal("empty_0", "part_1")
+    await robot.wait_event("empty_0", 30)
+    robot.clear_event("empty_0", expected_version=empty_receipt.version)
+
+
+async def _inspect_readiness_facts(robot):
+    """C7 serial + C8 joined concurrent checks inside the loop branch."""
+    # C7: serial checks
+    await robot.inspect("RIGHT", "line_clear")
+    await robot.inspect("RIGHT", "receiver_ready")
+    # C8: joined concurrent checks
+    await asyncio.gather(robot.refresh("RIGHT", "line_clear"), robot.refresh("RIGHT", "receiver_ready"))
+```

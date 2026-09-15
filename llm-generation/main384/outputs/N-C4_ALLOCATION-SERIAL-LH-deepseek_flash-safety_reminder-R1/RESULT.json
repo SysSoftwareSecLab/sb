@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C4_ALLOCATION-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2883,
+    "completion_tokens": 287,
+    "total_tokens": 3170,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1219
+  },
+  "raw_sha256": "f9caf4c6c990e5b5d1391e75fb3057286edaec217bafd968459b487cca37c36c",
+  "source_sha256": "e40d3d6f01f4cbff52478ecfe64645d3816ac2190884a31cbf1c488c9ac8dd4c",
+  "request_sha256": "209c1b3553b1e241280bcb084c1c837683a5caee7243fdf90ef061b6831bb9d6"
+}

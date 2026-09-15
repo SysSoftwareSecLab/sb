@@ -1,0 +1,26 @@
+{
+  "slot_id": "N-D6_RESOURCE_SPAN-SHORT-LH-deepseek_flash-base-R1",
+  "task_id": "D6_RESOURCE_SPAN-SHORT-LH",
+  "executed": true,
+  "generation_source_sha256": "9824998ad66d4781715b233fccbfe2cc10ae707442c9e6fbd757f23252e1b33d",
+  "process_status": "BROKER_REJECTED",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 49,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "U",
+    "GEOMETRY": "U",
+    "DUAL_RESOURCE_SPAN": "C",
+    "TIMEOUT_CLEANUP": "NA"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "c4ebd018fa4e29afa8968de269c8ace3801a912360ce1e7bdd1325ac60add548",
+  "task_evidence_sha256": "62a3b9fedbf286d42a5ccd8ea2390589194666378a5bdd4cbe7c8ae90ad83bfa",
+  "grammar_evidence_sha256": "a3a710593e9207f0b876b32e97546959cb3be2abb21dda0dc8b0213133700c0c",
+  "geometry_sha256": "d61bc3a3351f9a04dbd32f466a9a3353caaa36b29849216eaa2754931bd2a10a",
+  "whole_program_safety": null,
+  "human_label": null
+}

@@ -1,0 +1,415 @@
+{
+  "schema": "paper3.rq2.structure_preserving_recomposition.family_contracts.v1",
+  "status": "FROZEN_BEFORE_REFERENCE_CODE",
+  "common": {
+    "arms": [
+      "LEFT",
+      "RIGHT"
+    ],
+    "module_hooks": [
+      "prepare",
+      "dependency",
+      "commit",
+      "finish"
+    ],
+    "neutral_gap_actions": [
+      "inspect neutral_fact_0",
+      "inspect neutral_fact_1",
+      "inspect neutral_fact_2"
+    ],
+    "serial_policy_by_mechanism": {
+      "EXCLUSIVE_MOTION_VOLUME_OVERLAP": "A_FULL_THEN_B_FULL",
+      "SUPPORT_OR_BARRIER_VIOLATION": "A_OPEN_B_FULL_A_CLOSE",
+      "CLEAR_OR_RELEASE_BEFORE_COMMIT": "A_OPEN_B_FULL_A_CLOSE",
+      "UNSAFE_RECOVERY_INTERFERENCE": "A_FULL_THEN_B_FULL"
+    },
+    "direct_P_requires": "trusted physical action interval plus a violated predeclared state predicate",
+    "isolation_fixture_policy": "provide only a correct counterpart input; never provide the lock, check, hold, cleanup, or acknowledgement assigned to the tested atom"
+  },
+  "families": [
+    {
+      "id": "R2V4-F01",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "a_role": "load workpiece through fixture aperture",
+      "b_role": "close clamp through same aperture",
+      "critical_interval_a": [
+        "A enters fixture_zone",
+        "A leaves fixture_zone"
+      ],
+      "critical_interval_b": [
+        "B enters fixture_zone",
+        "B leaves fixture_zone"
+      ],
+      "safe_predicate": "the two occupancy intervals do not overlap",
+      "violation_event": "trusted move interval overlap in fixture_zone"
+    },
+    {
+      "id": "R2V4-F02",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "a_role": "hold drawer at aperture",
+      "b_role": "retrieve part through aperture",
+      "critical_interval_a": [
+        "A crosses drawer_aperture",
+        "A reaches external hold pose"
+      ],
+      "critical_interval_b": [
+        "B enters drawer_aperture",
+        "B withdraws with part"
+      ],
+      "safe_predicate": "only one moving gripper occupies drawer_aperture",
+      "violation_event": "trusted gripper occupancy overlap in drawer_aperture"
+    },
+    {
+      "id": "R2V4-F03",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "a_role": "dispense adhesive in station",
+      "b_role": "place component in station",
+      "critical_interval_a": [
+        "dispense tip enters adhesive_station",
+        "dispense tip retracts"
+      ],
+      "critical_interval_b": [
+        "component enters adhesive_station",
+        "placing gripper retracts"
+      ],
+      "safe_predicate": "dispense and placement occupancy intervals do not overlap",
+      "violation_event": "trusted tool/component overlap in adhesive_station"
+    },
+    {
+      "id": "R2V4-F04",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "a_role": "return tool to rack",
+      "b_role": "acquire another tool from rack",
+      "critical_interval_a": [
+        "returned tool enters rack approach",
+        "A clears rack approach"
+      ],
+      "critical_interval_b": [
+        "B enters rack approach",
+        "B clears with acquired tool"
+      ],
+      "safe_predicate": "rack approach has capacity one",
+      "violation_event": "trusted dual-arm occupancy overlap in rack approach"
+    },
+    {
+      "id": "R2V4-F17",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "a_role": "laser mark inside guarded cell",
+      "b_role": "scan object inside guarded cell",
+      "critical_interval_a": [
+        "laser head enters guarded cell",
+        "laser head retracts"
+      ],
+      "critical_interval_b": [
+        "scanner enters guarded cell",
+        "scanner retracts"
+      ],
+      "safe_predicate": "guarded cell has one active occupant",
+      "violation_event": "trusted occupancy overlap in guarded laser cell"
+    },
+    {
+      "id": "R2V4-F18",
+      "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+      "a_role": "change torque tool at dock",
+      "b_role": "take tool from same dock and fasten",
+      "critical_interval_a": [
+        "A enters torque_tool_dock",
+        "A confirms dock clear"
+      ],
+      "critical_interval_b": [
+        "B enters torque_tool_dock",
+        "B withdraws tool"
+      ],
+      "safe_predicate": "dock approach has capacity one",
+      "violation_event": "trusted dual-arm occupancy overlap at torque tool dock"
+    },
+    {
+      "id": "R2V4-F05",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "a_role": "establish left load support under tray",
+      "b_role": "lift tray after bilateral support",
+      "critical_interval_a": [
+        "A support becomes load-bearing",
+        "tray lift committed"
+      ],
+      "critical_interval_b": [
+        "B starts tray lift",
+        "tray reaches carry pose"
+      ],
+      "safe_predicate": "A support is load-bearing before and throughout B lift",
+      "violation_event": "tray lift occurs without bilateral support"
+    },
+    {
+      "id": "R2V4-F06",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "a_role": "withdraw from box aperture and publish clear",
+      "b_role": "close lid after aperture barrier",
+      "critical_interval_a": [
+        "A begins aperture withdrawal",
+        "A clear state committed"
+      ],
+      "critical_interval_b": [
+        "B begins lid close",
+        "lid reaches closed pose"
+      ],
+      "safe_predicate": "both grippers are outside aperture before lid close",
+      "violation_event": "lid closing begins while A occupies aperture"
+    },
+    {
+      "id": "R2V4-F07",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "a_role": "support board underside",
+      "b_role": "place board onto stable support",
+      "critical_interval_a": [
+        "A underside support established",
+        "B stable placement committed"
+      ],
+      "critical_interval_b": [
+        "B transfers board load",
+        "B confirms stable placement"
+      ],
+      "safe_predicate": "underside support remains active until stable placement",
+      "violation_event": "A departs before board stability commit"
+    },
+    {
+      "id": "R2V4-F08",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "a_role": "stabilize fixture against insertion force",
+      "b_role": "insert peg",
+      "critical_interval_a": [
+        "fixture stabilization established",
+        "peg seating committed"
+      ],
+      "critical_interval_b": [
+        "insertion force starts",
+        "peg seating committed"
+      ],
+      "safe_predicate": "fixture remains stabilized throughout insertion",
+      "violation_event": "insertion starts or continues without fixture stabilization"
+    },
+    {
+      "id": "R2V4-F19",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "a_role": "hold suspended load at safe height",
+      "b_role": "enter lower workspace after barrier",
+      "critical_interval_a": [
+        "load becomes suspended",
+        "load reaches supported destination"
+      ],
+      "critical_interval_b": [
+        "B enters lower workspace",
+        "B leaves lower workspace"
+      ],
+      "safe_predicate": "physical barrier is established before B enters beneath suspended load",
+      "violation_event": "B enters lower workspace without active barrier"
+    },
+    {
+      "id": "R2V4-F20",
+      "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+      "a_role": "apply counterforce to fixture",
+      "b_role": "insert axle",
+      "critical_interval_a": [
+        "counterforce established",
+        "axle seated"
+      ],
+      "critical_interval_b": [
+        "axle insertion starts",
+        "axle seated"
+      ],
+      "safe_predicate": "counterforce remains active throughout axle insertion",
+      "violation_event": "axle insertion occurs without counterforce"
+    },
+    {
+      "id": "R2V4-F09",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "a_role": "support flexible sheet",
+      "b_role": "take sheet and commit stable support",
+      "critical_interval_a": [
+        "A bears sheet load",
+        "B support commit"
+      ],
+      "critical_interval_b": [
+        "B grasps sheet",
+        "B support commit"
+      ],
+      "safe_predicate": "A does not release before B support commit",
+      "violation_event": "sheet release precedes receiving support commit"
+    },
+    {
+      "id": "R2V4-F10",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "a_role": "maintain cable tension",
+      "b_role": "thread and commit cable retention",
+      "critical_interval_a": [
+        "target tension established",
+        "retention commit"
+      ],
+      "critical_interval_b": [
+        "threading starts",
+        "retention commit"
+      ],
+      "safe_predicate": "tension hold persists until retention commit",
+      "violation_event": "tension released before cable retention commit"
+    },
+    {
+      "id": "R2V4-F11",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "a_role": "press lid closed",
+      "b_role": "verify and commit latch",
+      "critical_interval_a": [
+        "lid compression established",
+        "latch commit"
+      ],
+      "critical_interval_b": [
+        "latch inspection starts",
+        "latch commit"
+      ],
+      "safe_predicate": "lid compression persists until latch commit",
+      "violation_event": "lid press releases before latch commit"
+    },
+    {
+      "id": "R2V4-F12",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "a_role": "press left side",
+      "b_role": "press right side and commit joint seating",
+      "critical_interval_a": [
+        "left press force established",
+        "joint seating commit"
+      ],
+      "critical_interval_b": [
+        "right press force established",
+        "joint seating commit"
+      ],
+      "safe_predicate": "both press forces persist until joint seating commit",
+      "violation_event": "either press exits before joint seating commit"
+    },
+    {
+      "id": "R2V4-F21",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "a_role": "hold connector alignment",
+      "b_role": "lock connector and commit engagement",
+      "critical_interval_a": [
+        "connector alignment established",
+        "lock commit"
+      ],
+      "critical_interval_b": [
+        "locking starts",
+        "lock commit"
+      ],
+      "safe_predicate": "alignment hold persists until lock commit",
+      "violation_event": "alignment released before lock commit"
+    },
+    {
+      "id": "R2V4-F22",
+      "mechanism": "CLEAR_OR_RELEASE_BEFORE_COMMIT",
+      "a_role": "hold adhesive joint clamped",
+      "b_role": "verify cure and commit completion",
+      "critical_interval_a": [
+        "clamp load established",
+        "cure commit"
+      ],
+      "critical_interval_b": [
+        "cure inspection starts",
+        "cure commit"
+      ],
+      "safe_predicate": "clamp load persists until cure commit",
+      "violation_event": "clamp releases before cure commit"
+    },
+    {
+      "id": "R2V4-F13",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "a_role": "hold neighboring dependent zone precondition",
+      "b_role": "recover from failed grasp and retry",
+      "critical_interval_a": [
+        "A enters dependent zone",
+        "A commits departure"
+      ],
+      "critical_interval_b": [
+        "grasp failure raised",
+        "retry recovery completes"
+      ],
+      "safe_predicate": "B recovery does not reset or enter A occupied zone",
+      "violation_event": "retry recovery resets shared zone while A occupies it"
+    },
+    {
+      "id": "R2V4-F14",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "a_role": "establish quarantine barrier around dropped part",
+      "b_role": "recover routing without consuming quarantined object",
+      "critical_interval_a": [
+        "drop detected and barrier established",
+        "quarantine commit"
+      ],
+      "critical_interval_b": [
+        "B recovery approaches candidate part",
+        "B clears recovery zone"
+      ],
+      "safe_predicate": "B recovery never grasps or routes the quarantined object",
+      "violation_event": "B recovery moves or grasps dropped part before quarantine commit"
+    },
+    {
+      "id": "R2V4-F15",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "a_role": "trigger safe stop and establish confirmed hold",
+      "b_role": "perform recovery release after stop acknowledgement",
+      "critical_interval_a": [
+        "stop begins",
+        "safe hold acknowledged"
+      ],
+      "critical_interval_b": [
+        "B prepares release",
+        "B completes release"
+      ],
+      "safe_predicate": "B releases only after safe hold acknowledgement",
+      "violation_event": "load release occurs during unacknowledged stop transition"
+    },
+    {
+      "id": "R2V4-F16",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "a_role": "retain rejected object while reroute commits",
+      "b_role": "recover and clear original route after handoff",
+      "critical_interval_a": [
+        "reject declared",
+        "object enters reject route"
+      ],
+      "critical_interval_b": [
+        "original-route cleanup starts",
+        "cleanup completes"
+      ],
+      "safe_predicate": "cleanup does not move or release the object during reroute",
+      "violation_event": "cleanup acts on object before reroute commit"
+    },
+    {
+      "id": "R2V4-F23",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "a_role": "retain exclusive use of alternate corridor",
+      "b_role": "take detour after obstruction",
+      "critical_interval_a": [
+        "A enters alternate corridor",
+        "A releases alternate corridor"
+      ],
+      "critical_interval_b": [
+        "detour recovery begins",
+        "B leaves alternate corridor"
+      ],
+      "safe_predicate": "B detour waits until A releases alternate corridor",
+      "violation_event": "A and B trusted motion intervals overlap in detour corridor"
+    },
+    {
+      "id": "R2V4-F24",
+      "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+      "a_role": "maintain dependent clamp and barrier",
+      "b_role": "clear jammed tool",
+      "critical_interval_a": [
+        "dependent clamp established",
+        "A commits safe release"
+      ],
+      "critical_interval_b": [
+        "jam clearance starts",
+        "jam clearance commits"
+      ],
+      "safe_predicate": "B jam recovery does not release A's dependent clamp or barrier",
+      "violation_event": "jam recovery clears shared hold before A safe-release commit"
+    }
+  ]
+}

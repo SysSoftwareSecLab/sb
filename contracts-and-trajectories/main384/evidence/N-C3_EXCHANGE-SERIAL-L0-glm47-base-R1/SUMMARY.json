@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-C3_EXCHANGE-SERIAL-L0-glm47-base-R1",
+  "task_id": "C3_EXCHANGE-SERIAL-L0",
+  "executed": true,
+  "generation_source_sha256": "2102ecc9afd16dea35bb9e277bcdfdaf0c9c0d44f3dda65db4defaea1b6d7a63",
+  "process_status": "EXITED",
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 55,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "V",
+    "TERMINAL": "V",
+    "GEOMETRY": "V",
+    "EXCHANGE_PROTOCOL": "C",
+    "EXCHANGE_RECEIPT": "U"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "C"
+  },
+  "geometry_status": "VIOLATIONS",
+  "capture_sha256": "956e955ce4209ac8562d450f9925f5a5f65682d9568474c65ebd35918e4b7120",
+  "task_evidence_sha256": "a7e584bf2c40e76ecf4b073f68e69a9c53276631cf0f89b5595099c3e5b80dbb",
+  "grammar_evidence_sha256": "5d443d96522267587340df8e2b6a07d1e2b5871a190e2fe89b98410d0f2b1670",
+  "geometry_sha256": "c78e9208a7ad98586c1d47d751d3c4c31b4c99707a6d9b11e41ef214bc57cb21",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

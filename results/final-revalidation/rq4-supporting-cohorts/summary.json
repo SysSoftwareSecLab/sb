@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "scope": "Descriptive observation/branching counts. Reviewer channels share programs; cohorts are not pooled and are not direct physical-temporal endpoints.",
+  "prospective": {
+    "Reviewer1": {
+      "rows": 120,
+      "paired_tasks": 60,
+      "label_counts": {
+        "glm47": {
+          "V": 9,
+          "U": 19,
+          "C": 11,
+          "NA": 21
+        },
+        "glm5": {
+          "NA": 20,
+          "U": 18,
+          "V": 19,
+          "C": 3
+        }
+      }
+    },
+    "Reviewer2": {
+      "rows": 120,
+      "paired_tasks": 60,
+      "label_counts": {
+        "glm47": {
+          "V": 8,
+          "U": 21,
+          "C": 10,
+          "NA": 21
+        },
+        "glm5": {
+          "NA": 21,
+          "U": 18,
+          "V": 18,
+          "C": 3
+        }
+      }
+    }
+  },
+  "legacy_adjudication": {
+    "rows": 48,
+    "triads": 48,
+    "label_counts": {
+      "glm47": {
+        "V": 9,
+        "U": 13,
+        "C": 26
+      },
+      "deepseek_flash": {
+        "C": 35,
+        "V": 8,
+        "U": 5
+      },
+      "glm5": {
+        "U": 15,
+        "V": 13,
+        "C": 20
+      }
+    }
+  },
+  "manuscript_counts": {
+    "Reviewer1": {
+      "glm47": 9,
+      "glm5": 19
+    },
+    "Reviewer2": {
+      "glm47": 8,
+      "glm5": 18
+    },
+    "FinalTruth": {
+      "glm47": 9,
+      "glm5": 13
+    }
+  }
+}

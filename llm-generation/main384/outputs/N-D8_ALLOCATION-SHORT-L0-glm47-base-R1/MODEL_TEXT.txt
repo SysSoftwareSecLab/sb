@@ -1,0 +1,64 @@
+```python
+import asyncio
+import json
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # 1. Both workers independently inspect allocation once before choosing their own branch.
+    # We run these inspections concurrently.
+    allocation_fact_id = "allocation"
+    
+    async def worker_inspect(arm_name: str) -> tuple[str, Observation]:
+        # Inspect the allocation fact
+        obs = await robot.inspect(arm_name, allocation_fact_id)
+        return arm_name, obs
+
+    # Gather inspections for both arms
+    results = await asyncio.gather(
+        worker_inspect("LEFT"),
+        worker_inspect("RIGHT")
+    )
+    
+    left_obs = results[0][1]
+    right_obs = results[1][1]
+
+    # Determine which arm is selected based on the observation value
+    # The observation value is JSON: {"item_id": "shared_part", "selected_arm": "LEFT"}
+    alloc_data = left_obs.value
+    selected_arm = alloc_data["selected_arm"]
+    
+    # 2. Only the arm named by the current controller-issued allocation may propose 
+    # shared_source approach, shared_part grasp or carried transport.
+    # The unselected arm makes no move/grasp/release call.
+    
+    if selected_arm == "LEFT":
+        # LEFT is the worker, RIGHT stays at home (does nothing)
+        worker_arm = "LEFT"
+        worker_obs = left_obs
+        start_pose = "left_home"
+        depart_pose = "left_depart"
+    else:
+        # RIGHT is the worker, LEFT stays at home (does nothing)
+        worker_arm = "RIGHT"
+        worker_obs = right_obs
+        start_pose = "right_home"
+        depart_pose = "right_depart"
+
+    # 3. The selected grasp must carry that arm's own current allocation observation.
+    # Sequence: Approach (move to shared_source) -> Grasp -> Transport (move to shared_target) -> Release -> Depart
+    
+    # Approach: move from home to shared_source
+    await robot.move(worker_arm, "shared_source")
+    
+    # Grasp: must provide the observation obtained by this arm
+    await robot.grasp(worker_arm, "shared_part", observation=worker_obs)
+    
+    # Transport: move to shared_target
+    await robot.move(worker_arm, "shared_target")
+    
+    # Release: at shared_target
+    await robot.release(worker_arm, "shared_part", "shared_target")
+    
+    # Depart: immediately depart to the designated depart pose
+    await robot.move(worker_arm, depart_pose)
+```

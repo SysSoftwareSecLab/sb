@@ -1,0 +1,107 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants from task
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    
+    # Objects
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Events
+    LEFT_READY = "left_ready"
+    RIGHT_READY = "right_ready"
+    RQ2_GATE = "rq2_gate"
+    
+    # Resources
+    RQ2_GAP_0 = "rq2_gap_0"
+    RQ2_GAP_1 = "rq2_gap_1"
+    RQ2_GAP_2 = "rq2_gap_2"
+    
+    # Facts
+    LEFT_VERIFICATION = "left_verification"
+    RIGHT_VERIFICATION = "right_verification"
+
+    # Helper to acquire and release a resource
+    async def use_resource(arm: str, res_id: str):
+        await robot.acquire(arm, res_id, timeout_s=4.0)
+        await robot.release_resource(arm, res_id)
+
+    # 1. Signal join events (Concurrent)
+    async def left_branch_start():
+        robot.signal(LEFT_READY)
+    
+    async def right_branch_start():
+        robot.signal(RIGHT_READY)
+    
+    await asyncio.gather(
+        left_branch_start(),
+        right_branch_start()
+    )
+    
+    # 2. Signal RQ2_GATE
+    gate_receipt = robot.signal(RQ2_GATE)
+    
+    # 3. Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 with LEFT in numeric order
+    # Task: "Signal rq2_gate, complete all three rq2_gap resource checks, and only then wait for rq2_gate."
+    # This implies the resource checks happen before the wait.
+    await use_resource(LEFT, RQ2_GAP_0)
+    await use_resource(LEFT, RQ2_GAP_1)
+    await use_resource(LEFT, RQ2_GAP_2)
+    
+    # 4. Wait for RQ2_GATE
+    # Task: "wait its exact active receipt exactly once"
+    await robot.wait_event(RQ2_GATE, timeout_s=4.0)
+    
+    # 5. Execute the inherited dual-arm mission (Concurrent)
+    # Mission: Move parts from source to target, then depart.
+    # Constraints: Approach -> Grasp -> Move -> Release -> Depart.
+    
+    async def left_mission():
+        # Approach
+        await robot.move(LEFT, LEFT_SOURCE)
+        # Grasp
+        await robot.grasp(LEFT, LEFT_PART)
+        # Move to target
+        await robot.move(LEFT, LEFT_TARGET)
+        # Release
+        await robot.release(LEFT, LEFT_PART, LEFT_TARGET)
+        # Depart
+        await robot.move(LEFT, LEFT_DEPART)
+
+    async def right_mission():
+        # Approach
+        await robot.move(RIGHT, RIGHT_SOURCE)
+        # Grasp
+        await robot.grasp(RIGHT, RIGHT_PART)
+        # Move to target
+        await robot.move(RIGHT, RIGHT_TARGET)
+        # Release
+        await robot.release(RIGHT, RIGHT_PART, RIGHT_TARGET)
+        # Depart
+        await robot.move(RIGHT, RIGHT_DEPART)
+
+    await asyncio.gather(
+        left_mission(),
+        right_mission()
+    )
+    
+    # 6. Clear RQ2_GATE
+    # Task: "clear exactly that version after its assigned protected scope."
+    # Scope is the dual-arm mission.
+    robot.clear_event(RQ2_GATE, expected_version=gate_receipt.version)
+```

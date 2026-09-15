@@ -1,0 +1,89 @@
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Task C1_BUFFER-SERIAL-LH (variant A, CONCURRENCY=SERIAL)
+    #
+    # Two parts cross a capacity-one buffer from LEFT producer to RIGHT
+    # consumer.  Structure is SERIAL: the producer episode for a part
+    # completes fully before the consumer episode for that part begins.
+    #
+    # Producer episode (part_i):
+    #   LEFT at left_home -> approach source_i -> grasp part_i
+    #   -> move to buffer_i (holding buffer_lock) -> release part_i
+    #   -> depart to left_wait -> signal ready_i
+    #
+    # Consumer episode (part_i):
+    #   RIGHT at right_home -> wait ready_i -> move to buffer_i
+    #   (holding buffer_lock) -> grasp part_i -> depart to right_wait
+    #   -> clear ready_i -> move to target_i (carrying ready_i receipt)
+    #   -> release part_i -> depart to right_home -> signal empty_0
+    #
+    # Producer waits for empty_0 before the second part.
+    # ------------------------------------------------------------------
+
+    # ---- Episode 1: part_0 -------------------------------------------
+    await _produce(robot, "part_0", "source_0", "buffer_0", "ready_0")
+    await _consume(robot, "part_0", "buffer_0", "target_0", "ready_0")
+
+    # ---- Episode 2: part_1 -------------------------------------------
+    # Producer must wait for empty_0 before entering buffer with part_1.
+    await _wait_and_clear_empty(robot)
+    await _produce(robot, "part_1", "source_1", "buffer_1", "ready_1")
+    await _consume(robot, "part_1", "buffer_1", "target_1", "ready_1")
+
+
+async def _produce(robot: Robot, part: str, source: str, buffer_pose: str, ready_event: str) -> None:
+    # Approach source from left_home (or left_wait for part_1).
+    start_pose = "left_home" if part == "part_0" else "left_wait"
+    await robot.move("LEFT", start_pose)
+    # Approach sequence: start_pose -> source, then immediately grasp.
+    await robot.move("LEFT", source)
+    await robot.grasp("LEFT", part)
+
+    # Acquire buffer_lock before entering buffer.
+    await robot.acquire("LEFT", "buffer_lock", 5.0)
+    try:
+        await robot.move("LEFT", buffer_pose)
+        await robot.release("LEFT", part, buffer_pose)
+        # Depart immediately after release.
+        await robot.move("LEFT", "left_wait")
+    finally:
+        await robot.release_resource("LEFT", "buffer_lock")
+
+    # Publish ready receipt after departing.
+    robot.signal(ready_event, part)
+
+
+async def _consume(robot: Robot, part: str, buffer_pose: str, target: str, ready_event: str) -> None:
+    # Wait for the ready receipt.
+    receipt = await robot.wait_event(ready_event, 10.0)
+
+    # Acquire buffer_lock before entering buffer.
+    await robot.acquire("RIGHT", "buffer_lock", 5.0)
+    try:
+        await robot.move("RIGHT", buffer_pose)
+        await robot.grasp("RIGHT", part)
+        # Depart immediately after grasp.
+        await robot.move("RIGHT", "right_wait")
+    finally:
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+    # Clear ready after departing from buffer.
+    robot.clear_event(ready_event, expected_version=receipt.version)
+
+    # Carried move to target, supplying the exact active item receipt.
+    await robot.move("RIGHT", target, receipt=receipt)
+    await robot.release("RIGHT", part, target)
+    # Depart immediately after release.
+    await robot.move("RIGHT", "right_home")
+
+    # Publish empty_0 after departing.
+    robot.signal("empty_0")
+
+
+async def _wait_and_clear_empty(robot: Robot) -> None:
+    receipt = await robot.wait_event("empty_0", 10.0)
+    robot.clear_event("empty_0", expected_version=receipt.version)

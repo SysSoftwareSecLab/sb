@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D4_ATTR_NESTED-SHORT-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3557,
+    "completion_tokens": 1289,
+    "total_tokens": 4846,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1893
+  },
+  "raw_sha256": "20b44ee032376da7288f6882b0bed2e7df3e6b00d08a165215a84baa35e2d958",
+  "source_sha256": "e3afab093f58ad35119e89684d9a918265bcda47c65b47e9c77f952c6daf00f7",
+  "request_sha256": "b257529e6955edc74eb62cbb650985761531608eecf19338717ab9bd7e3b102f"
+}

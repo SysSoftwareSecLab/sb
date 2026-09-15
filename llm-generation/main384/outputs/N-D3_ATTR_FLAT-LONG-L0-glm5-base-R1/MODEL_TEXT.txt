@@ -1,0 +1,209 @@
+```python
+import asyncio
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    # ---- constants from PUBLIC TASK ----
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    PARTS = ("part_0", "part_1")
+    SOURCE = {"part_0": "source_0", "part_1": "source_1"}
+    BUFFER = {"part_0": "buffer_0", "part_1": "buffer_1"}
+    TARGET = {"part_0": "target_0", "part_1": "target_1"}
+    READY = {"part_0": "ready_0", "part_1": "ready_1"}
+    EMPTY_EVENT = "empty_0"
+    BUFFER_LOCK = "buffer_lock"
+    TOOL = "tool"
+    LEFT_HOME = "left_home"
+    RIGHT_HOME = "right_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_WAIT = "right_wait"
+
+    # ---- shared state ----
+    empty_receipt = None
+    empty_cleared = False
+    ready_receipts = {}
+    ready_cleared = {"part_0": False, "part_1": False}
+    tool_owner = None
+    tool_mode = "OFF"
+    lock_owner = None
+    lock_mode = "OFF"
+    lock = asyncio.Lock()
+
+    async def acquire_tool(arm):
+        nonlocal tool_owner, tool_mode
+        await robot.acquire(arm, TOOL, 5)
+        tool_owner = arm
+        tool_mode = "OFF"
+
+    async def release_tool(arm):
+        nonlocal tool_owner, tool_mode
+        if tool_owner != arm:
+            return
+        if tool_mode != "OFF":
+            await robot.set_mode(arm, TOOL, "OFF")
+            tool_mode = "OFF"
+        await robot.release_resource(arm, TOOL)
+        tool_owner = None
+
+    async def acquire_lock(arm):
+        nonlocal lock_owner, lock_mode
+        await robot.acquire(arm, BUFFER_LOCK, 5)
+        lock_owner = arm
+        lock_mode = "OFF"
+
+    async def release_lock(arm):
+        nonlocal lock_owner, lock_mode
+        if lock_owner != arm:
+            return
+        if lock_mode != "OFF":
+            await robot.set_mode(arm, BUFFER_LOCK, "OFF")
+            lock_mode = "OFF"
+        await robot.release_resource(arm, BUFFER_LOCK)
+        lock_owner = None
+
+    async def producer(arm, part):
+        nonlocal empty_receipt, empty_cleared
+        # LONG: acquire tool before source pickup and keep it across wait/checks
+        await acquire_tool(arm)
+        try:
+            # approach source and immediately grasp (no intervening calls)
+            await robot.move(arm, LEFT_HOME)
+            await robot.move(arm, SOURCE[part])
+            await robot.grasp(arm, part)
+
+            # travel to buffer area
+            await robot.move(arm, LEFT_WAIT)
+
+            # Producer waits and clears empty_0 before entering buffer with second part
+            if part == "part_1":
+                er = await wait_empty()
+                await robot.clear_event(EMPTY_EVENT, expected_version=er.version)
+                empty_cleared = True
+
+            # enter buffer under lock and place part
+            await acquire_lock(arm)
+            try:
+                await robot.move(arm, BUFFER[part])
+                await robot.release(arm, part, BUFFER[part])
+                # immediate separating departure
+                await robot.move(arm, LEFT_WAIT)
+            finally:
+                await release_lock(arm)
+
+            # publish ready receipt for consumer
+            r = robot.signal(READY[part], item_id=part)
+            ready_receipts[part] = r
+        finally:
+            await release_tool(arm)
+
+    async def consumer(arm, part):
+        # wait for producer's ready receipt before pickup
+        r = await wait_ready(part)
+        # acquire tool only after any second-item wait and checks
+        if part == "part_1":
+            await acquire_tool(arm)
+        try:
+            # approach buffer and immediately grasp
+            await robot.move(arm, RIGHT_HOME)
+            await robot.move(arm, BUFFER[part])
+            await robot.grasp(arm, part, observation=r)
+
+            # carried move to target supplying exact active item receipt
+            await robot.move(arm, RIGHT_WAIT, receipt=r)
+            await robot.move(arm, TARGET[part], receipt=r)
+
+            # clear ready after carried move
+            await robot.clear_event(READY[part], expected_version=r.version)
+            ready_cleared[part] = True
+
+            # release on target and depart before publishing empty_0
+            await acquire_lock(arm)
+            try:
+                await robot.move(arm, TARGET[part])
+                await robot.release(arm, part, TARGET[part])
+                await robot.move(arm, RIGHT_WAIT)
+            finally:
+                await release_lock(arm)
+
+            # publish empty_0 after first item transfer
+            if part == "part_0":
+                e = robot.signal(EMPTY_EVENT, item_id=part)
+                empty_receipt = e
+        finally:
+            if part == "part_1":
+                await release_tool(arm)
+
+    async def wait_ready(part):
+        while True:
+            r = ready_receipts.get(part)
+            if r is not None:
+                return r
+            await asyncio.sleep(0)
+
+    async def wait_empty():
+        while True:
+            r = empty_receipt
+            if r is not None:
+                return r
+            await asyncio.sleep(0)
+
+    async def second_item_checks():
+        # D3: perform the two second-item checks serially
+        lc = await robot.inspect(LEFT, "line_clear")
+        if not (lc.value.get("clear") is True and lc.value.get("item_id") == "part_1"):
+            raise RuntimeError("line_clear check failed")
+        rr = await robot.inspect(RIGHT, "receiver_ready")
+        if not (rr.value.get("ready") is True and rr.value.get("item_id") == "part_1"):
+            raise RuntimeError("receiver_ready check failed")
+
+    async def episode_a(part):
+        # A alternates complete producer/consumer episodes
+        await producer(LEFT, part)
+        await consumer(RIGHT, part)
+
+    async def episode_b(part):
+        # B runs producer and consumer coroutines together
+        pt = asyncio.create_task(producer(LEFT, part))
+        ct = asyncio.create_task(consumer(RIGHT, part))
+        try:
+            await asyncio.gather(pt, ct)
+        except BaseException:
+            pt.cancel()
+            ct.cancel()
+            raise
+
+    async def second_item_branch():
+        # after empty_0 is waited and cleared, perform serial checks before transfer
+        await second_item_checks()
+        await episode_b("part_1")
+
+    async def main():
+        # first item: A alternates complete producer/consumer episodes
+        await episode_a("part_0")
+        # second item: B runs producer and consumer together
+        await second_item_branch()
+
+    try:
+        await main()
+    except MotionFault:
+        # reset declared current failure if any; normal path does not use safe_stop
+        try:
+            await robot.reset_failure("current")
+        except Exception:
+            pass
+        raise
+    finally:
+        # release tool on every normal, failure and cancellation exit
+        if tool_owner is not None:
+            try:
+                await release_tool(tool_owner)
+            except Exception:
+                pass
+        if lock_owner is not None:
+            try:
+                await release_lock(lock_owner)
+            except Exception:
+                pass
+```

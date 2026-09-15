@@ -1,0 +1,104 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # --- RQ2 Gate Protocol ---
+    # 1. Signal rq2_gate
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # 2. Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 with LEFT, in numeric order
+    #    "Acquire and release ... once each ... never retain them at return"
+    #    "complete all three rq2_gap resource checks, and only then wait for rq2_gate"
+    for gap_id in ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]:
+        await robot.acquire("LEFT", gap_id, 4.0)
+        await robot.release_resource("LEFT", gap_id)
+        
+    # 3. Wait for rq2_gate
+    await robot.wait_event("rq2_gate", 4.0)
+    
+    # 4. Clear rq2_gate (exact version from signal)
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # --- Inherited Dual-Arm Mission (Serial Schedule) ---
+    # Items: part_0, part_1
+    # Roles: LEFT (Producer), RIGHT (Consumer)
+    # Buffer: buffer_0 (for part_0), buffer_1 (for part_1)
+    # Events: ready_0, ready_1, empty_0
+    # Resources: buffer_lock, tool
+    
+    # --- Episode 1: part_0 ---
+    # Producer (LEFT)
+    await robot.acquire("LEFT", "tool", 4.0)
+    await robot.move("LEFT", "left_home") # Ensure start
+    await robot.move("LEFT", "source_0") # Approach
+    obs_p0 = await robot.grasp("LEFT", "part_0") # Grasp
+    
+    await robot.acquire("LEFT", "buffer_lock", 4.0)
+    await robot.move("LEFT", "buffer_0") # Place at buffer
+    await robot.release("LEFT", "part_0", "buffer_0") # Release
+    await robot.move("LEFT", "left_home") # Depart
+    await robot.release_resource("LEFT", "buffer_lock")
+    
+    ready_0_receipt = robot.signal("ready_0") # Publish ready
+    await robot.release_resource("LEFT", "tool") # Release tool on exit
+    
+    # Consumer (RIGHT)
+    await robot.wait_event("ready_0", 4.0) # Wait ready
+    await robot.move("RIGHT", "right_home") # Ensure start
+    await robot.move("RIGHT", "buffer_0") # Approach
+    obs_p0_consume = await robot.grasp("RIGHT", "part_0") # Grasp
+    
+    await robot.acquire("RIGHT", "buffer_lock", 4.0)
+    # Carried move to target using receipt
+    await robot.move("RIGHT", "target_0", receipt=ready_0_receipt)
+    robot.clear_event("ready_0", expected_version=ready_0_receipt.version) # Clear after carried move
+    await robot.release("RIGHT", "part_0", "target_0") # Release
+    await robot.move("RIGHT", "right_home") # Depart
+    await robot.release_resource("RIGHT", "buffer_lock")
+    
+    robot.signal("empty_0") # Publish empty
+
+    # --- Episode 2: part_1 ---
+    # Producer (LEFT)
+    await robot.wait_event("empty_0", 4.0) # Wait empty
+    robot.clear_event("empty_0", expected_version=1) # Clear empty (version 1)
+    
+    # "inspect both readiness facts; C7 checks serially"
+    # Facts: receiver_ready, line_clear
+    await robot.inspect("LEFT", "receiver_ready")
+    await robot.inspect("LEFT", "line_clear")
+    
+    await robot.acquire("LEFT", "tool", 4.0)
+    await robot.move("LEFT", "left_wait") # Start pose for part_1
+    await robot.move("LEFT", "source_1") # Approach
+    obs_p1 = await robot.grasp("LEFT", "part_1") # Grasp
+    
+    await robot.acquire("LEFT", "buffer_lock", 4.0)
+    await robot.move("LEFT", "buffer_1") # Place at buffer
+    await robot.release("LEFT", "part_1", "buffer_1") # Release
+    await robot.move("LEFT", "left_home") # Depart
+    await robot.release_resource("LEFT", "buffer_lock")
+    
+    ready_1_receipt = robot.signal("ready_1") # Publish ready
+    await robot.release_resource("LEFT", "tool") # Release tool on exit
+    
+    # Consumer (RIGHT)
+    await robot.wait_event("ready_1", 4.0) # Wait ready
+    await robot.move("RIGHT", "right_wait") # Start pose for part_1
+    await robot.move("RIGHT", "buffer_1") # Approach
+    obs_p1_consume = await robot.grasp("RIGHT", "part_1") # Grasp
+    
+    await robot.acquire("RIGHT", "buffer_lock", 4.0)
+    # Carried move to target using receipt
+    await robot.move("RIGHT", "target_1", receipt=ready_1_receipt)
+    robot.clear_event("ready_1", expected_version=ready_1_receipt.version) # Clear after carried move
+    await robot.release("RIGHT", "part_1", "target_1") # Release
+    await robot.move("RIGHT", "right_home") # Depart
+    await robot.release_resource("RIGHT", "buffer_lock")
+    
+    # Final state: empty arms at homes, buffer empty, lock free, events inactive
+    # ready_0, ready_1 cleared. empty_0 cleared.
+    # rq2_gate cleared.
+    # Resources released.
+```

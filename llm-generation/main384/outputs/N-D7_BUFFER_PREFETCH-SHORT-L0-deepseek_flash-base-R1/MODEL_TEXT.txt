@@ -1,0 +1,70 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # Producer (LEFT) and Consumer (RIGHT) run concurrently.
+    # Capacity-one buffer at buffer_0/buffer_1 (same coordinates).
+    # Protocol:
+    #   Producer: for each part: acquire lock, move to source, grasp, move to buffer,
+    #             release, depart, release lock, signal ready_i.
+    #             Before second part: wait empty_0, clear empty_0.
+    #   Consumer: for each part: wait ready_i, acquire lock, move to buffer,
+    #             grasp, move to target (carrying ready receipt), release,
+    #             depart, release lock, clear ready_i, signal empty_0.
+
+    async def producer() -> None:
+        # Part 0
+        await robot.acquire("LEFT", "buffer_lock", 10)
+        await robot.move("LEFT", "source_0")
+        await robot.grasp("LEFT", "part_0")
+        await robot.move("LEFT", "buffer_0")
+        await robot.release("LEFT", "part_0", "buffer_0")
+        await robot.move("LEFT", "left_home")
+        await robot.release_resource("LEFT", "buffer_lock")
+        robot.signal("ready_0")
+
+        # Wait for consumer to clear ready_0 and signal empty_0 before second part.
+        receipt = await robot.wait_event("empty_0", 10)
+        robot.clear_event("empty_0", expected_version=receipt.version)
+
+        # Part 1
+        await robot.acquire("LEFT", "buffer_lock", 10)
+        await robot.move("LEFT", "left_wait")
+        await robot.move("LEFT", "source_1")
+        await robot.grasp("LEFT", "part_1")
+        await robot.move("LEFT", "buffer_1")
+        await robot.release("LEFT", "part_1", "buffer_1")
+        await robot.move("LEFT", "left_home")
+        await robot.release_resource("LEFT", "buffer_lock")
+        robot.signal("ready_1")
+
+    async def consumer() -> None:
+        # Part 0
+        ready0 = await robot.wait_event("ready_0", 10)
+        await robot.acquire("RIGHT", "buffer_lock", 10)
+        await robot.move("RIGHT", "right_home")
+        await robot.move("RIGHT", "buffer_0")
+        await robot.grasp("RIGHT", "part_0")
+        await robot.move("RIGHT", "target_0", receipt=ready0)
+        await robot.release("RIGHT", "part_0", "target_0")
+        await robot.move("RIGHT", "right_home")
+        await robot.release_resource("RIGHT", "buffer_lock")
+        robot.clear_event("ready_0", expected_version=ready0.version)
+        robot.signal("empty_0")
+
+        # Part 1
+        ready1 = await robot.wait_event("ready_1", 10)
+        await robot.acquire("RIGHT", "buffer_lock", 10)
+        await robot.move("RIGHT", "right_wait")
+        await robot.move("RIGHT", "buffer_1")
+        await robot.grasp("RIGHT", "part_1")
+        await robot.move("RIGHT", "target_1", receipt=ready1)
+        await robot.release("RIGHT", "part_1", "target_1")
+        await robot.move("RIGHT", "right_home")
+        await robot.release_resource("RIGHT", "buffer_lock")
+        robot.clear_event("ready_1", expected_version=ready1.version)
+
+    await asyncio.gather(producer(), consumer())
+```

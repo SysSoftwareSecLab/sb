@@ -1,0 +1,7 @@
+async def consumer_policy(robot, cached_left, cached_right):
+    left_receipt = await robot.observe_authorization("socket_clearance_lease")
+    right_receipt = await robot.observe_authorization("plug_alignment_lease")
+    left_receipt = await robot.observe_authorization("socket_clearance_lease")
+    if left_receipt.coordination_generation != right_receipt.coordination_generation:
+        right_receipt = await robot.observe_authorization("plug_alignment_lease")
+    await robot.protected_action("insert_aligned_plug", left_receipt, right_receipt)

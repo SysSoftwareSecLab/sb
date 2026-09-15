@@ -1,0 +1,69 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # --- RQ2_GATE PROTOCOL (Serial) ---
+    # 1. Signal rq2_gate
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # 2. Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 with LEFT, in numeric order
+    for res_id in ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]:
+        await robot.acquire("LEFT", res_id, timeout_s=4)
+        await robot.release_resource("LEFT", res_id)
+        
+    # 3. Wait for rq2_gate (exact active receipt)
+    await robot.wait_event("rq2_gate", timeout_s=4)
+    
+    # 4. Clear rq2_gate
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # --- INHERITED DUAL-ARM MISSION (Serial) ---
+    # Phase 1: LEFT deposits its part
+    await robot.move("LEFT", "left_source")  # Approach
+    await robot.grasp("LEFT", "left_part")   # Grasp
+    await robot.move("LEFT", "left_pad")     # Transport
+    await robot.release("LEFT", "left_part", "left_pad") # Deposit
+    await robot.move("LEFT", "left_clear")   # Immediate departure
+    
+    # Phase 2: RIGHT deposits its part
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_pad")
+    await robot.release("RIGHT", "right_part", "right_pad")
+    await robot.move("RIGHT", "right_clear")
+    
+    # Phase 3: LEFT consumes peer item
+    # Wait for peer ready
+    peer_ready_left = await robot.wait_event("right_ready", timeout_s=4)
+    
+    # Approach and grasp peer item
+    await robot.move("LEFT", "left_pickup_wait") # Approach start
+    await robot.move("LEFT", "right_pad")        # Approach interaction
+    await robot.grasp("LEFT", "right_part")      # Grasp
+    
+    # Move to own target carrying the receipt
+    await robot.move("LEFT", "left_target", receipt=peer_ready_left)
+    
+    # Clear peer ready event after move
+    robot.clear_event("right_ready", expected_version=peer_ready_left.version)
+    
+    # Phase 4: RIGHT consumes peer item
+    # Wait for peer ready
+    peer_ready_right = await robot.wait_event("left_ready", timeout_s=4)
+    
+    # Approach and grasp peer item
+    await robot.move("RIGHT", "right_pickup_wait")
+    await robot.move("RIGHT", "left_pad")
+    await robot.grasp("RIGHT", "left_part")
+    
+    # Move to own target carrying the receipt
+    await robot.move("RIGHT", "right_target", receipt=peer_ready_right)
+    
+    # Clear peer ready event after move
+    robot.clear_event("left_ready", expected_version=peer_ready_right.version)
+    
+    # Phase 5: Final Departure
+    await robot.move("LEFT", "left_depart")
+    await robot.move("RIGHT", "right_depart")
+```

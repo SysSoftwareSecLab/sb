@@ -1,0 +1,34 @@
+```python
+async def run_task(robot):
+    # Phase 1: rq2_gate protocol (serial, before dual-arm mission)
+    # Acquire rq2_gap_0, rq2_gap_1, rq2_gap_2 in numeric order with LEFT, release each immediately.
+    for rid in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", rid, 5)
+        await robot.release_resource("LEFT", rid)
+
+    # All three gap checks complete; signal rq2_gate exactly once.
+    gate_receipt = robot.signal("rq2_gate")
+
+    # Wait immediately after the signal for the exact active receipt.
+    waited = await robot.wait_event("rq2_gate", 5)
+
+    # Clear exactly that version after the protected scope completes.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # Phase 2: inherited dual-arm mission (serial scheduling)
+    # LEFT arm: left_home -> left_source (approach), grasp left_part,
+    #           move to left_target, release, depart to left_depart.
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+    # RIGHT arm: right_home -> right_source (approach), grasp right_part,
+    #           move to right_target, release, depart to right_depart.
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+```

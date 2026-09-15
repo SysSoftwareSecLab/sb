@@ -1,0 +1,67 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # ---- RQ2 gap resource checks (serial, numeric order, LEFT only) ----
+    for gap in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", gap, 5)
+        await robot.release_resource("LEFT", gap)
+
+    # ---- Signal rq2_gate exactly once, wait its exact active receipt once ----
+    gate_receipt = robot.signal("rq2_gate")
+    gate_wait_receipt = await robot.wait_event("rq2_gate", 5)
+    assert gate_wait_receipt.version == gate_receipt.version
+
+    # ---- Inherited dual-arm buffer mission (SERIAL scheduling) ----
+    await _producer_consumer_episode(robot, "part_0", "source_0", "buffer_0",
+                                      "ready_0", "target_0", "left_home",
+                                      "right_home")
+    await _producer_consumer_episode(robot, "part_1", "source_1", "buffer_1",
+                                      "ready_1", "target_1", "left_wait",
+                                      "right_wait")
+
+    # ---- Clear rq2_gate after the protected inherited mission ----
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+
+async def _producer_consumer_episode(robot: Robot, part: str, source: str,
+                                     buffer: str, ready_event: str,
+                                     target: str, left_start: str,
+                                     right_start: str) -> None:
+    # Producer (LEFT): acquire tool, move to source start, approach+grasp,
+    # acquire buffer_lock, move to buffer, release, depart, release tool,
+    # then publish ready.
+    await robot.acquire("LEFT", "tool", 5)
+    await robot.move("LEFT", left_start, timeout_s=5)
+    await robot.move("LEFT", source, timeout_s=5)
+    await robot.grasp("LEFT", part)
+    await robot.acquire("LEFT", "buffer_lock", 5)
+    await robot.move("LEFT", buffer, timeout_s=5)
+    await robot.release("LEFT", part, buffer)
+    await robot.move("LEFT", left_start, timeout_s=5)
+    await robot.release_resource("LEFT", "buffer_lock")
+    await robot.release_resource("LEFT", "tool")
+    ready_receipt = robot.signal(ready_event)
+
+    # Consumer (RIGHT): wait ready, acquire buffer_lock, approach+grasp,
+    # carried move to target supplying the exact active item receipt,
+    # clear ready, release on target, depart, release buffer_lock,
+    # then publish empty_0.
+    waited_receipt = await robot.wait_event(ready_event, 10)
+    assert waited_receipt.version == ready_receipt.version
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+    await robot.move("RIGHT", right_start, timeout_s=5)
+    await robot.move("RIGHT", buffer, timeout_s=5)
+    await robot.grasp("RIGHT", part)
+    await robot.move("RIGHT", target, timeout_s=5, receipt=waited_receipt)
+    robot.clear_event(ready_event, expected_version=waited_receipt.version)
+    await robot.release("RIGHT", part, target)
+    await robot.move("RIGHT", right_start, timeout_s=5)
+    await robot.release_resource("RIGHT", "buffer_lock")
+    empty_receipt = robot.signal("empty_0")
+
+    # Producer (LEFT): wait and clear empty_0 before entering buffer again.
+    empty_waited = await robot.wait_event("empty_0", 10)
+    assert empty_waited.version == empty_receipt.version
+    robot.clear_event("empty_0", expected_version=empty_waited.version)

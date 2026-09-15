@@ -1,0 +1,128 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Shared state for the two coroutines (producer LEFT, consumer RIGHT)
+    # ------------------------------------------------------------------
+    ready_receipts: dict[str, EventReceipt | None] = {"part_0": None, "part_1": None}
+    empty_receipt: EventReceipt | None = None
+    empty_cleared = asyncio.Event()
+    ready_cleared = {"part_0": asyncio.Event(), "part_1": asyncio.Event()}
+
+    # ------------------------------------------------------------------
+    # Producer (LEFT arm)
+    # ------------------------------------------------------------------
+    async def producer() -> None:
+        nonlocal empty_receipt
+        # LONG: acquire tool before source pickup and keep across wait/checks
+        await robot.acquire("LEFT", "tool", 5.0)
+        try:
+            for i, (part, source, buffer_pose, ready_ev) in enumerate([
+                ("part_0", "source_0", "buffer_0", "ready_0"),
+                ("part_1", "source_1", "buffer_1", "ready_1"),
+            ]):
+                if i == 1:
+                    # Wait for empty_0 receipt from consumer
+                    while empty_receipt is None:
+                        await empty_cleared.wait()
+                    rec = empty_receipt
+                    robot.clear_event("empty_0", expected_version=rec.version)
+                    empty_receipt = None
+                    empty_cleared.clear()
+
+                    # D4: join the two second-item checks with gather
+                    obs_l, obs_r = await asyncio.gather(
+                        robot.inspect("LEFT", "line_clear"),
+                        robot.inspect("RIGHT", "receiver_ready"),
+                    )
+                    # Both public Boolean fields must permit transfer
+                    lv = obs_l.value
+                    rv = obs_r.value
+                    if not (isinstance(lv, dict) and lv.get("clear") is True):
+                        raise ContractError("line_clear not clear")
+                    if not (isinstance(rv, dict) and rv.get("ready") is True):
+                        raise ContractError("receiver_ready not ready")
+
+                # Approach source: from left_home (i==0) or left_wait (i==1)
+                start = "left_home" if i == 0 else "left_wait"
+                await robot.move("LEFT", start)
+                await robot.move("LEFT", source)
+                await robot.grasp("LEFT", part)
+
+                # Acquire buffer_lock for buffer entry
+                await robot.acquire("LEFT", "buffer_lock", 5.0)
+                try:
+                    await robot.move("LEFT", buffer_pose)
+                    await robot.release("LEFT", part, buffer_pose)
+                    # Immediately depart buffer
+                    await robot.move("LEFT", "left_wait")
+                finally:
+                    await robot.release_resource("LEFT", "buffer_lock")
+
+                # Publish ready event
+                robot.signal(ready_ev, part)
+
+                # Wait for consumer to clear ready before next iteration
+                await ready_cleared[part].wait()
+                ready_cleared[part].clear()
+
+            # Return to home
+            await robot.move("LEFT", "left_home")
+        finally:
+            # Release tool on every normal/failure/cancellation exit
+            try:
+                await robot.release_resource("LEFT", "tool")
+            except Exception:
+                pass
+
+    # ------------------------------------------------------------------
+    # Consumer (RIGHT arm)
+    # ------------------------------------------------------------------
+    async def consumer() -> None:
+        nonlocal empty_receipt
+        for i, (part, buffer_pose, target, ready_ev) in enumerate([
+            ("part_0", "buffer_0", "target_0", "ready_0"),
+            ("part_1", "buffer_1", "target_1", "ready_1"),
+        ]):
+            # Wait for ready receipt
+            rec = await robot.wait_event(ready_ev, 10.0)
+            ready_receipts[part] = rec
+
+            # Acquire buffer_lock for buffer entry
+            await robot.acquire("RIGHT", "buffer_lock", 5.0)
+            try:
+                # Approach buffer from right_home (i==0) or right_wait (i==1)
+                start = "right_home" if i == 0 else "right_wait"
+                await robot.move("RIGHT", start)
+                await robot.move("RIGHT", buffer_pose)
+                await robot.grasp("RIGHT", part)
+                # Immediately depart buffer
+                await robot.move("RIGHT", "right_wait")
+            finally:
+                await robot.release_resource("RIGHT", "buffer_lock")
+
+            # Carried move to target using the exact active ready receipt
+            await robot.move("RIGHT", target, receipt=rec)
+            await robot.release("RIGHT", part, target)
+            # Depart target
+            await robot.move("RIGHT", "right_wait")
+
+            # Clear ready after carried move, release, and departure
+            robot.clear_event(ready_ev, expected_version=rec.version)
+            ready_receipts[part] = None
+            ready_cleared[part].set()
+
+            # Publish empty_0 after first item
+            if i == 0:
+                empty_receipt = robot.signal("empty_0")
+                empty_cleared.set()
+
+        # Return to home
+        await robot.move("RIGHT", "right_home")
+
+    # ------------------------------------------------------------------
+    # Run producer and consumer concurrently
+    # ------------------------------------------------------------------
+    await asyncio.gather(producer(), consumer())

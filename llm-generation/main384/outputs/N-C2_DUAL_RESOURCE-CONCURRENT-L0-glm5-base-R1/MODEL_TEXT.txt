@@ -1,0 +1,141 @@
+```python
+import asyncio
+import traceback
+from bridge_robot_api import Robot
+
+
+async def _worker(robot: Robot, arm: str, part: str, source: str, target: str,
+                  depart: str, home: str, fixture_acq: asyncio.Future,
+                  tool_acq: asyncio.Future, fixture_rel: asyncio.Future,
+                  tool_rel: asyncio.Future) -> None:
+    """Run one complete placement lane for a single arm.
+
+    Acquisition order is fixed: fixture first, then tool.  Both controllers
+    are released in the reverse order after the arm departs.  The futures
+    serialize acquisition/release across the two concurrent workers so that
+    only one arm owns both controllers at a time.
+    """
+    acquired_fixture = False
+    acquired_tool = False
+    try:
+        # Approach the part from its declared start pose and grasp immediately.
+        await robot.move(arm, home)
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+
+        # Carry the part to its target.
+        await robot.move(arm, target)
+
+        # Acquire fixture, then tool (required order).
+        await asyncio.shield(fixture_acq)
+        acquired_fixture = True
+        await asyncio.shield(tool_acq)
+        acquired_tool = True
+
+        # Release the part onto the target support zone and depart immediately.
+        await robot.release(arm, part, target)
+        await robot.move(arm, depart)
+
+        # Release tool, then fixture (reverse order).
+        if acquired_tool:
+            tool_rel.set_result(None)
+            acquired_tool = False
+        if acquired_fixture:
+            fixture_rel.set_result(None)
+            acquired_fixture = False
+    except asyncio.CancelledError:
+        raise
+    except BaseException:
+        # Best-effort cleanup on any failure: release controllers that this
+        # worker still owns, then propagate.
+        if acquired_tool:
+            try:
+                tool_rel.set_result(None)
+            except asyncio.InvalidStateError:
+                pass
+            acquired_tool = False
+        if acquired_fixture:
+            try:
+                fixture_rel.set_result(None)
+            except asyncio.InvalidStateError:
+                pass
+            acquired_fixture = False
+        raise
+
+
+async def run_task(robot: Robot) -> None:
+    """Concurrent variant B: launch both lane workers concurrently.
+
+    Both workers use the same acquisition order (fixture then tool).  A pair
+    of futures per controller serializes ownership so that only one worker
+    holds both controllers at a time, while the two lanes otherwise proceed
+    concurrently.
+    """
+    loop = asyncio.get_running_loop()
+
+    fixture_acq = loop.create_future()
+    fixture_rel = loop.create_future()
+    tool_acq = loop.create_future()
+    tool_rel = loop.create_future()
+
+    async def fixture_controller() -> None:
+        """Serialize fixture ownership between the two workers."""
+        try:
+            while True:
+                await fixture_acq
+                await robot.acquire("LEFT", "fixture", 30)
+                await fixture_rel
+                await robot.release_resource("LEFT", "fixture")
+
+                # Re-arm futures for the second worker.
+                nonlocal fixture_acq, fixture_rel
+                fixture_acq = loop.create_future()
+                fixture_rel = loop.create_future()
+        except asyncio.CancelledError:
+            pass
+
+    async def tool_controller() -> None:
+        """Serialize tool ownership between the two workers."""
+        try:
+            while True:
+                await tool_acq
+                await robot.acquire("LEFT", "tool", 30)
+                await tool_rel
+                await robot.release_resource("LEFT", "tool")
+
+                nonlocal tool_acq, tool_rel
+                tool_acq = loop.create_future()
+                tool_rel = loop.create_future()
+        except asyncio.CancelledError:
+            pass
+
+    left_worker = _worker(
+        robot, "LEFT", "left_part", "left_source", "left_target",
+        "left_depart", "left_home", fixture_acq, tool_acq,
+        fixture_rel, tool_rel,
+    )
+    right_worker = _worker(
+        robot, "RIGHT", "right_part", "right_source", "right_target",
+        "right_depart", "right_home", fixture_acq, tool_acq,
+        fixture_rel, tool_rel,
+    )
+
+    fc_task = asyncio.ensure_future(fixture_controller())
+    tc_task = asyncio.ensure_future(tool_controller())
+    lw_task = asyncio.ensure_future(left_worker)
+    rw_task = asyncio.ensure_future(right_worker)
+
+    try:
+        await asyncio.gather(lw_task, rw_task)
+    finally:
+        for t in (lw_task, rw_task, fc_task, tc_task):
+            if not t.done():
+                t.cancel()
+        for t in (lw_task, rw_task, fc_task, tc_task):
+            try:
+                await t
+            except asyncio.CancelledError:
+                pass
+            except BaseException:
+                traceback.print_exc()
+```

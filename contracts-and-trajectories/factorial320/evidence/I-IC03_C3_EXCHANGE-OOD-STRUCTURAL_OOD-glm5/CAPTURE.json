@@ -1,0 +1,316 @@
+{
+  "profile": "QUALITY_TYPED_TRACE_DEV_V1",
+  "process": {
+    "status": "NONZERO_EXIT",
+    "returncode": 1,
+    "wall_seconds": 0.055966,
+    "stdout": "",
+    "stderr": "",
+    "stop_reasons": [],
+    "captured_output_bytes": 0,
+    "security_profile": "LINUX_X86_64_BWRAP_SECCOMP_RO_JOB_V1",
+    "candidate_stdout_is_trusted_evidence": false
+  },
+  "child_lifecycle_report": {
+    "kind": "finish",
+    "outcome": "exception",
+    "error": {
+      "type": "AttributeError",
+      "message": "'NoneType' object has no attribute 'version'"
+    }
+  },
+  "execution_lifecycle_complete": false,
+  "trusted_events": [
+    {
+      "index": 0,
+      "time": 0.0,
+      "phase": "complete",
+      "action": "signal",
+      "args": {
+        "event_id": "rq2_gate",
+        "item_id": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            -2,
+            2
+          ],
+          "RIGHT": [
+            3,
+            2,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -3,
+            -2,
+            1
+          ],
+          "right_part": [
+            3,
+            2,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {
+          "left_ready": 0,
+          "right_ready": 0,
+          "rq2_gate": 1
+        },
+        "active_events": {
+          "rq2_gate": {
+            "event_id": "rq2_gate",
+            "item_id": null,
+            "version": 1,
+            "signaled_at": 0.0
+          }
+        },
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7289ac7ab920",
+      "request_id": 1,
+      "result": {
+        "event_id": "rq2_gate",
+        "item_id": null,
+        "version": 1,
+        "signaled_at": 0.0
+      }
+    },
+    {
+      "index": 1,
+      "time": 0.0,
+      "phase": "start",
+      "action": "wait_event",
+      "args": {
+        "event_id": "rq2_gate",
+        "timeout_s": 30
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            -2,
+            2
+          ],
+          "RIGHT": [
+            3,
+            2,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -3,
+            -2,
+            1
+          ],
+          "right_part": [
+            3,
+            2,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {
+          "left_ready": 0,
+          "right_ready": 0,
+          "rq2_gate": 1
+        },
+        "active_events": {
+          "rq2_gate": {
+            "event_id": "rq2_gate",
+            "item_id": null,
+            "version": 1,
+            "signaled_at": 0.0
+          }
+        },
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7289ac7abac0",
+      "request_id": 2,
+      "operation_id": "op_0001"
+    },
+    {
+      "index": 2,
+      "time": 0.0,
+      "phase": "complete",
+      "action": "wait_event",
+      "args": {
+        "event_id": "rq2_gate",
+        "timeout_s": 30
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            -2,
+            2
+          ],
+          "RIGHT": [
+            3,
+            2,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -3,
+            -2,
+            1
+          ],
+          "right_part": [
+            3,
+            2,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {
+          "left_ready": 0,
+          "right_ready": 0,
+          "rq2_gate": 1
+        },
+        "active_events": {
+          "rq2_gate": {
+            "event_id": "rq2_gate",
+            "item_id": null,
+            "version": 1,
+            "signaled_at": 0.0
+          }
+        },
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7289ac7abac0",
+      "request_id": 2,
+      "operation_id": "op_0001",
+      "result": {
+        "event_id": "rq2_gate",
+        "item_id": null,
+        "version": 1,
+        "signaled_at": 0.0
+      }
+    }
+  ],
+  "call_audit": [
+    {
+      "request_id": 1,
+      "action": "signal",
+      "proposed_at": 0.0,
+      "before_event_count": 0,
+      "wire_args": [
+        "rq2_gate",
+        null
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "event_id": "rq2_gate",
+        "item_id": null
+      },
+      "outcome": "RETURNED",
+      "started": false,
+      "committed": true,
+      "event_indices": [
+        0
+      ],
+      "finished_at": 0.0,
+      "after_event_count": 1
+    },
+    {
+      "request_id": 2,
+      "action": "wait_event",
+      "proposed_at": 0.0,
+      "before_event_count": 1,
+      "wire_args": [
+        "rq2_gate",
+        30
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "event_id": "rq2_gate",
+        "timeout_s": 30
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        1,
+        2
+      ],
+      "finished_at": 0.0,
+      "after_event_count": 3
+    }
+  ],
+  "call_audit_complete": true,
+  "trusted_api_errors": [],
+  "safety_label": null,
+  "source_scope": "SELF_AUTHORED_DEVELOPMENT_ONLY"
+}

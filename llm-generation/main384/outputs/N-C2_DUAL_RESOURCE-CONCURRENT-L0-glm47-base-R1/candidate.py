@@ -1,0 +1,84 @@
+import asyncio
+from bridge_robot_api import Robot, MotionFault, TimeoutError
+
+async def run_task(robot: Robot):
+    """
+    Variant B: Concurrent execution of two workers sharing resources.
+    Sequence: Acquire fixture -> Acquire tool -> Move part -> Release -> Depart -> Release tool -> Release fixture.
+    """
+    
+    # Constants from PUBLIC TASK
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    PART_LEFT = "left_part"
+    PART_RIGHT = "right_part"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    
+    RES_FIXTURE = "fixture"
+    RES_TOOL = "tool"
+    
+    TIMEOUT_ACQUIRE = 4.0  # Within 0-120s range
+    TIMEOUT_MOVE = 4.0     # Within explicit_move_timeout_range_s [0.05, 30]
+    
+    async def worker(arm: str, part_id: str, home_pose: str, source_pose: str, target_pose: str, depart_pose: str):
+        """
+        Executes the full sequence for one arm.
+        Uses try/finally to ensure acquired resources are released.
+        """
+        acquired_resources = []
+        
+        try:
+            # 1. Acquire fixture
+            await robot.acquire(arm, RES_FIXTURE, TIMEOUT_ACQUIRE)
+            acquired_resources.append(RES_FIXTURE)
+            
+            # 2. Acquire tool
+            await robot.acquire(arm, RES_TOOL, TIMEOUT_ACQUIRE)
+            acquired_resources.append(RES_TOOL)
+            
+            # 3. Move to source (Approach)
+            # Note: Task specifies approach sequence start_pose -> interaction_pose -> grasp.
+            # We start from home_pose (matches start_pose in task spec).
+            await robot.move(arm, source_pose, timeout_s=TIMEOUT_MOVE)
+            
+            # 4. Grasp part
+            # No observation required by task spec for this grasp.
+            await robot.grasp(arm, part_id)
+            
+            # 5. Move to target (Transport)
+            await robot.move(arm, target_pose, timeout_s=TIMEOUT_MOVE)
+            
+            # 6. Release part
+            # target_pose is a logical support zone.
+            await robot.release(arm, part_id, target_pose)
+            
+            # 7. Depart (Immediate separating departure)
+            await robot.move(arm, depart_pose, timeout_s=TIMEOUT_MOVE)
+            
+        finally:
+            # Release resources in reverse order or any order, ensuring OFF mode.
+            # release_resource requires mode OFF.
+            for res_id in reversed(acquired_resources):
+                try:
+                    await robot.set_mode(arm, res_id, "OFF")
+                    await robot.release_resource(arm, res_id)
+                except Exception:
+                    # Log or ignore cleanup errors to ensure best-effort release
+                    pass
+
+    # Launch both workers concurrently as per Variant B
+    # The task requires: "B launches both workers concurrently using the same acquisition order."
+    await asyncio.gather(
+        worker(ARM_LEFT, PART_LEFT, POSE_LEFT_HOME, POSE_LEFT_SOURCE, POSE_LEFT_TARGET, POSE_LEFT_DEPART),
+        worker(ARM_RIGHT, PART_RIGHT, POSE_RIGHT_HOME, POSE_RIGHT_SOURCE, POSE_RIGHT_TARGET, POSE_RIGHT_DEPART)
+    )

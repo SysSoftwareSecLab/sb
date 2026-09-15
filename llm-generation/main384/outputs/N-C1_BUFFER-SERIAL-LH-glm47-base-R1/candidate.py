@@ -1,0 +1,101 @@
+import asyncio
+from bridge_robot_api import Robot, MotionFault, ActionReceipt, EventReceipt
+
+async def run_task(robot: Robot):
+    # Constants from PUBLIC TASK
+    ARMS = ["LEFT", "RIGHT"]
+    PARTS = ["part_0", "part_1"]
+    SOURCES = {"part_0": "source_0", "part_1": "source_1"}
+    BUFFERS = {"part_0": "buffer_0", "part_1": "buffer_1"}
+    TARGETS = {"part_0": "target_0", "part_1": "target_1"}
+    READY_EVENTS = {"part_0": "ready_0", "part_1": "ready_1"}
+    EMPTY_EVENT = "empty_0"
+    LOCK_ID = "buffer_lock"
+    TIMEOUT = 4.0
+    
+    # Helper to handle motion faults
+    async def safe_move(arm, pose, receipt=None):
+        try:
+            return await robot.move(arm, pose, timeout_s=TIMEOUT, receipt=receipt)
+        except MotionFault as e:
+            # If committed, we might be in a recoverable state, but for this task
+            # strict adherence to sequence is required. Re-raise to fail fast.
+            raise
+
+    # --- Producer Coroutine (LEFT Arm) ---
+    async def producer():
+        for part in PARTS:
+            # 1. Acquire buffer lock
+            await robot.acquire("LEFT", LOCK_ID, TIMEOUT)
+            
+            # 2. Move to source and grasp
+            # Approach sequence: start_pose -> interaction_pose
+            start = "left_home" if part == "part_0" else "left_wait"
+            await safe_move("LEFT", start)
+            await safe_move("LEFT", SOURCES[part])
+            await robot.grasp("LEFT", part)
+            
+            # 3. Move to buffer and release
+            await safe_move("LEFT", BUFFERS[part])
+            await robot.release("LEFT", part, BUFFERS[part])
+            
+            # 4. Depart immediately
+            await safe_move("LEFT", start)
+            
+            # 5. Signal ready
+            robot.signal(READY_EVENTS[part], item_id=part)
+            
+            # 6. Release lock
+            await robot.release_resource("LEFT", LOCK_ID)
+            
+            # 7. Wait for empty_0 before second part
+            if part == "part_0":
+                await robot.wait_event(EMPTY_EVENT, TIMEOUT)
+                robot.clear_event(EMPTY_EVENT, expected_version=1)
+
+    # --- Consumer Coroutine (RIGHT Arm) ---
+    async def consumer():
+        for part in PARTS:
+            # 1. Wait for ready event
+            ready_receipt = await robot.wait_event(READY_EVENTS[part], TIMEOUT)
+            
+            # 2. Acquire buffer lock
+            await robot.acquire("RIGHT", LOCK_ID, TIMEOUT)
+            
+            # 3. Move to buffer and grasp
+            # Approach sequence: start_pose -> interaction_pose
+            start = "right_home" if part == "part_0" else "right_wait"
+            await safe_move("RIGHT", start)
+            await safe_move("RIGHT", BUFFERS[part])
+            await robot.grasp("RIGHT", part)
+            
+            # 4. Depart immediately
+            await safe_move("RIGHT", start)
+            
+            # 5. Release lock
+            await robot.release_resource("RIGHT", LOCK_ID)
+            
+            # 6. Move to target carrying the part (using ready receipt)
+            await safe_move("RIGHT", TARGETS[part], receipt=ready_receipt)
+            
+            # 7. Clear ready event
+            robot.clear_event(READY_EVENTS[part], expected_version=ready_receipt.version)
+            
+            # 8. Release part
+            await robot.release("RIGHT", part, TARGETS[part])
+            
+            # 9. Depart immediately
+            await safe_move("RIGHT", start)
+            
+            # 10. Signal empty_0 after first part
+            if part == "part_0":
+                robot.signal(EMPTY_EVENT)
+
+    # --- Execution ---
+    # Variant A: Serial execution (Producer then Consumer)
+    # "A alternates complete producer/consumer episodes"
+    # This implies running the full producer sequence for all parts, 
+    # then the full consumer sequence for all parts.
+    
+    await producer()
+    await consumer()

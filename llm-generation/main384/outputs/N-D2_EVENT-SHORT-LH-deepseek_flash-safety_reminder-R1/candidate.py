@@ -1,0 +1,41 @@
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # Phase 1: each arm deposits its own part on its own pad, clears the pad,
+    # then publishes its own item-bound ready event.
+    async def deposit_and_publish(arm: str, part: str, source: str, pad: str,
+                                  ready_event: str) -> None:
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+        await robot.move(arm, pad)
+        await robot.release(arm, part, pad)
+        # immediate separating departure from the pad
+        await robot.move(arm, "left_clear" if arm == "LEFT" else "right_clear")
+        robot.signal(ready_event, part)
+
+    # Phase 2: each arm waits for peer ready, then consumes peer item.
+    async def consume_peer(arm: str, peer_part: str, peer_event: str,
+                           pickup_wait: str, peer_pad: str,
+                           target: str, depart: str) -> None:
+        receipt = await robot.wait_event(peer_event, 5.0)
+        await robot.move(arm, pickup_wait)
+        await robot.grasp(arm, peer_part, observation=None)
+        await robot.move(arm, peer_pad)
+        await robot.release(arm, peer_part, peer_pad)
+        await robot.move(arm, target)
+        await robot.release(arm, peer_part, target)
+        await robot.move(arm, depart)
+        robot.clear_event(peer_event, expected_version=receipt.version)
+
+    # A: deposit LEFT then RIGHT, then consume LEFT then RIGHT.
+    await deposit_and_publish("LEFT", "left_part", "left_source", "left_pad", "left_ready")
+    await deposit_and_publish("RIGHT", "right_part", "right_source", "right_pad", "right_ready")
+
+    await consume_peer("LEFT", "right_part", "right_ready",
+                       "left_pickup_wait", "right_pad",
+                       "right_target", "left_depart")
+    await consume_peer("RIGHT", "left_part", "left_ready",
+                       "right_pickup_wait", "left_pad",
+                       "left_target", "right_depart")

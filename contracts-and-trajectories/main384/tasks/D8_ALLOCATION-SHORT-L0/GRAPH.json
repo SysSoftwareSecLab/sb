@@ -1,0 +1,26 @@
+{
+  "axis": "DEPENDENCY_DISTANCE",
+  "level": "SHORT",
+  "layout_relation": "DEVELOPMENT_BASELINE",
+  "object_count": 1,
+  "resource_count": 0,
+  "event_count": 0,
+  "observation_count": 1,
+  "state_count": 0,
+  "cross_arm_dependency": false,
+  "reachable_functions": [
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "grasp": 1,
+    "inspect": 2,
+    "move": 3,
+    "release": 1
+  },
+  "for_nodes": 0,
+  "if_nodes": 0,
+  "gather_nodes": 0,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "signature": "1a88ab6f83b0e1f4eb6d3ce0fc451c87002ecbb7722e36f0ffb38c9cfcc2cd51"
+}

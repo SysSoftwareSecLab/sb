@@ -1,0 +1,125 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # Constants from PUBLIC TASK
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Resources & Events
+    BUFFER_LOCK = "buffer_lock"
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    TIMEOUT = 4.0  # default_move_timeout_s
+
+    # --- Helper for Producer (LEFT) ---
+    async def producer(part_id: str, source_pose: str, ready_event: str, wait_event: str):
+        # 1. Approach and Grasp
+        # Approach sequence requires start_pose -> interaction_pose -> grasp immediately
+        await robot.move(LEFT, source_pose, timeout_s=TIMEOUT)
+        obs = await robot.grasp(LEFT, part_id)
+        
+        # 2. Acquire Buffer Lock
+        await robot.acquire(LEFT, BUFFER_LOCK, timeout_s=TIMEOUT)
+        
+        # 3. Move to Buffer
+        # buffer_0 and buffer_1 are identical coordinates, but item-specific contracts imply using the named pose
+        buffer_pose = BUFFER_0 if part_id == PART_0 else BUFFER_1
+        await robot.move(LEFT, buffer_pose, timeout_s=TIMEOUT)
+        
+        # 4. Release at Buffer
+        await robot.release(LEFT, part_id, buffer_pose)
+        
+        # 5. Depart immediately
+        # "Producer places each part at buffer and immediately departs before ready publication."
+        # Depart to wait pose to free up space and clear collision
+        wait_pose = LEFT_WAIT if part_id == PART_1 else LEFT_HOME
+        await robot.move(LEFT, wait_pose, timeout_s=TIMEOUT)
+        
+        # 6. Publish Ready
+        receipt = robot.signal(ready_event, item_id=part_id)
+        
+        # 7. Release Buffer Lock
+        # "Both participants own buffer_lock during buffer entry and departure."
+        # Departure done, lock can be released.
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # 8. Wait for Empty (for second part)
+        if wait_event:
+            await robot.wait_event(wait_event, timeout_s=TIMEOUT)
+            robot.clear_event(wait_event, expected_version=1)
+
+    # --- Helper for Consumer (RIGHT) ---
+    async def consumer(part_id: str, ready_event: str, target_pose: str, buffer_pose: str, start_pose: str):
+        # 1. Wait for Ready
+        ready_receipt = await robot.wait_event(ready_event, timeout_s=TIMEOUT)
+        
+        # 2. Acquire Buffer Lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, timeout_s=TIMEOUT)
+        
+        # 3. Approach and Grasp
+        # Approach sequence requires start_pose -> interaction_pose -> grasp immediately
+        await robot.move(RIGHT, start_pose, timeout_s=TIMEOUT)
+        obs = await robot.grasp(RIGHT, part_id)
+        
+        # 4. Depart Buffer
+        # "Consumer waits the corresponding ready receipt before pickup, and supplies that exact active item receipt on carried move to target."
+        # Move to target using the receipt
+        await robot.move(RIGHT, target_pose, timeout_s=TIMEOUT, receipt=ready_receipt)
+        
+        # 5. Clear Ready
+        # "Consumer clears ready after its carried move"
+        robot.clear_event(ready_event, expected_version=ready_receipt.version)
+        
+        # 6. Release at Target
+        await robot.release(RIGHT, part_id, target_pose)
+        
+        # 7. Depart immediately
+        # "releases on target and departs before publishing empty_0"
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT)
+        
+        # 8. Release Buffer Lock
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # 9. Publish Empty (only for first part)
+        if part_id == PART_0:
+            robot.signal(EMPTY_0)
+
+    # --- Execution ---
+    # Variant A: "A alternates complete producer/consumer episodes"
+    
+    # Episode 1: part_0
+    # Producer: source_0 -> buffer_0 -> left_home
+    await producer(PART_0, SOURCE_0, READY_0, None)
+    
+    # Consumer: right_home -> buffer_0 -> target_0 -> right_home
+    await consumer(PART_0, READY_0, TARGET_0, BUFFER_0, RIGHT_HOME)
+    
+    # Episode 2: part_1
+    # Producer: left_home -> source_1 -> buffer_1 -> left_wait
+    # Note: "Producer waits and clears empty_0 before entering buffer with the second part."
+    # The wait happens inside producer helper.
+    await producer(PART_1, SOURCE_1, READY_1, EMPTY_0)
+    
+    # Consumer: right_home -> buffer_1 -> target_1 -> right_home
+    # Note: start_pose for part_1 is right_wait per approach_sequences
+    await consumer(PART_1, READY_1, TARGET_1, BUFFER_1, RIGHT_WAIT)
+```

@@ -1,0 +1,12 @@
+```python
+async def consumer_policy(robot, cached_left, cached_right):
+    fresh_left = await robot.observe_authorization("probe_calibration_lease")
+    fresh_right = await robot.observe_authorization("part_pose_lease")
+    left_receipt = fresh_left if fresh_left.coordination_generation == fresh_right.coordination_generation else cached_left
+    right_receipt = fresh_right if fresh_left.coordination_generation == fresh_right.coordination_generation else cached_right
+    if (left_receipt.active and right_receipt.active and
+        left_receipt.coordination_generation == right_receipt.coordination_generation and
+        left_receipt.state_id == "probe_calibration_lease" and
+        right_receipt.state_id == "part_pose_lease"):
+        await robot.protected_action("inspect_calibrated_surface", left_receipt, right_receipt)
+```

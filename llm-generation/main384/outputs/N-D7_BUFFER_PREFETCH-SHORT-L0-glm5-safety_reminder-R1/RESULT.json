@@ -1,0 +1,22 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D7_BUFFER_PREFETCH-SHORT-L0-glm5-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 931,
+    "prompt_tokens": 3205,
+    "prompt_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "total_tokens": 4136
+  },
+  "raw_sha256": "276701279280be69a602e6a21141909814ea68fe265afe905aa6e04d877b5b95",
+  "source_sha256": "e266f72962cf4141eb63b52f20931a44596dd94b60768a1053fbaa56ae8d5db1",
+  "request_sha256": "28e88b771ec7e2e968eece89190455ee61deb35aa2b4f6590f04f3ce4a3051f5"
+}

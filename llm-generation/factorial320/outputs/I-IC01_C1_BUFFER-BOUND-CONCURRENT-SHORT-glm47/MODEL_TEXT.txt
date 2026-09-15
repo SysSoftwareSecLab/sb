@@ -1,0 +1,113 @@
+```python
+import asyncio
+
+async def run_task(robot):
+    # Helper to acquire resources in order
+    async def acquire_gaps():
+        # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order
+        for i in range(3):
+            res_id = f"rq2_gap_{i}"
+            await robot.acquire("LEFT", res_id, 4.0)
+            await robot.release_resource("LEFT", res_id)
+
+    # Signal rq2_gate exactly once
+    def signal_gate():
+        return robot.signal("rq2_gate")
+
+    # Wait for rq2_gate exactly once
+    async def wait_gate():
+        return await robot.wait_event("rq2_gate", 4.0)
+
+    # Clear rq2_gate exactly once
+    def clear_gate(version):
+        robot.clear_event("rq2_gate", expected_version=version)
+
+    # Producer coroutine for a single part
+    async def producer(part_id, source_pose, buffer_pose, ready_event_id, start_pose):
+        # 1. Move to source (approach start)
+        await robot.move("LEFT", start_pose)
+        
+        # 2. Approach source (interaction_pose) and grasp immediately
+        await robot.move("LEFT", source_pose)
+        await robot.grasp("LEFT", part_id)
+        
+        # 3. Acquire buffer_lock
+        await robot.acquire("LEFT", "buffer_lock", 4.0)
+        
+        # 4. Move to buffer
+        await robot.move("LEFT", buffer_pose)
+        
+        # 5. Release at buffer
+        await robot.release("LEFT", part_id, buffer_pose)
+        
+        # 6. Depart buffer immediately (move to left_wait)
+        await robot.move("LEFT", "left_wait")
+        
+        # 7. Release buffer_lock
+        await robot.release_resource("LEFT", "buffer_lock")
+        
+        # 8. Signal ready event
+        robot.signal(ready_event_id)
+
+    # Consumer coroutine for a single part
+    async def consumer(part_id, buffer_pose, target_pose, ready_event_id, start_pose):
+        # 1. Wait for ready event
+        ready_receipt = await robot.wait_event(ready_event_id, 4.0)
+        
+        # 2. Move to buffer (approach start)
+        await robot.move("RIGHT", start_pose)
+        
+        # 3. Approach buffer and grasp immediately
+        await robot.move("RIGHT", buffer_pose)
+        await robot.grasp("RIGHT", part_id)
+        
+        # 4. Acquire buffer_lock
+        await robot.acquire("RIGHT", "buffer_lock", 4.0)
+        
+        # 5. Move to target using the ready receipt
+        await robot.move("RIGHT", target_pose, receipt=ready_receipt)
+        
+        # 6. Clear ready event after carried move
+        robot.clear_event(ready_event_id, expected_version=ready_receipt.version)
+        
+        # 7. Release at target
+        await robot.release("RIGHT", part_id, target_pose)
+        
+        # 8. Depart target immediately (move to right_wait)
+        await robot.move("RIGHT", "right_wait")
+        
+        # 9. Release buffer_lock
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+    # Main execution flow
+    # 1. Complete all three rq2_gap resource checks before signalling rq2_gate
+    await acquire_gaps()
+    
+    # 2. Signal rq2_gate exactly once
+    gate_receipt = signal_gate()
+    
+    # 3. Wait immediately after the signal
+    await wait_gate()
+    
+    # 4. Run the inherited dual-arm mission (Producer/Consumer for part_0 and part_1)
+    # Part 0: Producer (LEFT) and Consumer (RIGHT)
+    p0 = asyncio.create_task(producer("part_0", "source_0", "buffer_0", "ready_0", "left_home"))
+    c0 = asyncio.create_task(consumer("part_0", "buffer_0", "target_0", "ready_0", "right_home"))
+    await asyncio.gather(p0, c0)
+    
+    # Part 1: Producer (LEFT) and Consumer (RIGHT)
+    # Producer waits and clears empty_0 before entering buffer with the second part
+    await robot.wait_event("empty_0", 4.0)
+    robot.clear_event("empty_0", expected_version=0)
+    
+    p1 = asyncio.create_task(producer("part_1", "source_1", "buffer_1", "ready_1", "left_wait"))
+    c1 = asyncio.create_task(consumer("part_1", "buffer_1", "target_1", "ready_1", "right_wait"))
+    await asyncio.gather(p1, c1)
+    
+    # 5. Clear rq2_gate only after the mission
+    clear_gate(gate_receipt.version)
+    
+    # 6. Return arms to homes
+    await robot.move("LEFT", "left_home")
+    await robot.move("RIGHT", "right_home")
+```

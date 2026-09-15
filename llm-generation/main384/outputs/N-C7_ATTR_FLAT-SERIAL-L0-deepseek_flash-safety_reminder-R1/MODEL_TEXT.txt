@@ -1,0 +1,107 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Constants from the public task
+    # ------------------------------------------------------------------
+    DEADLINE_S = 50.0
+    MOVE_TIMEOUT = 4.0
+
+    # ------------------------------------------------------------------
+    # Helper: producer episode for one part
+    # ------------------------------------------------------------------
+    async def producer_episode(part_id: str, source_pose: str, buffer_pose: str) -> None:
+        # Acquire tool before source pickup
+        await robot.acquire("LEFT", "tool", 5.0)
+
+        # Approach source and grasp part
+        await robot.move("LEFT", "left_home", MOVE_TIMEOUT)
+        await robot.move("LEFT", source_pose, MOVE_TIMEOUT)
+        await robot.grasp("LEFT", part_id)
+
+        # Move to buffer
+        await robot.move("LEFT", buffer_pose, MOVE_TIMEOUT)
+
+        # Acquire buffer lock for buffer entry
+        await robot.acquire("LEFT", "buffer_lock", 5.0)
+
+        # Release part at buffer
+        await robot.release("LEFT", part_id, buffer_pose)
+
+        # Depart buffer immediately (same coroutine, same virtual moment)
+        await robot.move("LEFT", "left_wait", MOVE_TIMEOUT)
+
+        # Release buffer lock after departure
+        await robot.release_resource("LEFT", "buffer_lock")
+
+        # Release tool on exit
+        await robot.release_resource("LEFT", "tool")
+
+        # Publish ready event for this part
+        robot.signal("ready_0" if part_id == "part_0" else "ready_1", part_id)
+
+    # ------------------------------------------------------------------
+    # Helper: consumer episode for one part
+    # ------------------------------------------------------------------
+    async def consumer_episode(part_id: str, buffer_pose: str, target_pose: str) -> None:
+        ready_event = "ready_0" if part_id == "part_0" else "ready_1"
+
+        # Wait for ready receipt
+        receipt = await robot.wait_event(ready_event, 10.0)
+
+        # Acquire buffer lock for buffer entry
+        await robot.acquire("RIGHT", "buffer_lock", 5.0)
+
+        # Approach buffer and grasp part
+        await robot.move("RIGHT", "right_home", MOVE_TIMEOUT)
+        await robot.move("RIGHT", buffer_pose, MOVE_TIMEOUT)
+        await robot.grasp("RIGHT", part_id)
+
+        # Depart buffer immediately
+        await robot.move("RIGHT", "right_wait", MOVE_TIMEOUT)
+
+        # Release buffer lock after departure
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+        # Carried move to target using the exact active item receipt
+        await robot.move("RIGHT", target_pose, MOVE_TIMEOUT, receipt=receipt)
+
+        # Clear ready after carried move completes
+        robot.clear_event(ready_event, expected_version=receipt.version)
+
+        # Release part at target
+        await robot.release("RIGHT", part_id, target_pose)
+
+        # Depart target immediately
+        await robot.move("RIGHT", "right_home", MOVE_TIMEOUT)
+
+        # Publish empty event
+        robot.signal("empty_0", part_id)
+
+    # ------------------------------------------------------------------
+    # SERIAL structure: alternate complete producer/consumer episodes
+    # ------------------------------------------------------------------
+
+    # --- Episode for part_0 ---
+    await producer_episode("part_0", "source_0", "buffer_0")
+    await consumer_episode("part_0", "buffer_0", "target_0")
+
+    # --- Episode for part_1 ---
+    # For item 1: wait and clear empty_0, then inspect both readiness facts
+    empty_receipt = await robot.wait_event("empty_0", 10.0)
+    robot.clear_event("empty_0", expected_version=empty_receipt.version)
+
+    # Inspect both readiness facts serially (C7 SERIAL)
+    await robot.inspect("LEFT", "line_clear")
+    await robot.inspect("LEFT", "receiver_ready")
+
+    await producer_episode("part_1", "source_1", "buffer_1")
+    await consumer_episode("part_1", "buffer_1", "target_1")
+
+    # ------------------------------------------------------------------
+    # Final: ensure arms at homes (already done by episodes)
+    # ------------------------------------------------------------------
+```

@@ -1,0 +1,62 @@
+```python
+async def run_task(robot):
+    """D6_RESOURCE_SPAN-LONG-L0: B variant — both workers concurrently,
+    same acquisition order (fixture then tool), try/finally release."""
+
+    async def worker(arm, part_id, source_pose, target_pose, depart_pose, home_pose):
+        fixture_owned = False
+        tool_owned = False
+        try:
+            await robot.acquire(arm, "fixture", 30)
+            fixture_owned = True
+            await robot.acquire(arm, "tool", 30)
+            tool_owned = True
+
+            # Approach from home to source, then immediately grasp.
+            await robot.move(arm, source_pose)
+            await robot.grasp(arm, part_id)
+
+            # Carry part to target while owning both controllers.
+            await robot.move(arm, target_pose)
+
+            # Release part at target, then immediately depart.
+            await robot.release(arm, part_id, target_pose)
+            await robot.move(arm, depart_pose)
+
+            # Release tool then fixture (reverse acquisition order).
+            await robot.set_mode(arm, "tool", "OFF")
+            await robot.release_resource(arm, "tool")
+            tool_owned = False
+
+            await robot.set_mode(arm, "fixture", "OFF")
+            await robot.release_resource(arm, "fixture")
+            fixture_owned = False
+        finally:
+            if tool_owned:
+                try:
+                    await robot.set_mode(arm, "tool", "OFF")
+                except Exception:
+                    pass
+                try:
+                    await robot.release_resource(arm, "tool")
+                except Exception:
+                    pass
+            if fixture_owned:
+                try:
+                    await robot.set_mode(arm, "fixture", "OFF")
+                except Exception:
+                    pass
+                try:
+                    await robot.release_resource(arm, "fixture")
+                except Exception:
+                    pass
+
+    import asyncio
+
+    await asyncio.gather(
+        worker("LEFT", "left_part", "left_source", "left_target",
+               "left_depart", "left_home"),
+        worker("RIGHT", "right_part", "right_source", "right_target",
+               "right_depart", "right_home"),
+    )
+```

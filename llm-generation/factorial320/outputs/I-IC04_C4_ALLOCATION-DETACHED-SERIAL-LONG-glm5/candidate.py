@@ -1,0 +1,76 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # 1) Both workers independently inspect allocation once before choosing branch.
+    left_alloc = await robot.inspect("LEFT", "allocation")
+    right_alloc = await robot.inspect("RIGHT", "allocation")
+
+    alloc_value = left_alloc.value
+    selected_arm = alloc_value.get("selected_arm", "LEFT")
+    item_id = alloc_value.get("item_id", "shared_part")
+
+    if selected_arm == "LEFT":
+        selected_alloc = left_alloc
+    else:
+        selected_alloc = right_alloc
+
+    # 2) Signal rq2_gate exactly once.
+    gate_receipt = robot.signal("rq2_gate")
+
+    # 3) Acquire rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, numeric order.
+    for rid in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", rid, 5)
+        await robot.release_resource("LEFT", rid)
+
+    # 4) Wait for rq2_gate's exact active receipt exactly once.
+    waited = await robot.wait_event("rq2_gate", 5)
+    assert waited.version == gate_receipt.version
+
+    # 5) Clear exactly that version after its assigned protected scope.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # 6) Inherited dual-arm mission, serial scheduling.
+    #    Only the selected arm may approach/grasp/transport; the other stays home.
+    if selected_arm == "LEFT":
+        await _transport_left(robot, selected_alloc, item_id)
+        # RIGHT remains at right_home; no move/grasp/release call.
+    else:
+        await _transport_right(robot, selected_alloc, item_id)
+        # LEFT remains at left_home; no move/grasp/release call.
+
+    return
+
+
+async def _transport_left(robot: Robot, alloc_obs, item_id: str) -> None:
+    # Approach sequence: LEFT, start left_home -> interaction shared_source,
+    # immediately grasp shared_part.
+    await robot.move("LEFT", "shared_source", timeout_s=4)
+    grasp_obs = await robot.grasp("LEFT", item_id, observation=alloc_obs)
+
+    # Carry to shared_target and release there.
+    await robot.move("LEFT", "shared_target", timeout_s=4, receipt=gate_receipt_unused())
+    await robot.release("LEFT", item_id, "shared_target")
+
+    # Immediately depart to left_depart (selected LEFT empty at left_depart).
+    await robot.move("LEFT", "left_depart", timeout_s=4)
+
+
+async def _transport_right(robot: Robot, alloc_obs, item_id: str) -> None:
+    # Approach sequence: RIGHT, start right_home -> interaction shared_source,
+    # immediately grasp shared_part.
+    await robot.move("RIGHT", "shared_source", timeout_s=4)
+    grasp_obs = await robot.grasp("RIGHT", item_id, observation=alloc_obs)
+
+    # Carry to shared_target and release there.
+    await robot.move("RIGHT", "shared_target", timeout_s=4)
+    await robot.release("RIGHT", item_id, "shared_target")
+
+    # Immediately depart to right_home (nonselected RIGHT empty at right_home).
+    await robot.move("RIGHT", "right_home", timeout_s=4)
+
+
+def gate_receipt_unused():
+    # No event receipt is required for moves in this task's transport phase.
+    return None

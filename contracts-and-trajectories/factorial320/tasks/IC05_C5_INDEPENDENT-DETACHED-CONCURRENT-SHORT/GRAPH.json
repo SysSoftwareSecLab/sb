@@ -1,0 +1,36 @@
+{
+  "task_id": "IC05_C5_INDEPENDENT-DETACHED-CONCURRENT-SHORT",
+  "family_cluster": "IC05_C5_INDEPENDENT",
+  "block": "RQ2_FACTORIAL",
+  "coupling": "DETACHED",
+  "schedule": "CONCURRENT",
+  "dependency_distance": "SHORT",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "_rq2_spacing",
+    "left",
+    "right",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 1,
+    "clear_event": 1,
+    "grasp": 2,
+    "move": 6,
+    "release": 2,
+    "release_resource": 1,
+    "signal": 1,
+    "wait_event": 1
+  },
+  "for_nodes": 1,
+  "if_nodes": 1,
+  "gather_nodes": 2,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 215,
+  "source_chars": 1381,
+  "source_lines": 30,
+  "signature": "a46265e9ef25cc9f1e7ffd91897c5517aa01cdc1c6d8eca4158cbd46a2386d98"
+}

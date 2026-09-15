@@ -1,0 +1,99 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, MotionFault, TimeoutError
+
+async def run_task(robot: Robot):
+    """
+    D6_RESOURCE_SPAN-LONG-L0 Implementation.
+    Strategy: Concurrent workers (B) with strict acquisition order (fixture then tool).
+    """
+    
+    # Constants from PUBLIC TASK
+    FIXTURE = "fixture"
+    TOOL = "tool"
+    MODE_OFF = "OFF"
+    
+    # Timeout for acquiring resources (0-120s)
+    ACQUIRE_TIMEOUT = 10.0
+    
+    async def worker(arm: str, home: str, source: str, target: str, depart: str, part_id: str):
+        """
+        Executes the full sequence for one arm:
+        1. Acquire Fixture -> Tool.
+        2. Move to Source, Grasp Part.
+        3. Move to Target, Release Part.
+        4. Move to Depart.
+        5. Release Tool -> Fixture.
+        """
+        # Local tracking for try/finally release
+        owned_fixture = False
+        owned_tool = False
+        
+        try:
+            # 1. Acquire Resources (Strict Order: Fixture then Tool)
+            await robot.acquire(arm, FIXTURE, ACQUIRE_TIMEOUT)
+            owned_fixture = True
+            
+            await robot.acquire(arm, TOOL, ACQUIRE_TIMEOUT)
+            owned_tool = True
+            
+            # 2. Approach and Grasp
+            # Approach sequence: start_pose -> interaction_pose
+            await robot.move(arm, source)
+            # Immediate grasp required by approach sequence
+            await robot.grasp(arm, part_id)
+            
+            # 3. Transport and Release
+            # Move to target (support zone)
+            await robot.move(arm, target)
+            # Release part at support zone
+            await robot.release(arm, part_id, target)
+            
+            # 4. Departure
+            # Immediate separating departure
+            await robot.move(arm, depart)
+            
+        except Exception:
+            # Propagate errors to be handled by gather or outer scope
+            raise
+        finally:
+            # 5. Release Resources (Reverse Order: Tool then Fixture)
+            # Ensure we release whatever was acquired successfully
+            if owned_tool:
+                # Must be OFF to release
+                await robot.set_mode(arm, TOOL, MODE_OFF)
+                await robot.release_resource(arm, TOOL)
+            
+            if owned_fixture:
+                # Must be OFF to release
+                await robot.set_mode(arm, FIXTURE, MODE_OFF)
+                await robot.release_resource(arm, FIXTURE)
+
+    # Launch both workers concurrently
+    # Left Worker
+    left_task = asyncio.create_task(
+        worker(
+            arm="LEFT",
+            home="left_home",
+            source="left_source",
+            target="left_target",
+            depart="left_depart",
+            part_id="left_part"
+        )
+    )
+    
+    # Right Worker
+    right_task = asyncio.create_task(
+        worker(
+            arm="RIGHT",
+            home="right_home",
+            source="right_source",
+            target="right_target",
+            depart="right_depart",
+            part_id="right_part"
+        )
+    )
+    
+    # Wait for both to complete
+    await asyncio.gather(left_task, right_task)
+```

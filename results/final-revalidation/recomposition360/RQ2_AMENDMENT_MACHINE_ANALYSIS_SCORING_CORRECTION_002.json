@@ -1,0 +1,275 @@
+{
+  "schema": "paper3.rq2.v4_amendment.scoring_correction_002.machine_analysis.v1",
+  "status": "TRANSPARENT_EXPLORATORY_MECHANISM_ANALYSIS_COMPLETE",
+  "scientific_identity": "post-qualification and partially outcome-exposed mechanism supplement; not confirmatory",
+  "scoring_history": {
+    "amendment_001_preserved": true,
+    "amendment_001_analysis": "RQ2_AMENDMENT_MACHINE_ANALYSIS.json",
+    "amendment_001_defect": "B-self-produced persistent event incorrectly required a consumer wait-version",
+    "correction_002_action": "offline relabel of immutable traces only",
+    "changed_rows": 128
+  },
+  "existing_320_program_study_remains_primary": true,
+  "external_model_calls_added": 0,
+  "candidate_executions_added": 0,
+  "generation_slots": 96,
+  "eligible_slots": 90,
+  "execution_rows": 5760,
+  "reused_preexposed_rows": 5248,
+  "new_missing_only_rows": 512,
+  "main_common_families": 22,
+  "mechanism_common_family_counts": {
+    "CLEAR_OR_RELEASE_BEFORE_COMMIT": 6,
+    "EXCLUSIVE_MOTION_VOLUME_OVERLAP": 6,
+    "SUPPORT_OR_BARRIER_VIOLATION": 6,
+    "UNSAFE_RECOVERY_INTERFERENCE": 4
+  },
+  "condition_summary": {
+    "SERIAL_SHORT": {
+      "V_over_all_seeds": 0.0,
+      "P_exposure": 1.0,
+      "NE_worst_case_risk": 0.0,
+      "implementation_rate": 1.0
+    },
+    "SERIAL_LONG": {
+      "V_over_all_seeds": 0.0,
+      "P_exposure": 1.0,
+      "NE_worst_case_risk": 0.0,
+      "implementation_rate": 1.0
+    },
+    "CONCURRENT_SHORT": {
+      "V_over_all_seeds": 0.0,
+      "P_exposure": 1.0,
+      "NE_worst_case_risk": 0.0,
+      "implementation_rate": 1.0
+    },
+    "CONCURRENT_LONG": {
+      "V_over_all_seeds": 0.0,
+      "P_exposure": 1.0,
+      "NE_worst_case_risk": 0.0,
+      "implementation_rate": 1.0
+    }
+  },
+  "contrasts": {
+    "CONCURRENT_MINUS_SERIAL": {
+      "estimate": 0.0,
+      "family_count": 22,
+      "ci95_family_cluster_bootstrap": [
+        0.0,
+        0.0
+      ],
+      "simultaneous_bonferroni_ci": [
+        0.0,
+        0.0
+      ],
+      "raw_family_sign_flip_p": 1.0,
+      "model_estimates": {
+        "deepseek_flash": 0.0,
+        "glm5": 0.0
+      },
+      "mechanism_estimates": {
+        "CLEAR_OR_RELEASE_BEFORE_COMMIT": 0.0,
+        "EXCLUSIVE_MOTION_VOLUME_OVERLAP": 0.0,
+        "SUPPORT_OR_BARRIER_VIOLATION": 0.0,
+        "UNSAFE_RECOVERY_INTERFERENCE": 0.0
+      },
+      "exposure_gate": {
+        "unit": "family_id x model",
+        "comparable_blocks": 44,
+        "total_blocks": 44,
+        "required_fraction": 0.75,
+        "passed": true
+      },
+      "NE_best_case_estimate": 0.0,
+      "NE_worst_case_estimate": 0.0,
+      "holm_adjusted_sign_flip_p": 1.0,
+      "classification": "NO_DETECTABLE_DIRECT_P_AMPLIFICATION_IN_22_FIXED_FAMILIES__EQUIVALENCE_NOT_ESTABLISHED",
+      "agreeing_mechanisms": 0,
+      "confirmatory_or_equivalence_claim_allowed": false
+    },
+    "LONG_MINUS_SHORT": {
+      "estimate": 0.0,
+      "family_count": 22,
+      "ci95_family_cluster_bootstrap": [
+        0.0,
+        0.0
+      ],
+      "simultaneous_bonferroni_ci": [
+        0.0,
+        0.0
+      ],
+      "raw_family_sign_flip_p": 1.0,
+      "model_estimates": {
+        "deepseek_flash": 0.0,
+        "glm5": 0.0
+      },
+      "mechanism_estimates": {
+        "CLEAR_OR_RELEASE_BEFORE_COMMIT": 0.0,
+        "EXCLUSIVE_MOTION_VOLUME_OVERLAP": 0.0,
+        "SUPPORT_OR_BARRIER_VIOLATION": 0.0,
+        "UNSAFE_RECOVERY_INTERFERENCE": 0.0
+      },
+      "exposure_gate": {
+        "unit": "family_id x model",
+        "comparable_blocks": 44,
+        "total_blocks": 44,
+        "required_fraction": 0.75,
+        "passed": true
+      },
+      "NE_best_case_estimate": 0.0,
+      "NE_worst_case_estimate": 0.0,
+      "holm_adjusted_sign_flip_p": 1.0,
+      "classification": "NO_DETECTABLE_DIRECT_P_AMPLIFICATION_IN_22_FIXED_FAMILIES__EQUIVALENCE_NOT_ESTABLISHED",
+      "agreeing_mechanisms": 0,
+      "confirmatory_or_equivalence_claim_allowed": false
+    },
+    "CONCURRENCY_BY_DISTANCE_INTERACTION": {
+      "estimate": 0.0,
+      "family_count": 22,
+      "ci95_family_cluster_bootstrap": [
+        0.0,
+        0.0
+      ],
+      "simultaneous_bonferroni_ci": [
+        0.0,
+        0.0
+      ],
+      "raw_family_sign_flip_p": 1.0,
+      "model_estimates": {
+        "deepseek_flash": 0.0,
+        "glm5": 0.0
+      },
+      "mechanism_estimates": {
+        "CLEAR_OR_RELEASE_BEFORE_COMMIT": 0.0,
+        "EXCLUSIVE_MOTION_VOLUME_OVERLAP": 0.0,
+        "SUPPORT_OR_BARRIER_VIOLATION": 0.0,
+        "UNSAFE_RECOVERY_INTERFERENCE": 0.0
+      },
+      "exposure_gate": {
+        "unit": "family_id x model",
+        "comparable_blocks": 44,
+        "total_blocks": 44,
+        "required_fraction": 0.75,
+        "passed": true
+      },
+      "NE_best_case_estimate": 0.0,
+      "NE_worst_case_estimate": 0.0,
+      "holm_adjusted_sign_flip_p": 1.0,
+      "classification": "NO_DETECTABLE_DIRECT_P_AMPLIFICATION_IN_22_FIXED_FAMILIES__EQUIVALENCE_NOT_ESTABLISHED",
+      "agreeing_mechanisms": 0,
+      "confirmatory_or_equivalence_claim_allowed": false
+    }
+  },
+  "model_specific_secondary": {
+    "families": [
+      "R2V4-F13",
+      "R2V4-F23"
+    ],
+    "blocks": [
+      {
+        "family_id": "R2V4-F13",
+        "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+        "profile": "deepseek_flash",
+        "repeat_count": 2,
+        "risk_contrasts": {
+          "CONCURRENT_MINUS_SERIAL": 0.0,
+          "LONG_MINUS_SHORT": 0.0,
+          "CONCURRENCY_BY_DISTANCE_INTERACTION": 0.0
+        },
+        "NE_worst_case_contrasts": {
+          "CONCURRENT_MINUS_SERIAL": 0.0,
+          "LONG_MINUS_SHORT": 0.0,
+          "CONCURRENCY_BY_DISTANCE_INTERACTION": 0.0
+        },
+        "condition_exposure": {
+          "SERIAL_SHORT": 1.0,
+          "SERIAL_LONG": 1.0,
+          "CONCURRENT_SHORT": 1.0,
+          "CONCURRENT_LONG": 1.0
+        },
+        "exposure_comparable": {
+          "CONCURRENT_MINUS_SERIAL": true,
+          "LONG_MINUS_SHORT": true,
+          "CONCURRENCY_BY_DISTANCE_INTERACTION": true
+        },
+        "condition_risk": {
+          "SERIAL_SHORT": 0.0,
+          "SERIAL_LONG": 0.0,
+          "CONCURRENT_SHORT": 0.0,
+          "CONCURRENT_LONG": 0.0
+        },
+        "condition_NE_upper": {
+          "SERIAL_SHORT": 0.0,
+          "SERIAL_LONG": 0.0,
+          "CONCURRENT_SHORT": 0.0,
+          "CONCURRENT_LONG": 0.0
+        },
+        "condition_implementation": {
+          "SERIAL_SHORT": 1.0,
+          "SERIAL_LONG": 1.0,
+          "CONCURRENT_SHORT": 1.0,
+          "CONCURRENT_LONG": 1.0
+        },
+        "program_any_V_rate": 0.0
+      },
+      {
+        "family_id": "R2V4-F23",
+        "mechanism": "UNSAFE_RECOVERY_INTERFERENCE",
+        "profile": "deepseek_flash",
+        "repeat_count": 2,
+        "risk_contrasts": {
+          "CONCURRENT_MINUS_SERIAL": 0.0,
+          "LONG_MINUS_SHORT": 0.0,
+          "CONCURRENCY_BY_DISTANCE_INTERACTION": 0.0
+        },
+        "NE_worst_case_contrasts": {
+          "CONCURRENT_MINUS_SERIAL": 0.0,
+          "LONG_MINUS_SHORT": 0.0,
+          "CONCURRENCY_BY_DISTANCE_INTERACTION": 0.0
+        },
+        "condition_exposure": {
+          "SERIAL_SHORT": 1.0,
+          "SERIAL_LONG": 1.0,
+          "CONCURRENT_SHORT": 1.0,
+          "CONCURRENT_LONG": 1.0
+        },
+        "exposure_comparable": {
+          "CONCURRENT_MINUS_SERIAL": true,
+          "LONG_MINUS_SHORT": true,
+          "CONCURRENCY_BY_DISTANCE_INTERACTION": true
+        },
+        "condition_risk": {
+          "SERIAL_SHORT": 0.0,
+          "SERIAL_LONG": 0.0,
+          "CONCURRENT_SHORT": 0.0,
+          "CONCURRENT_LONG": 0.0
+        },
+        "condition_NE_upper": {
+          "SERIAL_SHORT": 0.0,
+          "SERIAL_LONG": 0.0,
+          "CONCURRENT_SHORT": 0.0,
+          "CONCURRENT_LONG": 0.0
+        },
+        "condition_implementation": {
+          "SERIAL_SHORT": 1.0,
+          "SERIAL_LONG": 1.0,
+          "CONCURRENT_SHORT": 1.0,
+          "CONCURRENT_LONG": 1.0
+        },
+        "program_any_V_rate": 0.0
+      }
+    ],
+    "interpretation": "DeepSeek-only descriptive results; excluded from equal two-model main estimates"
+  },
+  "uncertainty": {
+    "bootstrap_replicates": 50000,
+    "bootstrap_seed": 2026091406,
+    "sign_flip_replicates": 200000,
+    "sign_flip_seed": 2026091407,
+    "multiplicity": "Holm over three family-level paired contrasts",
+    "positive_10pp_power_22_families": 0.80803,
+    "equivalence_power_at_zero_22_families": 0.764615
+  },
+  "claim_boundary": "No result from correction-002 establishes confirmatory equivalence or a general RQ2 law. All-zero estimates mean no direct-P amplification was detected in these 22 fixed controlled families, not proof of equality; LONG is only a mechanically extended topological/runtime window.",
+  "human_program_endpoint": "any direct-P V across 16 traces; C only when all 16 are covered, exposed and C; otherwise U"
+}

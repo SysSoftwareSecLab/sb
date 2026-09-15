@@ -1,0 +1,25 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "I-IC01_C1_BUFFER-BOUND-CONCURRENT-SHORT-glm52",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5.2",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 803,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 3493,
+    "prompt_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "total_tokens": 4296
+  },
+  "raw_sha256": "06dd68abe34610c561308de6dc6dc11d74298dd1d34e5e1fcf1f0cd383272960",
+  "request_sha256": "6dd4a033def9d3101c75612b7566a71eec84fb11fa3e9405e697d1d5f8410056",
+  "source_sha256": "aea86573eef278b5a927528659c1a57c7de256c48bea0ca842b5d32ea5fb5ba0"
+}

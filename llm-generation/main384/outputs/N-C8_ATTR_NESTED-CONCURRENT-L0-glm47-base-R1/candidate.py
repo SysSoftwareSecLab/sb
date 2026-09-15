@@ -1,0 +1,199 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # Constants from task
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Items
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Resources
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Durations
+    MOVE_TIME = 1.0
+    
+    # Helper to wait for event and return receipt
+    async def get_event_receipt(event_id: str, timeout_s: float) -> EventReceipt:
+        return await robot.wait_event(event_id, timeout_s)
+
+    # Helper to clear event
+    def clear_event_by_receipt(receipt: EventReceipt) -> None:
+        robot.clear_event(receipt.event_id, expected_version=receipt.version)
+
+    # --- COROUTINES ---
+
+    async def producer_part_0():
+        # 1. Acquire tool
+        await robot.acquire(LEFT, TOOL, 4.0)
+        
+        # 2. Move to source_0 and grasp part_0
+        await robot.move(LEFT, SOURCE_0, timeout_s=4.0)
+        await robot.grasp(LEFT, PART_0)
+        
+        # 3. Acquire buffer_lock
+        await robot.acquire(LEFT, BUFFER_LOCK, 4.0)
+        
+        # 4. Move to buffer_0 and release part_0
+        await robot.move(LEFT, BUFFER_0, timeout_s=4.0)
+        await robot.release(LEFT, PART_0, BUFFER_0)
+        
+        # 5. Depart buffer (move to left_wait) immediately
+        await robot.move(LEFT, LEFT_WAIT, timeout_s=4.0)
+        
+        # 6. Release buffer_lock
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # 7. Signal ready_0
+        ready_0_receipt = robot.signal(READY_0, item_id=PART_0)
+        
+        # 8. Release tool
+        await robot.release_resource(LEFT, TOOL)
+        
+        return ready_0_receipt
+
+    async def producer_part_1():
+        # 1. Wait for empty_0
+        empty_0_receipt = await get_event_receipt(EMPTY_0, 50.0)
+        
+        # 2. Clear empty_0
+        clear_event_by_receipt(empty_0_receipt)
+        
+        # 3. Acquire tool
+        await robot.acquire(LEFT, TOOL, 4.0)
+        
+        # 4. Move to source_1 and grasp part_1
+        await robot.move(LEFT, SOURCE_1, timeout_s=4.0)
+        await robot.grasp(LEFT, PART_1)
+        
+        # 5. Acquire buffer_lock
+        await robot.acquire(LEFT, BUFFER_LOCK, 4.0)
+        
+        # 6. Move to buffer_1 and release part_1
+        await robot.move(LEFT, BUFFER_1, timeout_s=4.0)
+        await robot.release(LEFT, PART_1, BUFFER_1)
+        
+        # 7. Depart buffer (move to left_home) immediately
+        await robot.move(LEFT, LEFT_HOME, timeout_s=4.0)
+        
+        # 8. Release buffer_lock
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # 9. Signal ready_1
+        robot.signal(READY_1, item_id=PART_1)
+        
+        # 10. Release tool
+        await robot.release_resource(LEFT, TOOL)
+
+    async def consumer_part_0(ready_0_receipt: EventReceipt):
+        # 1. Wait for ready_0 receipt (passed in, but wait_event validates it's active)
+        # The spec says "Consumer waits the corresponding ready receipt".
+        # We await wait_event to ensure synchronization and get the active receipt object.
+        active_ready_0 = await get_event_receipt(READY_0, 50.0)
+        
+        # 2. Acquire buffer_lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, 4.0)
+        
+        # 3. Move to buffer_0 and grasp part_0
+        await robot.move(RIGHT, BUFFER_0, timeout_s=4.0)
+        await robot.grasp(RIGHT, PART_0)
+        
+        # 4. Depart buffer (move to right_wait) immediately
+        await robot.move(RIGHT, RIGHT_WAIT, timeout_s=4.0)
+        
+        # 5. Release buffer_lock
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # 6. Move to target_0 using the active_ready_0 receipt
+        await robot.move(RIGHT, TARGET_0, timeout_s=4.0, receipt=active_ready_0)
+        
+        # 7. Clear ready_0
+        clear_event_by_receipt(active_ready_0)
+        
+        # 8. Release part_0
+        await robot.release(RIGHT, PART_0, TARGET_0)
+        
+        # 9. Depart target (move to right_home) immediately
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=4.0)
+        
+        # 10. Signal empty_0
+        robot.signal(EMPTY_0)
+
+    async def consumer_part_1():
+        # 1. Wait for ready_1
+        active_ready_1 = await get_event_receipt(READY_1, 50.0)
+        
+        # 2. Acquire buffer_lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, 4.0)
+        
+        # 3. Move to buffer_1 and grasp part_1
+        await robot.move(RIGHT, BUFFER_1, timeout_s=4.0)
+        await robot.grasp(RIGHT, PART_1)
+        
+        # 4. Depart buffer (move to right_wait) immediately
+        await robot.move(RIGHT, RIGHT_WAIT, timeout_s=4.0)
+        
+        # 5. Release buffer_lock
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # 6. Move to target_1 using the active_ready_1 receipt
+        await robot.move(RIGHT, TARGET_1, timeout_s=4.0, receipt=active_ready_1)
+        
+        # 7. Clear ready_1
+        clear_event_by_receipt(active_ready_1)
+        
+        # 8. Release part_1
+        await robot.release(RIGHT, PART_1, TARGET_1)
+        
+        # 9. Depart target (move to right_home) immediately
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=4.0)
+
+    # --- EXECUTION ---
+
+    # Start Producer Part 0
+    prod_0_task = asyncio.create_task(producer_part_0())
+    
+    # Wait for Producer Part 0 to signal ready_0
+    ready_0_receipt = await prod_0_task
+    
+    # Start Consumer Part 0 (needs the receipt)
+    cons_0_task = asyncio.create_task(consumer_part_0(ready_0_receipt))
+    
+    # Start Producer Part 1 (runs concurrently with Consumer Part 0)
+    prod_1_task = asyncio.create_task(producer_part_1())
+    
+    # Wait for Consumer Part 0 to finish (signals empty_0)
+    await cons_0_task
+    
+    # Start Consumer Part 1 (waits for ready_1, which happens after prod_1 finishes)
+    cons_1_task = asyncio.create_task(consumer_part_1())
+    
+    # Wait for remaining tasks
+    await prod_1_task
+    await cons_1_task

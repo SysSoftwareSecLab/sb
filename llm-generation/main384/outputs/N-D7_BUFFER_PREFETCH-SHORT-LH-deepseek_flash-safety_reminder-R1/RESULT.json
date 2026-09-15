@@ -1,0 +1,25 @@
+{
+  "status": "NONPARSEABLE_SOURCE_OR_NONCODE_RESPONSE",
+  "syntax_valid": false,
+  "entry_present": false,
+  "syntax_error_line": 1,
+  "slot_id": "N-D7_BUFFER_PREFETCH-SHORT-LH-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "length",
+  "usage": {
+    "prompt_tokens": 3405,
+    "completion_tokens": 8192,
+    "total_tokens": 11597,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1741
+  },
+  "raw_sha256": "cb402736a0d6a666aff75c2fcbb7ee052577e75823a41bdb530f31dba9d7fdff",
+  "source_sha256": "639cd6c3cb9ce0d65d718b4647263d3e1cd720cd4ec17f32987fabc59b9183a4",
+  "request_sha256": "1148cbede3efbae5898f9848f59574f59d654bb383ad4fbfba687878befa9d93"
+}

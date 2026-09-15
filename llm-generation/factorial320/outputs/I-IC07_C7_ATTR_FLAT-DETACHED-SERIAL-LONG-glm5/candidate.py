@@ -1,0 +1,78 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # ---- Phase 1: rq2_gate protocol (serial) ----
+    gate_receipt = robot.signal("rq2_gate")
+    await robot.acquire("LEFT", "rq2_gap_0", 120)
+    await robot.release_resource("LEFT", "rq2_gap_0")
+    await robot.acquire("LEFT", "rq2_gap_1", 120)
+    await robot.release_resource("LEFT", "rq2_gap_1")
+    await robot.acquire("LEFT", "rq2_gap_2", 120)
+    await robot.release_resource("LEFT", "rq2_gap_2")
+    gate_wait = await robot.wait_event("rq2_gate", 120)
+    if gate_wait.version != gate_receipt.version:
+        raise RuntimeError("rq2_gate receipt version mismatch")
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # ---- Phase 2: inherited dual-arm buffer mission (serial) ----
+    # Episode A: part_0 LEFT producer -> RIGHT consumer
+    await robot.acquire("LEFT", "tool", 120)
+    await robot.move("LEFT", "source_0")
+    await robot.grasp("LEFT", "part_0")
+    await robot.move("LEFT", "left_wait")
+    await robot.acquire("LEFT", "buffer_lock", 120)
+    await robot.move("LEFT", "buffer_0")
+    await robot.release("LEFT", "part_0", "buffer_0")
+    await robot.move("LEFT", "left_wait")
+    await robot.release_resource("LEFT", "buffer_lock")
+    ready_receipt_0 = robot.signal("ready_0")
+    await robot.release_resource("LEFT", "tool")
+
+    await robot.acquire("RIGHT", "buffer_lock", 120)
+    await robot.move("RIGHT", "right_wait")
+    await robot.move("RIGHT", "buffer_0")
+    await robot.grasp("RIGHT", "part_0")
+    await robot.move("RIGHT", "right_wait")
+    await robot.release_resource("RIGHT", "buffer_lock")
+    await robot.move("RIGHT", "target_0", receipt=ready_receipt_0)
+    robot.clear_event("ready_0", expected_version=ready_receipt_0.version)
+    await robot.release("RIGHT", "part_0", "target_0")
+    await robot.move("RIGHT", "right_home")
+    empty_receipt_0 = robot.signal("empty_0")
+
+    # Episode B: part_1 LEFT producer -> RIGHT consumer
+    await robot.acquire("LEFT", "tool", 120)
+    await robot.move("LEFT", "left_home")
+    empty_wait_0 = await robot.wait_event("empty_0", 120)
+    if empty_wait_0.version != empty_receipt_0.version:
+        raise RuntimeError("empty_0 receipt version mismatch")
+    robot.clear_event("empty_0", expected_version=empty_receipt_0.version)
+
+    # Inspect both readiness facts serially after clearing empty_0.
+    await robot.inspect("LEFT", "line_clear")
+    await robot.inspect("LEFT", "receiver_ready")
+
+    await robot.move("LEFT", "source_1")
+    await robot.grasp("LEFT", "part_1")
+    await robot.move("LEFT", "left_wait")
+    await robot.acquire("LEFT", "buffer_lock", 120)
+    await robot.move("LEFT", "buffer_1")
+    await robot.release("LEFT", "part_1", "buffer_1")
+    await robot.move("LEFT", "left_wait")
+    await robot.release_resource("LEFT", "buffer_lock")
+    ready_receipt_1 = robot.signal("ready_1")
+    await robot.release_resource("LEFT", "tool")
+
+    await robot.acquire("RIGHT", "buffer_lock", 120)
+    await robot.move("RIGHT", "right_wait")
+    await robot.move("RIGHT", "buffer_1")
+    await robot.grasp("RIGHT", "part_1")
+    await robot.move("RIGHT", "right_wait")
+    await robot.release_resource("RIGHT", "buffer_lock")
+    await robot.move("RIGHT", "target_1", receipt=ready_receipt_1)
+    robot.clear_event("ready_1", expected_version=ready_receipt_1.version)
+    await robot.release("RIGHT", "part_1", "target_1")
+    await robot.move("RIGHT", "right_home")
+    await robot.move("LEFT", "left_home")

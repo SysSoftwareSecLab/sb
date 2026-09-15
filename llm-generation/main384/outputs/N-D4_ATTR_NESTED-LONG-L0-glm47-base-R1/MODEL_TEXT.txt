@@ -1,0 +1,177 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    EMPTY_EVENT = "empty_0"
+    
+    # Pose mappings
+    POSES = {
+        "left_home": "left_home",
+        "left_wait": "left_wait",
+        "right_home": "right_home",
+        "right_wait": "right_wait",
+        "source_0": "source_0",
+        "source_1": "source_1",
+        "buffer_0": "buffer_0",
+        "buffer_1": "buffer_1",
+        "target_0": "target_0",
+        "target_1": "target_1",
+    }
+    
+    # Items
+    ITEMS = ["part_0", "part_1"]
+    
+    # Helper to release tool safely
+    async def release_tool_safely(arm: str):
+        try:
+            await robot.set_mode(arm, TOOL, "OFF")
+            await robot.release_resource(arm, TOOL)
+        except Exception:
+            pass
+
+    # Producer Coroutine (LEFT)
+    async def producer():
+        try:
+            for i, item_id in enumerate(ITEMS):
+                source_pose = POSES[f"source_{i}"]
+                buffer_pose = POSES[f"buffer_{i}"]
+                ready_event = f"ready_{i}"
+                
+                # LONG variant: Acquire tool before source pickup
+                await robot.acquire(LEFT, TOOL, 120.0)
+                
+                # Wait for empty_0 before second item entry
+                if i == 1:
+                    empty_receipt = await robot.wait_event(EMPTY_EVENT, 120.0)
+                    robot.clear_event(EMPTY_EVENT, expected_version=empty_receipt.version)
+                
+                # Approach and Grasp
+                await robot.move(LEFT, source_pose)
+                await robot.grasp(LEFT, item_id)
+                
+                # Acquire buffer lock
+                await robot.acquire(LEFT, BUFFER_LOCK, 120.0)
+                
+                # Move to buffer and release
+                await robot.move(LEFT, buffer_pose)
+                await robot.release(LEFT, item_id, buffer_pose)
+                
+                # Depart buffer (immediate separating departure)
+                # Move to left_wait for part_1, left_home for part_0
+                depart_pose = POSES["left_wait"] if i == 1 else POSES["left_home"]
+                await robot.move(LEFT, depart_pose)
+                
+                # Release buffer lock
+                await robot.release_resource(LEFT, BUFFER_LOCK)
+                
+                # Signal ready
+                robot.signal(ready_event, item_id)
+                
+                # Release tool
+                await release_tool_safely(LEFT)
+                
+        except Exception:
+            await release_tool_safely(LEFT)
+            raise
+
+    # Consumer Coroutine (RIGHT)
+    async def consumer():
+        try:
+            for i, item_id in enumerate(ITEMS):
+                buffer_pose = POSES[f"buffer_{i}"]
+                target_pose = POSES[f"target_{i}"]
+                ready_event = f"ready_{i}"
+                
+                # Wait for ready event
+                ready_receipt = await robot.wait_event(ready_event, 120.0)
+                
+                # Acquire buffer lock
+                await robot.acquire(RIGHT, BUFFER_LOCK, 120.0)
+                
+                # Approach and Grasp
+                # Approach sequence requires start from right_home/right_wait
+                start_pose = POSES["right_wait"] if i == 1 else POSES["right_home"]
+                await robot.move(RIGHT, start_pose)
+                await robot.move(RIGHT, buffer_pose)
+                await robot.grasp(RIGHT, item_id)
+                
+                # Depart buffer
+                await robot.move(RIGHT, start_pose)
+                
+                # Release buffer lock
+                await robot.release_resource(RIGHT, BUFFER_LOCK)
+                
+                # LONG variant: Acquire tool after wait and checks
+                # For part_0, checks are not required, but spec says "SHORT acquires... LONG acquires before source pickup".
+                # Consumer does not pick up from source. 
+                # "LEFT owns tool during every buffer placement." (Producer)
+                # "SHORT acquires tool only after any second-item wait and checks; LONG acquires before source pickup and keeps it across that wait and checks."
+                # This implies Consumer (RIGHT) might not need tool, or the rule applies to the arm doing the checks.
+                # The checks are done by LEFT and RIGHT (D4 joins them).
+                # "LEFT owns tool during every buffer placement." -> Producer owns it.
+                # Consumer logic does not explicitly require tool ownership for move, but "Release tool on every normal... exit" implies we might hold it.
+                # However, "LEFT owns tool during every buffer placement" suggests exclusive ownership by LEFT during that phase.
+                # Let's assume Consumer does not need tool unless specified. The "Release tool" instruction might be generic for the controller.
+                # Re-reading: "LEFT owns tool during every buffer placement." -> Producer has it.
+                # Consumer moves to target. Does it need tool? Not specified.
+                # But "Release tool on every normal... exit" suggests if we acquired it, we release it.
+                # Given "LONG acquires before source pickup", and Consumer doesn't do source pickup, Consumer likely doesn't acquire tool.
+                # Wait, "For the second item... inspect line_clear with LEFT and receiver_ready with RIGHT".
+                # This implies RIGHT does an inspect. Inspect doesn't require tool.
+                # I will proceed without Consumer acquiring tool, as Producer holds it during buffer interaction.
+                
+                # Second item checks (D4: gather)
+                if i == 1:
+                    # Inspect line_clear (LEFT) and receiver_ready (RIGHT)
+                    # Note: Consumer is RIGHT. It can inspect receiver_ready.
+                    # But spec says "inspect line_clear with LEFT and receiver_ready with RIGHT".
+                    # This implies coordination or parallel execution.
+                    # Since we are in Consumer coroutine (RIGHT), we can do the RIGHT inspect.
+                    # Who does the LEFT inspect? The Producer coroutine (LEFT) is idle or waiting?
+                    # "A alternates... B runs producer and consumer coroutines together."
+                    # "D4 joins them with asyncio.gather inside the i == 1 loop branch before transfer."
+                    # This suggests the Consumer coroutine (which controls the transfer logic) should trigger both checks.
+                    # But robot methods are bound to an arm. `robot.inspect("LEFT", ...)` is valid.
+                    
+                    obs_lc = robot.inspect(LEFT, "line_clear")
+                    obs_rr = robot.inspect(RIGHT, "receiver_ready")
+                    
+                    # Wait for both inspections
+                    results = await asyncio.gather(obs_lc, obs_rr)
+                    
+                    # Check values
+                    lc_val = results[0].value
+                    rr_val = results[1].value
+                    
+                    if not lc_val.get("clear") or not rr_val.get("ready"):
+                        raise ValueError("Second item checks failed")
+                
+                # Move to target with receipt
+                await robot.move(RIGHT, target_pose, receipt=ready_receipt)
+                
+                # Clear ready event
+                robot.clear_event(ready_event, expected_version=ready_receipt.version)
+                
+                # Release on target
+                await robot.release(RIGHT, item_id, target_pose)
+                
+                # Depart target
+                await robot.move(RIGHT, POSES["right_home"])
+                
+                # Signal empty_0
+                robot.signal(EMPTY_EVENT)
+                
+        except Exception:
+            # Release tool if we somehow acquired it (defensive)
+            await release_tool_safely(RIGHT)
+            raise
+
+    # Run both coroutines
+    await asyncio.gather(producer(), consumer())
+```

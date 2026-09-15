@@ -1,0 +1,65 @@
+{
+  "automatic_adjudication": false,
+  "fields": {
+    "gap_update_outcome": {
+      "cohen_kappa": 1.0,
+      "exact": 96,
+      "proportion": 1.0,
+      "reviewer_1_counts": {
+        "C": 49,
+        "NE": 43,
+        "V": 4
+      },
+      "reviewer_2_counts": {
+        "C": 49,
+        "NE": 43,
+        "V": 4
+      },
+      "total": 96
+    },
+    "interface": {
+      "cohen_kappa": 1.0,
+      "exact": 96,
+      "proportion": 1.0,
+      "reviewer_1_counts": {
+        "INVALID": 4,
+        "VALID": 92
+      },
+      "reviewer_2_counts": {
+        "INVALID": 4,
+        "VALID": 92
+      },
+      "total": 96
+    },
+    "no_update_outcome": {
+      "cohen_kappa": 1.0,
+      "exact": 96,
+      "proportion": 1.0,
+      "reviewer_1_counts": {
+        "C": 94,
+        "NE": 2
+      },
+      "reviewer_2_counts": {
+        "C": 94,
+        "NE": 2
+      },
+      "total": 96
+    },
+    "stable_pair_strategy": {
+      "cohen_kappa": 1.0,
+      "exact": 96,
+      "proportion": 1.0,
+      "reviewer_1_counts": {
+        "ABSENT": 8,
+        "PRESENT": 88
+      },
+      "reviewer_2_counts": {
+        "ABSENT": 8,
+        "PRESENT": 88
+      },
+      "total": 96
+    }
+  },
+  "schema": "paper3.rq2.coherent_pair.human_agreement.v1",
+  "status": "EXACT_CONSENSUS"
+}

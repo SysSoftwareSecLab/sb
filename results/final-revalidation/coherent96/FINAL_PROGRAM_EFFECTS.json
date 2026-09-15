@@ -1,0 +1,4130 @@
+[
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-05-base-deepseek_flash",
+    "stratum": "handover",
+    "task_id": "CP-05"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": false,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-17-base-glm5",
+    "stratum": "inspection",
+    "task_id": "CP-17"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-05-base-glm5",
+    "stratum": "handover",
+    "task_id": "CP-05"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-13-base-deepseek_flash",
+    "stratum": "shared_resource",
+    "task_id": "CP-13"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.75,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 1.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.25
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-17-base-deepseek_flash",
+    "stratum": "inspection",
+    "task_id": "CP-17"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-13-base-glm5",
+    "stratum": "shared_resource",
+    "task_id": "CP-13"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-09-base-deepseek_flash",
+    "stratum": "insertion",
+    "task_id": "CP-09"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-01-base-deepseek_flash",
+    "stratum": "assembly",
+    "task_id": "CP-01"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-09-base-glm5",
+    "stratum": "insertion",
+    "task_id": "CP-09"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-01-base-glm5",
+    "stratum": "assembly",
+    "task_id": "CP-01"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-19-explicit-glm5",
+    "stratum": "inspection",
+    "task_id": "CP-19"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-18-explicit-deepseek_flash",
+    "stratum": "inspection",
+    "task_id": "CP-18"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-23-explicit-glm5",
+    "stratum": "packaging",
+    "task_id": "CP-23"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-12-explicit-deepseek_flash",
+    "stratum": "insertion",
+    "task_id": "CP-12"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-17-explicit-deepseek_flash",
+    "stratum": "inspection",
+    "task_id": "CP-17"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": false,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-21-base-glm5",
+    "stratum": "packaging",
+    "task_id": "CP-21"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-24-base-glm5",
+    "stratum": "packaging",
+    "task_id": "CP-24"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-20-explicit-deepseek_flash",
+    "stratum": "inspection",
+    "task_id": "CP-20"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.75,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 1.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.25
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-03-base-glm5",
+    "stratum": "assembly",
+    "task_id": "CP-03"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-18-base-deepseek_flash",
+    "stratum": "inspection",
+    "task_id": "CP-18"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-06-explicit-glm5",
+    "stratum": "handover",
+    "task_id": "CP-06"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.75,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 1.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.25
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-13-explicit-glm5",
+    "stratum": "shared_resource",
+    "task_id": "CP-13"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-08-base-deepseek_flash",
+    "stratum": "handover",
+    "task_id": "CP-08"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-23-explicit-deepseek_flash",
+    "stratum": "packaging",
+    "task_id": "CP-23"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-11-explicit-deepseek_flash",
+    "stratum": "insertion",
+    "task_id": "CP-11"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-07-explicit-deepseek_flash",
+    "stratum": "handover",
+    "task_id": "CP-07"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-05-explicit-glm5",
+    "stratum": "handover",
+    "task_id": "CP-05"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-14-base-glm5",
+    "stratum": "shared_resource",
+    "task_id": "CP-14"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-08-explicit-deepseek_flash",
+    "stratum": "handover",
+    "task_id": "CP-08"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-06-explicit-deepseek_flash",
+    "stratum": "handover",
+    "task_id": "CP-06"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-13-explicit-deepseek_flash",
+    "stratum": "shared_resource",
+    "task_id": "CP-13"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-04-base-glm5",
+    "stratum": "assembly",
+    "task_id": "CP-04"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-07-explicit-glm5",
+    "stratum": "handover",
+    "task_id": "CP-07"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-07-base-glm5",
+    "stratum": "handover",
+    "task_id": "CP-07"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-22-base-glm5",
+    "stratum": "packaging",
+    "task_id": "CP-22"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-23-base-deepseek_flash",
+    "stratum": "packaging",
+    "task_id": "CP-23"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-01-explicit-deepseek_flash",
+    "stratum": "assembly",
+    "task_id": "CP-01"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-02-explicit-deepseek_flash",
+    "stratum": "assembly",
+    "task_id": "CP-02"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-15-explicit-deepseek_flash",
+    "stratum": "shared_resource",
+    "task_id": "CP-15"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-17-explicit-glm5",
+    "stratum": "inspection",
+    "task_id": "CP-17"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-06-base-glm5",
+    "stratum": "handover",
+    "task_id": "CP-06"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-09-explicit-deepseek_flash",
+    "stratum": "insertion",
+    "task_id": "CP-09"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-14-base-deepseek_flash",
+    "stratum": "shared_resource",
+    "task_id": "CP-14"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.75,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 1.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.25
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-02-base-glm5",
+    "stratum": "assembly",
+    "task_id": "CP-02"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-04-explicit-glm5",
+    "stratum": "assembly",
+    "task_id": "CP-04"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-16-explicit-glm5",
+    "stratum": "shared_resource",
+    "task_id": "CP-16"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-04-base-deepseek_flash",
+    "stratum": "assembly",
+    "task_id": "CP-04"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-10-base-deepseek_flash",
+    "stratum": "insertion",
+    "task_id": "CP-10"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-11-explicit-glm5",
+    "stratum": "insertion",
+    "task_id": "CP-11"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-08-explicit-glm5",
+    "stratum": "handover",
+    "task_id": "CP-08"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-11-base-deepseek_flash",
+    "stratum": "insertion",
+    "task_id": "CP-11"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-10-explicit-glm5",
+    "stratum": "insertion",
+    "task_id": "CP-10"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-03-explicit-deepseek_flash",
+    "stratum": "assembly",
+    "task_id": "CP-03"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-24-explicit-glm5",
+    "stratum": "packaging",
+    "task_id": "CP-24"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-20-explicit-glm5",
+    "stratum": "inspection",
+    "task_id": "CP-20"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-21-explicit-deepseek_flash",
+    "stratum": "packaging",
+    "task_id": "CP-21"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-19-base-glm5",
+    "stratum": "inspection",
+    "task_id": "CP-19"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-03-explicit-glm5",
+    "stratum": "assembly",
+    "task_id": "CP-03"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-19-explicit-deepseek_flash",
+    "stratum": "inspection",
+    "task_id": "CP-19"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-05-explicit-deepseek_flash",
+    "stratum": "handover",
+    "task_id": "CP-05"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-01-explicit-glm5",
+    "stratum": "assembly",
+    "task_id": "CP-01"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-22-explicit-glm5",
+    "stratum": "packaging",
+    "task_id": "CP-22"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-20-base-deepseek_flash",
+    "stratum": "inspection",
+    "task_id": "CP-20"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-10-base-glm5",
+    "stratum": "insertion",
+    "task_id": "CP-10"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-23-base-glm5",
+    "stratum": "packaging",
+    "task_id": "CP-23"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-21-explicit-glm5",
+    "stratum": "packaging",
+    "task_id": "CP-21"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-22-base-deepseek_flash",
+    "stratum": "packaging",
+    "task_id": "CP-22"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-12-base-glm5",
+    "stratum": "insertion",
+    "task_id": "CP-12"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-03-base-deepseek_flash",
+    "stratum": "assembly",
+    "task_id": "CP-03"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-15-explicit-glm5",
+    "stratum": "shared_resource",
+    "task_id": "CP-15"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-18-base-glm5",
+    "stratum": "inspection",
+    "task_id": "CP-18"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-06-base-deepseek_flash",
+    "stratum": "handover",
+    "task_id": "CP-06"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-16-explicit-deepseek_flash",
+    "stratum": "shared_resource",
+    "task_id": "CP-16"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-16-base-deepseek_flash",
+    "stratum": "shared_resource",
+    "task_id": "CP-16"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-09-explicit-glm5",
+    "stratum": "insertion",
+    "task_id": "CP-09"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-12-explicit-glm5",
+    "stratum": "insertion",
+    "task_id": "CP-12"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-24-base-deepseek_flash",
+    "stratum": "packaging",
+    "task_id": "CP-24"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-24-explicit-deepseek_flash",
+    "stratum": "packaging",
+    "task_id": "CP-24"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": false,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-08-base-glm5",
+    "stratum": "handover",
+    "task_id": "CP-08"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-15-base-deepseek_flash",
+    "stratum": "shared_resource",
+    "task_id": "CP-15"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-12-base-deepseek_flash",
+    "stratum": "insertion",
+    "task_id": "CP-12"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-21-base-deepseek_flash",
+    "stratum": "packaging",
+    "task_id": "CP-21"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-14-explicit-deepseek_flash",
+    "stratum": "shared_resource",
+    "task_id": "CP-14"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-07-base-deepseek_flash",
+    "stratum": "handover",
+    "task_id": "CP-07"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-19-base-deepseek_flash",
+    "stratum": "inspection",
+    "task_id": "CP-19"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-16-base-glm5",
+    "stratum": "shared_resource",
+    "task_id": "CP-16"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": false,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 0.0,
+        "S0": 1.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-11-base-glm5",
+    "stratum": "insertion",
+    "task_id": "CP-11"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-14-explicit-glm5",
+    "stratum": "shared_resource",
+    "task_id": "CP-14"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-22-explicit-deepseek_flash",
+    "stratum": "packaging",
+    "task_id": "CP-22"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-04-explicit-deepseek_flash",
+    "stratum": "assembly",
+    "task_id": "CP-04"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-15-base-glm5",
+    "stratum": "shared_resource",
+    "task_id": "CP-15"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-18-explicit-glm5",
+    "stratum": "inspection",
+    "task_id": "CP-18"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-02-base-deepseek_flash",
+    "stratum": "assembly",
+    "task_id": "CP-02"
+  },
+  {
+    "I_F": 0.75,
+    "I_NE": 0.75,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "BASE",
+    "interface_valid": true,
+    "mechanism_positive": true,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 0.0,
+        "F": 1.0,
+        "NE": 1.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 0.75,
+        "F": 0.25,
+        "NE": 0.25,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-20-base-glm5",
+    "stratum": "inspection",
+    "task_id": "CP-20"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "deepseek_flash",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-10-explicit-deepseek_flash",
+    "stratum": "insertion",
+    "task_id": "CP-10"
+  },
+  {
+    "I_F": 0.0,
+    "I_NE": 0.0,
+    "I_S0": 0.0,
+    "I_V": 0.0,
+    "arm": "EXPLICIT",
+    "interface_valid": true,
+    "mechanism_positive": false,
+    "profile": "glm5",
+    "rates": {
+      "CONCURRENT_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_LONG": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      },
+      "SERIAL_SHORT": {
+        "C": 1.0,
+        "F": 0.0,
+        "NE": 0.0,
+        "S0": 0.0,
+        "V": 0.0
+      }
+    },
+    "slot_id": "CP-02-explicit-glm5",
+    "stratum": "assembly",
+    "task_id": "CP-02"
+  }
+]

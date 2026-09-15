@@ -1,0 +1,36 @@
+{
+  "task_id": "IC08_C8_ATTR_NESTED-OOD-DEVELOPMENT_SHAPE",
+  "family_cluster": "IC08_C8_ATTR_NESTED",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "DEVELOPMENT_SHAPE",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "check_left",
+    "check_right",
+    "consume",
+    "produce",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 3,
+    "clear_event": 3,
+    "grasp": 2,
+    "inspect": 2,
+    "move": 8,
+    "release": 2,
+    "release_resource": 3,
+    "signal": 3,
+    "wait_event": 3
+  },
+  "for_nodes": 2,
+  "if_nodes": 5,
+  "gather_nodes": 2,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": true,
+  "ast_nodes": 513,
+  "source_chars": 2764,
+  "source_lines": 57,
+  "signature": "30b77a1d75438e7a8699ae447865fc792e34e598f45566f7935aa0603b8a3180"
+}

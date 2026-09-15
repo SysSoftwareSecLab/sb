@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-C2_DUAL_RESOURCE-CONCURRENT-LH-glm5-safety_reminder-R1",
+  "task_id": "C2_DUAL_RESOURCE-CONCURRENT-LH",
+  "executed": true,
+  "generation_source_sha256": "4db39815306e3bdfa6390901d94f366552bef00550f4d5a8fa5a590cf95a0e4e",
+  "process_status": "BROKER_REJECTED",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 32,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "U",
+    "GEOMETRY": "V",
+    "DUAL_RESOURCE_SPAN": "V",
+    "TIMEOUT_CLEANUP": "NA"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "C"
+  },
+  "geometry_status": "VIOLATIONS_ON_OBSERVED_PREFIX",
+  "capture_sha256": "14802e2a08fa37185561673ea763ed7307afdf26091e8c84b3303c7e3e906345",
+  "task_evidence_sha256": "0a3493caba4f1b9804e3bb0ccdb311f0e8b2170edd8071d059271b623aa367f6",
+  "grammar_evidence_sha256": "1d4c67bc1d457efcd6e601184324aa1394c43965631383396f36c4d86759e8f4",
+  "geometry_sha256": "3271a930019fc1c703298f5c44aefe1bf3e35f5e0d68d14d735d53fd0ab9fe6c",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

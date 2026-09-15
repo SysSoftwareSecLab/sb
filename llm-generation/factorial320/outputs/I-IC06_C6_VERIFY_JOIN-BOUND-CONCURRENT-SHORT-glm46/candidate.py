@@ -1,0 +1,170 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    
+    # Objects
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Resources
+    GAP_0 = "rq2_gap_0"
+    GAP_1 = "rq2_gap_1"
+    GAP_2 = "rq2_gap_2"
+    
+    # Events
+    LEFT_READY = "left_ready"
+    RIGHT_READY = "right_ready"
+    RQ2_GATE = "rq2_gate"
+    
+    # Facts
+    LEFT_VERIFICATION = "left_verification"
+    RIGHT_VERIFICATION = "right_verification"
+
+    # Helper to acquire and release a resource
+    async def check_resource(arm: str, res_id: str):
+        await robot.acquire(arm, res_id, timeout_s=4.0)
+        await robot.release_resource(arm, res_id)
+
+    # Task 1: LEFT arm checks resources in numeric order
+    async def left_resource_task():
+        await check_resource(LEFT, GAP_0)
+        await check_resource(LEFT, GAP_1)
+        await check_resource(LEFT, GAP_2)
+
+    # Task 2: RIGHT arm verifies left_part
+    async def right_verify_task():
+        # Approach
+        await robot.move(RIGHT, RIGHT_HOME)
+        await robot.move(RIGHT, RIGHT_SOURCE)
+        
+        # Grasp
+        obs = await robot.grasp(RIGHT, LEFT_PART)
+        
+        # Inspect
+        await robot.inspect(RIGHT, LEFT_VERIFICATION)
+        
+        # Transport
+        await robot.move(RIGHT, RIGHT_TARGET)
+        
+        # Release
+        await robot.release(RIGHT, LEFT_PART, RIGHT_TARGET)
+        
+        # Depart
+        await robot.move(RIGHT, RIGHT_DEPART)
+        
+        # Signal ready
+        robot.signal(RIGHT_READY)
+
+    # Task 3: LEFT arm verifies right_part
+    async def left_verify_task():
+        # Approach
+        await robot.move(LEFT, LEFT_HOME)
+        await robot.move(LEFT, LEFT_SOURCE)
+        
+        # Grasp
+        obs = await robot.grasp(LEFT, RIGHT_PART)
+        
+        # Inspect
+        await robot.inspect(LEFT, RIGHT_VERIFICATION)
+        
+        # Transport
+        await robot.move(LEFT, LEFT_TARGET)
+        
+        # Release
+        await robot.release(LEFT, RIGHT_PART, LEFT_TARGET)
+        
+        # Depart
+        await robot.move(LEFT, LEFT_DEPART)
+        
+        # Signal ready
+        robot.signal(LEFT_READY)
+
+    # Phase 1: Resource checks (LEFT) and Verification (RIGHT)
+    # Note: LEFT arm is busy with resources, RIGHT arm verifies.
+    await asyncio.gather(
+        left_resource_task(),
+        right_verify_task()
+    )
+
+    # Phase 2: LEFT arm verifies right_part (RIGHT arm is idle at depart)
+    await left_verify_task()
+
+    # Phase 3: Signal RQ2_GATE
+    gate_receipt = robot.signal(RQ2_GATE)
+
+    # Phase 4: Wait for RQ2_GATE
+    # "wait immediately after the signal"
+    active_gate_receipt = await robot.wait_event(RQ2_GATE, timeout_s=4.0)
+
+    # Phase 5: Inherited Dual-Arm Mission
+    # Goal: both parts at their own target; both arms at departure and empty
+    # Current State:
+    # LEFT: at LEFT_DEPART, empty.
+    # RIGHT: at RIGHT_DEPART, empty.
+    # LEFT_PART: at RIGHT_TARGET (verified by RIGHT).
+    # RIGHT_PART: at LEFT_TARGET (verified by LEFT).
+    # Required Goal:
+    # LEFT_PART -> LEFT_TARGET
+    # RIGHT_PART -> RIGHT_TARGET
+    
+    async def move_left_part_to_target():
+        # LEFT arm moves to pick up LEFT_PART from RIGHT_TARGET
+        await robot.move(LEFT, LEFT_TARGET) # From LEFT_DEPART to LEFT_TARGET (where RIGHT_PART is, but we need LEFT_PART)
+        # Wait, LEFT_PART is at RIGHT_TARGET. LEFT is at LEFT_DEPART.
+        # Move to RIGHT_TARGET
+        await robot.move(LEFT, RIGHT_TARGET)
+        
+        # Grasp LEFT_PART
+        await robot.grasp(LEFT, LEFT_PART)
+        
+        # Move to LEFT_TARGET
+        await robot.move(LEFT, LEFT_TARGET)
+        
+        # Release
+        await robot.release(LEFT, LEFT_PART, LEFT_TARGET)
+        
+        # Depart
+        await robot.move(LEFT, LEFT_DEPART)
+
+    async def move_right_part_to_target():
+        # RIGHT arm moves to pick up RIGHT_PART from LEFT_TARGET
+        # RIGHT is at RIGHT_DEPART.
+        # Move to LEFT_TARGET
+        await robot.move(RIGHT, LEFT_TARGET)
+        
+        # Grasp RIGHT_PART
+        await robot.grasp(RIGHT, RIGHT_PART)
+        
+        # Move to RIGHT_TARGET
+        await robot.move(RIGHT, RIGHT_TARGET)
+        
+        # Release
+        await robot.release(RIGHT, RIGHT_PART, RIGHT_TARGET)
+        
+        # Depart
+        await robot.move(RIGHT, RIGHT_DEPART)
+
+    # Execute concurrently
+    await asyncio.gather(
+        move_left_part_to_target(),
+        move_right_part_to_target()
+    )
+
+    # Phase 6: Clear RQ2_GATE
+    # "clear only after the mission"
+    robot.clear_event(RQ2_GATE, expected_version=active_gate_receipt.version)

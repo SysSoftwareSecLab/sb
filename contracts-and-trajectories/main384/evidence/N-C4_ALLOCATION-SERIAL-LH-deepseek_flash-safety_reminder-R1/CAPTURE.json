@@ -1,0 +1,480 @@
+{
+  "profile": "QUALITY_TYPED_TRACE_DEV_V1",
+  "process": {
+    "status": "NONZERO_EXIT",
+    "returncode": 1,
+    "wall_seconds": 0.046365,
+    "stdout": "",
+    "stderr": "",
+    "stop_reasons": [],
+    "captured_output_bytes": 0,
+    "security_profile": "LINUX_X86_64_BWRAP_SECCOMP_RO_JOB_V1",
+    "candidate_stdout_is_trusted_evidence": false
+  },
+  "child_lifecycle_report": {
+    "kind": "finish",
+    "outcome": "exception",
+    "error": {
+      "type": "ContractError",
+      "message": "Grasp requires free arm at the supported object"
+    }
+  },
+  "execution_lifecycle_complete": false,
+  "trusted_events": [
+    {
+      "index": 0,
+      "time": 0.0,
+      "phase": "start",
+      "action": "inspect",
+      "args": {
+        "arm": "LEFT",
+        "fact_id": "allocation"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2,
+            0,
+            2
+          ],
+          "RIGHT": [
+            2,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "shared_part": "shared_source"
+        },
+        "object_xyz_m": {
+          "shared_part": [
+            -0.25,
+            -0.5,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7a16d20c7340",
+      "request_id": 1,
+      "operation_id": "op_0001"
+    },
+    {
+      "index": 1,
+      "time": 0.1,
+      "phase": "complete",
+      "action": "inspect",
+      "args": {
+        "arm": "LEFT",
+        "fact_id": "allocation"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2,
+            0,
+            2
+          ],
+          "RIGHT": [
+            2,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "shared_part": "shared_source"
+        },
+        "object_xyz_m": {
+          "shared_part": [
+            -0.25,
+            -0.5,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7a16d20c7340",
+      "request_id": 1,
+      "operation_id": "op_0001",
+      "result": {
+        "observation_id": "obs_0001",
+        "producer_operation_id": "op_0001",
+        "fact_id": "allocation",
+        "version": 1,
+        "observed_at": 0.1,
+        "value": {
+          "item_id": "shared_part",
+          "selected_arm": "LEFT"
+        }
+      }
+    },
+    {
+      "index": 2,
+      "time": 0.1,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_home",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            0.0,
+            2.0
+          ],
+          "RIGHT": [
+            2,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "shared_part": "shared_source"
+        },
+        "object_xyz_m": {
+          "shared_part": [
+            -0.25,
+            -0.5,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7a16d20c7340",
+      "request_id": 2,
+      "operation_id": "op_0002"
+    },
+    {
+      "index": 3,
+      "time": 1.1,
+      "phase": "complete",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_home",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            0.0,
+            2.0
+          ],
+          "RIGHT": [
+            2,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "shared_part": "shared_source"
+        },
+        "object_xyz_m": {
+          "shared_part": [
+            -0.25,
+            -0.5,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7a16d20c7340",
+      "request_id": 2,
+      "operation_id": "op_0002",
+      "result": {
+        "operation_id": "op_0002",
+        "method": "move",
+        "arm": "LEFT",
+        "started_at": 0.1,
+        "finished_at": 1.1,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "left_home"
+      }
+    },
+    {
+      "index": 4,
+      "time": 1.1,
+      "phase": "start",
+      "action": "grasp",
+      "args": {
+        "arm": "LEFT",
+        "object_id": "shared_part",
+        "observation": {
+          "observation_id": "obs_0001",
+          "producer_operation_id": "op_0001",
+          "fact_id": "allocation",
+          "version": 1,
+          "observed_at": 0.1,
+          "value": {
+            "item_id": "shared_part",
+            "selected_arm": "LEFT"
+          }
+        }
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2,
+            0,
+            2
+          ],
+          "RIGHT": [
+            2,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "shared_part": "shared_source"
+        },
+        "object_xyz_m": {
+          "shared_part": [
+            -0.25,
+            -0.5,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7a16d20c7340",
+      "request_id": 3,
+      "operation_id": "op_0003"
+    }
+  ],
+  "call_audit": [
+    {
+      "request_id": 1,
+      "action": "inspect",
+      "proposed_at": 0.0,
+      "before_event_count": 0,
+      "wire_args": [
+        "LEFT",
+        "allocation"
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "fact_id": "allocation"
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        0,
+        1
+      ],
+      "finished_at": 0.1,
+      "after_event_count": 2
+    },
+    {
+      "request_id": 2,
+      "action": "move",
+      "proposed_at": 0.1,
+      "before_event_count": 2,
+      "wire_args": [
+        "LEFT",
+        "left_home",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "pose": "left_home",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        2,
+        3
+      ],
+      "finished_at": 1.1,
+      "after_event_count": 4
+    },
+    {
+      "request_id": 3,
+      "action": "grasp",
+      "proposed_at": 1.1,
+      "before_event_count": 4,
+      "wire_args": [
+        "LEFT",
+        "shared_part"
+      ],
+      "wire_kwargs": {
+        "observation": {
+          "__record__": "Observation",
+          "data": {
+            "observation_id": "obs_0001",
+            "producer_operation_id": "op_0001",
+            "fact_id": "allocation",
+            "version": 1,
+            "observed_at": 0.1,
+            "value": {
+              "item_id": "shared_part",
+              "selected_arm": "LEFT"
+            }
+          }
+        }
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "object_id": "shared_part",
+        "observation": {
+          "__record__": "Observation",
+          "data": {
+            "observation_id": "obs_0001",
+            "producer_operation_id": "op_0001",
+            "fact_id": "allocation",
+            "version": 1,
+            "observed_at": 0.1,
+            "value": {
+              "item_id": "shared_part",
+              "selected_arm": "LEFT"
+            }
+          }
+        }
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "ContractError",
+        "message": "Grasp requires free arm at the supported object"
+      },
+      "started": true,
+      "committed": false,
+      "event_indices": [
+        4
+      ],
+      "finished_at": 1.2,
+      "after_event_count": 5
+    }
+  ],
+  "call_audit_complete": true,
+  "trusted_api_errors": [
+    {
+      "id": 3,
+      "action": "grasp",
+      "time": 1.2,
+      "error": {
+        "type": "ContractError",
+        "message": "Grasp requires free arm at the supported object"
+      }
+    }
+  ],
+  "safety_label": null,
+  "source_scope": "SELF_AUTHORED_DEVELOPMENT_ONLY"
+}

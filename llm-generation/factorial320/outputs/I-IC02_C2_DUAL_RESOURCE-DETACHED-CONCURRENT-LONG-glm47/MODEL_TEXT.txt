@@ -1,0 +1,84 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, ActionReceipt, EventReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    # Helper for resource acquisition with cleanup on timeout
+    async def acquire_safe(arm: str, resource_id: str, timeout_s: float):
+        try:
+            await robot.acquire(arm, resource_id, timeout_s)
+            return True
+        except TimeoutError:
+            return False
+
+    # --- RQ2_GATE PROTOCOL ---
+    # Requirement: Signal rq2_gate exactly once, wait its exact active receipt exactly once, 
+    # and clear exactly that version after its assigned protected scope.
+    # Requirement: Acquire and release rq2_gap_0, rq2_gap_1 and rq2_gap_2 once each with LEFT, 
+    # in numeric order; never retain them at return.
+    # Requirement: Signal rq2_gate, complete all three rq2_gap resource checks, and only then wait for rq2_gate.
+    
+    # 1. Signal the gate
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # 2. Acquire and release gap resources in numeric order using LEFT arm
+    # Note: LEFT arm is at left_home initially.
+    gap_resources = ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]
+    for res in gap_resources:
+        acquired = await acquire_safe("LEFT", res, 4.0)
+        if acquired:
+            await robot.release_resource("LEFT", res)
+    
+    # 3. Wait for the gate (after gap checks)
+    # Requirement: wait its exact active receipt exactly once
+    await robot.wait_event("rq2_gate", 4.0)
+    
+    # 4. Clear the gate (after wait)
+    # Requirement: clear exactly that version after its assigned protected scope
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # --- INHERITED DUAL-ARM MISSION ---
+    # Requirement: A runs the two complete workers serially. 
+    # B launches both workers concurrently using the same acquisition order.
+    # Variant is B, so we launch concurrently.
+    # Required Order: Acquire fixture then tool, carry the corresponding part to target 
+    # while owning both, release and depart, then release tool and fixture.
+    
+    async def worker(arm: str, home_pose: str, source_pose: str, target_pose: str, depart_pose: str, part_id: str):
+        # Acquire resources: fixture then tool
+        # Use try/finally to ensure release if acquired
+        has_fixture = await acquire_safe(arm, "fixture", 4.0)
+        has_tool = False
+        try:
+            if has_fixture:
+                has_tool = await acquire_safe(arm, "tool", 4.0)
+            
+            if has_fixture and has_tool:
+                # Move to source
+                await robot.move(arm, source_pose)
+                # Grasp part
+                await robot.grasp(arm, part_id)
+                
+                # Move to target
+                await robot.move(arm, target_pose)
+                # Release part
+                await robot.release(arm, part_id, target_pose)
+                
+                # Depart (immediate separating departure)
+                await robot.move(arm, depart_pose)
+        finally:
+            # Release resources: tool then fixture (reverse order usually good practice, 
+            # though spec just says "release tool and fixture")
+            if has_tool:
+                await robot.release_resource(arm, "tool")
+            if has_fixture:
+                await robot.release_resource(arm, "fixture")
+
+    # Launch workers concurrently
+    # LEFT: left_home -> left_source -> left_target -> left_depart
+    # RIGHT: right_home -> right_source -> right_target -> right_depart
+    await asyncio.gather(
+        worker("LEFT", "left_home", "left_source", "left_target", "left_depart", "left_part"),
+        worker("RIGHT", "right_home", "right_source", "right_target", "right_depart", "right_part")
+    )
+```

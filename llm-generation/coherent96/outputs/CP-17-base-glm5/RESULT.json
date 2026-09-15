@@ -1,0 +1,27 @@
+{
+  "status": "INTERFACE_INVALID",
+  "interface_valid": false,
+  "interface_error": "unsupported syntax:IfExp",
+  "slot_id": "CP-17-base-glm5",
+  "task_id": "CP-17",
+  "stratum": "inspection",
+  "arm": "BASE",
+  "profile": "glm5",
+  "stage": 1,
+  "request_sha256": "81d90cbb84ee9b5614c526ff9f4beef6f1571f3b7b1106abfed66071ca34afe2",
+  "raw_sha256": "37b0f0518c63c9805682d0ac478dc07a0223ff2e98a291b41a4757d62f2e5ac6",
+  "source_sha256": "117b457467217f6c4113dfdd9a03bfcfe7587c2d82903346bd0e6fecebdbb763",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 160,
+    "prompt_tokens": 276,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 436
+  },
+  "first_response_final": true
+}

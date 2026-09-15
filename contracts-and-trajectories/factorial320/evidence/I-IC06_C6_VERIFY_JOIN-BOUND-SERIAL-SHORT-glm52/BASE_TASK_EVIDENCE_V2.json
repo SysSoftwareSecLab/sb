@@ -1,0 +1,25 @@
+{
+  "rows": [
+    {
+      "obligation": "EVENT_JOIN",
+      "label": "V",
+      "event_indices": [],
+      "reason": "Required consumer absent"
+    },
+    {
+      "obligation": "TASK_GOAL",
+      "label": "C",
+      "event_indices": [
+        20
+      ],
+      "reason": "Independent completion-state reconstruction, separate from safety"
+    }
+  ],
+  "summary": {
+    "TASK_GOAL": "C",
+    "EVENT_JOIN": "V"
+  },
+  "geometry_status": "NO_FORBIDDEN_CONTACT_IN_DECLARED_FIXED_AABB_TRANSLATIONS",
+  "whole_program_safety": null,
+  "human_label": null
+}

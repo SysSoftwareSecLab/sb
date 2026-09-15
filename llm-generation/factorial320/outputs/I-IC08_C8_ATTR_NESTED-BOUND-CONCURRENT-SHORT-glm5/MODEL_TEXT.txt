@@ -1,0 +1,126 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # ---- shared state ----
+    empty_receipt = None
+    ready_receipts = {}
+    gate_receipt = None
+
+    # ---- LEFT producer episode for one part ----
+    async def producer_episode(part, source, buffer, ready_event, left_wait):
+        nonlocal empty_receipt
+
+        # 1. Acquire tool and keep it through ready publication.
+        await robot.acquire("LEFT", "tool", 120)
+        try:
+            # 2. Approach source from left_home and immediately grasp.
+            await robot.move("LEFT", source, receipt=None)
+            await robot.grasp("LEFT", part, observation=None)
+
+            # 3. Carry part to buffer.
+            await robot.move("LEFT", buffer, receipt=None)
+
+            # 4. Own buffer_lock during buffer entry and departure.
+            await robot.acquire("LEFT", "buffer_lock", 120)
+            try:
+                # 5. Release part at buffer, then immediately depart.
+                await robot.release("LEFT", part, buffer)
+                await robot.move("LEFT", left_wait, receipt=None)
+            finally:
+                await robot.release_resource("LEFT", "buffer_lock")
+
+            # 6. Publish ready after departing buffer.
+            ready_receipts[part] = robot.signal(ready_event, part)
+        finally:
+            # LEFT releases tool on every exit.
+            await robot.release_resource("LEFT", "tool")
+
+    # ---- RIGHT consumer episode for one part ----
+    async def consumer_episode(part, buffer, target, ready_event, right_wait):
+        # 1. Wait the corresponding ready receipt before pickup.
+        rdy = await robot.wait_event(ready_event, 120)
+
+        # 2. Approach buffer from right_home and immediately grasp.
+        await robot.move("RIGHT", buffer, receipt=None)
+        await robot.grasp("RIGHT", part, observation=None)
+
+        # 3. Own buffer_lock during buffer entry and departure.
+        await robot.acquire("RIGHT", "buffer_lock", 120)
+        try:
+            # 4. Depart buffer carrying the part.
+            await robot.move("RIGHT", right_wait, receipt=rdy)
+        finally:
+            await robot.release_resource("RIGHT", "buffer_lock")
+
+        # 5. Carry to target using the exact active item receipt.
+        await robot.move("RIGHT", target, receipt=rdy)
+
+        # 6. Clear ready after the carried move.
+        robot.clear_event(ready_event, expected_version=rdy.version)
+
+        # 7. Release on target and depart before publishing empty.
+        await robot.acquire("RIGHT", "buffer_lock", 120)
+        try:
+            await robot.release("RIGHT", part, target)
+            await robot.move("RIGHT", "right_home", receipt=None)
+        finally:
+            await robot.release_resource("RIGHT", "buffer_lock")
+
+        # 8. Publish empty_0 after departing target.
+        empty_receipt = robot.signal("empty_0", part)
+
+    # ---- LEFT serial readiness checks for part_1 ----
+    async def left_readiness_checks():
+        # Wait and clear empty_0 before entering buffer with the second part.
+        er = await robot.wait_event("empty_0", 120)
+        robot.clear_event("empty_0", expected_version=er.version)
+
+        # Inspect both readiness facts serially (C7-style serial checks).
+        await robot.inspect("LEFT", "line_clear")
+        await robot.inspect("LEFT", "receiver_ready")
+
+    # ---- Inherited dual-arm mission (A alternates, B concurrent) ----
+    async def inherited_mission():
+        # Episode A: part_0 producer + consumer concurrently.
+        await asyncio.gather(
+            producer_episode("part_0", "source_0", "buffer_0", "ready_0", "left_wait"),
+            consumer_episode("part_0", "buffer_0", "target_0", "ready_0", "right_wait"),
+        )
+
+        # For item 1, LEFT waits/clears empty_0 and inspects readiness facts.
+        await left_readiness_checks()
+
+        # Episode B: part_1 producer and consumer coroutines together.
+        await asyncio.gather(
+            producer_episode("part_1", "source_1", "buffer_1", "ready_1", "left_wait"),
+            consumer_episode("part_1", "buffer_1", "target_1", "ready_1", "right_wait"),
+        )
+
+    # ---- rq2_gap resource checks (LEFT, numeric order, OFF only) ----
+    async def gap_checks():
+        for gap in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+            await robot.acquire("LEFT", gap, 120)
+            try:
+                pass
+            finally:
+                await robot.release_resource("LEFT", gap)
+
+    # ---- rq2_gate protected scope ----
+    async def gate_protected_scope():
+        nonlocal gate_receipt
+        # Complete all three rq2_gap checks before signalling rq2_gate.
+        await gap_checks()
+        # Signal rq2_gate exactly once.
+        gate_receipt = robot.signal("rq2_gate")
+        # Wait its exact active receipt exactly once, immediately after signal.
+        gw = await robot.wait_event("rq2_gate", 120)
+        # Keep rq2_gate active while executing the complete inherited mission.
+        await inherited_mission()
+        # Clear exactly that version after the assigned protected scope.
+        robot.clear_event("rq2_gate", expected_version=gw.version)
+
+    await gate_protected_scope()
+```

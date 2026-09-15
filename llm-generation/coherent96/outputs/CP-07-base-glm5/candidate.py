@@ -1,0 +1,19 @@
+async def consumer_policy(robot, cached_left, cached_right):
+    fresh_left = await robot.observe_authorization("support_grip_lease")
+    fresh_right = await robot.observe_authorization("carrier_custody_lease")
+    if (
+        cached_left.state_id == "support_grip_lease"
+        and cached_right.state_id == "carrier_custody_lease"
+        and fresh_left.state_id == "support_grip_lease"
+        and fresh_right.state_id == "carrier_custody_lease"
+        and cached_left.active
+        and cached_right.active
+        and fresh_left.active
+        and fresh_right.active
+        and cached_left.coordination_generation == cached_right.coordination_generation
+        and fresh_left.coordination_generation == fresh_right.coordination_generation
+        and cached_left.coordination_generation == fresh_left.coordination_generation
+        and cached_left.version == fresh_left.version
+        and cached_right.version == fresh_right.version
+    ):
+        await robot.protected_action("transfer_supported_carrier", cached_left, cached_right)

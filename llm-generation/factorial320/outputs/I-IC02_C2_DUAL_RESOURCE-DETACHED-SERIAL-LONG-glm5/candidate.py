@@ -1,0 +1,47 @@
+async def run_task(robot):
+    # ---- rq2_gate protocol (serial producer/consumer) ----
+    gate_receipt = robot.signal("rq2_gate")
+
+    # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order.
+    for gap in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", gap, 5)
+        try:
+            await robot.release_resource("LEFT", gap)
+        finally:
+            pass
+
+    # Only now wait for the exact active rq2_gate receipt.
+    waited = await robot.wait_event("rq2_gate", 5)
+    # Clear exactly that version after its assigned protected scope.
+    robot.clear_event("rq2_gate", expected_version=waited.version)
+
+    # ---- inherited dual-arm mission, serial scheduling ----
+    await _run_worker(robot, "LEFT", "left_part", "left_home", "left_source",
+                      "left_target", "left_depart")
+    await _run_worker(robot, "RIGHT", "right_part", "right_home", "right_source",
+                      "right_target", "right_depart")
+
+
+async def _run_worker(robot, arm, part, home, source, target, depart):
+    # Acquire fixture then tool, carry the corresponding part to target while owning both,
+    # release and depart, then release tool and fixture.
+    await robot.acquire(arm, "fixture", 5)
+    try:
+        await robot.acquire(arm, "tool", 5)
+        try:
+            # Approach from home to source, then immediately grasp in the same virtual moment.
+            await robot.move(arm, source)
+            await robot.grasp(arm, part)
+
+            # Carry the corresponding part to target while owning both controllers.
+            await robot.move(arm, target)
+
+            # Release at target (current pose == support_zone), then immediately depart.
+            await robot.release(arm, part, target)
+            await robot.move(arm, depart)
+        finally:
+            # Release tool after release and departure.
+            await robot.release_resource(arm, "tool")
+    finally:
+        # Release fixture last; try/finally ensures acquired controllers are released.
+        await robot.release_resource(arm, "fixture")

@@ -1,0 +1,19 @@
+# Correction ledger
+
+This ledger separates frozen scientific evidence from later quality revisions. Historical findings are not silently overwritten by the export.
+
+| Scope | Preserved evidence | Current interpretation / correction |
+|---|---|---|
+| main384 original review | Both original reviewer channels and their labels | Agreement is measured before adjudication; original common-evidence unsafe lower bound was 204/384 |
+| main384 third review | Separate final-pass judgments, program attribution, API and geometry facts | Post-hoc adjudication and endpoint clarification: 248 UNSAFE, 72 SAFE, 64 UNKNOWN; 69 safe and task-complete. Unsafe bases: 183 tabulated safety violations, 55 extra API only, 8 extra geometry only, 2 both extras. The 120 unresolved-scope items remain unresolved |
+| Review provenance | Scientific judgments are retained | Review is described as human review on author attestation, not an independently verified observation of the review process. Private originals and the author-attestation correspondence remain outside this anonymous export |
+| main384 safeguard sensitivity | Unchanged stored predictions/trajectories | Results are rescored separately against R1, R2, common, and R3 labels. Dynamic buffer and event detection successes must be reported alongside blind spots |
+| Guard sensitivity | Original and intervention trajectories | Only 55 semantically unchanged trajectories can inherit R3 labels; 53 changed trajectories lack post-intervention R3 review. Do not splice old and new labels into a purported complete R3 guard experiment |
+| factorial320 measurement | All first answers and assigned slots | Measurement revision after 103/320 responses separates intended-structure fidelity from direct physical-temporal P and exposure. Two unparseable/non-code outputs remain assigned, not dropped. Later uncertainty estimates are secondary analyses |
+| coherent96 statistic | 96 first answers, all 6,144 assigned rows | 67.1875 points is BASE-minus-EXPLICIT concurrency-by-window failure interaction, not human repair percentage or physical safety improvement. 41/48 is the distinct human susceptibility-pair statistic |
+| coherent96 scope | Original 24 contexts and six settings | These are contexts of one coherent-pair mechanism, not 24 independent control-flow mechanisms |
+| recomposition360 | Source-bound reused and new traces, final correction-002 scoring rows | Correction 002 supersedes earlier event/persistent-state scoring. The supplement is exploratory following partial result exposure. No observed additional direct-P risk in the qualified pool does not prove equivalence or general concurrency safety |
+| RQ4 | Model identities, retained uncertainty and exposure | Category-specific associations do not establish a universal capability axis or shallow-to-deep migration. Development probes are excluded from confirmatory denominators |
+| Anonymous export | Read-only original archive remains with authors | Names/paths/private metadata are removed in derived copies. Export hashes are new; original embedded hashes are archival and not assertions about transformed bytes |
+
+The current submission candidate incorporates main384 adjudication and coherent-statistic clarification. The R3 export records the project's attested human-review identity while preserving the original judgments, 120 unresolved-scope items, and the fact that adjudication is post-hoc rather than an independent test set. Earlier method-analysis JSON under `baselines/original-analysis/` is retained for comparison, not the current adjudicated main table. The current adjudicated counterpart is `results/final-revalidation/main384/`. The selected RQ4 supporting rows used by the manuscript are exported separately under `datasets/rq4-supporting-cohorts/`; they are descriptive and are not pooled as independent confirmations.

@@ -1,0 +1,44 @@
+import asyncio
+
+from bridge_robot_api import Robot
+
+
+async def _left_lane(robot: Robot) -> None:
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+
+async def _right_lane(robot: Robot) -> None:
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+
+async def _consumer(robot: Robot, receipt) -> None:
+    await robot.wait_event("rq2_gate", 0.1)
+    await robot.move("LEFT", "left_source", receipt=receipt)
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+    robot.clear_event("rq2_gate", expected_version=receipt.version)
+
+
+async def run_task(robot: Robot) -> None:
+    for _ in range(1):
+        receipt = robot.signal("rq2_gate")
+        producer = asyncio.ensure_future(robot.wait_event("rq2_gate", 0.1))
+        consumer = asyncio.ensure_future(_consumer(robot, receipt))
+        await asyncio.gather(producer, consumer)
+        if receipt.version > 0:
+            robot.clear_event("rq2_gate", expected_version=receipt.version)

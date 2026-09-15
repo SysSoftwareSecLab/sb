@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C8_ATTR_NESTED-CONCURRENT-LH-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3516,
+    "completion_tokens": 1094,
+    "total_tokens": 4610,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1852
+  },
+  "raw_sha256": "fe292c673e509d7a81f9c3d325b7b4db3a255b7483f80ec03309180ae07241e0",
+  "source_sha256": "886d21dc2cec5679c943eb227b6f950b5f44a6369730b1f9a630f5d8f9801210",
+  "request_sha256": "4b55031a582d16f7b3aef913db49d5bc514767335d84df4a87043a2d0aa978c4"
+}

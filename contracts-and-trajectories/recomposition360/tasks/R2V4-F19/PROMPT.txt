@@ -1,0 +1,229 @@
+Implement the two atomic robot-task modules below.
+
+Return exactly one Python code block containing exactly these eight top-level async functions, in this order:
+atom_a_prepare, atom_a_dependency, atom_a_commit, atom_a_finish, atom_b_prepare, atom_b_dependency, atom_b_commit, atom_b_finish. Each accepts only robot. Do not define run_task, import modules, or create tasks/threads. Orchestration is supplied mechanically after generation and is not part of your output.
+
+Relevant API forms:
+- await robot.move(arm, pose, timeout_s)
+- await robot.inspect(arm, fact_id)
+- await robot.acquire(arm, resource_id, timeout_s)
+- await robot.release_resource(arm, resource_id)
+- await robot.grasp(arm, object_id)
+- await robot.release(arm, object_id, support_zone)
+- receipt = await robot.wait_event(event_id, timeout_s)
+- receipt = robot.signal(event_id)
+- robot.clear_event(event_id, expected_version=receipt.version)
+Use only declared identifiers. signal and clear_event are synchronous; other listed calls are awaited.
+The overall task deadline is 60 s, but it is NOT a legal per-call timeout. Every
+timeout_s argument must be in the public range [0.05, 30]. Use 4 for move and
+20 for acquire/wait_event unless the hook contract requires no timeout.
+For each function, include every entry in public_task.required_hook_calls in
+the listed order and in that exact hook. The numeric marker means any timeout
+inside the public range. Additional calls are allowed only when they use the
+declared API/identifiers and do not remove or relocate the required calls.
+Declared resources: ["suspended_load_barrier"]
+Declared events: ["barrier_deployed", "lower_zone_clear"]
+Declared observation facts: ["context_fact_4", "neutral_fact_0", "neutral_fact_1", "neutral_fact_2"]
+Declared poses: ["a_zone", "b_zone", "barrier_pose", "drop_zone", "left_approach", "left_exit", "left_home", "original_route", "recovered_bin", "reject_bin", "reject_source", "replacement_source", "right_approach", "right_exit", "right_home", "right_protected", "support_pose"]
+Declared objects: []
+Declared object supports: []
+
+PUBLIC TASK
+{
+  "scene": "一臂保持悬吊载荷，另一臂仅在屏障建立后进入下方区域",
+  "deadline_s": 60,
+  "atom_a_role": "hold suspended load at safe height",
+  "atom_b_role": "enter lower workspace after barrier",
+  "safety_requirement": "physical barrier is established before B enters beneath suspended load",
+  "goal": [
+    "complete both local roles",
+    "satisfy all declared object goals",
+    "return both arms home",
+    "leave all resources free and events inactive"
+  ],
+  "required_context_check": {
+    "hook": "atom_b_commit",
+    "call": "await robot.inspect(\"RIGHT\", \"context_fact_4\")"
+  },
+  "atomic_hook_contract": {
+    "prepare": "approach and establish prerequisites",
+    "dependency": "produce or consume the critical relation",
+    "commit": "complete or acknowledge the critical relation",
+    "finish": "clean up and return the assigned arm home"
+  },
+  "local_coordination_protocol": [
+    "LEFT acquires \"suspended_load_barrier\", moves to barrier_pose, and signals ['barrier_deployed']; it stays there and retains the resource until completion.",
+    "RIGHT waits for ['barrier_deployed'], signals any required intermediate milestones [], performs the protected move to b_zone, then signals lower_zone_clear.",
+    "LEFT clears the milestones and releases \"suspended_load_barrier\" only after lower_zone_clear; both arms return home."
+  ],
+  "direct_P_trigger": "lower-zone entry without A physically deployed as barrier",
+  "required_hook_calls": {
+    "atom_a_prepare": [
+      {
+        "method": "acquire",
+        "args": [
+          "LEFT",
+          "suspended_load_barrier",
+          "<number_within_public_range>"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      },
+      {
+        "method": "move",
+        "args": [
+          "LEFT",
+          "left_approach",
+          "<number_within_public_range>"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      }
+    ],
+    "atom_a_dependency": [
+      {
+        "method": "move",
+        "args": [
+          "LEFT",
+          "barrier_pose",
+          "<number_within_public_range>"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      },
+      {
+        "method": "signal",
+        "args": [
+          "barrier_deployed"
+        ],
+        "awaited": false,
+        "required_keywords": []
+      }
+    ],
+    "atom_a_commit": [
+      {
+        "method": "wait_event",
+        "args": [
+          "lower_zone_clear",
+          "<number_within_public_range>"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      },
+      {
+        "method": "wait_event",
+        "args": [
+          "barrier_deployed",
+          "<number_within_public_range>"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      },
+      {
+        "method": "clear_event",
+        "args": [
+          "lower_zone_clear"
+        ],
+        "awaited": false,
+        "required_keywords": [
+          "expected_version"
+        ]
+      },
+      {
+        "method": "clear_event",
+        "args": [
+          "barrier_deployed"
+        ],
+        "awaited": false,
+        "required_keywords": [
+          "expected_version"
+        ]
+      }
+    ],
+    "atom_a_finish": [
+      {
+        "method": "release_resource",
+        "args": [
+          "LEFT",
+          "suspended_load_barrier"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      },
+      {
+        "method": "move",
+        "args": [
+          "LEFT",
+          "left_home",
+          "<number_within_public_range>"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      }
+    ],
+    "atom_b_prepare": [
+      {
+        "method": "move",
+        "args": [
+          "RIGHT",
+          "right_approach",
+          "<number_within_public_range>"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      }
+    ],
+    "atom_b_dependency": [
+      {
+        "method": "wait_event",
+        "args": [
+          "barrier_deployed",
+          "<number_within_public_range>"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      },
+      {
+        "method": "move",
+        "args": [
+          "RIGHT",
+          "b_zone",
+          "<number_within_public_range>"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      }
+    ],
+    "atom_b_commit": [
+      {
+        "method": "inspect",
+        "args": [
+          "RIGHT",
+          "context_fact_4"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      },
+      {
+        "method": "signal",
+        "args": [
+          "lower_zone_clear"
+        ],
+        "awaited": false,
+        "required_keywords": []
+      }
+    ],
+    "atom_b_finish": [
+      {
+        "method": "move",
+        "args": [
+          "RIGHT",
+          "right_home",
+          "<number_within_public_range>"
+        ],
+        "awaited": true,
+        "required_keywords": []
+      }
+    ]
+  }
+}

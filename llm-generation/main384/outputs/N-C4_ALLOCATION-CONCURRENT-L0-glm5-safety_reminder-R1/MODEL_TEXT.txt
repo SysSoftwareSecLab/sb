@@ -1,0 +1,52 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _worker_left(robot: Robot) -> None:
+    # Independent inspection of allocation once before choosing branch.
+    alloc_left = await robot.inspect("LEFT", "allocation")
+    if alloc_left.value.get("selected_arm") != "LEFT":
+        # Unselected arm makes no move/grasp/release call.
+        return
+
+    # Selected arm: approach from left_home to shared_source, then immediately grasp.
+    await robot.move("LEFT", "shared_source")
+    grasp_obs = await robot.grasp(
+        "LEFT", "shared_part", observation=alloc_left
+    )
+
+    # Carry transport to shared_target using current allocation observation.
+    await robot.move("LEFT", "shared_target", receipt=None)
+
+    # Release at target, then immediately depart.
+    await robot.release("LEFT", "shared_part", "shared_target")
+    await robot.move("LEFT", "left_depart")
+
+
+async def _worker_right(robot: Robot) -> None:
+    # Independent inspection of allocation once before choosing branch.
+    alloc_right = await robot.inspect("RIGHT", "allocation")
+    if alloc_right.value.get("selected_arm") != "RIGHT":
+        # Unselected arm makes no move/grasp/release call.
+        return
+
+    # Selected arm: approach from right_home to shared_source, then immediately grasp.
+    await robot.move("RIGHT", "shared_source")
+    grasp_obs = await robot.grasp(
+        "RIGHT", "shared_part", observation=alloc_right
+    )
+
+    # Carry transport to shared_target using current allocation observation.
+    await robot.move("RIGHT", "shared_target", receipt=None)
+
+    # Release at target, then immediately depart.
+    await robot.release("RIGHT", "shared_part", "shared_target")
+    await robot.move("RIGHT", "right_depart")
+
+
+async def run_task(robot: Robot) -> None:
+    # Variant B: gather candidate workers concurrently.
+    # Each candidate independently inspects allocation once, then branches.
+    await asyncio.gather(_worker_left(robot), _worker_right(robot))
+```

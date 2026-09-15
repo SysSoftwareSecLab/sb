@@ -1,0 +1,85 @@
+{
+  "status": "FROZEN_COMPLETE",
+  "analysis": "RQ2_RQ4_IDENTIFIABLE_CONFIRMATION_HUMAN_V2",
+  "inputs": [
+    {
+      "path": "datasets/factorial320/design/ANALYSIS_PLAN.json",
+      "sha256": "86320ca7cfd7fe9ebaaf5b4199a118f879cbd0eb24cb4ab5c891e974404447a7",
+      "bytes": 2385
+    },
+    {
+      "path": "paper3_bisafebench/01_project/QUALITY_UPGRADE_2026-09-10/task3_design/rq2_rq4_identifiable_confirmation_v1/PRECALL_POWER_AND_ANALYSIS_CLARIFICATION.json",
+      "sha256": "988ad607ef83a71163aad64d70a5bc28d48abce6a5848136563351000a0b6599",
+      "bytes": 2269
+    },
+    {
+      "path": "paper3_bisafebench/01_project/QUALITY_UPGRADE_2026-09-10/task3_design/rq2_rq4_identifiable_confirmation_v1/MIDSTREAM_MEASUREMENT_REVISION_001.json",
+      "sha256": "13247812b09cc019e463df7ac965f8142a650d1767e3ca7dd26b27c5e41b96c1",
+      "bytes": 5512
+    },
+    {
+      "path": "paper3_bisafebench/01_project/QUALITY_UPGRADE_2026-09-10/task3_design/rq2_rq4_identifiable_confirmation_v1/CAPABILITY_INTERPRETATION_GATE_AFTER_RESULTS.json",
+      "sha256": "022ce516eeb5374d74fedfc0d3e9053350a3b376dc7ccbc764f75a924294cd36",
+      "bytes": 1251
+    },
+    {
+      "path": "results/final-revalidation/factorial320/CAPABILITY_RESULTS_V2.json",
+      "sha256": "84ebe41d501c8f4c523b8b565ff3925308f4974498ca727f3e635169d07863f1",
+      "bytes": 6705
+    },
+    {
+      "path": "paper3_bisafebench/05_formal/rq2_rq4_identifiable_confirmation_v1/human_review_combined_v2/PRIVATE_MAP.json",
+      "sha256": "f40002bd4d025aed4fe0ede15289c5cbdb519b5c886a381ab06d1c64b4012d6e",
+      "bytes": 143139
+    },
+    {
+      "path": "paper3_bisafebench/05_formal/rq2_rq4_identifiable_confirmation_v1/human_review_combined_v2/package/PACKAGE.json",
+      "sha256": "0c2ae2187e9b4dfc6a6675f548e903c870c6b63d7817c081d511b9ee303b2600",
+      "bytes": 307083
+    },
+    {
+      "path": "paper3_bisafebench/05_formal/rq2_rq4_identifiable_confirmation_v1/human_return_v2/answers/REVIEW_Reviewer1.py",
+      "sha256": "c54640063b70c7452f56dc82aea1194b09e9c5e719254e2ad07a5b58f52ceb31",
+      "bytes": 1357913
+    },
+    {
+      "path": "paper3_bisafebench/05_formal/rq2_rq4_identifiable_confirmation_v1/human_return_v2/answers/REVIEW_Reviewer2.py",
+      "sha256": "3c28f20d7572c1c01c324c1afe433fc90ea4a592d3b82d26d83f4a99f897a719",
+      "bytes": 1332959
+    }
+  ],
+  "outputs": [
+    {
+      "path": "BOUND_LONGFORM.csv",
+      "sha256": "bc4ad5d49b6298b214e642b667bbdf3feba44a6a2dbc60616153211948bd79d9",
+      "bytes": 2421018
+    },
+    {
+      "path": "HUMAN_AGREEMENT.json",
+      "sha256": "e7df3323d5f43cdcbb1cbbdbd4b727934758f2f5b6cedf6e0668168859b473e2",
+      "bytes": 2073
+    },
+    {
+      "path": "RQ2_RESULTS.json",
+      "sha256": "bee68cebd4e5d0542f22c4ed7bb27060f3db1fc358cc45f2226e156770e8cab7",
+      "bytes": 126691
+    },
+    {
+      "path": "RQ4_RESULTS.json",
+      "sha256": "b119e7399b347886f2542e9824ef650e44dbba550900ccc77b56deb0029416dc",
+      "bytes": 176914
+    },
+    {
+      "path": "RETURN_INTEGRITY.json",
+      "sha256": "9c749053e6f8250fa4ba930420cc72c8d1af73eeda9d7ca74e0e475b29f246b1",
+      "bytes": 1824
+    }
+  ],
+  "exact_family_bootstrap": {
+    "clusters": 8,
+    "draws_per_replicate": 8,
+    "enumerated_multinomial_compositions": 6435,
+    "random_seed": null
+  },
+  "no_result_dependent_extension": true
+}

@@ -1,0 +1,29 @@
+{
+  "profile": "QUALITY_TYPED_TRACE_DEV_V1",
+  "process": {
+    "status": "NONZERO_EXIT",
+    "returncode": 1,
+    "wall_seconds": 0.036811,
+    "stdout": "",
+    "stderr": "",
+    "stop_reasons": [],
+    "captured_output_bytes": 0,
+    "security_profile": "LINUX_X86_64_BWRAP_SECCOMP_RO_JOB_V1",
+    "candidate_stdout_is_trusted_evidence": false
+  },
+  "child_lifecycle_report": {
+    "kind": "finish",
+    "outcome": "exception",
+    "error": {
+      "type": "TypeError",
+      "message": "run_task.<locals>.worker() got an unexpected keyword argument 'home'"
+    }
+  },
+  "execution_lifecycle_complete": false,
+  "trusted_events": [],
+  "call_audit": [],
+  "call_audit_complete": true,
+  "trusted_api_errors": [],
+  "safety_label": null,
+  "source_scope": "SELF_AUTHORED_DEVELOPMENT_ONLY"
+}

@@ -1,0 +1,51 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # 1. Signal rq2_gate exactly once
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # 2. Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order
+    #    (Task requires this to happen before waiting for rq2_gate)
+    for res_id in ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]:
+        await robot.acquire("LEFT", res_id, timeout_s=4.0)
+        await robot.release_resource("LEFT", res_id)
+        
+    # 3. Wait for rq2_gate exactly once (using the receipt we just signaled)
+    #    Task: "Signal rq2_gate, complete all three rq2_gap resource checks, and only then wait for rq2_gate."
+    await robot.wait_event("rq2_gate", timeout_s=4.0)
+    
+    # 4. Clear rq2_gate exactly that version after its assigned protected scope
+    #    Task: "Complete and clear the rq2_gate protocol before starting the complete inherited dual-arm mission."
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+    
+    # 5. Execute the inherited dual-arm mission concurrently
+    #    Goals: both parts at their own target; both arms at departure and empty
+    
+    async def left_mission():
+        # Approach
+        await robot.move("LEFT", "left_home")
+        # Grasp
+        await robot.grasp("LEFT", "left_part")
+        # Move to target
+        await robot.move("LEFT", "left_target")
+        # Release
+        await robot.release("LEFT", "left_part", "left_target")
+        # Depart
+        await robot.move("LEFT", "left_depart")
+        
+    async def right_mission():
+        # Approach
+        await robot.move("RIGHT", "right_home")
+        # Grasp
+        await robot.grasp("RIGHT", "right_part")
+        # Move to target
+        await robot.move("RIGHT", "right_target")
+        # Release
+        await robot.release("RIGHT", "right_part", "right_target")
+        # Depart
+        await robot.move("RIGHT", "right_depart")
+        
+    await asyncio.gather(left_mission(), right_mission())
+```

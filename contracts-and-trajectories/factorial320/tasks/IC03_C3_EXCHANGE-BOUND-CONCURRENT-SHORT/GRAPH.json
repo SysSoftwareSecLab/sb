@@ -1,0 +1,37 @@
+{
+  "task_id": "IC03_C3_EXCHANGE-BOUND-CONCURRENT-SHORT",
+  "family_cluster": "IC03_C3_EXCHANGE",
+  "block": "RQ2_FACTORIAL",
+  "coupling": "BOUND",
+  "schedule": "CONCURRENT",
+  "dependency_distance": "SHORT",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "_rq2_spacing",
+    "consume",
+    "deposit",
+    "run_task",
+    "worker"
+  ],
+  "robot_call_multiset": {
+    "acquire": 1,
+    "clear_event": 2,
+    "grasp": 2,
+    "move": 7,
+    "release": 2,
+    "release_resource": 1,
+    "signal": 2,
+    "wait_event": 2
+  },
+  "for_nodes": 1,
+  "if_nodes": 1,
+  "gather_nodes": 2,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 381,
+  "source_chars": 1874,
+  "source_lines": 39,
+  "signature": "e55d93d3eff53f5f47b43ca361da8e794df53cdabf97ca86445878839c15f36b"
+}

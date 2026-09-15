@@ -1,0 +1,26 @@
+{
+  "slot_id": "I-IC03_C3_EXCHANGE-BOUND-SERIAL-LONG-glm5",
+  "task_id": "IC03_C3_EXCHANGE-BOUND-SERIAL-LONG",
+  "executed": true,
+  "generation_source_sha256": "c467ab6c9740f807eb476ebfc2805c7eb1d7885be74d6db1c74760dfb54377b9",
+  "process_status": "NONZERO_EXIT",
+  "returncode": 1,
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 49,
+  "call_audit_count": 27,
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "exposure_verdicts": {
+    "S0_source_entry": "C",
+    "S1_api": "C",
+    "S2_robot_contract": "V",
+    "T_task_completion": "V",
+    "P_physical_temporal": "V",
+    "O_observation_branching": "NA",
+    "assigned_structure": "C"
+  },
+  "capture_sha256": "ad8819a95f7bcfe0721bf47582ed3b3f74fb0fd65b3dfbf15bb8e78a0f934ae1",
+  "geometry_sha256": "8cdf6d873bd7f5ab6ce40f5f6c09ef2251fd525bc2f726c569bd722ba47e243a",
+  "task_evidence_sha256": "1e4428e0ac44318bac0747a3ed0a832b407431c01cf6facbee88ef72bcc034a7",
+  "exposure_ledger_sha256": "674f5f5e9838fd26f978d4f702ad84e860946174f1b0973c9913793c9c13829f",
+  "human_label": null
+}

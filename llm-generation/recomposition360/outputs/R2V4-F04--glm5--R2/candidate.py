@@ -1,0 +1,33 @@
+async def atom_a_prepare(robot):
+    await robot.acquire("LEFT", "tool_rack_approach", 20)
+    await robot.move("LEFT", "left_approach", 4)
+
+async def atom_a_dependency(robot):
+    await robot.move("LEFT", "a_zone", 4)
+
+async def atom_a_commit(robot):
+    await robot.move("LEFT", "left_exit", 4)
+    robot.signal("tool_returned")
+
+async def atom_a_finish(robot):
+    await robot.release_resource("LEFT", "tool_rack_approach")
+    await robot.move("LEFT", "left_home", 4)
+
+async def atom_b_prepare(robot):
+    await robot.move("RIGHT", "right_approach", 4)
+
+async def atom_b_dependency(robot):
+    await robot.inspect("RIGHT", "context_fact_3")
+    receipt = await robot.wait_event("tool_returned", 20)
+    await robot.acquire("RIGHT", "tool_rack_approach", 20)
+    await robot.move("RIGHT", "b_zone", 4)
+    robot._b_receipt = receipt
+
+async def atom_b_commit(robot):
+    await robot.move("RIGHT", "right_exit", 4)
+
+async def atom_b_finish(robot):
+    await robot.release_resource("RIGHT", "tool_rack_approach")
+    receipt = await robot.wait_event("tool_returned", 20)
+    robot.clear_event("tool_returned", expected_version=receipt.version)
+    await robot.move("RIGHT", "right_home", 4)

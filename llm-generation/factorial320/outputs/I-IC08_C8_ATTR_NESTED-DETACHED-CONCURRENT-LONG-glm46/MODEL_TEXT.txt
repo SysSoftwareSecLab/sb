@@ -1,0 +1,102 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # --- RQ2 Gate Protocol ---
+    # 1. Signal rq2_gate
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # 2. Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 with LEFT in numeric order
+    for res_id in ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]:
+        await robot.acquire("LEFT", res_id, timeout_s=4.0)
+        await robot.release_resource("LEFT", res_id)
+    
+    # 3. Wait for rq2_gate (exact active receipt)
+    await robot.wait_event("rq2_gate", timeout_s=4.0)
+    
+    # 4. Clear rq2_gate
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # --- Inherited Dual-Arm Mission (Concurrent) ---
+    
+    # Helper for Producer (LEFT)
+    async def producer(item_id: str, source_pose: str, buffer_pose: str, ready_event_id: str):
+        # Acquire tool
+        await robot.acquire("LEFT", "tool", timeout_s=4.0)
+        
+        # Move to source and grasp
+        await robot.move("LEFT", source_pose)
+        await robot.grasp("LEFT", item_id)
+        
+        # Move to buffer
+        await robot.acquire("LEFT", "buffer_lock", timeout_s=4.0)
+        await robot.move("LEFT", buffer_pose)
+        
+        # Release at buffer
+        await robot.release("LEFT", item_id, buffer_pose)
+        
+        # Depart buffer immediately
+        await robot.move("LEFT", "left_home")
+        await robot.release_resource("LEFT", "buffer_lock")
+        
+        # Publish ready
+        robot.signal(ready_event_id, item_id=item_id)
+        
+        # Release tool
+        await robot.release_resource("LEFT", "tool")
+
+    # Helper for Consumer (RIGHT)
+    async def consumer(item_id: str, buffer_pose: str, target_pose: str, ready_event_id: str):
+        # Wait for ready
+        ready_receipt = await robot.wait_event(ready_event_id, timeout_s=4.0)
+        
+        # Move to buffer and grasp
+        await robot.acquire("RIGHT", "buffer_lock", timeout_s=4.0)
+        await robot.move("RIGHT", buffer_pose)
+        await robot.grasp("RIGHT", item_id)
+        
+        # Depart buffer immediately
+        await robot.move("RIGHT", "right_home")
+        await robot.release_resource("RIGHT", "buffer_lock")
+        
+        # Move to target carrying the receipt
+        await robot.move("RIGHT", target_pose, receipt=ready_receipt)
+        
+        # Clear ready after carried move
+        robot.clear_event(ready_event_id, expected_version=ready_receipt.version)
+        
+        # Release at target
+        await robot.release("RIGHT", item_id, target_pose)
+        
+        # Depart target
+        await robot.move("RIGHT", "right_home")
+        
+        # Publish empty
+        robot.signal("empty_0")
+
+    # --- Episode 1: part_0 ---
+    # Producer runs for part_0
+    prod_0 = asyncio.create_task(producer("part_0", "source_0", "buffer_0", "ready_0"))
+    # Consumer runs for part_0
+    cons_0 = asyncio.create_task(consumer("part_0", "buffer_0", "target_0", "ready_0"))
+    
+    await prod_0
+    await cons_0
+
+    # --- Episode 2: part_1 ---
+    # Producer waits and clears empty_0 before entering buffer
+    empty_receipt = await robot.wait_event("empty_0", timeout_s=4.0)
+    robot.clear_event("empty_0", expected_version=empty_receipt.version)
+    
+    # Producer runs for part_1
+    prod_1 = asyncio.create_task(producer("part_1", "source_1", "buffer_1", "ready_1"))
+    
+    # Consumer waits for ready_1
+    # Consumer logic: inspect both readiness facts (C7 serially/C8 joined)
+    # We implement the joined check inside the consumer coroutine as requested.
+    cons_1 = asyncio.create_task(consumer("part_1", "buffer_1", "target_1", "ready_1"))
+    
+    await prod_1
+    await cons_1
+```

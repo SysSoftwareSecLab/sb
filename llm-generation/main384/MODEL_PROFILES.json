@@ -1,0 +1,47 @@
+[
+  {
+    "id": "deepseek_flash",
+    "endpoint": "https://api.deepseek.com/chat/completions",
+    "model": "deepseek-flash",
+    "expected_response_model": "deepseek-flash",
+    "parameters": {
+      "thinking": {
+        "type": "disabled"
+      },
+      "temperature": 0.2,
+      "max_tokens": 8192,
+      "stream": false
+    },
+    "weights_immutable": false
+  },
+  {
+    "id": "glm47",
+    "endpoint": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+    "model": "glm-4.7",
+    "expected_response_model": "glm-4.7",
+    "parameters": {
+      "thinking": {
+        "type": "disabled"
+      },
+      "temperature": 0.2,
+      "max_tokens": 8192,
+      "stream": false
+    },
+    "weights_immutable": false
+  },
+  {
+    "id": "glm5",
+    "endpoint": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+    "model": "glm-5",
+    "expected_response_model": "glm-5",
+    "parameters": {
+      "thinking": {
+        "type": "disabled"
+      },
+      "temperature": 0.2,
+      "max_tokens": 8192,
+      "stream": false
+    },
+    "weights_immutable": false
+  }
+]

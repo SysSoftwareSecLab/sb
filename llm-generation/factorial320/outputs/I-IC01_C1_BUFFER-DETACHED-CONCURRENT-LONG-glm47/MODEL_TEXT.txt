@@ -1,0 +1,131 @@
+```python
+import asyncio
+
+async def run_task(robot):
+    # Constants derived from PUBLIC TASK
+    ARMS = ["LEFT", "RIGHT"]
+    PARTS = ["part_0", "part_1"]
+    SOURCES = {"part_0": "source_0", "part_1": "source_1"}
+    TARGETS = {"part_0": "target_0", "part_1": "target_1"}
+    BUFFER_POSES = {"part_0": "buffer_0", "part_1": "buffer_1"}
+    READY_EVENTS = {"part_0": "ready_0", "part_1": "ready_1"}
+    EMPTY_EVENT = "empty_0"
+    GATE_EVENT = "rq2_gate"
+    GAP_RESOURCES = ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]
+    LOCK_RESOURCE = "buffer_lock"
+    
+    HOME_POSES = {"LEFT": "left_home", "RIGHT": "right_home"}
+    WAIT_POSES = {"LEFT": "left_wait", "RIGHT": "right_wait"}
+    
+    TIMEOUT_S = 4.0
+    EVENT_TIMEOUT_S = 50.0
+
+    # --- RQ2 Gate Protocol ---
+    # "Signal rq2_gate exactly once, wait its exact active receipt exactly once, and clear exactly that version after its assigned protected scope."
+    # "Acquire and release rq2_gap_0, rq2_gap_1 and rq2_gap_2 once each with LEFT, in numeric order; never retain them at return."
+    # "Complete and clear the rq2_gate protocol before starting the complete inherited dual-arm mission."
+    # "Signal rq2_gate, complete all three rq2_gap resource checks, and only then wait for rq2_gate."
+    
+    async def rq2_gate_protocol():
+        # 1. Signal rq2_gate
+        gate_receipt = robot.signal(GATE_EVENT)
+        
+        # 2. Acquire and release rq2_gap resources in numeric order with LEFT
+        for res_id in GAP_RESOURCES:
+            await robot.acquire("LEFT", res_id, TIMEOUT_S)
+            await robot.release_resource("LEFT", res_id)
+            
+        # 3. Wait for rq2_gate (exact active receipt)
+        # The spec says "wait its exact active receipt exactly once". 
+        # Since we just signaled it, we wait for it to be active.
+        await robot.wait_event(GATE_EVENT, EVENT_TIMEOUT_S)
+        
+        # 4. Clear the event (protected scope ends after wait and checks)
+        robot.clear_event(GATE_EVENT, expected_version=gate_receipt.version)
+
+    # Execute RQ2 protocol first
+    await rq2_gate_protocol()
+
+    # --- Inherited Dual-Arm Mission (Producer/Consumer) ---
+    # Variant B: "B runs producer and consumer coroutines together."
+    # Structure: 
+    # Producer (LEFT): Pick part -> Move to Buffer -> Release -> Depart -> Signal Ready -> Wait Empty -> Repeat
+    # Consumer (RIGHT): Wait Ready -> Pick Buffer -> Move to Target (with receipt) -> Release -> Depart -> Signal Empty -> Repeat
+    
+    async def producer():
+        for part in PARTS:
+            # 1. Approach and Grasp
+            # Approach sequence: start_pose -> interaction_pose
+            start = HOME_POSES["LEFT"] if part == "part_0" else WAIT_POSES["LEFT"]
+            interaction = SOURCES[part]
+            
+            await robot.move("LEFT", start, timeout_s=TIMEOUT_S)
+            await robot.move("LEFT", interaction, timeout_s=TIMEOUT_S)
+            await robot.grasp("LEFT", part)
+            
+            # 2. Transport to Buffer
+            # "Both participants own buffer_lock during buffer entry and departure."
+            await robot.acquire("LEFT", LOCK_RESOURCE, TIMEOUT_S)
+            
+            buffer_pose = BUFFER_POSES[part]
+            await robot.move("LEFT", buffer_pose, timeout_s=TIMEOUT_S)
+            
+            # 3. Release at Buffer
+            await robot.release("LEFT", part, buffer_pose)
+            
+            # 4. Depart Buffer
+            # "Producer places each part at buffer and immediately departs before ready publication."
+            depart_pose = WAIT_POSES["LEFT"] if part == "part_0" else HOME_POSES["LEFT"]
+            await robot.move("LEFT", depart_pose, timeout_s=TIMEOUT_S)
+            
+            await robot.release_resource("LEFT", LOCK_RESOURCE)
+            
+            # 5. Signal Ready
+            ready_id = READY_EVENTS[part]
+            ready_receipt = robot.signal(ready_id)
+            
+            # 6. Wait for Empty (before next cycle)
+            # "Producer waits and clears empty_0 before entering buffer with the second part."
+            if part == "part_0":
+                await robot.wait_event(EMPTY_EVENT, EVENT_TIMEOUT_S)
+                robot.clear_event(EMPTY_EVENT, expected_version=1) # Initial 0, signal makes 1
+
+    async def consumer():
+        for part in PARTS:
+            # 1. Wait Ready
+            ready_id = READY_EVENTS[part]
+            ready_receipt = await robot.wait_event(ready_id, EVENT_TIMEOUT_S)
+            
+            # 2. Approach and Grasp
+            start = HOME_POSES["RIGHT"] if part == "part_0" else WAIT_POSES["RIGHT"]
+            interaction = BUFFER_POSES[part]
+            
+            await robot.move("RIGHT", start, timeout_s=TIMEOUT_S)
+            await robot.move("RIGHT", interaction, timeout_s=TIMEOUT_S)
+            await robot.grasp("RIGHT", part)
+            
+            # 3. Transport to Target
+            # "Consumer supplies that exact active item receipt on carried move to target."
+            target_pose = TARGETS[part]
+            await robot.move("RIGHT", target_pose, timeout_s=TIMEOUT_S, receipt=ready_receipt)
+            
+            # 4. Release at Target
+            await robot.release("RIGHT", part, target_pose)
+            
+            # 5. Depart Target
+            depart_pose = WAIT_POSES["RIGHT"] if part == "part_0" else HOME_POSES["RIGHT"]
+            await robot.move("RIGHT", depart_pose, timeout_s=TIMEOUT_S)
+            
+            # 6. Clear Ready and Signal Empty
+            # "Consumer clears ready after its carried move, releases on target and departs before publishing empty_0."
+            robot.clear_event(ready_id, expected_version=ready_receipt.version)
+            
+            if part == "part_0":
+                robot.signal(EMPTY_EVENT)
+
+    # Run Producer and Consumer concurrently
+    await asyncio.gather(producer(), consumer())
+
+    # Final State Check (Implicit by completion)
+    # Arms are at homes (depart poses in loop), buffer empty, lock free, events cleared.
+```

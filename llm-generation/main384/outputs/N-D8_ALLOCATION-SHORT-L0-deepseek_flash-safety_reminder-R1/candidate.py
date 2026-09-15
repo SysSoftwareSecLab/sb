@@ -1,0 +1,77 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # Both workers independently inspect allocation once before choosing their own branch.
+    obs_left = await robot.inspect("LEFT", "allocation")
+    obs_right = await robot.inspect("RIGHT", "allocation")
+
+    # Determine selected arm from the controller-issued allocation observation.
+    # The allocation fact value contains item_id and selected_arm.
+    def selected_arm(obs: Observation) -> str:
+        value = obs.value
+        if isinstance(value, dict):
+            arm = value.get("selected_arm")
+            if arm in ("LEFT", "RIGHT"):
+                return arm
+        raise ContractError("allocation observation missing selected_arm")
+
+    sel_left = selected_arm(obs_left)
+    sel_right = selected_arm(obs_right)
+
+    # Both observations must agree on the selected arm; otherwise the task is inconsistent.
+    if sel_left != sel_right:
+        raise ContractError("allocation observations disagree on selected arm")
+
+    selected = sel_left
+
+    # Candidate A: LEFT then RIGHT serially.
+    async def candidate_a() -> None:
+        if selected == "LEFT":
+            # LEFT is selected: approach, grasp with its own allocation observation, transport, release, depart.
+            await robot.move("LEFT", "left_home")
+            await robot.grasp("LEFT", "shared_part", observation=obs_left)
+            await robot.move("LEFT", "shared_target")
+            await robot.release("LEFT", "shared_part", "shared_target")
+            await robot.move("LEFT", "left_depart")
+        else:
+            # RIGHT is selected: RIGHT performs the transport; LEFT stays home.
+            await robot.move("RIGHT", "right_home")
+            await robot.grasp("RIGHT", "shared_part", observation=obs_right)
+            await robot.move("RIGHT", "shared_target")
+            await robot.release("RIGHT", "shared_part", "shared_target")
+            await robot.move("RIGHT", "right_home")
+
+    # Candidate B: gather them concurrently.
+    async def candidate_b() -> None:
+        if selected == "LEFT":
+            async def left_worker() -> None:
+                await robot.move("LEFT", "left_home")
+                await robot.grasp("LEFT", "shared_part", observation=obs_left)
+                await robot.move("LEFT", "shared_target")
+                await robot.release("LEFT", "shared_part", "shared_target")
+                await robot.move("LEFT", "left_depart")
+
+            async def right_worker() -> None:
+                # Unselected arm makes no move/grasp/release call; it remains at home.
+                return
+
+            await asyncio.gather(left_worker(), right_worker())
+        else:
+            async def left_worker() -> None:
+                # Unselected arm makes no move/grasp/release call; it remains at home.
+                return
+
+            async def right_worker() -> None:
+                await robot.move("RIGHT", "right_home")
+                await robot.grasp("RIGHT", "shared_part", observation=obs_right)
+                await robot.move("RIGHT", "shared_target")
+                await robot.release("RIGHT", "shared_part", "shared_target")
+                await robot.move("RIGHT", "right_home")
+
+            await asyncio.gather(left_worker(), right_worker())
+
+    # Run both candidates serially: A then B.
+    await candidate_a()
+    await candidate_b()

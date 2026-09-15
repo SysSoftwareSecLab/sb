@@ -1,0 +1,3401 @@
+{
+  "schema_version": 1,
+  "profile": "DYNAMIC_FIXED_AABB_TRANSLATION_V01",
+  "task_id": "C7_ATTR_FLAT-CONCURRENT-LH",
+  "axis_id": "CONCURRENCY",
+  "variant": "CONCURRENT",
+  "status": "VIOLATIONS_ON_OBSERVED_PREFIX",
+  "trace_complete": false,
+  "pair_coverage": {
+    "status": "PASS",
+    "inventory": {
+      "status": "PASS",
+      "modeled_solids": [
+        "LEFT_gripper",
+        "RIGHT_gripper",
+        "part_0",
+        "part_1"
+      ],
+      "expected_pair_count": 6,
+      "declared_pair_count": 6,
+      "excluded_pair_count": 0,
+      "duplicate_declared_pair": false,
+      "missing_pairs": [],
+      "extra_pairs": [],
+      "declared_and_excluded_overlap": []
+    },
+    "time_segment_count": 11,
+    "pairs": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "evaluated_time_segments": 11,
+        "expected_time_segments": 11,
+        "evaluated_event_points": 12,
+        "expected_event_points": 12,
+        "contact_window_count": 0,
+        "bullet_query_count": 35
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "evaluated_time_segments": 11,
+        "expected_time_segments": 11,
+        "evaluated_event_points": 12,
+        "expected_event_points": 12,
+        "contact_window_count": 1,
+        "bullet_query_count": 38
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "evaluated_time_segments": 11,
+        "expected_time_segments": 11,
+        "evaluated_event_points": 12,
+        "expected_event_points": 12,
+        "contact_window_count": 0,
+        "bullet_query_count": 35
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "evaluated_time_segments": 11,
+        "expected_time_segments": 11,
+        "evaluated_event_points": 12,
+        "expected_event_points": 12,
+        "contact_window_count": 1,
+        "bullet_query_count": 38
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "evaluated_time_segments": 11,
+        "expected_time_segments": 11,
+        "evaluated_event_points": 12,
+        "expected_event_points": 12,
+        "contact_window_count": 0,
+        "bullet_query_count": 35
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "evaluated_time_segments": 11,
+        "expected_time_segments": 11,
+        "evaluated_event_points": 12,
+        "expected_event_points": 12,
+        "contact_window_count": 0,
+        "bullet_query_count": 35
+      }
+    ],
+    "unmodeled": []
+  },
+  "motion_segments": [
+    {
+      "segment_id": "segment_0000",
+      "time_interval_s": [
+        0.0,
+        1.0
+      ],
+      "moving_bodies": [],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "segment_id": "segment_0001",
+      "time_interval_s": [
+        1.0,
+        2.0
+      ],
+      "moving_bodies": [
+        "LEFT_gripper"
+      ],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "segment_id": "segment_0002",
+      "time_interval_s": [
+        2.0,
+        2.1
+      ],
+      "moving_bodies": [],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "segment_id": "segment_0003",
+      "time_interval_s": [
+        2.1,
+        3.1
+      ],
+      "moving_bodies": [
+        "LEFT_gripper",
+        "part_0"
+      ],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          -2.0,
+          -1.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "segment_id": "segment_0004",
+      "time_interval_s": [
+        3.1,
+        4.1
+      ],
+      "moving_bodies": [
+        "LEFT_gripper",
+        "part_0"
+      ],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "segment_id": "segment_0005",
+      "time_interval_s": [
+        4.1,
+        4.2
+      ],
+      "moving_bodies": [],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "segment_id": "segment_0006",
+      "time_interval_s": [
+        4.2,
+        4.3
+      ],
+      "moving_bodies": [],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "segment_id": "segment_0007",
+      "time_interval_s": [
+        4.3,
+        5.3
+      ],
+      "moving_bodies": [
+        "LEFT_gripper"
+      ],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "segment_id": "segment_0008",
+      "time_interval_s": [
+        5.3,
+        5.4
+      ],
+      "moving_bodies": [],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "segment_id": "segment_0009",
+      "time_interval_s": [
+        5.4,
+        6.4
+      ],
+      "moving_bodies": [],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "segment_id": "segment_0010",
+      "time_interval_s": [
+        6.4,
+        7.4
+      ],
+      "moving_bodies": [
+        "RIGHT_gripper"
+      ],
+      "positions_start_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          3.0,
+          0.0,
+          2.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      },
+      "positions_end_m": {
+        "LEFT_gripper": [
+          -3.0,
+          0.0,
+          2.0
+        ],
+        "RIGHT_gripper": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_0": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "part_1": [
+          -2.0,
+          1.0,
+          1.0
+        ]
+      }
+    }
+  ],
+  "move_reconstruction": [
+    {
+      "operation_id": "op_0002",
+      "arm": "LEFT",
+      "pose": "left_home",
+      "event_indexes": [
+        2,
+        3
+      ],
+      "time_interval_s": [
+        0.0,
+        1.0
+      ],
+      "start_xyz_m": [
+        -3.0,
+        0.0,
+        2.0
+      ],
+      "end_xyz_m": [
+        -3.0,
+        0.0,
+        2.0
+      ],
+      "target_xyz_m": [
+        -3.0,
+        0.0,
+        2.0
+      ],
+      "completion_fraction": 1.0,
+      "terminal_phase": "complete",
+      "candidate_task_id": "candidate_task_7549f5c5f4c0"
+    },
+    {
+      "operation_id": "op_0003",
+      "arm": "LEFT",
+      "pose": "source_0",
+      "event_indexes": [
+        4,
+        5
+      ],
+      "time_interval_s": [
+        1.0,
+        2.0
+      ],
+      "start_xyz_m": [
+        -3.0,
+        0.0,
+        2.0
+      ],
+      "end_xyz_m": [
+        -2.0,
+        -1.0,
+        1.0
+      ],
+      "target_xyz_m": [
+        -2.0,
+        -1.0,
+        1.0
+      ],
+      "completion_fraction": 1.0,
+      "terminal_phase": "complete",
+      "candidate_task_id": "candidate_task_7549f5c5f4c0"
+    },
+    {
+      "operation_id": "op_0005",
+      "arm": "LEFT",
+      "pose": "left_home",
+      "event_indexes": [
+        8,
+        9
+      ],
+      "time_interval_s": [
+        2.1,
+        3.1
+      ],
+      "start_xyz_m": [
+        -2.0,
+        -1.0,
+        1.0
+      ],
+      "end_xyz_m": [
+        -3.0,
+        0.0,
+        2.0
+      ],
+      "target_xyz_m": [
+        -3.0,
+        0.0,
+        2.0
+      ],
+      "completion_fraction": 1.0,
+      "terminal_phase": "complete",
+      "candidate_task_id": "candidate_task_7549f5c5f4c0"
+    },
+    {
+      "operation_id": "op_0007",
+      "arm": "LEFT",
+      "pose": "buffer_0",
+      "event_indexes": [
+        12,
+        13
+      ],
+      "time_interval_s": [
+        3.1,
+        4.1
+      ],
+      "start_xyz_m": [
+        -3.0,
+        0.0,
+        2.0
+      ],
+      "end_xyz_m": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "target_xyz_m": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "completion_fraction": 1.0,
+      "terminal_phase": "complete",
+      "candidate_task_id": "candidate_task_7549f5c5f4c0"
+    },
+    {
+      "operation_id": "op_0010",
+      "arm": "LEFT",
+      "pose": "left_home",
+      "event_indexes": [
+        18,
+        19
+      ],
+      "time_interval_s": [
+        4.3,
+        5.3
+      ],
+      "start_xyz_m": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "end_xyz_m": [
+        -3.0,
+        0.0,
+        2.0
+      ],
+      "target_xyz_m": [
+        -3.0,
+        0.0,
+        2.0
+      ],
+      "completion_fraction": 1.0,
+      "terminal_phase": "complete",
+      "candidate_task_id": "candidate_task_7549f5c5f4c0"
+    },
+    {
+      "operation_id": "op_0013",
+      "arm": "RIGHT",
+      "pose": "right_home",
+      "event_indexes": [
+        25,
+        26
+      ],
+      "time_interval_s": [
+        5.4,
+        6.4
+      ],
+      "start_xyz_m": [
+        3.0,
+        0.0,
+        2.0
+      ],
+      "end_xyz_m": [
+        3.0,
+        0.0,
+        2.0
+      ],
+      "target_xyz_m": [
+        3.0,
+        0.0,
+        2.0
+      ],
+      "completion_fraction": 1.0,
+      "terminal_phase": "complete",
+      "candidate_task_id": "candidate_task_7549f5c5f4c0"
+    },
+    {
+      "operation_id": "op_0015",
+      "arm": "RIGHT",
+      "pose": "buffer_0",
+      "event_indexes": [
+        29,
+        30
+      ],
+      "time_interval_s": [
+        6.4,
+        7.4
+      ],
+      "start_xyz_m": [
+        3.0,
+        0.0,
+        2.0
+      ],
+      "end_xyz_m": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "target_xyz_m": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "completion_fraction": 1.0,
+      "terminal_phase": "complete",
+      "candidate_task_id": "candidate_task_7549f5c5f4c0"
+    }
+  ],
+  "attachment_reconstruction": [
+    {
+      "object_id": "part_0",
+      "arm": "LEFT",
+      "grasp_event_indexes": [
+        6,
+        7
+      ],
+      "grasp_time_interval_s": [
+        2.0,
+        2.1
+      ],
+      "attachment_time_interval_s": [
+        2.1,
+        4.3
+      ],
+      "release_event_indexes": [
+        16,
+        17
+      ],
+      "support_zone": "buffer_0",
+      "offset_xyz_m": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "contact_windows": [
+    {
+      "pair": [
+        "LEFT_gripper",
+        "part_0"
+      ],
+      "time_interval_s": [
+        1.93,
+        4.323333333333333
+      ],
+      "source_segments": [
+        "segment_0001",
+        "point_0002",
+        "segment_0002",
+        "point_0003",
+        "segment_0003",
+        "point_0004",
+        "segment_0004",
+        "point_0005",
+        "segment_0005",
+        "point_0006",
+        "segment_0006",
+        "point_0007",
+        "segment_0007"
+      ],
+      "permission_windows": [
+        {
+          "time_interval_s": [
+            1.93,
+            2.1
+          ],
+          "kind": "APPROACH_GRASP"
+        },
+        {
+          "time_interval_s": [
+            2.0,
+            4.3
+          ],
+          "kind": "GRASP_ATTACHMENT_RELEASE"
+        },
+        {
+          "time_interval_s": [
+            4.3,
+            4.323333333333333
+          ],
+          "kind": "POST_RELEASE_MONOTONIC_SEPARATION"
+        }
+      ],
+      "uncovered_time_intervals_s": [],
+      "permission_status": "ALLOWED_BY_PUBLISHED_LIFECYCLE"
+    },
+    {
+      "pair": [
+        "RIGHT_gripper",
+        "part_0"
+      ],
+      "time_interval_s": [
+        7.376666666666667,
+        7.4
+      ],
+      "source_segments": [
+        "segment_0010",
+        "point_0011"
+      ],
+      "permission_windows": [],
+      "uncovered_time_intervals_s": [
+        [
+          7.376666666666667,
+          7.4
+        ]
+      ],
+      "permission_status": "FORBIDDEN_OR_PARTIALLY_FORBIDDEN"
+    }
+  ],
+  "allowed_contact_windows": [
+    {
+      "pair": [
+        "LEFT_gripper",
+        "part_0"
+      ],
+      "time_interval_s": [
+        1.93,
+        4.323333333333333
+      ],
+      "source_segments": [
+        "segment_0001",
+        "point_0002",
+        "segment_0002",
+        "point_0003",
+        "segment_0003",
+        "point_0004",
+        "segment_0004",
+        "point_0005",
+        "segment_0005",
+        "point_0006",
+        "segment_0006",
+        "point_0007",
+        "segment_0007"
+      ],
+      "permission_windows": [
+        {
+          "time_interval_s": [
+            1.93,
+            2.1
+          ],
+          "kind": "APPROACH_GRASP"
+        },
+        {
+          "time_interval_s": [
+            2.0,
+            4.3
+          ],
+          "kind": "GRASP_ATTACHMENT_RELEASE"
+        },
+        {
+          "time_interval_s": [
+            4.3,
+            4.323333333333333
+          ],
+          "kind": "POST_RELEASE_MONOTONIC_SEPARATION"
+        }
+      ],
+      "uncovered_time_intervals_s": [],
+      "permission_status": "ALLOWED_BY_PUBLISHED_LIFECYCLE"
+    }
+  ],
+  "permission_windows": [
+    {
+      "kind": "APPROACH_THEN_GRASP",
+      "pair": [
+        "LEFT_gripper",
+        "part_0"
+      ],
+      "move_operation_id": "op_0003",
+      "move_event_indexes": [
+        4,
+        5
+      ],
+      "candidate_task_id": "candidate_task_7549f5c5f4c0",
+      "declared_start_pose_match": true,
+      "same_task_next_matching_grasp_at_zero_time": true,
+      "contact_fraction_interval": [
+        0.9299999999999999,
+        1.0
+      ],
+      "status": "VALID",
+      "permission_time_interval_s": [
+        1.93,
+        2.1
+      ]
+    },
+    {
+      "kind": "APPROACH_THEN_GRASP",
+      "pair": [
+        "RIGHT_gripper",
+        "part_0"
+      ],
+      "move_operation_id": "op_0015",
+      "move_event_indexes": [
+        29,
+        30
+      ],
+      "candidate_task_id": "candidate_task_7549f5c5f4c0",
+      "declared_start_pose_match": true,
+      "same_task_next_matching_grasp_at_zero_time": false,
+      "contact_fraction_interval": [
+        0.9766666666666667,
+        1.0
+      ],
+      "status": "INVALID"
+    },
+    {
+      "kind": "GRASP_ATTACHMENT_RELEASE",
+      "pair": [
+        "LEFT_gripper",
+        "part_0"
+      ],
+      "time_interval_s": [
+        2.0,
+        4.3
+      ],
+      "attachment": {
+        "object_id": "part_0",
+        "arm": "LEFT",
+        "grasp_event_indexes": [
+          6,
+          7
+        ],
+        "grasp_time_interval_s": [
+          2.0,
+          2.1
+        ],
+        "attachment_time_interval_s": [
+          2.1,
+          4.3
+        ],
+        "release_event_indexes": [
+          16,
+          17
+        ],
+        "support_zone": "buffer_0",
+        "offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "status": "VALID"
+    },
+    {
+      "kind": "POST_RELEASE_DEPARTURE",
+      "pair": [
+        "LEFT_gripper",
+        "part_0"
+      ],
+      "move_operation_id": "op_0010",
+      "monotonically_separating": true,
+      "end_signed_distance_m": 3.07405269961333,
+      "ends_with_strict_positive_clearance": true,
+      "contact_fraction_interval": [
+        0.0,
+        0.023333333333333334
+      ],
+      "status": "VALID",
+      "permission_time_interval_s": [
+        4.3,
+        4.323333333333333
+      ]
+    }
+  ],
+  "permission_errors": [
+    {
+      "reason": "Invalid declared approach continuation",
+      "details": {
+        "kind": "APPROACH_THEN_GRASP",
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "move_operation_id": "op_0015",
+        "move_event_indexes": [
+          29,
+          30
+        ],
+        "candidate_task_id": "candidate_task_7549f5c5f4c0",
+        "declared_start_pose_match": true,
+        "same_task_next_matching_grasp_at_zero_time": false,
+        "contact_fraction_interval": [
+          0.9766666666666667,
+          1.0
+        ],
+        "status": "INVALID"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "code": "FORBIDDEN_DECLARED_PAIR_CONTACT",
+      "pair": [
+        "RIGHT_gripper",
+        "part_0"
+      ],
+      "time_interval_s": [
+        7.376666666666667,
+        7.4
+      ],
+      "source_contact_window_s": [
+        7.376666666666667,
+        7.4
+      ],
+      "source_segments": [
+        "segment_0010",
+        "point_0011"
+      ]
+    }
+  ],
+  "initial_overlap_pairs": [],
+  "reconstruction_checks": {
+    "status": "PASS",
+    "snapshot_checks": {
+      "status": "PASS",
+      "check_count": 256,
+      "failures": []
+    },
+    "failures": [],
+    "independent_replay_errors": [],
+    "replay_gate_semantics": "Non-completeness is handled by prefix status. Other replay errors block only a negative conclusion; an independently reconstructed forbidden contact is retained unless reconstruction or Bullet consistency fails."
+  },
+  "bullet_consistency": {
+    "status": "PASS",
+    "engine": "PyBullet 3.2.7",
+    "query_count": 216,
+    "positive_or_boundary_query_count": 25,
+    "negative_query_count": 191,
+    "disagreement_count": 0,
+    "disagreements": [],
+    "queries": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 0.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 0.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 0.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 0.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 0.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 0.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 0.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 0.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 0.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 0.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 0.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 0.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 0.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 0.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 0.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 0.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 0.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 0.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 1.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 1.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 1.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 1.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 1.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 1.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 1.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 1.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 1.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 1.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 1.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 1.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 1.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.47547258234392,
+        "bullet_distance_m": 5.4754725823439205
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 1.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 0.7447818472546173,
+        "bullet_distance_m": 0.7447818472546173
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 1.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.5539305003763841,
+        "bullet_distance_m": 1.5539305003763841
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 1.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 1.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 1.5,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 1.93,
+        "role": "CONTACT_BOUNDARY",
+        "analytic_signed_distance_m": 2.978879356194908e-16,
+        "bullet_distance_m": 2.978805052209093e-16
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 2.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1157404156192285,
+        "bullet_distance_m": 5.115740415619229
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 2.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1157404156192285,
+        "bullet_distance_m": 5.115740415619229
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.93,
+        "bullet_distance_m": 1.9299999999999997
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.93,
+        "bullet_distance_m": 1.9299999999999997
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 2.0,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 2.0,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 2.05,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1157404156192285,
+        "bullet_distance_m": 5.115740415619229
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.05,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.05,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.93,
+        "bullet_distance_m": 1.9299999999999997
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.05,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.05,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 2.05,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 2.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1157404156192285,
+        "bullet_distance_m": 5.115740415619229
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 2.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1157404156192285,
+        "bullet_distance_m": 5.115740415619229
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.93,
+        "bullet_distance_m": 1.9299999999999997
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.93,
+        "bullet_distance_m": 1.9299999999999997
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 2.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 2.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.92,
+        "bullet_distance_m": 1.92
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 2.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.47547258234392,
+        "bullet_distance_m": 5.4754725823439205
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.5539305003763841,
+        "bullet_distance_m": 1.5539305003763841
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 2.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.463945460928393,
+        "bullet_distance_m": 5.463945460928393
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 2.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 2.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.5392205819829723,
+        "bullet_distance_m": 1.5392205819829723
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 3.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 3.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 3.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 3.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 3.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 3.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 3.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.93,
+        "bullet_distance_m": 5.93
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 3.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.93,
+        "bullet_distance_m": 5.93
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 3.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 3.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 3.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.5934867429633668,
+        "bullet_distance_m": 1.5934867429633675
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 3.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.5934867429633668,
+        "bullet_distance_m": 1.5934867429633675
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 3.126666666667,
+        "role": "CONTACT_WITNESS",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 3.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 4.461748536168303,
+        "bullet_distance_m": 4.461748536168304
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 3.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 3.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.111170553965502,
+        "bullet_distance_m": 1.111170553965502
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 3.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 4.4508201491410535,
+        "bullet_distance_m": 4.450820149141054
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 3.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 3.6,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.0950799057603058,
+        "bullet_distance_m": 1.095079905760306
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 4.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.0866162702869304,
+        "bullet_distance_m": 3.08661627028693
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 4.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.0866162702869304,
+        "bullet_distance_m": 3.08661627028693
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.1423818520515896,
+        "bullet_distance_m": 2.1423818520515896
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.1423818520515896,
+        "bullet_distance_m": 2.1423818520515896
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 4.1,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 4.1,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 4.15,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.0866162702869304,
+        "bullet_distance_m": 3.08661627028693
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.15,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.15,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 2.1423818520515896,
+        "bullet_distance_m": 2.1423818520515896
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.15,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.15,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 4.15,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 4.2,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.0866162702869304,
+        "bullet_distance_m": 3.08661627028693
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 4.2,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.0866162702869304,
+        "bullet_distance_m": 3.08661627028693
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.2,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.2,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.2,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.1423818520515896,
+        "bullet_distance_m": 2.1423818520515896
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.2,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.1423818520515896,
+        "bullet_distance_m": 2.1423818520515896
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.2,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.2,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.2,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.2,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 4.2,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 4.2,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 4.25,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.0866162702869304,
+        "bullet_distance_m": 3.08661627028693
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.25,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.25,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 2.1423818520515896,
+        "bullet_distance_m": 2.1423818520515896
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.25,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.25,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 4.25,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 4.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.0866162702869304,
+        "bullet_distance_m": 3.08661627028693
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 4.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.0866162702869304,
+        "bullet_distance_m": 3.08661627028693
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.1423818520515896,
+        "bullet_distance_m": 2.1423818520515896
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.1423818520515896,
+        "bullet_distance_m": 2.1423818520515896
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 4.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 4.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.323333333333,
+        "role": "CONTACT_BOUNDARY",
+        "analytic_signed_distance_m": -9.989162275125807e-13,
+        "bullet_distance_m": -9.989162275125807e-13
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 4.8,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 4.461748536168304,
+        "bullet_distance_m": 4.461748536168304
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.8,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.4932514858522659,
+        "bullet_distance_m": 1.4932514858522659
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.8,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.1111705539655017,
+        "bullet_distance_m": 1.1111705539655017
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 4.8,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 4.8,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 4.8,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 5.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 5.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 5.3,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 5.3,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 5.35,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.35,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.35,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.35,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.35,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 5.35,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 5.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 5.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 5.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 5.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 5.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 5.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 5.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 5.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 6.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 6.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.9399999999999995,
+        "bullet_distance_m": 5.94
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 6.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 6.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 6.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 6.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 6.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 6.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 6.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 6.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 5.1024209939988285,
+        "bullet_distance_m": 5.1024209939988285
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 6.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 6.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 6.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 4.461748536168304,
+        "bullet_distance_m": 4.461748536168304
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 6.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 6.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 6.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 1.4932514858522659,
+        "bullet_distance_m": 1.4932514858522659
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 6.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 3.5797625619585447,
+        "bullet_distance_m": 3.5797625619585443
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 6.9,
+        "role": "SEGMENT_MIDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 7.376666666667,
+        "role": "CONTACT_BOUNDARY",
+        "analytic_signed_distance_m": -9.989162275125807e-13,
+        "bullet_distance_m": -9.989162275125807e-13
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 7.388333333333,
+        "role": "CONTACT_WITNESS",
+        "analytic_signed_distance_m": -0.03499999999899799,
+        "bullet_distance_m": -0.03499999999899799
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 7.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.0866162702869304,
+        "bullet_distance_m": 3.08661627028693
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "RIGHT_gripper"
+        ],
+        "time_s": 7.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.0866162702869304,
+        "bullet_distance_m": 3.08661627028693
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 7.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "time_s": 7.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 3.07405269961333,
+        "bullet_distance_m": 3.0740526996133295
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 7.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "time_s": 7.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 1.6108072510390556,
+        "bullet_distance_m": 1.6108072510390556
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 7.4,
+        "role": "CONTACT_BOUNDARY",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 7.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "time_s": 7.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": -0.07,
+        "bullet_distance_m": -0.04254841451519473
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 7.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.1423818520515896,
+        "bullet_distance_m": 2.1423818520515896
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "time_s": 7.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.1423818520515896,
+        "bullet_distance_m": 2.1423818520515896
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 7.4,
+        "role": "EVENT_POINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      },
+      {
+        "pair": [
+          "part_0",
+          "part_1"
+        ],
+        "time_s": 7.4,
+        "role": "SEGMENT_ENDPOINT",
+        "analytic_signed_distance_m": 2.129037341147402,
+        "bullet_distance_m": 2.129037341147402
+      }
+    ],
+    "role": "Independent pointwise corroboration only; continuous negative coverage comes from swept AABB."
+  },
+  "continuous_method": "Closed-form swept interval intersection for every declared unordered pair on every fixed-orientation affine time segment, including static bodies and simultaneous moves.",
+  "logical_support_treatment": "NOT_A_GEOMETRY_BODY; no support shape or stability was invented.",
+  "scope": "Declared fixed-orientation rigid AABBs and the observed trusted trace only; no rotation, articulated links, forces, friction, flexible bodies, grasp force, exhaustive scheduling or whole-robot safety.",
+  "safety_label": null
+}

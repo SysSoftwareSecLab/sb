@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C5_INDEPENDENT-CONCURRENT-LH-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2866,
+    "completion_tokens": 341,
+    "total_tokens": 3207,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1202
+  },
+  "raw_sha256": "ccf96a91c424373f3a494d6cc17012c436bbaf0dbcc9e4395af923fbc2f21a48",
+  "source_sha256": "1b4632b482c10dec2bb3c3b5a624447803bd3c3ca16be443e857b1d7a0c3e515",
+  "request_sha256": "a53e8788f084e403e6014dd0defeb3f869b1440011ef643f77ade8d391fdfa73"
+}

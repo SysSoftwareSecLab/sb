@@ -1,0 +1,89 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    ALLOCATION_FACT = "allocation"
+    SHARED_PART = "shared_part"
+    GATE_EVENT = "rq2_gate"
+    RESOURCES = ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_DEPART = "left_depart"
+    RIGHT_HOME = "right_home"
+    RIGHT_DEPART = "right_depart"
+    SHARED_SOURCE = "shared_source"
+    SHARED_TARGET = "shared_target"
+    
+    # Support Zones
+    ZONE_SOURCE = "shared_source"
+    ZONE_TARGET = "shared_target"
+
+    # --- Phase 1: RQ2 Gate Protocol (Concurrent) ---
+    
+    async def gate_producer():
+        # Signal the gate exactly once
+        robot.signal(GATE_EVENT)
+    
+    async def gate_consumer():
+        # Acquire resources in numeric order with LEFT arm
+        for res_id in RESOURCES:
+            await robot.acquire("LEFT", res_id, timeout_s=4.0)
+        
+        # Wait for the gate event exactly once
+        receipt = await robot.wait_event(GATE_EVENT, timeout_s=4.0)
+        
+        # Release resources
+        for res_id in RESOURCES:
+            await robot.release_resource("LEFT", res_id)
+            
+        # Clear the event using the exact version from the receipt
+        robot.clear_event(GATE_EVENT, expected_version=receipt.version)
+
+    # Run producer and consumer concurrently
+    await asyncio.gather(gate_producer(), gate_consumer())
+
+    # --- Phase 2: Inherited Dual-Arm Mission (Concurrent) ---
+    
+    async def worker(arm: str, home_pose: str, depart_pose: str):
+        # 1. Inspect allocation
+        obs = await robot.inspect(arm, ALLOCATION_FACT)
+        
+        # 2. Check if this arm is selected
+        # Observation value is JSON string: {"item_id": "shared_part", "selected_arm": "LEFT"}
+        selected_arm = obs.value["selected_arm"]
+        
+        if selected_arm == arm:
+            # --- Selected Arm Path ---
+            
+            # 3. Approach shared_source
+            # Must start from home_pose
+            await robot.move(arm, home_pose)
+            await robot.move(arm, SHARED_SOURCE)
+            
+            # 4. Grasp shared_part
+            # Must carry the observation
+            await robot.grasp(arm, SHARED_PART, observation=obs)
+            
+            # 5. Transport to shared_target
+            await robot.move(arm, SHARED_TARGET)
+            
+            # 6. Release at target
+            await robot.release(arm, SHARED_PART, ZONE_TARGET)
+            
+            # 7. Immediate departure
+            await robot.move(arm, depart_pose)
+            
+        else:
+            # --- Unselected Arm Path ---
+            # Makes no move/grasp/release calls.
+            # Just wait or idle (implicitly by not calling actions).
+            # To ensure concurrency structure, we can await a dummy sleep or just pass.
+            pass
+
+    # Run both workers concurrently
+    await asyncio.gather(
+        worker("LEFT", LEFT_HOME, LEFT_DEPART),
+        worker("RIGHT", RIGHT_HOME, RIGHT_DEPART)
+    )

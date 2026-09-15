@@ -1,0 +1,154 @@
+import asyncio
+
+async def run_task(robot):
+    # Constants from task spec
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    TIMEOUT = 50.0
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    # Items and locations
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+
+    async def producer():
+        # --- Item 0 ---
+        # Acquire tool
+        await robot.acquire(LEFT, TOOL, TIMEOUT)
+        
+        # Move to source and grasp
+        await robot.move(LEFT, SOURCE_0)
+        obs_0 = await robot.grasp(LEFT, PART_0)
+        
+        # Acquire buffer lock
+        await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT)
+        
+        # Move to buffer and release
+        await robot.move(LEFT, BUFFER_0)
+        await robot.release(LEFT, PART_0, BUFFER_0)
+        
+        # Depart buffer (immediate separating departure)
+        await robot.move(LEFT, LEFT_HOME)
+        
+        # Release buffer lock
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # Publish ready
+        receipt_0 = robot.signal(READY_0, PART_0)
+        
+        # Release tool
+        await robot.release_resource(LEFT, TOOL)
+        
+        # --- Item 1 ---
+        # Wait and clear empty_0
+        empty_receipt = await robot.wait_event(EMPTY_0, TIMEOUT)
+        robot.clear_event(EMPTY_0, expected_version=empty_receipt.version)
+        
+        # Acquire tool
+        await robot.acquire(LEFT, TOOL, TIMEOUT)
+        
+        # Move to source and grasp
+        await robot.move(LEFT, SOURCE_1)
+        obs_1 = await robot.grasp(LEFT, PART_1)
+        
+        # Acquire buffer lock
+        await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT)
+        
+        # Move to buffer and release
+        await robot.move(LEFT, BUFFER_1)
+        await robot.release(LEFT, PART_1, BUFFER_1)
+        
+        # Depart buffer
+        await robot.move(LEFT, LEFT_HOME)
+        
+        # Release buffer lock
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # Publish ready
+        receipt_1 = robot.signal(READY_1, PART_1)
+        
+        # Release tool
+        await robot.release_resource(LEFT, TOOL)
+
+    async def consumer():
+        # --- Item 0 ---
+        # Wait for ready_0
+        ready_0_receipt = await robot.wait_event(READY_0, TIMEOUT)
+        
+        # Acquire buffer lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT)
+        
+        # Move to buffer and grasp
+        await robot.move(RIGHT, BUFFER_0)
+        await robot.grasp(RIGHT, PART_0)
+        
+        # Depart buffer
+        await robot.move(RIGHT, RIGHT_HOME)
+        
+        # Release buffer lock
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # Move to target using receipt
+        await robot.move(RIGHT, TARGET_0, receipt=ready_0_receipt)
+        
+        # Clear ready after carried move
+        robot.clear_event(READY_0, expected_version=ready_0_receipt.version)
+        
+        # Release and depart
+        await robot.release(RIGHT, PART_0, TARGET_0)
+        await robot.move(RIGHT, RIGHT_HOME)
+        
+        # Publish empty_0
+        robot.signal(EMPTY_0)
+        
+        # --- Item 1 ---
+        # Wait for ready_1
+        ready_1_receipt = await robot.wait_event(READY_1, TIMEOUT)
+        
+        # Acquire buffer lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT)
+        
+        # Move to buffer and grasp
+        await robot.move(RIGHT, BUFFER_1)
+        await robot.grasp(RIGHT, PART_1)
+        
+        # Depart buffer
+        await robot.move(RIGHT, RIGHT_HOME)
+        
+        # Release buffer lock
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # Move to target using receipt
+        await robot.move(RIGHT, TARGET_1, receipt=ready_1_receipt)
+        
+        # Clear ready after carried move
+        robot.clear_event(READY_1, expected_version=ready_1_receipt.version)
+        
+        # Release and depart
+        await robot.release(RIGHT, PART_1, TARGET_1)
+        await robot.move(RIGHT, RIGHT_HOME)
+
+    # Run producer and consumer concurrently
+    await asyncio.gather(producer(), consumer())

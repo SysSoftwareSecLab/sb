@@ -1,0 +1,29 @@
+{
+  "task_id": "IC05_C5_INDEPENDENT-OOD-DEVELOPMENT_SHAPE",
+  "family_cluster": "IC05_C5_INDEPENDENT",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "DEVELOPMENT_SHAPE",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "clear_event": 1,
+    "grasp": 2,
+    "move": 6,
+    "release": 2,
+    "signal": 1,
+    "wait_event": 1
+  },
+  "for_nodes": 1,
+  "if_nodes": 1,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": true,
+  "ast_nodes": 162,
+  "source_chars": 972,
+  "source_lines": 22,
+  "signature": "5f58c03a3c76bb5d24677f92fa37f20412327ebde825a77b25c38c21c8106c29"
+}

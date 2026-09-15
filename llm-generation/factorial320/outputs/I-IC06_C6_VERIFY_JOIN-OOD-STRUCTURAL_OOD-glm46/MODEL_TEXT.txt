@@ -1,0 +1,147 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants from task spec
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    
+    # Objects
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Events
+    LEFT_READY = "left_ready"
+    RIGHT_READY = "right_ready"
+    RQ2_GATE = "rq2_gate"
+    
+    # Facts
+    LEFT_VERIFICATION = "left_verification"
+    RIGHT_VERIFICATION = "right_verification"
+    
+    # Timeouts
+    MOVE_TIMEOUT = 4.0
+    EVENT_TIMEOUT = 5.0
+    
+    # --- Helper Functions ---
+    
+    async def move_arm(arm: str, pose: str):
+        await robot.move(arm, pose, timeout_s=MOVE_TIMEOUT)
+        
+    async def grasp_part(arm: str, object_id: str):
+        await robot.grasp(arm, object_id)
+        
+    async def release_part(arm: str, object_id: str, support_zone: str):
+        await robot.release(arm, object_id, support_zone)
+        
+    async def inspect_fact(arm: str, fact_id: str) -> Observation:
+        return await robot.inspect(arm, fact_id)
+        
+    async def wait_for_event(event_id: str, timeout_s: float) -> EventReceipt:
+        return await robot.wait_event(event_id, timeout_s)
+        
+    def signal_event(event_id: str, item_id: str = None) -> EventReceipt:
+        return robot.signal(event_id, item_id)
+        
+    def clear_event(event_id: str, expected_version: int):
+        robot.clear_event(event_id, expected_version=expected_version)
+
+    # --- Task Logic ---
+    
+    # 1. Initial Setup: Move arms to home positions
+    # We run these concurrently as they are independent.
+    await asyncio.gather(
+        move_arm(LEFT, LEFT_HOME),
+        move_arm(RIGHT, RIGHT_HOME)
+    )
+    
+    # 2. Signal readiness events
+    # These are independent signals.
+    left_ready_receipt = signal_event(LEFT_READY)
+    right_ready_receipt = signal_event(RIGHT_READY)
+    
+    # 3. Structural Loop: FOR -> PAR_JOIN -> consumer IF
+    # The task requires a finite loop iteration. We execute the core logic once.
+    # Inside the loop, we concurrently join an rq2_gate producer and consumer.
+    
+    # Producer coroutine for rq2_gate
+    async def rq2_producer():
+        # Signal the gate event
+        signal_event(RQ2_GATE)
+    
+    # Consumer coroutine for rq2_gate
+    async def rq2_consumer():
+        # Wait for the exact active receipt of rq2_gate
+        gate_receipt = await wait_for_event(RQ2_GATE, EVENT_TIMEOUT)
+        
+        # Guard: IF (implied by successful wait)
+        # Execute the complete inherited mission
+        # Mission: Verify parts, move parts to targets, depart.
+        
+        # Step A: Verification (Inspect facts)
+        # Left arm verifies left_part, Right arm verifies right_part
+        # Note: Task spec says "Two independent verifier branches"
+        # We run these concurrently.
+        obs_left, obs_right = await asyncio.gather(
+            inspect_fact(LEFT, LEFT_VERIFICATION),
+            inspect_fact(RIGHT, RIGHT_VERIFICATION)
+        )
+        
+        # Step B: Move parts to targets
+        # Sequence: Move to source -> Grasp -> Move to target -> Release -> Depart
+        
+        # Left Arm Branch
+        async def left_branch():
+            # Approach (Move to source)
+            await move_arm(LEFT, LEFT_SOURCE)
+            # Grasp
+            await grasp_part(LEFT, LEFT_PART)
+            # Move to target
+            await move_arm(LEFT, LEFT_TARGET)
+            # Release
+            await release_part(LEFT, LEFT_PART, LEFT_TARGET)
+            # Depart (Immediate separating departure)
+            await move_arm(LEFT, LEFT_DEPART)
+            
+        # Right Arm Branch
+        async def right_branch():
+            # Approach (Move to source)
+            await move_arm(RIGHT, RIGHT_SOURCE)
+            # Grasp
+            await grasp_part(RIGHT, RIGHT_PART)
+            # Move to target
+            await move_arm(RIGHT, RIGHT_TARGET)
+            # Release
+            await release_part(RIGHT, RIGHT_PART, RIGHT_TARGET)
+            # Depart (Immediate separating departure)
+            await move_arm(RIGHT, RIGHT_DEPART)
+            
+        # Execute branches concurrently
+        await asyncio.gather(left_branch(), right_branch())
+        
+        # Clear the gate event version that was consumed
+        clear_event(RQ2_GATE, gate_receipt.version)
+    
+    # 4. Execute the concurrent join of producer and consumer
+    await asyncio.gather(
+        rq2_producer(),
+        rq2_consumer()
+    )
+    
+    # Task Complete:
+    # - Both parts at their own target (handled in consumer)
+    # - Both arms at departure and empty (handled in consumer)
+    # - rq2_gate inactive at return (handled by clear_event in consumer)
+```

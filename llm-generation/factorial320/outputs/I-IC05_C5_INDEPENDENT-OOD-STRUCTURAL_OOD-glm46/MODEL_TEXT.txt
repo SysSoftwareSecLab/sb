@@ -1,0 +1,77 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Task Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    
+    # Event
+    EVENT_ID = "rq2_gate"
+    
+    # Timeouts
+    MOVE_TIMEOUT = 4.0
+    EVENT_TIMEOUT = 30.0
+
+    async def execute_mission(arm: str, part: str, home: str, source: str, target: str, depart: str):
+        # 1. Approach
+        await robot.move(arm, source, timeout_s=MOVE_TIMEOUT)
+        
+        # 2. Grasp
+        await robot.grasp(arm, part)
+        
+        # 3. Transport to Target
+        await robot.move(arm, target, timeout_s=MOVE_TIMEOUT)
+        
+        # 4. Release
+        await robot.release(arm, part, target)
+        
+        # 5. Depart
+        await robot.move(arm, depart, timeout_s=MOVE_TIMEOUT)
+
+    # Structural Loop: FOR -> PAR_JOIN -> consumer IF
+    # The task requires one finite loop iteration.
+    # Inside the loop, we concurrently join a producer and consumer.
+    
+    # Producer: Signal the event
+    async def producer():
+        robot.signal(EVENT_ID)
+        return
+
+    # Consumer: Wait for event, execute mission, clear event
+    async def consumer():
+        # Wait for the exact active receipt
+        receipt = await robot.wait_event(EVENT_ID, timeout_s=EVENT_TIMEOUT)
+        
+        # Execute the complete inherited mission
+        # Since the mission involves two independent lanes, we run them concurrently
+        # to satisfy the "both parts at their own target" goal efficiently.
+        await asyncio.gather(
+            execute_mission(LEFT, LEFT_PART, LEFT_HOME, LEFT_SOURCE, LEFT_TARGET, LEFT_DEPART),
+            execute_mission(RIGHT, RIGHT_PART, RIGHT_HOME, RIGHT_SOURCE, RIGHT_TARGET, RIGHT_DEPART)
+        )
+        
+        # Clear that version
+        robot.clear_event(EVENT_ID, expected_version=receipt.version)
+        return
+
+    # Execute the loop iteration
+    # PAR_JOIN of producer and consumer
+    await asyncio.gather(producer(), consumer())
+
+    return
+```

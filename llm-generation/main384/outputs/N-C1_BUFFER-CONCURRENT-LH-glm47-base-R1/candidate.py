@@ -1,0 +1,182 @@
+import asyncio
+from bridge_robot_api import Robot, EventReceipt, ActionReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    """
+    Implements the C1_BUFFER-CONCURRENT-LH task (Variant B).
+    Structure: Producer (LEFT) and Consumer (RIGHT) run concurrently.
+    Sequence:
+    1. LEFT moves part_0 from source_0 to buffer_0.
+    2. LEFT signals ready_0.
+    3. RIGHT waits ready_0, moves to buffer_0, grasps part_0.
+    4. RIGHT moves to target_0 (carrying part_0, using ready_0 receipt).
+    5. RIGHT clears ready_0, releases part_0, moves to right_home.
+    6. RIGHT signals empty_0.
+    7. LEFT waits empty_0.
+    8. LEFT moves part_1 from source_1 to buffer_1.
+    9. LEFT signals ready_1.
+    10. RIGHT waits ready_1, moves to buffer_1, grasps part_1.
+    11. RIGHT moves to target_1 (carrying part_1, using ready_1 receipt).
+    12. RIGHT clears ready_1, releases part_1, moves to right_home.
+    13. LEFT moves to left_home.
+    """
+
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+
+    # Resources
+    BUFFER_LOCK = "buffer_lock"
+
+    # Timeouts
+    MOVE_TIMEOUT = 4.0
+    EVENT_TIMEOUT = 10.0
+
+    async def producer():
+        # --- Episode 1: Part 0 ---
+        
+        # Acquire lock for buffer entry
+        await robot.acquire(LEFT, BUFFER_LOCK, EVENT_TIMEOUT)
+        
+        # Move to source_0 (Approach)
+        await robot.move(LEFT, SOURCE_0, MOVE_TIMEOUT)
+        
+        # Grasp part_0
+        await robot.grasp(LEFT, PART_0)
+        
+        # Move to buffer_0 (Transport)
+        await robot.move(LEFT, BUFFER_0, MOVE_TIMEOUT)
+        
+        # Release part_0 at buffer
+        await robot.release(LEFT, PART_0, BUFFER_0)
+        
+        # Depart buffer (Immediate departure)
+        await robot.move(LEFT, LEFT_WAIT, MOVE_TIMEOUT)
+        
+        # Release lock (Departure complete)
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # Signal ready_0
+        ready_0_receipt = robot.signal(READY_0, PART_0)
+        
+        # --- Episode 2: Part 1 ---
+        
+        # Wait for empty_0 before entering buffer again
+        empty_0_receipt = await robot.wait_event(EMPTY_0, EVENT_TIMEOUT)
+        
+        # Clear empty_0
+        robot.clear_event(EMPTY_0, expected_version=empty_0_receipt.version)
+        
+        # Acquire lock for buffer entry
+        await robot.acquire(LEFT, BUFFER_LOCK, EVENT_TIMEOUT)
+        
+        # Move to source_1 (Approach)
+        await robot.move(LEFT, SOURCE_1, MOVE_TIMEOUT)
+        
+        # Grasp part_1
+        await robot.grasp(LEFT, PART_1)
+        
+        # Move to buffer_1 (Transport)
+        await robot.move(LEFT, BUFFER_1, MOVE_TIMEOUT)
+        
+        # Release part_1 at buffer
+        await robot.release(LEFT, PART_1, BUFFER_1)
+        
+        # Depart buffer (Immediate departure)
+        await robot.move(LEFT, LEFT_HOME, MOVE_TIMEOUT)
+        
+        # Release lock (Departure complete)
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # Signal ready_1
+        robot.signal(READY_1, PART_1)
+
+    async def consumer():
+        # --- Episode 1: Part 0 ---
+        
+        # Wait for ready_0
+        ready_0_receipt = await robot.wait_event(READY_0, EVENT_TIMEOUT)
+        
+        # Acquire lock for buffer entry
+        await robot.acquire(RIGHT, BUFFER_LOCK, EVENT_TIMEOUT)
+        
+        # Move to buffer_0 (Approach)
+        await robot.move(RIGHT, BUFFER_0, MOVE_TIMEOUT)
+        
+        # Grasp part_0
+        await robot.grasp(RIGHT, PART_0)
+        
+        # Depart buffer (Immediate departure)
+        await robot.move(RIGHT, RIGHT_WAIT, MOVE_TIMEOUT)
+        
+        # Release lock (Departure complete)
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # Move to target_0 (Transport, carrying receipt)
+        await robot.move(RIGHT, TARGET_0, MOVE_TIMEOUT, receipt=ready_0_receipt)
+        
+        # Clear ready_0
+        robot.clear_event(READY_0, expected_version=ready_0_receipt.version)
+        
+        # Release part_0 at target
+        await robot.release(RIGHT, PART_0, TARGET_0)
+        
+        # Depart target (Immediate departure)
+        await robot.move(RIGHT, RIGHT_HOME, MOVE_TIMEOUT)
+        
+        # Signal empty_0
+        robot.signal(EMPTY_0)
+        
+        # --- Episode 2: Part 1 ---
+        
+        # Wait for ready_1
+        ready_1_receipt = await robot.wait_event(READY_1, EVENT_TIMEOUT)
+        
+        # Acquire lock for buffer entry
+        await robot.acquire(RIGHT, BUFFER_LOCK, EVENT_TIMEOUT)
+        
+        # Move to buffer_1 (Approach)
+        await robot.move(RIGHT, BUFFER_1, MOVE_TIMEOUT)
+        
+        # Grasp part_1
+        await robot.grasp(RIGHT, PART_1)
+        
+        # Depart buffer (Immediate departure)
+        await robot.move(RIGHT, RIGHT_WAIT, MOVE_TIMEOUT)
+        
+        # Release lock (Departure complete)
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # Move to target_1 (Transport, carrying receipt)
+        await robot.move(RIGHT, TARGET_1, MOVE_TIMEOUT, receipt=ready_1_receipt)
+        
+        # Clear ready_1
+        robot.clear_event(READY_1, expected_version=ready_1_receipt.version)
+        
+        # Release part_1 at target
+        await robot.release(RIGHT, PART_1, TARGET_1)
+        
+        # Depart target (Immediate departure)
+        await robot.move(RIGHT, RIGHT_HOME, MOVE_TIMEOUT)
+
+    # Run producer and consumer concurrently
+    await asyncio.gather(producer(), consumer())

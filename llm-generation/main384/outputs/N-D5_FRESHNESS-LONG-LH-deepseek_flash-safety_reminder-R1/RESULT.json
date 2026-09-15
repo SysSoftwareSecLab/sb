@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D5_FRESHNESS-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2928,
+    "completion_tokens": 1157,
+    "total_tokens": 4085,
+    "prompt_tokens_details": {
+      "cached_tokens": 1536
+    },
+    "prompt_cache_hit_tokens": 1536,
+    "prompt_cache_miss_tokens": 1392
+  },
+  "raw_sha256": "65e97407e7bbb4f279ce82e235e45a09118e633aed14d734f60539d7539b1584",
+  "source_sha256": "0dcb2d07313eb768c38bdbed0670cf2c05c070b37ec021dc79b2e1450ee2bd04",
+  "request_sha256": "854a90cf79de70e9f98241d4a98c3a34d99e0354beefde52137c59813f46a215"
+}

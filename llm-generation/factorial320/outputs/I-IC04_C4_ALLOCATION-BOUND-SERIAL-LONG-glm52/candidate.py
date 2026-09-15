@@ -1,0 +1,44 @@
+async def run_task(robot):
+    # Both workers independently inspect allocation once before choosing their branch.
+    left_alloc = await robot.inspect("LEFT", "allocation")
+    right_alloc = await robot.inspect("RIGHT", "allocation")
+
+    selected_arm = left_alloc.value.get("selected_arm", "LEFT")
+    item_id = left_alloc.value.get("item_id", "shared_part")
+
+    # Only the selected arm may act; the unselected arm makes no move/grasp/release call.
+    if selected_arm == "LEFT":
+        active_arm = "LEFT"
+        active_alloc = left_alloc
+        home_pose = "left_home"
+        depart_pose = "left_depart"
+    else:
+        active_arm = "RIGHT"
+        active_alloc = right_alloc
+        home_pose = "right_home"
+        depart_pose = "right_depart"
+
+    # Signal rq2_gate exactly once.
+    gate_receipt = robot.signal("rq2_gate")
+
+    # Complete all three rq2_gap resource checks (acquire+release) in numeric order,
+    # then wait for rq2_gate. Keep gate active throughout.
+    for i in range(3):
+        rid = f"rq2_gap_{i}"
+        await robot.acquire(active_arm, rid, 5)
+        await robot.release_resource(active_arm, rid)
+
+    # Wait for the exact active receipt exactly once.
+    waited = await robot.wait_event("rq2_gate", 5)
+    assert waited.version == gate_receipt.version
+
+    # Selected transport: approach shared_source from home, grasp, carry to shared_target,
+    # release, immediately depart.
+    await robot.move(active_arm, "shared_source", timeout_s=4)
+    grasp_obs = await robot.grasp(active_arm, item_id, observation=active_alloc)
+    await robot.move(active_arm, "shared_target", timeout_s=4, receipt=waited)
+    await robot.release(active_arm, item_id, "shared_target")
+    await robot.move(active_arm, depart_pose, timeout_s=4)
+
+    # Clear rq2_gate only after the mission, using the exact signaled version.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)

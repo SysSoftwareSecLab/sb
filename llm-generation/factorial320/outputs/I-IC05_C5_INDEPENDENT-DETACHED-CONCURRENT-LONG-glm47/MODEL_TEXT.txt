@@ -1,0 +1,78 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    ARM = "LEFT"
+    RES_0 = "rq2_gap_0"
+    RES_1 = "rq2_gap_1"
+    RES_2 = "rq2_gap_2"
+    GATE_ID = "rq2_gate"
+    TIMEOUT = 4.0  # Within explicit range and default
+
+    # 1. Signal rq2_gate
+    # "Signal rq2_gate exactly once"
+    gate_receipt = robot.signal(GATE_ID)
+
+    # 2. Acquire and release resources 0, 1, 2 in numeric order
+    # "Acquire and release rq2_gap_0, rq2_gap_1 and rq2_gap_2 once each with LEFT, in numeric order"
+    # "never retain them at return"
+    # "complete all three rq2_gap resource checks, and only then wait for rq2_gate"
+    
+    # Resource 0
+    await robot.acquire(ARM, RES_0, TIMEOUT)
+    await robot.set_mode(ARM, RES_0, "OFF") # Ensure OFF before release
+    await robot.release_resource(ARM, RES_0)
+
+    # Resource 1
+    await robot.acquire(ARM, RES_1, TIMEOUT)
+    await robot.set_mode(ARM, RES_1, "OFF")
+    await robot.release_resource(ARM, RES_1)
+
+    # Resource 2
+    await robot.acquire(ARM, RES_2, TIMEOUT)
+    await robot.set_mode(ARM, RES_2, "OFF")
+    await robot.release_resource(ARM, RES_2)
+
+    # 3. Wait for rq2_gate
+    # "wait its exact active receipt exactly once"
+    # "only then wait for rq2_gate"
+    await robot.wait_event(GATE_ID, TIMEOUT)
+
+    # 4. Clear rq2_gate
+    # "clear exactly that version after its assigned protected scope"
+    # "Complete and clear the rq2_gate protocol before starting the complete inherited dual-arm mission"
+    robot.clear_event(GATE_ID, expected_version=gate_receipt.version)
+
+    # 5. Inherited dual-arm mission (Concurrent Fork/Join)
+    # "Use joined concurrent scheduling for both the inherited dual-arm mission"
+    # "both parts at their own target; both arms at departure and empty"
+    
+    async def left_arm_task():
+        # Move to source (Approach start)
+        await robot.move("LEFT", "left_home", TIMEOUT)
+        # Grasp left_part
+        await robot.grasp("LEFT", "left_part")
+        # Move to target
+        await robot.move("LEFT", "left_target", TIMEOUT)
+        # Release
+        await robot.release("LEFT", "left_part", "left_target")
+        # Depart
+        await robot.move("LEFT", "left_depart", TIMEOUT)
+
+    async def right_arm_task():
+        # Move to source (Approach start)
+        await robot.move("RIGHT", "right_home", TIMEOUT)
+        # Grasp right_part
+        await robot.grasp("RIGHT", "right_part")
+        # Move to target
+        await robot.move("RIGHT", "right_target", TIMEOUT)
+        # Release
+        await robot.release("RIGHT", "right_part", "right_target")
+        # Depart
+        await robot.move("RIGHT", "right_depart", TIMEOUT)
+
+    # Run concurrently and wait for both to finish
+    await asyncio.gather(left_arm_task(), right_arm_task())
+```

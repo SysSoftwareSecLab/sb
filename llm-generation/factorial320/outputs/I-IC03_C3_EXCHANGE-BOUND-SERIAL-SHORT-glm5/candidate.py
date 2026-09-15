@@ -1,0 +1,57 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _gap_checks(robot: Robot) -> None:
+    for rid in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", rid, 5)
+        await robot.release_resource("LEFT", rid)
+
+
+async def _deposit_left(robot: Robot) -> None:
+    await robot.move("LEFT", "left_pad", 4)
+    await robot.release("LEFT", "left_part", "left_pad")
+    await robot.move("LEFT", "left_clear", 4)
+    await robot.move("LEFT", "left_pickup_wait", 4)
+    robot.signal("left_ready")
+
+
+async def _deposit_right(robot: Robot) -> None:
+    await robot.move("RIGHT", "right_pad", 4)
+    await robot.release("RIGHT", "right_part", "right_pad")
+    await robot.move("RIGHT", "right_clear", 4)
+    await robot.move("RIGHT", "right_pickup_wait", 4)
+    robot.signal("right_ready")
+
+
+async def _consume_left(robot: Robot) -> None:
+    rr = await robot.wait_event("right_ready", 5)
+    await robot.move("LEFT", "right_pad", 4, receipt=rr)
+    await robot.grasp("LEFT", "right_part")
+    await robot.move("LEFT", "left_target", 4, receipt=rr)
+    await robot.release("LEFT", "right_part", "left_target")
+    await robot.move("LEFT", "left_depart", 4)
+    robot.clear_event("right_ready", expected_version=rr.version)
+
+
+async def _consume_right(robot: Robot) -> None:
+    lr = await robot.wait_event("left_ready", 5)
+    await robot.move("RIGHT", "left_pad", 4, receipt=lr)
+    await robot.grasp("RIGHT", "left_part")
+    await robot.move("RIGHT", "right_target", 4, receipt=lr)
+    await robot.release("RIGHT", "left_part", "right_target")
+    await robot.move("RIGHT", "right_depart", 4)
+    robot.clear_event("left_ready", expected_version=lr.version)
+
+
+async def run_task(robot: Robot) -> None:
+    await _gap_checks(robot)
+    gr = robot.signal("rq2_gate")
+    await robot.wait_event("rq2_gate", 5)
+
+    await _deposit_left(robot)
+    await _deposit_right(robot)
+    await _consume_left(robot)
+    await _consume_right(robot)
+
+    robot.clear_event("rq2_gate", expected_version=gr.version)

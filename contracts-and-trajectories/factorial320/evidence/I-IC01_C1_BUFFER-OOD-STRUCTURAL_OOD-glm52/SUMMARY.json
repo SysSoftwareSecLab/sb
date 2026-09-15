@@ -1,0 +1,26 @@
+{
+  "slot_id": "I-IC01_C1_BUFFER-OOD-STRUCTURAL_OOD-glm52",
+  "task_id": "IC01_C1_BUFFER-OOD-STRUCTURAL_OOD",
+  "executed": true,
+  "generation_source_sha256": "6921c4005ca22f85e4fb40f811340babe10747cdd7b2179419aa3e1750a1d689",
+  "process_status": "NONZERO_EXIT",
+  "returncode": 1,
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 31,
+  "call_audit_count": 17,
+  "geometry_status": "GEOMETRY_EVALUATOR_ERROR",
+  "exposure_verdicts": {
+    "S0_source_entry": "C",
+    "S1_api": "C",
+    "S2_robot_contract": "V",
+    "T_task_completion": "V",
+    "P_physical_temporal": "V",
+    "O_observation_branching": "NA",
+    "assigned_structure": "U"
+  },
+  "capture_sha256": "532eff6154ac9f3ba1b6814b6d995396b6bb32d1c4d44fc9c4e689ec096459f7",
+  "geometry_sha256": "8e553d4d488821a874a40fb88fbf9e1693392d74de725408d5430821869ec383",
+  "task_evidence_sha256": "78c75ec56547cacab8a2cacf40511a436124d45719495d6624f19619206ce1aa",
+  "exposure_ledger_sha256": "f251148a1bdc4182c2862402f37a1a2abd3e839c43d4d1264d1badf156154d5e",
+  "human_label": null
+}

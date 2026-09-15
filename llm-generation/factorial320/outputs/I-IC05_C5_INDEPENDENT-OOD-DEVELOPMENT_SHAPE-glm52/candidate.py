@@ -1,0 +1,49 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _consumer_mission(robot: Robot, gate_receipt) -> None:
+    """Inherited mission: move both parts to their targets, arms depart, empty.
+
+    Consumer has no mission guard of its own; it executes the complete
+    inherited mission after waiting the exact active receipt.
+    """
+    # LEFT lane: approach left_source from left_home, immediately grasp.
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    # Transport to left_target and release there.
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    # Immediate separating departure from the release support zone.
+    await robot.move("LEFT", "left_depart")
+
+    # RIGHT lane: approach right_source from right_home, immediately grasp.
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    # Transport to right_target and release there.
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    # Immediate separating departure from the release support zone.
+    await robot.move("RIGHT", "right_depart")
+
+    # Clear the exact active receipt version consumed above.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+
+async def run_task(robot: Robot) -> None:
+    """Development shape: FOR -> IF -> PAR_JOIN.
+
+    Inside one finite loop iteration, concurrently join an rq2_gate producer
+    and consumer. The consumer waits the exact active receipt, executes the
+    complete inherited mission, then clears that version.
+    """
+    for _ in range(1):
+        if True:
+            async def _producer():
+                return robot.signal("rq2_gate")
+
+            async def _consumer():
+                receipt = await robot.wait_event("rq2_gate", 30)
+                await _consumer_mission(robot, receipt)
+
+            await asyncio.gather(_producer(), _consumer())

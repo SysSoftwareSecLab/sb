@@ -1,0 +1,35 @@
+async def run_task(robot):
+    # Both workers independently inspect allocation once before choosing branch.
+    left_alloc = await robot.inspect("LEFT", "allocation")
+    right_alloc = await robot.inspect("RIGHT", "allocation")
+
+    selected_arm = left_alloc.value.get("selected_arm", "LEFT")
+    item_id = left_alloc.value.get("item_id", "shared_part")
+
+    # rq2_gap resource checks: acquire/release each with LEFT in numeric order.
+    for i in range(3):
+        rid = f"rq2_gap_{i}"
+        await robot.acquire("LEFT", rid, 5)
+        await robot.release_resource("LEFT", rid)
+
+    # Signal rq2_gate exactly once, then wait its exact active receipt once.
+    gate_receipt = robot.signal("rq2_gate")
+    waited = await robot.wait_event("rq2_gate", 5)
+    # Clear exactly that version after its assigned protected scope.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # Inherited dual-arm mission: selected arm transports shared_part to target.
+    if selected_arm == "LEFT":
+        await robot.move("LEFT", "shared_source")
+        grasp_obs = await robot.grasp("LEFT", "shared_part", observation=left_alloc)
+        await robot.move("LEFT", "shared_target", receipt=gate_receipt)
+        await robot.release("LEFT", "shared_part", "shared_target")
+        await robot.move("LEFT", "left_depart")
+        # RIGHT remains at home (right_home); no move/grasp/release calls.
+    else:
+        await robot.move("RIGHT", "shared_source")
+        grasp_obs = await robot.grasp("RIGHT", "shared_part", observation=right_alloc)
+        await robot.move("RIGHT", "shared_target", receipt=gate_receipt)
+        await robot.release("RIGHT", "shared_part", "shared_target")
+        await robot.move("RIGHT", "right_depart")
+        # LEFT remains at home (left_home); no move/grasp/release calls.

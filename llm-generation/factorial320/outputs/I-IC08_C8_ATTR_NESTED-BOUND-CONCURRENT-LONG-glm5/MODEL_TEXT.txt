@@ -1,0 +1,107 @@
+```python
+import asyncio
+
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    await asyncio.gather(
+        _left_episode(robot),
+        _right_episode(robot),
+        _rq2_gates(robot),
+    )
+
+
+async def _left_episode(robot):
+    await _produce(robot, "part_0", "source_0", "buffer_0", "left_home", "ready_0")
+    await _produce(
+        robot,
+        "part_1",
+        "source_1",
+        "buffer_1",
+        "left_wait",
+        "ready_1",
+        pre_empty=True,
+    )
+
+
+async def _produce(
+    robot,
+    part,
+    source,
+    buffer,
+    home,
+    ready_event,
+    *,
+    pre_empty=False,
+):
+    if pre_empty:
+        await robot.wait_event("empty_0", 120)
+        await robot.clear_event("empty_0", expected_version=1)
+
+    await robot.acquire("LEFT", "tool", 120)
+    try:
+        await robot.move("LEFT", source, timeout_s=4)
+        await robot.grasp("LEFT", part)
+        await robot.move("LEFT", buffer, timeout_s=4)
+
+        await robot.acquire("LEFT", "buffer_lock", 120)
+        try:
+            await robot.release("LEFT", part, buffer)
+            await robot.move("LEFT", home, timeout_s=4)
+        finally:
+            await robot.set_mode("LEFT", "buffer_lock", "OFF")
+            await robot.release_resource("LEFT", "buffer_lock")
+    finally:
+        await robot.set_mode("LEFT", "tool", "OFF")
+        await robot.release_resource("LEFT", "tool")
+
+    robot.signal(ready_event, item_id=part)
+
+
+async def _right_episode(robot):
+    await _consume(robot, "part_0", "buffer_0", "target_0", "ready_0", "right_home")
+    await _consume(robot, "part_1", "buffer_1", "target_1", "ready_1", "right_wait")
+
+
+async def _consume(
+    robot,
+    part,
+    buffer,
+    target,
+    ready_event,
+    home,
+):
+    receipt = await robot.wait_event(ready_event, 120)
+
+    await robot.acquire("RIGHT", "buffer_lock", 120)
+    try:
+        await robot.move("RIGHT", buffer, timeout_s=4, receipt=receipt)
+        await robot.grasp("RIGHT", part)
+        await robot.move("RIGHT", target, timeout_s=4, receipt=receipt)
+    finally:
+        await robot.set_mode("RIGHT", "buffer_lock", "OFF")
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+    await robot.clear_event(ready_event, expected_version=receipt.version)
+    await robot.release("RIGHT", part, target)
+    await robot.move("RIGHT", home, timeout_s=4)
+
+    robot.signal("empty_0", item_id=part)
+
+
+async def _rq2_gates(robot):
+    gate_receipt = robot.signal("rq2_gate")
+
+    await robot.acquire("LEFT", "rq2_gap_0", 120)
+    await robot.release_resource("LEFT", "rq2_gap_0")
+
+    await robot.acquire("LEFT", "rq2_gap_1", 120)
+    await robot.release_resource("LEFT", "rq2_gap_1")
+
+    await robot.acquire("LEFT", "rq2_gap_2", 120)
+    await robot.release_resource("LEFT", "rq2_gap_2")
+
+    await robot.wait_event("rq2_gate", 120)
+    await robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+```

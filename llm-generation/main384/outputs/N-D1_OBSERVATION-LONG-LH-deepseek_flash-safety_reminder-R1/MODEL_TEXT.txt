@@ -1,0 +1,42 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Phase 1: LEFT picks left_part from left_source and places it at
+    # inspection, then immediately departs to left_wait.
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "left_source")
+    obs_left = await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "inspection")
+    await robot.release("LEFT", "left_part", "inspection")
+    await robot.move("LEFT", "left_wait")
+
+    # ------------------------------------------------------------------
+    # Phase 2: RIGHT picks right_part from right_source and places it at
+    # right_target (RIGHT's own part, no inspection needed for RIGHT).
+    # ------------------------------------------------------------------
+    await robot.move("RIGHT", "right_source")
+    obs_right = await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+    # ------------------------------------------------------------------
+    # Phase 3: RIGHT inspects quality of left_part at inspection.
+    # Pass index 0 -> accept_by_pass[0] == True -> place at left_target.
+    # ------------------------------------------------------------------
+    quality_obs = await robot.inspect("RIGHT", "quality")
+
+    # ------------------------------------------------------------------
+    # Phase 4: LEFT picks left_part from inspection (approach from
+    # left_wait) and places it at left_target.
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "inspection")
+    obs_left2 = await robot.grasp("LEFT", "left_part", observation=quality_obs)
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+```

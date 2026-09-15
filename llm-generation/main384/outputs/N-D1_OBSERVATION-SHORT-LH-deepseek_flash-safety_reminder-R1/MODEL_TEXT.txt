@@ -1,0 +1,62 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Phase 1: LEFT approaches left_source and grasps left_part
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "left_source")
+    left_obs = await robot.grasp("LEFT", "left_part")
+
+    # ------------------------------------------------------------------
+    # Phase 2: LEFT carries left_part to inspection and releases it
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "inspection")
+    await robot.release("LEFT", "left_part", "inspection")
+
+    # ------------------------------------------------------------------
+    # Phase 3: LEFT immediately departs from inspection to left_wait
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "left_wait")
+
+    # ------------------------------------------------------------------
+    # Phase 4: RIGHT approaches right_source and grasps right_part
+    # ------------------------------------------------------------------
+    await robot.move("RIGHT", "right_source")
+    right_obs = await robot.grasp("RIGHT", "right_part")
+
+    # ------------------------------------------------------------------
+    # Phase 5: RIGHT carries right_part to right_target and releases it
+    # ------------------------------------------------------------------
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+
+    # ------------------------------------------------------------------
+    # Phase 6: RIGHT departs to right_depart
+    # ------------------------------------------------------------------
+    await robot.move("RIGHT", "right_depart")
+
+    # ------------------------------------------------------------------
+    # Phase 7: LEFT approaches inspection and grasps left_part (pass 1)
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "inspection")
+    left_obs_pass1 = await robot.grasp("LEFT", "left_part")
+
+    # ------------------------------------------------------------------
+    # Phase 8: RIGHT inspects quality (pass 1) - RIGHT issues observation
+    # ------------------------------------------------------------------
+    quality_obs_pass1 = await robot.inspect("RIGHT", "quality")
+
+    # ------------------------------------------------------------------
+    # Phase 9: LEFT carries left_part to left_target and releases it
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+
+    # ------------------------------------------------------------------
+    # Phase 10: LEFT departs to left_depart
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "left_depart")
+```

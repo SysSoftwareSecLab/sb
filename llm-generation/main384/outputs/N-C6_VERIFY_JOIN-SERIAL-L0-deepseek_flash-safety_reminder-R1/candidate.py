@@ -1,0 +1,56 @@
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # SERIAL structure: produce both verifier observations sequentially,
+    # then join via events, then consume payload.
+    # Layout L0 / SERIAL: no concurrent worker coroutines.
+
+    # LEFT verifier branch
+    await robot.move("LEFT", "left_home")
+    obs_left = await robot.inspect("LEFT", "left_verification")
+    assert obs_left.fact_id == "left_verification"
+    assert obs_left.value["item_id"] == "left_part"
+    assert obs_left.value["verified_by"] == "LEFT"
+
+    # RIGHT verifier branch
+    await robot.move("RIGHT", "right_home")
+    obs_right = await robot.inspect("RIGHT", "right_verification")
+    assert obs_right.fact_id == "right_verification"
+    assert obs_right.value["item_id"] == "left_part"
+    assert obs_right.value["verified_by"] == "RIGHT"
+
+    # Signal join events after both verifications produced (serial).
+    r_left = robot.signal("left_ready", item_id="left_part")
+    r_right = robot.signal("right_ready", item_id="left_part")
+
+    # Join: wait for both events to be active.
+    w_left = await robot.wait_event("left_ready", timeout_s=4)
+    w_right = await robot.wait_event("right_ready", timeout_s=4)
+    assert w_left.event_id == "left_ready"
+    assert w_right.event_id == "right_ready"
+
+    # Consume payload: LEFT approaches left_source and grasps left_part.
+    await robot.move("LEFT", "left_home")
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part", observation=obs_left)
+
+    # Transport left_part to left_target.
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+    # RIGHT approaches right_source and grasps right_part.
+    await robot.move("RIGHT", "right_home")
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part", observation=obs_right)
+
+    # Transport right_part to right_target.
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+    # Clear join events after consumption complete.
+    robot.clear_event("left_ready", expected_version=r_left.version)
+    robot.clear_event("right_ready", expected_version=r_right.version)

@@ -1,0 +1,54 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # Producer coroutine: LEFT arm moves parts from source to buffer.
+    async def producer() -> None:
+        # Part 0 episode
+        await robot.move("LEFT", "source_0")
+        obs0 = await robot.grasp("LEFT", "part_0")
+        await robot.move("LEFT", "buffer_0")
+        await robot.release("LEFT", "part_0", "buffer_0")
+        await robot.move("LEFT", "left_wait")
+        robot.signal("ready_0", "part_0")
+
+        # Wait for empty_0 before second part
+        await robot.wait_event("empty_0", 10.0)
+        robot.clear_event("empty_0", expected_version=1)
+
+        # Part 1 episode
+        await robot.move("LEFT", "source_1")
+        obs1 = await robot.grasp("LEFT", "part_1")
+        await robot.move("LEFT", "buffer_1")
+        await robot.release("LEFT", "part_1", "buffer_1")
+        await robot.move("LEFT", "left_wait")
+        robot.signal("ready_1", "part_1")
+
+    # Consumer coroutine: RIGHT arm moves parts from buffer to target.
+    async def consumer() -> None:
+        # Part 0 episode
+        await robot.move("RIGHT", "right_wait")
+        receipt0 = await robot.wait_event("ready_0", 10.0)
+        await robot.move("RIGHT", "buffer_0")
+        obs0 = await robot.grasp("RIGHT", "part_0")
+        await robot.move("RIGHT", "target_0", receipt=receipt0)
+        await robot.release("RIGHT", "part_0", "target_0")
+        await robot.move("RIGHT", "right_home")
+        robot.clear_event("ready_0", expected_version=receipt0.version)
+        robot.signal("empty_0")
+
+        # Part 1 episode
+        await robot.move("RIGHT", "right_wait")
+        receipt1 = await robot.wait_event("ready_1", 10.0)
+        await robot.move("RIGHT", "buffer_1")
+        obs1 = await robot.grasp("RIGHT", "part_1")
+        await robot.move("RIGHT", "target_1", receipt=receipt1)
+        await robot.release("RIGHT", "part_1", "target_1")
+        await robot.move("RIGHT", "right_home")
+        robot.clear_event("ready_1", expected_version=receipt1.version)
+
+    # Run producer and consumer concurrently
+    await asyncio.gather(producer(), consumer())
+```

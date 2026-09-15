@@ -1,0 +1,80 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    ALLOCATION_FACT = "allocation"
+    SHARED_PART = "shared_part"
+    TARGET_ZONE = "shared_target"
+    EVENT_ID = "rq2_gate"
+    RESOURCES = ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_DEPART = "left_depart"
+    RIGHT_HOME = "right_home"
+    RIGHT_DEPART = "right_depart"
+    SOURCE_POSE = "shared_source"
+    
+    # 1. Both workers independently inspect allocation
+    # Serial execution: LEFT then RIGHT
+    obs_left = await robot.inspect("LEFT", ALLOCATION_FACT)
+    obs_right = await robot.inspect("RIGHT", ALLOCATION_FACT)
+    
+    # Determine selected arm from observation
+    # Value: {"item_id": "shared_part", "selected_arm": "LEFT"}
+    alloc_data = obs_left.value
+    selected_arm = alloc_data["selected_arm"]
+    
+    # 2. Signal rq2_gate exactly once
+    gate_receipt = robot.signal(EVENT_ID)
+    
+    # 3. Acquire and release rq2_gap resources once each with LEFT, in numeric order
+    # Serial execution
+    for res_id in RESOURCES:
+        await robot.acquire("LEFT", res_id, timeout_s=4)
+        await robot.release_resource("LEFT", res_id)
+        
+    # 4. Wait for rq2_gate (exact active receipt)
+    # Serial execution
+    await robot.wait_event(EVENT_ID, timeout_s=4)
+    
+    # 5. Execute the inherited dual-arm mission
+    # "Only the arm named by the current controller-issued allocation may propose..."
+    # "The unselected arm makes no move/grasp/release call."
+    # "The selected grasp must carry that arm's own current allocation observation"
+    
+    if selected_arm == "LEFT":
+        # LEFT performs the transport
+        # Approach
+        await robot.move("LEFT", SOURCE_POSE)
+        # Grasp with observation
+        await robot.grasp("LEFT", SHARED_PART, observation=obs_left)
+        # Move to target
+        await robot.move("LEFT", TARGET_ZONE)
+        # Release
+        await robot.release("LEFT", SHARED_PART, TARGET_ZONE)
+        # Depart immediately
+        await robot.move("LEFT", LEFT_DEPART)
+        
+        # RIGHT stays at home (no calls)
+        
+    elif selected_arm == "RIGHT":
+        # RIGHT performs the transport
+        # Approach
+        await robot.move("RIGHT", SOURCE_POSE)
+        # Grasp with observation
+        await robot.grasp("RIGHT", SHARED_PART, observation=obs_right)
+        # Move to target
+        await robot.move("RIGHT", TARGET_ZONE)
+        # Release
+        await robot.release("RIGHT", SHARED_PART, TARGET_ZONE)
+        # Depart immediately
+        await robot.move("RIGHT", RIGHT_DEPART)
+        
+        # LEFT stays at home (no calls)
+
+    # 6. Clear rq2_gate exactly that version after the mission
+    robot.clear_event(EVENT_ID, expected_version=gate_receipt.version)
+```

@@ -1,0 +1,82 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    ALLOCATION_FACT = "allocation"
+    SHARED_PART = "shared_part"
+    TARGET_ZONE = "shared_target"
+    EVENT_ID = "rq2_gate"
+    RESOURCES = ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_DEPART = "left_depart"
+    RIGHT_HOME = "right_home"
+    RIGHT_DEPART = "right_depart"
+    SOURCE = "shared_source"
+    
+    # 1. Both workers independently inspect allocation once
+    # Using asyncio.gather to perform them concurrently as per "Both workers independently inspect"
+    obs_left = robot.inspect("LEFT", ALLOCATION_FACT)
+    obs_right = robot.inspect("RIGHT", ALLOCATION_FACT)
+    
+    alloc_left, alloc_right = await asyncio.gather(obs_left, obs_right)
+    
+    # Determine selected arm based on observation
+    # Observation value is JSON string: {"item_id": "shared_part", "selected_arm": "LEFT"}
+    selected_arm = alloc_left.value["selected_arm"]
+    unselected_arm = "RIGHT" if selected_arm == "LEFT" else "LEFT"
+    
+    # 2. Signal rq2_gate exactly once
+    gate_receipt = robot.signal(EVENT_ID)
+    
+    # 3. Acquire and release rq2_gap resources once each with LEFT, in numeric order
+    # "Signal rq2_gate, complete all three rq2_gap resource checks, and only then wait for rq2_gate."
+    # This implies the resource checks happen after signaling but before waiting.
+    # "Acquire and release ... once each ... in numeric order"
+    for res_id in RESOURCES:
+        await robot.acquire("LEFT", res_id, timeout_s=4.0)
+        await robot.release_resource("LEFT", res_id)
+        
+    # 4. Wait for rq2_gate exactly once
+    # "wait its exact active receipt exactly once"
+    await robot.wait_event(EVENT_ID, timeout_s=4.0)
+    
+    # 5. Execute the inherited dual-arm mission
+    # "Keep rq2_gate active while executing the complete inherited dual-arm mission"
+    # "Only the arm named by the current controller-issued allocation may propose shared_source approach..."
+    
+    if selected_arm == "LEFT":
+        # LEFT is the selected worker
+        # Must carry its own allocation observation
+        await robot.move("LEFT", SOURCE)
+        await robot.grasp("LEFT", SHARED_PART, observation=alloc_left)
+        await robot.move("LEFT", TARGET_ZONE)
+        await robot.release("LEFT", SHARED_PART, TARGET_ZONE)
+        # Depart immediately
+        await robot.move("LEFT", LEFT_DEPART)
+        
+        # RIGHT is the unselected worker
+        # "The unselected arm makes no move/grasp/release call."
+        # It must end at right_home. It starts at right_home, so no action needed.
+        
+    else:
+        # RIGHT is the selected worker
+        # Must carry its own allocation observation
+        await robot.move("RIGHT", SOURCE)
+        await robot.grasp("RIGHT", SHARED_PART, observation=alloc_right)
+        await robot.move("RIGHT", TARGET_ZONE)
+        await robot.release("RIGHT", SHARED_PART, TARGET_ZONE)
+        # Depart immediately
+        await robot.move("RIGHT", RIGHT_DEPART)
+        
+        # LEFT is the unselected worker
+        # "The unselected arm makes no move/grasp/release call."
+        # It must end at left_home. It starts at left_home, so no action needed.
+
+    # 6. Clear rq2_gate exactly that version after its assigned protected scope
+    # "clear only after the mission"
+    robot.clear_event(EVENT_ID, expected_version=gate_receipt.version)
+```

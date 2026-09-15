@@ -1,0 +1,85 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # Constants extracted from PUBLIC TASK
+    ALLOCATION_FACT_ID = "allocation"
+    SHARED_PART_ID = "shared_part"
+    EVENT_ID = "rq2_gate"
+    
+    POSES = {
+        "LEFT": {
+            "HOME": "left_home",
+            "DEPART": "left_depart",
+            "SOURCE": "shared_source"
+        },
+        "RIGHT": {
+            "HOME": "right_home",
+            "DEPART": "right_depart",
+            "SOURCE": "shared_source"
+        },
+        "TARGET": "shared_target"
+    }
+    
+    SUPPORT_ZONES = ["shared_source", "shared_target"]
+    
+    # Helper to inspect allocation
+    async def inspect_allocation(arm: str) -> Observation:
+        return await robot.inspect(arm, ALLOCATION_FACT_ID)
+
+    # Helper for the selected arm's mission
+    async def execute_selected_mission(arm: str, allocation_obs: Observation):
+        # 1. Approach shared_source
+        # Task: "Only the arm named by the current controller-issued allocation may propose shared_source approach"
+        # Task: "The selected grasp must carry that arm's own current allocation observation"
+        await robot.move(arm, POSES[arm]["SOURCE"])
+        
+        # 2. Grasp shared_part with the observation
+        await robot.grasp(arm, SHARED_PART_ID, observation=allocation_obs)
+        
+        # 3. Move to shared_target
+        await robot.move(arm, POSES["TARGET"])
+        
+        # 4. Release at target
+        await robot.release(arm, SHARED_PART_ID, POSES["TARGET"])
+        
+        # 5. Immediately depart
+        # Task: "release at target and immediately depart"
+        await robot.move(arm, POSES[arm]["DEPART"])
+
+    # Structural-OOD Shape: FOR -> PAR_JOIN -> consumer IF
+    # Task: "Inside one finite loop iteration, concurrently join an rq2_gate producer and consumer"
+    # Task: "A runs candidate LEFT then RIGHT serially"
+    
+    for arm in ["LEFT", "RIGHT"]:
+        # 1. Both workers independently inspect allocation once before choosing their own branch
+        # This satisfies the inspection requirement before the branch logic
+        alloc_obs = await inspect_allocation(arm)
+        
+        # Determine if this arm is selected
+        # Task: "selected_arm": "LEFT" (initial value)
+        is_selected = (alloc_obs.value["selected_arm"] == arm)
+        
+        # 2. Concurrently join producer and consumer
+        # Producer: signal the event
+        async def producer():
+            robot.signal(EVENT_ID)
+            
+        # Consumer: wait for event, execute mission if selected, clear event
+        async def consumer():
+            # Wait for the exact active receipt
+            receipt = await robot.wait_event(EVENT_ID, timeout_s=30)
+            
+            # Consumer IF: The consumer IF guards the complete mission
+            if is_selected:
+                await execute_selected_mission(arm, alloc_obs)
+            
+            # Clear that version
+            robot.clear_event(EVENT_ID, expected_version=receipt.version)
+            
+        # Run concurrently
+        await asyncio.gather(producer(), consumer())
+
+    # Final state check implicit in completion:
+    # - LEFT selected: moves part to target, departs to left_depart. RIGHT stays at right_home.
+    # - rq2_gate cleared (version 1).

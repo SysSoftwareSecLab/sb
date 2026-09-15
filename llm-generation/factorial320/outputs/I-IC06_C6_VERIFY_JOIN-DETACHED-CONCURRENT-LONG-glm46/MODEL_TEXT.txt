@@ -1,0 +1,59 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # 1. Signal rq2_gate
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # 2. Acquire and release rq2_gap resources in numeric order with LEFT
+    #    Using explicit timeout as required by API for acquire
+    timeout = 10.0
+    for res_id in ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]:
+        await robot.acquire("LEFT", res_id, timeout)
+        await robot.release_resource("LEFT", res_id)
+    
+    # 3. Wait for rq2_gate (wait for the active receipt we just signaled)
+    #    Using explicit timeout as required by API for wait_event
+    await robot.wait_event("rq2_gate", timeout)
+    
+    # 4. Clear rq2_gate using the version from the receipt
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+    
+    # 5. Execute the dual-arm mission concurrently
+    #    LEFT: left_home -> left_source -> grasp -> left_target -> release -> left_depart
+    #    RIGHT: right_home -> right_source -> grasp -> right_target -> release -> right_depart
+    
+    async def left_mission():
+        # Approach
+        await robot.move("LEFT", "left_source")
+        # Grasp
+        await robot.grasp("LEFT", "left_part")
+        # Transport
+        await robot.move("LEFT", "left_target")
+        # Release
+        await robot.release("LEFT", "left_part", "left_target")
+        # Depart
+        await robot.move("LEFT", "left_depart")
+        
+        # Signal join event
+        robot.signal("left_ready")
+
+    async def right_mission():
+        # Approach
+        await robot.move("RIGHT", "right_source")
+        # Grasp
+        await robot.grasp("RIGHT", "right_part")
+        # Transport
+        await robot.move("RIGHT", "right_target")
+        # Release
+        await robot.release("RIGHT", "right_part", "right_target")
+        # Depart
+        await robot.move("RIGHT", "right_depart")
+        
+        # Signal join event
+        robot.signal("right_ready")
+
+    # Run both missions concurrently
+    await asyncio.gather(left_mission(), right_mission())
+```

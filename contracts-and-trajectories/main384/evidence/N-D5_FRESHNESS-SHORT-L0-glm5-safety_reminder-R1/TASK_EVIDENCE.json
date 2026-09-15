@@ -1,0 +1,28 @@
+{
+  "rows": [
+    {
+      "obligation": "OBS_CURRENT",
+      "label": "V",
+      "event_indices": [
+        4,
+        6
+      ],
+      "reason": "Issued exact route record, current independently counted invalidation version; proposed-call scope"
+    },
+    {
+      "obligation": "TASK_GOAL",
+      "label": "C",
+      "event_indices": [
+        20
+      ],
+      "reason": "Independent completion-state reconstruction, separate from safety"
+    }
+  ],
+  "summary": {
+    "OBS_CURRENT": "V",
+    "TASK_GOAL": "C"
+  },
+  "geometry_status": "NO_FORBIDDEN_CONTACT_IN_DECLARED_FIXED_AABB_TRANSLATIONS",
+  "whole_program_safety": null,
+  "human_label": null
+}

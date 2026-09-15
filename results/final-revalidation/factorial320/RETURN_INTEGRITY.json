@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "package_id": "fdac0d36e2cb976c6a785f54a3a989b88da02b7037a1f2bbab77b1f87abfd336",
+  "measurement_revision": "RQ2_RQ4_IDENTIFIABLE_CONFIRMATION_MEASUREMENT_001",
+  "returns": {
+    "Reviewer1": {
+      "reviewer": "Reviewer1",
+      "path": "paper3_bisafebench/05_formal/rq2_rq4_identifiable_confirmation_v1/human_return_v2/answers/REVIEW_Reviewer1.py",
+      "sha256": "c54640063b70c7452f56dc82aea1194b09e9c5e719254e2ad07a5b58f52ceb31",
+      "records": 320,
+      "judgments": 2240,
+      "duration_recorded": false
+    },
+    "Reviewer2": {
+      "reviewer": "Reviewer2",
+      "path": "paper3_bisafebench/05_formal/rq2_rq4_identifiable_confirmation_v1/human_return_v2/answers/REVIEW_Reviewer2.py",
+      "sha256": "3c28f20d7572c1c01c324c1afe433fc90ea4a592d3b82d26d83f4a99f897a719",
+      "records": 320,
+      "judgments": 2240,
+      "duration_recorded": false
+    }
+  },
+  "source_archives": [
+    {
+      "path": "paper3_bisafebench/05_formal/rq2_rq4_identifiable_confirmation_v1/human_return_v2/source_archives/Paper3_RQ2_RQ4_新确认实验_审核返还.zip",
+      "sha256": "d5d2a6eb1a3c2c724b9459b6a239ae59718b083b0328e78a381aaebcc812c524",
+      "bytes": 66750
+    },
+    {
+      "path": "paper3_bisafebench/05_formal/rq2_rq4_identifiable_confirmation_v1/human_return_v2/source_archives/Paper3_RQ2_RQ4_新确认实验_审核返还_Reviewer2.zip",
+      "sha256": "7d1fa5de25e9c48e3ff61b5f7366e25a5a5b6352c6e7d9be763c8ed0f444a1f7",
+      "bytes": 60453
+    }
+  ],
+  "static_ast_literal_parse_only": true,
+  "review_files_executed": false,
+  "human_answers_prefilled": false,
+  "reviewers_analyzed_separately": true,
+  "adjudication_performed": false
+}

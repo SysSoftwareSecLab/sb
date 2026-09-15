@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-D6_RESOURCE_SPAN-SHORT-LH-glm47-safety_reminder-R1",
+  "task_id": "D6_RESOURCE_SPAN-SHORT-LH",
+  "executed": true,
+  "generation_source_sha256": "40ec164eee2b7d6994026aa59bdbee71c0aa1dbf25e3957870875be3814ce7ee",
+  "process_status": "EXITED",
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 45,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "C",
+    "GEOMETRY": "C",
+    "DUAL_RESOURCE_SPAN": "C",
+    "TIMEOUT_CLEANUP": "NA"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "V"
+  },
+  "geometry_status": "NO_FORBIDDEN_CONTACT_IN_DECLARED_FIXED_AABB_TRANSLATIONS",
+  "capture_sha256": "77a7854abd8f9f7b59d10e5467ca2fdca7ed95ee9bacd26496b3055804df1cf1",
+  "task_evidence_sha256": "80a83b36f83c613a667af77d4d4fb356000b2fc708672cef49b9a976fb213e65",
+  "grammar_evidence_sha256": "c90069716aeae8c0984d456bdaf5453bdb9d2ad5207490da5be4419f8710ee84",
+  "geometry_sha256": "115c93749544c34abb232a2dec22a9af02564296bea12c7ab8e8eea2688b5754",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

@@ -1,0 +1,146 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    """
+    Task: C3_EXCHANGE-CONCURRENT-LH
+    Variant: B (Joined worker coroutines)
+    Goal: Exchange parts between LEFT and RIGHT arms.
+    Sequence:
+    1. Deposit own part to own pad.
+    2. Clear pad (move to departure).
+    3. Signal own ready event.
+    4. Wait for peer ready event.
+    5. Move to peer pad (carrying peer receipt).
+    6. Grasp peer part.
+    7. Move to own target (carrying peer receipt).
+    8. Release peer part.
+    9. Clear peer ready event.
+    10. Move to own departure.
+    """
+
+    # Constants derived from PUBLIC TASK
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_PAD = "left_pad"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    LEFT_PICKUP_WAIT = "left_pickup_wait"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_PAD = "right_pad"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    RIGHT_PICKUP_WAIT = "right_pickup_wait"
+
+    # Objects
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+
+    # Events
+    LEFT_READY = "left_ready"
+    RIGHT_READY = "right_ready"
+
+    # Timeout
+    TIMEOUT = 30.0
+
+    async def worker(arm: str, 
+                     home_pose: str, 
+                     source_pose: str, 
+                     own_pad: str, 
+                     own_target: str, 
+                     own_depart: str, 
+                     pickup_wait: str, 
+                     peer_pad: str, 
+                     part_id: str, 
+                     peer_part_id: str, 
+                     own_event: str, 
+                     peer_event: str):
+        
+        # 1. Deposit own part
+        # Move to source (Approach)
+        await robot.move(arm, source_pose, timeout_s=TIMEOUT)
+        # Grasp own part
+        await robot.grasp(arm, part_id)
+        # Move to own pad
+        await robot.move(arm, own_pad, timeout_s=TIMEOUT)
+        # Release own part
+        await robot.release(arm, part_id, own_pad)
+        
+        # 2. Clear pad (immediate departure)
+        # Move to own departure
+        await robot.move(arm, own_depart, timeout_s=TIMEOUT)
+        
+        # 3. Signal own ready event
+        receipt = robot.signal(own_event, item_id=part_id)
+        
+        # 4. Wait for peer ready event
+        peer_receipt = await robot.wait_event(peer_event, timeout_s=TIMEOUT)
+        
+        # 5. Move to peer pad (carrying peer receipt)
+        # Note: Task requires "The carried move to its own target must carry the exact active peer-item receipt".
+        # This applies to the move to target. The move to peer pad is the approach for the peer part.
+        # We move to the pickup wait pose first (approach start).
+        await robot.move(arm, pickup_wait, timeout_s=TIMEOUT)
+        # Then move to peer pad (interaction pose)
+        await robot.move(arm, peer_pad, timeout_s=TIMEOUT)
+        
+        # 6. Grasp peer part
+        await robot.grasp(arm, peer_part_id)
+        
+        # 7. Move to own target (carrying peer receipt)
+        await robot.move(arm, own_target, timeout_s=TIMEOUT, receipt=peer_receipt)
+        
+        # 8. Release peer part
+        await robot.release(arm, peer_part_id, own_target)
+        
+        # 9. Clear peer ready event
+        robot.clear_event(peer_event, expected_version=peer_receipt.version)
+        
+        # 10. Move to own departure
+        await robot.move(arm, own_depart, timeout_s=TIMEOUT)
+
+    # Create concurrent tasks for both arms
+    left_task = asyncio.create_task(
+        worker(
+            arm=LEFT,
+            home_pose=LEFT_HOME,
+            source_pose=LEFT_SOURCE,
+            own_pad=LEFT_PAD,
+            own_target=LEFT_TARGET,
+            own_depart=LEFT_DEPART,
+            pickup_wait=LEFT_PICKUP_WAIT,
+            peer_pad=RIGHT_PAD,
+            part_id=LEFT_PART,
+            peer_part_id=RIGHT_PART,
+            own_event=LEFT_READY,
+            peer_event=RIGHT_READY
+        )
+    )
+
+    right_task = asyncio.create_task(
+        worker(
+            arm=RIGHT,
+            home_pose=RIGHT_HOME,
+            source_pose=RIGHT_SOURCE,
+            own_pad=RIGHT_PAD,
+            own_target=RIGHT_TARGET,
+            own_depart=RIGHT_DEPART,
+            pickup_wait=RIGHT_PICKUP_WAIT,
+            peer_pad=LEFT_PAD,
+            part_id=RIGHT_PART,
+            peer_part_id=LEFT_PART,
+            own_event=RIGHT_READY,
+            peer_event=LEFT_READY
+        )
+    )
+
+    # Wait for both tasks to complete
+    await asyncio.gather(left_task, right_task)
+```

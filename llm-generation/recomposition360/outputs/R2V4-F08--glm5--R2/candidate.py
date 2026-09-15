@@ -1,0 +1,35 @@
+async def atom_a_prepare(robot):
+    await robot.acquire("LEFT", "fixture_stable", 20)
+    await robot.move("LEFT", "left_approach", 4)
+
+async def atom_a_dependency(robot):
+    await robot.move("LEFT", "support_pose", 4)
+    robot.signal("fixture_stable")
+    robot.signal("force_ready")
+
+async def atom_a_commit(robot):
+    r_peg_seated = await robot.wait_event("peg_seated", 20)
+    r_fixture_stable = await robot.wait_event("fixture_stable", 20)
+    r_force_ready = await robot.wait_event("force_ready", 20)
+    robot.clear_event("peg_seated", expected_version=r_peg_seated.version)
+    robot.clear_event("fixture_stable", expected_version=r_fixture_stable.version)
+    robot.clear_event("force_ready", expected_version=r_force_ready.version)
+
+async def atom_a_finish(robot):
+    await robot.release_resource("LEFT", "fixture_stable")
+    await robot.move("LEFT", "left_home", 4)
+
+async def atom_b_prepare(robot):
+    await robot.move("RIGHT", "right_approach", 4)
+
+async def atom_b_dependency(robot):
+    await robot.inspect("RIGHT", "context_fact_3")
+    await robot.wait_event("fixture_stable", 20)
+    await robot.wait_event("force_ready", 20)
+    await robot.move("RIGHT", "right_protected", 4)
+
+async def atom_b_commit(robot):
+    robot.signal("peg_seated")
+
+async def atom_b_finish(robot):
+    await robot.move("RIGHT", "right_home", 4)

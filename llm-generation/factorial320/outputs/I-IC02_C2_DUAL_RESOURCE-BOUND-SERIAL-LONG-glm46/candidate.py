@@ -1,0 +1,122 @@
+import asyncio
+from bridge_robot_api import Robot, MotionFault, TimeoutError
+
+async def run_task(robot: Robot):
+    # Constants
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    RES_FIXTURE = "fixture"
+    RES_TOOL = "tool"
+    
+    RES_GAP_0 = "rq2_gap_0"
+    RES_GAP_1 = "rq2_gap_1"
+    RES_GAP_2 = "rq2_gap_2"
+    
+    EVENT_GATE = "rq2_gate"
+    
+    MODE_OFF = "OFF"
+    
+    TIMEOUT_ACQUIRE = 4.0
+    TIMEOUT_WAIT = 4.0
+
+    # Helper for resource acquisition with cleanup
+    async def acquire_resources(arm: str, resources: list[str]):
+        acquired = []
+        try:
+            for res_id in resources:
+                await robot.acquire(arm, res_id, TIMEOUT_ACQUIRE)
+                acquired.append(res_id)
+        except Exception:
+            # Cleanup on failure
+            for res_id in reversed(acquired):
+                try:
+                    await robot.set_mode(arm, res_id, MODE_OFF)
+                    await robot.release_resource(arm, res_id)
+                except Exception:
+                    pass
+            raise
+
+    # Helper for resource release
+    async def release_resources(arm: str, resources: list[str]):
+        for res_id in reversed(resources):
+            await robot.set_mode(arm, res_id, MODE_OFF)
+            await robot.release_resource(arm, res_id)
+
+    # Worker for a single arm
+    async def worker(arm: str, home_pose: str, source_pose: str, target_pose: str, depart_pose: str, obj_id: str):
+        # 1. Acquire resources
+        await acquire_resources(arm, [RES_FIXTURE, RES_TOOL])
+        
+        try:
+            # 2. Move to source
+            await robot.move(arm, source_pose)
+            
+            # 3. Grasp object
+            await robot.grasp(arm, obj_id)
+            
+            # 4. Move to target
+            await robot.move(arm, target_pose)
+            
+            # 5. Release object
+            await robot.release(arm, obj_id, target_pose)
+            
+            # 6. Depart immediately
+            await robot.move(arm, depart_pose)
+            
+        finally:
+            # 7. Release resources
+            await release_resources(arm, [RES_FIXTURE, RES_TOOL])
+
+    # --- Main Execution Flow ---
+
+    # 1. Signal rq2_gate
+    gate_receipt = robot.signal(EVENT_GATE)
+
+    # 2. Acquire and release rq2_gap resources with LEFT in numeric order
+    # "Acquire and release rq2_gap_0, rq2_gap_1 and rq2_gap_2 once each with LEFT, in numeric order"
+    # "never retain them at return"
+    # "Signal rq2_gate, complete all three rq2_gap resource checks, and only then wait for rq2_gate."
+    
+    gap_resources = [RES_GAP_0, RES_GAP_1, RES_GAP_2]
+    await acquire_resources(ARM_LEFT, gap_resources)
+    await release_resources(ARM_LEFT, gap_resources)
+
+    # 3. Wait for rq2_gate
+    # "wait its exact active receipt exactly once"
+    await robot.wait_event(EVENT_GATE, TIMEOUT_WAIT)
+
+    # 4. Execute the inherited dual-arm mission
+    # "Keep rq2_gate active while executing the complete inherited dual-arm mission"
+    # "Use serial scheduling for both the inherited dual-arm mission"
+    
+    # Run Left Worker
+    await worker(
+        ARM_LEFT, 
+        POSE_LEFT_HOME, POSE_LEFT_SOURCE, POSE_LEFT_TARGET, POSE_LEFT_DEPART, 
+        OBJ_LEFT
+    )
+    
+    # Run Right Worker
+    await worker(
+        ARM_RIGHT, 
+        POSE_RIGHT_HOME, POSE_RIGHT_SOURCE, POSE_RIGHT_TARGET, POSE_RIGHT_DEPART, 
+        OBJ_RIGHT
+    )
+
+    # 5. Clear rq2_gate
+    # "clear exactly that version after its assigned protected scope"
+    robot.clear_event(EVENT_GATE, expected_version=gate_receipt.version)

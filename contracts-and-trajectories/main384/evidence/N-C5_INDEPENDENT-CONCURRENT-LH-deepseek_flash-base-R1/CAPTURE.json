@@ -1,0 +1,2221 @@
+{
+  "profile": "QUALITY_TYPED_TRACE_DEV_V1",
+  "process": {
+    "status": "EXITED",
+    "returncode": 0,
+    "wall_seconds": 0.047596,
+    "stdout": "",
+    "stderr": "",
+    "stop_reasons": [],
+    "captured_output_bytes": 0,
+    "security_profile": "LINUX_X86_64_BWRAP_SECCOMP_RO_JOB_V1",
+    "candidate_stdout_is_trusted_evidence": false
+  },
+  "child_lifecycle_report": {
+    "kind": "finish",
+    "outcome": "returned",
+    "pending_task_count": 0,
+    "pending_timer_count": 0,
+    "pending_ready_callback_count": 0,
+    "lifecycle_profile": "V04_CALLBACK_ACCOUNTING"
+  },
+  "execution_lifecycle_complete": true,
+  "trusted_events": [
+    {
+      "index": 0,
+      "time": 0.0,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_home",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            -1.0,
+            1.4
+          ],
+          "RIGHT": [
+            2.0,
+            -1,
+            1.4
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 1,
+      "operation_id": "op_0001"
+    },
+    {
+      "index": 1,
+      "time": 0.0,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "RIGHT",
+        "pose": "right_home",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            -1.0,
+            1.4
+          ],
+          "RIGHT": [
+            2.0,
+            -1.0,
+            1.4
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 2,
+      "operation_id": "op_0002"
+    },
+    {
+      "index": 2,
+      "time": 1.0,
+      "phase": "complete",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_home",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            -1.0,
+            1.4
+          ],
+          "RIGHT": [
+            2.0,
+            -1.0,
+            1.4
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 1,
+      "operation_id": "op_0001",
+      "result": {
+        "operation_id": "op_0001",
+        "method": "move",
+        "arm": "LEFT",
+        "started_at": 0.0,
+        "finished_at": 1.0,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "left_home"
+      }
+    },
+    {
+      "index": 3,
+      "time": 1.0,
+      "phase": "complete",
+      "action": "move",
+      "args": {
+        "arm": "RIGHT",
+        "pose": "right_home",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            -1,
+            1.4
+          ],
+          "RIGHT": [
+            2.0,
+            -1.0,
+            1.4
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 2,
+      "operation_id": "op_0002",
+      "result": {
+        "operation_id": "op_0002",
+        "method": "move",
+        "arm": "RIGHT",
+        "started_at": 0.0,
+        "finished_at": 1.0,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "right_home"
+      }
+    },
+    {
+      "index": 4,
+      "time": 1.0,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_source",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            -1.0,
+            1.4
+          ],
+          "RIGHT": [
+            2.0,
+            -1,
+            1.4
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 3,
+      "operation_id": "op_0003"
+    },
+    {
+      "index": 5,
+      "time": 1.0,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "RIGHT",
+        "pose": "right_source",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            -1.0,
+            1.4
+          ],
+          "RIGHT": [
+            2.0,
+            -1.0,
+            1.4
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 4,
+      "operation_id": "op_0004"
+    },
+    {
+      "index": 6,
+      "time": 2.0,
+      "phase": "complete",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_source",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            0.0,
+            1.0
+          ],
+          "RIGHT": [
+            2.0,
+            0.0,
+            1.0
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 3,
+      "operation_id": "op_0003",
+      "result": {
+        "operation_id": "op_0003",
+        "method": "move",
+        "arm": "LEFT",
+        "started_at": 1.0,
+        "finished_at": 2.0,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "left_source"
+      }
+    },
+    {
+      "index": 7,
+      "time": 2.0,
+      "phase": "complete",
+      "action": "move",
+      "args": {
+        "arm": "RIGHT",
+        "pose": "right_source",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            0,
+            1
+          ],
+          "RIGHT": [
+            2.0,
+            0.0,
+            1.0
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [
+          {
+            "arm": "LEFT",
+            "object_id": "left_part",
+            "operation_id": "op_0003",
+            "candidate_task_id": "candidate_task_7d8ce78c7400",
+            "completed_at": 2.0,
+            "contact_start_fraction": 0.9299999999999999
+          }
+        ],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 4,
+      "operation_id": "op_0004",
+      "result": {
+        "operation_id": "op_0004",
+        "method": "move",
+        "arm": "RIGHT",
+        "started_at": 1.0,
+        "finished_at": 2.0,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "right_source"
+      }
+    },
+    {
+      "index": 8,
+      "time": 2.0,
+      "phase": "start",
+      "action": "grasp",
+      "args": {
+        "arm": "LEFT",
+        "object_id": "left_part",
+        "observation": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            0,
+            1
+          ],
+          "RIGHT": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [
+          {
+            "arm": "LEFT",
+            "object_id": "left_part",
+            "operation_id": "op_0003",
+            "candidate_task_id": "candidate_task_7d8ce78c7400",
+            "completed_at": 2.0,
+            "contact_start_fraction": 0.9299999999999999
+          },
+          {
+            "arm": "RIGHT",
+            "object_id": "right_part",
+            "operation_id": "op_0004",
+            "candidate_task_id": "candidate_task_7d8ce78c74c0",
+            "completed_at": 2.0,
+            "contact_start_fraction": 0.9299999999999999
+          }
+        ],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 5,
+      "operation_id": "op_0005"
+    },
+    {
+      "index": 9,
+      "time": 2.0,
+      "phase": "start",
+      "action": "grasp",
+      "args": {
+        "arm": "RIGHT",
+        "object_id": "right_part",
+        "observation": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            0,
+            1
+          ],
+          "RIGHT": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [
+          {
+            "arm": "LEFT",
+            "object_id": "left_part",
+            "operation_id": "op_0003",
+            "candidate_task_id": "candidate_task_7d8ce78c7400",
+            "completed_at": 2.0,
+            "contact_start_fraction": 0.9299999999999999
+          },
+          {
+            "arm": "RIGHT",
+            "object_id": "right_part",
+            "operation_id": "op_0004",
+            "candidate_task_id": "candidate_task_7d8ce78c74c0",
+            "completed_at": 2.0,
+            "contact_start_fraction": 0.9299999999999999
+          }
+        ],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 6,
+      "operation_id": "op_0006"
+    },
+    {
+      "index": 10,
+      "time": 2.1,
+      "phase": "complete",
+      "action": "grasp",
+      "args": {
+        "arm": "LEFT",
+        "object_id": "left_part",
+        "observation": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            0,
+            1
+          ],
+          "RIGHT": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "HELD:LEFT",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": "left_part",
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [
+          {
+            "arm": "LEFT",
+            "object_id": "left_part",
+            "operation_id": "op_0003",
+            "candidate_task_id": "candidate_task_7d8ce78c7400",
+            "completed_at": 2.0,
+            "contact_start_fraction": 0.9299999999999999
+          },
+          {
+            "arm": "RIGHT",
+            "object_id": "right_part",
+            "operation_id": "op_0004",
+            "candidate_task_id": "candidate_task_7d8ce78c74c0",
+            "completed_at": 2.0,
+            "contact_start_fraction": 0.9299999999999999
+          }
+        ],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 5,
+      "operation_id": "op_0005",
+      "result": {
+        "observation_id": "obs_0001",
+        "producer_operation_id": "op_0005",
+        "fact_id": "grasp_state",
+        "version": 1,
+        "observed_at": 2.1,
+        "value": {
+          "held_by": "LEFT",
+          "item_id": "left_part"
+        }
+      }
+    },
+    {
+      "index": 11,
+      "time": 2.1,
+      "phase": "complete",
+      "action": "grasp",
+      "args": {
+        "arm": "RIGHT",
+        "object_id": "right_part",
+        "observation": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            0,
+            1
+          ],
+          "RIGHT": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "HELD:LEFT",
+          "right_part": "HELD:RIGHT"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": "left_part",
+          "RIGHT": "right_part"
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [
+          {
+            "arm": "RIGHT",
+            "object_id": "right_part",
+            "operation_id": "op_0004",
+            "candidate_task_id": "candidate_task_7d8ce78c74c0",
+            "completed_at": 2.0,
+            "contact_start_fraction": 0.9299999999999999
+          }
+        ],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 6,
+      "operation_id": "op_0006",
+      "result": {
+        "observation_id": "obs_0002",
+        "producer_operation_id": "op_0006",
+        "fact_id": "grasp_state",
+        "version": 1,
+        "observed_at": 2.1,
+        "value": {
+          "held_by": "RIGHT",
+          "item_id": "right_part"
+        }
+      }
+    },
+    {
+      "index": 12,
+      "time": 2.1,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_target",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            0.0,
+            1.0
+          ],
+          "RIGHT": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "HELD:LEFT",
+          "right_part": "HELD:RIGHT"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0.0,
+            1.0
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": "left_part",
+          "RIGHT": "right_part"
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 7,
+      "operation_id": "op_0007"
+    },
+    {
+      "index": 13,
+      "time": 2.1,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "RIGHT",
+        "pose": "right_target",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            0.0,
+            1.0
+          ],
+          "RIGHT": [
+            2.0,
+            0.0,
+            1.0
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "HELD:LEFT",
+          "right_part": "HELD:RIGHT"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0.0,
+            1.0
+          ],
+          "right_part": [
+            2.0,
+            0.0,
+            1.0
+          ]
+        },
+        "held": {
+          "LEFT": "left_part",
+          "RIGHT": "right_part"
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 8,
+      "operation_id": "op_0008"
+    },
+    {
+      "index": 14,
+      "time": 3.1,
+      "phase": "complete",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_target",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1.0,
+            1.0
+          ],
+          "RIGHT": [
+            -2.0,
+            1.0,
+            1.8
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "HELD:LEFT",
+          "right_part": "HELD:RIGHT"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1.0,
+            1.0
+          ],
+          "right_part": [
+            -2.0,
+            1.0,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": "left_part",
+          "RIGHT": "right_part"
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 7,
+      "operation_id": "op_0007",
+      "result": {
+        "operation_id": "op_0007",
+        "method": "move",
+        "arm": "LEFT",
+        "started_at": 2.1,
+        "finished_at": 3.1,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "left_target"
+      }
+    },
+    {
+      "index": 15,
+      "time": 3.1,
+      "phase": "complete",
+      "action": "move",
+      "args": {
+        "arm": "RIGHT",
+        "pose": "right_target",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1,
+            1
+          ],
+          "RIGHT": [
+            -2.0,
+            1.0,
+            1.8
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "HELD:LEFT",
+          "right_part": "HELD:RIGHT"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1,
+            1
+          ],
+          "right_part": [
+            -2.0,
+            1.0,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": "left_part",
+          "RIGHT": "right_part"
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 8,
+      "operation_id": "op_0008",
+      "result": {
+        "operation_id": "op_0008",
+        "method": "move",
+        "arm": "RIGHT",
+        "started_at": 2.1,
+        "finished_at": 3.1,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "right_target"
+      }
+    },
+    {
+      "index": 16,
+      "time": 3.1,
+      "phase": "start",
+      "action": "release",
+      "args": {
+        "arm": "LEFT",
+        "object_id": "left_part",
+        "support_zone": "left_target"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1,
+            1
+          ],
+          "RIGHT": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "HELD:LEFT",
+          "right_part": "HELD:RIGHT"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1,
+            1
+          ],
+          "right_part": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": "left_part",
+          "RIGHT": "right_part"
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 9,
+      "operation_id": "op_0009"
+    },
+    {
+      "index": 17,
+      "time": 3.1,
+      "phase": "start",
+      "action": "release",
+      "args": {
+        "arm": "RIGHT",
+        "object_id": "right_part",
+        "support_zone": "right_target"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1,
+            1
+          ],
+          "RIGHT": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "HELD:LEFT",
+          "right_part": "HELD:RIGHT"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1,
+            1
+          ],
+          "right_part": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": "left_part",
+          "RIGHT": "right_part"
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 10,
+      "operation_id": "op_0010"
+    },
+    {
+      "index": 18,
+      "time": 3.2,
+      "phase": "complete",
+      "action": "release",
+      "args": {
+        "arm": "LEFT",
+        "object_id": "left_part",
+        "support_zone": "left_target"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1,
+            1
+          ],
+          "RIGHT": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_target",
+          "right_part": "HELD:RIGHT"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1,
+            1
+          ],
+          "right_part": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": "right_part"
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 9,
+      "operation_id": "op_0009",
+      "result": {
+        "operation_id": "op_0009",
+        "method": "release",
+        "arm": "LEFT",
+        "started_at": 3.1,
+        "finished_at": 3.2,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "left_target"
+      }
+    },
+    {
+      "index": 19,
+      "time": 3.2,
+      "phase": "complete",
+      "action": "release",
+      "args": {
+        "arm": "RIGHT",
+        "object_id": "right_part",
+        "support_zone": "right_target"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1,
+            1
+          ],
+          "RIGHT": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_target",
+          "right_part": "right_target"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1,
+            1
+          ],
+          "right_part": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 10,
+      "operation_id": "op_0010",
+      "result": {
+        "operation_id": "op_0010",
+        "method": "release",
+        "arm": "RIGHT",
+        "started_at": 3.1,
+        "finished_at": 3.2,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "right_target"
+      }
+    },
+    {
+      "index": 20,
+      "time": 3.2,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_depart",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1.0,
+            1.0
+          ],
+          "RIGHT": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_target",
+          "right_part": "right_target"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1,
+            1
+          ],
+          "right_part": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 11,
+      "operation_id": "op_0011"
+    },
+    {
+      "index": 21,
+      "time": 3.2,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "RIGHT",
+        "pose": "right_depart",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1.0,
+            1.0
+          ],
+          "RIGHT": [
+            -2.0,
+            1.0,
+            1.8
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_target",
+          "right_part": "right_target"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1,
+            1
+          ],
+          "right_part": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 12,
+      "operation_id": "op_0012"
+    },
+    {
+      "index": 22,
+      "time": 4.2,
+      "phase": "complete",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_depart",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1.0,
+            1.5
+          ],
+          "RIGHT": [
+            -2.0,
+            1.0,
+            2.3
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_target",
+          "right_part": "right_target"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1,
+            1
+          ],
+          "right_part": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c7400",
+      "request_id": 11,
+      "operation_id": "op_0011",
+      "result": {
+        "operation_id": "op_0011",
+        "method": "move",
+        "arm": "LEFT",
+        "started_at": 3.2,
+        "finished_at": 4.2,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "left_depart"
+      }
+    },
+    {
+      "index": 23,
+      "time": 4.2,
+      "phase": "complete",
+      "action": "move",
+      "args": {
+        "arm": "RIGHT",
+        "pose": "right_depart",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1,
+            1.5
+          ],
+          "RIGHT": [
+            -2.0,
+            1.0,
+            2.3
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_target",
+          "right_part": "right_target"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1,
+            1
+          ],
+          "right_part": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7d8ce78c74c0",
+      "request_id": 12,
+      "operation_id": "op_0012",
+      "result": {
+        "operation_id": "op_0012",
+        "method": "move",
+        "arm": "RIGHT",
+        "started_at": 3.2,
+        "finished_at": 4.2,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "right_depart"
+      }
+    },
+    {
+      "index": 24,
+      "time": 4.2,
+      "phase": "complete",
+      "action": "run_return",
+      "args": {},
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            2.0,
+            1,
+            1.5
+          ],
+          "RIGHT": [
+            -2.0,
+            1,
+            2.3
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_target",
+          "right_part": "right_target"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            2.0,
+            1,
+            1
+          ],
+          "right_part": [
+            -2.0,
+            1,
+            1.8
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": null,
+      "request_id": null,
+      "pending_task_count": 0,
+      "pending_timer_count": 0,
+      "pending_ready_callback_count": 0
+    }
+  ],
+  "call_audit": [
+    {
+      "request_id": 1,
+      "action": "move",
+      "proposed_at": 0.0,
+      "before_event_count": 0,
+      "wire_args": [
+        "LEFT",
+        "left_home",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "pose": "left_home",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        0,
+        2
+      ],
+      "finished_at": 1.0,
+      "after_event_count": 3
+    },
+    {
+      "request_id": 2,
+      "action": "move",
+      "proposed_at": 0.0,
+      "before_event_count": 1,
+      "wire_args": [
+        "RIGHT",
+        "right_home",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "RIGHT",
+        "pose": "right_home",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        1,
+        3
+      ],
+      "finished_at": 1.0,
+      "after_event_count": 4
+    },
+    {
+      "request_id": 3,
+      "action": "move",
+      "proposed_at": 1.0,
+      "before_event_count": 4,
+      "wire_args": [
+        "LEFT",
+        "left_source",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "pose": "left_source",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        4,
+        6
+      ],
+      "finished_at": 2.0,
+      "after_event_count": 7
+    },
+    {
+      "request_id": 4,
+      "action": "move",
+      "proposed_at": 1.0,
+      "before_event_count": 5,
+      "wire_args": [
+        "RIGHT",
+        "right_source",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "RIGHT",
+        "pose": "right_source",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        5,
+        7
+      ],
+      "finished_at": 2.0,
+      "after_event_count": 8
+    },
+    {
+      "request_id": 5,
+      "action": "grasp",
+      "proposed_at": 2.0,
+      "before_event_count": 8,
+      "wire_args": [
+        "LEFT",
+        "left_part"
+      ],
+      "wire_kwargs": {
+        "observation": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "object_id": "left_part",
+        "observation": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        8,
+        10
+      ],
+      "finished_at": 2.1,
+      "after_event_count": 11
+    },
+    {
+      "request_id": 6,
+      "action": "grasp",
+      "proposed_at": 2.0,
+      "before_event_count": 9,
+      "wire_args": [
+        "RIGHT",
+        "right_part"
+      ],
+      "wire_kwargs": {
+        "observation": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "RIGHT",
+        "object_id": "right_part",
+        "observation": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        9,
+        11
+      ],
+      "finished_at": 2.1,
+      "after_event_count": 12
+    },
+    {
+      "request_id": 7,
+      "action": "move",
+      "proposed_at": 2.1,
+      "before_event_count": 12,
+      "wire_args": [
+        "LEFT",
+        "left_target",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "pose": "left_target",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        12,
+        14
+      ],
+      "finished_at": 3.1,
+      "after_event_count": 15
+    },
+    {
+      "request_id": 8,
+      "action": "move",
+      "proposed_at": 2.1,
+      "before_event_count": 13,
+      "wire_args": [
+        "RIGHT",
+        "right_target",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "RIGHT",
+        "pose": "right_target",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        13,
+        15
+      ],
+      "finished_at": 3.1,
+      "after_event_count": 16
+    },
+    {
+      "request_id": 9,
+      "action": "release",
+      "proposed_at": 3.1,
+      "before_event_count": 16,
+      "wire_args": [
+        "LEFT",
+        "left_part",
+        "left_target"
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "object_id": "left_part",
+        "support_zone": "left_target"
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        16,
+        18
+      ],
+      "finished_at": 3.2,
+      "after_event_count": 19
+    },
+    {
+      "request_id": 10,
+      "action": "release",
+      "proposed_at": 3.1,
+      "before_event_count": 17,
+      "wire_args": [
+        "RIGHT",
+        "right_part",
+        "right_target"
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "RIGHT",
+        "object_id": "right_part",
+        "support_zone": "right_target"
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        17,
+        19
+      ],
+      "finished_at": 3.2,
+      "after_event_count": 20
+    },
+    {
+      "request_id": 11,
+      "action": "move",
+      "proposed_at": 3.2,
+      "before_event_count": 20,
+      "wire_args": [
+        "LEFT",
+        "left_depart",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "pose": "left_depart",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        20,
+        22
+      ],
+      "finished_at": 4.2,
+      "after_event_count": 23
+    },
+    {
+      "request_id": 12,
+      "action": "move",
+      "proposed_at": 3.2,
+      "before_event_count": 21,
+      "wire_args": [
+        "RIGHT",
+        "right_depart",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "RIGHT",
+        "pose": "right_depart",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        21,
+        23
+      ],
+      "finished_at": 4.2,
+      "after_event_count": 24
+    }
+  ],
+  "call_audit_complete": true,
+  "trusted_api_errors": [],
+  "safety_label": null,
+  "source_scope": "SELF_AUTHORED_DEVELOPMENT_ONLY"
+}

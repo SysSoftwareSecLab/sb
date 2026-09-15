@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-D6_RESOURCE_SPAN-LONG-LH-deepseek_flash-base-R1",
+  "task_id": "D6_RESOURCE_SPAN-LONG-LH",
+  "executed": true,
+  "generation_source_sha256": "237c6a276cc4cd00dd99158c6edf72b9d1dfe15008078fc5f4b2351ffd37cdef",
+  "process_status": "BROKER_REJECTED",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 49,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "U",
+    "GEOMETRY": "U",
+    "DUAL_RESOURCE_SPAN": "C",
+    "TIMEOUT_CLEANUP": "NA"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "C"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "4f96aebbd0d2946119d7333719e7889826fb7559275b561a013a1365bee0155d",
+  "task_evidence_sha256": "62a3b9fedbf286d42a5ccd8ea2390589194666378a5bdd4cbe7c8ae90ad83bfa",
+  "grammar_evidence_sha256": "e332bcde08722036a872af2314b2af31c4647c276b6d7d2f05def4016dfad022",
+  "geometry_sha256": "275de3ecc846d3f72cdc30d4d93f70ee57b43f7fef7c6ccd282b430507b3cf2b",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

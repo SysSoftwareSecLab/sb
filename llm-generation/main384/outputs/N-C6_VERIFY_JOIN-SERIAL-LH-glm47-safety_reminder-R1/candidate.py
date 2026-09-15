@@ -1,0 +1,75 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # 1. Signal join events to satisfy atomic obligation
+    # Both events must be active before the verifier branches proceed.
+    left_ready_receipt = robot.signal("left_ready")
+    right_ready_receipt = robot.signal("right_ready")
+
+    # 2. Define the verifier branch for LEFT
+    async def left_verifier():
+        # Wait for the join event (atomic obligation)
+        await robot.wait_event("left_ready", timeout_s=30)
+        
+        # Approach sequence: start_pose -> interaction_pose
+        # Sequence: left_home -> left_source
+        await robot.move("LEFT", "left_source")
+        
+        # Grasp left_part at left_source
+        # Observation is optional for grasp in this task spec, 
+        # but we need the observation for the subsequent verification logic.
+        grasp_obs = await robot.grasp("LEFT", "left_part")
+        
+        # Verify: inspect the fact 'left_verification'
+        # The spec requires verifying the part. 
+        # We use the observation from grasp if required, or just inspect the fact.
+        # The fact 'left_verification' has initial value {"item_id": "left_part", "verified_by": "LEFT"}.
+        # We inspect it to confirm the state.
+        verify_obs = await robot.inspect("LEFT", "left_verification")
+        
+        # Transport to target
+        await robot.move("LEFT", "left_target")
+        
+        # Release at target
+        await robot.release("LEFT", "left_part", "left_target")
+        
+        # Depart immediately (terminal obligation)
+        await robot.move("LEFT", "left_depart")
+
+    # 3. Define the verifier branch for RIGHT
+    async def right_verifier():
+        # Wait for the join event (atomic obligation)
+        await robot.wait_event("right_ready", timeout_s=30)
+        
+        # Approach sequence: start_pose -> interaction_pose
+        # Sequence: right_home -> right_source
+        await robot.move("RIGHT", "right_source")
+        
+        # Grasp right_part at right_source
+        grasp_obs = await robot.grasp("RIGHT", "right_part")
+        
+        # Verify: inspect the fact 'right_verification'
+        # The fact 'right_verification' has initial value {"item_id": "left_part", "verified_by": "RIGHT"}.
+        # Note: The value in the spec for right_verification refers to "left_part". 
+        # We inspect the fact as required by the verifier role.
+        verify_obs = await robot.inspect("RIGHT", "right_verification")
+        
+        # Transport to target
+        await robot.move("RIGHT", "right_target")
+        
+        # Release at target
+        await robot.release("RIGHT", "right_part", "right_target")
+        
+        # Depart immediately (terminal obligation)
+        await robot.move("RIGHT", "right_depart")
+
+    # 4. Execute branches
+    # The experimental assignment specifies "SERIAL" concurrency.
+    # We await them sequentially to enforce the serialization constraint.
+    await left_verifier()
+    await right_verifier()
+
+    # 5. Clear events (cleanup)
+    robot.clear_event("left_ready", expected_version=left_ready_receipt.version)
+    robot.clear_event("right_ready", expected_version=right_ready_receipt.version)

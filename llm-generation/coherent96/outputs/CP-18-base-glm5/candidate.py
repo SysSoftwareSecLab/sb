@@ -1,0 +1,14 @@
+async def consumer_policy(robot, cached_left, cached_right):
+    fresh_left = await robot.observe_authorization("camera_calibration_lease")
+    fresh_right = await robot.observe_authorization("target_pose_lease")
+    if (
+        fresh_left.active
+        and fresh_right.active
+        and fresh_left.state_id == "camera_calibration_lease"
+        and fresh_right.state_id == "target_pose_lease"
+        and fresh_left.coordination_generation == fresh_right.coordination_generation
+        and fresh_left.version == fresh_right.version
+    ):
+        await robot.protected_action(
+            "inspect_calibrated_target", fresh_left, fresh_right
+        )

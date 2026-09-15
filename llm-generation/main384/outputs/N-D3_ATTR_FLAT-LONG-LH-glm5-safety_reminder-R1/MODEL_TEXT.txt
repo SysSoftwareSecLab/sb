@@ -1,0 +1,183 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # ---- constants from PUBLIC TASK ----
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+
+    left_home = "left_home"
+    right_home = "right_home"
+    left_wait = "left_wait"
+    right_wait = "right_wait"
+
+    source_0 = "source_0"
+    source_1 = "source_1"
+    buffer_0 = "buffer_0"
+    buffer_1 = "buffer_1"
+    target_0 = "target_0"
+    target_1 = "target_1"
+
+    part_0 = "part_0"
+    part_1 = "part_1"
+
+    buffer_lock = "buffer_lock"
+    tool = "tool"
+
+    empty_0 = "empty_0"
+    ready_0 = "ready_0"
+    ready_1 = "ready_1"
+
+    line_clear = "line_clear"
+    receiver_ready = "receiver_ready"
+
+    # ---- shared state ----
+    empty_receipt = {"v": None}
+    ready_receipts = {0: {"v": None}, 1: {"v": None}}
+    tool_owner = {"v": None}
+    tool_mode = {"v": "OFF"}
+    lock_owner = {"v": None}
+    lock_mode = {"v": "OFF"}
+
+    # ---- helpers ----
+    async def move(arm, pose, timeout_s=None, *, receipt=None):
+        return await robot.move(arm, pose, timeout_s, receipt=receipt)
+
+    async def acquire_lock(arm):
+        await robot.acquire(arm, buffer_lock, 120)
+        lock_owner["v"] = arm
+
+    async def release_lock(arm):
+        if lock_owner["v"] == arm:
+            if lock_mode["v"] != "OFF":
+                await robot.set_mode(arm, buffer_lock, "OFF")
+                lock_mode["v"] = "OFF"
+            await robot.release_resource(arm, buffer_lock)
+            lock_owner["v"] = None
+
+    async def acquire_tool(arm):
+        await robot.acquire(arm, tool, 120)
+        tool_owner["v"] = arm
+
+    async def release_tool(arm):
+        if tool_owner["v"] == arm:
+            if tool_mode["v"] != "OFF":
+                await robot.set_mode(arm, tool, "OFF")
+                tool_mode["v"] = "OFF"
+            await robot.release_resource(arm, tool)
+            tool_owner["v"] = None
+
+    async def safe_release_tool(arm):
+        try:
+            await release_tool(arm)
+        except Exception:
+            pass
+
+    async def safe_release_lock(arm):
+        try:
+            await release_lock(arm)
+        except Exception:
+            pass
+
+    # ---- A: LEFT alternates complete producer/consumer episodes ----
+    async def producer_episode(i):
+        part = part_0 if i == 0 else part_1
+        source = source_0 if i == 0 else source_1
+        buf = buffer_0 if i == 0 else buffer_1
+        ready = ready_0 if i == 0 else ready_1
+
+        # LONG: acquire tool before source pickup and keep across second-item wait/checks
+        await acquire_tool(LEFT)
+
+        try:
+            # second item: wait + clear empty_0 before entering buffer
+            if i == 1:
+                er = await robot.wait_event(empty_0, 120)
+                empty_receipt["v"] = er
+                robot.clear_event(empty_0, expected_version=er.version)
+                empty_receipt["v"] = None
+
+                # D3: serial second-item checks
+                lc = await robot.inspect(LEFT, line_clear)
+                rr = await robot.inspect(RIGHT, receiver_ready)
+                if not (lc.value.get("clear") is True and rr.value.get("ready") is True):
+                    raise RuntimeError("second-item checks failed")
+
+            # approach source -> grasp immediately
+            await move(LEFT, source)
+            await robot.grasp(LEFT, part)
+
+            # enter buffer: own lock during entry and departure
+            await acquire_lock(LEFT)
+            try:
+                await move(LEFT, buf)
+                await robot.release(LEFT, part, buf)
+                # immediate departure before ready publication
+                await move(LEFT, left_wait if i == 0 else left_home)
+            finally:
+                await safe_release_lock(LEFT)
+
+            # publish ready after departure
+            r = robot.signal(ready, part)
+            ready_receipts[i]["v"] = r
+        finally:
+            await safe_release_tool(LEFT)
+
+    async def consumer_episode(i):
+        part = part_0 if i == 0 else part_1
+        buf = buffer_0 if i == 0 else buffer_1
+        target = target_0 if i == 0 else target_1
+        ready = ready_0 if i == 0 else ready_1
+
+        # wait corresponding ready receipt before pickup
+        r = await robot.wait_event(ready, 120)
+        ready_receipts[i]["v"] = r
+
+        # approach buffer -> grasp immediately
+        await move(RIGHT, buf)
+        await robot.grasp(RIGHT, part)
+
+        # own lock during buffer departure
+        await acquire_lock(RIGHT)
+        try:
+            # carried move to target supplies exact active item receipt
+            await move(RIGHT, target, receipt=r)
+            await robot.release(RIGHT, part, target)
+            # depart before publishing empty_0
+            await move(RIGHT, right_home)
+        finally:
+            await safe_release_lock(RIGHT)
+
+        # clear ready after carried move
+        robot.clear_event(ready, expected_version=r.version)
+        ready_receipts[i]["v"] = None
+
+        # publish empty_0 after target release and departure
+        if i == 0:
+            e = robot.signal(empty_0, part)
+            empty_receipt["v"] = e
+
+    async def a_coro():
+        await producer_episode(0)
+        await consumer_episode(0)
+        await producer_episode(1)
+        await consumer_episode(1)
+
+    # ---- B: RIGHT runs producer and consumer coroutines together ----
+    async def b_producer():
+        # RIGHT producer episodes mirror LEFT consumer targets
+        await consumer_episode(0)
+        await consumer_episode(1)
+
+    async def b_consumer():
+        # RIGHT consumer episodes mirror LEFT producer sources
+        await producer_episode(0)
+        await producer_episode(1)
+
+    async def b_coro():
+        await asyncio.gather(b_producer(), b_consumer())
+
+    await asyncio.gather(a_coro(), b_coro())
+```

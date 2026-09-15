@@ -1,0 +1,117 @@
+import asyncio
+
+async def run_task(robot):
+    """
+    Executes the D2_EVENT-LONG-L0 task.
+    Strategy: Sequential execution by LEFT arm to satisfy strict ordering constraints
+    and avoid collision risks in a single-threaded async environment.
+    """
+
+    # --- Constants ---
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    # Poses
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_PAD = "left_pad"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    POSE_LEFT_PICKUP_WAIT = "left_pickup_wait"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_PAD = "right_pad"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    POSE_RIGHT_PICKUP_WAIT = "right_pickup_wait"
+
+    # Events
+    EVENT_LEFT_READY = "left_ready"
+    EVENT_RIGHT_READY = "right_ready"
+
+    # Timeout
+    TIMEOUT_S = 4.0
+
+    # --- Phase 1: LEFT deposits its own part ---
+    
+    # 1.1 LEFT moves to source and grasps left_part
+    await robot.move(ARM_LEFT, POSE_LEFT_SOURCE, timeout_s=TIMEOUT_S)
+    await robot.grasp(ARM_LEFT, OBJ_LEFT)
+    
+    # 1.2 LEFT moves to left_pad and releases left_part
+    await robot.move(ARM_LEFT, POSE_LEFT_PAD, timeout_s=TIMEOUT_S)
+    await robot.release(ARM_LEFT, OBJ_LEFT, POSE_LEFT_PAD)
+    
+    # 1.3 LEFT clears the pad immediately
+    await robot.move(ARM_LEFT, POSE_LEFT_DEPART, timeout_s=TIMEOUT_S)
+    
+    # 1.4 LEFT signals its ready event
+    left_ready_receipt = robot.signal(EVENT_LEFT_READY, OBJ_LEFT)
+
+    # --- Phase 2: RIGHT deposits its own part ---
+    
+    # 2.1 RIGHT moves to source and grasps right_part
+    await robot.move(ARM_RIGHT, POSE_RIGHT_SOURCE, timeout_s=TIMEOUT_S)
+    await robot.grasp(ARM_RIGHT, OBJ_RIGHT)
+    
+    # 2.2 RIGHT moves to right_pad and releases right_part
+    await robot.move(ARM_RIGHT, POSE_RIGHT_PAD, timeout_s=TIMEOUT_S)
+    await robot.release(ARM_RIGHT, OBJ_RIGHT, POSE_RIGHT_PAD)
+    
+    # 2.3 RIGHT clears the pad immediately
+    await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART, timeout_s=TIMEOUT_S)
+    
+    # 2.4 RIGHT signals its ready event
+    right_ready_receipt = robot.signal(EVENT_RIGHT_READY, OBJ_RIGHT)
+
+    # --- Phase 3: LEFT consumes RIGHT's part ---
+    
+    # 3.1 LEFT waits for RIGHT's ready event
+    peer_right_receipt = await robot.wait_event(EVENT_RIGHT_READY, timeout_s=TIMEOUT_S)
+    
+    # 3.2 LEFT moves to pickup wait pose (approach start)
+    await robot.move(ARM_LEFT, POSE_LEFT_PICKUP_WAIT, timeout_s=TIMEOUT_S)
+    
+    # 3.3 LEFT moves to right_pad (approach) and grasps right_part
+    await robot.move(ARM_LEFT, POSE_RIGHT_PAD, timeout_s=TIMEOUT_S)
+    await robot.grasp(ARM_LEFT, OBJ_RIGHT)
+    
+    # 3.4 LEFT moves to left_target carrying the peer receipt
+    await robot.move(ARM_LEFT, POSE_LEFT_TARGET, timeout_s=TIMEOUT_S, receipt=peer_right_receipt)
+    
+    # 3.5 LEFT releases right_part at left_target
+    await robot.release(ARM_LEFT, OBJ_RIGHT, POSE_LEFT_TARGET)
+    
+    # 3.6 LEFT clears the event after the move
+    robot.clear_event(EVENT_RIGHT_READY, expected_version=peer_right_receipt.version)
+    
+    # 3.7 LEFT departs to final pose
+    await robot.move(ARM_LEFT, POSE_LEFT_DEPART, timeout_s=TIMEOUT_S)
+
+    # --- Phase 4: RIGHT consumes LEFT's part ---
+    
+    # 4.1 RIGHT waits for LEFT's ready event
+    peer_left_receipt = await robot.wait_event(EVENT_LEFT_READY, timeout_s=TIMEOUT_S)
+    
+    # 4.2 RIGHT moves to pickup wait pose (approach start)
+    await robot.move(ARM_RIGHT, POSE_RIGHT_PICKUP_WAIT, timeout_s=TIMEOUT_S)
+    
+    # 4.3 RIGHT moves to left_pad (approach) and grasps left_part
+    await robot.move(ARM_RIGHT, POSE_LEFT_PAD, timeout_s=TIMEOUT_S)
+    await robot.grasp(ARM_RIGHT, OBJ_LEFT)
+    
+    # 4.4 RIGHT moves to right_target carrying the peer receipt
+    await robot.move(ARM_RIGHT, POSE_RIGHT_TARGET, timeout_s=TIMEOUT_S, receipt=peer_left_receipt)
+    
+    # 4.5 RIGHT releases left_part at right_target
+    await robot.release(ARM_RIGHT, OBJ_LEFT, POSE_RIGHT_TARGET)
+    
+    # 4.6 RIGHT clears the event after the move
+    robot.clear_event(EVENT_LEFT_READY, expected_version=peer_left_receipt.version)
+    
+    # 4.7 RIGHT departs to final pose
+    await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART, timeout_s=TIMEOUT_S)

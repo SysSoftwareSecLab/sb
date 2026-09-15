@@ -1,0 +1,110 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # Constants extracted from PUBLIC TASK
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Resources & Events
+    BUFFER_LOCK = "buffer_lock"
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    TIMEOUT_S = 4.0  # default_move_timeout_s
+
+    # --- Helper for Producer Episode ---
+    async def producer_episode(part_id: str, source_pose: str, wait_pose: str, buffer_pose: str, ready_event: str):
+        # 1. Move to source (Approach)
+        await robot.move(LEFT, source_pose, timeout_s=TIMEOUT_S)
+        
+        # 2. Grasp part
+        await robot.grasp(LEFT, part_id)
+        
+        # 3. Acquire buffer lock
+        await robot.acquire(LEFT, BUFFER_LOCK, timeout_s=TIMEOUT_S)
+        
+        # 4. Move to buffer
+        await robot.move(LEFT, buffer_pose, timeout_s=TIMEOUT_S)
+        
+        # 5. Release part at buffer
+        await robot.release(LEFT, part_id, buffer_pose)
+        
+        # 6. Depart buffer immediately (to wait_pose)
+        await robot.move(LEFT, wait_pose, timeout_s=TIMEOUT_S)
+        
+        # 7. Signal ready
+        robot.signal(ready_event, item_id=part_id)
+        
+        # 8. Release buffer lock
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+
+    # --- Helper for Consumer Episode ---
+    async def consumer_episode(part_id: str, buffer_pose: str, target_pose: str, ready_event: str):
+        # 1. Wait for ready event
+        ready_receipt = await robot.wait_event(ready_event, timeout_s=TIMEOUT_S)
+        
+        # 2. Acquire buffer lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, timeout_s=TIMEOUT_S)
+        
+        # 3. Move to buffer (Approach)
+        await robot.move(RIGHT, buffer_pose, timeout_s=TIMEOUT_S)
+        
+        # 4. Grasp part
+        await robot.grasp(RIGHT, part_id)
+        
+        # 5. Depart buffer immediately (to right_home)
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_S)
+        
+        # 6. Release buffer lock
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # 7. Move to target using the ready receipt
+        await robot.move(RIGHT, target_pose, timeout_s=TIMEOUT_S, receipt=ready_receipt)
+        
+        # 8. Clear ready event
+        robot.clear_event(ready_event, expected_version=ready_receipt.version)
+        
+        # 9. Release part at target
+        await robot.release(RIGHT, part_id, target_pose)
+        
+        # 10. Depart target immediately (to right_wait)
+        await robot.move(RIGHT, RIGHT_WAIT, timeout_s=TIMEOUT_S)
+        
+        # 11. Signal empty
+        robot.signal(EMPTY_0)
+
+    # --- Execution Flow (Variant A: Serial) ---
+    
+    # Episode 1: part_0
+    await producer_episode(PART_0, SOURCE_0, LEFT_WAIT, BUFFER_0, READY_0)
+    await consumer_episode(PART_0, BUFFER_0, TARGET_0, READY_0)
+    
+    # Wait for empty_0 before entering buffer with second part
+    empty_receipt = await robot.wait_event(EMPTY_0, timeout_s=TIMEOUT_S)
+    robot.clear_event(EMPTY_0, expected_version=empty_receipt.version)
+    
+    # Episode 2: part_1
+    await producer_episode(PART_1, SOURCE_1, LEFT_WAIT, BUFFER_1, READY_1)
+    await consumer_episode(PART_1, BUFFER_1, TARGET_1, READY_1)
+    
+    # Final Departure
+    await robot.move(LEFT, LEFT_HOME, timeout_s=TIMEOUT_S)
+    await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_S)
+```

@@ -1,0 +1,47 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # 1. Acquire resources rq2_gap_0, rq2_gap_1, rq2_gap_2 in numeric order with LEFT arm.
+    #    Timeout is set to 1.0s (within 0-120s range).
+    await robot.acquire("LEFT", "rq2_gap_0", 1.0)
+    await robot.acquire("LEFT", "rq2_gap_1", 1.0)
+    await robot.acquire("LEFT", "rq2_gap_2", 1.0)
+
+    # 2. Signal rq2_gate exactly once.
+    #    This activates the gate and returns an EventReceipt.
+    gate_receipt = robot.signal("rq2_gate")
+
+    # 3. Wait for rq2_gate to be active immediately after signaling.
+    #    This consumes the active receipt.
+    await robot.wait_event("rq2_gate", 1.0)
+
+    # 4. Execute the inherited dual-arm mission (Serial Scheduling).
+    #    The mission is: Move LEFT to source, grasp left_part, move to target, release.
+    #    Then do the same for RIGHT.
+    
+    # LEFT Arm Sequence
+    await robot.move("LEFT", "left_home")  # Start pose for approach
+    await robot.move("LEFT", "left_source")  # Approach
+    await robot.grasp("LEFT", "left_part")   # Grasp
+    await robot.move("LEFT", "left_target")  # Transport
+    await robot.release("LEFT", "left_part", "left_target") # Release
+    await robot.move("LEFT", "left_depart")  # Departure
+
+    # RIGHT Arm Sequence
+    await robot.move("RIGHT", "right_home") # Start pose for approach
+    await robot.move("RIGHT", "right_source") # Approach
+    await robot.grasp("RIGHT", "right_part")  # Grasp
+    await robot.move("RIGHT", "right_target") # Transport
+    await robot.release("RIGHT", "right_part", "right_target") # Release
+    await robot.move("RIGHT", "right_depart") # Departure
+
+    # 5. Clear rq2_gate exactly once after the mission.
+    #    Use the version from the receipt obtained in step 2.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # 6. Release resources rq2_gap_0, rq2_gap_1, rq2_gap_2.
+    #    They must be OFF (initial mode) to release.
+    await robot.release_resource("LEFT", "rq2_gap_0")
+    await robot.release_resource("LEFT", "rq2_gap_1")
+    await robot.release_resource("LEFT", "rq2_gap_2")

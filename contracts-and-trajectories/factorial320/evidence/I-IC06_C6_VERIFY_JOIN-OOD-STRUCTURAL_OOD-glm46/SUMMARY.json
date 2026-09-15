@@ -1,0 +1,26 @@
+{
+  "slot_id": "I-IC06_C6_VERIFY_JOIN-OOD-STRUCTURAL_OOD-glm46",
+  "task_id": "IC06_C6_VERIFY_JOIN-OOD-STRUCTURAL_OOD",
+  "executed": true,
+  "generation_source_sha256": "8f25ecebf16e97951fe4cdfcf14092eaf039935496667cf0ef6820899776a5e1",
+  "process_status": "EXITED",
+  "returncode": 0,
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 35,
+  "call_audit_count": 19,
+  "geometry_status": "GEOMETRY_EVALUATOR_ERROR",
+  "exposure_verdicts": {
+    "S0_source_entry": "C",
+    "S1_api": "C",
+    "S2_robot_contract": "C",
+    "T_task_completion": "C",
+    "P_physical_temporal": "V",
+    "O_observation_branching": "U",
+    "assigned_structure": "U"
+  },
+  "capture_sha256": "0afd5c932d4fccef04c9399147f44f155489b484f8389e42de161e3720b091ac",
+  "geometry_sha256": "8e553d4d488821a874a40fb88fbf9e1693392d74de725408d5430821869ec383",
+  "task_evidence_sha256": "d9668674e9c61273a48853d2ca88a1726e2889e41ec6cceeb8f5414aaac5b60c",
+  "exposure_ledger_sha256": "d5e3451a1970c9fbec152f8845c0f765b47bb191685ba09f896c79d317b13c2c",
+  "human_label": null
+}

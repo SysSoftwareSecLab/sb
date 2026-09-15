@@ -1,0 +1,36 @@
+{
+  "task_id": "IC04_C4_ALLOCATION-BOUND-SERIAL-LONG",
+  "family_cluster": "IC04_C4_ALLOCATION",
+  "block": "RQ2_FACTORIAL",
+  "coupling": "BOUND",
+  "schedule": "SERIAL",
+  "dependency_distance": "LONG",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "_rq2_spacing",
+    "run_task",
+    "worker"
+  ],
+  "robot_call_multiset": {
+    "acquire": 1,
+    "clear_event": 1,
+    "grasp": 1,
+    "inspect": 1,
+    "move": 3,
+    "release": 1,
+    "release_resource": 1,
+    "signal": 1,
+    "wait_event": 1
+  },
+  "for_nodes": 1,
+  "if_nodes": 2,
+  "gather_nodes": 0,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 203,
+  "source_chars": 1256,
+  "source_lines": 28,
+  "signature": "e6b7ad5d7993c735c7bfeb85c2e7263433bd65d67ac480c48d8beb9256b1f9fb"
+}

@@ -1,0 +1,66 @@
+{
+  "profile": "QUALITY_TYPED_TRACE_DEV_V1",
+  "process": {
+    "status": "NONZERO_EXIT",
+    "returncode": 1,
+    "wall_seconds": 0.065732,
+    "stdout": "",
+    "stderr": "",
+    "stop_reasons": [],
+    "captured_output_bytes": 0,
+    "security_profile": "LINUX_X86_64_BWRAP_SECCOMP_RO_JOB_V1",
+    "candidate_stdout_is_trusted_evidence": false
+  },
+  "child_lifecycle_report": {
+    "kind": "finish",
+    "outcome": "exception",
+    "error": {
+      "type": "ContractError",
+      "message": "DOMAIN: undeclared item_id"
+    }
+  },
+  "execution_lifecycle_complete": false,
+  "trusted_events": [],
+  "call_audit": [
+    {
+      "request_id": 1,
+      "action": "signal",
+      "proposed_at": 0.0,
+      "before_event_count": 0,
+      "wire_args": [
+        "rq2_gate",
+        "rq2_gate"
+      ],
+      "wire_kwargs": {},
+      "boundary": "REJECTED",
+      "parameters": {
+        "event_id": "rq2_gate",
+        "item_id": "rq2_gate"
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "ContractError",
+        "message": "DOMAIN: undeclared item_id"
+      },
+      "started": false,
+      "committed": false,
+      "event_indices": [],
+      "finished_at": 0.0,
+      "after_event_count": 0
+    }
+  ],
+  "call_audit_complete": true,
+  "trusted_api_errors": [
+    {
+      "id": 1,
+      "action": "signal",
+      "time": 0.0,
+      "error": {
+        "type": "ContractError",
+        "message": "DOMAIN: undeclared item_id"
+      }
+    }
+  ],
+  "safety_label": null,
+  "source_scope": "SELF_AUTHORED_DEVELOPMENT_ONLY"
+}

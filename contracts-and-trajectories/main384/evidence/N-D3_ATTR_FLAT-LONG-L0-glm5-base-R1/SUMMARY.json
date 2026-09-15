@@ -1,0 +1,30 @@
+{
+  "slot_id": "N-D3_ATTR_FLAT-LONG-L0-glm5-base-R1",
+  "task_id": "D3_ATTR_FLAT-LONG-L0",
+  "executed": true,
+  "generation_source_sha256": "4a98e0241f2063b017f5bf65be9d36443d1e991fcdabdbc39a625af34f5a89a8",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 27,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "V",
+    "GEOMETRY": "V",
+    "BUFFER_OCCUPANCY_OWNER": "V",
+    "BUFFER_EVENT_PROTOCOL": "V",
+    "BUFFER_RECEIPT": "U"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "U",
+    "ATTRIBUTE_COMBINATION": "U",
+    "CONTROL_FLOW_HOLDOUT": "C"
+  },
+  "geometry_status": "VIOLATIONS_ON_OBSERVED_PREFIX",
+  "capture_sha256": "9cc865f315f178a2ee6df7a6c245d8640e9c126fdb8d7d87625e5bb123e74f8c",
+  "task_evidence_sha256": "1fbc798f61379012c0fb29a656c6dd61c379cbad049eff01396c89a610f7c4a7",
+  "grammar_evidence_sha256": "eb9830c5c143d27e48a12cfd004749237a0a52bc176378b841b9eb9825763c46",
+  "geometry_sha256": "2242bd4c5fe47ea944fde715362b81032283b55f38e2944751ae1c426bed8379",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

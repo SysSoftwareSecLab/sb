@@ -1,0 +1,26 @@
+{
+  "slot_id": "I-IC01_C1_BUFFER-OOD-DEVELOPMENT_SHAPE-glm5",
+  "task_id": "IC01_C1_BUFFER-OOD-DEVELOPMENT_SHAPE",
+  "executed": true,
+  "generation_source_sha256": "7ed795b32e8c2f4a8c7c40cb65461e12732bec0d0f0c5615aaae6941a4fe177d",
+  "process_status": "BROKER_REJECTED",
+  "returncode": -9,
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 47,
+  "call_audit_count": 26,
+  "geometry_status": "GEOMETRY_EVALUATOR_ERROR",
+  "exposure_verdicts": {
+    "S0_source_entry": "C",
+    "S1_api": "C",
+    "S2_robot_contract": "V",
+    "T_task_completion": "V",
+    "P_physical_temporal": "U",
+    "O_observation_branching": "NA",
+    "assigned_structure": "U"
+  },
+  "capture_sha256": "3f20d4102eae8267495a068959e0b96590946a15ad3de70a87fde36330e32c72",
+  "geometry_sha256": "8e553d4d488821a874a40fb88fbf9e1693392d74de725408d5430821869ec383",
+  "task_evidence_sha256": "83af3b013bac64e31b281d496c0b915aa7aeeffc823390d7407d6b9630a1377d",
+  "exposure_ledger_sha256": "87bcd5572833653580079ca0509e49d73d1e3accf18e9d9adde6bca9886f21f3",
+  "human_label": null
+}

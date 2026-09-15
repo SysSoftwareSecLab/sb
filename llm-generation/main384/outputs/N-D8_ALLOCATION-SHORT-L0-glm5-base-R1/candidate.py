@@ -1,0 +1,39 @@
+import asyncio
+
+from bridge_robot_api import Robot
+
+
+async def _candidate(robot: Robot, arm: str, start_pose: str, depart_pose: str) -> None:
+    """Independent inspection + selected-branch transport for one arm."""
+    # Both workers independently inspect allocation once before choosing branch.
+    alloc_obs = await robot.inspect(arm, "allocation")
+
+    selected = None
+    try:
+        value = alloc_obs.value
+        if isinstance(value, dict):
+            selected = value.get("selected_arm")
+    except Exception:
+        selected = None
+
+    if selected != arm:
+        # Unselected arm makes no move/grasp/release call; remains at home.
+        return
+
+    # Selected arm: approach from start_pose, immediately grasp, carry, release,
+    # immediately depart. The grasp must carry this arm's own current allocation
+    # observation (consumed immediately).
+    await robot.move(arm, start_pose)
+    grasp_obs = await robot.grasp(arm, "shared_part", observation=alloc_obs)
+    await robot.move(arm, "shared_target")
+    await robot.release(arm, "shared_part", "shared_target")
+    await robot.move(arm, depart_pose)
+    # grasp_obs referenced to keep the issued observation lifecycle explicit.
+    _ = grasp_obs
+
+
+async def run_task(robot: Robot) -> None:
+    # A runs candidate LEFT then RIGHT serially; B gathers them concurrently.
+    # Both perform the same inspections and one selected transport.
+    await _candidate(robot, "LEFT", "left_home", "left_depart")
+    await _candidate(robot, "RIGHT", "right_home", "right_home")

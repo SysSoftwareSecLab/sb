@@ -1,0 +1,205 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Items
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Resources
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    GAP_0 = "rq2_gap_0"
+    GAP_1 = "rq2_gap_1"
+    GAP_2 = "rq2_gap_2"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    GATE = "rq2_gate"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+
+    # Helper to acquire resources in order
+    async def acquire_gaps():
+        await robot.acquire(LEFT, GAP_0, 10.0)
+        await robot.acquire(LEFT, GAP_1, 10.0)
+        await robot.acquire(LEFT, GAP_2, 10.0)
+
+    # Helper to release resources in order
+    async def release_gaps():
+        await robot.release_resource(LEFT, GAP_0)
+        await robot.release_resource(LEFT, GAP_1)
+        await robot.release_resource(LEFT, GAP_2)
+
+    # RQ2 Gap Check and Gate Logic
+    async def gate_producer():
+        await acquire_gaps()
+        # Signal gate
+        receipt = robot.signal(GATE)
+        # Wait immediately after signal
+        await robot.wait_event(GATE, 10.0)
+        return receipt
+
+    async def gate_consumer():
+        # Wait for gate
+        receipt = await robot.wait_event(GATE, 10.0)
+        return receipt
+
+    # Producer Coroutine (LEFT)
+    async def producer():
+        # --- Item 0 ---
+        # Acquire tool
+        await robot.acquire(LEFT, TOOL, 10.0)
+        
+        # Approach & Grasp part_0
+        await robot.move(LEFT, SOURCE_0)
+        await robot.grasp(LEFT, PART_0)
+        
+        # Move to buffer
+        await robot.acquire(LEFT, BUFFER_LOCK, 10.0)
+        await robot.move(LEFT, BUFFER_0)
+        await robot.release(LEFT, PART_0, BUFFER_0)
+        
+        # Depart buffer immediately
+        await robot.move(LEFT, LEFT_HOME)
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # Publish ready
+        ready_0_rec = robot.signal(READY_0)
+        
+        # Release tool
+        await robot.release_resource(LEFT, TOOL)
+        
+        # --- Item 1 ---
+        # Wait and clear empty_0
+        await robot.wait_event(EMPTY_0, 10.0)
+        robot.clear_event(EMPTY_0, expected_version=1)
+        
+        # Acquire tool
+        await robot.acquire(LEFT, TOOL, 10.0)
+        
+        # Inspect readiness facts (C8 joins checks inside loop branch)
+        obs_lc = await robot.inspect(LEFT, FACT_LINE_CLEAR)
+        obs_rr = await robot.inspect(LEFT, FACT_RECEIVER_READY)
+        
+        # Approach & Grasp part_1
+        await robot.move(LEFT, SOURCE_1)
+        await robot.grasp(LEFT, PART_1)
+        
+        # Move to buffer
+        await robot.acquire(LEFT, BUFFER_LOCK, 10.0)
+        await robot.move(LEFT, BUFFER_1)
+        await robot.release(LEFT, PART_1, BUFFER_1)
+        
+        # Depart buffer immediately
+        await robot.move(LEFT, LEFT_HOME)
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # Publish ready
+        ready_1_rec = robot.signal(READY_1)
+        
+        # Release tool
+        await robot.release_resource(LEFT, TOOL)
+
+    # Consumer Coroutine (RIGHT)
+    async def consumer():
+        # --- Item 0 ---
+        # Wait ready receipt
+        ready_0_rec = await robot.wait_event(READY_0, 10.0)
+        
+        # Acquire buffer lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, 10.0)
+        
+        # Approach & Grasp part_0
+        await robot.move(RIGHT, BUFFER_0)
+        await robot.grasp(RIGHT, PART_0)
+        
+        # Depart buffer immediately
+        await robot.move(RIGHT, RIGHT_HOME)
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # Move to target using receipt
+        await robot.move(RIGHT, TARGET_0, receipt=ready_0_rec)
+        
+        # Clear ready after carried move
+        robot.clear_event(READY_0, expected_version=ready_0_rec.version)
+        
+        # Release on target
+        await robot.release(RIGHT, PART_0, TARGET_0)
+        
+        # Depart before publishing empty
+        await robot.move(RIGHT, RIGHT_HOME)
+        robot.signal(EMPTY_0)
+        
+        # --- Item 1 ---
+        # Wait ready receipt
+        ready_1_rec = await robot.wait_event(READY_1, 10.0)
+        
+        # Acquire buffer lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, 10.0)
+        
+        # Approach & Grasp part_1
+        await robot.move(RIGHT, BUFFER_1)
+        await robot.grasp(RIGHT, PART_1)
+        
+        # Depart buffer immediately
+        await robot.move(RIGHT, RIGHT_HOME)
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # Move to target using receipt
+        await robot.move(RIGHT, TARGET_1, receipt=ready_1_rec)
+        
+        # Clear ready after carried move
+        robot.clear_event(READY_1, expected_version=ready_1_rec.version)
+        
+        # Release on target
+        await robot.release(RIGHT, PART_1, TARGET_1)
+        
+        # Depart before publishing empty (implied, though not strictly required for final state)
+        await robot.move(RIGHT, RIGHT_HOME)
+
+    # --- Main Execution ---
+    
+    # 1. Complete gap checks and signal gate
+    gate_prod_task = asyncio.create_task(gate_producer())
+    gate_cons_task = asyncio.create_task(gate_consumer())
+    
+    # Wait for gate logic to establish
+    gate_receipt = await gate_cons_task
+    await gate_prod_task
+    
+    # 2. Execute inherited dual-arm mission concurrently with gate active
+    prod_task = asyncio.create_task(producer())
+    cons_task = asyncio.create_task(consumer())
+    
+    await prod_task
+    await cons_task
+    
+    # 3. Clear gate after mission
+    robot.clear_event(GATE, expected_version=gate_receipt.version)
+    
+    # 4. Release gaps
+    await release_gaps()
+```

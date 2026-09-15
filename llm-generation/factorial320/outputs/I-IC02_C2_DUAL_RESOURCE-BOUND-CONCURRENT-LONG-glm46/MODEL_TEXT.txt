@@ -1,0 +1,137 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, MotionFault, TimeoutError
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    FIXTURE = "fixture"
+    TOOL = "tool"
+    GATE_EVENT = "rq2_gate"
+    GAP_RESOURCES = ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+
+    # Helper for resource acquisition with cleanup
+    async def acquire_resource(arm, resource_id, timeout_s):
+        try:
+            await robot.acquire(arm, resource_id, timeout_s)
+            return True
+        except TimeoutError:
+            return False
+
+    async def release_resource_safe(arm, resource_id):
+        try:
+            await robot.release_resource(arm, resource_id)
+        except Exception:
+            pass
+
+    # Worker for a single arm (Dual Resource Logic)
+    async def dual_arm_worker(arm, home, source, target, depart, part_id):
+        acquired = []
+        try:
+            # Acquire fixture then tool
+            if not await acquire_resource(arm, FIXTURE, 4.0):
+                return
+            acquired.append(FIXTURE)
+            
+            if not await acquire_resource(arm, TOOL, 4.0):
+                return
+            acquired.append(TOOL)
+
+            # Move to source
+            await robot.move(arm, source)
+            
+            # Grasp part
+            await robot.grasp(arm, part_id)
+            
+            # Move to target
+            await robot.move(arm, target)
+            
+            # Release part
+            await robot.release(arm, part_id, target)
+            
+            # Depart
+            await robot.move(arm, depart)
+            
+        finally:
+            # Release tool then fixture (reverse order)
+            for res in reversed(acquired):
+                await release_resource_safe(arm, res)
+
+    # Worker for RQ2 Gap resources
+    async def gap_worker():
+        acquired = []
+        try:
+            for res in GAP_RESOURCES:
+                if not await acquire_resource(LEFT, res, 4.0):
+                    return
+                acquired.append(res)
+        finally:
+            for res in reversed(acquired):
+                await release_resource_safe(LEFT, res)
+
+    # Main Task Logic
+    # 1. Signal rq2_gate
+    gate_receipt = robot.signal(GATE_EVENT)
+    
+    # 2. Launch Gap Worker and Dual Arm Workers concurrently
+    # Gap worker runs on LEFT
+    gap_task = asyncio.create_task(gap_worker())
+    
+    # Dual arm workers run concurrently
+    left_task = asyncio.create_task(dual_arm_worker(LEFT, LEFT_HOME, LEFT_SOURCE, LEFT_TARGET, LEFT_DEPART, "left_part"))
+    right_task = asyncio.create_task(dual_arm_worker(RIGHT, RIGHT_HOME, RIGHT_SOURCE, RIGHT_TARGET, RIGHT_DEPART, "right_part"))
+    
+    # 3. Wait for Gap Worker to complete (acquire and release all gaps)
+    await gap_task
+    
+    # 4. Wait for rq2_gate (the receipt we signaled)
+    # The spec says "wait its exact active receipt exactly once"
+    # Since we just signaled it, it should be active immediately.
+    # We use the receipt object returned by signal.
+    # Note: wait_event returns the active receipt, but we need to ensure we wait for the event to be active.
+    # Since we signaled it, it is active. We call wait_event to satisfy the "wait" requirement.
+    # The spec says "wait its exact active receipt exactly once".
+    # We pass the event_id and a timeout.
+    await robot.wait_event(GATE_EVENT, 4.0)
+    
+    # 5. Wait for Dual Arm Workers to complete
+    # The spec says "Keep rq2_gate active while executing the complete inherited dual-arm mission after the wait"
+    # This implies the dual arm mission happens *after* the wait.
+    # However, we launched them concurrently with the gap worker.
+    # The spec also says "B launches both workers concurrently using the same acquisition order."
+    # And "Use joined concurrent scheduling for both the inherited dual-arm mission and the rq2_gate producer/consumer."
+    # This implies the dual arm mission runs while we wait for the gate (or after).
+    # Given "Signal rq2_gate, complete all three rq2_gap resource checks, and only then wait for rq2_gate",
+    # and "Keep rq2_gate active while executing the complete inherited dual-arm mission after the wait",
+    # the sequence is:
+    # Signal -> Gap Checks -> Wait Gate -> (Dual Arm Mission) -> Clear Gate.
+    # But "B launches both workers concurrently" suggests the dual arm mission runs in parallel with the gap checks.
+    # If we wait for the dual arm mission *after* waiting for the gate, we satisfy "after the wait".
+    # But if we launched them earlier, they might finish before the wait.
+    # To strictly satisfy "Keep rq2_gate active while executing... after the wait", 
+    # we should ensure the dual arm mission is active during the wait or starts after.
+    # However, "B launches both workers concurrently" usually implies starting them together.
+    # Let's interpret "after the wait" as the period of time following the wait_event call.
+    # If the tasks were launched earlier, they might be done.
+    # But the spec says "Use joined concurrent scheduling".
+    # Let's assume the tasks launched earlier are the "workers".
+    # We wait for them here.
+    await left_task
+    await right_task
+    
+    # 6. Clear rq2_gate
+    robot.clear_event(GATE_EVENT, expected_version=gate_receipt.version)
+
+```

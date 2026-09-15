@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D6_RESOURCE_SPAN-LONG-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2909,
+    "completion_tokens": 288,
+    "total_tokens": 3197,
+    "prompt_tokens_details": {
+      "cached_tokens": 1536
+    },
+    "prompt_cache_hit_tokens": 1536,
+    "prompt_cache_miss_tokens": 1373
+  },
+  "raw_sha256": "05d55c074002cd5de3c80d091d2cb0e0c27b5d334adeb5c16b83c855a6a1a942",
+  "source_sha256": "a751ad6a3ab4a91c0c690f2be49c8a976eaafd2cb25f939c17859824600d96b4",
+  "request_sha256": "1b516f9aff708816258dba2cfdf131a4909382cc030ed35183a88a5148bd7cb0"
+}

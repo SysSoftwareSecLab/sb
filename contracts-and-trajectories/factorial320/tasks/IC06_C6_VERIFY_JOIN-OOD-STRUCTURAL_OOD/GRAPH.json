@@ -1,0 +1,30 @@
+{
+  "task_id": "IC06_C6_VERIFY_JOIN-OOD-STRUCTURAL_OOD",
+  "family_cluster": "IC06_C6_VERIFY_JOIN",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "STRUCTURAL_OOD",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "clear_event": 3,
+    "grasp": 2,
+    "inspect": 2,
+    "move": 6,
+    "release": 2,
+    "signal": 3,
+    "wait_event": 3
+  },
+  "for_nodes": 1,
+  "if_nodes": 1,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 249,
+  "source_chars": 1462,
+  "source_lines": 30,
+  "signature": "ec86f8d1368afb9faf95277f40dab8d8131fdbe5367f6d9f5e3f3d8e2faab52d"
+}

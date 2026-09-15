@@ -1,0 +1,201 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Objects
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Resources
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Durations
+    TIMEOUT_MOVE = 4.0
+    TIMEOUT_EVENT = 5.0
+    
+    # --- Helper Functions ---
+    
+    async def acquire_tool(arm: str):
+        await robot.acquire(arm, TOOL, TIMEOUT_EVENT)
+        await robot.set_mode(arm, TOOL, "LEFT_PROFILE" if arm == LEFT else "RIGHT_PROFILE")
+        
+    async def release_tool(arm: str):
+        await robot.set_mode(arm, TOOL, "OFF")
+        await robot.release_resource(arm, TOOL)
+        
+    async def acquire_buffer_lock(arm: str):
+        await robot.acquire(arm, BUFFER_LOCK, TIMEOUT_EVENT)
+        
+    async def release_buffer_lock(arm: str):
+        await robot.release_resource(arm, BUFFER_LOCK)
+
+    # --- Episode 0: part_0 ---
+    
+    # Producer (LEFT)
+    await robot.move(LEFT, LEFT_HOME, timeout_s=TIMEOUT_MOVE)
+    await acquire_tool(LEFT)
+    
+    # Approach source_0
+    await robot.move(LEFT, SOURCE_0, timeout_s=TIMEOUT_MOVE)
+    # Immediate grasp
+    obs_grasp_0 = await robot.grasp(LEFT, PART_0)
+    
+    # Acquire buffer lock for entry
+    await acquire_buffer_lock(LEFT)
+    
+    # Move to buffer
+    await robot.move(LEFT, BUFFER_0, timeout_s=TIMEOUT_MOVE)
+    
+    # Release at buffer
+    await robot.release(LEFT, PART_0, BUFFER_0)
+    
+    # Depart buffer (immediate separating departure)
+    await robot.move(LEFT, LEFT_WAIT, timeout_s=TIMEOUT_MOVE)
+    
+    # Release buffer lock after departure
+    await release_buffer_lock(LEFT)
+    
+    # Publish ready_0
+    receipt_ready_0 = robot.signal(READY_0, item_id=PART_0)
+    
+    # Release tool
+    await release_tool(LEFT)
+    
+    # Consumer (RIGHT)
+    await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_MOVE)
+    
+    # Wait for ready_0
+    await robot.wait_event(READY_0, TIMEOUT_EVENT)
+    
+    # Acquire buffer lock for entry
+    await acquire_buffer_lock(RIGHT)
+    
+    # Approach buffer_0
+    await robot.move(RIGHT, BUFFER_0, timeout_s=TIMEOUT_MOVE)
+    # Immediate grasp
+    await robot.grasp(RIGHT, PART_0)
+    
+    # Depart buffer
+    await robot.move(RIGHT, RIGHT_WAIT, timeout_s=TIMEOUT_MOVE)
+    
+    # Release buffer lock after departure
+    await release_buffer_lock(RIGHT)
+    
+    # Move to target_0 with receipt
+    await robot.move(RIGHT, TARGET_0, timeout_s=TIMEOUT_MOVE, receipt=receipt_ready_0)
+    
+    # Clear ready_0 after carried move
+    robot.clear_event(READY_0, expected_version=receipt_ready_0.version)
+    
+    # Release at target
+    await robot.release(RIGHT, PART_0, TARGET_0)
+    
+    # Depart target
+    await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_MOVE)
+    
+    # Publish empty_0
+    robot.signal(EMPTY_0)
+    
+    # --- Episode 1: part_1 ---
+    
+    # Producer (LEFT)
+    # Wait and clear empty_0
+    receipt_empty_0 = await robot.wait_event(EMPTY_0, TIMEOUT_EVENT)
+    robot.clear_event(EMPTY_0, expected_version=receipt_empty_0.version)
+    
+    # Inspect both readiness facts (Serial check)
+    obs_line_clear = await robot.inspect(LEFT, FACT_LINE_CLEAR)
+    obs_receiver_ready = await robot.inspect(LEFT, FACT_RECEIVER_READY)
+    
+    # Acquire tool
+    await acquire_tool(LEFT)
+    
+    # Approach source_1
+    await robot.move(LEFT, SOURCE_1, timeout_s=TIMEOUT_MOVE)
+    # Immediate grasp
+    obs_grasp_1 = await robot.grasp(LEFT, PART_1)
+    
+    # Acquire buffer lock for entry
+    await acquire_buffer_lock(LEFT)
+    
+    # Move to buffer
+    await robot.move(LEFT, BUFFER_1, timeout_s=TIMEOUT_MOVE)
+    
+    # Release at buffer
+    await robot.release(LEFT, PART_1, BUFFER_1)
+    
+    # Depart buffer
+    await robot.move(LEFT, LEFT_WAIT, timeout_s=TIMEOUT_MOVE)
+    
+    # Release buffer lock after departure
+    await release_buffer_lock(LEFT)
+    
+    # Publish ready_1
+    receipt_ready_1 = robot.signal(READY_1, item_id=PART_1)
+    
+    # Release tool
+    await release_tool(LEFT)
+    
+    # Consumer (RIGHT)
+    # Wait for ready_1
+    await robot.wait_event(READY_1, TIMEOUT_EVENT)
+    
+    # Acquire buffer lock for entry
+    await acquire_buffer_lock(RIGHT)
+    
+    # Approach buffer_1
+    await robot.move(RIGHT, BUFFER_1, timeout_s=TIMEOUT_MOVE)
+    # Immediate grasp
+    await robot.grasp(RIGHT, PART_1)
+    
+    # Depart buffer
+    await robot.move(RIGHT, RIGHT_WAIT, timeout_s=TIMEOUT_MOVE)
+    
+    # Release buffer lock after departure
+    await release_buffer_lock(RIGHT)
+    
+    # Move to target_1 with receipt
+    await robot.move(RIGHT, TARGET_1, timeout_s=TIMEOUT_MOVE, receipt=receipt_ready_1)
+    
+    # Clear ready_1 after carried move
+    robot.clear_event(READY_1, expected_version=receipt_ready_1.version)
+    
+    # Release at target
+    await robot.release(RIGHT, PART_1, TARGET_1)
+    
+    # Depart target
+    await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_MOVE)
+    
+    # Publish empty_0
+    robot.signal(EMPTY_0)
+    
+    # Final State Check / Cleanup
+    # Ensure LEFT is at home
+    await robot.move(LEFT, LEFT_HOME, timeout_s=TIMEOUT_MOVE)

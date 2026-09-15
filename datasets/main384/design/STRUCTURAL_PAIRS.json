@@ -1,0 +1,322 @@
+[
+  {
+    "pair_id": "C1_BUFFER-L0",
+    "axis": "CONCURRENCY",
+    "layout": "L0",
+    "members": [
+      "C1_BUFFER-SERIAL-L0",
+      "C1_BUFFER-CONCURRENT-L0"
+    ],
+    "cluster": "C1_BUFFER"
+  },
+  {
+    "pair_id": "C1_BUFFER-LH",
+    "axis": "CONCURRENCY",
+    "layout": "LH",
+    "members": [
+      "C1_BUFFER-SERIAL-LH",
+      "C1_BUFFER-CONCURRENT-LH"
+    ],
+    "cluster": "C1_BUFFER"
+  },
+  {
+    "pair_id": "C2_DUAL_RESOURCE-L0",
+    "axis": "CONCURRENCY",
+    "layout": "L0",
+    "members": [
+      "C2_DUAL_RESOURCE-SERIAL-L0",
+      "C2_DUAL_RESOURCE-CONCURRENT-L0"
+    ],
+    "cluster": "C2_DUAL_RESOURCE"
+  },
+  {
+    "pair_id": "C2_DUAL_RESOURCE-LH",
+    "axis": "CONCURRENCY",
+    "layout": "LH",
+    "members": [
+      "C2_DUAL_RESOURCE-SERIAL-LH",
+      "C2_DUAL_RESOURCE-CONCURRENT-LH"
+    ],
+    "cluster": "C2_DUAL_RESOURCE"
+  },
+  {
+    "pair_id": "C3_EXCHANGE-L0",
+    "axis": "CONCURRENCY",
+    "layout": "L0",
+    "members": [
+      "C3_EXCHANGE-SERIAL-L0",
+      "C3_EXCHANGE-CONCURRENT-L0"
+    ],
+    "cluster": "C3_EXCHANGE"
+  },
+  {
+    "pair_id": "C3_EXCHANGE-LH",
+    "axis": "CONCURRENCY",
+    "layout": "LH",
+    "members": [
+      "C3_EXCHANGE-SERIAL-LH",
+      "C3_EXCHANGE-CONCURRENT-LH"
+    ],
+    "cluster": "C3_EXCHANGE"
+  },
+  {
+    "pair_id": "C4_ALLOCATION-L0",
+    "axis": "CONCURRENCY",
+    "layout": "L0",
+    "members": [
+      "C4_ALLOCATION-SERIAL-L0",
+      "C4_ALLOCATION-CONCURRENT-L0"
+    ],
+    "cluster": "C4_ALLOCATION"
+  },
+  {
+    "pair_id": "C4_ALLOCATION-LH",
+    "axis": "CONCURRENCY",
+    "layout": "LH",
+    "members": [
+      "C4_ALLOCATION-SERIAL-LH",
+      "C4_ALLOCATION-CONCURRENT-LH"
+    ],
+    "cluster": "C4_ALLOCATION"
+  },
+  {
+    "pair_id": "C5_INDEPENDENT-L0",
+    "axis": "CONCURRENCY",
+    "layout": "L0",
+    "members": [
+      "C5_INDEPENDENT-SERIAL-L0",
+      "C5_INDEPENDENT-CONCURRENT-L0"
+    ],
+    "cluster": "C5_INDEPENDENT"
+  },
+  {
+    "pair_id": "C5_INDEPENDENT-LH",
+    "axis": "CONCURRENCY",
+    "layout": "LH",
+    "members": [
+      "C5_INDEPENDENT-SERIAL-LH",
+      "C5_INDEPENDENT-CONCURRENT-LH"
+    ],
+    "cluster": "C5_INDEPENDENT"
+  },
+  {
+    "pair_id": "C6_VERIFY_JOIN-L0",
+    "axis": "CONCURRENCY",
+    "layout": "L0",
+    "members": [
+      "C6_VERIFY_JOIN-SERIAL-L0",
+      "C6_VERIFY_JOIN-CONCURRENT-L0"
+    ],
+    "cluster": "C6_VERIFY_JOIN"
+  },
+  {
+    "pair_id": "C6_VERIFY_JOIN-LH",
+    "axis": "CONCURRENCY",
+    "layout": "LH",
+    "members": [
+      "C6_VERIFY_JOIN-SERIAL-LH",
+      "C6_VERIFY_JOIN-CONCURRENT-LH"
+    ],
+    "cluster": "C6_VERIFY_JOIN"
+  },
+  {
+    "pair_id": "C7_ATTR_FLAT-L0",
+    "axis": "CONCURRENCY",
+    "layout": "L0",
+    "members": [
+      "C7_ATTR_FLAT-SERIAL-L0",
+      "C7_ATTR_FLAT-CONCURRENT-L0"
+    ],
+    "cluster": "C7_ATTR_FLAT"
+  },
+  {
+    "pair_id": "C7_ATTR_FLAT-LH",
+    "axis": "CONCURRENCY",
+    "layout": "LH",
+    "members": [
+      "C7_ATTR_FLAT-SERIAL-LH",
+      "C7_ATTR_FLAT-CONCURRENT-LH"
+    ],
+    "cluster": "C7_ATTR_FLAT"
+  },
+  {
+    "pair_id": "C8_ATTR_NESTED-L0",
+    "axis": "CONCURRENCY",
+    "layout": "L0",
+    "members": [
+      "C8_ATTR_NESTED-SERIAL-L0",
+      "C8_ATTR_NESTED-CONCURRENT-L0"
+    ],
+    "cluster": "C8_ATTR_NESTED"
+  },
+  {
+    "pair_id": "C8_ATTR_NESTED-LH",
+    "axis": "CONCURRENCY",
+    "layout": "LH",
+    "members": [
+      "C8_ATTR_NESTED-SERIAL-LH",
+      "C8_ATTR_NESTED-CONCURRENT-LH"
+    ],
+    "cluster": "C8_ATTR_NESTED"
+  },
+  {
+    "pair_id": "D1_OBSERVATION-L0",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "L0",
+    "members": [
+      "D1_OBSERVATION-SHORT-L0",
+      "D1_OBSERVATION-LONG-L0"
+    ],
+    "cluster": "D1_OBSERVATION"
+  },
+  {
+    "pair_id": "D1_OBSERVATION-LH",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "LH",
+    "members": [
+      "D1_OBSERVATION-SHORT-LH",
+      "D1_OBSERVATION-LONG-LH"
+    ],
+    "cluster": "D1_OBSERVATION"
+  },
+  {
+    "pair_id": "D2_EVENT-L0",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "L0",
+    "members": [
+      "D2_EVENT-SHORT-L0",
+      "D2_EVENT-LONG-L0"
+    ],
+    "cluster": "D2_EVENT"
+  },
+  {
+    "pair_id": "D2_EVENT-LH",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "LH",
+    "members": [
+      "D2_EVENT-SHORT-LH",
+      "D2_EVENT-LONG-LH"
+    ],
+    "cluster": "D2_EVENT"
+  },
+  {
+    "pair_id": "D3_ATTR_FLAT-L0",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "L0",
+    "members": [
+      "D3_ATTR_FLAT-SHORT-L0",
+      "D3_ATTR_FLAT-LONG-L0"
+    ],
+    "cluster": "D3_ATTR_FLAT"
+  },
+  {
+    "pair_id": "D3_ATTR_FLAT-LH",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "LH",
+    "members": [
+      "D3_ATTR_FLAT-SHORT-LH",
+      "D3_ATTR_FLAT-LONG-LH"
+    ],
+    "cluster": "D3_ATTR_FLAT"
+  },
+  {
+    "pair_id": "D4_ATTR_NESTED-L0",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "L0",
+    "members": [
+      "D4_ATTR_NESTED-SHORT-L0",
+      "D4_ATTR_NESTED-LONG-L0"
+    ],
+    "cluster": "D4_ATTR_NESTED"
+  },
+  {
+    "pair_id": "D4_ATTR_NESTED-LH",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "LH",
+    "members": [
+      "D4_ATTR_NESTED-SHORT-LH",
+      "D4_ATTR_NESTED-LONG-LH"
+    ],
+    "cluster": "D4_ATTR_NESTED"
+  },
+  {
+    "pair_id": "D5_FRESHNESS-L0",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "L0",
+    "members": [
+      "D5_FRESHNESS-SHORT-L0",
+      "D5_FRESHNESS-LONG-L0"
+    ],
+    "cluster": "D5_FRESHNESS"
+  },
+  {
+    "pair_id": "D5_FRESHNESS-LH",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "LH",
+    "members": [
+      "D5_FRESHNESS-SHORT-LH",
+      "D5_FRESHNESS-LONG-LH"
+    ],
+    "cluster": "D5_FRESHNESS"
+  },
+  {
+    "pair_id": "D6_RESOURCE_SPAN-L0",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "L0",
+    "members": [
+      "D6_RESOURCE_SPAN-SHORT-L0",
+      "D6_RESOURCE_SPAN-LONG-L0"
+    ],
+    "cluster": "D6_RESOURCE_SPAN"
+  },
+  {
+    "pair_id": "D6_RESOURCE_SPAN-LH",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "LH",
+    "members": [
+      "D6_RESOURCE_SPAN-SHORT-LH",
+      "D6_RESOURCE_SPAN-LONG-LH"
+    ],
+    "cluster": "D6_RESOURCE_SPAN"
+  },
+  {
+    "pair_id": "D7_BUFFER_PREFETCH-L0",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "L0",
+    "members": [
+      "D7_BUFFER_PREFETCH-SHORT-L0",
+      "D7_BUFFER_PREFETCH-LONG-L0"
+    ],
+    "cluster": "D7_BUFFER_PREFETCH"
+  },
+  {
+    "pair_id": "D7_BUFFER_PREFETCH-LH",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "LH",
+    "members": [
+      "D7_BUFFER_PREFETCH-SHORT-LH",
+      "D7_BUFFER_PREFETCH-LONG-LH"
+    ],
+    "cluster": "D7_BUFFER_PREFETCH"
+  },
+  {
+    "pair_id": "D8_ALLOCATION-L0",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "L0",
+    "members": [
+      "D8_ALLOCATION-SHORT-L0",
+      "D8_ALLOCATION-LONG-L0"
+    ],
+    "cluster": "D8_ALLOCATION"
+  },
+  {
+    "pair_id": "D8_ALLOCATION-LH",
+    "axis": "DEPENDENCY_DISTANCE",
+    "layout": "LH",
+    "members": [
+      "D8_ALLOCATION-SHORT-LH",
+      "D8_ALLOCATION-LONG-LH"
+    ],
+    "cluster": "D8_ALLOCATION"
+  }
+]

@@ -1,0 +1,104 @@
+import asyncio
+from bridge_robot_api import Robot, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    """
+    Executes the CONCURRENT dual-arm mission with RQ2 resource lifecycle and gate dependency.
+    """
+    
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Resource IDs
+    RES_0 = "rq2_gap_0"
+    RES_1 = "rq2_gap_1"
+    RES_2 = "rq2_gap_2"
+    
+    # Event ID
+    GATE_ID = "rq2_gate"
+    
+    # Pose Names
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    
+    # Object IDs
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Timeout for resource acquisition (0-120s)
+    ACQUIRE_TIMEOUT = 5.0
+    
+    # Timeout for event waiting
+    WAIT_TIMEOUT = 10.0
+
+    async def acquire_resources():
+        """Acquire rq2_gap_0, rq2_gap_1, rq2_gap_2 in numeric order with LEFT arm."""
+        await robot.acquire(LEFT, RES_0, ACQUIRE_TIMEOUT)
+        await robot.acquire(LEFT, RES_1, ACQUIRE_TIMEOUT)
+        await robot.acquire(LEFT, RES_2, ACQUIRE_TIMEOUT)
+
+    async def release_resources():
+        """Release all acquired resources with LEFT arm."""
+        # Resources must be OFF to release. Initial mode is OFF, and we never set them to PROFILE.
+        await robot.release_resource(LEFT, RES_0)
+        await robot.release_resource(LEFT, RES_1)
+        await robot.release_resource(LEFT, RES_2)
+
+    async def left_arm_mission():
+        """Left arm: pick left_part from left_source, place at left_target, move to left_depart."""
+        # Approach
+        await robot.move(LEFT, LEFT_SOURCE)
+        # Grasp
+        await robot.grasp(LEFT, LEFT_PART)
+        # Move to target
+        await robot.move(LEFT, LEFT_TARGET)
+        # Release
+        await robot.release(LEFT, LEFT_PART, LEFT_TARGET)
+        # Depart immediately
+        await robot.move(LEFT, LEFT_DEPART)
+
+    async def right_arm_mission():
+        """Right arm: pick right_part from right_source, place at right_target, move to right_depart."""
+        # Approach
+        await robot.move(RIGHT, RIGHT_SOURCE)
+        # Grasp
+        await robot.grasp(RIGHT, RIGHT_PART)
+        # Move to target
+        await robot.move(RIGHT, RIGHT_TARGET)
+        # Release
+        await robot.release(RIGHT, RIGHT_PART, RIGHT_TARGET)
+        # Depart immediately
+        await robot.move(RIGHT, RIGHT_DEPART)
+
+    # 1. Signal rq2_gate
+    gate_receipt = robot.signal(GATE_ID)
+    
+    # 2. Acquire resources (0, 1, 2) in order
+    await acquire_resources()
+    
+    # 3. Wait for rq2_gate (exact active receipt)
+    # The receipt returned by signal is the active one.
+    await robot.wait_event(GATE_ID, WAIT_TIMEOUT)
+    
+    # 4. Execute dual-arm mission concurrently
+    # "Keep rq2_gate active while executing the complete inherited dual-arm mission"
+    await asyncio.gather(
+        left_arm_mission(),
+        right_arm_mission()
+    )
+    
+    # 5. Clear rq2_gate
+    # "clear exactly that version after its assigned protected scope"
+    robot.clear_event(GATE_ID, expected_version=gate_receipt.version)
+    
+    # 6. Release resources
+    # "never retain them at return"
+    await release_resources()

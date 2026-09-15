@@ -1,0 +1,66 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # ---- RQ2 gate lifecycle (serial, before inherited mission) ----
+    gate_receipt = robot.signal("rq2_gate")
+    await robot.acquire("LEFT", "rq2_gap_0", 5)
+    await robot.release_resource("LEFT", "rq2_gap_0")
+    await robot.acquire("LEFT", "rq2_gap_1", 5)
+    await robot.release_resource("LEFT", "rq2_gap_1")
+    await robot.acquire("LEFT", "rq2_gap_2", 5)
+    await robot.release_resource("LEFT", "rq2_gap_2")
+    gate_wait = await robot.wait_event("rq2_gate", 5)
+
+    # ---- Inherited dual-arm buffer mission (serial scheduling) ----
+    # Episode A: part_0 LEFT producer -> RIGHT consumer.
+    await robot.acquire("LEFT", "tool", 5)
+    await robot.set_mode("LEFT", "tool", "LEFT_PROFILE")
+    await robot.move("LEFT", "source_0")
+    await robot.grasp("LEFT", "part_0")
+    await robot.move("LEFT", "buffer_0")
+    await robot.release("LEFT", "part_0", "buffer_0")
+    await robot.move("LEFT", "left_home")
+    await robot.set_mode("LEFT", "tool", "OFF")
+    await robot.release_resource("LEFT", "tool")
+
+    ready_0 = robot.signal("ready_0", "part_0")
+
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+    await robot.move("RIGHT", "buffer_0")
+    await robot.grasp("RIGHT", "part_0", observation=ready_0)
+    await robot.move("RIGHT", "target_0", receipt=ready_0)
+    robot.clear_event("ready_0", expected_version=ready_0.version)
+    await robot.release("RIGHT", "part_0", "target_0")
+    await robot.move("RIGHT", "right_home")
+    await robot.release_resource("RIGHT", "buffer_lock")
+
+    empty_0 = robot.signal("empty_0", "part_0")
+
+    # Episode B: part_1 LEFT producer -> RIGHT consumer.
+    await robot.acquire("LEFT", "tool", 5)
+    await robot.set_mode("LEFT", "tool", "LEFT_PROFILE")
+    await robot.move("LEFT", "left_wait")
+    await robot.move("LEFT", "source_1")
+    await robot.grasp("LEFT", "part_1")
+    await robot.move("LEFT", "buffer_1")
+    await robot.release("LEFT", "part_1", "buffer_1")
+    await robot.move("LEFT", "left_home")
+    await robot.set_mode("LEFT", "tool", "OFF")
+    await robot.release_resource("LEFT", "tool")
+
+    ready_1 = robot.signal("ready_1", "part_1")
+
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+    await robot.move("RIGHT", "right_wait")
+    await robot.move("RIGHT", "buffer_1")
+    await robot.grasp("RIGHT", "part_1", observation=ready_1)
+    await robot.move("RIGHT", "target_1", receipt=ready_1)
+    robot.clear_event("ready_1", expected_version=ready_1.version)
+    await robot.release("RIGHT", "part_1", "target_1")
+    await robot.move("RIGHT", "right_home")
+    await robot.release_resource("RIGHT", "buffer_lock")
+
+    # ---- Clear rq2_gate after the complete inherited mission ----
+    robot.clear_event("rq2_gate", expected_version=gate_wait.version)

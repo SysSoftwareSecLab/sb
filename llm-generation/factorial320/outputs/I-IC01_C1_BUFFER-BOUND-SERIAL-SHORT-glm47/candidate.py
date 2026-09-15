@@ -1,0 +1,142 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Objects
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Resources
+    BUFFER_LOCK = "buffer_lock"
+    GAP_0 = "rq2_gap_0"
+    GAP_1 = "rq2_gap_1"
+    GAP_2 = "rq2_gap_2"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    GATE = "rq2_gate"
+    
+    # Timeouts
+    TIMEOUT_S = 4.0
+    
+    # --- RQ2 Gap Resource Checks (Serial, LEFT, Numeric Order) ---
+    # "Acquire and release rq2_gap_0, rq2_gap_1 and rq2_gap_2 once each with LEFT, in numeric order"
+    # "Complete all three rq2_gap resource checks before signalling rq2_gate"
+    
+    await robot.acquire(LEFT, GAP_0, TIMEOUT_S)
+    await robot.release_resource(LEFT, GAP_0)
+    
+    await robot.acquire(LEFT, GAP_1, TIMEOUT_S)
+    await robot.release_resource(LEFT, GAP_1)
+    
+    await robot.acquire(LEFT, GAP_2, TIMEOUT_S)
+    await robot.release_resource(LEFT, GAP_2)
+    
+    # --- Signal and Wait RQ2 Gate ---
+    # "Signal rq2_gate exactly once, wait its exact active receipt exactly once"
+    # "wait immediately after the signal"
+    
+    gate_receipt = robot.signal(GATE)
+    await robot.wait_event(GATE, TIMEOUT_S)
+    
+    # --- Inherited Dual-Arm Mission (Serial) ---
+    # "Keep rq2_gate active while executing the complete inherited dual-arm mission"
+    # "Use serial scheduling for both the inherited dual-arm mission and the rq2_gate producer/consumer"
+    
+    # === Episode 0: part_0 ===
+    
+    # 1. Producer (LEFT) moves to source_0, grasps part_0
+    await robot.move(LEFT, SOURCE_0, TIMEOUT_S)
+    grasp_obs_0 = await robot.grasp(LEFT, PART_0)
+    
+    # 2. Producer moves to buffer, acquires lock, releases part_0, departs, releases lock, signals ready_0
+    await robot.move(LEFT, BUFFER_0, TIMEOUT_S)
+    await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.release(LEFT, PART_0, BUFFER_0)
+    await robot.move(LEFT, LEFT_WAIT, TIMEOUT_S)
+    await robot.release_resource(LEFT, BUFFER_LOCK)
+    ready_receipt_0 = robot.signal(READY_0)
+    
+    # 3. Consumer (RIGHT) waits ready_0, moves to buffer, acquires lock, grasps part_0, departs, releases lock
+    await robot.wait_event(READY_0, TIMEOUT_S)
+    await robot.move(RIGHT, BUFFER_0, TIMEOUT_S)
+    await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.grasp(RIGHT, PART_0)
+    await robot.move(RIGHT, RIGHT_WAIT, TIMEOUT_S)
+    await robot.release_resource(RIGHT, BUFFER_LOCK)
+    
+    # 4. Consumer moves to target_0 (carrying ready_receipt_0), clears ready_0, releases part_0, departs
+    await robot.move(RIGHT, TARGET_0, TIMEOUT_S, receipt=ready_receipt_0)
+    robot.clear_event(READY_0, expected_version=ready_receipt_0.version)
+    await robot.release(RIGHT, PART_0, TARGET_0)
+    await robot.move(RIGHT, RIGHT_HOME, TIMEOUT_S)
+    
+    # 5. Consumer signals empty_0
+    robot.signal(EMPTY_0)
+    
+    # === Episode 1: part_1 ===
+    
+    # 6. Producer waits empty_0, clears empty_0, moves to source_1, grasps part_1
+    await robot.wait_event(EMPTY_0, TIMEOUT_S)
+    robot.clear_event(EMPTY_0, expected_version=1) # Version 1 because signaled once
+    await robot.move(LEFT, SOURCE_1, TIMEOUT_S)
+    grasp_obs_1 = await robot.grasp(LEFT, PART_1)
+    
+    # 7. Producer moves to buffer, acquires lock, releases part_1, departs, releases lock, signals ready_1
+    await robot.move(LEFT, BUFFER_1, TIMEOUT_S)
+    await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.release(LEFT, PART_1, BUFFER_1)
+    await robot.move(LEFT, LEFT_WAIT, TIMEOUT_S)
+    await robot.release_resource(LEFT, BUFFER_LOCK)
+    ready_receipt_1 = robot.signal(READY_1)
+    
+    # 8. Consumer waits ready_1, moves to buffer, acquires lock, grasps part_1, departs, releases lock
+    await robot.wait_event(READY_1, TIMEOUT_S)
+    await robot.move(RIGHT, BUFFER_1, TIMEOUT_S)
+    await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.grasp(RIGHT, PART_1)
+    await robot.move(RIGHT, RIGHT_WAIT, TIMEOUT_S)
+    await robot.release_resource(RIGHT, BUFFER_LOCK)
+    
+    # 9. Consumer moves to target_1 (carrying ready_receipt_1), clears ready_1, releases part_1, departs
+    await robot.move(RIGHT, TARGET_1, TIMEOUT_S, receipt=ready_receipt_1)
+    robot.clear_event(READY_1, expected_version=ready_receipt_1.version)
+    await robot.release(RIGHT, PART_1, TARGET_1)
+    await robot.move(RIGHT, RIGHT_HOME, TIMEOUT_S)
+    
+    # 10. Consumer signals empty_0 (Final state requires empty_0 active? No, "events inactive" in goal, but logic requires signal for next loop if any. 
+    # Goal: "events inactive". "empty_0" is signaled in step 5. 
+    # Wait, goal says "events inactive". Step 5 signals empty_0. Step 6 waits and clears it. 
+    # After step 9, we should probably signal empty_0 to satisfy the "buffer empty" logic flow, 
+    # but goal says "events inactive". 
+    # Let's check goal: "part_0 at target_0; part_1 at target_1; empty arms at homes; buffer empty; lock free; events inactive".
+    # So we should NOT signal empty_0 at the end. 
+    # But wait, step 5 signals it. Step 6 clears it. 
+    # So after step 9, empty_0 is inactive (cleared in step 6). ready_1 cleared in step 9. 
+    # So events are inactive. Correct.
+    
+    # 11. Producer returns home
+    await robot.move(LEFT, LEFT_HOME, TIMEOUT_S)
+    
+    # --- Clear RQ2 Gate ---
+    # "clear exactly that version after its assigned protected scope"
+    robot.clear_event(GATE, expected_version=gate_receipt.version)

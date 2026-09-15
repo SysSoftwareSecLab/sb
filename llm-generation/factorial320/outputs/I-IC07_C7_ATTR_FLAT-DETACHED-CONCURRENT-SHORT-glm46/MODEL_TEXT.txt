@@ -1,0 +1,170 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # --- RQ2_GAP Resource Checks ---
+    # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order.
+    # Complete all three checks before signalling rq2_gate.
+    for i in range(3):
+        res_id = f"rq2_gap_{i}"
+        await robot.acquire("LEFT", res_id, 4.0)
+        await robot.release_resource("LEFT", res_id)
+
+    # --- RQ2_GATE Protocol ---
+    # Signal rq2_gate exactly once.
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # Wait its exact active receipt exactly once.
+    # The spec says "wait immediately after the signal".
+    # The signal returns the receipt for the new version.
+    # We wait for that specific version.
+    await robot.wait_event("rq2_gate", 4.0)
+    
+    # Clear exactly that version after its assigned protected scope.
+    # The scope is the "inherited dual-arm mission".
+    # We will clear it after the main mission completes.
+    
+    # --- Inherited Dual-Arm Mission ---
+    # Scenario: LEFT produces, RIGHT consumes.
+    # Items: part_0, part_1.
+    # Buffer: buffer_0 (for part_0), buffer_1 (for part_1).
+    # Events: ready_0, ready_1, empty_0.
+    
+    async def producer(item_id: str, source_pose: str, buffer_pose: str, ready_event: str, tool_res: str):
+        # 1. Acquire tool
+        await robot.acquire("LEFT", tool_res, 4.0)
+        
+        # 2. Move to source (Approach)
+        # part_0: left_home -> source_0
+        # part_1: left_home -> source_1 (Spec says start_pose left_home for part_1 in approach_sequences? 
+        # Wait, approach_sequences for part_1 says start_pose: left_wait. 
+        # But initial is left_home. We must move to left_wait first to satisfy approach sequence start_pose?
+        # "Approach must start from corresponding start_pose".
+        # For part_1, start_pose is left_wait. So we move left_home -> left_wait.
+        if item_id == "part_1":
+            await robot.move("LEFT", "left_wait", 4.0)
+            
+        await robot.move("LEFT", source_pose, 4.0)
+        
+        # 3. Grasp
+        await robot.grasp("LEFT", item_id)
+        
+        # 4. Move to buffer
+        # Must acquire buffer_lock before entering buffer.
+        await robot.acquire("LEFT", "buffer_lock", 4.0)
+        await robot.move("LEFT", buffer_pose, 4.0)
+        
+        # 5. Release
+        await robot.release("LEFT", item_id, buffer_pose)
+        
+        # 6. Depart (Immediate separating departure)
+        # Move away from buffer. 
+        # For part_0, back to left_home.
+        # For part_1, back to left_home (or left_wait? left_home is safe).
+        await robot.move("LEFT", "left_home", 4.0)
+        
+        # Release buffer_lock after departure.
+        await robot.release_resource("LEFT", "buffer_lock")
+        
+        # 7. Publish ready
+        ready_rec = robot.signal(ready_event)
+        
+        # 8. Release tool
+        await robot.release_resource("LEFT", tool_res)
+        
+        return ready_rec
+
+    async def consumer(item_id: str, buffer_pose: str, target_pose: str, ready_event: str, tool_res: str):
+        # 1. Wait for ready receipt
+        ready_rec = await robot.wait_event(ready_event, 4.0)
+        
+        # 2. Acquire tool
+        await robot.acquire("RIGHT", tool_res, 4.0)
+        
+        # 3. Acquire buffer_lock before entering
+        await robot.acquire("RIGHT", "buffer_lock", 4.0)
+        
+        # 4. Move to buffer (Approach)
+        # part_0: right_home -> buffer_0
+        # part_1: right_home -> buffer_1 (Approach seq start_pose is right_wait for part_1)
+        if item_id == "part_1":
+            await robot.move("RIGHT", "right_wait", 4.0)
+            
+        await robot.move("RIGHT", buffer_pose, 4.0)
+        
+        # 5. Grasp
+        await robot.grasp("RIGHT", item_id)
+        
+        # 6. Depart buffer
+        # Move away from buffer to release lock.
+        # For part_0, right_home.
+        # For part_1, right_home.
+        await robot.move("RIGHT", "right_home", 4.0)
+        
+        # Release buffer_lock
+        await robot.release_resource("RIGHT", "buffer_lock")
+        
+        # 7. Move to target (Carried move with receipt)
+        # "supplies that exact active item receipt on carried move to target"
+        await robot.move("RIGHT", target_pose, 4.0, receipt=ready_rec)
+        
+        # 8. Clear ready after carried move
+        robot.clear_event(ready_event, expected_version=ready_rec.version)
+        
+        # 9. Release
+        await robot.release("RIGHT", item_id, target_pose)
+        
+        # 10. Depart
+        await robot.move("RIGHT", "right_home", 4.0)
+        
+        # 11. Publish empty_0
+        robot.signal("empty_0")
+        
+        # 12. Release tool
+        await robot.release_resource("RIGHT", tool_res)
+
+    # --- Execution ---
+    
+    # Episode 1: part_0
+    # Producer places part_0 at buffer_0, signals ready_0.
+    # Consumer waits ready_0, picks part_0, moves to target_0, clears ready_0, signals empty_0.
+    prod_0 = producer("part_0", "source_0", "buffer_0", "ready_0", "tool")
+    cons_0 = consumer("part_0", "buffer_0", "target_0", "ready_0", "tool")
+    
+    await asyncio.gather(prod_0, cons_0)
+    
+    # Episode 2: part_1
+    # Producer waits and clears empty_0 before entering buffer with second part.
+    # "For item 1, wait and clear empty_0, then inspect both readiness facts"
+    
+    # Wait empty_0
+    empty_rec = await robot.wait_event("empty_0", 4.0)
+    # Clear empty_0
+    robot.clear_event("empty_0", expected_version=empty_rec.version)
+    
+    # Inspect both readiness facts (line_clear, receiver_ready)
+    # "C7 checks serially and C8 joins the two checks inside the loop branch."
+    # We are implementing the structure. We perform the inspections.
+    # Note: inspect/refresh return Observation.
+    await robot.inspect("LEFT", "line_clear")
+    await robot.inspect("LEFT", "receiver_ready")
+    
+    # Producer places part_1 at buffer_1, signals ready_1.
+    # Consumer waits ready_1, picks part_1, moves to target_1, clears ready_1, signals empty_0.
+    prod_1 = producer("part_1", "source_1", "buffer_1", "ready_1", "tool")
+    cons_1 = consumer("part_1", "buffer_1", "target_1", "ready_1", "tool")
+    
+    await asyncio.gather(prod_1, cons_1)
+    
+    # --- Finalization ---
+    
+    # Clear rq2_gate after the assigned protected scope (inherited dual-arm mission).
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+    
+    # Ensure arms are at home (already done by producers/consumers).
+    # Ensure buffer empty (part_0 and part_1 are at targets).
+    # Ensure lock free (released).
+    # Ensure events inactive (cleared).
+    # rq2_gap resources released (done at start).
+```

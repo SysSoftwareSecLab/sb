@@ -1,0 +1,399 @@
+{
+  "profile": "QUALITY_TYPED_TRACE_DEV_V1",
+  "process": {
+    "status": "BROKER_REJECTED",
+    "returncode": -9,
+    "wall_seconds": 0.03982,
+    "stdout": "",
+    "stderr": "unhandled exception during asyncio.run() shutdown\ntask: <Task finished name='Task-3' coro=<_worker_a() done, defined at /job/candidate.py:24> exception=OSError(9, 'Bad file descriptor')>\nTraceback (most recent call last):\n  File \"/job/bridge_robot_api.py\", line 131, in call\n    try: return await asyncio.shield(future)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nasyncio.exceptions.CancelledError\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/job/candidate.py\", line 25, in _worker_a\n    left_obs = await _inspect_allocation(robot, \"LEFT\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/job/candidate.py\", line 6, in _inspect_allocation\n    return await robot.inspect(arm, \"allocation\")\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/job/bridge_robot_api.py\", line 156, in inspect\n    async def inspect(self, arm, fact_id): return await self._client.call(\"inspect\",[arm,fact_id],{})\n                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/job/bridge_robot_api.py\", line 133, in call\n    self.send(dict(kind=\"cancel\",id=identifier))\n  File \"/job/bridge_robot_api.py\", line 81, in send\n    sent=self.socket.send(view);view=view[sent:]\n         ^^^^^^^^^^^^^^^^^^^^^^\nOSError: [Errno 9] Bad file descriptor\nunhandled exception during asyncio.run() shutdown\ntask: <Task finished name='Task-6' coro=<_inspect_allocation() done, defined at /job/candidate.py:5> exception=OSError(9, 'Bad file descriptor')>\nTraceback (most recent call last):\n  File \"/job/bridge_robot_api.py\", line 131, in call\n    try: return await asyncio.shield(future)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nasyncio.exceptions.CancelledError\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/job/candidate.py\", line 6, in _inspect_allocation\n    return await robot.inspect(arm, \"allocation\")\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/job/bridge_robot_api.py\", line 156, in inspect\n    async def inspect(self, arm, fact_id): return await self._client.call(\"inspect\",[arm,fact_id],{})\n                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/job/bridge_robot_api.py\", line 133, in call\n    self.send(dict(kind=\"cancel\",id=identifier))\n  File \"/job/bridge_robot_api.py\", line 81, in send\n    sent=self.socket.send(view);view=view[sent:]\n         ^^^^^^^^^^^^^^^^^^^^^^\nOSError: [Errno 9] Bad file descriptor\n",
+    "stop_reasons": [
+      "BROKER_REJECTED:BrokenPipeError:[Errno 32] Broken pipe"
+    ],
+    "captured_output_bytes": 2565,
+    "security_profile": "LINUX_X86_64_BWRAP_SECCOMP_RO_JOB_V1",
+    "candidate_stdout_is_trusted_evidence": false
+  },
+  "child_lifecycle_report": {
+    "kind": "finish",
+    "outcome": "exception",
+    "error": {
+      "type": "ContractError",
+      "message": "At most one in-flight operation per arm"
+    }
+  },
+  "execution_lifecycle_complete": false,
+  "trusted_events": [
+    {
+      "index": 0,
+      "time": 0.0,
+      "phase": "start",
+      "action": "inspect",
+      "args": {
+        "arm": "LEFT",
+        "fact_id": "allocation"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2,
+            0,
+            2
+          ],
+          "RIGHT": [
+            2,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "shared_part": "shared_source"
+        },
+        "object_xyz_m": {
+          "shared_part": [
+            0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_718a6509b400",
+      "request_id": 1,
+      "operation_id": "op_0001"
+    },
+    {
+      "index": 1,
+      "time": 0.0,
+      "phase": "start",
+      "action": "inspect",
+      "args": {
+        "arm": "RIGHT",
+        "fact_id": "allocation"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2,
+            0,
+            2
+          ],
+          "RIGHT": [
+            2,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "shared_part": "shared_source"
+        },
+        "object_xyz_m": {
+          "shared_part": [
+            0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_718a6509b580",
+      "request_id": 3,
+      "operation_id": "op_0002"
+    },
+    {
+      "index": 2,
+      "time": 0.0,
+      "phase": "cancel",
+      "action": "inspect",
+      "args": {
+        "arm": "LEFT",
+        "fact_id": "allocation"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2,
+            0,
+            2
+          ],
+          "RIGHT": [
+            2,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "shared_part": "shared_source"
+        },
+        "object_xyz_m": {
+          "shared_part": [
+            0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_718a6509b400",
+      "request_id": 1,
+      "operation_id": "op_0001",
+      "result": {
+        "operation_id": "op_0001",
+        "method": "inspect",
+        "arm": "LEFT",
+        "started_at": 0.0,
+        "finished_at": 0.0,
+        "status": "CANCELLED",
+        "committed": false,
+        "completion_fraction": 0.0,
+        "final_pose": "left_home"
+      }
+    },
+    {
+      "index": 3,
+      "time": 0.0,
+      "phase": "cancel",
+      "action": "inspect",
+      "args": {
+        "arm": "RIGHT",
+        "fact_id": "allocation"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2,
+            0,
+            2
+          ],
+          "RIGHT": [
+            2,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "shared_part": "shared_source"
+        },
+        "object_xyz_m": {
+          "shared_part": [
+            0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {},
+        "event_versions": {},
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_718a6509b580",
+      "request_id": 3,
+      "operation_id": "op_0002",
+      "result": {
+        "operation_id": "op_0002",
+        "method": "inspect",
+        "arm": "RIGHT",
+        "started_at": 0.0,
+        "finished_at": 0.0,
+        "status": "CANCELLED",
+        "committed": false,
+        "completion_fraction": 0.0,
+        "final_pose": "right_home"
+      }
+    }
+  ],
+  "call_audit": [
+    {
+      "request_id": 1,
+      "action": "inspect",
+      "proposed_at": 0.0,
+      "before_event_count": 0,
+      "wire_args": [
+        "LEFT",
+        "allocation"
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "fact_id": "allocation"
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "CancelledError",
+        "message": ""
+      },
+      "started": true,
+      "committed": false,
+      "event_indices": [
+        0,
+        2
+      ],
+      "finished_at": 0.0,
+      "after_event_count": 3
+    },
+    {
+      "request_id": 2,
+      "action": "inspect",
+      "proposed_at": 0.0,
+      "before_event_count": 1,
+      "wire_args": [
+        "LEFT",
+        "allocation"
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "fact_id": "allocation"
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "ContractError",
+        "message": "At most one in-flight operation per arm"
+      },
+      "started": false,
+      "committed": false,
+      "event_indices": [],
+      "finished_at": 0.0,
+      "after_event_count": 1
+    },
+    {
+      "request_id": 3,
+      "action": "inspect",
+      "proposed_at": 0.0,
+      "before_event_count": 1,
+      "wire_args": [
+        "RIGHT",
+        "allocation"
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "RIGHT",
+        "fact_id": "allocation"
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "CancelledError",
+        "message": ""
+      },
+      "started": true,
+      "committed": false,
+      "event_indices": [
+        1,
+        3
+      ],
+      "finished_at": 0.0,
+      "after_event_count": 4
+    }
+  ],
+  "call_audit_complete": true,
+  "trusted_api_errors": [
+    {
+      "id": 2,
+      "action": "inspect",
+      "time": 0.0,
+      "error": {
+        "type": "ContractError",
+        "message": "At most one in-flight operation per arm"
+      }
+    },
+    {
+      "id": 1,
+      "action": "inspect",
+      "time": 0.0,
+      "error": {
+        "type": "CancelledError",
+        "message": ""
+      }
+    },
+    {
+      "id": 3,
+      "action": "inspect",
+      "time": 0.0,
+      "error": {
+        "type": "CancelledError",
+        "message": ""
+      }
+    }
+  ],
+  "safety_label": null,
+  "source_scope": "SELF_AUTHORED_DEVELOPMENT_ONLY"
+}

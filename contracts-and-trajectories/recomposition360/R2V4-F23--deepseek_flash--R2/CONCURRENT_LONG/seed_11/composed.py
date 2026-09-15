@@ -1,0 +1,76 @@
+import asyncio
+async def atom_a_prepare(robot):
+    await robot.acquire("LEFT", "detour_corridor", 20)
+    await robot.move("LEFT", "left_approach", 4)
+
+async def atom_a_dependency(robot):
+    await robot.move("LEFT", "a_zone", 4)
+    robot.signal("obstruction_seen")
+
+async def atom_a_commit(robot):
+    await robot.move("LEFT", "left_exit", 4)
+
+async def atom_a_finish(robot):
+    await robot.release_resource("LEFT", "detour_corridor")
+    receipt = await robot.wait_event("obstruction_seen", 20)
+    robot.clear_event("obstruction_seen", expected_version=receipt.version)
+    robot.signal("corridor_released")
+    await robot.move("LEFT", "left_home", 4)
+
+async def atom_b_prepare(robot):
+    await robot.move("RIGHT", "right_approach", 4)
+
+async def atom_b_dependency(robot):
+    await robot.wait_event("corridor_released", 20)
+    robot.signal("detour_ready")
+    await robot.move("RIGHT", "b_zone", 4)
+
+async def atom_b_commit(robot):
+    await robot.inspect("RIGHT", "context_fact_4")
+    await robot.move("RIGHT", "right_exit", 4)
+
+async def atom_b_finish(robot):
+    receipt = await robot.wait_event("corridor_released", 20)
+    robot.clear_event("corridor_released", expected_version=receipt.version)
+    receipt = await robot.wait_event("detour_ready", 20)
+    robot.clear_event("detour_ready", expected_version=receipt.version)
+    await robot.move("RIGHT", "right_home", 4)
+_RQ2_SEED = 11
+async def _rq2_checkpoint(label):
+    label_code = sum((index + 1) * ord(character) for index, character in enumerate(label))
+    turns = ((_RQ2_SEED >> (label_code % 4)) ^ (_RQ2_SEED * ((label_code % 7) + 1)) ^ label_code) % 4
+    for _ in range(turns):
+        await asyncio.sleep(0)
+async def _rq2_neutral_gap(robot):
+    await robot.inspect("LEFT", "neutral_fact_0")
+    await _rq2_checkpoint("neutral_0")
+    await robot.inspect("LEFT", "neutral_fact_1")
+    await _rq2_checkpoint("neutral_1")
+    await robot.inspect("LEFT", "neutral_fact_2")
+    await _rq2_checkpoint("neutral_2")
+_rq2_ready = None
+async def _rq2_chain_a(robot):
+    await _rq2_checkpoint("a_prepare_before")
+    await atom_a_prepare(robot)
+    await _rq2_checkpoint("a_dependency_before")
+    await atom_a_dependency(robot)
+    await _rq2_neutral_gap(robot)
+    _rq2_ready.set()
+    await _rq2_checkpoint("a_commit_before")
+    await atom_a_commit(robot)
+    await _rq2_checkpoint("a_finish_before")
+    await atom_a_finish(robot)
+async def _rq2_chain_b(robot):
+    await _rq2_checkpoint("b_prepare_before")
+    await atom_b_prepare(robot)
+    await _rq2_ready.wait()
+    await _rq2_checkpoint("b_dependency_before")
+    await atom_b_dependency(robot)
+    await _rq2_checkpoint("b_commit_before")
+    await atom_b_commit(robot)
+    await _rq2_checkpoint("b_finish_before")
+    await atom_b_finish(robot)
+async def run_task(robot):
+    global _rq2_ready
+    _rq2_ready = asyncio.Event()
+    await asyncio.gather(_rq2_chain_a(robot), _rq2_chain_b(robot))

@@ -1,0 +1,74 @@
+```python
+import asyncio
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    # ---- Producer (LEFT) ----
+    async def producer():
+        # Item 0: LEFT home -> source_0 -> grasp part_0 -> buffer_0 -> release -> depart
+        await robot.move("LEFT", "source_0")
+        await robot.grasp("LEFT", "part_0")
+        await robot.acquire("LEFT", "buffer_lock", 5)
+        await robot.move("LEFT", "buffer_0")
+        await robot.release("LEFT", "part_0", "buffer_0")
+        await robot.move("LEFT", "left_home")
+        robot.signal("ready_0", "part_0")
+        await robot.release_resource("LEFT", "buffer_lock")
+
+        # Wait for consumer to clear buffer (empty_0)
+        empty_receipt = await robot.wait_event("empty_0", 30)
+
+        # Second-item checks joined with asyncio.gather (D4)
+        lc_obs, rr_obs = await asyncio.gather(
+            robot.inspect("LEFT", "line_clear"),
+            robot.inspect("RIGHT", "receiver_ready"),
+        )
+        lc_ok = bool(lc_obs.value.get("clear")) and lc_obs.value.get("item_id") == "part_1"
+        rr_ok = bool(rr_obs.value.get("ready")) and rr_obs.value.get("item_id") == "part_1"
+        if not (lc_ok and rr_ok):
+            return
+
+        # SHORT: acquire tool only after second-item wait and checks
+        await robot.acquire("LEFT", "tool", 5)
+
+        try:
+            # Item 1: LEFT home -> source_1 -> grasp part_1 -> buffer_1 -> release -> depart
+            await robot.move("LEFT", "source_1")
+            await robot.grasp("LEFT", "part_1")
+            await robot.acquire("LEFT", "buffer_lock", 5)
+            await robot.move("LEFT", "buffer_1")
+            await robot.release("LEFT", "part_1", "buffer_1")
+            await robot.move("LEFT", "left_home")
+            robot.signal("ready_1", "part_1")
+            await robot.release_resource("LEFT", "buffer_lock")
+        finally:
+            await robot.release_resource("LEFT", "tool")
+
+    # ---- Consumer (RIGHT) ----
+    async def consumer():
+        # Item 0: wait ready_0, then pickup and carry to target_0
+        ready_receipt_0 = await robot.wait_event("ready_0", 30)
+        await robot.acquire("RIGHT", "buffer_lock", 5)
+        await robot.move("RIGHT", "buffer_0", receipt=ready_receipt_0)
+        await robot.grasp("RIGHT", "part_0")
+        await robot.move("RIGHT", "target_0")
+        await robot.release("RIGHT", "part_0", "target_0")
+        await robot.move("RIGHT", "right_home")
+        await robot.release_resource("RIGHT", "buffer_lock")
+        robot.clear_event("ready_0", expected_version=ready_receipt_0.version)
+        robot.signal("empty_0", "part_0")
+
+        # Item 1: wait ready_1, then pickup and carry to target_1
+        ready_receipt_1 = await robot.wait_event("ready_1", 30)
+        await robot.acquire("RIGHT", "buffer_lock", 5)
+        await robot.move("RIGHT", "buffer_1", receipt=ready_receipt_1)
+        await robot.grasp("RIGHT", "part_1")
+        await robot.move("RIGHT", "target_1")
+        await robot.release("RIGHT", "part_1", "target_1")
+        await robot.move("RIGHT", "right_home")
+        await robot.release_resource("RIGHT", "buffer_lock")
+        robot.clear_event("ready_1", expected_version=ready_receipt_1.version)
+
+    await asyncio.gather(producer(), consumer())
+```

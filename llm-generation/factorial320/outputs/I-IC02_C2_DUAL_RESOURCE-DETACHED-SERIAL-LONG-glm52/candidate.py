@@ -1,0 +1,115 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _run_left_worker(robot: Robot) -> None:
+    """LEFT arm: acquire fixture+tool, carry left_part to left_target, release, depart, release tool+fixture."""
+    fixture_acquired = False
+    tool_acquired = False
+    try:
+        await robot.acquire("LEFT", "fixture", 5)
+        fixture_acquired = True
+        await robot.acquire("LEFT", "tool", 5)
+        tool_acquired = True
+
+        # Approach left_part from left_home and grasp immediately.
+        await robot.move("LEFT", "left_source")
+        await robot.grasp("LEFT", "left_part")
+
+        # Carry to target while owning both controllers.
+        await robot.move("LEFT", "left_target")
+        await robot.release("LEFT", "left_part", "left_target")
+
+        # Immediate separating departure.
+        await robot.move("LEFT", "left_depart")
+
+        # Release controllers in reverse order: tool then fixture.
+        await robot.release_resource("LEFT", "tool")
+        tool_acquired = False
+        await robot.release_resource("LEFT", "fixture")
+        fixture_acquired = False
+    finally:
+        if tool_acquired:
+            try:
+                await robot.release_resource("LEFT", "tool")
+            except Exception:
+                pass
+        if fixture_acquired:
+            try:
+                await robot.release_resource("LEFT", "fixture")
+            except Exception:
+                pass
+
+
+async def _run_right_worker(robot: Robot) -> None:
+    """RIGHT arm: acquire fixture+tool, carry right_part to right_target, release, depart, release tool+fixture."""
+    fixture_acquired = False
+    tool_acquired = False
+    try:
+        await robot.acquire("RIGHT", "fixture", 5)
+        fixture_acquired = True
+        await robot.acquire("RIGHT", "tool", 5)
+        tool_acquired = True
+
+        # Approach right_part from right_home and grasp immediately.
+        await robot.move("RIGHT", "right_source")
+        await robot.grasp("RIGHT", "right_part")
+
+        # Carry to target while owning both controllers.
+        await robot.move("RIGHT", "right_target")
+        await robot.release("RIGHT", "right_part", "right_target")
+
+        # Immediate separating departure.
+        await robot.move("RIGHT", "right_depart")
+
+        # Release controllers in reverse order: tool then fixture.
+        await robot.release_resource("RIGHT", "tool")
+        tool_acquired = False
+        await robot.release_resource("RIGHT", "fixture")
+        fixture_acquired = False
+    finally:
+        if tool_acquired:
+            try:
+                await robot.release_resource("RIGHT", "tool")
+            except Exception:
+                pass
+        if fixture_acquired:
+            try:
+                await robot.release_resource("RIGHT", "fixture")
+            except Exception:
+                pass
+
+
+async def _run_rq2_gate_protocol(robot: Robot) -> None:
+    """Signal rq2_gate once, run three gap checks, then wait and clear the gate."""
+    gate_receipt = robot.signal("rq2_gate")
+
+    # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order.
+    for gap_id in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        acquired = False
+        try:
+            await robot.acquire("LEFT", gap_id, 5)
+            acquired = True
+            await robot.release_resource("LEFT", gap_id)
+            acquired = False
+        finally:
+            if acquired:
+                try:
+                    await robot.release_resource("LEFT", gap_id)
+                except Exception:
+                    pass
+
+    # Wait for the exact active receipt of rq2_gate.
+    waited_receipt = await robot.wait_event("rq2_gate", 5)
+
+    # Clear exactly that version after the protected scope completes.
+    robot.clear_event("rq2_gate", expected_version=waited_receipt.version)
+
+
+async def run_task(robot: Robot) -> None:
+    # 1. Complete and clear the rq2_gate protocol before starting the inherited dual-arm mission.
+    await _run_rq2_gate_protocol(robot)
+
+    # 2. Run the two complete workers serially (variant A: SERIAL schedule).
+    await _run_left_worker(robot)
+    await _run_right_worker(robot)

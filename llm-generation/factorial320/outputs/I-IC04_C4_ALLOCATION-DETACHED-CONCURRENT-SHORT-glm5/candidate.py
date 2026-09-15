@@ -1,0 +1,49 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _inspect_allocation(robot: Robot, arm: str):
+    return await robot.inspect(arm, "allocation")
+
+
+async def _selected_transport(robot: Robot, selected_arm: str, alloc_obs):
+    if selected_arm == "LEFT":
+        start_pose = "left_home"
+        depart_pose = "left_depart"
+    else:
+        start_pose = "right_home"
+        depart_pose = "right_depart"
+
+    await robot.move(selected_arm, start_pose)
+    await robot.grasp(selected_arm, "shared_part", observation=alloc_obs)
+    await robot.move(selected_arm, "shared_target")
+    await robot.release(selected_arm, "shared_part", "shared_target")
+    await robot.move(selected_arm, depart_pose)
+
+
+async def _worker_candidate(robot: Robot, arm: str):
+    alloc_obs = await _inspect_allocation(robot, arm)
+    selected = alloc_obs.value.get("selected_arm")
+    if selected == arm:
+        await _selected_transport(robot, arm, alloc_obs)
+
+
+async def _gap_protocol(robot: Robot, gate_event):
+    for i in range(3):
+        rid = f"rq2_gap_{i}"
+        await robot.acquire("LEFT", rid, 5)
+        await robot.release_resource("LEFT", rid)
+
+    receipt = robot.signal("rq2_gate")
+    waited = await robot.wait_event("rq2_gate", 5)
+    await robot.move("LEFT", "left_home", receipt=waited)
+    robot.clear_event("rq2_gate", expected_version=receipt.version)
+
+
+async def run_task(robot: Robot):
+    gate_event = asyncio.Event()
+    gate_task = asyncio.create_task(_gap_protocol(robot, gate_event))
+    left_task = asyncio.create_task(_worker_candidate(robot, "LEFT"))
+    right_task = asyncio.create_task(_worker_candidate(robot, "RIGHT"))
+
+    await asyncio.gather(gate_task, left_task, right_task)

@@ -1,0 +1,53 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _left_mission(robot: Robot) -> None:
+    """LEFT arm: verify left_part, transport to left_target, depart."""
+    # Approach left_part from left_home -> left_source, then immediately grasp.
+    await robot.move("LEFT", "left_source")
+    left_obs = await robot.grasp("LEFT", "left_part")
+    # Transport to left_target (logical_supports includes left_target).
+    await robot.move("LEFT", "left_target", receipt=None)
+    # Release onto left_target, then immediately depart.
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+    # Signal readiness for join.
+    robot.signal("left_ready", item_id="left_part")
+
+
+async def _right_mission(robot: Robot) -> None:
+    """RIGHT arm: verify right_part, transport to right_target, depart."""
+    await robot.move("RIGHT", "right_source")
+    right_obs = await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target", receipt=None)
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+    robot.signal("right_ready", item_id="right_part")
+
+
+async def _gap_checks(robot: Robot) -> None:
+    """Acquire/release rq2_gap_0..2 with LEFT in numeric order, OFF only."""
+    for rid in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", rid, 5)
+        await robot.release_resource("LEFT", rid)
+
+
+async def run_task(robot: Robot) -> None:
+    # rq2_gate producer: signal exactly once.
+    gate_receipt = robot.signal("rq2_gate")
+
+    # Concurrently: inherited dual-arm mission + gap resource checks.
+    await asyncio.gather(
+        _left_mission(robot),
+        _right_mission(robot),
+        _gap_checks(robot),
+    )
+
+    # Wait for the exact active rq2_gate receipt once.
+    waited = await robot.wait_event("rq2_gate", 5)
+    # Clear exactly that version after the protected scope.
+    robot.clear_event("rq2_gate", expected_version=waited.version)
+
+    # rq2_gate inactive at return; resources already released and OFF.
+    return

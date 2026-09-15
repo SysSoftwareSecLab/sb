@@ -1,0 +1,87 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # C7_ATTR_FLAT-SERIAL-LH
+    # SERIAL structure: A alternates complete producer/consumer episodes.
+    # LEFT is producer; RIGHT is consumer.
+    # tool owned by LEFT from before each source pickup through ready publication,
+    # released on every exit. buffer_lock owned during buffer entry and departure.
+    # ready receipt supplied on carried move to target; cleared after carried move.
+    # empty_0 waited/cleared by producer before entering buffer with second part.
+    # For item 1: wait/clear empty_0, then inspect both readiness facts serially.
+
+    # ---- Episode 1: part_0 ----
+    # LEFT producer: acquire tool, move to source_0, grasp part_0, move to buffer_0,
+    # release part_0, depart, publish ready_0, release tool.
+    await robot.acquire("LEFT", "tool", 120)
+    await robot.move("LEFT", "source_0")
+    await robot.grasp("LEFT", "part_0")
+    await robot.move("LEFT", "buffer_0")
+    await robot.release("LEFT", "part_0", "buffer_0")
+    await robot.move("LEFT", "left_home")
+    ready_0_receipt = robot.signal("ready_0", "part_0")
+    await robot.release_resource("LEFT", "tool")
+
+    # RIGHT consumer: acquire buffer_lock, move to buffer_0, grasp part_0,
+    # carried move to target_0 using ready_0 receipt, clear ready_0,
+    # release part_0, depart, acquire buffer_lock for departure, depart home,
+    # release buffer_lock, publish empty_0.
+    await robot.acquire("RIGHT", "buffer_lock", 120)
+    await robot.move("RIGHT", "buffer_0")
+    await robot.grasp("RIGHT", "part_0")
+    await robot.move("RIGHT", "target_0", receipt=ready_0_receipt)
+    clear_event_safe(robot, "ready_0", ready_0_receipt.version)
+    await robot.release("RIGHT", "part_0", "target_0")
+    await robot.acquire("RIGHT", "buffer_lock", 120)
+    await robot.move("RIGHT", "right_home")
+    await robot.release_resource("RIGHT", "buffer_lock")
+    robot.signal("empty_0", "part_0")
+
+    # ---- Episode 2: part_1 ----
+    # Producer waits and clears empty_0 before entering buffer with second part.
+    empty_0_receipt = await robot.wait_event("empty_0", 120)
+    clear_event_safe(robot, "empty_0", empty_0_receipt.version)
+
+    # For item 1: inspect both readiness facts serially (C7 serial branch).
+    await robot.inspect("LEFT", "line_clear")
+    await robot.inspect("LEFT", "receiver_ready")
+
+    # LEFT producer: acquire tool, move to left_wait, move to source_1, grasp part_1,
+    # move to left_wait, move to buffer_1, release part_1, depart to left_wait,
+    # depart to left_home, publish ready_1, release tool.
+    await robot.acquire("LEFT", "tool", 120)
+    await robot.move("LEFT", "left_wait")
+    await robot.move("LEFT", "source_1")
+    await robot.grasp("LEFT", "part_1")
+    await robot.move("LEFT", "left_wait")
+    await robot.move("LEFT", "buffer_1")
+    await robot.release("LEFT", "part_1", "buffer_1")
+    await robot.move("LEFT", "left_wait")
+    await robot.move("LEFT", "left_home")
+    ready_1_receipt = robot.signal("ready_1", "part_1")
+    await robot.release_resource("LEFT", "tool")
+
+    # RIGHT consumer: acquire buffer_lock, move to right_wait, move to buffer_1,
+    # grasp part_1, carried move to target_1 using ready_1 receipt, clear ready_1,
+    # release part_1, depart to right_wait, acquire buffer_lock for departure,
+    # depart home, release buffer_lock, publish empty_0.
+    await robot.acquire("RIGHT", "buffer_lock", 120)
+    await robot.move("RIGHT", "right_wait")
+    await robot.move("RIGHT", "buffer_1")
+    await robot.grasp("RIGHT", "part_1")
+    await robot.move("RIGHT", "target_1", receipt=ready_1_receipt)
+    clear_event_safe(robot, "ready_1", ready_1_receipt.version)
+    await robot.release("RIGHT", "part_1", "target_1")
+    await robot.move("RIGHT", "right_wait")
+    await robot.acquire("RIGHT", "buffer_lock", 120)
+    await robot.move("RIGHT", "right_home")
+    await robot.release_resource("RIGHT", "buffer_lock")
+    robot.signal("empty_0", "part_1")
+
+
+def clear_event_safe(robot: Robot, event_id: str, expected_version: int) -> None:
+    robot.clear_event(event_id, expected_version=expected_version)
+```

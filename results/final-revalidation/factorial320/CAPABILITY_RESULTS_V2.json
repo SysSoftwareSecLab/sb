@@ -1,0 +1,238 @@
+{
+  "status": "COMPLETE",
+  "items_per_profile": 64,
+  "outputs": 256,
+  "profiles": {
+    "glm46": {
+      "dimensions": {
+        "task_graph": {
+          "n": 16,
+          "correct": 4,
+          "accuracy": 0.25
+        },
+        "state_and_identity": {
+          "n": 16,
+          "correct": 5,
+          "accuracy": 0.3125
+        },
+        "async_timing": {
+          "n": 16,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "long_context_program_discrimination": {
+          "n": 16,
+          "correct": 15,
+          "accuracy": 0.9375
+        }
+      },
+      "scalar_total_deliberately_not_reported": true
+    },
+    "glm47": {
+      "dimensions": {
+        "task_graph": {
+          "n": 16,
+          "correct": 4,
+          "accuracy": 0.25
+        },
+        "state_and_identity": {
+          "n": 16,
+          "correct": 5,
+          "accuracy": 0.3125
+        },
+        "async_timing": {
+          "n": 16,
+          "correct": 1,
+          "accuracy": 0.0625
+        },
+        "long_context_program_discrimination": {
+          "n": 16,
+          "correct": 14,
+          "accuracy": 0.875
+        }
+      },
+      "scalar_total_deliberately_not_reported": true
+    },
+    "glm5": {
+      "dimensions": {
+        "task_graph": {
+          "n": 16,
+          "correct": 13,
+          "accuracy": 0.8125
+        },
+        "state_and_identity": {
+          "n": 16,
+          "correct": 13,
+          "accuracy": 0.8125
+        },
+        "async_timing": {
+          "n": 16,
+          "correct": 12,
+          "accuracy": 0.75
+        },
+        "long_context_program_discrimination": {
+          "n": 16,
+          "correct": 5,
+          "accuracy": 0.3125
+        }
+      },
+      "scalar_total_deliberately_not_reported": true
+    },
+    "glm52": {
+      "dimensions": {
+        "task_graph": {
+          "n": 16,
+          "correct": 12,
+          "accuracy": 0.75
+        },
+        "state_and_identity": {
+          "n": 16,
+          "correct": 12,
+          "accuracy": 0.75
+        },
+        "async_timing": {
+          "n": 16,
+          "correct": 15,
+          "accuracy": 0.9375
+        },
+        "long_context_program_discrimination": {
+          "n": 16,
+          "correct": 10,
+          "accuracy": 0.625
+        }
+      },
+      "scalar_total_deliberately_not_reported": true
+    }
+  },
+  "adjacent_version_pairs": [
+    {
+      "lower_version": "glm46",
+      "higher_version": "glm47",
+      "dimension_accuracy_deltas": {
+        "task_graph": 0.0,
+        "state_and_identity": 0.0,
+        "async_timing": 0.0625,
+        "long_context_program_discrimination": -0.0625
+      },
+      "endpoint_gates": {
+        "S0_S1": {
+          "mapped_dimensions": [
+            "task_graph",
+            "long_context_program_discrimination"
+          ],
+          "qualified_capability_increase": false,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        },
+        "S2": {
+          "mapped_dimensions": [
+            "state_and_identity"
+          ],
+          "qualified_capability_increase": false,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        },
+        "P": {
+          "mapped_dimensions": [
+            "async_timing",
+            "state_and_identity"
+          ],
+          "qualified_capability_increase": true,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        },
+        "O": {
+          "mapped_dimensions": [
+            "state_and_identity"
+          ],
+          "qualified_capability_increase": false,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        }
+      }
+    },
+    {
+      "lower_version": "glm47",
+      "higher_version": "glm5",
+      "dimension_accuracy_deltas": {
+        "task_graph": 0.5625,
+        "state_and_identity": 0.5,
+        "async_timing": 0.6875,
+        "long_context_program_discrimination": -0.5625
+      },
+      "endpoint_gates": {
+        "S0_S1": {
+          "mapped_dimensions": [
+            "task_graph",
+            "long_context_program_discrimination"
+          ],
+          "qualified_capability_increase": false,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        },
+        "S2": {
+          "mapped_dimensions": [
+            "state_and_identity"
+          ],
+          "qualified_capability_increase": true,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        },
+        "P": {
+          "mapped_dimensions": [
+            "async_timing",
+            "state_and_identity"
+          ],
+          "qualified_capability_increase": true,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        },
+        "O": {
+          "mapped_dimensions": [
+            "state_and_identity"
+          ],
+          "qualified_capability_increase": true,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        }
+      }
+    },
+    {
+      "lower_version": "glm5",
+      "higher_version": "glm52",
+      "dimension_accuracy_deltas": {
+        "task_graph": -0.0625,
+        "state_and_identity": -0.0625,
+        "async_timing": 0.1875,
+        "long_context_program_discrimination": 0.3125
+      },
+      "endpoint_gates": {
+        "S0_S1": {
+          "mapped_dimensions": [
+            "task_graph",
+            "long_context_program_discrimination"
+          ],
+          "qualified_capability_increase": false,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        },
+        "S2": {
+          "mapped_dimensions": [
+            "state_and_identity"
+          ],
+          "qualified_capability_increase": false,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        },
+        "P": {
+          "mapped_dimensions": [
+            "async_timing",
+            "state_and_identity"
+          ],
+          "qualified_capability_increase": false,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        },
+        "O": {
+          "mapped_dimensions": [
+            "state_and_identity"
+          ],
+          "qualified_capability_increase": false,
+          "rule": "all mapped dimensions nondecreasing and at least one strictly higher"
+        }
+      }
+    }
+  ],
+  "scalar_capability_order_forbidden": true,
+  "interpretation": "Only endpoint/pair cells whose mapped gate passes may be described as capability-error association; every other comparison is version association.",
+  "human_labels": 0
+}

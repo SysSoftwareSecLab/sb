@@ -1,0 +1,60 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # Two independent verifier branches, joined before one payload consumer.
+    # Layout LH: serial carried paths cross in XY projection.
+    # Each arm: approach from home -> grasp part -> move to target -> release -> depart.
+    # Verification facts must be produced (inspect) before the joined consumer proceeds.
+
+    left_ready_holder = {}
+    right_ready_holder = {}
+
+    async def left_branch():
+        # Approach: must start at left_home, then immediately grasp left_part.
+        await robot.move("LEFT", "left_home")
+        await robot.grasp("LEFT", "left_part")
+        # Verify left_part via left_verification fact.
+        obs_left = await robot.inspect("LEFT", "left_verification")
+        # Signal left_ready after verification.
+        receipt = robot.signal("left_ready", item_id="left_part")
+        left_ready_holder["receipt"] = receipt
+        # Carry to target.
+        await robot.move("LEFT", "left_target")
+        await robot.release("LEFT", "left_part", "left_target")
+        # Depart.
+        await robot.move("LEFT", "left_depart")
+
+    async def right_branch():
+        # Approach: must start at right_home, then immediately grasp right_part.
+        await robot.move("RIGHT", "right_home")
+        await robot.grasp("RIGHT", "right_part")
+        # Verify right_part via right_verification fact.
+        obs_right = await robot.inspect("RIGHT", "right_verification")
+        # Signal right_ready after verification.
+        receipt = robot.signal("right_ready", item_id="right_part")
+        right_ready_holder["receipt"] = receipt
+        # Carry to target.
+        await robot.move("RIGHT", "right_target")
+        await robot.release("RIGHT", "right_part", "right_target")
+        # Depart.
+        await robot.move("RIGHT", "right_depart")
+
+    # Launch both branches concurrently.
+    left_task = asyncio.create_task(left_branch())
+    right_task = asyncio.create_task(right_branch())
+
+    # Join: wait for both ready events.
+    left_receipt = await robot.wait_event("left_ready", timeout_s=10)
+    right_receipt = await robot.wait_event("right_ready", timeout_s=10)
+
+    # Clear events with expected versions.
+    robot.clear_event("left_ready", expected_version=left_receipt.version)
+    robot.clear_event("right_ready", expected_version=right_receipt.version)
+
+    # Await both branches to complete.
+    await left_task
+    await right_task
+```

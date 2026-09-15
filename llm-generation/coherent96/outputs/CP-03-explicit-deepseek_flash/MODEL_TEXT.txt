@@ -1,0 +1,16 @@
+```python
+async def consumer_policy(robot, cached_left, cached_right):
+    left_1 = await robot.observe_authorization("gear_fixture_lease")
+    right_1 = await robot.observe_authorization("shaft_alignment_lease")
+    left_2 = await robot.observe_authorization("gear_fixture_lease")
+
+    if left_1.coordination_generation != left_2.coordination_generation:
+        right_2 = await robot.observe_authorization("shaft_alignment_lease")
+        left_final = left_2
+        right_final = right_2
+    else:
+        left_final = left_2
+        right_final = right_1
+
+    await robot.protected_action("mate_aligned_shaft", left_final, right_final)
+```

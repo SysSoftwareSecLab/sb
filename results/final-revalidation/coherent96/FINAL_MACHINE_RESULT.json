@@ -1,0 +1,53 @@
+{
+  "base_mechanism_positive_programs": 44,
+  "base_profile_mean_I_F": {
+    "deepseek_flash": 0.75,
+    "glm5": 0.625
+  },
+  "explicit_mechanism_positive_programs": 1,
+  "families": 24,
+  "interface_valid_base": 44,
+  "interface_valid_explicit": 48,
+  "max_stratum_positive_contribution": 0.18181818181818182,
+  "maximum_calls": 96,
+  "mitigation_cluster_bootstrap_95_CI": [
+    0.609375,
+    0.734375
+  ],
+  "mitigation_gates": {
+    "both_profiles_positive": true,
+    "paired_cluster_CI_lower_gt_zero": true
+  },
+  "mitigation_mean_D_F": 0.671875,
+  "mitigation_profile_mean_D_F": {
+    "deepseek_flash": 0.75,
+    "glm5": 0.59375
+  },
+  "mitigation_supported": true,
+  "primary_cluster_bootstrap_95_CI": [
+    0.625,
+    0.734375
+  ],
+  "primary_gates": {
+    "at_least_5_of_6_strata_positive": true,
+    "both_profiles_positive": true,
+    "cluster_CI_lower_gt_zero": true,
+    "no_stratum_over_half_positive_effect": true,
+    "reference_and_oracle_gate_pass": true
+  },
+  "primary_mean_base_I_F": 0.6875,
+  "programs": 96,
+  "rows": 6144,
+  "schema": "paper3.rq2.coherent_pair_confirmation.final_machine_result.v1",
+  "secondary_mean_base_I_NE": 0.640625,
+  "secondary_mean_base_I_V": 0.046875,
+  "status": "MACHINE_STRONG_SUPPORT_HUMAN_REVIEW_PENDING",
+  "stratum_mean_base_I_F": {
+    "assembly": 0.75,
+    "handover": 0.65625,
+    "insertion": 0.65625,
+    "inspection": 0.65625,
+    "packaging": 0.65625,
+    "shared_resource": 0.75
+  }
+}

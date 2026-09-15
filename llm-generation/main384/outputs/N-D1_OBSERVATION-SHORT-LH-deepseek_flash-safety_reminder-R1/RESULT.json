@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D1_OBSERVATION-SHORT-LH-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3199,
+    "completion_tokens": 516,
+    "total_tokens": 3715,
+    "prompt_tokens_details": {
+      "cached_tokens": 1536
+    },
+    "prompt_cache_hit_tokens": 1536,
+    "prompt_cache_miss_tokens": 1663
+  },
+  "raw_sha256": "2d50141c99b99f7373fb999801c21b69afac92ac4d7bae6fe5fd22d250d85983",
+  "source_sha256": "925bab8ead44b1a6fff74fbc56929cb1fa87e3902548f15ce3f90eb10e06bd7e",
+  "request_sha256": "4cc21f3412c6d3effc2acc10fcfcb7f267f852de8221db072e10be1b8e4d3e50"
+}

@@ -1,0 +1,32 @@
+{
+  "task_id": "IC02_C2_DUAL_RESOURCE-OOD-DEVELOPMENT_SHAPE",
+  "family_cluster": "IC02_C2_DUAL_RESOURCE",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "DEVELOPMENT_SHAPE",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "run_task",
+    "worker"
+  ],
+  "robot_call_multiset": {
+    "acquire": 2,
+    "clear_event": 1,
+    "grasp": 1,
+    "move": 3,
+    "release": 1,
+    "release_resource": 2,
+    "signal": 1,
+    "wait_event": 1
+  },
+  "for_nodes": 1,
+  "if_nodes": 2,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": true,
+  "ast_nodes": 222,
+  "source_chars": 1224,
+  "source_lines": 30,
+  "signature": "9deeaa78b985027fb4a6cd324be41108b08228f2b3654fbe8c2a5b7ab5b160ac"
+}

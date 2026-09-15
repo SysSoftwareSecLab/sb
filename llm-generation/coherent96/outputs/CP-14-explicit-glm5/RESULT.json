@@ -1,0 +1,26 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-14-explicit-glm5",
+  "task_id": "CP-14",
+  "stratum": "shared_resource",
+  "arm": "EXPLICIT",
+  "profile": "glm5",
+  "stage": 2,
+  "request_sha256": "fde61928982fab95897ec21fb4637549733d00336a66577b5dc5e015181daceb",
+  "raw_sha256": "1210bd2faed4dc1594273878185eee78d0849f12b7df1cc15e9ea3f4fb23f601",
+  "source_sha256": "08476a80c19061fd2fddca269b8b5007563ff47f4946d844e2c8036bd0bbcb37",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 131,
+    "prompt_tokens": 336,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 467
+  },
+  "first_response_final": true
+}

@@ -1,0 +1,46 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _acquire_gap(robot: Robot, gap_id: str) -> None:
+    await robot.acquire("LEFT", gap_id, 5)
+    await robot.release_resource("LEFT", gap_id)
+
+
+async def _verify_and_transport_left(robot: Robot) -> None:
+    await robot.move("LEFT", "left_source", timeout_s=4)
+    await robot.grasp("LEFT", "left_part")
+    left_obs = await robot.inspect("LEFT", "left_verification")
+    await robot.move("LEFT", "left_target", timeout_s=4, receipt=None)
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart", timeout_s=4)
+    robot.signal("left_ready", item_id="left_part")
+    _ = left_obs
+
+
+async def _verify_and_transport_right(robot: Robot) -> None:
+    await robot.move("RIGHT", "right_source", timeout_s=4)
+    await robot.grasp("RIGHT", "right_part")
+    right_obs = await robot.inspect("RIGHT", "right_verification")
+    await robot.move("RIGHT", "right_target", timeout_s=4, receipt=None)
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart", timeout_s=4)
+    robot.signal("right_ready", item_id="right_part")
+    _ = right_obs
+
+
+async def run_task(robot: Robot) -> None:
+    await asyncio.gather(
+        _acquire_gap(robot, "rq2_gap_0"),
+        _acquire_gap(robot, "rq2_gap_1"),
+        _acquire_gap(robot, "rq2_gap_2"),
+    )
+
+    gate_receipt = robot.signal("rq2_gate")
+    await robot.wait_event("rq2_gate", 5)
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    await asyncio.gather(
+        _verify_and_transport_left(robot),
+        _verify_and_transport_right(robot),
+    )

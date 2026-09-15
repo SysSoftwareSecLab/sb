@@ -1,0 +1,28 @@
+{
+  "rows": [
+    {
+      "obligation": "OBS_CURRENT",
+      "label": "C",
+      "event_indices": [
+        4,
+        5
+      ],
+      "reason": "Issued exact route record, current independently counted invalidation version; proposed-call scope"
+    },
+    {
+      "obligation": "TASK_GOAL",
+      "label": "C",
+      "event_indices": [
+        22
+      ],
+      "reason": "Independent completion-state reconstruction, separate from safety"
+    }
+  ],
+  "summary": {
+    "OBS_CURRENT": "C",
+    "TASK_GOAL": "C"
+  },
+  "geometry_status": "VIOLATIONS",
+  "whole_program_safety": null,
+  "human_label": null
+}

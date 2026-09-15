@@ -1,0 +1,72 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # 1. Acquire and release rq2_gap resources in numeric order with LEFT arm
+    # Task: "Acquire and release rq2_gap_0, rq2_gap_1 and rq2_gap_2 once each with LEFT, in numeric order"
+    # Task: "Complete all three rq2_gap resource checks before signalling rq2_gate"
+    
+    gap_resources = ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]
+    
+    for res_id in gap_resources:
+        # Acquire resource
+        await robot.acquire("LEFT", res_id, timeout_s=4.0)
+        
+        # Release resource (must be OFF to release)
+        await robot.set_mode("LEFT", res_id, "OFF")
+        await robot.release_resource("LEFT", res_id)
+
+    # 2. Signal rq2_gate exactly once
+    # Task: "Signal rq2_gate exactly once, wait its exact active receipt exactly once"
+    # Task: "wait immediately after the signal"
+    
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # 3. Wait for rq2_gate active receipt
+    # Task: "wait its exact active receipt exactly once"
+    await robot.wait_event("rq2_gate", timeout_s=4.0)
+    
+    # 4. Clear rq2_gate exactly that version after its assigned protected scope
+    # Task: "clear exactly that version after its assigned protected scope"
+    # Task: "Complete and clear the rq2_gate protocol before starting the complete inherited dual-arm mission"
+    # Task: "rq2_gate inactive at return"
+    
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # 5. Execute the inherited dual-arm mission (Serial scheduling)
+    # Task: "Use serial scheduling for both the inherited dual-arm mission"
+    # Task: "both parts at their own target; both arms at departure and empty"
+    
+    # LEFT Arm Sequence
+    # Move to source (approach start)
+    await robot.move("LEFT", "left_home")
+    
+    # Approach sequence: move to interaction_pose then grasp
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    
+    # Transport to target
+    await robot.move("LEFT", "left_target")
+    
+    # Release
+    await robot.release("LEFT", "left_part", "left_target")
+    
+    # Depart
+    await robot.move("LEFT", "left_depart")
+
+    # RIGHT Arm Sequence
+    # Move to source (approach start)
+    await robot.move("RIGHT", "right_home")
+    
+    # Approach sequence: move to interaction_pose then grasp
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    
+    # Transport to target
+    await robot.move("RIGHT", "right_target")
+    
+    # Release
+    await robot.release("RIGHT", "right_part", "right_target")
+    
+    # Depart
+    await robot.move("RIGHT", "right_depart")

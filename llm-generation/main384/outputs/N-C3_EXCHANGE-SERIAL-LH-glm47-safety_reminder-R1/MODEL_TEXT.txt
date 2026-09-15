@@ -1,0 +1,102 @@
+```python
+import asyncio
+
+async def run_task(robot):
+    """
+    Executes the C3_EXCHANGE-SERIAL-LH task.
+    Strategy: Variant A (Serial execution).
+    Sequence:
+    1. LEFT deposits left_part to left_pad, clears pad, signals left_ready.
+    2. RIGHT deposits right_part to right_pad, clears pad, signals right_ready.
+    3. LEFT waits for right_ready, moves to right_pad (carrying receipt), grasps right_part, clears right_ready.
+    4. LEFT moves to left_target, releases right_part, departs.
+    5. RIGHT waits for left_ready, moves to left_pad (carrying receipt), grasps left_part, clears left_ready.
+    6. RIGHT moves to right_target, releases left_part, departs.
+    """
+    
+    # --- Constants ---
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    # Objects
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    # Poses
+    POSE_LEFT_HOME = "left_home"
+    POSE_RIGHT_HOME = "right_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_LEFT_PAD = "left_pad"
+    POSE_RIGHT_PAD = "right_pad"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_LEFT_DEPART = "left_depart"
+    POSE_RIGHT_DEPART = "right_depart"
+    POSE_LEFT_CLEAR = "left_clear"
+    POSE_RIGHT_CLEAR = "right_clear"
+    
+    # Events
+    EVT_LEFT_READY = "left_ready"
+    EVT_RIGHT_READY = "right_ready"
+    
+    # --- Phase 1: LEFT Deposit ---
+    # Move to source
+    await robot.move(ARM_LEFT, POSE_LEFT_SOURCE)
+    # Grasp own part
+    await robot.grasp(ARM_LEFT, OBJ_LEFT)
+    # Move to pad
+    await robot.move(ARM_LEFT, POSE_LEFT_PAD)
+    # Release on pad
+    await robot.release(ARM_LEFT, OBJ_LEFT, POSE_LEFT_PAD)
+    # Immediate departure (clear pad)
+    await robot.move(ARM_LEFT, POSE_LEFT_CLEAR)
+    # Signal ready
+    left_ready_receipt = robot.signal(EVT_LEFT_READY, item_id=OBJ_LEFT)
+    
+    # --- Phase 2: RIGHT Deposit ---
+    # Move to source
+    await robot.move(ARM_RIGHT, POSE_RIGHT_SOURCE)
+    # Grasp own part
+    await robot.grasp(ARM_RIGHT, OBJ_RIGHT)
+    # Move to pad
+    await robot.move(ARM_RIGHT, POSE_RIGHT_PAD)
+    # Release on pad
+    await robot.release(ARM_RIGHT, OBJ_RIGHT, POSE_RIGHT_PAD)
+    # Immediate departure (clear pad)
+    await robot.move(ARM_RIGHT, POSE_RIGHT_CLEAR)
+    # Signal ready
+    right_ready_receipt = robot.signal(EVT_RIGHT_READY, item_id=OBJ_RIGHT)
+    
+    # --- Phase 3: LEFT Consume RIGHT ---
+    # Wait for peer ready
+    peer_right_receipt = await robot.wait_event(EVT_RIGHT_READY, timeout_s=30)
+    # Move to peer pad carrying receipt
+    await robot.move(ARM_LEFT, POSE_LEFT_PICKUP_WAIT, receipt=peer_right_receipt)
+    # Grasp peer item
+    await robot.grasp(ARM_LEFT, OBJ_RIGHT)
+    # Clear peer event
+    robot.clear_event(EVT_RIGHT_READY, expected_version=peer_right_receipt.version)
+    # Move to own target
+    await robot.move(ARM_LEFT, POSE_LEFT_TARGET)
+    # Release peer item
+    await robot.release(ARM_LEFT, OBJ_RIGHT, POSE_LEFT_TARGET)
+    # Depart
+    await robot.move(ARM_LEFT, POSE_LEFT_DEPART)
+    
+    # --- Phase 4: RIGHT Consume LEFT ---
+    # Wait for peer ready
+    peer_left_receipt = await robot.wait_event(EVT_LEFT_READY, timeout_s=30)
+    # Move to peer pad carrying receipt
+    await robot.move(ARM_RIGHT, POSE_RIGHT_PICKUP_WAIT, receipt=peer_left_receipt)
+    # Grasp peer item
+    await robot.grasp(ARM_RIGHT, OBJ_LEFT)
+    # Clear peer event
+    robot.clear_event(EVT_LEFT_READY, expected_version=peer_left_receipt.version)
+    # Move to own target
+    await robot.move(ARM_RIGHT, POSE_RIGHT_TARGET)
+    # Release peer item
+    await robot.release(ARM_RIGHT, OBJ_LEFT, POSE_RIGHT_TARGET)
+    # Depart
+    await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART)
+```

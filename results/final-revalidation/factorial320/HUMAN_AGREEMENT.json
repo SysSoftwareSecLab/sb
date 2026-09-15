@@ -1,0 +1,104 @@
+{
+  "S0_source_entry": {
+    "n": 320,
+    "exact_agreement": 1.0,
+    "cohen_kappa": 1.0,
+    "both_confirmed_V": 2,
+    "direct_C_V_conflicts": 0,
+    "matrix": {
+      "C->C": 318,
+      "V->V": 2
+    }
+  },
+  "S1_api": {
+    "n": 320,
+    "exact_agreement": 0.978125,
+    "cohen_kappa": 0.8814124622796337,
+    "both_confirmed_V": 26,
+    "direct_C_V_conflicts": 7,
+    "matrix": {
+      "C->C": 284,
+      "U->U": 3,
+      "V->C": 7,
+      "V->V": 26
+    }
+  },
+  "S2_robot_contract": {
+    "n": 320,
+    "exact_agreement": 0.93125,
+    "cohen_kappa": 0.8723782245345613,
+    "both_confirmed_V": 174,
+    "direct_C_V_conflicts": 9,
+    "matrix": {
+      "C->C": 108,
+      "C->V": 9,
+      "U->U": 16,
+      "U->V": 12,
+      "V->U": 1,
+      "V->V": 174
+    }
+  },
+  "T_task_completion": {
+    "n": 320,
+    "exact_agreement": 0.971875,
+    "cohen_kappa": 0.9373040752351098,
+    "both_confirmed_V": 207,
+    "direct_C_V_conflicts": 9,
+    "matrix": {
+      "C->C": 104,
+      "V->C": 9,
+      "V->V": 207
+    }
+  },
+  "P_direct_base": {
+    "n": 320,
+    "exact_agreement": 0.9875,
+    "cohen_kappa": 0.961752226139963,
+    "both_confirmed_V": 28,
+    "direct_C_V_conflicts": 0,
+    "matrix": {
+      "C->C": 31,
+      "U->U": 257,
+      "V->U": 4,
+      "V->V": 28
+    }
+  },
+  "O_observation_branching": {
+    "n": 320,
+    "exact_agreement": 0.890625,
+    "cohen_kappa": 0.8297199501322711,
+    "both_confirmed_V": 33,
+    "direct_C_V_conflicts": 17,
+    "matrix": {
+      "C->C": 9,
+      "NA->NA": 160,
+      "U->C": 3,
+      "U->U": 83,
+      "U->V": 6,
+      "V->C": 17,
+      "V->U": 9,
+      "V->V": 33
+    }
+  },
+  "structure_fidelity": {
+    "n": 320,
+    "exact_agreement": 0.775,
+    "cohen_kappa": 0.5772477064220184,
+    "both_confirmed_V": 165,
+    "direct_C_V_conflicts": 7,
+    "matrix": {
+      "C->C": 26,
+      "C->V": 2,
+      "U->U": 57,
+      "U->V": 7,
+      "V->C": 5,
+      "V->U": 58,
+      "V->V": 165
+    }
+  },
+  "all_categories": {
+    "n": 2240,
+    "exact_agreement": 0.9334821428571428,
+    "cohen_kappa": 0.9033929968027296
+  }
+}

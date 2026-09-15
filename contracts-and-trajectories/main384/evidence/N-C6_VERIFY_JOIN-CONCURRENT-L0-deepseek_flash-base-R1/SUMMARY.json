@@ -1,0 +1,24 @@
+{
+  "slot_id": "N-C6_VERIFY_JOIN-CONCURRENT-L0-deepseek_flash-base-R1",
+  "task_id": "C6_VERIFY_JOIN-CONCURRENT-L0",
+  "executed": true,
+  "generation_source_sha256": "31e2a3dfd4ffbc11883eb0c17efa4ed02d92dda757f223a77cca80bb5a8f7607",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 14,
+  "task_labels": {
+    "TASK_GOAL": "U",
+    "EVENT_JOIN": "U"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "C"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "dcc95f6d0e6cac689bbeefa18334798dec3a1bbc6fca8837fa78f897394b7980",
+  "task_evidence_sha256": "ee08e69de75f1561a3ffbcb1c3fda0acd73f7e0f42e6f887ad3f7d4140fcc288",
+  "grammar_evidence_sha256": "9642c0c2f72832609145bed3e30af4628573f65f9fe967abb6d7681bdfd50c7c",
+  "geometry_sha256": "7dc00a53b4c79aa1d3b4d382972d0cc2a48793baa1e8f96b6ab42743329858f3",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

@@ -1,0 +1,32 @@
+{
+  "task_id": "IC02_C2_DUAL_RESOURCE-OOD-STRUCTURAL_OOD",
+  "family_cluster": "IC02_C2_DUAL_RESOURCE",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "STRUCTURAL_OOD",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "run_task",
+    "worker"
+  ],
+  "robot_call_multiset": {
+    "acquire": 2,
+    "clear_event": 1,
+    "grasp": 1,
+    "move": 3,
+    "release": 1,
+    "release_resource": 2,
+    "signal": 1,
+    "wait_event": 1
+  },
+  "for_nodes": 1,
+  "if_nodes": 2,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 224,
+  "source_chars": 1232,
+  "source_lines": 30,
+  "signature": "2d0e634093d332ca1cea217eb9def134aa553f0c4647d2b5b054188423d0ea6c"
+}

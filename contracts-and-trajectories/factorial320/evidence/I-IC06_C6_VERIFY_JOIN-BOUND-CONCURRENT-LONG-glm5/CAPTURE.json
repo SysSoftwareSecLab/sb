@@ -1,0 +1,475 @@
+{
+  "profile": "QUALITY_TYPED_TRACE_DEV_V1",
+  "process": {
+    "status": "BROKER_REJECTED",
+    "returncode": -9,
+    "wall_seconds": 0.067228,
+    "stdout": "",
+    "stderr": "unhandled exception during asyncio.run() shutdown\ntask: <Task finished name='Task-5' coro=<_left_branch() done, defined at /job/candidate.py:6> exception=OSError(9, 'Bad file descriptor')>\nTraceback (most recent call last):\n  File \"/job/bridge_robot_api.py\", line 131, in call\n    try: return await asyncio.shield(future)\nasyncio.exceptions.CancelledError\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/job/candidate.py\", line 76, in _mission\n    await asyncio.gather(left_task, right_task)\n  File \"/job/candidate.py\", line 8, in _left_branch\n    await robot.move(\"LEFT\", \"left_source\")\n  File \"/job/bridge_robot_api.py\", line 246, in _forward_move\n    return await self._client.call(\"move\", [arm, pose, timeout_s], {\"receipt\": receipt})\n  File \"/job/bridge_robot_api.py\", line 133, in call\n    self.send(dict(kind=\"cancel\",id=identifier))\n  File \"/job/bridge_robot_api.py\", line 81, in send\n    sent=self.socket.send(view);view=view[sent:]\nOSError: [Errno 9] Bad file descriptor\nunhandled exception during asyncio.run() shutdown\ntask: <Task finished name='Task-4' coro=<_mission() done, defined at /job/candidate.py:71> exception=OSError(9, 'Bad file descriptor')>\nTraceback (most recent call last):\n  File \"/job/bridge_robot_api.py\", line 131, in call\n    try: return await asyncio.shield(future)\nasyncio.exceptions.CancelledError\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/job/candidate.py\", line 76, in _mission\n    await asyncio.gather(left_task, right_task)\n  File \"/job/candidate.py\", line 8, in _left_branch\n    await robot.move(\"LEFT\", \"left_source\")\n  File \"/job/bridge_robot_api.py\", line 246, in _forward_move\n    return await self._client.call(\"move\", [arm, pose, timeout_s], {\"receipt\": receipt})\n  File \"/job/bridge_robot_api.py\", line 133, in call\n    self.send(dict(kind=\"cancel\",id=identifier))\n  File \"/job/bridge_robot_api.py\", line 81, in send\n    sent=self.socket.send(view);view=view[sent:]\nOSError: [Errno 9] Bad file descriptor\nunhandled exception during asyncio.run() shutdown\ntask: <Task finished name='Task-6' coro=<_right_branch() done, defined at /job/candidate.py:22> exception=OSError(9, 'Bad file descriptor')>\nTraceback (most recent call last):\n  File \"/job/bridge_robot_api.py\", line 131, in call\n    try: return await asyncio.shield(future)\nasyncio.exceptions.CancelledError\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/job/candidate.py\", line 24, in _right_branch\n    await robot.move(\"RIGHT\", \"right_source\")\n  File \"/job/bridge_robot_api.py\", line 246, in _forward_move\n    return await self._client.call(\"move\", [arm, pose, timeout_s], {\"receipt\": receipt})\n  File \"/job/bridge_robot_api.py\", line 133, in call\n    self.send(dict(kind=\"cancel\",id=identifier))\n  File \"/job/bridge_robot_api.py\", line 81, in send\n    sent=self.socket.send(view);view=view[sent:]\nOSError: [Errno 9] Bad file descriptor\n",
+    "stop_reasons": [
+      "BROKER_REJECTED:BrokenPipeError:[Errno 32] Broken pipe"
+    ],
+    "captured_output_bytes": 3047,
+    "security_profile": "LINUX_X86_64_BWRAP_SECCOMP_RO_JOB_V1",
+    "candidate_stdout_is_trusted_evidence": false
+  },
+  "child_lifecycle_report": {
+    "kind": "finish",
+    "outcome": "exception",
+    "error": {
+      "type": "ContractError",
+      "message": "DOMAIN: undeclared item_id"
+    }
+  },
+  "execution_lifecycle_complete": false,
+  "trusted_events": [
+    {
+      "index": 0,
+      "time": 0.0,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_source",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            -1.0,
+            1.4
+          ],
+          "RIGHT": [
+            2.0,
+            -1,
+            1.4
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {
+          "rq2_gap_0": "OFF",
+          "rq2_gap_1": "OFF",
+          "rq2_gap_2": "OFF"
+        },
+        "event_versions": {
+          "left_ready": 0,
+          "right_ready": 0,
+          "rq2_gate": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_700071fafb90",
+      "request_id": 2,
+      "operation_id": "op_0001"
+    },
+    {
+      "index": 1,
+      "time": 0.0,
+      "phase": "start",
+      "action": "move",
+      "args": {
+        "arm": "RIGHT",
+        "pose": "right_source",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            -1.0,
+            1.4
+          ],
+          "RIGHT": [
+            2.0,
+            -1.0,
+            1.4
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {
+          "rq2_gap_0": "OFF",
+          "rq2_gap_1": "OFF",
+          "rq2_gap_2": "OFF"
+        },
+        "event_versions": {
+          "left_ready": 0,
+          "right_ready": 0,
+          "rq2_gate": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_700071fafc60",
+      "request_id": 3,
+      "operation_id": "op_0002"
+    },
+    {
+      "index": 2,
+      "time": 0.0,
+      "phase": "cancel",
+      "action": "move",
+      "args": {
+        "arm": "LEFT",
+        "pose": "left_source",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            -1.0,
+            1.4
+          ],
+          "RIGHT": [
+            2.0,
+            -1.0,
+            1.4
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {
+          "rq2_gap_0": "OFF",
+          "rq2_gap_1": "OFF",
+          "rq2_gap_2": "OFF"
+        },
+        "event_versions": {
+          "left_ready": 0,
+          "right_ready": 0,
+          "rq2_gate": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_700071fafb90",
+      "request_id": 2,
+      "operation_id": "op_0001",
+      "termination": "TASK_CANCELLATION",
+      "result": {
+        "operation_id": "op_0001",
+        "method": "move",
+        "arm": "LEFT",
+        "started_at": 0.0,
+        "finished_at": 0.0,
+        "status": "CANCELLED",
+        "committed": false,
+        "completion_fraction": 0.0,
+        "final_pose": null
+      }
+    },
+    {
+      "index": 3,
+      "time": 0.0,
+      "phase": "cancel",
+      "action": "move",
+      "args": {
+        "arm": "RIGHT",
+        "pose": "right_source",
+        "timeout_s": 4.0,
+        "receipt": null
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -2.0,
+            -1.0,
+            1.4
+          ],
+          "RIGHT": [
+            2.0,
+            -1.0,
+            1.4
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "left_part": "left_source",
+          "right_part": "right_source"
+        },
+        "object_xyz_m": {
+          "left_part": [
+            -2.0,
+            0,
+            1
+          ],
+          "right_part": [
+            2.0,
+            0,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {
+          "rq2_gap_0": "OFF",
+          "rq2_gap_1": "OFF",
+          "rq2_gap_2": "OFF"
+        },
+        "event_versions": {
+          "left_ready": 0,
+          "right_ready": 0,
+          "rq2_gate": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_700071fafc60",
+      "request_id": 3,
+      "operation_id": "op_0002",
+      "termination": "TASK_CANCELLATION",
+      "result": {
+        "operation_id": "op_0002",
+        "method": "move",
+        "arm": "RIGHT",
+        "started_at": 0.0,
+        "finished_at": 0.0,
+        "status": "CANCELLED",
+        "committed": false,
+        "completion_fraction": 0.0,
+        "final_pose": null
+      }
+    }
+  ],
+  "call_audit": [
+    {
+      "request_id": 1,
+      "action": "signal",
+      "proposed_at": 0.0,
+      "before_event_count": 0,
+      "wire_args": [
+        "rq2_gate",
+        "rq2_gate"
+      ],
+      "wire_kwargs": {},
+      "boundary": "REJECTED",
+      "parameters": {
+        "event_id": "rq2_gate",
+        "item_id": "rq2_gate"
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "ContractError",
+        "message": "DOMAIN: undeclared item_id"
+      },
+      "started": false,
+      "committed": false,
+      "event_indices": [],
+      "finished_at": 0.0,
+      "after_event_count": 0
+    },
+    {
+      "request_id": 2,
+      "action": "move",
+      "proposed_at": 0.0,
+      "before_event_count": 0,
+      "wire_args": [
+        "LEFT",
+        "left_source",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "pose": "left_source",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "CancelledError",
+        "message": ""
+      },
+      "started": true,
+      "committed": false,
+      "event_indices": [
+        0,
+        2
+      ],
+      "finished_at": 0.0,
+      "after_event_count": 3
+    },
+    {
+      "request_id": 3,
+      "action": "move",
+      "proposed_at": 0.0,
+      "before_event_count": 1,
+      "wire_args": [
+        "RIGHT",
+        "right_source",
+        null
+      ],
+      "wire_kwargs": {
+        "receipt": null
+      },
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "RIGHT",
+        "pose": "right_source",
+        "timeout_s": null,
+        "receipt": null
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "CancelledError",
+        "message": ""
+      },
+      "started": true,
+      "committed": false,
+      "event_indices": [
+        1,
+        3
+      ],
+      "finished_at": 0.0,
+      "after_event_count": 4
+    }
+  ],
+  "call_audit_complete": true,
+  "trusted_api_errors": [
+    {
+      "id": 1,
+      "action": "signal",
+      "time": 0.0,
+      "error": {
+        "type": "ContractError",
+        "message": "DOMAIN: undeclared item_id"
+      }
+    },
+    {
+      "id": 2,
+      "action": "move",
+      "time": 0.0,
+      "error": {
+        "type": "CancelledError",
+        "message": ""
+      }
+    },
+    {
+      "id": 3,
+      "action": "move",
+      "time": 0.0,
+      "error": {
+        "type": "CancelledError",
+        "message": ""
+      }
+    }
+  ],
+  "safety_label": null,
+  "source_scope": "SELF_AUTHORED_DEVELOPMENT_ONLY"
+}

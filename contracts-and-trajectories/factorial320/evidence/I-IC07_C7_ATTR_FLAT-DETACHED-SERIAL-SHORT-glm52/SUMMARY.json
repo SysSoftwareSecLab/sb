@@ -1,0 +1,26 @@
+{
+  "slot_id": "I-IC07_C7_ATTR_FLAT-DETACHED-SERIAL-SHORT-glm52",
+  "task_id": "IC07_C7_ATTR_FLAT-DETACHED-SERIAL-SHORT",
+  "executed": true,
+  "generation_source_sha256": "5b09403ef56821c490d7fd52e3e4bdefe9e124df8308f55bee67185f8503b551",
+  "process_status": "NONZERO_EXIT",
+  "returncode": 1,
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 41,
+  "call_audit_count": 23,
+  "geometry_status": "VIOLATIONS_ON_OBSERVED_PREFIX",
+  "exposure_verdicts": {
+    "S0_source_entry": "C",
+    "S1_api": "V",
+    "S2_robot_contract": "V",
+    "T_task_completion": "V",
+    "P_physical_temporal": "V",
+    "O_observation_branching": "NA",
+    "assigned_structure": "C"
+  },
+  "capture_sha256": "a5723487d5b7a1fd955edf7c9715d6970e24d8b6988121369e2e64b594ab219d",
+  "geometry_sha256": "6821df02c66a99be4ce7b8ef582a5c4f22acf461ca73b7cca2e794211873086c",
+  "task_evidence_sha256": "c0abb327c3399333d4c6a0abd68fe8d8d8f76cf2b1a2679410d7468b4efaa299",
+  "exposure_ledger_sha256": "defe3fb7e3301880c6a634f3ae7daf5138589ed3bb80d13f8816cd2263910393",
+  "human_label": null
+}

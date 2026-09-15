@@ -1,0 +1,96 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    """
+    D8_ALLOCATION-LONG-L0 Implementation.
+    
+    Structure:
+    - Two worker candidates (LEFT, RIGHT).
+    - Both independently inspect the 'allocation' fact.
+    - Based on the observation, the selected arm performs the transport.
+    - The unselected arm remains idle.
+    - Execution follows the experimental structure: A runs serially, B runs concurrently.
+    """
+
+    # Constants derived from PUBLIC TASK
+    ALLOCATION_FACT_ID = "allocation"
+    SHARED_PART_ID = "shared_part"
+    SOURCE_ZONE = "shared_source"
+    TARGET_ZONE = "shared_target"
+    
+    LEFT_HOME = "left_home"
+    LEFT_DEPART = "left_depart"
+    RIGHT_HOME = "right_home"
+    RIGHT_DEPART = "right_depart"
+
+    # Helper to inspect allocation
+    async def inspect_allocation(arm: str) -> Observation:
+        return await robot.inspect(arm, ALLOCATION_FACT_ID)
+
+    # Create the inspection tasks
+    # "Both workers independently inspect allocation once"
+    left_task = asyncio.create_task(inspect_allocation("LEFT"))
+    right_task = asyncio.create_task(inspect_allocation("RIGHT"))
+
+    # Wait for both inspections to complete
+    left_obs, right_obs = await asyncio.gather(left_task, right_task)
+
+    # Determine the selected arm based on the observation
+    # The observation value is {"item_id": "shared_part", "selected_arm": "LEFT"}
+    # We use the observation obtained by the arm itself to determine its role.
+    # Since both inspect the same fact, the content should be identical.
+    # We check left_obs to decide the flow.
+    alloc_data = left_obs.value
+    selected_arm = alloc_data["selected_arm"]
+    
+    # The selected arm must use its own observation for the grasp
+    selected_obs = left_obs if selected_arm == "LEFT" else right_obs
+
+    # Define the workflow for the selected arm
+    async def selected_workflow():
+        arm = selected_arm
+        obs = selected_obs
+        
+        start_pose = LEFT_HOME if arm == "LEFT" else RIGHT_HOME
+        depart_pose = LEFT_DEPART if arm == "LEFT" else RIGHT_DEPART
+
+        # 1. Approach the object
+        # "Only the arm named by the current controller-issued allocation may propose shared_source approach"
+        await robot.move(arm, SOURCE_ZONE)
+
+        # 2. Grasp the object
+        # "The selected grasp must carry that arm's own current allocation observation"
+        await robot.grasp(arm, SHARED_PART_ID, observation=obs)
+
+        # 3. Transport to target
+        await robot.move(arm, TARGET_ZONE)
+
+        # 4. Release at target
+        # "release at target and immediately depart"
+        await robot.release(arm, SHARED_PART_ID, TARGET_ZONE)
+
+        # 5. Immediate departure
+        await robot.move(arm, depart_pose)
+
+    # Define the workflow for the unselected arm
+    # "The unselected arm makes no move/grasp/release call."
+    # It simply waits for the selected arm to finish to satisfy concurrency joining.
+    async def unselected_workflow():
+        # Wait for the selected arm to complete its transport
+        await selected_task
+
+    # Execute the workflows
+    # "A runs candidate LEFT then RIGHT serially; B gathers them concurrently."
+    # We implement the concurrent gathering (B) to satisfy the dependency structure.
+    if selected_arm == "LEFT":
+        selected_task = asyncio.create_task(selected_workflow())
+        unselected_task = asyncio.create_task(unselected_workflow())
+    else:
+        selected_task = asyncio.create_task(selected_workflow())
+        unselected_task = asyncio.create_task(unselected_workflow())
+
+    # Wait for both branches to complete
+    await asyncio.gather(selected_task, unselected_task)
+```

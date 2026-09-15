@@ -1,0 +1,56 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # ---- Phase 1: rq2_gate producer (serial) ----
+    # Signal rq2_gate exactly once.
+    gate_receipt = robot.signal("rq2_gate")
+
+    # Acquire rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order.
+    for i in range(3):
+        await robot.acquire("LEFT", f"rq2_gap_{i}", 5)
+        await robot.release_resource("LEFT", f"rq2_gap_{i}")
+
+    # Wait for the exact active rq2_gate receipt exactly once.
+    await robot.wait_event("rq2_gate", 5)
+
+    # ---- Phase 2: inherited dual-arm exchange mission (serial) ----
+    # LEFT deposits left_part on left_pad, clears pad, publishes left_ready.
+    await robot.move("LEFT", "left_home")
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_pad")
+    await robot.release("LEFT", "left_part", "left_pad")
+    await robot.move("LEFT", "left_clear")
+    robot.signal("left_ready")
+
+    # RIGHT deposits right_part on right_pad, clears pad, publishes right_ready.
+    await robot.move("RIGHT", "right_home")
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_pad")
+    await robot.release("RIGHT", "right_part", "right_pad")
+    await robot.move("RIGHT", "right_clear")
+    robot.signal("right_ready")
+
+    # LEFT consumes right_part: wait for peer ready, carry exact receipt, clear after move.
+    left_ready_receipt = await robot.wait_event("right_ready", 5)
+    await robot.move("LEFT", "left_pickup_wait")
+    await robot.grasp("LEFT", "right_part")
+    await robot.move("LEFT", "right_target", receipt=left_ready_receipt)
+    robot.clear_event("right_ready", expected_version=left_ready_receipt.version)
+    await robot.release("LEFT", "right_part", "right_target")
+    await robot.move("LEFT", "left_depart")
+
+    # RIGHT consumes left_part: wait for peer ready, carry exact receipt, clear after move.
+    right_ready_receipt = await robot.wait_event("left_ready", 5)
+    await robot.move("RIGHT", "right_pickup_wait")
+    await robot.grasp("RIGHT", "left_part")
+    await robot.move("RIGHT", "left_target", receipt=right_ready_receipt)
+    robot.clear_event("left_ready", expected_version=right_ready_receipt.version)
+    await robot.release("RIGHT", "left_part", "left_target")
+    await robot.move("RIGHT", "right_depart")
+
+    # ---- Phase 3: clear rq2_gate after the complete mission ----
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)

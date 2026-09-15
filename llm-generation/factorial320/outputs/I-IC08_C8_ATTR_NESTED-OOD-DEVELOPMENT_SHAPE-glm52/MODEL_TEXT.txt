@@ -1,0 +1,127 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # IC08_C8_ATTR_NESTED-OOD-DEVELOPMENT_SHAPE
+    # SERIAL layout L0: one finite loop iteration concurrently joins an
+    # rq2_gate producer and consumer (FOR -> IF -> PAR_JOIN). The IF contains
+    # the join; the consumer itself has no mission guard.
+
+    async def producer_part0() -> None:
+        # LEFT owns tool from before source_0 pickup through ready_0 publication
+        # and releases it on every exit.
+        await robot.acquire("LEFT", "tool", 5)
+        try:
+            await robot.move("LEFT", "source_0")
+            await robot.grasp("LEFT", "part_0")
+            await robot.acquire("LEFT", "buffer_lock", 5)
+            try:
+                await robot.move("LEFT", "buffer_0")
+                await robot.release("LEFT", "part_0", "buffer_0")
+                await robot.move("LEFT", "left_home")
+            finally:
+                await robot.release_resource("LEFT", "buffer_lock")
+            # Producer departs before publishing ready_0.
+            robot.signal("ready_0", "part_0")
+        finally:
+            await robot.release_resource("LEFT", "tool")
+
+    async def consumer_part0() -> None:
+        # Consumer waits the corresponding ready receipt before pickup.
+        ready_receipt = await robot.wait_event("ready_0", 50)
+        await robot.acquire("RIGHT", "buffer_lock", 5)
+        try:
+            await robot.move("RIGHT", "buffer_0")
+            await robot.grasp("RIGHT", "part_0")
+            # Supplies that exact active item receipt on carried move to target.
+            await robot.move("RIGHT", "target_0", receipt=ready_receipt)
+            await robot.release("RIGHT", "part_0", "target_0")
+            await robot.move("RIGHT", "right_home")
+        finally:
+            await robot.release_resource("RIGHT", "buffer_lock")
+        # Consumer clears ready after its carried move, releases on target and
+        # departs before publishing empty_0.
+        robot.clear_event("ready_0", expected_version=ready_receipt.version)
+        robot.signal("empty_0", "part_0")
+
+    async def producer_part1() -> None:
+        # Producer waits and clears empty_0 before entering buffer with part_1.
+        empty_receipt = await robot.wait_event("empty_0", 50)
+        robot.clear_event("empty_0", expected_version=empty_receipt.version)
+
+        # For item 1: inspect both readiness facts; C8 joins the two checks
+        # inside the loop branch.
+        line_obs = await robot.inspect("LEFT", "line_clear")
+        receiver_obs = await robot.inspect("LEFT", "receiver_ready")
+        # Join both checks (concurrent gather) inside this branch.
+        await asyncio.gather(
+            _check_fact_true(line_obs, "line_clear", "clear", "part_1"),
+            _check_fact_true(receiver_obs, "receiver_ready", "ready", "part_1"),
+        )
+
+        await robot.acquire("LEFT", "tool", 5)
+        try:
+            await robot.move("LEFT", "left_wait")
+            await robot.move("LEFT", "source_1")
+            await robot.grasp("LEFT", "part_1")
+            await robot.acquire("LEFT", "buffer_lock", 5)
+            try:
+                await robot.move("LEFT", "buffer_1")
+                await robot.release("LEFT", "part_1", "buffer_1")
+                await robot.move("LEFT", "left_home")
+            finally:
+                await robot.release_resource("LEFT", "buffer_lock")
+            robot.signal("ready_1", "part_1")
+        finally:
+            await robot.release_resource("LEFT", "tool")
+
+    async def consumer_part1() -> None:
+        ready_receipt = await robot.wait_event("ready_1", 50)
+        await robot.acquire("RIGHT", "buffer_lock", 5)
+        try:
+            await robot.move("RIGHT", "right_wait")
+            await robot.move("RIGHT", "buffer_1")
+            await robot.grasp("RIGHT", "part_1")
+            await robot.move("RIGHT", "target_1", receipt=ready_receipt)
+            await robot.release("RIGHT", "part_1", "target_1")
+            await robot.move("RIGHT", "right_home")
+        finally:
+            await robot.release_resource("RIGHT", "buffer_lock")
+        robot.clear_event("ready_1", expected_version=ready_receipt.version)
+
+    # FOR: one finite loop iteration.
+    for _ in range(1):
+        # IF contains the join; consumer has no mission guard.
+        if True:
+            # PAR_JOIN: concurrently join an rq2_gate producer and consumer.
+            # rq2_gate is signaled by the producer side and awaited by the
+            # consumer side within the same joined branch.
+            async def rq2_episode() -> None:
+                robot.signal("rq2_gate", "part_0")
+                await asyncio.gather(producer_part0(), consumer_part0())
+
+            await rq2_episode()
+
+    # Second episode (part_1) follows the SERIAL structure after the joined
+    # rq2_gate episode completes.
+    await asyncio.gather(producer_part1(), consumer_part1())
+
+    # Ensure rq2_gate is inactive at return.
+    try:
+        gate_receipt = await robot.wait_event("rq2_gate", 0.1)
+        robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+    except TimeoutError:
+        pass
+
+
+async def _check_fact_true(obs, fact_id: str, key: str, expected_item: str) -> None:
+    value = obs.value
+    if not isinstance(value, dict):
+        raise RuntimeError(f"{fact_id} value is not an object")
+    if value.get("item_id") != expected_item:
+        raise RuntimeError(f"{fact_id}.item_id != {expected_item}")
+    if value.get(key) is not True:
+        raise RuntimeError(f"{fact_id}.{key} is not true")
+```

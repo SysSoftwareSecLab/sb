@@ -1,0 +1,86 @@
+{
+  "schema": "paper3.rq2.structure_preserving_recomposition.analysis_plan.v1",
+  "status": "FROZEN_BEFORE_EXTERNAL_CALLS",
+  "population": "Fixed model-generated atomic module pairs that pass condition-blind isolated contract qualification",
+  "fixed_request_slots": 96,
+  "factorial_conditions": [
+    "SERIAL_SHORT",
+    "SERIAL_LONG",
+    "CONCURRENT_SHORT",
+    "CONCURRENT_LONG"
+  ],
+  "primary_endpoint": "DIRECT_P_V_INCIDENCE_OVER_16_FIXED_PROTOCOL_SCHEDULER_SEEDS_WITH_EXPOSURE_GATE",
+  "multistate_outcomes": [
+    "treatment_implementation_and_task_completion",
+    "direct_P_path_exposure",
+    "direct_P_C_or_V_given_exposure"
+  ],
+  "confirmatory_contrasts": [
+    "CONCURRENT_MINUS_SERIAL",
+    "LONG_MINUS_SHORT",
+    "CONCURRENCY_BY_DISTANCE_INTERACTION"
+  ],
+  "multiplicity": {
+    "method": "HOLM",
+    "familywise_alpha": 0.05,
+    "family": "three confirmatory contrasts"
+  },
+  "independent_cluster": "family_id",
+  "fixed_stratum": "mechanism",
+  "within_family_aggregation_order": [
+    "compute each program condition over all 16 fixed scheduler seeds without deduplicating or reweighting",
+    "average two fixed repeats within model",
+    "average two model blocks within family"
+  ],
+  "required_denominators": [
+    "all 96 generation slots",
+    "isolated-qualified module pairs",
+    "all four composed conditions",
+    "P-path-exposed traces",
+    "normalized causal-order trace types as unweighted coverage sensitivity"
+  ],
+  "exposure_identifiability_gate": {
+    "minimum_exposure_rate_per_compared_arm": 0.75,
+    "maximum_absolute_exposure_rate_difference": 0.1,
+    "minimum_fraction_of_common_model_families_meeting_both_conditions": 0.75,
+    "failure_interpretation": "Exposure/censoring changed; direct-P risk difference and equivalence are not identifiable. Report completion, exposure, full-seed V incidence, and V given exposure separately."
+  },
+  "model_missingness": {
+    "aggregation": "repeat mean within model, then equal model mean within family",
+    "confirmatory_population": "families with at least one isolated-qualified repeat from both frozen models",
+    "minimum_common_model_families": 24,
+    "minimum_common_model_families_per_mechanism_stratum": 6,
+    "forbidden": "letting a model with two eligible repeats receive twice the weight of a model with one eligible repeat"
+  },
+  "uncertainty": "family-cluster bootstrap stratified by the four fixed mechanisms; frozen resample seed and replicate count before external calls",
+  "robustness": [
+    "leave-one-family-out direction",
+    "separate GLM and DeepSeek direction",
+    "four mechanism-specific estimates",
+    "machine endpoint versus blinded human endpoint direction",
+    "fixed-seed primary estimate versus normalized causal-order trace-type coverage"
+  ],
+  "positive_claim_gate": [
+    "Holm-adjusted family-cluster interval excludes zero",
+    "leave-one-family-out estimate never reverses direction",
+    "both model blocks agree in direction",
+    "at least three of four mechanisms agree and the fourth is not significantly opposite",
+    "blinded human program-level any-V endpoint does not contradict the machine program-level any-V corroboration endpoint"
+  ],
+  "equivalence_margin": [
+    -0.1,
+    0.1
+  ],
+  "equivalence_claim": "For conservative planning, the 96.667% TOST interval (one-sided alpha 0.05/3) is wholly inside the equivalence margin; final Holm step-down decisions use the ordered p-values",
+  "inconclusive_rule": "Intervals spanning both zero and either equivalence boundary are reported as imprecise or heterogeneous, never as no effect",
+  "stopping_rule": "Stop at the fixed 96 generation slots and maximum 384 composed programs regardless of sign or significance",
+  "forbidden": [
+    "resampling failed or unfavorable outputs",
+    "counting seeds, programs, models, repeats, or reviewers as independent families",
+    "calling benchmark-development exposure model-training seen versus unseen",
+    "calling an abstract lock, identity, version, observation, or structure error a direct physical-temporal P violation",
+    "treating NE as C or as evidence of lower risk",
+    "using raw timestamp differences to define or scientifically weight distinct traces",
+    "calling the controlled LONG factor an LLM token-distance or code-authoring effect"
+  ]
+}

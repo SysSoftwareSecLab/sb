@@ -1,0 +1,55 @@
+import asyncio
+
+async def run_task(robot):
+    # Phase 1: rq2_gate protocol (serial producer/consumer)
+    # Acquire rq2_gap_0, rq2_gap_1, rq2_gap_2 with LEFT in numeric order, release each immediately.
+    for i in range(3):
+        rid = f"rq2_gap_{i}"
+        await robot.acquire("LEFT", rid, 5)
+        await robot.release_resource("LEFT", rid)
+
+    # Signal rq2_gate exactly once, wait its exact active receipt exactly once, clear after scope.
+    gate_receipt = robot.signal("rq2_gate")
+    waited = await robot.wait_event("rq2_gate", 5)
+    assert waited.version == gate_receipt.version
+    clear_event = robot.clear_event
+    clear_event("rq2_gate", expected_version=waited.version)
+
+    # Phase 2: inherited dual-arm exchange mission (serial scheduling)
+    # Variant A: deposit LEFT then RIGHT, then consume LEFT then RIGHT.
+
+    # --- LEFT deposits left_part on left_pad ---
+    await robot.move("LEFT", "left_source")          # approach start -> interaction pose
+    await robot.grasp("LEFT", "left_part")           # immediately grasp
+    await robot.move("LEFT", "left_pad")             # carry to own pad
+    await robot.release("LEFT", "left_part", "left_pad")
+    await robot.move("LEFT", "left_clear")           # immediate separating departure
+    left_ready_receipt = robot.signal("left_ready")  # publish own item-bound ready
+
+    # --- RIGHT deposits right_part on right_pad ---
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_pad")
+    await robot.release("RIGHT", "right_part", "right_pad")
+    await robot.move("RIGHT", "right_clear")
+    right_ready_receipt = robot.signal("right_ready")
+
+    # --- LEFT consumes right_part (waits for peer ready = right_ready) ---
+    right_ready_waited = await robot.wait_event("right_ready", 5)
+    assert right_ready_waited.version == right_ready_receipt.version
+    await robot.move("LEFT", "right_pickup_wait")    # approach start for right_part
+    await robot.move("LEFT", "right_pad")            # interaction pose
+    await robot.grasp("LEFT", "right_part", observation=right_ready_waited)
+    await robot.move("LEFT", "left_target", receipt=right_ready_waited)  # carry active peer receipt
+    clear_event("right_ready", expected_version=right_ready_waited.version)
+    await robot.move("LEFT", "left_depart")          # empty arm at own departure
+
+    # --- RIGHT consumes left_part (waits for peer ready = left_ready) ---
+    left_ready_waited = await robot.wait_event("left_ready", 5)
+    assert left_ready_waited.version == left_ready_receipt.version
+    await robot.move("RIGHT", "left_pickup_wait")
+    await robot.move("RIGHT", "left_pad")
+    await robot.grasp("RIGHT", "left_part", observation=left_ready_waited)
+    await robot.move("RIGHT", "right_target", receipt=left_ready_waited)
+    clear_event("left_ready", expected_version=left_ready_waited.version)
+    await robot.move("RIGHT", "right_depart")

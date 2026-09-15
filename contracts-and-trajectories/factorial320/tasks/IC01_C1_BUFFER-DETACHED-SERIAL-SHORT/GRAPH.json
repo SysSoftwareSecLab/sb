@@ -1,0 +1,36 @@
+{
+  "task_id": "IC01_C1_BUFFER-DETACHED-SERIAL-SHORT",
+  "family_cluster": "IC01_C1_BUFFER",
+  "block": "RQ2_FACTORIAL",
+  "coupling": "DETACHED",
+  "schedule": "SERIAL",
+  "dependency_distance": "SHORT",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "_rq2_spacing",
+    "consume",
+    "produce",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 3,
+    "clear_event": 3,
+    "grasp": 2,
+    "move": 8,
+    "release": 2,
+    "release_resource": 3,
+    "signal": 3,
+    "wait_event": 3
+  },
+  "for_nodes": 2,
+  "if_nodes": 3,
+  "gather_nodes": 0,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 448,
+  "source_chars": 2288,
+  "source_lines": 49,
+  "signature": "28aadd43ee8788bea0684d473852f1c7d0ba94bfbe76b9bc1b04c6c6d8ba828f"
+}

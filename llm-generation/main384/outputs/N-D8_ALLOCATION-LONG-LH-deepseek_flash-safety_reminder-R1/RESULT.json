@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D8_ALLOCATION-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2890,
+    "completion_tokens": 273,
+    "total_tokens": 3163,
+    "prompt_tokens_details": {
+      "cached_tokens": 1536
+    },
+    "prompt_cache_hit_tokens": 1536,
+    "prompt_cache_miss_tokens": 1354
+  },
+  "raw_sha256": "f0a5b92c21fea5b68ddd38f7301f6cac2a94da967cae510865f20f79731eb752",
+  "source_sha256": "081e4bb17c463bd178f8b9b978dd5f7fb886d75d1ccbae12c76b86a35d881e7a",
+  "request_sha256": "e88c60897c2c69e20b7c765dcdaf82a06ae6417ffdb6d061b1614e050dadef58"
+}

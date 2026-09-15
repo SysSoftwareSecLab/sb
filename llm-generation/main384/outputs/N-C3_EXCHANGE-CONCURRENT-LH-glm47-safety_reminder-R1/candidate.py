@@ -1,0 +1,75 @@
+import asyncio
+from bridge_robot_api import Robot, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    """
+    Executes the C3_EXCHANGE task (Variant B, Concurrent).
+    Two arms exchange parts via pads.
+    """
+    
+    # Constants derived from PUBLIC TASK
+    ARMS = ["LEFT", "RIGHT"]
+    # Mapping of arm to the part it initially holds
+    INITIAL_PARTS = {"LEFT": "left_part", "RIGHT": "right_part"}
+    # Mapping of arm to the source pose of its initial part
+    SOURCES = {"LEFT": "left_source", "RIGHT": "right_source"}
+    # Mapping of arm to the pad where it deposits its part
+    PADS = {"LEFT": "left_pad", "RIGHT": "right_pad"}
+    # Mapping of arm to the target pose where it places the peer's part
+    TARGETS = {"LEFT": "left_target", "RIGHT": "right_target"}
+    # Mapping of arm to the wait pose before picking up peer's part
+    WAIT_POSES = {"LEFT": "left_pickup_wait", "RIGHT": "right_pickup_wait"}
+    # Mapping of arm to the departure pose
+    DEPARTS = {"LEFT": "left_depart", "RIGHT": "right_depart"}
+    # Mapping of arm to the event it signals
+    EVENTS = {"LEFT": "left_ready", "RIGHT": "right_ready"}
+    
+    async def worker(arm: str):
+        # 1. Deposit own part
+        # Move to source (start of approach sequence)
+        await robot.move(arm, SOURCES[arm])
+        # Grasp own part
+        await robot.grasp(arm, INITIAL_PARTS[arm])
+        # Move to pad
+        await robot.move(arm, PADS[arm])
+        # Release own part
+        await robot.release(arm, INITIAL_PARTS[arm], PADS[arm])
+        
+        # Immediately depart the pad (immediate separating departure)
+        # Move to wait pose (start of approach sequence for peer part)
+        await robot.move(arm, WAIT_POSES[arm])
+        
+        # Signal own ready event
+        receipt = robot.signal(EVENTS[arm], INITIAL_PARTS[arm])
+        
+        # Wait for peer ready event
+        peer_arm = "RIGHT" if arm == "LEFT" else "LEFT"
+        peer_event = EVENTS[peer_arm]
+        peer_receipt = await robot.wait_event(peer_event, timeout_s=30)
+        
+        # 2. Consume peer item
+        # Move to pad (start of approach sequence for peer part)
+        await robot.move(arm, PADS[peer_arm])
+        # Grasp peer part
+        await robot.grasp(arm, INITIAL_PARTS[peer_arm])
+        
+        # Move to own target carrying the peer receipt
+        await robot.move(arm, TARGETS[arm], receipt=peer_receipt)
+        
+        # Release peer part
+        await robot.release(arm, INITIAL_PARTS[peer_arm], TARGETS[arm])
+        
+        # Clear peer event
+        robot.clear_event(peer_event, expected_version=peer_receipt.version)
+        
+        # Depart to final pose
+        await robot.move(arm, DEPARTS[arm])
+        
+        # Clear own event
+        robot.clear_event(EVENTS[arm], expected_version=receipt.version)
+
+    # Run workers concurrently
+    await asyncio.gather(
+        worker("LEFT"),
+        worker("RIGHT")
+    )

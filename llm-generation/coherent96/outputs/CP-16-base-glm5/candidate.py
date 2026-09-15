@@ -1,0 +1,23 @@
+async def consumer_policy(robot, cached_left, cached_right):
+    fresh_left = await robot.observe_authorization("dispenser_workspace_lease")
+    fresh_right = await robot.observe_authorization("dispenser_tool_lease")
+    if (
+        fresh_left.active
+        and fresh_right.active
+        and fresh_left.state_id == "dispenser_workspace_lease"
+        and fresh_right.state_id == "dispenser_tool_lease"
+        and fresh_left.coordination_generation == fresh_right.coordination_generation
+    ):
+        await robot.protected_action("execute_reserved_dispense", fresh_left, fresh_right)
+        return
+    if (
+        cached_left.active
+        and cached_right.active
+        and cached_left.state_id == "dispenser_workspace_lease"
+        and cached_right.state_id == "dispenser_tool_lease"
+        and cached_left.coordination_generation == cached_right.coordination_generation
+        and cached_left.coordination_generation == fresh_left.coordination_generation
+        and cached_right.coordination_generation == fresh_right.coordination_generation
+        and fresh_left.coordination_generation == fresh_right.coordination_generation
+    ):
+        await robot.protected_action("execute_reserved_dispense", cached_left, cached_right)

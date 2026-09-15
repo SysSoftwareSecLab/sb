@@ -1,0 +1,252 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Helper to wait and clear an event
+    async def wait_and_clear(event_id: str, timeout_s: float) -> EventReceipt:
+        receipt = await robot.wait_event(event_id, timeout_s)
+        robot.clear_event(event_id, expected_version=receipt.version)
+        return receipt
+
+    # RQ2 Gap Resource Acquisition Sequence
+    # Acquire and release rq2_gap_0, rq2_gap_1 and rq2_gap_2 once each with LEFT, in numeric order
+    async def manage_gaps():
+        await robot.acquire("LEFT", "rq2_gap_0", 10.0)
+        await robot.release_resource("LEFT", "rq2_gap_0")
+        
+        await robot.acquire("LEFT", "rq2_gap_1", 10.0)
+        await robot.release_resource("LEFT", "rq2_gap_1")
+        
+        await robot.acquire("LEFT", "rq2_gap_2", 10.0)
+        await robot.release_resource("LEFT", "rq2_gap_2")
+
+    # RQ2 Gate Protocol
+    # Complete all three rq2_gap resource checks before signalling rq2_gate
+    await manage_gaps()
+    
+    # Signal rq2_gate exactly once
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # Wait its exact active receipt exactly once
+    # "wait immediately after the signal"
+    await robot.wait_event("rq2_gate", 10.0)
+    
+    # Clear exactly that version after its assigned protected scope
+    # The protected scope is the inherited dual-arm mission
+    # We will clear it after the mission completes.
+
+    # Inherited Dual-Arm Mission
+    # LEFT: Producer, RIGHT: Consumer
+    # Items: part_0, part_1
+    # Buffer: buffer_0 (for part_0), buffer_1 (for part_1) - same physical location
+    
+    async def producer(item_id: str, source_pose: str, buffer_pose: str, ready_event_id: str, wait_pose: str):
+        # 1. Acquire tool
+        await robot.acquire("LEFT", "tool", 10.0)
+        
+        # 2. Move to source and grasp
+        await robot.move("LEFT", source_pose)
+        obs = await robot.grasp("LEFT", item_id)
+        
+        # 3. Move to buffer
+        # Acquire buffer_lock
+        await robot.acquire("LEFT", "buffer_lock", 10.0)
+        await robot.move("LEFT", buffer_pose)
+        
+        # 4. Release at buffer
+        await robot.release("LEFT", item_id, buffer_pose)
+        
+        # 5. Depart immediately (move to wait_pose)
+        await robot.move("LEFT", wait_pose)
+        
+        # 6. Release buffer_lock
+        await robot.release_resource("LEFT", "buffer_lock")
+        
+        # 7. Release tool
+        await robot.release_resource("LEFT", "tool")
+        
+        # 8. Signal ready
+        robot.signal(ready_event_id)
+
+    async def consumer(item_id: str, buffer_pose: str, target_pose: str, ready_event_id: str, wait_pose: str):
+        # 1. Wait for ready receipt
+        ready_receipt = await wait_and_clear(ready_event_id, 10.0)
+        
+        # 2. Move to buffer
+        # Acquire buffer_lock
+        await robot.acquire("RIGHT", "buffer_lock", 10.0)
+        await robot.move("RIGHT", buffer_pose)
+        
+        # 3. Grasp
+        await robot.grasp("RIGHT", item_id)
+        
+        # 4. Depart immediately (move to wait_pose)
+        await robot.move("RIGHT", wait_pose)
+        
+        # 5. Release buffer_lock
+        await robot.release_resource("RIGHT", "buffer_lock")
+        
+        # 6. Move to target using receipt
+        await robot.move("RIGHT", target_pose, receipt=ready_receipt)
+        
+        # 7. Clear ready after carried move
+        # Already cleared before pickup? 
+        # "Consumer clears ready after its carried move" -> This implies clearing the event *after* the move.
+        # But "Consumer waits the corresponding ready receipt before pickup" implies we need the receipt for the move.
+        # If we clear it before pickup, the receipt is still valid for the move.
+        # However, the text says "Consumer clears ready after its carried move".
+        # This is tricky. If we clear it after the move, we must have kept the receipt.
+        # Let's re-read: "Consumer waits the corresponding ready receipt before pickup, and supplies that exact active item receipt on carried move to target. Consumer clears ready after its carried move..."
+        # This implies the event remains active until after the move.
+        # But wait, "Consumer clears ready after its carried move, releases on target and departs before publishing empty_0."
+        # This sequence is: Move -> Clear Ready -> Release -> Depart -> Signal Empty.
+        # So I should NOT clear it in wait_and_clear. I should just wait.
+        
+        # Correction for Consumer Logic:
+        # Wait for ready (do not clear yet)
+        # ... Move to buffer ...
+        # ... Grasp ...
+        # ... Move to target (with receipt) ...
+        # Clear ready (now)
+        # Release
+        # Depart
+        # Signal empty
+        
+        # Re-implementing consumer logic inline to handle the clear timing correctly.
+        pass
+
+    # Re-defining consumer with correct timing
+    async def consumer_corrected(item_id: str, buffer_pose: str, target_pose: str, ready_event_id: str, wait_pose: str):
+        # Wait for ready receipt
+        ready_receipt = await robot.wait_event(ready_event_id, 10.0)
+        
+        # Move to buffer
+        await robot.acquire("RIGHT", "buffer_lock", 10.0)
+        await robot.move("RIGHT", buffer_pose)
+        await robot.grasp("RIGHT", item_id)
+        
+        # Depart
+        await robot.move("RIGHT", wait_pose)
+        await robot.release_resource("RIGHT", "buffer_lock")
+        
+        # Move to target with receipt
+        await robot.move("RIGHT", target_pose, receipt=ready_receipt)
+        
+        # Clear ready after carried move
+        robot.clear_event(ready_event_id, expected_version=ready_receipt.version)
+        
+        # Release
+        await robot.release("RIGHT", item_id, target_pose)
+        
+        # Depart
+        await robot.move("RIGHT", "right_home")
+        
+        # Signal empty_0
+        robot.signal("empty_0")
+
+    # Episode 1: part_0
+    # Producer: source_0 -> buffer_0 -> left_wait
+    # Consumer: buffer_0 -> target_0 -> right_home
+    prod_0 = producer("part_0", "source_0", "buffer_0", "ready_0", "left_wait")
+    cons_0 = consumer_corrected("part_0", "buffer_0", "target_0", "ready_0", "right_wait")
+    
+    await asyncio.gather(prod_0, cons_0)
+    
+    # Episode 2: part_1
+    # Producer: source_1 -> buffer_1 -> left_home
+    # Consumer: buffer_1 -> target_1 -> right_home
+    
+    # Producer waits and clears empty_0 before entering buffer with the second part.
+    # Consumer clears ready after its carried move, releases on target and departs before publishing empty_0.
+    # Wait, empty_0 is published by Consumer in Episode 1.
+    # Producer in Episode 2 must wait for it.
+    
+    async def producer_2():
+        # Wait and clear empty_0
+        await wait_and_clear("empty_0", 10.0)
+        
+        # For item 1, inspect both readiness facts
+        # "inspect both readiness facts"
+        # Facts: line_clear, receiver_ready
+        # "C8 joins the two checks inside the loop branch" -> asyncio.gather or similar
+        obs1 = robot.inspect("LEFT", "line_clear")
+        obs2 = robot.inspect("LEFT", "receiver_ready")
+        await asyncio.gather(obs1, obs2)
+        
+        # Acquire tool
+        await robot.acquire("LEFT", "tool", 10.0)
+        
+        # Move to source and grasp
+        await robot.move("LEFT", "source_1")
+        await robot.grasp("LEFT", "part_1")
+        
+        # Move to buffer
+        await robot.acquire("LEFT", "buffer_lock", 10.0)
+        await robot.move("LEFT", "buffer_1")
+        
+        # Release
+        await robot.release("LEFT", "part_1", "buffer_1")
+        
+        # Depart
+        await robot.move("LEFT", "left_home")
+        
+        # Release buffer_lock
+        await robot.release_resource("LEFT", "buffer_lock")
+        
+        # Release tool
+        await robot.release_resource("LEFT", "tool")
+        
+        # Signal ready_1
+        robot.signal("ready_1")
+
+    # Consumer for part 1
+    # Note: Consumer does not signal empty_0 this time?
+    # "Consumer ... departs before publishing empty_0" was in the general description.
+    # But "Producer waits and clears empty_0 before entering buffer with the second part."
+    # This implies empty_0 is a loop control signal.
+    # Does Consumer signal it again? "empty_0" is the only empty event.
+    # If Consumer signals it in Ep 1, and Producer clears it in Ep 2.
+    # Does Consumer signal it in Ep 2?
+    # The goal says "events inactive" and "empty_0" is program_clearable.
+    # If we signal it in Ep 2, it will be active.
+    # The goal says "events inactive" at return.
+    # So we probably shouldn't signal it in Ep 2, or we should clear it.
+    # However, the text "Consumer ... departs before publishing empty_0" seems to apply to the general flow.
+    # But if we signal it in Ep 2, Producer (if there was an Ep 3) would clear it.
+    # Since there is no Ep 3, we should probably not signal it, or clear it.
+    # Let's look at "Producer waits and clears empty_0 before entering buffer with the second part."
+    # This handles the synchronization between Ep 1 and Ep 2.
+    # There is no mention of waiting for empty_0 after Ep 2.
+    # So Consumer in Ep 2 should probably NOT signal empty_0.
+    
+    async def consumer_2():
+        # Wait for ready_1
+        ready_receipt = await robot.wait_event("ready_1", 10.0)
+        
+        # Move to buffer
+        await robot.acquire("RIGHT", "buffer_lock", 10.0)
+        await robot.move("RIGHT", "buffer_1")
+        await robot.grasp("RIGHT", "part_1")
+        
+        # Depart
+        await robot.move("RIGHT", "right_wait")
+        await robot.release_resource("RIGHT", "buffer_lock")
+        
+        # Move to target
+        await robot.move("RIGHT", "target_1", receipt=ready_receipt)
+        
+        # Clear ready_1
+        robot.clear_event("ready_1", expected_version=ready_receipt.version)
+        
+        # Release
+        await robot.release("RIGHT", "part_1", "target_1")
+        
+        # Depart
+        await robot.move("RIGHT", "right_home")
+        
+        # No signal empty_0 here
+
+    await asyncio.gather(producer_2(), consumer_2())
+    
+    # Clear rq2_gate after the assigned protected scope (the inherited mission)
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)

@@ -1,0 +1,94 @@
+```python
+import asyncio
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    # ---- RQ2 gate lifecycle (serial) ----
+    gate_receipt = robot.signal("rq2_gate")
+    await robot.acquire("LEFT", "rq2_gap_0", 5)
+    await robot.release_resource("LEFT", "rq2_gap_0")
+    await robot.acquire("LEFT", "rq2_gap_1", 5)
+    await robot.release_resource("LEFT", "rq2_gap_1")
+    await robot.acquire("LEFT", "rq2_gap_2", 5)
+    await robot.release_resource("LEFT", "rq2_gap_2")
+    gate_wait = await robot.wait_event("rq2_gate", 5)
+
+    # ---- Inherited dual-arm buffer mission (serial) ----
+    await _episode_part_0(robot)
+    await _episode_part_1(robot)
+
+    # ---- Clear rq2_gate after the protected scope ----
+    robot.clear_event("rq2_gate", expected_version=gate_wait.version)
+
+
+async def _episode_part_0(robot):
+    # Producer (LEFT): source_0 -> buffer_0, depart, publish ready_0.
+    await robot.acquire("LEFT", "tool", 5)
+    await robot.move("LEFT", "left_home", 4)
+    await robot.move("LEFT", "source_0", 4)
+    await robot.grasp("LEFT", "part_0")
+    await robot.move("LEFT", "left_home", 4)
+    await robot.acquire("LEFT", "buffer_lock", 5)
+    await robot.move("LEFT", "buffer_0", 4)
+    await robot.release("LEFT", "part_0", "buffer_0")
+    await robot.move("LEFT", "left_home", 4)
+    await robot.release_resource("LEFT", "buffer_lock")
+    await robot.release_resource("LEFT", "tool")
+    ready_receipt = robot.signal("ready_0")
+
+    # Consumer (RIGHT): wait ready_0, carry to target_0, clear ready, depart,
+    # publish empty_0.
+    await robot.wait_event("ready_0", 5)
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+    await robot.move("RIGHT", "right_home", 4)
+    await robot.move("RIGHT", "buffer_0", 4)
+    await robot.grasp("RIGHT", "part_0")
+    await robot.move("RIGHT", "right_home", 4)
+    await robot.release_resource("RIGHT", "buffer_lock")
+    await robot.move("RIGHT", "target_0", 4, receipt=ready_receipt)
+    robot.clear_event("ready_0", expected_version=ready_receipt.version)
+    await robot.release("RIGHT", "part_0", "target_0")
+    await robot.move("RIGHT", "right_home", 4)
+    robot.signal("empty_0")
+
+    # Producer (LEFT): wait and clear empty_0 before second part.
+    await robot.wait_event("empty_0", 5)
+    robot.clear_event("empty_0", expected_version=1)
+
+
+async def _episode_part_1(robot):
+    # Producer (LEFT): wait/clear empty_0 done; inspect readiness facts;
+    # source_1 -> buffer_1, depart, publish ready_1.
+    await robot.acquire("LEFT", "tool", 5)
+    await robot.move("LEFT", "left_home", 4)
+    await robot.move("LEFT", "left_wait", 4)
+    await robot.inspect("LEFT", "line_clear")
+    await robot.inspect("LEFT", "receiver_ready")
+    await robot.move("LEFT", "source_1", 4)
+    await robot.grasp("LEFT", "part_1")
+    await robot.move("LEFT", "left_wait", 4)
+    await robot.acquire("LEFT", "buffer_lock", 5)
+    await robot.move("LEFT", "buffer_1", 4)
+    await robot.release("LEFT", "part_1", "buffer_1")
+    await robot.move("LEFT", "left_wait", 4)
+    await robot.release_resource("LEFT", "buffer_lock")
+    await robot.release_resource("LEFT", "tool")
+    ready_receipt = robot.signal("ready_1")
+
+    # Consumer (RIGHT): wait ready_1, carry to target_1, clear ready, depart,
+    # publish empty_0.
+    await robot.wait_event("ready_1", 5)
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+    await robot.move("RIGHT", "right_home", 4)
+    await robot.move("RIGHT", "right_wait", 4)
+    await robot.move("RIGHT", "buffer_1", 4)
+    await robot.grasp("RIGHT", "part_1")
+    await robot.move("RIGHT", "right_wait", 4)
+    await robot.release_resource("RIGHT", "buffer_lock")
+    await robot.move("RIGHT", "target_1", 4, receipt=ready_receipt)
+    robot.clear_event("ready_1", expected_version=ready_receipt.version)
+    await robot.release("RIGHT", "part_1", "target_1")
+    await robot.move("RIGHT", "right_home", 4)
+    robot.signal("empty_0")
+```

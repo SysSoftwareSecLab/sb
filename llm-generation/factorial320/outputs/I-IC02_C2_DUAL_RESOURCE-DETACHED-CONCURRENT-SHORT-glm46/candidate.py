@@ -1,0 +1,82 @@
+import asyncio
+from bridge_robot_api import Robot, ActionReceipt, EventReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    # Helper to manage resource acquisition with timeout and release on failure
+    async def acquire_safe(arm: str, resource_id: str, timeout_s: float):
+        try:
+            await robot.acquire(arm, resource_id, timeout_s)
+            return True
+        except TimeoutError:
+            return False
+
+    # Helper to release resource if owned
+    async def release_if_owned(arm: str, resource_id: str):
+        try:
+            await robot.release_resource(arm, resource_id)
+        except Exception:
+            pass
+
+    # --- RQ2_GATE PROTOCOL ---
+    # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order
+    # Complete all three checks before signalling rq2_gate
+    async def rq2_gate_producer():
+        gap_resources = ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]
+        for res in gap_resources:
+            # Acquire
+            await robot.acquire("LEFT", res, 4.0)
+            # Release immediately (check complete)
+            await robot.release_resource("LEFT", res)
+        
+        # Signal rq2_gate exactly once
+        robot.signal("rq2_gate")
+
+    # Wait for rq2_gate and clear it
+    async def rq2_gate_consumer():
+        # Wait for the active receipt
+        receipt = await robot.wait_event("rq2_gate", 4.0)
+        # Clear exactly that version
+        robot.clear_event("rq2_gate", expected_version=receipt.version)
+
+    # Run producer and consumer concurrently
+    await asyncio.gather(rq2_gate_producer(), rq2_gate_consumer())
+
+    # --- INHERITED DUAL-ARM MISSION ---
+    # Required order: Acquire fixture then tool.
+    # Carry part to target while owning both.
+    # Release and depart.
+    # Release tool and fixture.
+    # Use try/finally for resource cleanup.
+    
+    async def worker(arm: str, part_id: str, source_pose: str, target_pose: str, depart_pose: str):
+        acquired = []
+        try:
+            # 1. Acquire fixture then tool
+            await robot.acquire(arm, "fixture", 4.0)
+            acquired.append("fixture")
+            await robot.acquire(arm, "tool", 4.0)
+            acquired.append("tool")
+
+            # 2. Move to source, grasp part
+            await robot.move(arm, source_pose)
+            await robot.grasp(arm, part_id)
+
+            # 3. Move to target, release part
+            await robot.move(arm, target_pose)
+            await robot.release(arm, part_id, target_pose)
+
+            # 4. Depart
+            await robot.move(arm, depart_pose)
+
+        finally:
+            # Release in reverse order or just ensure all are released
+            # Task says "release tool and fixture" after mission.
+            # Ensure mode is OFF before release (initial is OFF, no set_mode needed).
+            for res in reversed(acquired):
+                await robot.release_resource(arm, res)
+
+    # Launch both workers concurrently
+    await asyncio.gather(
+        worker("LEFT", "left_part", "left_source", "left_target", "left_depart"),
+        worker("RIGHT", "right_part", "right_source", "right_target", "right_depart")
+    )

@@ -1,0 +1,122 @@
+import asyncio
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    """C1_BUFFER-CONCURRENT-LH, variant B.
+
+    Structure: A alternates complete producer/consumer episodes; B runs producer
+    and consumer coroutines together.  LEFT is the producer arm; RIGHT is the
+    consumer arm.  The capacity-one buffer (buffer_0/buffer_1 at identical
+    coordinates) is shared through buffer_lock and the ready/empty receipts.
+    """
+
+    # ---- small helpers -------------------------------------------------
+    async def _move(arm, pose, timeout_s=None, *, receipt=None):
+        return await robot.move(arm, pose, timeout_s=timeout_s, receipt=receipt)
+
+    async def _approach_and_grasp(arm, start_pose, interaction_pose, object_id):
+        """Declared approach: start_pose -> interaction_pose, then grasp in the
+        same virtual instant with no intervening robot call."""
+        await _move(arm, interaction_pose)
+        return await robot.grasp(arm, object_id)
+
+    async def _release_and_depart(arm, object_id, support_zone, depart_pose):
+        """Declared release: release on support_zone, then same coroutine begins
+        separating departure immediately."""
+        await robot.release(arm, object_id, support_zone)
+        await _move(arm, depart_pose)
+
+    # ---- producer episode for one part ---------------------------------
+    async def produce_part(part_id, source_pose, buffer_pose, ready_event,
+                           empty_event, empty_receipt_holder):
+        """LEFT producer: acquire buffer_lock, approach source, grasp part,
+        enter buffer, release part, depart buffer, publish ready, then wait for
+        empty_0 and clear it before returning (so the next producer episode may
+        enter the buffer)."""
+
+        await robot.acquire("LEFT", "buffer_lock", 120)
+
+        # Approach source and grasp in the same virtual instant.
+        await _approach_and_grasp("LEFT", "left_home", source_pose, part_id)
+
+        # Carry part into the capacity-one buffer.
+        await _move("LEFT", buffer_pose, receipt=None)
+
+        # Release on the buffer and immediately depart.
+        await _release_and_depart("LEFT", part_id, buffer_pose, "left_home")
+
+        # Producer owns lock during buffer entry AND departure; free it now.
+        await robot.release_resource("LEFT", "buffer_lock")
+
+        # Publish ready receipt for this part.
+        ready_receipt = robot.signal(ready_event, part_id)
+        empty_receipt_holder["receipt"] = ready_receipt
+
+        # Producer waits and clears empty_0 before entering buffer with next part.
+        empty_receipt = await robot.wait_event(empty_event, 120)
+        robot.clear_event(empty_event, expected_version=empty_receipt.version)
+
+    # ---- consumer episode for one part --------------------------------
+    async def consume_part(part_id, buffer_pose, target_pose, ready_event,
+                           ready_receipt_holder, empty_event):
+        """RIGHT consumer: wait the corresponding ready receipt, acquire
+        buffer_lock, approach buffer, grasp part, carry to target supplying the
+        exact active item receipt, clear ready after the carried move, release
+        on target, depart, then publish empty_0."""
+
+        ready_receipt = await robot.wait_event(ready_event, 120)
+        ready_receipt_holder["receipt"] = ready_receipt
+
+        await robot.acquire("RIGHT", "buffer_lock", 120)
+
+        # Approach buffer and grasp the part in the same virtual instant.
+        await _approach_and_grasp("RIGHT", "right_home", buffer_pose, part_id)
+
+        # Carried move to target supplies the exact active item receipt.
+        await _move("RIGHT", target_pose, receipt=ready_receipt)
+
+        # Consumer clears ready after its carried move.
+        robot.clear_event(ready_event, expected_version=ready_receipt.version)
+
+        # Release on target and immediately depart.
+        await _release_and_depart("RIGHT", part_id, target_pose, "right_home")
+
+        # Consumer owns lock during buffer entry AND departure; free it now.
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+        # Publish empty_0 after departing from target.
+        robot.signal(empty_event, part_id)
+
+    # ---- joined worker coroutines (variant B) -------------------------
+    async def episode_0():
+        ready_holder = {}
+        empty_holder = {}
+
+        producer_0 = asyncio.create_task(
+            produce_part("part_0", "source_0", "buffer_0", "ready_0",
+                         "empty_0", empty_holder)
+        )
+        consumer_0 = asyncio.create_task(
+            consume_part("part_0", "buffer_0", "target_0", "ready_0",
+                         ready_holder, "empty_0")
+        )
+        await asyncio.gather(producer_0, consumer_0)
+
+    async def episode_1():
+        ready_holder = {}
+        empty_holder = {}
+
+        producer_1 = asyncio.create_task(
+            produce_part("part_1", "source_1", "buffer_1", "ready_1",
+                         "empty_0", empty_holder)
+        )
+        consumer_1 = asyncio.create_task(
+            consume_part("part_1", "buffer_1", "target_1", "ready_1",
+                         ready_holder, "empty_0")
+        )
+        await asyncio.gather(producer_1, consumer_1)
+
+    # A alternates complete producer/consumer episodes.
+    await episode_0()
+    await episode_1()

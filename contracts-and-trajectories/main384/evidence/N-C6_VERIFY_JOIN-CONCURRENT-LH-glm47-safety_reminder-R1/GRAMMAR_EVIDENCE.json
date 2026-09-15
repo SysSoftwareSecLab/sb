@@ -1,0 +1,19 @@
+{
+  "rows": [
+    {
+      "obligation": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "observed": 3.3,
+      "expected": {
+        "level": "CONCURRENT",
+        "threshold": 0.05,
+        "reference_serial": 0.0,
+        "reference_concurrent": 0.1
+      }
+    }
+  ],
+  "summary": {
+    "COMPOSITION_CONCURRENCY": "C"
+  },
+  "scope": "Observed finite path plus reachable source control flow; independent of model judge and human labels"
+}

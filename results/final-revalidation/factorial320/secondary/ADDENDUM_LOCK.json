@@ -1,0 +1,41 @@
+{
+  "status": "FROZEN_COMPLETE",
+  "scope": "PRE_SPECIFIED_RQ2_SECONDARY_UNCERTAINTY_COMPLETION_AFTER_AGGREGATE_VISIBILITY",
+  "inputs": [
+    {
+      "path": "results/final-revalidation/factorial320/ANALYSIS_LOCK.json",
+      "sha256": "a63ca9662ac6d32c967b4333b3fdd8abb13311f9108a258669c3e0e1a7af40ae",
+      "bytes": 3756
+    },
+    {
+      "path": "datasets/factorial320/design/ANALYSIS_IMPLEMENTATION_ADDENDUM_001.md",
+      "sha256": "fd99ccee99d294e9e0c612ba98f6804b08085bf4e17e45e3ba1c730c7e5d98d1",
+      "bytes": 1645
+    },
+    {
+      "path": "oracles/source-snapshots/factorial/analyze_rq2_secondary_addendum_v1.py",
+      "sha256": "283010fd1b77b9fbecbae8a452e4212b2ce801c299c3aa7b3d4d483ddd31fd1d",
+      "bytes": 6489
+    },
+    {
+      "path": "paper3_bisafebench/05_formal/rq2_rq4_identifiable_confirmation_v1/human_return_v2/answers/REVIEW_Reviewer1.py",
+      "sha256": "c54640063b70c7452f56dc82aea1194b09e9c5e719254e2ad07a5b58f52ceb31",
+      "bytes": 1357913
+    },
+    {
+      "path": "paper3_bisafebench/05_formal/rq2_rq4_identifiable_confirmation_v1/human_return_v2/answers/REVIEW_Reviewer2.py",
+      "sha256": "3c28f20d7572c1c01c324c1afe433fc90ea4a592d3b82d26d83f4a99f897a719",
+      "bytes": 1332959
+    }
+  ],
+  "outputs": [
+    {
+      "path": "RQ2_SECONDARY_UNCERTAINTY.json",
+      "sha256": "ff24aec819b8a7c4d261dd16b559b41db546bc86a1afc3ede9a6711d6aa1c28c",
+      "bytes": 118284
+    }
+  ],
+  "no_overwrite_of_original_analysis": true,
+  "not_independent_confirmation": true,
+  "no_result_dependent_extension": true
+}

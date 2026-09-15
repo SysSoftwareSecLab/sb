@@ -1,0 +1,49 @@
+```python
+async def run_task(robot):
+    GATE = "rq2_gate"
+    GAPS = ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2")
+    FIXTURE = "fixture"
+    TOOL = "tool"
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+
+    async def worker(arm, part, home, source, target, depart):
+        await robot.move(arm, home)
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+        await robot.acquire(arm, FIXTURE, 5)
+        try:
+            await robot.acquire(arm, TOOL, 5)
+            try:
+                await robot.move(arm, target)
+                await robot.release(arm, part, target)
+                await robot.move(arm, depart)
+            finally:
+                await robot.set_mode(arm, TOOL, "OFF")
+                await robot.release_resource(arm, TOOL)
+        finally:
+            await robot.set_mode(arm, FIXTURE, "OFF")
+            await robot.release_resource(arm, FIXTURE)
+
+    gate_receipt = robot.signal(GATE)
+    for gap in GAPS:
+        await robot.acquire(LEFT, gap, 5)
+        await robot.set_mode(LEFT, gap, "OFF")
+        await robot.release_resource(LEFT, gap)
+    gate_wait = await robot.wait_event(GATE, 5)
+    try:
+        await worker(LEFT, LEFT_PART, LEFT_HOME, LEFT_SOURCE, LEFT_TARGET, LEFT_DEPART)
+        await worker(RIGHT, RIGHT_PART, RIGHT_HOME, RIGHT_SOURCE, RIGHT_TARGET, RIGHT_DEPART)
+    finally:
+        robot.clear_event(GATE, expected_version=gate_wait.version)
+```

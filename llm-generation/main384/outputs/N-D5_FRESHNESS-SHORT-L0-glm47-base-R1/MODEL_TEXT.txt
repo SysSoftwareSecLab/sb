@@ -1,0 +1,82 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    # Task: Move left_part to left_target, right_part to right_target.
+    # Arms end at left_depart and right_depart respectively.
+    # Constraints: Approach sequences must be followed strictly.
+    # Development obligation: Observation of 'route' for 'left_part' must be preserved.
+    # This implies we must NOT invalidate the 'route' fact.
+    # The task spec says "preserve versus invalidate same closed-value observation".
+    # Since 'route' is associated with 'left_part', and we are moving 'left_part',
+    # we must ensure we do not trigger invalidation logic if it were present,
+    # or simply ensure we use the observation correctly.
+    # Given `h_variant.invalidates` is true, but `invalidation_on_release` is empty {},
+    # and `route` is an observation_fact, invalidation likely happens on specific releases.
+    # To be safe and strictly follow "preserve", we avoid releasing in a way that might
+    # trigger logic if it existed, but here we just need to complete the move.
+    # The critical path is the atomic observation requirement.
+    # We must inspect 'route' for 'left_part'.
+    
+    # 1. Inspect 'route' fact for 'left_part' to satisfy atomic observation obligation.
+    # This ensures we have the observation before any potential invalidation.
+    # Note: The spec says "observation occurs after invalidating peer placement".
+    # Since we are moving left_part, and right_part is the peer, we might need to coordinate.
+    # However, the goal is simple: move both parts.
+    # We will perform the inspection first to capture the state.
+    
+    # Initial positions: LEFT at left_home, RIGHT at right_home.
+    # Parts: left_part at left_source, right_part at right_source.
+    
+    # Step 1: Inspect route for left_part.
+    # We need to be at a pose? Inspect doesn't require a specific pose in the API,
+    # but logically we might want to be near. However, API only requires arm and fact_id.
+    # We do this immediately.
+    route_obs: Observation = await robot.inspect("LEFT", "route")
+    
+    # Step 2: Move LEFT to left_source (Approach start).
+    # This is part of the approach sequence for left_part.
+    await robot.move("LEFT", "left_source")
+    
+    # Step 3: Grasp left_part.
+    # Must be done immediately after move to left_source (approach sequence).
+    # We pass the observation? The spec says "grasp.observation: None or ...".
+    # The obligation is "atomic observation". Usually this means the observation
+    # is part of the transaction or validated. We pass it if needed, or just hold it.
+    # The API says grasp returns an observation.
+    grasp_obs: Observation = await robot.grasp("LEFT", "left_part", observation=route_obs)
+    
+    # Step 4: Move LEFT to left_target.
+    await robot.move("LEFT", "left_target")
+    
+    # Step 5: Release left_part at left_target.
+    # Support zone is left_target.
+    await robot.release("LEFT", "left_part", "left_target")
+    
+    # Step 6: Depart LEFT to left_depart.
+    # Must be immediate after release.
+    await robot.move("LEFT", "left_depart")
+    
+    # Now handle RIGHT arm.
+    # Step 7: Move RIGHT to right_source.
+    await robot.move("RIGHT", "right_source")
+    
+    # Step 8: Grasp right_part.
+    await robot.grasp("RIGHT", "right_part")
+    
+    # Step 9: Move RIGHT to right_target.
+    await robot.move("RIGHT", "right_target")
+    
+    # Step 10: Release right_part at right_target.
+    await robot.release("RIGHT", "right_part", "right_target")
+    
+    # Step 11: Depart RIGHT to right_depart.
+    await robot.move("RIGHT", "right_depart")
+    
+    # Goal state achieved:
+    # left_part at left_target, right_part at right_target.
+    # LEFT at left_depart, RIGHT at right_depart.
+    # Arms empty.
+    # Observation of 'route' was obtained.
+```

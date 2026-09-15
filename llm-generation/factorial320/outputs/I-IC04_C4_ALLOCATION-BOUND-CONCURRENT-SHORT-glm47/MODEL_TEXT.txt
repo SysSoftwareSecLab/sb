@@ -1,0 +1,73 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # 1. Both workers independently inspect allocation once before choosing their own branch.
+    # We perform inspections concurrently.
+    alloc_obs_left: Observation = await robot.inspect("LEFT", "allocation")
+    alloc_obs_right: Observation = await robot.inspect("RIGHT", "allocation")
+
+    # Determine which arm is selected based on the observation value.
+    # The observation value is a dict: {"item_id": "shared_part", "selected_arm": "LEFT"}
+    selected_arm = alloc_obs_left.value["selected_arm"]
+    unselected_arm = "RIGHT" if selected_arm == "LEFT" else "LEFT"
+
+    # 2. Acquire and release rq2_gap_0, rq2_gap_1 and rq2_gap_2 once each with LEFT, in numeric order.
+    # This must be done before signalling rq2_gate.
+    # We use a helper to acquire and release sequentially.
+    async def manage_gap(gap_id: str):
+        await robot.acquire("LEFT", gap_id, timeout_s=4.0)
+        await robot.release_resource("LEFT", gap_id)
+
+    # Execute sequentially: 0 -> 1 -> 2
+    await manage_gap("rq2_gap_0")
+    await manage_gap("rq2_gap_1")
+    await manage_gap("rq2_gap_2")
+
+    # 3. Signal rq2_gate exactly once.
+    # This happens after the gap checks are complete.
+    gate_receipt: EventReceipt = robot.signal("rq2_gate")
+
+    # 4. Wait for rq2_gate exactly once.
+    # The task requires waiting immediately after the signal.
+    # We use a short timeout as the event is already active.
+    active_gate_receipt: EventReceipt = await robot.wait_event("rq2_gate", timeout_s=1.0)
+
+    # 5. Execute the complete inherited dual-arm mission while rq2_gate is active.
+    # We use joined concurrent scheduling (asyncio.gather) for the dual-arm mission.
+    
+    async def selected_arm_mission():
+        # The selected arm performs the transport.
+        # It must use its own current allocation observation for grasp.
+        # We use the observation obtained by this specific arm (alloc_obs_left or alloc_obs_right).
+        obs_to_use = alloc_obs_left if selected_arm == "LEFT" else alloc_obs_right
+        
+        # Approach shared_source
+        await robot.move(selected_arm, "shared_source", timeout_s=4.0)
+        
+        # Grasp shared_part with the observation
+        await robot.grasp(selected_arm, "shared_part", observation=obs_to_use)
+        
+        # Move to shared_target
+        await robot.move(selected_arm, "shared_target", timeout_s=4.0)
+        
+        # Release at target
+        await robot.release(selected_arm, "shared_part", "shared_target")
+        
+        # Immediately depart
+        depart_pose = "left_depart" if selected_arm == "LEFT" else "right_depart"
+        await robot.move(selected_arm, depart_pose, timeout_s=4.0)
+
+    async def unselected_arm_mission():
+        # The unselected arm makes no move/grasp/release call.
+        # It must end at its home pose (already there).
+        # We simply pass to satisfy concurrency structure.
+        pass
+
+    # Run both arms concurrently
+    await asyncio.gather(selected_arm_mission(), unselected_arm_mission())
+
+    # 6. Clear rq2_gate exactly that version after the mission.
+    robot.clear_event("rq2_gate", expected_version=active_gate_receipt.version)
+```

@@ -1,0 +1,42 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # 1. Signal rq2_gate
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # 2. Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 with LEFT in numeric order
+    # Resources start in OFF mode, so we can acquire directly.
+    # Timeout is set to a safe value within the 0-120s range.
+    timeout = 5.0
+    
+    await robot.acquire("LEFT", "rq2_gap_0", timeout)
+    await robot.release_resource("LEFT", "rq2_gap_0")
+    
+    await robot.acquire("LEFT", "rq2_gap_1", timeout)
+    await robot.release_resource("LEFT", "rq2_gap_1")
+    
+    await robot.acquire("LEFT", "rq2_gap_2", timeout)
+    await robot.release_resource("LEFT", "rq2_gap_2")
+    
+    # 3. Wait for rq2_gate (exact active receipt)
+    # The receipt we got from signal is active, but the task requires waiting for it.
+    await robot.wait_event("rq2_gate", timeout)
+    
+    # 4. Clear rq2_gate
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+    
+    # 5. Complete the inherited dual-arm mission (Serial scheduling)
+    # LEFT Arm: Move to source, grasp, move to target, release, move to depart
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+    
+    # RIGHT Arm: Move to source, grasp, move to target, release, move to depart
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")

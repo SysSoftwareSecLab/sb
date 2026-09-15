@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C8_ATTR_NESTED-SERIAL-LH-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3510,
+    "completion_tokens": 1152,
+    "total_tokens": 4662,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1846
+  },
+  "raw_sha256": "f58ea038bed918acc4e74e4deb15f578a989da23129e4ebdeea435f1df1f2ddd",
+  "source_sha256": "b573e96b671b90f5484f81e4eb70e9310da3c3a386ec41d84b2e4426a0c49aef",
+  "request_sha256": "502f8f882753d3faca36e4d5616d576a4c4323073a3e4e57f962e2f807b45485"
+}

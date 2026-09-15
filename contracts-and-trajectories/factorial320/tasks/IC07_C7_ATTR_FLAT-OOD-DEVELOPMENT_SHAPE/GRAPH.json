@@ -1,0 +1,34 @@
+{
+  "task_id": "IC07_C7_ATTR_FLAT-OOD-DEVELOPMENT_SHAPE",
+  "family_cluster": "IC07_C7_ATTR_FLAT",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "DEVELOPMENT_SHAPE",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "consume",
+    "produce",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 3,
+    "clear_event": 3,
+    "grasp": 2,
+    "inspect": 2,
+    "move": 8,
+    "release": 2,
+    "release_resource": 3,
+    "signal": 3,
+    "wait_event": 3
+  },
+  "for_nodes": 2,
+  "if_nodes": 5,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": true,
+  "ast_nodes": 494,
+  "source_chars": 2596,
+  "source_lines": 54,
+  "signature": "de6ba6df778db5f3507885fcdeac94f629f121a27cb1750d928e4a7191ef50f4"
+}

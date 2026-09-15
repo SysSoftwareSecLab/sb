@@ -1,0 +1,81 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # Variant B: gather two workers; each worker deposits, waits for peer, then consumes.
+    # Obligations and action multiset are identical to variant A.
+
+    async def worker(arm: str, own_part: str, peer_part: str,
+                     own_source: str, own_pad: str, own_target: str,
+                     peer_pad: str, peer_target: str,
+                     own_ready_event: str, peer_ready_event: str,
+                     own_depart: str, pickup_wait: str) -> None:
+        # 1. Approach own source from home, then grasp own part.
+        await robot.move(arm, own_source)
+        own_obs = await robot.grasp(arm, own_part)
+
+        # 2. Carry own part to own pad and release it there.
+        await robot.move(arm, own_pad)
+        await robot.release(arm, own_part, own_pad)
+
+        # 3. Immediately clear the pad (depart) before publishing ready event.
+        await robot.move(arm, own_depart)
+
+        # 4. Publish own item-bound ready event.
+        own_receipt = robot.signal(own_ready_event, own_part)
+
+        # 5. Wait for peer ready event.
+        peer_receipt = await robot.wait_event(peer_ready_event, 120)
+
+        # 6. Approach peer pad from pickup_wait, then grasp peer part.
+        await robot.move(arm, pickup_wait)
+        await robot.move(arm, peer_pad)
+        peer_obs = await robot.grasp(arm, peer_part, observation=peer_receipt)
+
+        # 7. Carry peer part to own target using the exact active peer receipt.
+        await robot.move(arm, own_target, receipt=peer_receipt)
+
+        # 8. Clear the peer event after the move completes.
+        robot.clear_event(peer_ready_event, expected_version=peer_receipt.version)
+
+        # 9. Release peer part at own target.
+        await robot.release(arm, peer_part, own_target)
+
+        # 10. Depart to own departure pose.
+        await robot.move(arm, own_depart)
+
+        # 11. Clear own ready event (now inactive).
+        robot.clear_event(own_ready_event, expected_version=own_receipt.version)
+
+    left_worker = asyncio.create_task(worker(
+        arm="LEFT",
+        own_part="left_part",
+        peer_part="right_part",
+        own_source="left_source",
+        own_pad="left_pad",
+        own_target="left_target",
+        peer_pad="right_pad",
+        peer_target="right_target",
+        own_ready_event="left_ready",
+        peer_ready_event="right_ready",
+        own_depart="left_depart",
+        pickup_wait="left_pickup_wait",
+    ))
+
+    right_worker = asyncio.create_task(worker(
+        arm="RIGHT",
+        own_part="right_part",
+        peer_part="left_part",
+        own_source="right_source",
+        own_pad="right_pad",
+        own_target="right_target",
+        peer_pad="left_pad",
+        peer_target="left_target",
+        own_ready_event="right_ready",
+        peer_ready_event="left_ready",
+        own_depart="right_depart",
+        pickup_wait="right_pickup_wait",
+    ))
+
+    await asyncio.gather(left_worker, right_worker)

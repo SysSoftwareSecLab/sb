@@ -1,0 +1,36 @@
+import asyncio
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    # SERIAL structure: signal rq2_gate once, then perform all three gap
+    # resource checks in numeric order with LEFT, then wait for rq2_gate
+    # exactly once, then execute the complete inherited dual-arm mission
+    # (also serially), then clear rq2_gate after the mission.
+
+    gate_receipt = robot.signal("rq2_gate")
+    gate_version = gate_receipt.version
+
+    # Three rq2_gap resource checks, acquired/released once each, numeric order.
+    for gap in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", gap, 5)
+        await robot.release_resource("LEFT", gap)
+
+    # Wait for the exact active receipt of rq2_gate exactly once.
+    await robot.wait_event("rq2_gate", 5)
+
+    # Inherited dual-arm mission, executed serially (LEFT fully, then RIGHT).
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+    # Clear rq2_gate only after the protected scope (the full mission) ends.
+    robot.clear_event("rq2_gate", expected_version=gate_version)

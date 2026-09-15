@@ -1,0 +1,95 @@
+import asyncio
+import traceback
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    FIXTURE = "fixture"
+    TOOL = "tool"
+    GAPS = ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2")
+    GATE = "rq2_gate"
+
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+
+    ACQUIRE_TIMEOUT = 120.0
+    WAIT_TIMEOUT = 120.0
+
+    async def worker(arm, home, source, target, depart, part):
+        acquired = []
+        try:
+            await robot.move(arm, source)
+            await robot.grasp(arm, part)
+            await robot.move(arm, target)
+            await robot.release(arm, part, target)
+            await robot.move(arm, depart)
+
+            await robot.acquire(arm, FIXTURE, ACQUIRE_TIMEOUT)
+            acquired.append(FIXTURE)
+            await robot.acquire(arm, TOOL, ACQUIRE_TIMEOUT)
+            acquired.append(TOOL)
+
+            await robot.move(arm, source)
+            await robot.grasp(arm, part)
+            await robot.move(arm, target)
+            await robot.release(arm, part, target)
+            await robot.move(arm, depart)
+
+            await robot.release_resource(arm, TOOL)
+            acquired.remove(TOOL)
+            await robot.release_resource(arm, FIXTURE)
+            acquired.remove(FIXTURE)
+        finally:
+            for resource in reversed(acquired):
+                try:
+                    await robot.release_resource(arm, resource)
+                except Exception:
+                    pass
+
+    async def left_worker():
+        await worker(LEFT, LEFT_HOME, LEFT_SOURCE, LEFT_TARGET, LEFT_DEPART, LEFT_PART)
+
+    async def right_worker():
+        await worker(RIGHT, RIGHT_HOME, RIGHT_SOURCE, RIGHT_TARGET, RIGHT_DEPART, RIGHT_PART)
+
+    async def inherited_mission():
+        await asyncio.gather(left_worker(), right_worker())
+
+    async def gap_checks():
+        for gap in GAPS:
+            await robot.acquire(LEFT, gap, ACQUIRE_TIMEOUT)
+            try:
+                await robot.release_resource(LEFT, gap)
+            except BaseException:
+                try:
+                    await robot.release_resource(LEFT, gap)
+                except Exception:
+                    pass
+                raise
+
+    async def gate_scope():
+        await gap_checks()
+        receipt = robot.signal(GATE)
+        try:
+            await robot.wait_event(GATE, WAIT_TIMEOUT)
+            await inherited_mission()
+        finally:
+            try:
+                robot.clear_event(GATE, expected_version=receipt.version)
+            except Exception:
+                pass
+
+    await gate_scope()

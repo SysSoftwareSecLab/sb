@@ -1,0 +1,108 @@
+import asyncio
+
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # C8_ATTR_NESTED-SERIAL-L0
+    # Two parts cross a capacity-one buffer from LEFT producer to RIGHT consumer.
+    # A alternates complete producer/consumer episodes; B runs producer and consumer
+    # coroutines together. For item 1, wait/clear empty_0, then inspect both readiness
+    # facts; C8 joins the two checks inside the loop branch.
+
+    async def producer_episode(part: str, source: str, buffer: str,
+                               ready_event: str, empty_event: str | None,
+                               left_wait: str) -> None:
+        # Acquire tool before source pickup; release it on every exit.
+        await robot.acquire("LEFT", "tool", 120)
+        try:
+            # Approach source and immediately grasp.
+            await robot.move("LEFT", source, timeout_s=4)
+            await robot.grasp("LEFT", part)
+
+            # Move to buffer and release.
+            await robot.move("LEFT", buffer, timeout_s=4)
+            await robot.release("LEFT", part, buffer)
+
+            # Depart immediately before ready publication.
+            await robot.move("LEFT", left_wait, timeout_s=4)
+        finally:
+            await robot.release_resource("LEFT", "tool")
+
+        # Publish ready receipt for the corresponding consumer.
+        ready_receipt = robot.signal(ready_event, part)
+
+        # Producer waits and clears empty_0 before entering buffer with the second part.
+        if empty_event is not None:
+            await robot.wait_event(empty_event, 120)
+            clear_event(ready_receipt)
+
+    async def consumer_episode(part: str, buffer: str, target: str,
+                               ready_event: str, right_wait: str) -> None:
+        # Consumer waits the corresponding ready receipt before pickup.
+        ready_receipt = await robot.wait_event(ready_event, 120)
+
+        # Acquire buffer_lock during buffer entry and departure.
+        await robot.acquire("RIGHT", "buffer_lock", 120)
+        try:
+            # Approach buffer and immediately grasp.
+            await robot.move("RIGHT", buffer, timeout_s=4)
+            await robot.grasp("RIGHT", part)
+
+            # Carried move to target supplies the exact active item receipt.
+            await robot.move("RIGHT", target, timeout_s=4, receipt=ready_receipt)
+        finally:
+            await robot.release_resource("RIGHT", "buffer_lock")
+
+        # Consumer clears ready after its carried move.
+        clear_event(ready_receipt)
+
+        # Release on target and depart before publishing empty_0.
+        await robot.release("RIGHT", part, target)
+        await robot.move("RIGHT", right_wait, timeout_s=4)
+
+        # Publish empty_0 so the producer may enter the buffer with the second part.
+        empty_receipt = robot.signal("empty_0", part)
+        await robot.wait_event("empty_0", 0.1)
+        clear_event(empty_receipt)
+
+    def clear_event(receipt) -> None:
+        robot.clear_event(receipt.event_id, expected_version=receipt.version)
+
+    async def inspect_readiness() -> None:
+        # C8 joins the two checks inside the loop branch.
+        line_clear = await robot.inspect("LEFT", "line_clear")
+        receiver_ready = await robot.inspect("LEFT", "receiver_ready")
+        if not (line_clear.value.get("clear") and
+                receiver_ready.value.get("ready")):
+            raise RuntimeError("readiness facts not satisfied")
+
+    async def item_0_episode() -> None:
+        await asyncio.gather(
+            producer_episode("part_0", "source_0", "buffer_0",
+                             "ready_0", None, "left_wait"),
+            consumer_episode("part_0", "buffer_0", "target_0",
+                             "ready_0", "right_wait"),
+        )
+
+    async def item_1_episode() -> None:
+        # For item 1, wait and clear empty_0, then inspect both readiness facts.
+        empty_receipt = await robot.wait_event("empty_0", 120)
+        clear_event(empty_receipt)
+        await inspect_readiness()
+
+        await asyncio.gather(
+            producer_episode("part_1", "source_1", "buffer_1",
+                             "ready_1", "empty_0", "left_wait"),
+            consumer_episode("part_1", "buffer_1", "target_1",
+                             "ready_1", "right_wait"),
+        )
+
+    await item_0_episode()
+    await item_1_episode()
+
+    # Return arms to homes for terminal goal.
+    await asyncio.gather(
+        robot.move("LEFT", "left_home", timeout_s=4),
+        robot.move("RIGHT", "right_home", timeout_s=4),
+    )

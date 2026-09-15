@@ -1,0 +1,46 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    """IC06_C6_VERIFY_JOIN-DETACHED-SERIAL-LONG, variant A.
+
+    Required structure (serial):
+      1. Signal rq2_gate exactly once.
+      2. Acquire/release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in order.
+      3. Wait for the exact active rq2_gate receipt once.
+      4. Clear that exact version after its protected scope.
+      5. Then perform the inherited dual-arm mission serially:
+         LEFT: left_home -> left_source, grasp left_part, move to left_target,
+              release left_part, depart to left_depart.
+         RIGHT: right_home -> right_source, grasp right_part, move to right_target,
+              release right_part, depart to right_depart.
+    """
+
+    # --- RQ2 gate protocol (producer side) ---
+    gate_receipt = robot.signal("rq2_gate")  # signal exactly once
+
+    for resource_id in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", resource_id, 5)
+        await robot.release_resource("LEFT", resource_id)
+
+    # --- RQ2 gate protocol (consumer side) ---
+    waited_receipt = await robot.wait_event("rq2_gate", 5)
+    robot.clear_event("rq2_gate", expected_version=waited_receipt.version)
+
+    # --- Inherited dual-arm mission, serial: LEFT then RIGHT ---
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+    return None
+```

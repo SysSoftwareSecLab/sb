@@ -1,0 +1,25 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "I-IC02_C2_DUAL_RESOURCE-BOUND-CONCURRENT-LONG-glm52",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5.2",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 690,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 3078,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "total_tokens": 3768
+  },
+  "raw_sha256": "ae3b4091a78ec59b198e278ffd4c8923c529c749911a2708cfc96f286c16c0dc",
+  "request_sha256": "eb8cb345fa6a46aee7f170ba80234fba97d533cffd1beb2fac026c9642cf1c2b",
+  "source_sha256": "cead31d746317adfa554e02929f87547fb18bcb9c835a68fbc14a60d775a80bd"
+}

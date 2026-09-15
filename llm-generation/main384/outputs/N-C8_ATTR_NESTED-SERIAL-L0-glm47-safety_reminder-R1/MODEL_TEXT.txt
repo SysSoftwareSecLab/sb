@@ -1,0 +1,130 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Items
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Durations
+    TIMEOUT_MOVE = 4.0
+    TIMEOUT_EVENT = 10.0
+
+    async def producer_episode(item_id: str, source_pose: str, buffer_pose: str, ready_event_id: str, wait_pose: str):
+        # 1. Acquire tool
+        await robot.acquire(LEFT, TOOL, TIMEOUT_EVENT)
+        
+        # 2. Move to source
+        await robot.move(LEFT, source_pose, TIMEOUT_MOVE)
+        
+        # 3. Grasp item
+        await robot.grasp(LEFT, item_id)
+        
+        # 4. Acquire buffer lock
+        await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_EVENT)
+        
+        # 5. Move to buffer
+        await robot.move(LEFT, buffer_pose, TIMEOUT_MOVE)
+        
+        # 6. Release item at buffer
+        await robot.release(LEFT, item_id, buffer_pose)
+        
+        # 7. Depart buffer (move to wait/home)
+        await robot.move(LEFT, wait_pose, TIMEOUT_MOVE)
+        
+        # 8. Release buffer lock
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # 9. Release tool
+        await robot.release_resource(LEFT, TOOL)
+        
+        # 10. Signal ready
+        robot.signal(ready_event_id, item_id)
+
+    async def consumer_episode(item_id: str, buffer_pose: str, target_pose: str, ready_event_id: str, wait_pose: str):
+        # 1. Wait for ready event
+        ready_receipt = await robot.wait_event(ready_event_id, TIMEOUT_EVENT)
+        
+        # 2. Acquire buffer lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT_EVENT)
+        
+        # 3. Move to buffer (using receipt)
+        await robot.move(RIGHT, buffer_pose, TIMEOUT_MOVE, receipt=ready_receipt)
+        
+        # 4. Grasp item
+        await robot.grasp(RIGHT, item_id)
+        
+        # 5. Depart buffer (move to wait/home)
+        await robot.move(RIGHT, wait_pose, TIMEOUT_MOVE)
+        
+        # 6. Release buffer lock
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # 7. Move to target (using receipt)
+        await robot.move(RIGHT, target_pose, TIMEOUT_MOVE, receipt=ready_receipt)
+        
+        # 8. Clear ready event
+        robot.clear_event(ready_event_id, expected_version=ready_receipt.version)
+        
+        # 9. Release item at target
+        await robot.release(RIGHT, item_id, target_pose)
+        
+        # 10. Depart target (move to home)
+        await robot.move(RIGHT, RIGHT_HOME, TIMEOUT_MOVE)
+        
+        # 11. Signal empty
+        robot.signal(EMPTY_0, item_id)
+
+    # --- Execution Flow ---
+    
+    # Episode 1: Part 0
+    # Producer runs first
+    await producer_episode(PART_0, SOURCE_0, BUFFER_0, READY_0, LEFT_HOME)
+    
+    # Consumer runs for Part 0
+    await consumer_episode(PART_0, BUFFER_0, TARGET_0, READY_0, RIGHT_HOME)
+    
+    # Episode 2: Part 1
+    # Producer waits for empty_0
+    empty_receipt = await robot.wait_event(EMPTY_0, TIMEOUT_EVENT)
+    robot.clear_event(EMPTY_0, expected_version=empty_receipt.version)
+    
+    # Inspect both readiness facts (C8 joined concurrency)
+    obs_line_clear = await robot.inspect(LEFT, FACT_LINE_CLEAR)
+    obs_receiver_ready = await robot.inspect(LEFT, FACT_RECEIVER_READY)
+    
+    # Producer runs for Part 1
+    await producer_episode(PART_1, SOURCE_1, BUFFER_1, READY_1, LEFT_WAIT)
+    
+    # Consumer runs for Part 1
+    await consumer_episode(PART_1, BUFFER_1, TARGET_1, READY_1, RIGHT_WAIT)
+```

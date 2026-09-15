@@ -1,0 +1,22 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C1_BUFFER-CONCURRENT-L0-glm5-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 1417,
+    "prompt_tokens": 3175,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "total_tokens": 4592
+  },
+  "raw_sha256": "fd763278d9c51346205f33b228eec955d8b18521122c95b6605e24ee3b8649f0",
+  "source_sha256": "b5c8f3a19d527ed80edfeae051eff23f99bff34f5b3d06082ce2e70f2c9ebb5d",
+  "request_sha256": "b61b824e6b4ac5c130cd6549af7078ae8f1c2aba53b3267a7b6aa9b73247a485"
+}

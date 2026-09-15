@@ -1,0 +1,31 @@
+{
+  "task_id": "IC03_C3_EXCHANGE-OOD-DEVELOPMENT_SHAPE",
+  "family_cluster": "IC03_C3_EXCHANGE",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "DEVELOPMENT_SHAPE",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "consume",
+    "deposit",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "clear_event": 2,
+    "grasp": 2,
+    "move": 7,
+    "release": 2,
+    "signal": 2,
+    "wait_event": 2
+  },
+  "for_nodes": 1,
+  "if_nodes": 1,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": true,
+  "ast_nodes": 334,
+  "source_chars": 1555,
+  "source_lines": 34,
+  "signature": "e54919eefc3c19302988f5b8572f614fda590a866b4b2666a2a3e1261400314c"
+}

@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D7_BUFFER_PREFETCH-SHORT-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3351,
+    "completion_tokens": 811,
+    "total_tokens": 4162,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1687
+  },
+  "raw_sha256": "cb33e23e4b592a3a518b912aab43510dc556ffb48eeccfa8f41f85f87ce21980",
+  "source_sha256": "907165cd5753875a34df5c92051c611a6cd3bdac57e9b1db947ba192cddf7620",
+  "request_sha256": "a84370c07f2b9e623aff7cb582e611e451abd1b71b9df2512b33a49ea63bda75"
+}

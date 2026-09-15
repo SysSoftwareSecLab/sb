@@ -1,0 +1,154 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # --- RQ2_GATE PROTOCOL ---
+    # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order.
+    # Complete all three rq2_gap resource checks before signalling rq2_gate.
+    # Signal rq2_gate exactly once, wait its exact active receipt exactly once, 
+    # and clear exactly that version after its assigned protected scope.
+    # Complete and clear the rq2_gate protocol before starting the complete inherited dual-arm mission.
+    
+    await robot.acquire("LEFT", "rq2_gap_0", 4.0)
+    await robot.release_resource("LEFT", "rq2_gap_0")
+    
+    await robot.acquire("LEFT", "rq2_gap_1", 4.0)
+    await robot.release_resource("LEFT", "rq2_gap_1")
+    
+    await robot.acquire("LEFT", "rq2_gap_2", 4.0)
+    await robot.release_resource("LEFT", "rq2_gap_2")
+    
+    # Signal rq2_gate
+    gate_receipt = robot.signal("rq2_gate")
+    
+    # Wait immediately after the signal
+    await robot.wait_event("rq2_gate", 4.0)
+    
+    # Protected scope (implied minimal scope for the protocol)
+    # Clear exactly that version
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # --- INHERITED DUAL-ARM MISSION ---
+    # Serial scheduling: Producer (LEFT) then Consumer (RIGHT) for each item.
+    # Items: part_0, part_1.
+    
+    # --- ITEM 0 ---
+    
+    # PRODUCER (LEFT)
+    # LEFT owns tool from before each source pickup through ready publication.
+    await robot.acquire("LEFT", "tool", 4.0)
+    
+    # Move to source_0 (approach start)
+    await robot.move("LEFT", "left_home")
+    # Approach sequence: start_pose left_home -> interaction_pose source_0
+    await robot.move("LEFT", "source_0")
+    # Grasp part_0
+    await robot.grasp("LEFT", "part_0")
+    
+    # Move to buffer
+    # Both participants own buffer_lock during buffer entry and departure.
+    await robot.acquire("LEFT", "buffer_lock", 4.0)
+    await robot.move("LEFT", "buffer_0")
+    
+    # Release part_0 at buffer
+    await robot.release("LEFT", "part_0", "buffer_0")
+    
+    # Depart immediately
+    await robot.move("LEFT", "left_home")
+    await robot.release_resource("LEFT", "buffer_lock")
+    
+    # Publish ready_0
+    ready_0_receipt = robot.signal("ready_0")
+    
+    # Release tool on every exit
+    await robot.release_resource("LEFT", "tool")
+    
+    # CONSUMER (RIGHT)
+    # Wait the corresponding ready receipt before pickup
+    await robot.wait_event("ready_0", 4.0)
+    
+    # Move to buffer (approach start)
+    await robot.move("RIGHT", "right_home")
+    # Approach sequence: start_pose right_home -> interaction_pose buffer_0
+    await robot.move("RIGHT", "buffer_0")
+    # Grasp part_0
+    await robot.grasp("RIGHT", "part_0")
+    
+    # Supplies that exact active item receipt on carried move to target.
+    await robot.acquire("RIGHT", "buffer_lock", 4.0)
+    await robot.move("RIGHT", "target_0", receipt=ready_0_receipt)
+    await robot.release_resource("RIGHT", "buffer_lock")
+    
+    # Release on target
+    await robot.release("RIGHT", "part_0", "target_0")
+    
+    # Depart immediately
+    await robot.move("RIGHT", "right_home")
+    
+    # Consumer clears ready after its carried move
+    robot.clear_event("ready_0", expected_version=ready_0_receipt.version)
+    
+    # Publish empty_0
+    empty_0_receipt = robot.signal("empty_0")
+    
+    # --- ITEM 1 ---
+    
+    # PRODUCER (LEFT)
+    # Producer waits and clears empty_0 before entering buffer with the second part.
+    await robot.wait_event("empty_0", 4.0)
+    robot.clear_event("empty_0", expected_version=empty_0_receipt.version)
+    
+    # LEFT owns tool
+    await robot.acquire("LEFT", "tool", 4.0)
+    
+    # Move to source_1 (approach start)
+    await robot.move("LEFT", "left_wait")
+    # Approach sequence: start_pose left_wait -> interaction_pose source_1
+    await robot.move("LEFT", "source_1")
+    # Grasp part_1
+    await robot.grasp("LEFT", "part_1")
+    
+    # Move to buffer
+    await robot.acquire("LEFT", "buffer_lock", 4.0)
+    await robot.move("LEFT", "buffer_1")
+    
+    # Release part_1 at buffer
+    await robot.release("LEFT", "part_1", "buffer_1")
+    
+    # Depart immediately
+    await robot.move("LEFT", "left_home")
+    await robot.release_resource("LEFT", "buffer_lock")
+    
+    # Publish ready_1
+    ready_1_receipt = robot.signal("ready_1")
+    
+    # Release tool
+    await robot.release_resource("LEFT", "tool")
+    
+    # CONSUMER (RIGHT)
+    # Wait ready receipt
+    await robot.wait_event("ready_1", 4.0)
+    
+    # Move to buffer (approach start)
+    await robot.move("RIGHT", "right_wait")
+    # Approach sequence: start_pose right_wait -> interaction_pose buffer_1
+    await robot.move("RIGHT", "buffer_1")
+    # Grasp part_1
+    await robot.grasp("RIGHT", "part_1")
+    
+    # Supplies that exact active item receipt on carried move to target.
+    await robot.acquire("RIGHT", "buffer_lock", 4.0)
+    await robot.move("RIGHT", "target_1", receipt=ready_1_receipt)
+    await robot.release_resource("RIGHT", "buffer_lock")
+    
+    # Release on target
+    await robot.release("RIGHT", "part_1", "target_1")
+    
+    # Depart immediately
+    await robot.move("RIGHT", "right_home")
+    
+    # Consumer clears ready after its carried move
+    robot.clear_event("ready_1", expected_version=ready_1_receipt.version)
+    
+    # Publish empty_0
+    robot.signal("empty_0")

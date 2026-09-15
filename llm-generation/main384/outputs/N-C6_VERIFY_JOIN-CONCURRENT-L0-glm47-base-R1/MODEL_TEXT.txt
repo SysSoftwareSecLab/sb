@@ -1,0 +1,92 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    """
+    Executes the C6_VERIFY_JOIN-CONCURRENT-L0 task.
+    
+    Structure:
+    1. Launch two concurrent worker coroutines (LEFT and RIGHT).
+    2. Each worker:
+       - Moves from home to source.
+       - Grasps the part.
+       - Inspects the part (producing verification observation).
+       - Moves to target.
+       - Releases the part.
+       - Signals its readiness event.
+       - Moves to depart.
+    3. Main coroutine waits for both 'left_ready' and 'right_ready' events.
+    4. Clears the events to satisfy the development contract.
+    """
+
+    async def left_worker():
+        # Move to source
+        await robot.move("LEFT", "left_home")
+        await robot.move("LEFT", "left_source")
+        
+        # Grasp part
+        await robot.grasp("LEFT", "left_part")
+        
+        # Inspect part (produces verification observation)
+        await robot.inspect("LEFT", "left_verification")
+        
+        # Move to target
+        await robot.move("LEFT", "left_target")
+        
+        # Release part
+        await robot.release("LEFT", "left_part", "left_target")
+        
+        # Signal readiness
+        robot.signal("left_ready")
+        
+        # Depart
+        await robot.move("LEFT", "left_depart")
+
+    async def right_worker():
+        # Move to source
+        await robot.move("RIGHT", "right_home")
+        await robot.move("RIGHT", "right_source")
+        
+        # Grasp part
+        await robot.grasp("RIGHT", "right_part")
+        
+        # Inspect part (produces verification observation)
+        await robot.inspect("RIGHT", "right_verification")
+        
+        # Move to target
+        await robot.move("RIGHT", "right_target")
+        
+        # Release part
+        await robot.release("RIGHT", "right_part", "right_target")
+        
+        # Signal readiness
+        robot.signal("right_ready")
+        
+        # Depart
+        await robot.move("RIGHT", "right_depart")
+
+    # Run workers concurrently
+    left_task = asyncio.create_task(left_worker())
+    right_task = asyncio.create_task(right_worker())
+
+    # Wait for both events to be signaled
+    # Using a timeout slightly less than the deadline to ensure safety
+    deadline = 30.0
+    wait_timeout = 25.0
+    
+    try:
+        left_receipt = await robot.wait_event("left_ready", timeout_s=wait_timeout)
+        right_receipt = await robot.wait_event("right_ready", timeout_s=wait_timeout)
+    except TimeoutError:
+        # If timeout, just await tasks to finish any pending moves
+        await asyncio.gather(left_task, right_task, return_exceptions=True)
+        return
+
+    # Clear events as required by the contract
+    robot.clear_event("left_ready", expected_version=left_receipt.version)
+    robot.clear_event("right_ready", expected_version=right_receipt.version)
+
+    # Ensure workers are fully finished
+    await asyncio.gather(left_task, right_task)
+```

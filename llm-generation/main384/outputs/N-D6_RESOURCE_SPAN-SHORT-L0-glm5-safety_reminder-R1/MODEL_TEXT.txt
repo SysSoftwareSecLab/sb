@@ -1,0 +1,41 @@
+```python
+import asyncio
+from bridge_robot_api import MotionFault
+
+async def run_task(robot):
+    async def worker(arm, part, start_pose, source, target, depart):
+        fixture_owned = False
+        tool_owned = False
+        try:
+            await robot.acquire(arm, "fixture", 120)
+            fixture_owned = True
+            await robot.acquire(arm, "tool", 120)
+            tool_owned = True
+
+            await robot.move(arm, start_pose)
+            await robot.move(arm, source)
+            await robot.grasp(arm, part)
+            await robot.move(arm, target)
+            await robot.release(arm, part, target)
+            await robot.move(arm, depart)
+
+            await robot.release_resource(arm, "tool")
+            tool_owned = False
+            await robot.release_resource(arm, "fixture")
+            fixture_owned = False
+        finally:
+            if tool_owned:
+                try:
+                    await robot.release_resource(arm, "tool")
+                except Exception:
+                    pass
+            if fixture_owned:
+                try:
+                    await robot.release_resource(arm, "fixture")
+                except Exception:
+                    pass
+
+    left = worker("LEFT", "left_part", "left_home", "left_source", "left_target", "left_depart")
+    right = worker("RIGHT", "right_part", "right_home", "right_source", "right_target", "right_depart")
+    await asyncio.gather(left, right)
+```

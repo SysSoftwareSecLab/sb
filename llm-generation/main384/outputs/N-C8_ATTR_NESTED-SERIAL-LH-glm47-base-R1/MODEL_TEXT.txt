@@ -1,0 +1,138 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # Constants from task spec
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Objects
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Resources
+    BUFFER_LOCK = "buffer_lock"
+    TOOL = "tool"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Helper to wait and clear an event
+    async def wait_and_clear(event_id: str, timeout_s: float) -> EventReceipt:
+        receipt = await robot.wait_event(event_id, timeout_s)
+        robot.clear_event(event_id, expected_version=receipt.version)
+        return receipt
+
+    # Helper to acquire tool
+    async def acquire_tool(arm: str):
+        await robot.acquire(arm, TOOL, 120.0)
+        await robot.set_mode(arm, TOOL, "OFF")
+
+    # Helper to release tool
+    async def release_tool(arm: str):
+        await robot.set_mode(arm, TOOL, "OFF")
+        await robot.release_resource(arm, TOOL)
+
+    # Helper to acquire buffer lock
+    async def acquire_buffer_lock(arm: str):
+        await robot.acquire(arm, BUFFER_LOCK, 120.0)
+        await robot.set_mode(arm, BUFFER_LOCK, "OFF")
+
+    # Helper to release buffer lock
+    async def release_buffer_lock(arm: str):
+        await robot.set_mode(arm, BUFFER_LOCK, "OFF")
+        await robot.release_resource(arm, BUFFER_LOCK)
+
+    # --- PART 0 HANDLING ---
+    
+    # 1. Producer (LEFT) picks up part_0 from source_0
+    await robot.move(LEFT, SOURCE_0)
+    await robot.grasp(LEFT, PART_0)
+    
+    # 2. Producer moves to buffer, acquires lock, places part_0
+    await acquire_tool(LEFT)
+    await acquire_buffer_lock(LEFT)
+    
+    await robot.move(LEFT, BUFFER_0)
+    await robot.release(LEFT, PART_0, BUFFER_0)
+    
+    # 3. Producer departs buffer, signals ready, releases lock
+    await robot.move(LEFT, LEFT_WAIT)
+    ready_0_receipt = robot.signal(READY_0, PART_0)
+    await release_buffer_lock(LEFT)
+    
+    # 4. Consumer (RIGHT) waits for ready_0, picks up part_0
+    await wait_and_clear(READY_0, 120.0)
+    
+    await robot.move(RIGHT, BUFFER_0)
+    await robot.grasp(RIGHT, PART_0)
+    
+    # 5. Consumer moves to target using receipt, releases part_0
+    await robot.move(RIGHT, TARGET_0, receipt=ready_0_receipt)
+    await robot.release(RIGHT, PART_0, TARGET_0)
+    
+    # 6. Consumer departs, signals empty_0
+    await robot.move(RIGHT, RIGHT_WAIT)
+    robot.signal(EMPTY_0)
+    
+    # --- PART 1 HANDLING ---
+    
+    # 7. Producer waits for empty_0, inspects facts
+    await wait_and_clear(EMPTY_0, 120.0)
+    
+    # C8 joins the two checks inside the loop branch (or sequentially here)
+    obs_line = await robot.inspect(LEFT, FACT_LINE_CLEAR)
+    obs_recv = await robot.inspect(LEFT, FACT_RECEIVER_READY)
+    
+    # 8. Producer picks up part_1 from source_1
+    await robot.move(LEFT, SOURCE_1)
+    await robot.grasp(LEFT, PART_1)
+    
+    # 9. Producer moves to buffer, acquires lock, places part_1
+    await acquire_buffer_lock(LEFT)
+    
+    await robot.move(LEFT, BUFFER_1)
+    await robot.release(LEFT, PART_1, BUFFER_1)
+    
+    # 10. Producer departs buffer, signals ready_1, releases lock and tool
+    await robot.move(LEFT, LEFT_WAIT)
+    ready_1_receipt = robot.signal(READY_1, PART_1)
+    await release_buffer_lock(LEFT)
+    await release_tool(LEFT)
+    
+    # 11. Consumer waits for ready_1, picks up part_1
+    await wait_and_clear(READY_1, 120.0)
+    
+    await robot.move(RIGHT, BUFFER_1)
+    await robot.grasp(RIGHT, PART_1)
+    
+    # 12. Consumer moves to target using receipt, releases part_1
+    await robot.move(RIGHT, TARGET_1, receipt=ready_1_receipt)
+    await robot.release(RIGHT, PART_1, TARGET_1)
+    
+    # 13. Consumer departs to home
+    await robot.move(RIGHT, RIGHT_HOME)
+    
+    # 14. Producer returns home
+    await robot.move(LEFT, LEFT_HOME)
+```

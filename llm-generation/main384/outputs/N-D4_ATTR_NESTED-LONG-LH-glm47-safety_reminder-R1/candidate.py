@@ -1,0 +1,206 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    # Constants extracted from PUBLIC TASK
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Objects
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Resources
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Timeouts
+    TIMEOUT_S = 50.0
+    MOVE_TIMEOUT = 4.0
+    
+    # Helper to clear event
+    def _clear_event(event_id: str, receipt: EventReceipt):
+        robot.clear_event(event_id, expected_version=receipt.version)
+
+    async def producer():
+        # --- Item 0 ---
+        # Acquire tool (LONG variant: acquire before source pickup)
+        await robot.acquire(LEFT, TOOL, TIMEOUT_S)
+        
+        # Move to source_0
+        await robot.move(LEFT, SOURCE_0, timeout_s=MOVE_TIMEOUT)
+        
+        # Grasp part_0
+        await robot.grasp(LEFT, PART_0)
+        
+        # Acquire buffer_lock
+        await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_S)
+        
+        # Move to buffer_0
+        await robot.move(LEFT, BUFFER_0, timeout_s=MOVE_TIMEOUT)
+        
+        # Release part_0 at buffer_0
+        await robot.release(LEFT, PART_0, BUFFER_0)
+        
+        # Depart buffer immediately
+        await robot.move(LEFT, LEFT_HOME, timeout_s=MOVE_TIMEOUT)
+        
+        # Release buffer_lock
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # Signal ready_0
+        ready_0_receipt = robot.signal(READY_0, item_id=PART_0)
+        
+        # --- Item 1 ---
+        # Wait for empty_0
+        empty_0_receipt = await robot.wait_event(EMPTY_0, TIMEOUT_S)
+        
+        # Clear empty_0
+        _clear_event(EMPTY_0, empty_0_receipt)
+        
+        # Acquire buffer_lock
+        await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_S)
+        
+        # Move to source_1
+        await robot.move(LEFT, SOURCE_1, timeout_s=MOVE_TIMEOUT)
+        
+        # Grasp part_1
+        await robot.grasp(LEFT, PART_1)
+        
+        # Move to buffer_1
+        await robot.move(LEFT, BUFFER_1, timeout_s=MOVE_TIMEOUT)
+        
+        # Release part_1 at buffer_1
+        await robot.release(LEFT, PART_1, BUFFER_1)
+        
+        # Depart buffer immediately
+        await robot.move(LEFT, LEFT_HOME, timeout_s=MOVE_TIMEOUT)
+        
+        # Release buffer_lock
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        # Signal ready_1
+        robot.signal(READY_1, item_id=PART_1)
+        
+        # Release tool (LONG variant: kept across wait)
+        await robot.release_resource(LEFT, TOOL)
+
+    async def consumer():
+        # --- Item 0 ---
+        # Wait for ready_0
+        ready_0_receipt = await robot.wait_event(READY_0, TIMEOUT_S)
+        
+        # Acquire buffer_lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT_S)
+        
+        # Move to buffer_0
+        await robot.move(RIGHT, BUFFER_0, timeout_s=MOVE_TIMEOUT)
+        
+        # Grasp part_0
+        await robot.grasp(RIGHT, PART_0)
+        
+        # Depart buffer immediately
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=MOVE_TIMEOUT)
+        
+        # Release buffer_lock
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # Move to target_0 with receipt
+        await robot.move(RIGHT, TARGET_0, timeout_s=MOVE_TIMEOUT, receipt=ready_0_receipt)
+        
+        # Clear ready_0
+        _clear_event(READY_0, ready_0_receipt)
+        
+        # Release part_0 at target_0
+        await robot.release(RIGHT, PART_0, TARGET_0)
+        
+        # Depart target immediately
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=MOVE_TIMEOUT)
+        
+        # Signal empty_0
+        robot.signal(EMPTY_0)
+        
+        # --- Item 1 ---
+        # Wait for ready_1
+        ready_1_receipt = await robot.wait_event(READY_1, TIMEOUT_S)
+        
+        # Acquire buffer_lock
+        await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT_S)
+        
+        # Move to buffer_1
+        await robot.move(RIGHT, BUFFER_1, timeout_s=MOVE_TIMEOUT)
+        
+        # Grasp part_1
+        await robot.grasp(RIGHT, PART_1)
+        
+        # Depart buffer immediately
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=MOVE_TIMEOUT)
+        
+        # Release buffer_lock
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        # D4: Join inspections with asyncio.gather
+        # "For the second item, after the exact empty_0 receipt is waited and cleared, 
+        # inspect line_clear with LEFT and receiver_ready with RIGHT"
+        # Note: The wait and clear of empty_0 happened in Producer. 
+        # The checks happen here before transfer.
+        
+        # Acquire tool (SHORT variant: acquire after wait)
+        await robot.acquire(RIGHT, TOOL, TIMEOUT_S)
+        
+        # Perform inspections concurrently
+        obs_line_clear = robot.inspect(LEFT, FACT_LINE_CLEAR)
+        obs_receiver_ready = robot.inspect(RIGHT, FACT_RECEIVER_READY)
+        
+        await asyncio.gather(obs_line_clear, obs_receiver_ready)
+        
+        # Verify facts (internal verification logic)
+        # obs_line_clear.value -> {"clear": true, "item_id": "part_1"}
+        # obs_receiver_ready.value -> {"item_id": "part_1", "ready": true}
+        if not (obs_line_clear.result().value.get("clear") and 
+                obs_line_clear.result().value.get("item_id") == PART_1 and
+                obs_receiver_ready.result().value.get("ready") and
+                obs_receiver_ready.result().value.get("item_id") == PART_1):
+            raise ValueError("Second item checks failed")
+        
+        # Move to target_1 with receipt
+        await robot.move(RIGHT, TARGET_1, timeout_s=MOVE_TIMEOUT, receipt=ready_1_receipt)
+        
+        # Clear ready_1
+        _clear_event(READY_1, ready_1_receipt)
+        
+        # Release part_1 at target_1
+        await robot.release(RIGHT, PART_1, TARGET_1)
+        
+        # Depart target immediately
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=MOVE_TIMEOUT)
+        
+        # Release tool
+        await robot.release_resource(RIGHT, TOOL)
+
+    # Run producer and consumer concurrently
+    await asyncio.gather(producer(), consumer())

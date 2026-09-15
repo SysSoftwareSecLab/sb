@@ -1,0 +1,26 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-09-base-glm5",
+  "task_id": "CP-09",
+  "stratum": "insertion",
+  "arm": "BASE",
+  "profile": "glm5",
+  "stage": 1,
+  "request_sha256": "42c65221c874f94dad0428ef24e9951fd0b6bc22b0835f957da8b93e26d3b083",
+  "raw_sha256": "a918ad3d112842ab384076906c3b961bf3cd785065f20de256024d8989bd7f64",
+  "source_sha256": "0894cea6fe27204683440e34d596a2418346ab2cc2e9aa01276771b993b71af1",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 132,
+    "prompt_tokens": 277,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 409
+  },
+  "first_response_final": true
+}

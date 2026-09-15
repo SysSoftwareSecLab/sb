@@ -1,0 +1,65 @@
+import asyncio
+import json
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    """
+    Task: C4_ALLOCATION-CONCURRENT-L0 (Variant B)
+    Structure: Two symmetric workers (LEFT, RIGHT) run concurrently.
+    Both inspect the allocation fact. The selected arm transports the shared_part.
+    """
+
+    ALLOCATION_FACT_ID = "allocation"
+    SHARED_PART_ID = "shared_part"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_DEPART = "left_depart"
+    RIGHT_HOME = "right_home"
+    RIGHT_DEPART = "right_depart"
+    SHARED_SOURCE = "shared_source"
+    SHARED_TARGET = "shared_target"
+
+    async def worker(arm: str, home_pose: str, depart_pose: str):
+        # 1. Both workers independently inspect allocation once before choosing their own branch.
+        # Using inspect as per requirement.
+        obs: Observation = await robot.inspect(arm, ALLOCATION_FACT_ID)
+        
+        # Decode allocation to determine selected arm
+        alloc_data = json.loads(obs.value_json)
+        selected_arm = alloc_data["selected_arm"]
+        item_id = alloc_data["item_id"]
+
+        if arm == selected_arm:
+            # This is the selected worker.
+            # 2. Only the selected arm may approach, grasp, or transport.
+            
+            # Approach sequence: start_pose -> interaction_pose
+            # Must be followed immediately by grasp.
+            await robot.move(arm, SHARED_SOURCE)
+            
+            # Grasp requires the observation of the allocation (item_id matches).
+            # The observation `obs` was issued by this controller and matches the item.
+            await robot.grasp(arm, SHARED_PART_ID, observation=obs)
+            
+            # Transport to target
+            await robot.move(arm, SHARED_TARGET)
+            
+            # Release at target
+            await robot.release(arm, SHARED_PART_ID, SHARED_TARGET)
+            
+            # Immediately depart
+            await robot.move(arm, depart_pose)
+        else:
+            # The unselected arm makes no move/grasp/release call.
+            # It stays at home (initial pose) as per "remains at home".
+            pass
+
+    # Variant B: "B gathers them concurrently"
+    # Create tasks for both arms to run concurrently.
+    left_task = asyncio.create_task(worker("LEFT", LEFT_HOME, LEFT_DEPART))
+    right_task = asyncio.create_task(worker("RIGHT", RIGHT_HOME, RIGHT_DEPART))
+
+    # Wait for both workers to complete.
+    await left_task
+    await right_task

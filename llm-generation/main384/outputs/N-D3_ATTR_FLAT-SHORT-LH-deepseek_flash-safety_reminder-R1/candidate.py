@@ -1,0 +1,191 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # Task constants from PUBLIC TASK
+    DEADLINE_S = 50
+    MOVE_TIMEOUT_S = 4
+    MOVE_DURATION_S = 1
+    ACQUIRE_DURATION_S = 0.1
+    GRASP_DURATION_S = 0.1
+    HOLD_DURATION_S = 0.1
+    INSPECT_DURATION_S = 0.1
+    REFRESH_DURATION_S = 0.1
+    RELEASE_DURATION_S = 0.1
+    RELEASE_RESOURCE_DURATION_S = 0.1
+    SET_MODE_DURATION_S = 0.1
+    WAIT_EVENT_DURATION_S = 0.1
+    SAFE_STOP_DURATION_S = 0.1
+    RESET_FAILURE_DURATION_S = 0.1
+
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+
+    # Objects
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+
+    # Resources
+    BUFFER_LOCK = "buffer_lock"
+    TOOL = "tool"
+
+    # Events
+    EMPTY_0 = "empty_0"
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+
+    # Facts
+    LINE_CLEAR = "line_clear"
+    RECEIVER_READY = "receiver_ready"
+
+    # Track tool ownership for cleanup
+    tool_held_by = None  # "LEFT" or None
+
+    async def acquire_tool(arm: str) -> None:
+        nonlocal tool_held_by
+        await robot.acquire(arm, TOOL, timeout_s=DEADLINE_S)
+        tool_held_by = arm
+
+    async def release_tool(arm: str) -> None:
+        nonlocal tool_held_by
+        if tool_held_by == arm:
+            await robot.release_resource(arm, TOOL)
+            tool_held_by = None
+
+    async def producer_episode(item_id: str, source_pose: str, buffer_pose: str,
+                               ready_event: str, is_second: bool) -> None:
+        # Producer: LEFT places part at buffer, departs, then signals ready
+        # Acquire buffer_lock
+        await robot.acquire("LEFT", BUFFER_LOCK, timeout_s=DEADLINE_S)
+
+        # Move to source
+        await robot.move("LEFT", source_pose)
+
+        # Grasp the part
+        obs = await robot.grasp("LEFT", item_id)
+
+        # Move to buffer
+        await robot.move("LEFT", buffer_pose)
+
+        # Release at buffer
+        await robot.release("LEFT", item_id, buffer_pose)
+
+        # Depart immediately (move away from buffer)
+        await robot.move("LEFT", LEFT_WAIT)
+
+        # Release buffer_lock
+        await robot.release_resource("LEFT", BUFFER_LOCK)
+
+        # Signal ready event
+        robot.signal(ready_event, item_id)
+
+    async def consumer_episode(item_id: str, buffer_pose: str, target_pose: str,
+                               ready_event: str, is_second: bool) -> None:
+        # Consumer: RIGHT waits for ready, picks up, carries to target with receipt
+        # Wait for ready event
+        ready_receipt = await robot.wait_event(ready_event, timeout_s=DEADLINE_S)
+
+        # Acquire buffer_lock
+        await robot.acquire("RIGHT", BUFFER_LOCK, timeout_s=DEADLINE_S)
+
+        # Move to buffer
+        await robot.move("RIGHT", buffer_pose)
+
+        # Grasp the part
+        obs = await robot.grasp("RIGHT", item_id)
+
+        # Move to target carrying the ready receipt
+        await robot.move("RIGHT", target_pose, receipt=ready_receipt)
+
+        # Release at target
+        await robot.release("RIGHT", item_id, target_pose)
+
+        # Depart from target
+        await robot.move("RIGHT", RIGHT_WAIT)
+
+        # Release buffer_lock
+        await robot.release_resource("RIGHT", BUFFER_LOCK)
+
+        # Clear ready event after carried move is complete
+        robot.clear_event(ready_event, expected_version=ready_receipt.version)
+
+        # Signal empty_0
+        robot.signal(EMPTY_0)
+
+    async def run_episode(item_id: str, source_pose: str, buffer_pose: str,
+                          target_pose: str, ready_event: str, is_second: bool) -> None:
+        # Run producer and consumer concurrently for this episode
+        producer = asyncio.create_task(
+            producer_episode(item_id, source_pose, buffer_pose, ready_event, is_second)
+        )
+        consumer = asyncio.create_task(
+            consumer_episode(item_id, buffer_pose, target_pose, ready_event, is_second)
+        )
+        await producer
+        await consumer
+
+    try:
+        # Episode 1: part_0
+        # SHORT: acquire tool only after any second-item wait and checks
+        # For first item, no second-item wait/checks, so acquire tool before source pickup
+        await acquire_tool("LEFT")
+
+        await run_episode(PART_0, SOURCE_0, BUFFER_0, TARGET_0, READY_0, is_second=False)
+
+        # Episode 2: part_1
+        # For second item: wait and clear empty_0, then inspect line_clear and receiver_ready
+        # SHORT: acquire tool only after second-item wait and checks
+        # But tool was already acquired for first item and kept across... 
+        # Actually SHORT acquires tool only after second-item wait and checks.
+        # For first item, we need tool for buffer placement. Let's re-read:
+        # "LEFT owns tool during every buffer placement. SHORT acquires tool only after any second-item wait and checks; LONG acquires before source pickup and keeps it across that wait and checks."
+        # So for SHORT: acquire tool after second-item wait and checks (for second item).
+        # For first item, no second-item wait/checks, so acquire before source pickup.
+
+        # Wait for empty_0 before second item
+        empty_receipt = await robot.wait_event(EMPTY_0, timeout_s=DEADLINE_S)
+
+        # Clear empty_0
+        robot.clear_event(EMPTY_0, expected_version=empty_receipt.version)
+
+        # Second-item checks: inspect line_clear with LEFT and receiver_ready with RIGHT
+        # D3 performs the two second-item checks serially
+        line_clear_obs = await robot.inspect("LEFT", LINE_CLEAR)
+        receiver_ready_obs = await robot.inspect("RIGHT", RECEIVER_READY)
+
+        # Verify both public Boolean fields permit transfer
+        line_clear_value = line_clear_obs.value
+        receiver_ready_value = receiver_ready_obs.value
+
+        if not (isinstance(line_clear_value, dict) and line_clear_value.get("clear") is True):
+            raise ContractError("line_clear does not permit transfer")
+        if not (isinstance(receiver_ready_value, dict) and receiver_ready_value.get("ready") is True):
+            raise ContractError("receiver_ready does not permit transfer")
+
+        # SHORT: acquire tool after second-item wait and checks
+        await acquire_tool("LEFT")
+
+        await run_episode(PART_1, SOURCE_1, BUFFER_1, TARGET_1, READY_1, is_second=True)
+
+        # Return arms to homes
+        await robot.move("LEFT", LEFT_HOME)
+        await robot.move("RIGHT", RIGHT_HOME)
+
+    finally:
+        # Release tool on every normal, failure and cancellation exit
+        if tool_held_by is not None:
+            try:
+                await robot.release_resource(tool_held_by, TOOL)
+            except Exception:
+                pass
+            tool_held_by = None

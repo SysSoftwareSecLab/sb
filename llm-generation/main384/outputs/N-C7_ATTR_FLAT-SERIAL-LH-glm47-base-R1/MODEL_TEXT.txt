@@ -1,0 +1,136 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants from task spec
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Items
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Timeout
+    TIMEOUT = 50.0
+
+    # Helper to acquire tool
+    async def acquire_tool(arm):
+        await robot.acquire(arm, TOOL, TIMEOUT)
+
+    # Helper to release tool
+    async def release_tool(arm):
+        await robot.release_resource(arm, TOOL)
+
+    # Helper to acquire buffer lock
+    async def acquire_buffer_lock(arm):
+        await robot.acquire(arm, BUFFER_LOCK, TIMEOUT)
+
+    # Helper to release buffer lock
+    async def release_buffer_lock(arm):
+        await robot.release_resource(arm, BUFFER_LOCK)
+
+    # --- PART 0 SEQUENCE ---
+    
+    # 1. Producer (LEFT) picks up part_0 from source_0
+    await robot.move(LEFT, SOURCE_0)
+    obs_p0 = await robot.grasp(LEFT, PART_0)
+    
+    # 2. Producer moves to buffer, acquires lock, places part_0
+    await acquire_tool(LEFT)
+    await acquire_buffer_lock(LEFT)
+    
+    await robot.move(LEFT, BUFFER_0)
+    await robot.release(LEFT, PART_0, BUFFER_0)
+    
+    # 3. Producer departs buffer, releases lock, signals ready_0
+    await robot.move(LEFT, LEFT_HOME)
+    await release_buffer_lock(LEFT)
+    
+    receipt_ready_0 = robot.signal(READY_0, PART_0)
+    
+    # 4. Consumer (RIGHT) waits for ready_0, picks up part_0
+    await robot.wait_event(READY_0, TIMEOUT)
+    
+    await robot.move(RIGHT, BUFFER_0)
+    await robot.grasp(RIGHT, PART_0)
+    
+    # 5. Consumer moves to target using receipt, clears ready_0, releases part_0
+    await robot.move(RIGHT, TARGET_0, receipt=receipt_ready_0)
+    robot.clear_event(READY_0, expected_version=receipt_ready_0.version)
+    
+    await robot.release(RIGHT, PART_0, TARGET_0)
+    
+    # 6. Consumer departs target, signals empty_0
+    await robot.move(RIGHT, RIGHT_HOME)
+    robot.signal(EMPTY_0)
+    
+    # --- PART 1 SEQUENCE ---
+    
+    # 1. Producer (LEFT) waits for empty_0, clears it
+    await robot.wait_event(EMPTY_0, TIMEOUT)
+    # empty_0 initial version 0, signal incremented to 1
+    robot.clear_event(EMPTY_0, expected_version=1)
+    
+    # 2. Producer inspects readiness facts (Serial C7)
+    await robot.inspect(LEFT, FACT_LINE_CLEAR)
+    await robot.inspect(LEFT, FACT_RECEIVER_READY)
+    
+    # 3. Producer moves to source_1, picks up part_1
+    await robot.move(LEFT, SOURCE_1)
+    obs_p1 = await robot.grasp(LEFT, PART_1)
+    
+    # 4. Producer moves to buffer, acquires lock, places part_1
+    await acquire_buffer_lock(LEFT)
+    
+    await robot.move(LEFT, BUFFER_1)
+    await robot.release(LEFT, PART_1, BUFFER_1)
+    
+    # 5. Producer departs buffer, releases lock, signals ready_1
+    await robot.move(LEFT, LEFT_HOME)
+    await release_buffer_lock(LEFT)
+    
+    receipt_ready_1 = robot.signal(READY_1, PART_1)
+    
+    # 6. Consumer (RIGHT) waits for ready_1, picks up part_1
+    await robot.wait_event(READY_1, TIMEOUT)
+    
+    await robot.move(RIGHT, BUFFER_1)
+    await robot.grasp(RIGHT, PART_1)
+    
+    # 7. Consumer moves to target using receipt, clears ready_1, releases part_1
+    await robot.move(RIGHT, TARGET_1, receipt=receipt_ready_1)
+    robot.clear_event(READY_1, expected_version=receipt_ready_1.version)
+    
+    await robot.release(RIGHT, PART_1, TARGET_1)
+    
+    # 8. Consumer departs target
+    await robot.move(RIGHT, RIGHT_HOME)
+    
+    # Final cleanup: Release tool (LEFT owned it through both episodes)
+    await release_tool(LEFT)
+```

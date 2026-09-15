@@ -1,0 +1,75 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # D7_BUFFER_PREFETCH-LONG-L0
+    # Two parts cross a capacity-one buffer from LEFT producer to RIGHT consumer.
+    # A: LEFT producer episodes (place at buffer, depart, publish ready; later
+    #    wait/clear empty_0, then second producer episode).
+    # B: RIGHT consumer episodes (wait ready, pickup, carried move to target,
+    #    clear ready, release on target, depart, publish empty_0).
+
+    async def producer_episode(robot: Robot, part_id: str, source_pose: str,
+                               buffer_pose: str, ready_event: str) -> None:
+        # Approach source from left_home (or left_wait for second part).
+        await robot.move("LEFT", source_pose)
+        # Immediately grasp at the approach interaction pose.
+        await robot.grasp("LEFT", part_id)
+        # Acquire buffer_lock for buffer entry.
+        await robot.acquire("LEFT", "buffer_lock", 120)
+        # Enter buffer with carried object.
+        await robot.move("LEFT", buffer_pose)
+        # Release part onto buffer (current pose == buffer support zone).
+        await robot.release("LEFT", part_id, buffer_pose)
+        # Immediately depart buffer (same virtual moment; no intervening calls).
+        await robot.move("LEFT", "left_wait")
+        # Release ownership of buffer_lock after departure.
+        await robot.release_resource("LEFT", "buffer_lock")
+        # Publish ready receipt for this item.
+        robot.signal(ready_event, part_id)
+
+    async def consumer_episode(robot: Robot, part_id: str, buffer_pose: str,
+                               target_pose: str, ready_event: str) -> None:
+        # Wait for the corresponding ready receipt before pickup.
+        receipt = await robot.wait_event(ready_event, 120)
+        # Acquire buffer_lock for buffer entry.
+        await robot.acquire("RIGHT", "buffer_lock", 120)
+        # Enter buffer to approach the item.
+        await robot.move("RIGHT", buffer_pose)
+        # Immediately grasp the item at buffer.
+        await robot.grasp("RIGHT", part_id, observation=receipt)
+        # Carried move to target, supplying the exact active item receipt.
+        await robot.move("RIGHT", target_pose, receipt=receipt)
+        # Clear ready after carried move completes.
+        robot.clear_event(ready_event, expected_version=receipt.version)
+        # Release ownership of buffer_lock after pickup/departure segment.
+        await robot.release_resource("RIGHT", "buffer_lock")
+        # Release item on target (current pose == target support zone).
+        await robot.release("RIGHT", part_id, target_pose)
+        # Immediately depart target.
+        await robot.move("RIGHT", "right_wait")
+        # Publish empty_0.
+        robot.signal("empty_0", part_id)
+
+    async def producer_a(robot: Robot) -> None:
+        # Episode 1: part_0 from source_0 to buffer_0, publish ready_0.
+        await producer_episode(robot, "part_0", "source_0", "buffer_0", "ready_0")
+        # Producer waits and clears empty_0 before entering buffer with second part.
+        empty_receipt = await robot.wait_event("empty_0", 120)
+        robot.clear_event("empty_0", expected_version=empty_receipt.version)
+        # Episode 2: part_1 from source_1 to buffer_1, publish ready_1.
+        await producer_episode(robot, "part_1", "source_1", "buffer_1", "ready_1")
+
+    async def consumer_b(robot: Robot) -> None:
+        # Episode 1: consume part_0 from buffer_0 to target_0, publish empty_0.
+        await consumer_episode(robot, "part_0", "buffer_0", "target_0", "ready_0")
+        # Episode 2: consume part_1 from buffer_1 to target_1.
+        await consumer_episode(robot, "part_1", "buffer_1", "target_1", "ready_1")
+        # Return RIGHT to home after final departure.
+        await robot.move("RIGHT", "right_home")
+
+    # B runs producer and consumer coroutines together; A alternates episodes.
+    await asyncio.gather(producer_a(robot), consumer_b(robot))
+    # Return LEFT to home after second producer episode departure.
+    await robot.move("LEFT", "left_home")

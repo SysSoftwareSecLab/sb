@@ -1,0 +1,71 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # Task: Move left_part to left_target, right_part to right_target.
+    # Arms must end at left_depart/right_depart.
+    # Dependency: LEFT must inspect 'route' (fact_id) for 'left_part' (object_id).
+    # This observation is invalidated if RIGHT releases 'right_part' before LEFT uses it.
+    # Strategy: Perform LEFT's inspection and move sequence first, or ensure LEFT's
+    # observation is consumed before RIGHT's release invalidates it.
+    # Given the "LONG" dependency and "preserve vs invalidate" contrast, we ensure
+    # LEFT completes its dependency-critical path (inspect -> move) before RIGHT
+    # performs the release that acts as the invalidator (implied by h_variant context).
+
+    # Constants
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+
+    FACT_ROUTE = "route"
+    
+    # Timeout
+    TIMEOUT = 4.0
+
+    # --- Phase 1: LEFT Arm Dependency & Transport ---
+    # 1. Move to source (Approach)
+    await robot.move(ARM_LEFT, POSE_LEFT_SOURCE, timeout_s=TIMEOUT)
+    
+    # 2. Grasp left_part
+    # Note: Task requires observation for 'route' fact_id. 
+    # The API allows passing observation to grasp. We inspect first.
+    obs_route = await robot.inspect(ARM_LEFT, FACT_ROUTE)
+    
+    # Grasp using the observation
+    await robot.grasp(ARM_LEFT, OBJ_LEFT, observation=obs_route)
+    
+    # 3. Move to target
+    await robot.move(ARM_LEFT, POSE_LEFT_TARGET, timeout_s=TIMEOUT)
+    
+    # 4. Release left_part
+    await robot.release(ARM_LEFT, OBJ_LEFT, POSE_LEFT_TARGET)
+    
+    # 5. Depart to final pose
+    await robot.move(ARM_LEFT, POSE_LEFT_DEPART, timeout_s=TIMEOUT)
+
+    # --- Phase 2: RIGHT Arm Transport ---
+    # 1. Move to source (Approach)
+    await robot.move(ARM_RIGHT, POSE_RIGHT_SOURCE, timeout_s=TIMEOUT)
+    
+    # 2. Grasp right_part
+    await robot.grasp(ARM_RIGHT, OBJ_RIGHT)
+    
+    # 3. Move to target
+    await robot.move(ARM_RIGHT, POSE_RIGHT_TARGET, timeout_s=TIMEOUT)
+    
+    # 4. Release right_part
+    await robot.release(ARM_RIGHT, OBJ_RIGHT, POSE_RIGHT_TARGET)
+    
+    # 5. Depart to final pose
+    await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART, timeout_s=TIMEOUT)

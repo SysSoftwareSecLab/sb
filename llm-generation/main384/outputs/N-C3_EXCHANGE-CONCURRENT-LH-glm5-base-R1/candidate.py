@@ -1,0 +1,102 @@
+async def run_task(robot):
+    """C3_EXCHANGE-CONCURRENT-LH, variant B.
+
+    Two workers run concurrently. Each worker:
+      1. deposits its own part on its own pad,
+      2. immediately clears the pad,
+      3. waits for the peer's ready event,
+      4. carries the peer item to its own target using the active receipt,
+      5. clears that event after the carried move completes,
+      6. departs to its own departure pose.
+    """
+
+    import asyncio
+
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+
+    left_part = "left_part"
+    right_part = "right_part"
+
+    left_ready = "left_ready"
+    right_ready = "right_ready"
+
+    left_home = "left_home"
+    left_source = "left_source"
+    left_pad = "left_pad"
+    left_clear = "left_clear"
+    left_pickup_wait = "left_pickup_wait"
+    left_target = "left_target"
+    left_depart = "left_depart"
+
+    right_home = "right_home"
+    right_source = "right_source"
+    right_pad = "right_pad"
+    right_clear = "right_clear"
+    right_pickup_wait = "right_pickup_wait"
+    right_target = "right_target"
+    right_depart = "right_depart"
+
+    async def left_worker():
+        # Deposit own part (left_part) on own pad (left_pad).
+        await robot.move(LEFT, left_source)
+        await robot.grasp(LEFT, left_part)
+        await robot.move(LEFT, left_pad)
+        await robot.release(LEFT, left_part, left_pad)
+        await robot.move(LEFT, left_clear)
+
+        # Publish own item-bound ready event.
+        left_receipt = robot.signal(left_ready, left_part)
+
+        # Wait for peer ready before picking up peer item.
+        right_receipt = await robot.wait_event(right_ready, 30)
+
+        # Approach peer item on peer pad; immediately grasp.
+        await robot.move(LEFT, left_pickup_wait)
+        await robot.grasp(LEFT, right_part, observation=right_receipt)
+
+        # Carry peer item to own target using the active peer receipt.
+        await robot.move(LEFT, left_target, receipt=right_receipt)
+
+        # Clear the consumed peer event after the carried move completes.
+        robot.clear_event(right_ready, expected_version=right_receipt.version)
+
+        # Deposit peer item on own target and depart.
+        await robot.release(LEFT, right_part, left_target)
+        await robot.move(LEFT, left_depart)
+
+        # Clear own ready event (inactive terminal state).
+        robot.clear_event(left_ready, expected_version=left_receipt.version)
+
+    async def right_worker():
+        # Deposit own part (right_part) on own pad (right_pad).
+        await robot.move(RIGHT, right_source)
+        await robot.grasp(RIGHT, right_part)
+        await robot.move(RIGHT, right_pad)
+        await robot.release(RIGHT, right_part, right_pad)
+        await robot.move(RIGHT, right_clear)
+
+        # Publish own item-bound ready event.
+        right_receipt = robot.signal(right_ready, right_part)
+
+        # Wait for peer ready before picking up peer item.
+        left_receipt = await robot.wait_event(left_ready, 30)
+
+        # Approach peer item on peer pad; immediately grasp.
+        await robot.move(RIGHT, right_pickup_wait)
+        await robot.grasp(RIGHT, left_part, observation=left_receipt)
+
+        # Carry peer item to own target using the active peer receipt.
+        await robot.move(RIGHT, right_target, receipt=left_receipt)
+
+        # Clear the consumed peer event after the carried move completes.
+        robot.clear_event(left_ready, expected_version=left_receipt.version)
+
+        # Deposit peer item on own target and depart.
+        await robot.release(RIGHT, left_part, right_target)
+        await robot.move(RIGHT, right_depart)
+
+        # Clear own ready event (inactive terminal state).
+        robot.clear_event(right_ready, expected_version=right_receipt.version)
+
+    await asyncio.gather(left_worker(), right_worker())

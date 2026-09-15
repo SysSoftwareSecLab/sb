@@ -1,0 +1,75 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Phase 1: LEFT approaches left_source from left_home and grasps left_part.
+    # Approach must start at left_home and the very next robot call must be grasp.
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "left_source")
+    left_obs = await robot.grasp("LEFT", "left_part")
+
+    # ------------------------------------------------------------------
+    # Phase 2: LEFT carries left_part to inspection and releases it there.
+    # Release onto inspection invalidates the quality fact (version bump).
+    # Immediately after release, LEFT must depart from inspection.
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "inspection")
+    await robot.release("LEFT", "left_part", "inspection")
+    await robot.move("LEFT", "left_wait")
+
+    # ------------------------------------------------------------------
+    # Phase 3: RIGHT approaches right_source from right_home and grasps right_part.
+    # ------------------------------------------------------------------
+    await robot.move("RIGHT", "right_source")
+    right_obs = await robot.grasp("RIGHT", "right_part")
+
+    # ------------------------------------------------------------------
+    # Phase 4: RIGHT carries right_part to right_target and releases it.
+    # ------------------------------------------------------------------
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+    # ------------------------------------------------------------------
+    # Phase 5: Inspection pass 1.
+    # RIGHT inspects the quality fact. The newly issued observation must be
+    # consumed by the LEFT grasp at inspection.
+    # ------------------------------------------------------------------
+    quality_obs_1 = await robot.inspect("RIGHT", "quality")
+
+    # LEFT approaches inspection from left_wait and immediately grasps
+    # left_part, consuming the current quality observation.
+    await robot.move("LEFT", "inspection")
+    await robot.grasp("LEFT", "left_part", observation=quality_obs_1)
+
+    # ------------------------------------------------------------------
+    # Phase 6: Evaluate pass 1 acceptance.
+    # accept_by_pass[0] is true, so LEFT places at left_target.
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+    # ------------------------------------------------------------------
+    # Phase 7: Inspection pass 2.
+    # The task states B accepts on the second pass. RIGHT inspects again,
+    # producing a fresh quality observation. LEFT must consume this new
+    # observation on its inspection pickup.
+    # ------------------------------------------------------------------
+    quality_obs_2 = await robot.inspect("RIGHT", "quality")
+
+    # LEFT approaches inspection from left_wait and immediately grasps
+    # left_part, consuming the current quality observation.
+    await robot.move("LEFT", "inspection")
+    await robot.grasp("LEFT", "left_part", observation=quality_obs_2)
+
+    # ------------------------------------------------------------------
+    # Phase 8: Evaluate pass 2 acceptance.
+    # accept_by_pass[1] is true, so LEFT places at left_target.
+    # ------------------------------------------------------------------
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+```

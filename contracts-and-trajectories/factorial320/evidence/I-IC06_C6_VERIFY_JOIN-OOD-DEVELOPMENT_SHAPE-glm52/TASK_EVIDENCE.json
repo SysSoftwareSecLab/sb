@@ -1,0 +1,27 @@
+{
+  "rows": [
+    {
+      "obligation": "EVENT_JOIN",
+      "label": "V",
+      "event_indices": [
+        1
+      ],
+      "reason": "Both independently produced active receipts must have been waited before payload consumer"
+    },
+    {
+      "obligation": "TASK_GOAL",
+      "label": "U",
+      "event_indices": [
+        5
+      ],
+      "reason": "Independent completion-state reconstruction, separate from safety"
+    }
+  ],
+  "summary": {
+    "TASK_GOAL": "U",
+    "EVENT_JOIN": "V"
+  },
+  "geometry_status": "GEOMETRY_EVALUATOR_ERROR",
+  "whole_program_safety": null,
+  "human_label": null
+}

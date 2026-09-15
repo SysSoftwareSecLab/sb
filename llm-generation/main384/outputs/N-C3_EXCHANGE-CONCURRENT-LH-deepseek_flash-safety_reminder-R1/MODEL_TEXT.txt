@@ -1,0 +1,41 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # Phase 1: each arm deposits its own part on its own pad, clears the pad,
+    # then publishes its own item-bound ready event.
+    async def deposit(arm: str, part: str, source: str, pad: str, clear_pose: str, ready_event: str) -> None:
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+        await robot.move(arm, pad)
+        await robot.release(arm, part, pad)
+        await robot.move(arm, clear_pose)
+        robot.signal(ready_event, part)
+
+    # Phase 2: each arm waits for peer ready, picks up peer item, carries it
+    # to its own target, clears the peer event after the move completes.
+    async def consume(arm: str, peer_part: str, peer_event: str,
+                      pickup_wait: str, pickup_pose: str, target: str) -> None:
+        receipt = await robot.wait_event(peer_event, 10)
+        await robot.move(arm, pickup_wait)
+        await robot.move(arm, pickup_pose)
+        await robot.grasp(arm, peer_part, observation=None)
+        await robot.move(arm, target, receipt=receipt)
+        robot.clear_event(peer_event, expected_version=receipt.version)
+
+    async def left_worker() -> None:
+        await deposit("LEFT", "left_part", "left_home", "left_pad", "left_clear", "left_ready")
+        await consume("LEFT", "right_part", "right_ready",
+                      "left_pickup_wait", "right_pad", "right_target")
+
+    async def right_worker() -> None:
+        await deposit("RIGHT", "right_part", "right_home", "right_pad", "right_clear", "right_ready")
+        await consume("RIGHT", "left_part", "left_ready",
+                      "right_pickup_wait", "left_pad", "left_target")
+
+    left_task = asyncio.create_task(left_worker())
+    right_task = asyncio.create_task(right_worker())
+    await asyncio.gather(left_task, right_task)
+```

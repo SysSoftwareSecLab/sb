@@ -1,0 +1,153 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants extracted from PUBLIC TASK
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    
+    # Objects
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Events
+    LEFT_READY = "left_ready"
+    RIGHT_READY = "right_ready"
+    RQ2_GATE = "rq2_gate"
+    
+    # Facts
+    LEFT_VERIFICATION = "left_verification"
+    RIGHT_VERIFICATION = "right_verification"
+    
+    # Timeouts
+    MOVE_TIMEOUT = 4.0
+    EVENT_TIMEOUT = 5.0
+    
+    # Helper to execute the complete mission for an arm
+    async def execute_mission(arm: str, home: str, source: str, target: str, depart: str, part: str, fact: str, ready_event: str):
+        # 1. Signal ready
+        robot.signal(ready_event)
+        
+        # 2. Move to source (Approach)
+        await robot.move(arm, source, timeout_s=MOVE_TIMEOUT)
+        
+        # 3. Grasp part
+        # Note: Task requires observation for grasp if specified. 
+        # PUBLIC TASK observation_facts exist but grasp obligation in text is generic.
+        # We pass observation=None as no specific "grasp observation" is mandated by text.
+        await robot.grasp(arm, part)
+        
+        # 4. Move to target
+        await robot.move(arm, target, timeout_s=MOVE_TIMEOUT)
+        
+        # 5. Release part
+        await robot.release(arm, part, target)
+        
+        # 6. Inspect fact
+        # We need the observation to signal the gate later
+        obs = await robot.inspect(arm, fact)
+        
+        # 7. Move to depart
+        await robot.move(arm, depart, timeout_s=MOVE_TIMEOUT)
+        
+        return obs
+
+    # Structural Loop
+    while True:
+        # PAR_JOIN: Concurrently produce RQ2_GATE and wait for it
+        async def produce_gate():
+            # Wait for both arms to be ready
+            # We wait for the events we will signal in the mission
+            # But since the mission signals them at start, we need to coordinate.
+            # The structure says: "Inside one finite loop iteration, concurrently join an rq2_gate producer and consumer"
+            
+            # Wait for left_ready and right_ready
+            # These are signaled by the mission tasks.
+            # To avoid deadlock where mission waits for gate and gate waits for mission,
+            # we assume the mission tasks are launched concurrently with this producer.
+            # However, the structure "FOR -> PAR_JOIN -> consumer IF" implies the gate logic is the join point.
+            
+            # Let's wait for the ready events.
+            # Since the mission tasks signal these immediately, we can wait for them.
+            # But we must ensure the mission tasks are running.
+            # We will launch the missions *after* creating the producer task? 
+            # No, "concurrently join".
+            
+            # Correct interpretation:
+            # 1. Launch Producer (wait for ready events -> signal gate).
+            # 2. Launch Consumer (wait for gate -> run mission).
+            # 3. Wait for both.
+            
+            # Wait for the specific versions of left_ready and right_ready
+            # Since we are in a loop, versions increment.
+            # We just need to know they are active.
+            await robot.wait_event(LEFT_READY, timeout_s=EVENT_TIMEOUT)
+            await robot.wait_event(RIGHT_READY, timeout_s=EVENT_TIMEOUT)
+            
+            # Signal the gate
+            robot.signal(RQ2_GATE)
+
+        async def consume_gate():
+            # Wait for the gate
+            receipt = await robot.wait_event(RQ2_GATE, timeout_s=EVENT_TIMEOUT)
+            
+            # Execute the complete inherited mission
+            # We run both arms concurrently as part of the "complete mission" implied by the scene
+            # or sequentially? "Two independent verifier branches".
+            # "serial versus concurrent verifier production" in contrast.
+            # "Experimental structure is CONCURRENCY=SERIAL".
+            # This likely means the *Gate Join* is serial (Producer then Consumer), 
+            # but the branches (Left/Right) are independent.
+            # However, the consumer IF guards the *complete* mission.
+            # We will run Left and Right missions concurrently within the consumer.
+            
+            t_left = asyncio.create_task(execute_mission(
+                LEFT, LEFT_HOME, LEFT_SOURCE, LEFT_TARGET, LEFT_DEPART, LEFT_PART, LEFT_VERIFICATION, LEFT_READY
+            ))
+            t_right = asyncio.create_task(execute_mission(
+                RIGHT, RIGHT_HOME, RIGHT_SOURCE, RIGHT_TARGET, RIGHT_DEPART, RIGHT_PART, RIGHT_VERIFICATION, RIGHT_READY
+            ))
+            
+            obs_left, obs_right = await asyncio.gather(t_left, t_right)
+            
+            # Clear the gate event using the receipt we waited on
+            robot.clear_event(RQ2_GATE, expected_version=receipt.version)
+            
+            # Clear the ready events for the next loop iteration
+            # We need the receipts for left_ready and right_ready.
+            # Since execute_mission signals them, we should return those receipts or fetch them.
+            # To keep it simple and robust, we fetch the current active receipts.
+            r_left = await robot.wait_event(LEFT_READY, timeout_s=EVENT_TIMEOUT)
+            r_right = await robot.wait_event(RIGHT_READY, timeout_s=EVENT_TIMEOUT)
+            
+            robot.clear_event(LEFT_READY, expected_version=r_left.version)
+            robot.clear_event(RIGHT_READY, expected_version=r_right.version)
+            
+            return obs_left, obs_right
+
+        # Run Producer and Consumer concurrently
+        t_prod = asyncio.create_task(produce_gate())
+        t_cons = asyncio.create_task(consume_gate())
+        
+        await asyncio.gather(t_prod, t_cons)
+        
+        # Check goal condition: "rq2_gate inactive at return"
+        # We cleared it in consume_gate.
+        # Check goal condition: "both parts at their own target; both arms at departure and empty"
+        # This is achieved by execute_mission.
+        # Since the task asks for a finite loop iteration and we reached the goal state,
+        # we break the loop.
+        break
+```

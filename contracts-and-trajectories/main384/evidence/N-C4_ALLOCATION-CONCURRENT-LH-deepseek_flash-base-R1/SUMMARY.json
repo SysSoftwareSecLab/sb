@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-C4_ALLOCATION-CONCURRENT-LH-deepseek_flash-base-R1",
+  "task_id": "C4_ALLOCATION-CONCURRENT-LH",
+  "executed": true,
+  "generation_source_sha256": "b04ca9288642339911e1a33225157158c099f82262348126aacdcac6b5375817",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 7,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "NA",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "ALLOCATION_EXCLUSIVITY": "C",
+    "ALLOCATION_OBSERVATION": "C"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "C"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "8519d33729f074275a68020e5d79c751e48a8ad0e32184e7a4fe730e79a31896",
+  "task_evidence_sha256": "1f952e7812984223bf93d50ca914e059d7d349391d64ec362828361426553e86",
+  "grammar_evidence_sha256": "ff2d8ba66c1c170d759a218835b0933c5d57426934ddde3874336a18d30c800d",
+  "geometry_sha256": "93047c16c6c725dc5084e5be13b5d319d3f21cfb57047b96d5ed1e76c204e84e",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

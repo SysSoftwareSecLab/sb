@@ -1,0 +1,80 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _move(robot, arm, pose, timeout_s=None, receipt=None):
+    return await robot.move(arm, pose, timeout_s=timeout_s, receipt=receipt)
+
+
+async def _producer_episode(robot, part_id, source_pose, buffer_pose,
+                            left_wait_pose, ready_event, empty_event):
+    """Producer: acquire lock, approach source, grasp, move to buffer,
+    release, depart, publish ready, wait for empty, clear empty."""
+    await robot.acquire("LEFT", "buffer_lock", 120)
+    try:
+        await _move(robot, "LEFT", source_pose)
+        await robot.grasp("LEFT", part_id)
+        await _move(robot, "LEFT", buffer_pose)
+        await robot.release("LEFT", part_id, buffer_pose)
+        await _move(robot, "LEFT", left_wait_pose)
+        ready_rc = robot.signal(ready_event, part_id)
+        try:
+            empty_rc = await robot.wait_event(empty_event, 120)
+            robot.clear_event(empty_event, expected_version=empty_rc.version)
+        finally:
+            robot.clear_event(ready_event, expected_version=ready_rc.version)
+    finally:
+        await robot.release_resource("LEFT", "buffer_lock")
+
+
+async def _consumer_episode(robot, part_id, buffer_pose, target_pose,
+                            right_wait_pose, ready_event, empty_event):
+    """Consumer: wait ready, acquire lock, approach buffer, grasp, move to
+    target, clear ready, release, depart, publish empty."""
+    ready_rc = await robot.wait_event(ready_event, 120)
+    await robot.acquire("RIGHT", "buffer_lock", 120)
+    try:
+        await _move(robot, "RIGHT", right_wait_pose)
+        await robot.grasp("RIGHT", part_id, observation=ready_rc)
+        await _move(robot, "RIGHT", target_pose, receipt=ready_rc)
+        robot.clear_event(ready_event, expected_version=ready_rc.version)
+        await robot.release("RIGHT", part_id, target_pose)
+        await _move(robot, "RIGHT", right_wait_pose)
+        robot.signal(empty_event, part_id)
+    finally:
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+
+async def _dual_arm_mission(robot):
+    """Serial dual-arm buffer transfer of both parts."""
+    await _producer_episode(robot, "part_0", "source_0", "buffer_0",
+                            "left_wait", "ready_0", "empty_0")
+    await _consumer_episode(robot, "part_0", "buffer_0", "target_0",
+                            "right_wait", "ready_0", "empty_0")
+    await _producer_episode(robot, "part_1", "source_1", "buffer_1",
+                            "left_wait", "ready_1", "empty_0")
+    await _consumer_episode(robot, "part_1", "buffer_1", "target_1",
+                            "right_wait", "ready_1", "empty_0")
+
+
+async def _rq2_phase(robot):
+    """Acquire/release rq2_gap_0..2 with LEFT in numeric order, then signal
+    rq2_gate, wait its receipt, run dual-arm mission, clear gate."""
+    for rid in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", rid, 120)
+        await robot.release_resource("LEFT", rid)
+
+    gate_rc = robot.signal("rq2_gate")
+    try:
+        gate_wait_rc = await robot.wait_event("rq2_gate", 120)
+        robot.clear_event("rq2_gate", expected_version=gate_wait_rc.version)
+    finally:
+        robot.clear_event("rq2_gate", expected_version=gate_rc.version)
+
+    await _dual_arm_mission(robot)
+
+
+async def run_task(robot: Robot):
+    await _rq2_phase(robot)
+```

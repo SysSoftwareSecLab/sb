@@ -1,0 +1,42 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _left_branch(robot: Robot) -> None:
+    # Inherited dual-arm mission: LEFT arm moves left_part from left_source to left_target.
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+
+async def _right_branch(robot: Robot) -> None:
+    # Inherited dual-arm mission: RIGHT arm moves right_part from right_source to right_target.
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+
+async def _rq2_gate_protocol(robot: Robot) -> None:
+    # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order.
+    for resource_id in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", resource_id, 5)
+        await robot.release_resource("LEFT", resource_id)
+
+    # Complete all three rq2_gap resource checks before signalling rq2_gate.
+    gate_receipt = robot.signal("rq2_gate")
+    # Wait immediately after the signal; wait its exact active receipt exactly once.
+    await robot.wait_event("rq2_gate", 5)
+    # Clear exactly that version after its assigned protected scope.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+
+async def run_task(robot: Robot) -> None:
+    # Complete and clear the rq2_gate protocol before starting the complete inherited dual-arm mission.
+    await _rq2_gate_protocol(robot)
+
+    # Use joined concurrent scheduling for the inherited dual-arm mission.
+    await asyncio.gather(_left_branch(robot), _right_branch(robot))

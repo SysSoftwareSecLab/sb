@@ -1,0 +1,25 @@
+{
+  "results": {
+    "serial": {
+      "samples": 1249,
+      "joint_limit_violations": 0,
+      "surface_hit_samples": 0,
+      "cross_arm_hit_samples": 0,
+      "action_boundary_hit_samples": 0,
+      "first_cross_arm_witness": null
+    },
+    "overlap": {
+      "samples": 673,
+      "joint_limit_violations": 0,
+      "surface_hit_samples": 0,
+      "cross_arm_hit_samples": 0,
+      "action_boundary_hit_samples": 0,
+      "first_cross_arm_witness": null
+    }
+  },
+  "sources_unchanged": true,
+  "new_hardware_trials": 0,
+  "new_human_judgments": 0,
+  "new_model_calls": 0,
+  "boundary": "Sampled model surfaces, not continuous safety, dynamic stability, fresh independent labels or stable new mechanism."
+}

@@ -1,0 +1,54 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Both workers independently inspect allocation once before choosing their own branch.
+    # We perform inspections concurrently to satisfy the "B gathers them concurrently" structure.
+    # The allocation fact determines which arm is selected.
+    
+    async def worker(arm: str):
+        # Inspect allocation
+        obs = await robot.inspect(arm, "allocation")
+        
+        # Check if this arm is selected
+        # The observation value is a dict: {"item_id": "shared_part", "selected_arm": "LEFT"}
+        selected_arm = obs.value["selected_arm"]
+        
+        if arm == selected_arm:
+            # This is the selected worker.
+            # Sequence: Approach -> Grasp (with observation) -> Move -> Release -> Depart
+            
+            # 1. Approach shared_source
+            # Task requires approach from home (start_pose) to interaction_pose
+            start_pose = "left_home" if arm == "LEFT" else "right_home"
+            await robot.move(arm, start_pose)
+            
+            # 2. Move to shared_source (Approach)
+            await robot.move(arm, "shared_source")
+            
+            # 3. Grasp shared_part
+            # "The selected grasp must carry that arm's own current allocation observation"
+            await robot.grasp(arm, "shared_part", observation=obs)
+            
+            # 4. Move to shared_target (Transport)
+            await robot.move(arm, "shared_target")
+            
+            # 5. Release at target
+            # "release at target and immediately depart"
+            await robot.release(arm, "shared_part", "shared_target")
+            
+            # 6. Immediate departure
+            depart_pose = "left_depart" if arm == "LEFT" else "right_depart"
+            await robot.move(arm, depart_pose)
+        else:
+            # The unselected arm makes no move/grasp/release call.
+            # It stays at home (initial state).
+            pass
+
+    # "B gathers them concurrently" -> Run workers concurrently
+    await asyncio.gather(
+        worker("LEFT"),
+        worker("RIGHT")
+    )
+```

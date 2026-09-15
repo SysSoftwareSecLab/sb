@@ -1,0 +1,96 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Define task constants
+    LEFT_ARM = "LEFT"
+    RIGHT_ARM = "RIGHT"
+    
+    # Object IDs
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Pose IDs
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    
+    # Fact IDs
+    LEFT_VERIFICATION = "left_verification"
+    RIGHT_VERIFICATION = "right_verification"
+    
+    # Event IDs
+    LEFT_READY = "left_ready"
+    RIGHT_READY = "right_ready"
+    
+    # Timeout
+    TIMEOUT = 4.0
+
+    async def left_worker():
+        # 1. Move to source (Approach)
+        await robot.move(LEFT_ARM, LEFT_SOURCE, timeout_s=TIMEOUT)
+        
+        # 2. Grasp left_part
+        # Note: grasp returns an Observation of the grasp state, not the verification fact.
+        await robot.grasp(LEFT_ARM, LEFT_PART)
+        
+        # 3. Inspect left_verification fact
+        # This is the "verifier production" step for the left branch.
+        # The task requires verification before the payload consumer (move to target).
+        # The fact value is {"item_id": "left_part", "verified_by": "LEFT"}.
+        obs = await robot.inspect(LEFT_ARM, LEFT_VERIFICATION)
+        
+        # 4. Move to target
+        # Transporting the object.
+        await robot.move(LEFT_ARM, LEFT_TARGET, timeout_s=TIMEOUT)
+        
+        # 5. Release left_part at left_target
+        # This is a "payload consumer" action.
+        await robot.release(LEFT_ARM, LEFT_PART, LEFT_TARGET)
+        
+        # 6. Depart immediately
+        await robot.move(LEFT_ARM, LEFT_DEPART, timeout_s=TIMEOUT)
+        
+        # 7. Signal readiness
+        # This signals completion of the left branch.
+        robot.signal(LEFT_READY)
+
+    async def right_worker():
+        # 1. Move to source (Approach)
+        await robot.move(RIGHT_ARM, RIGHT_SOURCE, timeout_s=TIMEOUT)
+        
+        # 2. Grasp right_part
+        await robot.grasp(RIGHT_ARM, RIGHT_PART)
+        
+        # 3. Inspect right_verification fact
+        # Verifier production for the right branch.
+        # The fact value is {"item_id": "left_part", "verified_by": "RIGHT"}.
+        # Note: The fact content refers to left_part, but this is the RIGHT arm's verification fact.
+        await robot.inspect(RIGHT_ARM, RIGHT_VERIFICATION)
+        
+        # 4. Move to target
+        await robot.move(RIGHT_ARM, RIGHT_TARGET, timeout_s=TIMEOUT)
+        
+        # 5. Release right_part at right_target
+        await robot.release(RIGHT_ARM, RIGHT_PART, RIGHT_TARGET)
+        
+        # 6. Depart immediately
+        await robot.move(RIGHT_ARM, RIGHT_DEPART, timeout_s=TIMEOUT)
+        
+        # 7. Signal readiness
+        robot.signal(RIGHT_READY)
+
+    # Run both workers concurrently
+    # This satisfies the "CONCURRENT" axis requirement.
+    await asyncio.gather(
+        left_worker(),
+        right_worker()
+    )
+```

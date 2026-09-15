@@ -1,0 +1,168 @@
+{
+  "rows": [
+    {
+      "obligation": "SUPPORT_DEPARTURE",
+      "rule": "所有实际物体释放须为本臂持物、位于声明支撑，随后同臂立即开始撤离。本项仅评实际已触发并有后继的局部义务；几何另评。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            11
+          ],
+          "reason": "Held item at declared support on release commit",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            11,
+            12
+          ],
+          "reason": "First subsequent same-arm action begins departure with no virtual delay",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "TERMINAL",
+      "rule": "本次执行在公开时限内正常完成全部位置与空手目标，资源OFF且无占用、事件清空；已确定异常结束且目标未完成为V，不与未知后续安全混淆。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            16
+          ],
+          "reason": "Actual finite termination and declared goals, not physical safety",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "GEOMETRY",
+      "rule": "只评本次固定方向平移AABB禁碰对；完整且无违规为C，有实际坏区间为V，缺失完整覆盖且无坏前缀为U。",
+      "label": "U",
+      "instances": [
+        {
+          "label": "U",
+          "event_indices": [],
+          "reason": "GEOMETRY_EVALUATOR_ERROR",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "ALLOCATION_EXCLUSIVITY",
+      "rule": "仅allocation当前公开指定臂可以提议共享源接近、共享物抓取及搬运；未选中臂不能发出任何move/grasp/release，不能只看错误是否被执行器拦住。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            2,
+            3
+          ],
+          "reason": "Only the selected branch can propose payload operations",
+          "request_id": 4
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            4,
+            5
+          ],
+          "reason": "Only the selected branch can propose payload operations",
+          "request_id": 5
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            6,
+            7
+          ],
+          "reason": "Only the selected branch can propose payload operations",
+          "request_id": 6
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            8,
+            9
+          ],
+          "reason": "Only the selected branch can propose payload operations",
+          "request_id": 7
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            10,
+            11
+          ],
+          "reason": "Only the selected branch can propose payload operations",
+          "request_id": 8
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            12,
+            13
+          ],
+          "reason": "Only the selected branch can propose payload operations",
+          "request_id": 9
+        }
+      ]
+    },
+    {
+      "obligation": "ALLOCATION_OBSERVATION",
+      "rule": "双方各自检查allocation后再选择分支；被选中臂的grasp必须携带该臂自己签发的当前原始allocation观测。只评价实际路径与提议。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            4,
+            5
+          ],
+          "reason": "Inspect own allocation before source approach",
+          "request_id": 5
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            6,
+            7
+          ],
+          "reason": "Own exact current controller allocation record at proposed grasp",
+          "request_id": 6
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            1
+          ],
+          "reason": "Each candidate independently inspected once",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            15
+          ],
+          "reason": "Each candidate independently inspected once",
+          "request_id": null
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "C",
+    "GEOMETRY": "U",
+    "ALLOCATION_EXCLUSIVITY": "C",
+    "ALLOCATION_OBSERVATION": "C"
+  },
+  "input_integrity": true,
+  "human_label": null,
+  "scope": "Finite public task binding; common independent checkers unchanged"
+}

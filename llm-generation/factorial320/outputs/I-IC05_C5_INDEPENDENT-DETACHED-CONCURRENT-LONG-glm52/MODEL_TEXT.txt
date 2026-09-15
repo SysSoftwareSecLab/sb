@@ -1,0 +1,65 @@
+```python
+import asyncio
+
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    """IC05_C5_INDEPENDENT-DETACHED-CONCURRENT-LONG (variant B).
+
+    Required structure:
+      * Signal rq2_gate exactly once.
+      * Acquire/release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT,
+        in numeric order, OFF only.
+      * Only after all three gap checks complete, wait for the exact active
+        rq2_gate receipt once, then clear that exact version.
+      * Complete and clear the rq2_gate protocol before starting the complete
+        inherited dual-arm mission.
+      * Use joined concurrent scheduling for the gate producer/consumer and the
+        dual-arm mission.
+    """
+
+    async def gap_protocol():
+        """Acquire and release the three gap resources in numeric order."""
+        for resource_id in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+            await robot.acquire("LEFT", resource_id, 5)
+            await robot.release_resource("LEFT", resource_id)
+
+    async def gate_producer():
+        """Signal rq2_gate exactly once, run the three gap checks, then wait
+        for the exact active receipt once and clear that exact version."""
+        receipt = robot.signal("rq2_gate")
+        await gap_protocol()
+        active = await robot.wait_event("rq2_gate", 5)
+        if active.version != receipt.version:
+            raise RuntimeError("rq2_gate active version mismatch")
+        robot.clear_event("rq2_gate", expected_version=active.version)
+
+    async def left_arm_mission():
+        """LEFT: approach left_part from left_home, grasp, move to left_target,
+        release, then depart to left_depart."""
+        await robot.move("LEFT", "left_source")
+        await robot.grasp("LEFT", "left_part")
+        await robot.move("LEFT", "left_target")
+        await robot.release("LEFT", "left_part", "left_target")
+        await robot.move("LEFT", "left_depart")
+
+    async def right_arm_mission():
+        """RIGHT: approach right_part from right_home, grasp, move to
+        right_target, release, then depart to right_depart."""
+        await robot.move("RIGHT", "right_source")
+        await robot.grasp("RIGHT", "right_part")
+        await robot.move("RIGHT", "right_target")
+        await robot.release("RIGHT", "right_part", "right_target")
+        await robot.move("RIGHT", "right_depart")
+
+    async def dual_arm_mission():
+        """Joined concurrent scheduling of the two independent release
+        lifecycles."""
+        await asyncio.gather(left_arm_mission(), right_arm_mission())
+
+    # Joined concurrent scheduling for the gate producer/consumer and the
+    # dual-arm mission. The gate protocol completes and clears rq2_gate before
+    # the inherited dual-arm mission starts.
+    await asyncio.gather(gate_producer(), dual_arm_mission())
+```

@@ -1,0 +1,34 @@
+{
+  "task_id": "IC07_C7_ATTR_FLAT-OOD-STRUCTURAL_OOD",
+  "family_cluster": "IC07_C7_ATTR_FLAT",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "STRUCTURAL_OOD",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "consume",
+    "produce",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 3,
+    "clear_event": 3,
+    "grasp": 2,
+    "inspect": 2,
+    "move": 8,
+    "release": 2,
+    "release_resource": 3,
+    "signal": 3,
+    "wait_event": 3
+  },
+  "for_nodes": 2,
+  "if_nodes": 5,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 496,
+  "source_chars": 2604,
+  "source_lines": 54,
+  "signature": "ec563bc57f9474179b1a08b9cc25f15807bc01d48e7ae64d40ccc184cfc31250"
+}

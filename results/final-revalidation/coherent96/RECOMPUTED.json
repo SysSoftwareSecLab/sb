@@ -1,0 +1,262 @@
+{
+  "status": "EXACT_REPRODUCTION_FROM_FROZEN_ROWS_NO_NEW_EXECUTION",
+  "contexts": 24,
+  "models": 2,
+  "interface_conditions": 2,
+  "scheduling_window_cells": 4,
+  "seeds_per_cell": 16,
+  "assigned_rows": 6144,
+  "unit": "24 context clusters, each containing two matched model pairs and all four schedule/window cells in both interfaces",
+  "equal_weighting": "1/16 per seed, 1/2 per model within context, 1/24 per context; no additional stratum weights",
+  "cells": {
+    "BASE": {
+      "SERIAL_SHORT": {
+        "assigned_rows": 768,
+        "F": 64,
+        "P_counts": {
+          "C": 704,
+          "S0": 64
+        },
+        "F_rate": 0.08333333333333333
+      },
+      "SERIAL_LONG": {
+        "assigned_rows": 768,
+        "F": 64,
+        "P_counts": {
+          "C": 704,
+          "S0": 64
+        },
+        "F_rate": 0.08333333333333333
+      },
+      "CONCURRENT_SHORT": {
+        "assigned_rows": 768,
+        "F": 240,
+        "P_counts": {
+          "NE": 164,
+          "C": 528,
+          "S0": 64,
+          "V": 12
+        },
+        "F_rate": 0.3125
+      },
+      "CONCURRENT_LONG": {
+        "assigned_rows": 768,
+        "F": 768,
+        "P_counts": {
+          "NE": 656,
+          "S0": 64,
+          "V": 48
+        },
+        "F_rate": 1.0
+      }
+    },
+    "EXPLICIT": {
+      "SERIAL_SHORT": {
+        "assigned_rows": 768,
+        "F": 0,
+        "P_counts": {
+          "C": 768
+        },
+        "F_rate": 0.0
+      },
+      "SERIAL_LONG": {
+        "assigned_rows": 768,
+        "F": 0,
+        "P_counts": {
+          "C": 768
+        },
+        "F_rate": 0.0
+      },
+      "CONCURRENT_SHORT": {
+        "assigned_rows": 768,
+        "F": 4,
+        "P_counts": {
+          "C": 764,
+          "V": 4
+        },
+        "F_rate": 0.005208333333333333
+      },
+      "CONCURRENT_LONG": {
+        "assigned_rows": 768,
+        "F": 16,
+        "P_counts": {
+          "C": 752,
+          "V": 16
+        },
+        "F_rate": 0.020833333333333332
+      }
+    }
+  },
+  "base_interaction": 0.6875,
+  "explicit_interaction": 0.015625,
+  "interaction_reduction": 0.671875,
+  "interaction_reduction_exact_fraction": "43/64",
+  "bootstrap_95": [
+    0.609375,
+    0.734375
+  ],
+  "bootstrap_reps": 10000,
+  "bootstrap_seed": 26091404,
+  "bootstrap_percentile_rule": "sorted_draws[int(p*(9999))], no interpolation",
+  "context_effects": [
+    {
+      "task_id": "CP-01",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-02",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-03",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-04",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-05",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-06",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-07",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-08",
+      "base_I_F": 0.375,
+      "explicit_I_F": 0.0,
+      "D_F": 0.375
+    },
+    {
+      "task_id": "CP-09",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-10",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-11",
+      "base_I_F": 0.375,
+      "explicit_I_F": 0.0,
+      "D_F": 0.375
+    },
+    {
+      "task_id": "CP-12",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-13",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.375,
+      "D_F": 0.375
+    },
+    {
+      "task_id": "CP-14",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-15",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-16",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-17",
+      "base_I_F": 0.375,
+      "explicit_I_F": 0.0,
+      "D_F": 0.375
+    },
+    {
+      "task_id": "CP-18",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-19",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-20",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-21",
+      "base_I_F": 0.375,
+      "explicit_I_F": 0.0,
+      "D_F": 0.375
+    },
+    {
+      "task_id": "CP-22",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-23",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    },
+    {
+      "task_id": "CP-24",
+      "base_I_F": 0.75,
+      "explicit_I_F": 0.0,
+      "D_F": 0.75
+    }
+  ],
+  "retained_invalid_BASE_programs": 4,
+  "human_pair_counts": {
+    "base_failure_explicit_success": 41,
+    "base_success_explicit_failure": 0,
+    "both_failure": 1,
+    "both_success_or_not_susceptible": 6
+  },
+  "human_matched_count_reduction": 0.8541666666666666,
+  "scope": "Machine interaction reduction is not human matched repair fraction, direct physical safety reduction, or a percentage relative reduction.",
+  "input_sha256": {
+    "FINAL_ROWS.json": "d2cb1c2dc91dfc8fbfe3ee3d70c260fcf8dbd696cc0837b59bc5103dbb2592e9",
+    "FINAL_FAMILY_EFFECTS.json": "a1c75661df8f30678da66839a469f36907c74c038be263c8c0c34fbd498e3da9",
+    "FINAL_MACHINE_RESULT.json": "216078234110af7b9d56f4965f3432484d26ac10b96adf7db25d1ed0bae3e3e6",
+    "FINAL_HUMAN_VALIDATED_RQ2_RESULT.json": "85d797a0c34cfa14486405d8a2b041f1699177e2ac31b661a87b63884f605acf"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "axis": "CONCURRENCY",
+  "level": "CONCURRENT",
+  "layout_relation": "CONCURRENT_CARRIED_PATHS_CROSS_IN_XY_WITH_PUBLIC_Z_SEPARATION",
+  "object_count": 2,
+  "resource_count": 0,
+  "event_count": 0,
+  "observation_count": 0,
+  "state_count": 0,
+  "cross_arm_dependency": false,
+  "reachable_functions": [
+    "left",
+    "right",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "grasp": 4,
+    "move": 12,
+    "release": 4
+  },
+  "for_nodes": 0,
+  "if_nodes": 0,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "signature": "cced5a51f90664f76d2c8d3ec495a33f6ab8728c5430edc62a4dc5e37658da81"
+}

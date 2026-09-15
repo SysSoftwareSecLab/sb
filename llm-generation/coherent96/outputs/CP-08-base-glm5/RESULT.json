@@ -1,0 +1,27 @@
+{
+  "status": "INTERFACE_INVALID",
+  "interface_valid": false,
+  "interface_error": "unsupported syntax:IfExp",
+  "slot_id": "CP-08-base-glm5",
+  "task_id": "CP-08",
+  "stratum": "handover",
+  "arm": "BASE",
+  "profile": "glm5",
+  "stage": 2,
+  "request_sha256": "b4bf3878817bdfbbc7d9e5cbc4e705d2d9be5344b1db8a117fcbf9f714463b29",
+  "raw_sha256": "5cb4117b9dbb82ed9a379d614673df1c5f9d27a624ef3d058b20ce471ddf2f6d",
+  "source_sha256": "c920a686aa67c92db0da89a635133fd11e0a8de2bb0e6e33ad0169994c77b768",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 103,
+    "prompt_tokens": 282,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 385
+  },
+  "first_response_final": true
+}

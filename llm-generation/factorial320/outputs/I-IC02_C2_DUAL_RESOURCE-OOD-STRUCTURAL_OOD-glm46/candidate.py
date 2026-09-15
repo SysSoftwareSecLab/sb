@@ -1,0 +1,85 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    # Constants from PUBLIC TASK
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    
+    OBJ_LEFT_PART = "left_part"
+    OBJ_RIGHT_PART = "right_part"
+    
+    RES_FIXTURE = "fixture"
+    RES_TOOL = "tool"
+    
+    EVT_GATE = "rq2_gate"
+    
+    TIMEOUT_ACQUIRE = 4.0  # Within 0-120s
+    TIMEOUT_MOVE = 4.0     # Default is 4.0
+    
+    # Helper to run the complete mission for one arm
+    async def worker(arm: str, home_pose: str, source_pose: str, target_pose: str, depart_pose: str, part_id: str):
+        acquired_resources = []
+        try:
+            # 1. Acquire fixture then tool
+            await robot.acquire(arm, RES_FIXTURE, TIMEOUT_ACQUIRE)
+            acquired_resources.append(RES_FIXTURE)
+            
+            await robot.acquire(arm, RES_TOOL, TIMEOUT_ACQUIRE)
+            acquired_resources.append(RES_TOOL)
+            
+            # 2. Move to source (Approach)
+            await robot.move(arm, source_pose, timeout_s=TIMEOUT_MOVE)
+            
+            # 3. Grasp part
+            await robot.grasp(arm, part_id)
+            
+            # 4. Move to target (Transport)
+            await robot.move(arm, target_pose, timeout_s=TIMEOUT_MOVE)
+            
+            # 5. Release part
+            await robot.release(arm, part_id, target_pose)
+            
+            # 6. Depart (Immediate separating departure)
+            await robot.move(arm, depart_pose, timeout_s=TIMEOUT_MOVE)
+            
+        finally:
+            # 7. Release tool and fixture in finally block
+            # Must be OFF to release
+            for res_id in reversed(acquired_resources):
+                await robot.set_mode(arm, res_id, "OFF")
+                await robot.release_resource(arm, res_id)
+
+    # Structural-OOD shape: FOR -> PAR_JOIN -> consumer IF
+    # Variant A: Serial execution of workers.
+    # Loop runs once to satisfy the "one finite loop iteration" requirement.
+    for _ in range(1):
+        # Concurrently join an rq2_gate producer and consumer
+        async def producer():
+            robot.signal(EVT_GATE)
+            
+        async def consumer():
+            # Wait the exact active receipt
+            receipt = await robot.wait_event(EVT_GATE, TIMEOUT_ACQUIRE)
+            
+            # Execute the complete inherited mission
+            # A runs the two complete workers serially
+            await worker(ARM_LEFT, POSE_LEFT_HOME, POSE_LEFT_SOURCE, POSE_LEFT_TARGET, POSE_LEFT_DEPART, OBJ_LEFT_PART)
+            await worker(ARM_RIGHT, POSE_RIGHT_HOME, POSE_RIGHT_SOURCE, POSE_RIGHT_TARGET, POSE_RIGHT_DEPART, OBJ_RIGHT_PART)
+            
+            # Clear that version
+            robot.clear_event(EVT_GATE, expected_version=receipt.version)
+            
+        await asyncio.gather(producer(), consumer())
+
+    # Ensure rq2_gate is inactive at return (cleared by consumer)

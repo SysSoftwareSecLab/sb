@@ -1,0 +1,64 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Helper to perform the full mission for one arm
+    async def execute_mission(arm: str, part_id: str, start_pose: str, source_pose: str, target_pose: str, depart_pose: str, ready_event_id: str):
+        # 1. Signal readiness
+        robot.signal(ready_event_id)
+        
+        # 2. Move to start pose (Approach start)
+        await robot.move(arm, start_pose)
+        
+        # 3. Move to source (Approach object)
+        await robot.move(arm, source_pose)
+        
+        # 4. Grasp object
+        # Note: Task does not require observation for grasp in this variant
+        await robot.grasp(arm, part_id)
+        
+        # 5. Move to target
+        await robot.move(arm, target_pose)
+        
+        # 6. Release object
+        await robot.release(arm, part_id, target_pose)
+        
+        # 7. Move to depart
+        await robot.move(arm, depart_pose)
+
+    # Main loop structure: FOR -> IF -> PAR_JOIN
+    # The task implies a single iteration to satisfy the goal within the deadline.
+    # We implement the structure explicitly.
+    
+    # FOR loop (1 iteration)
+    for _ in range(1):
+        # IF condition (True for this task)
+        if True:
+            # PAR_JOIN: Concurrently join producer and consumer for rq2_gate
+            
+            # Producer task: Signals rq2_gate
+            async def producer():
+                robot.signal("rq2_gate")
+            
+            # Consumer task: Waits for rq2_gate, executes mission, clears event
+            async def consumer():
+                # Wait for the exact active receipt
+                receipt = await robot.wait_event("rq2_gate", timeout_s=30)
+                
+                # Execute the complete inherited mission
+                # We run both arms concurrently as part of the consumer's execution
+                # to satisfy "both parts at their own target"
+                await asyncio.gather(
+                    execute_mission(
+                        "LEFT", "left_part", "left_home", "left_source", "left_target", "left_depart", "left_ready"
+                    ),
+                    execute_mission(
+                        "RIGHT", "right_part", "right_home", "right_source", "right_target", "right_depart", "right_ready"
+                    )
+                )
+                
+                # Clear that version
+                robot.clear_event("rq2_gate", expected_version=receipt.version)
+            
+            # Run producer and consumer concurrently
+            await asyncio.gather(producer(), consumer())

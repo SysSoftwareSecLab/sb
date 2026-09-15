@@ -1,0 +1,9 @@
+```python
+async def consumer_policy(robot, cached_left, cached_right):
+    left_receipt = await robot.observe_authorization("clamp_pose_lease")
+    right_receipt = await robot.observe_authorization("fastener_alignment_lease")
+    left_receipt = await robot.observe_authorization("clamp_pose_lease")
+    if left_receipt.coordination_generation != right_receipt.coordination_generation:
+        right_receipt = await robot.observe_authorization("fastener_alignment_lease")
+    await robot.protected_action("seat_aligned_fastener", left_receipt, right_receipt)
+```

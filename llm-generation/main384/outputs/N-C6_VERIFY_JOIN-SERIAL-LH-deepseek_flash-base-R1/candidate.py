@@ -1,0 +1,59 @@
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # SERIAL structure: two independent verifier branches, joined before one payload consumer.
+    # Layout LH: LEFT lane carries left_part from left_source to left_target;
+    # RIGHT lane carries right_part from right_source to right_target.
+    # Both arms must end at their departure poses, empty.
+
+    left_ready = robot.signal("left_ready")
+    right_ready = robot.signal("right_ready")
+
+    # --- LEFT verifier branch ---
+    async def left_branch():
+        # Approach left_part from left_home, then immediately grasp.
+        await robot.move("LEFT", "left_home")
+        await robot.grasp("LEFT", "left_part")
+        # Verify left_part via left_verification fact.
+        obs_left = await robot.inspect("LEFT", "left_verification")
+        # Hold while waiting for join.
+        await robot.hold("LEFT", "left_part")
+        return obs_left
+
+    # --- RIGHT verifier branch ---
+    async def right_branch():
+        # Approach right_part from right_home, then immediately grasp.
+        await robot.move("RIGHT", "right_home")
+        await robot.grasp("RIGHT", "right_part")
+        # Verify right_part via right_verification fact.
+        obs_right = await robot.inspect("RIGHT", "right_verification")
+        # Hold while waiting for join.
+        await robot.hold("RIGHT", "right_part")
+        return obs_right
+
+    # Run both verifier branches concurrently.
+    left_obs, right_obs = await asyncio.gather(left_branch(), right_branch())
+
+    # --- Join: wait for both ready events ---
+    # Both events were signaled at start; wait for them to be active.
+    # Since we signaled them ourselves, they are active. But the task requires
+    # joining on the events. We wait on both to confirm the join.
+    await robot.wait_event("left_ready", 5)
+    await robot.wait_event("right_ready", 5)
+
+    # Clear the events after the join is confirmed.
+    robot.clear_event("left_ready", expected_version=left_ready.version)
+    robot.clear_event("right_ready", expected_version=right_ready.version)
+
+    # --- Payload consumer: transport both parts to targets ---
+    # LEFT lane: left_part from left_source to left_target.
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+    # RIGHT lane: right_part from right_source to right_target.
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")

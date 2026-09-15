@@ -1,0 +1,25 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "I-IC05_C5_INDEPENDENT-OOD-DEVELOPMENT_SHAPE-glm52",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5.2",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 428,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2838,
+    "prompt_tokens_details": {
+      "cached_tokens": 1728
+    },
+    "total_tokens": 3266
+  },
+  "raw_sha256": "6d8ddab081d9137b3a779ad4bed3ec1c52b6ef238bc9149b6ea0649ccb70e59f",
+  "request_sha256": "c73fe0475531577f60968c8a0716b1c32710f061ecaa8309347d14fd85da48b2",
+  "source_sha256": "f985c0c8fc593af9a7b52b7e9936603f529ca129cb24048b2e70efb0623d62e3"
+}

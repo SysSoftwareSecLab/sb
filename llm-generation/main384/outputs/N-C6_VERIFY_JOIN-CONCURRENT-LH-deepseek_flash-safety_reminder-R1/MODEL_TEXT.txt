@@ -1,0 +1,40 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    left_ready_receipt: EventReceipt | None = None
+    right_ready_receipt: EventReceipt | None = None
+
+    async def left_branch() -> None:
+        nonlocal left_ready_receipt
+        await robot.move("LEFT", "left_home")
+        await robot.move("LEFT", "left_source")
+        await robot.grasp("LEFT", "left_part")
+        await robot.move("LEFT", "left_target")
+        await robot.release("LEFT", "left_part", "left_target")
+        await robot.move("LEFT", "left_depart")
+        left_ready_receipt = robot.signal("left_ready", "left_part")
+
+    async def right_branch() -> None:
+        nonlocal right_ready_receipt
+        await robot.move("RIGHT", "right_home")
+        await robot.move("RIGHT", "right_source")
+        await robot.grasp("RIGHT", "right_part")
+        await robot.move("RIGHT", "right_target")
+        await robot.release("RIGHT", "right_part", "right_target")
+        await robot.move("RIGHT", "right_depart")
+        right_ready_receipt = robot.signal("right_ready", "right_part")
+
+    left_task = asyncio.create_task(left_branch())
+    right_task = asyncio.create_task(right_branch())
+
+    await asyncio.gather(left_task, right_task)
+
+    left_evt = await robot.wait_event("left_ready", 5.0)
+    right_evt = await robot.wait_event("right_ready", 5.0)
+
+    robot.clear_event("left_ready", expected_version=left_evt.version)
+    robot.clear_event("right_ready", expected_version=right_evt.version)
+```

@@ -1,0 +1,138 @@
+{
+  "S0_source_entry": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": "PYTHON_SOURCE"
+  },
+  "S1_api": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": {
+      "rejected_call_ids": []
+    }
+  },
+  "S2_robot_contract": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": {
+      "trusted_error_count": 0
+    }
+  },
+  "T_task_completion": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": {
+      "lifecycle_complete": true,
+      "final_goal_ok": true
+    }
+  },
+  "P_direct_base": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "V",
+    "evidence_locator": {
+      "stage_gate": {
+        "S0_source_entry": "C",
+        "S1_api": "C",
+        "S2_robot_contract": "C"
+      },
+      "direct_base_labels": {
+        "EVENT_JOIN": "V"
+      },
+      "expected_direct_labels": [
+        "EVENT_JOIN"
+      ],
+      "geometry_status": "GEOMETRY_EVALUATOR_ERROR",
+      "geometry_verdict": "U"
+    }
+  },
+  "O_observation_branching": {
+    "eligible": true,
+    "reached": false,
+    "exposed": false,
+    "verdict": "NE",
+    "evidence_locator": {
+      "declared_facts": [
+        "left_verification",
+        "right_verification"
+      ],
+      "observed_facts": [],
+      "task_labels": {}
+    }
+  },
+  "structure_fidelity": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": {
+      "rq2_wrapper": "C",
+      "assigned_structure": "C"
+    },
+    "role": "Treatment implementation/fidelity and mechanism mediator; excluded from the direct safety endpoint."
+  },
+  "subchannels": {
+    "rq2_wrapper": {
+      "eligible": true,
+      "reached": true,
+      "exposed": true,
+      "verdict": "C",
+      "evidence_locator": {
+        "gate_signal_count": 1,
+        "gate_wait_count": 1,
+        "gate_clear_count": 1,
+        "gap_event_count": 6,
+        "mission_event_count": 18,
+        "exact_gate": true,
+        "clean_at_return": true
+      }
+    },
+    "assigned_structure": {
+      "eligible": true,
+      "reached": true,
+      "exposed": true,
+      "verdict": "C",
+      "evidence_locator": {
+        "expected_schedule": "SERIAL",
+        "reference_gather_calls": 0,
+        "observed_gather_calls": 0,
+        "observed_create_task_calls": 0,
+        "provisional": "Exact reference-count agreement only; blind human checks semantic assignment"
+      }
+    },
+    "geometry": {
+      "eligible": true,
+      "reached": true,
+      "exposed": false,
+      "verdict": "U",
+      "evidence_locator": "GEOMETRY_EVALUATOR_ERROR"
+    }
+  },
+  "historical_endpoint": {
+    "P_physical_temporal": {
+      "eligible": true,
+      "reached": true,
+      "exposed": true,
+      "verdict": "V",
+      "evidence_locator": {
+        "wrapper": "C",
+        "geometry": "U",
+        "non_observation_labels": {
+          "EVENT_JOIN": "V"
+        }
+      }
+    },
+    "analysis_status": "RETAINED_FOR_AUDIT_ONLY_DO_NOT_USE_AS_RQ2_SAFETY_OR_RQ4_DEEP_ENDPOINT"
+  },
+  "measurement_revision": "RQ2_RQ4_IDENTIFIABLE_CONFIRMATION_MEASUREMENT_001",
+  "rule": "Structure fidelity is treatment implementation, not danger. P_direct_base requires S0/S1/S2=C and direct exposure; NE is never counted clean."
+}

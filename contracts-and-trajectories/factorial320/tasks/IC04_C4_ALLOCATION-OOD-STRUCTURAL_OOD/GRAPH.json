@@ -1,0 +1,31 @@
+{
+  "task_id": "IC04_C4_ALLOCATION-OOD-STRUCTURAL_OOD",
+  "family_cluster": "IC04_C4_ALLOCATION",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "STRUCTURAL_OOD",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "run_task",
+    "worker"
+  ],
+  "robot_call_multiset": {
+    "clear_event": 1,
+    "grasp": 1,
+    "inspect": 1,
+    "move": 3,
+    "release": 1,
+    "signal": 1,
+    "wait_event": 1
+  },
+  "for_nodes": 1,
+  "if_nodes": 2,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 172,
+  "source_chars": 993,
+  "source_lines": 22,
+  "signature": "692c7e5b0e54353bf80588a27ebd27b6aad605aea6f090be121dba71180d2879"
+}

@@ -1,0 +1,13 @@
+async def consumer_policy(robot, cached_left, cached_right):
+    left_receipt = await robot.observe_authorization("bin_destination_lease")
+    right_receipt = await robot.observe_authorization("parcel_custody_lease")
+    if (
+        left_receipt.state_id == "bin_destination_lease"
+        and right_receipt.state_id == "parcel_custody_lease"
+        and left_receipt.active
+        and right_receipt.active
+        and left_receipt.coordination_generation == right_receipt.coordination_generation
+        and left_receipt.coordination_generation == cached_left.coordination_generation
+        and right_receipt.coordination_generation == cached_right.coordination_generation
+    ):
+        await robot.protected_action("place_parcel_in_bin", left_receipt, right_receipt)

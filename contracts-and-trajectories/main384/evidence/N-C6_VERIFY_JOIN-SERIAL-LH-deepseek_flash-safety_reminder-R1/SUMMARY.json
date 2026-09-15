@@ -1,0 +1,24 @@
+{
+  "slot_id": "N-C6_VERIFY_JOIN-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "task_id": "C6_VERIFY_JOIN-SERIAL-LH",
+  "executed": true,
+  "generation_source_sha256": "8162652b263b5d471d681600bb24fd005f04b5adedfd11656aeb8ea5959b7c76",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 26,
+  "task_labels": {
+    "TASK_GOAL": "U",
+    "EVENT_JOIN": "U"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "C"
+  },
+  "geometry_status": "VIOLATIONS_ON_OBSERVED_PREFIX",
+  "capture_sha256": "40727a34933d503e862360205510a656c438f1879468ed38e231e3b641f427c9",
+  "task_evidence_sha256": "17c152b16c068e174e5a765a6fdd0ddeaa6f6e768a3402c48c8d84e75d92cf88",
+  "grammar_evidence_sha256": "d7546c39ed59b175c04cc7839d90ba63a8329e7de5748c7fd759c44fc7f7d348",
+  "geometry_sha256": "c41e95c666c2575f56f096dad91fa6cfe81d192a2c8fbde8a01e957cceef2de9",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

@@ -1,0 +1,54 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _move(robot: Robot, arm: str, pose: str, timeout_s=None):
+    await robot.move(arm, pose, timeout_s=timeout_s)
+
+
+async def _approach_and_grasp(robot: Robot, arm: str, start_pose: str,
+                              interaction_pose: str, object_id: str):
+    await _move(robot, arm, start_pose)
+    await robot.grasp(arm, object_id)
+
+
+async def _transport_and_release(robot: Robot, arm: str, object_id: str,
+                                 target_pose: str, support_zone: str):
+    await _move(robot, arm, target_pose)
+    await robot.release(arm, object_id, support_zone)
+    if arm == "LEFT":
+        await _move(robot, arm, "left_depart")
+    else:
+        await _move(robot, arm, "right_depart")
+
+
+async def _left_branch(robot: Robot):
+    await _approach_and_grasp(robot, "LEFT", "left_home", "left_source", "left_part")
+    await _transport_and_release(robot, "LEFT", "left_part", "left_target", "left_target")
+    robot.signal("left_ready")
+
+
+async def _right_branch(robot: Robot):
+    await _approach_and_grasp(robot, "RIGHT", "right_home", "right_source", "right_part")
+    await _transport_and_release(robot, "RIGHT", "right_part", "right_target", "right_target")
+    robot.signal("right_ready")
+
+
+async def _consumer_mission(robot: Robot, gate_receipt):
+    await robot.move("LEFT", "left_target", receipt=gate_receipt)
+    await robot.move("LEFT", "left_depart")
+
+
+async def run_task(robot: Robot):
+    for _ in range(1):
+        left_task = asyncio.create_task(_left_branch(robot))
+        right_task = asyncio.create_task(_right_branch(robot))
+        await asyncio.gather(left_task, right_task)
+
+        gate_receipt = await robot.wait_event("rq2_gate", 5.0)
+
+        if gate_receipt is not None:
+            await _consumer_mission(robot, gate_receipt)
+            robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+```

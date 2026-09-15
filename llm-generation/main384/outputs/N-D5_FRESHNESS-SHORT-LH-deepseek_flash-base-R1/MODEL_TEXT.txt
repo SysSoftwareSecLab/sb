@@ -1,0 +1,83 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Task: D5_FRESHNESS-SHORT-LH
+    # Axis: DEPENDENCY_DISTANCE (SHORT)
+    # Layout: LH (SERIAL_CARRIED_PATHS_CROSS_IN_XY_PROJECTION)
+    #
+    # Structure required by the task:
+    #   - The focal dependency is: the "route" observation for left_part
+    #     must be taken AFTER the invalidating peer placement (the RIGHT
+    #     arm releasing right_part at right_target).
+    #   - h_variant.invalidates == True, so the release of right_part
+    #     invalidates the "route" observation fact (version bump).
+    #   - Therefore we must:
+    #       1. Move RIGHT to right_source, grasp right_part, move to
+    #          right_target, release right_part (this invalidates route).
+    #       2. THEN inspect "route" for left_part to get a fresh
+    #          observation.
+    #       3. Move LEFT to left_source, grasp left_part, move to
+    #          left_target, release left_part.
+    #       4. Both arms to departure poses, empty.
+    #
+    # Approach sequences (must be honored exactly):
+    #   LEFT:  start left_home -> interaction left_source -> grasp left_part
+    #   RIGHT: start right_home -> interaction right_source -> grasp right_part
+    #   The approach must be a single move from start_pose, and the very
+    #   next robot call in the same coroutine must be the matching grasp.
+    # ------------------------------------------------------------------
+
+    # ------------------------------------------------------------------
+    # Phase 1: RIGHT arm handles right_part first (this is the
+    # "invalidating peer placement" that must occur BEFORE the route
+    # observation for left_part).
+    # ------------------------------------------------------------------
+
+    # RIGHT approach: right_home -> right_source, then immediately grasp.
+    await robot.move("RIGHT", "right_source")
+    right_grasp_obs = await robot.grasp("RIGHT", "right_part")
+
+    # Transport right_part to its target.
+    await robot.move("RIGHT", "right_target")
+
+    # Release right_part at right_target. This is the invalidating
+    # peer placement (h_variant.invalidates == True).
+    await robot.release("RIGHT", "right_part", "right_target")
+
+    # Immediately separate the RIGHT arm from the release zone.
+    # The task says release must be followed by immediate separating
+    # departure by the same coroutine. Move RIGHT to its departure pose.
+    await robot.move("RIGHT", "right_depart")
+
+    # ------------------------------------------------------------------
+    # Phase 2: Now take the fresh "route" observation for left_part.
+    # This must occur AFTER the invalidating peer placement above.
+    # ------------------------------------------------------------------
+
+    route_obs = await robot.inspect("LEFT", "route")
+
+    # ------------------------------------------------------------------
+    # Phase 3: LEFT arm handles left_part.
+    # ------------------------------------------------------------------
+
+    # LEFT approach: left_home -> left_source, then immediately grasp.
+    await robot.move("LEFT", "left_source")
+    left_grasp_obs = await robot.grasp("LEFT", "left_part")
+
+    # Transport left_part to its target.
+    await robot.move("LEFT", "left_target")
+
+    # Release left_part at left_target.
+    await robot.release("LEFT", "left_part", "left_target")
+
+    # Immediately separate the LEFT arm from the release zone.
+    await robot.move("LEFT", "left_depart")
+
+    # ------------------------------------------------------------------
+    # Terminal goal: both parts at their own targets; both arms at
+    # departure and empty. This is satisfied by the sequence above.
+    # ------------------------------------------------------------------
+```

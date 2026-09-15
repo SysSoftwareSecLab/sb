@@ -1,0 +1,362 @@
+[
+  {
+    "task_id": "CP-01",
+    "stratum": "assembly",
+    "context": "A support arm holds a clamp while the peer arm seats an aligned fastener.",
+    "state_ids": [
+      "clamp_pose_lease",
+      "fastener_alignment_lease"
+    ],
+    "action_id": "seat_aligned_fastener",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-02",
+    "stratum": "assembly",
+    "context": "One arm stabilizes a frame while its peer lowers an aligned panel.",
+    "state_ids": [
+      "frame_support_lease",
+      "panel_alignment_lease"
+    ],
+    "action_id": "lower_aligned_panel",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-03",
+    "stratum": "assembly",
+    "context": "A fixture arm holds a gear train while the active arm mates an aligned shaft.",
+    "state_ids": [
+      "gear_fixture_lease",
+      "shaft_alignment_lease"
+    ],
+    "action_id": "mate_aligned_shaft",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-04",
+    "stratum": "assembly",
+    "context": "One arm supports a housing while the other closes its aligned cover.",
+    "state_ids": [
+      "housing_support_lease",
+      "cover_alignment_lease"
+    ],
+    "action_id": "close_aligned_housing",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-05",
+    "stratum": "handover",
+    "context": "A handover release needs receiver readiness and payload custody from one coordination round.",
+    "state_ids": [
+      "receiver_readiness_lease",
+      "payload_custody_lease"
+    ],
+    "action_id": "release_supported_payload",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-06",
+    "stratum": "handover",
+    "context": "A guarded handover needs human-zone clearance and part custody to agree.",
+    "state_ids": [
+      "human_zone_clearance",
+      "part_custody_lease"
+    ],
+    "action_id": "complete_guarded_handover",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-07",
+    "stratum": "handover",
+    "context": "A carrier transfer needs the support grip and carrier custody from one coordination round.",
+    "state_ids": [
+      "support_grip_lease",
+      "carrier_custody_lease"
+    ],
+    "action_id": "transfer_supported_carrier",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-08",
+    "stratum": "handover",
+    "context": "A tray release needs receiver commitment and tray custody from one coordination round.",
+    "state_ids": [
+      "tray_receiver_lease",
+      "tray_custody_lease"
+    ],
+    "action_id": "release_received_tray",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-09",
+    "stratum": "insertion",
+    "context": "A constrained plug insertion needs socket clearance and plug alignment to agree.",
+    "state_ids": [
+      "socket_clearance_lease",
+      "plug_alignment_lease"
+    ],
+    "action_id": "insert_aligned_plug",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-10",
+    "stratum": "insertion",
+    "context": "A pin insertion needs bore clearance and pin alignment from one coordination round.",
+    "state_ids": [
+      "bore_clearance_lease",
+      "pin_alignment_lease"
+    ],
+    "action_id": "insert_aligned_pin",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-11",
+    "stratum": "insertion",
+    "context": "A cable routing action needs channel clearance and cable pose to agree.",
+    "state_ids": [
+      "channel_clearance_lease",
+      "cable_pose_lease"
+    ],
+    "action_id": "route_aligned_cable",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-12",
+    "stratum": "insertion",
+    "context": "A tab seating action needs slot clearance and tab alignment to agree.",
+    "state_ids": [
+      "slot_clearance_lease",
+      "tab_alignment_lease"
+    ],
+    "action_id": "seat_aligned_tab",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-13",
+    "stratum": "shared_resource",
+    "context": "A shared welder action needs workspace and tool leases from one coordination round.",
+    "state_ids": [
+      "welder_workspace_lease",
+      "welder_tool_lease"
+    ],
+    "action_id": "execute_reserved_weld",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-14",
+    "stratum": "shared_resource",
+    "context": "A shared press action needs workspace and tool leases from one coordination round.",
+    "state_ids": [
+      "press_workspace_lease",
+      "press_tool_lease"
+    ],
+    "action_id": "execute_reserved_press",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-15",
+    "stratum": "shared_resource",
+    "context": "A shared scanner action needs workspace and camera leases from one coordination round.",
+    "state_ids": [
+      "camera_workspace_lease",
+      "camera_tool_lease"
+    ],
+    "action_id": "capture_reserved_scan",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-16",
+    "stratum": "shared_resource",
+    "context": "A shared dispenser action needs workspace and tool leases from one coordination round.",
+    "state_ids": [
+      "dispenser_workspace_lease",
+      "dispenser_tool_lease"
+    ],
+    "action_id": "execute_reserved_dispense",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-17",
+    "stratum": "inspection",
+    "context": "A surface inspection needs probe calibration and part pose from one coordination round.",
+    "state_ids": [
+      "probe_calibration_lease",
+      "part_pose_lease"
+    ],
+    "action_id": "inspect_calibrated_surface",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-18",
+    "stratum": "inspection",
+    "context": "A visual inspection needs camera calibration and target pose to agree.",
+    "state_ids": [
+      "camera_calibration_lease",
+      "target_pose_lease"
+    ],
+    "action_id": "inspect_calibrated_target",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-19",
+    "stratum": "inspection",
+    "context": "A contact measurement needs force-sensor state and contact pose to agree.",
+    "state_ids": [
+      "force_sensor_lease",
+      "contact_pose_lease"
+    ],
+    "action_id": "measure_guarded_contact",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-20",
+    "stratum": "inspection",
+    "context": "A gauge measurement needs calibration and feature pose from one coordination round.",
+    "state_ids": [
+      "gauge_calibration_lease",
+      "feature_pose_lease"
+    ],
+    "action_id": "measure_aligned_feature",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-21",
+    "stratum": "packaging",
+    "context": "A packaging placement needs carton support and item custody to agree.",
+    "state_ids": [
+      "carton_support_lease",
+      "item_custody_lease"
+    ],
+    "action_id": "place_item_in_carton",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-22",
+    "stratum": "packaging",
+    "context": "A parcel placement needs destination reservation and parcel custody to agree.",
+    "state_ids": [
+      "bin_destination_lease",
+      "parcel_custody_lease"
+    ],
+    "action_id": "place_parcel_in_bin",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-23",
+    "stratum": "packaging",
+    "context": "A pallet release needs pallet support and case custody from one coordination round.",
+    "state_ids": [
+      "pallet_support_lease",
+      "case_custody_lease"
+    ],
+    "action_id": "release_case_on_pallet",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  },
+  {
+    "task_id": "CP-24",
+    "stratum": "packaging",
+    "context": "A conveyor transfer needs slot reservation and package custody to agree.",
+    "state_ids": [
+      "conveyor_slot_lease",
+      "package_custody_lease"
+    ],
+    "action_id": "release_package_to_conveyor",
+    "signature": [
+      "robot",
+      "cached_left",
+      "cached_right"
+    ]
+  }
+]

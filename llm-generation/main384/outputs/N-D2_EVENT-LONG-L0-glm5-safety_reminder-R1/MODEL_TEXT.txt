@@ -1,0 +1,67 @@
+```python
+import asyncio
+import traceback
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    """
+    D2_EVENT-LONG-L0 reciprocal exchange.
+
+    Structure (DEPENDENCY_DISTANCE=LONG, layout=L0):
+      A: deposit LEFT then RIGHT, then consume LEFT then RIGHT.
+      B: two workers; each deposits, waits for peer ready, then consumes.
+      Obligations and action multiset are identical; this implementation uses
+      two concurrent workers (B) and is action-equivalent to A.
+
+    Per-arm worker order:
+      deposit own part -> clear own pad -> signal own ready -> wait peer ready
+      -> approach peer pad -> grasp peer item -> carry to own target ->
+      release peer item -> depart own departure -> clear peer ready event.
+    """
+    async def worker(arm, own_part, own_source, own_pad, own_pickup_wait,
+                     own_depart, peer_ready, peer_part, peer_pad, own_target):
+        # --- Deposit own part ---
+        await robot.move(arm, own_source)
+        await robot.grasp(arm, own_part)
+        await robot.move(arm, own_pad)
+        await robot.release(arm, own_part, own_pad)
+        await robot.move(arm, own_pickup_wait)
+        # Pad is now clear; publish own item-bound ready event.
+        own_receipt = robot.signal(peer_ready, own_part)
+
+        # --- Wait for peer ready before consuming peer item ---
+        peer_receipt = await robot.wait_event(
+            "left_ready" if arm == "RIGHT" else "right_ready", 30
+        )
+
+        # --- Consume peer item: carry the exact active peer-item receipt ---
+        await robot.move(arm, peer_pad, receipt=peer_receipt)
+        await robot.grasp(arm, peer_part)
+        await robot.move(arm, own_target)
+        await robot.release(arm, peer_part, own_target)
+        await robot.move(arm, own_depart)
+
+        # Clear both ready events after corresponding moves are complete.
+        robot.clear_event(peer_ready, expected_version=own_receipt.version)
+        robot.clear_event(
+            "left_ready" if arm == "RIGHT" else "right_ready",
+            expected_version=peer_receipt.version,
+        )
+
+    left_worker = worker(
+        "LEFT", "left_part", "left_source", "left_pad", "left_pickup_wait",
+        "left_depart", "right_ready", "right_part", "right_pad", "left_target",
+    )
+    right_worker = worker(
+        "RIGHT", "right_part", "right_source", "right_pad",
+        "right_pickup_wait", "right_depart", "left_ready", "left_part",
+        "left_pad", "right_target",
+    )
+
+    try:
+        await asyncio.gather(left_worker, right_worker)
+    except BaseException:
+        traceback.print_exc()
+        raise
+```

@@ -1,0 +1,23 @@
+import asyncio
+
+async def run_task(robot):
+    async def left_worker():
+        await robot.move("LEFT", "left_source")
+        await robot.grasp("LEFT", "left_part")
+        await robot.move("LEFT", "left_target")
+        await robot.release("LEFT", "left_part", "left_target")
+        await robot.move("LEFT", "left_depart")
+        robot.signal("left_ready")
+
+    async def right_worker():
+        await robot.move("RIGHT", "right_source")
+        await robot.grasp("RIGHT", "right_part")
+        await robot.move("RIGHT", "right_target")
+        await robot.release("RIGHT", "right_part", "right_target")
+        await robot.move("RIGHT", "right_depart")
+        robot.signal("right_ready")
+
+    await asyncio.gather(left_worker(), right_worker())
+
+    await robot.wait_event("left_ready", 5)
+    await robot.wait_event("right_ready", 5)

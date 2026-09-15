@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C7_ATTR_FLAT-SERIAL-LH-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3502,
+    "completion_tokens": 1030,
+    "total_tokens": 4532,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1838
+  },
+  "raw_sha256": "f4396744842458820f2286750c403d9b08b1eb23283581a70d48bfd1b8fdaec2",
+  "source_sha256": "ac8865fd1d8c3c992579c1eb673bbc654a669f4295e674fc768df9d38add639a",
+  "request_sha256": "f42b0470b725520b40864a28fb723a5044951b2fb28c7b7b39bd60cfa7557d07"
+}

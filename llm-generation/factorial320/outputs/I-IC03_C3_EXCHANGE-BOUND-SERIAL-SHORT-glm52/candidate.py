@@ -1,0 +1,85 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # IC03_C3_EXCHANGE-BOUND-SERIAL-SHORT
+    # Variant A: deposit LEFT then RIGHT, then consume LEFT then RIGHT.
+    # rq2_gate: signal once, wait once, clear after the full mission.
+    # rq2_gap_0/1/2: acquire+release once each with LEFT in numeric order, OFF.
+
+    async def deposit_own(arm: str, part: str, source: str, pad: str,
+                          pickup_wait: str, clear: str, depart: str,
+                          ready_event: str) -> None:
+        # Approach own part from home and grasp immediately.
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+        # Carry own part to own pad.
+        await robot.move(arm, pad)
+        # Release on the pad, then immediately depart the pad.
+        await robot.release(arm, part, pad)
+        await robot.move(arm, clear)
+        # Pad is clear; publish own item-bound ready event.
+        robot.signal(ready_event, part)
+        # Move to pickup-wait pose and wait for peer ready event.
+        await robot.move(arm, pickup_wait)
+        await robot.wait_event(
+            "right_ready" if ready_event == "left_ready" else "left_ready",
+            30,
+        )
+
+    async def consume_peer(arm: str, peer_part: str, peer_pad: str,
+                           pickup_wait: str, target: str,
+                           depart: str, ready_event: str) -> None:
+        # Approach peer item from pickup-wait and grasp immediately.
+        await robot.move(arm, peer_pad)
+        await robot.grasp(arm, peer_part)
+        # Carry peer item to own target using the active peer-item receipt.
+        peer_receipt = await robot.wait_event(ready_event, 30)
+        await robot.move(arm, target, receipt=peer_receipt)
+        # Release peer item on own target, then immediately depart.
+        await robot.release(arm, peer_part, target)
+        await robot.move(arm, depart)
+        # Clear the exact peer-item event version after the carrying move.
+        robot.clear_event(ready_event, expected_version=peer_receipt.version)
+
+    async def left_worker() -> None:
+        await deposit_own(
+            "LEFT", "left_part", "left_source", "left_pad",
+            "left_pickup_wait", "left_clear", "left_depart", "left_ready",
+        )
+        await consume_peer(
+            "LEFT", "right_part", "right_pad",
+            "left_pickup_wait", "left_target", "left_depart", "right_ready",
+        )
+
+    async def right_worker() -> None:
+        await deposit_own(
+            "RIGHT", "right_part", "right_source", "right_pad",
+            "right_pickup_wait", "right_clear", "right_depart", "right_ready",
+        )
+        await consume_peer(
+            "RIGHT", "left_part", "left_pad",
+            "right_pickup_wait", "right_target", "right_depart", "left_ready",
+        )
+
+    async def rq2_gate_producer() -> None:
+        # Complete all three rq2_gap resource checks before signalling rq2_gate.
+        for rid in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+            await robot.acquire("LEFT", rid, 30)
+            await robot.release_resource("LEFT", rid)
+        # Signal rq2_gate exactly once.
+        robot.signal("rq2_gate")
+
+    async def rq2_gate_consumer() -> None:
+        # Wait immediately after the signal; keep gate active during the mission.
+        gate_receipt = await robot.wait_event("rq2_gate", 30)
+        # Execute the complete inherited dual-arm mission while gate is active.
+        await left_worker()
+        await right_worker()
+        # Clear rq2_gate only after the mission, using the exact waited version.
+        robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # Serial scheduling for both the rq2_gate producer/consumer and the mission.
+    await rq2_gate_producer()
+    await rq2_gate_consumer()

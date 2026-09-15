@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D1_OBSERVATION-SHORT-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3146,
+    "completion_tokens": 403,
+    "total_tokens": 3549,
+    "prompt_tokens_details": {
+      "cached_tokens": 1536
+    },
+    "prompt_cache_hit_tokens": 1536,
+    "prompt_cache_miss_tokens": 1610
+  },
+  "raw_sha256": "975f90f9e735425e384ca381a628f1ada7c43a2f042626a123339e165c4be8a2",
+  "source_sha256": "2d3d79f63cec01557cc7589822e7adfcaed701b518b979915158e0a5071f98f1",
+  "request_sha256": "65a46adc2afd1d601c4958b5f8b7af44ec36ee423d2ac22a839137f776f6a950"
+}

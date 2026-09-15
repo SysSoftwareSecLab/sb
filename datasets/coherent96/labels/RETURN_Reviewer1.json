@@ -1,0 +1,777 @@
+{
+  "schema": "paper3.rq2.coherent_pair.human_return.v1",
+  "reviewer": "Reviewer1",
+  "started_utc": "2026-09-13T18:24:21.836492+00:00",
+  "answers": {
+    "CPS-001": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.919167+00:00"
+    },
+    "CPS-002": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.919497+00:00"
+    },
+    "CPS-003": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.919833+00:00"
+    },
+    "CPS-004": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "按左—右—左顺序观察并用第二次左值；固定单次更新后已得右2、左2，两场景各正确提交一次，同代际才构成提交对。",
+      "saved_utc": "2026-09-13T18:26:11.920101+00:00"
+    },
+    "CPS-005": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.920361+00:00"
+    },
+    "CPS-006": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.920623+00:00"
+    },
+    "CPS-007": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.920912+00:00"
+    },
+    "CPS-008": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.921200+00:00"
+    },
+    "CPS-009": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.921478+00:00"
+    },
+    "CPS-010": {
+      "interface": "INVALID",
+      "no_update_outcome": "NE",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "读取未声明的 robot.coordination_generation，接口无效；无更新到该字段时报异常，更新时因(1,2)不等提前短路，两者均不提交。",
+      "saved_utc": "2026-09-13T18:26:11.921761+00:00"
+    },
+    "CPS-011": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.922090+00:00"
+    },
+    "CPS-012": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.922349+00:00"
+    },
+    "CPS-013": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.922620+00:00"
+    },
+    "CPS-014": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.922906+00:00"
+    },
+    "CPS-015": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.923152+00:00"
+    },
+    "CPS-016": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.923433+00:00"
+    },
+    "CPS-017": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.923756+00:00"
+    },
+    "CPS-018": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.924012+00:00"
+    },
+    "CPS-019": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.924499+00:00"
+    },
+    "CPS-020": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.924823+00:00"
+    },
+    "CPS-021": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.925100+00:00"
+    },
+    "CPS-022": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "缓存有效时完全跳过观察，故题面“首次观察后更新”不会触发；两场景提交代际1缓存一次，未实现稳定成对采集。",
+      "saved_utc": "2026-09-13T18:26:11.925423+00:00"
+    },
+    "CPS-023": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.925674+00:00"
+    },
+    "CPS-024": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.925940+00:00"
+    },
+    "CPS-025": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.926211+00:00"
+    },
+    "CPS-026": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.926449+00:00"
+    },
+    "CPS-027": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.926717+00:00"
+    },
+    "CPS-028": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.926980+00:00"
+    },
+    "CPS-029": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.927239+00:00"
+    },
+    "CPS-030": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.927499+00:00"
+    },
+    "CPS-031": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.927758+00:00"
+    },
+    "CPS-032": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.928029+00:00"
+    },
+    "CPS-033": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.928301+00:00"
+    },
+    "CPS-034": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.928574+00:00"
+    },
+    "CPS-035": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.928846+00:00"
+    },
+    "CPS-036": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.929118+00:00"
+    },
+    "CPS-037": {
+      "interface": "INVALID",
+      "no_update_outcome": "NE",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "读取未声明的 robot.coordination_generation，接口无效；无更新到该字段时报异常，更新时因(1,2)不等提前短路，两者均不提交。",
+      "saved_utc": "2026-09-13T18:26:11.929422+00:00"
+    },
+    "CPS-038": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.929664+00:00"
+    },
+    "CPS-039": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "左—右—左重新采集，左代际与缓存不同时再读右；固定场景下分别提交(1,1)和(2,2)，各一次。",
+      "saved_utc": "2026-09-13T18:26:11.929914+00:00"
+    },
+    "CPS-040": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "左—右—左后又复核左；固定更新只发生在首读之后，最终分别持有(1,1)和(2,2)，各提交一次；结论限题面单次更新规则。",
+      "saved_utc": "2026-09-13T18:26:11.930202+00:00"
+    },
+    "CPS-041": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.930502+00:00"
+    },
+    "CPS-042": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.930777+00:00"
+    },
+    "CPS-043": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.931042+00:00"
+    },
+    "CPS-044": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.931285+00:00"
+    },
+    "CPS-045": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.931544+00:00"
+    },
+    "CPS-046": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.931848+00:00"
+    },
+    "CPS-047": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.932132+00:00"
+    },
+    "CPS-048": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.932412+00:00"
+    },
+    "CPS-049": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.932714+00:00"
+    },
+    "CPS-050": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.933009+00:00"
+    },
+    "CPS-051": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.933288+00:00"
+    },
+    "CPS-052": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.933686+00:00"
+    },
+    "CPS-053": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.933957+00:00"
+    },
+    "CPS-054": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.934243+00:00"
+    },
+    "CPS-055": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.934575+00:00"
+    },
+    "CPS-056": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.934877+00:00"
+    },
+    "CPS-057": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.935170+00:00"
+    },
+    "CPS-058": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.935445+00:00"
+    },
+    "CPS-059": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.935686+00:00"
+    },
+    "CPS-060": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.936003+00:00"
+    },
+    "CPS-061": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.936292+00:00"
+    },
+    "CPS-062": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.936551+00:00"
+    },
+    "CPS-063": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.936805+00:00"
+    },
+    "CPS-064": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.937081+00:00"
+    },
+    "CPS-065": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.937515+00:00"
+    },
+    "CPS-066": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.937855+00:00"
+    },
+    "CPS-067": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.938103+00:00"
+    },
+    "CPS-068": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.938384+00:00"
+    },
+    "CPS-069": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.938674+00:00"
+    },
+    "CPS-070": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.938955+00:00"
+    },
+    "CPS-071": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.939238+00:00"
+    },
+    "CPS-072": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.939536+00:00"
+    },
+    "CPS-073": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.939781+00:00"
+    },
+    "CPS-074": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.940053+00:00"
+    },
+    "CPS-075": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.940325+00:00"
+    },
+    "CPS-076": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.940594+00:00"
+    },
+    "CPS-077": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "按左—右—左顺序观察并用第二次左值；固定单次更新后已得右2、左2，两场景各正确提交一次，同代际才构成提交对。",
+      "saved_utc": "2026-09-13T18:26:11.940906+00:00"
+    },
+    "CPS-078": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.941254+00:00"
+    },
+    "CPS-079": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.941520+00:00"
+    },
+    "CPS-080": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.941805+00:00"
+    },
+    "CPS-081": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.942156+00:00"
+    },
+    "CPS-082": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.942409+00:00"
+    },
+    "CPS-083": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.942631+00:00"
+    },
+    "CPS-084": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.942914+00:00"
+    },
+    "CPS-085": {
+      "interface": "INVALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "V",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "含禁用三元表达式和大于比较，接口无效；按源码分支语义，无更新提交(1,1)，更新后逐资源择新得到(1,2)，不安全。",
+      "saved_utc": "2026-09-13T18:26:11.943170+00:00"
+    },
+    "CPS-086": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "直接使用代际1缓存，不采集新快照；固定场景中未发生首次观察，因此不会触发同行更新，两场景均提交(1,1)，但没有稳定成对采集策略。",
+      "saved_utc": "2026-09-13T18:26:11.943304+00:00"
+    },
+    "CPS-087": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "V",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "检测变化后把 left_second 覆盖回 left_first；无更新提交(1,1)，更新时提交旧左1与新右2，产生不安全执行。",
+      "saved_utc": "2026-09-13T18:26:11.943524+00:00"
+    },
+    "CPS-088": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "V",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "新观察代际不同时回退到未刷新缓存；无更新提交(1,1)，更新后仍提交旧缓存(1,1)，虽彼此相等却非当前代际2。",
+      "saved_utc": "2026-09-13T18:26:11.943854+00:00"
+    },
+    "CPS-089": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.944233+00:00"
+    },
+    "CPS-090": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.944530+00:00"
+    },
+    "CPS-091": {
+      "interface": "INVALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "V",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "含禁用三元表达式，接口无效；按源码分支语义，无更新提交(1,1)，更新时成对退回旧缓存(1,1)，与当前代际2不符。",
+      "saved_utc": "2026-09-13T18:26:11.944860+00:00"
+    },
+    "CPS-092": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.945268+00:00"
+    },
+    "CPS-093": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.945586+00:00"
+    },
+    "CPS-094": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.945873+00:00"
+    },
+    "CPS-095": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "复核左凭证并保留新值，必要时重读右侧；无更新提交(1,1)，首读后更新提交(2,2)，均恰好一次。",
+      "saved_utc": "2026-09-13T18:26:11.946169+00:00"
+    },
+    "CPS-096": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "两次观察后核验成对代际相等，仅提交通过检查的一对；无更新提交(1,1)一次，更新读到(1,2)后不提交，记NE；能防止不一致提交但未重采完成任务。",
+      "saved_utc": "2026-09-13T18:26:11.946543+00:00"
+    }
+  },
+  "completed_utc": "2026-09-13T18:26:11.946623+00:00",
+  "status": "COMPLETE"
+}

@@ -1,0 +1,25 @@
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # SERIAL structure: candidate A runs LEFT then RIGHT serially.
+    # Each worker independently inspects allocation once before choosing its branch.
+    # Only the selected arm may approach/grasp/transport. Unselected arm makes no move/grasp/release.
+
+    async def worker(arm: str) -> None:
+        obs = await robot.inspect(arm, "allocation")
+        selected = obs.value["selected_arm"]
+        if selected != arm:
+            return
+        # Selected arm: approach from its home pose, then immediately grasp.
+        await robot.move(arm, "left_home" if arm == "LEFT" else "right_home")
+        await robot.grasp(arm, "shared_part", observation=obs)
+        await robot.move(arm, "shared_target")
+        await robot.release(arm, "shared_part", "shared_target")
+        # Immediate separating departure.
+        await robot.move(arm, "left_depart" if arm == "LEFT" else "right_depart")
+
+    # SERIAL: run LEFT candidate fully, then RIGHT candidate.
+    await worker("LEFT")
+    await worker("RIGHT")

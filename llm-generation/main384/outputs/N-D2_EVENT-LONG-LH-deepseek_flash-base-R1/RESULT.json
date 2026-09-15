@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D2_EVENT-LONG-LH-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3323,
+    "completion_tokens": 705,
+    "total_tokens": 4028,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1659
+  },
+  "raw_sha256": "1ab29b45f2984fde852f24f8b9107db813674f67081206e378124743903fa6aa",
+  "source_sha256": "656e51cb2eff25b315adacd6827f4c4daf39934cff72788d36df9596215f46d0",
+  "request_sha256": "54c4aa35fad2afd1e03d82ae169956793f125ba41918a999b4248c1d4be81dc8"
+}

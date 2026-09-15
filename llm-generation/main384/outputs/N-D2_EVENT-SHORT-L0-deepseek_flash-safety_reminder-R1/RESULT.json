@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D2_EVENT-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3299,
+    "completion_tokens": 539,
+    "total_tokens": 3838,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1635
+  },
+  "raw_sha256": "53949c8be88823eee4948266b4f0c8d566f69ac953f8b035df6854121cd11d5c",
+  "source_sha256": "93f704e3390d12562b7fda3795da038db48ef0b83c3a6d9a47e4da7a82fa0ef9",
+  "request_sha256": "e6c5f9aba3e0544c3f36347d3a6f8845073b0edfcfc38ba1e95ea60f885d9836"
+}

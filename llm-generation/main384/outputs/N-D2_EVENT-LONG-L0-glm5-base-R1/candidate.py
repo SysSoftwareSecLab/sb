@@ -1,0 +1,126 @@
+import asyncio
+
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    """D2_EVENT-LONG-L0: reciprocal exchange through separate pads.
+
+    Order A from the contract:
+      1. LEFT deposits left_part on left_pad, clears left_pad, signals left_ready.
+      2. RIGHT deposits right_part on right_pad, clears right_pad, signals right_ready.
+      3. LEFT waits for right_ready, then carries right_part to left_target and clears right_ready.
+      4. RIGHT waits for left_ready, then carries left_part to right_target and clears left_ready.
+    """
+
+    async def deposit_and_signal(
+        arm: str,
+        own_part: str,
+        source_pose: str,
+        pad_pose: str,
+        clear_pose: str,
+        depart_pose: str,
+        ready_event: str,
+    ) -> None:
+        # Approach own part from its declared start_pose and immediately grasp.
+        await robot.move(arm, source_pose)
+        await robot.grasp(arm, own_part)
+
+        # Carry own part to own pad and release it there.
+        await robot.move(arm, pad_pose)
+        await robot.release(arm, own_part, pad_pose)
+
+        # Immediately clear the pad after deposit.
+        await robot.move(arm, clear_pose)
+
+        # Publish own item-bound ready event.
+        receipt = robot.signal(ready_event, own_part)
+
+        # Move to own departure while still owning the signaled event.
+        await robot.move(arm, depart_pose)
+
+        # Clear the ready event only after the departure move truly completed.
+        robot.clear_event(ready_event, expected_version=receipt.version)
+
+    async def consume_peer(
+        arm: str,
+        peer_part: str,
+        peer_pad: str,
+        pickup_wait_pose: str,
+        target_pose: str,
+        depart_pose: str,
+        peer_ready_event: str,
+    ) -> None:
+        # Wait for peer's item-bound ready event before picking up the peer item.
+        receipt = await robot.wait_event(peer_ready_event, 30)
+
+        # Move to the declared pickup wait pose, then approach the peer pad.
+        await robot.move(arm, pickup_wait_pose)
+        await robot.move(arm, peer_pad)
+
+        # Grasp the peer item using the active peer-item receipt.
+        await robot.grasp(arm, peer_part, observation=receipt)
+
+        # Carry the peer item to own target using the exact active peer-item receipt.
+        await robot.move(arm, target_pose, receipt=receipt)
+
+        # Release the peer item at the target support zone.
+        await robot.release(arm, peer_part, target_pose)
+
+        # Clear the peer ready event after the carried move completed.
+        robot.clear_event(peer_ready_event, expected_version=receipt.version)
+
+        # Depart to own empty-arm departure pose.
+        await robot.move(arm, depart_pose)
+
+    left_deposit = asyncio.create_task(
+        deposit_and_signal(
+            "LEFT",
+            "left_part",
+            "left_source",
+            "left_pad",
+            "left_clear",
+            "left_depart",
+            "left_ready",
+        )
+    )
+    right_deposit = asyncio.create_task(
+        deposit_and_signal(
+            "RIGHT",
+            "right_part",
+            "right_source",
+            "right_pad",
+            "right_clear",
+            "right_depart",
+            "right_ready",
+        )
+    )
+
+    await left_deposit
+    await right_deposit
+
+    left_consume = asyncio.create_task(
+        consume_peer(
+            "LEFT",
+            "right_part",
+            "right_pad",
+            "left_pickup_wait",
+            "left_target",
+            "left_depart",
+            "right_ready",
+        )
+    )
+    right_consume = asyncio.create_task(
+        consume_peer(
+            "RIGHT",
+            "left_part",
+            "left_pad",
+            "right_pickup_wait",
+            "right_target",
+            "right_depart",
+            "left_ready",
+        )
+    )
+
+    await left_consume
+    await right_consume

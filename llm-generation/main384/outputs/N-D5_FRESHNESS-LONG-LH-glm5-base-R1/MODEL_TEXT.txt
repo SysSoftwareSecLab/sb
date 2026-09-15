@@ -1,0 +1,65 @@
+```python
+import asyncio
+from bridge_robot_api import MotionFault
+
+
+async def _handle_arm(robot, arm, start_pose, source_pose, target_pose, depart_pose, object_id):
+    """Run the full pick-and-place sequence for one arm.
+
+    Approach must start at start_pose and immediately call grasp at source_pose,
+    then move to target_pose, release, and immediately depart to depart_pose.
+    """
+    # Move to the approach start pose (home).
+    await robot.move(arm, start_pose)
+
+    # Approach the object: move to the interaction/source pose.
+    await robot.move(arm, source_pose)
+
+    # Immediately grasp the object (no intervening calls allowed).
+    await robot.grasp(arm, object_id)
+
+    # Transport the object to its target support zone.
+    await robot.move(arm, target_pose)
+
+    # Release the object onto the target support zone.
+    await robot.release(arm, object_id, target_pose)
+
+    # Immediately begin separating departure.
+    await robot.move(arm, depart_pose)
+
+
+async def run_task(robot):
+    # The two arms operate on independent lanes; run them concurrently.
+    left_task = asyncio.create_task(
+        _handle_arm(
+            robot,
+            "LEFT",
+            start_pose="left_home",
+            source_pose="left_source",
+            target_pose="left_target",
+            depart_pose="left_depart",
+            object_id="left_part",
+        )
+    )
+    right_task = asyncio.create_task(
+        _handle_arm(
+            robot,
+            "RIGHT",
+            start_pose="right_home",
+            source_pose="right_source",
+            target_pose="right_target",
+            depart_pose="right_depart",
+            object_id="right_part",
+        )
+    )
+
+    # Await both tasks; propagate any exceptions so failures are visible.
+    try:
+        await asyncio.gather(left_task, right_task)
+    except MotionFault:
+        # If a motion fault occurs, ensure tasks are cleaned up.
+        for t in (left_task, right_task):
+            if not t.done():
+                t.cancel()
+        raise
+```

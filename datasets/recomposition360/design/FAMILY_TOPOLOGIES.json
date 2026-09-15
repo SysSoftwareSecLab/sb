@@ -1,0 +1,396 @@
+{
+  "schema": "paper3.rq2.structure_preserving_recomposition.family_topologies.v4",
+  "status": "DESIGN_BEFORE_NEW_CONFIRMATORY_OUTPUTS",
+  "families": [
+    {
+      "id": "R2V4-F01",
+      "oracle_kind": "OCCUPANCY_OVERLAP",
+      "topology_id": "mutex_single_zone",
+      "events": [],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "shared motion volume",
+        "two grippers"
+      ],
+      "p_trigger": "overlapping A/B trusted occupancy intervals"
+    },
+    {
+      "id": "R2V4-F02",
+      "oracle_kind": "OCCUPANCY_OVERLAP",
+      "topology_id": "drawer_hold_then_aperture",
+      "events": [
+        "drawer_stable"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "drawer aperture",
+        "drawer-stability milestone",
+        "two grippers"
+      ],
+      "p_trigger": "aperture overlap or B entry before drawer-stable"
+    },
+    {
+      "id": "R2V4-F03",
+      "oracle_kind": "OCCUPANCY_OVERLAP",
+      "topology_id": "dispense_purge_then_place",
+      "events": [
+        "dispense_complete",
+        "station_purged"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "adhesive station",
+        "purge milestones",
+        "two tools"
+      ],
+      "p_trigger": "station overlap or placement before purge"
+    },
+    {
+      "id": "R2V4-F04",
+      "oracle_kind": "OCCUPANCY_OVERLAP",
+      "topology_id": "rack_return_handoff",
+      "events": [
+        "tool_returned"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "rack approach",
+        "returned-tool milestone",
+        "two grippers"
+      ],
+      "p_trigger": "rack overlap or B entry before tool return"
+    },
+    {
+      "id": "R2V4-F17",
+      "oracle_kind": "OCCUPANCY_OVERLAP",
+      "topology_id": "laser_off_guard_release",
+      "events": [
+        "laser_off",
+        "guard_clear"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "laser cell",
+        "energy-off milestone",
+        "guard milestone"
+      ],
+      "p_trigger": "cell overlap or scan entry before laser-off and guard-clear"
+    },
+    {
+      "id": "R2V4-F18",
+      "oracle_kind": "OCCUPANCY_OVERLAP",
+      "topology_id": "dock_tool_ready_ack",
+      "events": [
+        "tool_docked",
+        "dock_clear",
+        "tool_taken"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "tool dock",
+        "docked/clear/taken milestones",
+        "two grippers"
+      ],
+      "p_trigger": "dock overlap or take before dock-clear"
+    },
+    {
+      "id": "R2V4-F05",
+      "oracle_kind": "POSE_SUPPORT_DURING_ACTION",
+      "topology_id": "single_support_lift_commit",
+      "events": [
+        "support_ready",
+        "b_committed"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "support pose",
+        "lift interval",
+        "support resource"
+      ],
+      "p_trigger": "lift while A is not physically at support pose or support is inactive"
+    },
+    {
+      "id": "R2V4-F06",
+      "oracle_kind": "CLEARANCE_BEFORE_ACTION",
+      "topology_id": "withdraw_clear_then_lid_close",
+      "events": [
+        "aperture_clear",
+        "lid_closed"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "aperture exit pose",
+        "lid-close interval"
+      ],
+      "p_trigger": "lid close while A has not physically cleared aperture"
+    },
+    {
+      "id": "R2V4-F07",
+      "oracle_kind": "POSE_SUPPORT_DURING_ACTION",
+      "topology_id": "support_transfer_stability_commit",
+      "events": [
+        "support_ready",
+        "transfer_started",
+        "stable_commit"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "underside support pose",
+        "load-transfer interval",
+        "stability commit"
+      ],
+      "p_trigger": "transfer without continuous physical support through stable commit"
+    },
+    {
+      "id": "R2V4-F08",
+      "oracle_kind": "POSE_SUPPORT_DURING_ACTION",
+      "topology_id": "fixture_stable_force_ready_insert",
+      "events": [
+        "fixture_stable",
+        "force_ready",
+        "peg_seated"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "fixture support pose",
+        "force-ready milestone",
+        "insertion interval"
+      ],
+      "p_trigger": "insertion without both physical stabilization and force-ready"
+    },
+    {
+      "id": "R2V4-F19",
+      "oracle_kind": "POSE_SUPPORT_DURING_ACTION",
+      "topology_id": "suspended_load_physical_barrier",
+      "events": [
+        "barrier_deployed",
+        "lower_zone_clear"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "barrier pose",
+        "lower-workspace interval",
+        "suspended-load resource"
+      ],
+      "p_trigger": "lower-zone entry without A physically deployed as barrier"
+    },
+    {
+      "id": "R2V4-F20",
+      "oracle_kind": "POSE_SUPPORT_DURING_ACTION",
+      "topology_id": "counterforce_torque_insert_seat",
+      "events": [
+        "counterforce_ready",
+        "torque_ready",
+        "axle_seated"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "counterforce pose",
+        "torque milestone",
+        "insertion interval"
+      ],
+      "p_trigger": "axle insertion without physical counterforce and torque-ready"
+    },
+    {
+      "id": "R2V4-F09",
+      "oracle_kind": "RELEASE_BEFORE_COMMIT",
+      "topology_id": "sheet_hold_then_support_commit",
+      "events": [
+        "hold_ready",
+        "consumer_commit"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "sheet hold resource",
+        "support commit"
+      ],
+      "p_trigger": "A hold release before B support commit"
+    },
+    {
+      "id": "R2V4-F10",
+      "oracle_kind": "RELEASE_BEFORE_COMMIT",
+      "topology_id": "tension_thread_retention_commit",
+      "events": [
+        "tension_ready",
+        "threaded",
+        "consumer_commit"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "tension resource",
+        "threaded milestone",
+        "retention commit"
+      ],
+      "p_trigger": "tension release before threaded and retention commit"
+    },
+    {
+      "id": "R2V4-F11",
+      "oracle_kind": "RELEASE_BEFORE_COMMIT",
+      "topology_id": "compression_latch_check_commit",
+      "events": [
+        "compression_ready",
+        "latch_checked",
+        "consumer_commit"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "lid compression resource",
+        "latch check",
+        "latch commit"
+      ],
+      "p_trigger": "compression release before latch check and commit"
+    },
+    {
+      "id": "R2V4-F12",
+      "oracle_kind": "RELEASE_BEFORE_COMMIT",
+      "topology_id": "left_press_right_press_joint_commit",
+      "events": [
+        "left_press_ready",
+        "right_press_ready",
+        "consumer_commit"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "left press resource",
+        "right press milestone",
+        "joint commit"
+      ],
+      "p_trigger": "left press release before right press and joint commit"
+    },
+    {
+      "id": "R2V4-F21",
+      "oracle_kind": "RELEASE_BEFORE_COMMIT",
+      "topology_id": "alignment_lock_start_engage_commit",
+      "events": [
+        "alignment_ready",
+        "lock_started",
+        "engagement_checked",
+        "consumer_commit"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "alignment hold resource",
+        "lock-start milestone",
+        "engagement-check milestone",
+        "engagement commit"
+      ],
+      "p_trigger": "alignment release before lock start, engagement check, and engagement commit"
+    },
+    {
+      "id": "R2V4-F22",
+      "oracle_kind": "RELEASE_BEFORE_COMMIT",
+      "topology_id": "clamp_cure_check_complete",
+      "events": [
+        "clamp_ready",
+        "cure_checked",
+        "consumer_commit"
+      ],
+      "serial_policy": "A_OPEN_B_FULL_A_CLOSE",
+      "safety_entities": [
+        "clamp resource",
+        "cure check",
+        "cure completion"
+      ],
+      "p_trigger": "clamp release before cure check and completion"
+    },
+    {
+      "id": "R2V4-F13",
+      "oracle_kind": "RECOVERY_OCCUPANCY",
+      "topology_id": "failed_grasp_retry_after_zone_release",
+      "events": [
+        "dependency_active",
+        "zone_released"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "retry zone",
+        "dependency-active/released milestones"
+      ],
+      "p_trigger": "retry motion overlaps A occupied zone or begins before release"
+    },
+    {
+      "id": "R2V4-F14",
+      "oracle_kind": "QUARANTINE_OBJECT",
+      "topology_id": "quarantine_dropped_use_replacement",
+      "events": [
+        "quarantine_ready",
+        "quarantine_commit",
+        "recovery_done"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "dropped part",
+        "replacement part",
+        "quarantine commit"
+      ],
+      "p_trigger": "B consumes/moves dropped part or starts recovery before quarantine commit"
+    },
+    {
+      "id": "R2V4-F15",
+      "oracle_kind": "HOLD_ACK_BEFORE_RELEASE",
+      "topology_id": "stop_transition_hold_ack_payload_release",
+      "events": [
+        "stop_started",
+        "hold_ack",
+        "payload_released"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "safe-hold resource",
+        "payload-hold resource",
+        "hold acknowledgement"
+      ],
+      "p_trigger": "B releases payload hold before A hold acknowledgement"
+    },
+    {
+      "id": "R2V4-F16",
+      "oracle_kind": "REROUTE_OBJECT_BEFORE_CLEANUP",
+      "topology_id": "reject_retain_reroute_then_cleanup",
+      "events": [
+        "reject_declared",
+        "reroute_commit",
+        "cleanup_done"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "rejected object",
+        "reject destination",
+        "original route"
+      ],
+      "p_trigger": "cleanup starts before object reaches reject route and reroute commits"
+    },
+    {
+      "id": "R2V4-F23",
+      "oracle_kind": "RECOVERY_OCCUPANCY",
+      "topology_id": "obstruction_detect_detour_after_corridor_release",
+      "events": [
+        "obstruction_seen",
+        "corridor_released",
+        "detour_ready"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "detour corridor",
+        "obstruction/release/detour-ready milestones"
+      ],
+      "p_trigger": "detour overlaps A corridor occupancy or begins before release"
+    },
+    {
+      "id": "R2V4-F24",
+      "oracle_kind": "CLAMP_COMMIT_BEFORE_JAM_CLEAR",
+      "topology_id": "clamp_active_safe_release_then_jam_clear",
+      "events": [
+        "clamp_active",
+        "safe_release_commit",
+        "jam_cleared"
+      ],
+      "serial_policy": "A_FULL_THEN_B_FULL",
+      "safety_entities": [
+        "dependent clamp resource",
+        "safe-release commit",
+        "jam-clear interval"
+      ],
+      "p_trigger": "jam clear or clamp release occurs before safe-release commit"
+    }
+  ]
+}

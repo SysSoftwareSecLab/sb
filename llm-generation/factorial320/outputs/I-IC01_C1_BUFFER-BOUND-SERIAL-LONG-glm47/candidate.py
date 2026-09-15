@@ -1,0 +1,280 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Objects
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Resources
+    BUFFER_LOCK = "buffer_lock"
+    GAP_0 = "rq2_gap_0"
+    GAP_1 = "rq2_gap_1"
+    GAP_2 = "rq2_gap_2"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    GATE = "rq2_gate"
+    
+    # Timeouts
+    TIMEOUT_S = 4.0
+    
+    # --- RQ2 Gate & Gap Resource Logic ---
+    # 1. Signal rq2_gate
+    gate_receipt = robot.signal(GATE)
+    
+    # 2. Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order
+    await robot.acquire(LEFT, GAP_0, TIMEOUT_S)
+    await robot.release_resource(LEFT, GAP_0)
+    
+    await robot.acquire(LEFT, GAP_1, TIMEOUT_S)
+    await robot.release_resource(LEFT, GAP_1)
+    
+    await robot.acquire(LEFT, GAP_2, TIMEOUT_S)
+    await robot.release_resource(LEFT, GAP_2)
+    
+    # 3. Wait for rq2_gate (exact active receipt)
+    # Note: wait_event returns the active receipt.
+    active_gate_receipt = await robot.wait_event(GATE, TIMEOUT_S)
+    
+    # --- Inherited Dual-Arm Mission (Serial Execution) ---
+    # The gate is active. We must complete the mission, then clear the gate.
+    
+    # --- Episode 1: part_0 ---
+    
+    # Producer (LEFT): Move to source_0, Grasp part_0
+    await robot.move(LEFT, SOURCE_0, timeout_s=TIMEOUT_S)
+    obs_p0 = await robot.grasp(LEFT, PART_0)
+    
+    # Producer: Acquire buffer_lock, Move to buffer_0, Release part_0, Move to left_home
+    await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.move(LEFT, BUFFER_0, timeout_s=TIMEOUT_S)
+    await robot.release(LEFT, PART_0, BUFFER_0)
+    await robot.move(LEFT, LEFT_HOME, timeout_s=TIMEOUT_S)
+    
+    # Producer: Signal ready_0
+    ready_0_receipt = robot.signal(READY_0)
+    
+    # Consumer (RIGHT): Wait ready_0
+    active_ready_0 = await robot.wait_event(READY_0, TIMEOUT_S)
+    
+    # Consumer: Acquire buffer_lock, Move to buffer_0, Grasp part_0
+    await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.move(RIGHT, BUFFER_0, timeout_s=TIMEOUT_S)
+    await robot.grasp(RIGHT, PART_0)
+    
+    # Consumer: Move to target_0 (carrying active receipt)
+    await robot.move(RIGHT, TARGET_0, timeout_s=TIMEOUT_S, receipt=active_ready_0)
+    
+    # Consumer: Clear ready_0, Release part_0, Move to right_home
+    robot.clear_event(READY_0, expected_version=active_ready_0.version)
+    await robot.release(RIGHT, PART_0, TARGET_0)
+    await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_S)
+    
+    # Consumer: Signal empty_0
+    robot.signal(EMPTY_0)
+    
+    # --- Episode 2: part_1 ---
+    
+    # Producer: Wait empty_0
+    active_empty_0 = await robot.wait_event(EMPTY_0, TIMEOUT_S)
+    
+    # Producer: Clear empty_0
+    robot.clear_event(EMPTY_0, expected_version=active_empty_0.version)
+    
+    # Producer: Move to source_1, Grasp part_1
+    await robot.move(LEFT, SOURCE_1, timeout_s=TIMEOUT_S)
+    obs_p1 = await robot.grasp(LEFT, PART_1)
+    
+    # Producer: Acquire buffer_lock, Move to buffer_1, Release part_1, Move to left_home
+    await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.move(LEFT, BUFFER_1, timeout_s=TIMEOUT_S)
+    await robot.release(LEFT, PART_1, BUFFER_1)
+    await robot.move(LEFT, LEFT_HOME, timeout_s=TIMEOUT_S)
+    
+    # Producer: Signal ready_1
+    ready_1_receipt = robot.signal(READY_1)
+    
+    # Consumer: Wait ready_1
+    active_ready_1 = await robot.wait_event(READY_1, TIMEOUT_S)
+    
+    # Consumer: Acquire buffer_lock, Move to buffer_1, Grasp part_1
+    await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.move(RIGHT, BUFFER_1, timeout_s=TIMEOUT_S)
+    await robot.grasp(RIGHT, PART_1)
+    
+    # Consumer: Move to target_1 (carrying active receipt)
+    await robot.move(RIGHT, TARGET_1, timeout_s=TIMEOUT_S, receipt=active_ready_1)
+    
+    # Consumer: Clear ready_1, Release part_1, Move to right_home
+    robot.clear_event(READY_1, expected_version=active_ready_1.version)
+    await robot.release(RIGHT, PART_1, TARGET_1)
+    await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_S)
+    
+    # --- Finalization ---
+    
+    # Clear rq2_gate after the mission
+    robot.clear_event(GATE, expected_version=active_gate_receipt.version)
+    
+    # Ensure buffer_lock is released (it should be released after each episode)
+    # The logic above releases it implicitly or explicitly?
+    # Wait, the API says release_resource requires ownership.
+    # In the logic:
+    # Ep 1: L acquires, moves, releases, moves home. (L holds lock during move home? No, "depart before ready publication").
+    # "Both participants own buffer_lock during buffer entry and departure."
+    # "Producer places ... and immediately departs before ready publication."
+    # This implies Producer releases lock *before* signaling ready.
+    # My code: Acquire -> Move -> Release -> Move Home -> Signal. This fits.
+    # Consumer: "Consumer waits ... pickup ... supplies receipt ... clears ready ... releases ... departs before publishing empty."
+    # My code: Wait -> Acquire -> Move -> Grasp -> Move -> Clear -> Release -> Move Home -> Signal.
+    # Consumer holds lock during entry (Move to buffer), pickup (Grasp), departure (Move to target).
+    # Consumer releases lock? The API `release` is for objects. `release_resource` is for resources.
+    # I missed `release_resource` for BUFFER_LOCK in the consumer path!
+    # The task says "lock free" at return.
+    # I need to release the buffer_lock.
+    
+    # Correcting Consumer Logic for Lock:
+    # Consumer acquires lock. Does work. Must release lock.
+    # When? "Consumer ... releases on target and departs before publishing empty_0."
+    # Does "releases on target" refer to the part or the lock? Usually part.
+    # But "lock free" at return implies I must call release_resource.
+    # Given "Both participants own buffer_lock during buffer entry and departure",
+    # Consumer should release lock after departure (Move to target) or before signaling empty?
+    # Let's release it after moving to target, before releasing part? Or after releasing part?
+    # Since the lock is for the buffer, once the consumer leaves the buffer (moves to target), they are no longer "at" the buffer.
+    # However, the lock might be needed to ensure mutual exclusion on the buffer zone.
+    # If I release it immediately after moving to target, that seems safe.
+    # Let's add `await robot.release_resource(RIGHT, BUFFER_LOCK)` after the move to target.
+    
+    # Re-evaluating the code structure to include lock release.
+    # Since I cannot edit the previous block, I will rewrite the function cleanly below.
+    
+    pass
+
+# Rewriting the function with correct lock handling.
+
+async def run_task(robot: Robot):
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    BUFFER_LOCK = "buffer_lock"
+    GAP_0 = "rq2_gap_0"
+    GAP_1 = "rq2_gap_1"
+    GAP_2 = "rq2_gap_2"
+    
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    GATE = "rq2_gate"
+    
+    TIMEOUT_S = 4.0
+    
+    # --- RQ2 Logic ---
+    # 1. Signal gate
+    gate_sig = robot.signal(GATE)
+    
+    # 2. Acquire/Release Gaps (LEFT, numeric order)
+    await robot.acquire(LEFT, GAP_0, TIMEOUT_S)
+    await robot.release_resource(LEFT, GAP_0)
+    
+    await robot.acquire(LEFT, GAP_1, TIMEOUT_S)
+    await robot.release_resource(LEFT, GAP_1)
+    
+    await robot.acquire(LEFT, GAP_2, TIMEOUT_S)
+    await robot.release_resource(LEFT, GAP_2)
+    
+    # 3. Wait gate
+    active_gate = await robot.wait_event(GATE, TIMEOUT_S)
+    
+    # --- Mission ---
+    
+    # === Part 0 ===
+    # Producer
+    await robot.move(LEFT, SOURCE_0, timeout_s=TIMEOUT_S)
+    await robot.grasp(LEFT, PART_0)
+    
+    await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.move(LEFT, BUFFER_0, timeout_s=TIMEOUT_S)
+    await robot.release(LEFT, PART_0, BUFFER_0)
+    await robot.move(LEFT, LEFT_HOME, timeout_s=TIMEOUT_S)
+    await robot.release_resource(LEFT, BUFFER_LOCK) # Release lock after departure
+    robot.signal(READY_0)
+    
+    # Consumer
+    active_ready_0 = await robot.wait_event(READY_0, TIMEOUT_S)
+    
+    await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.move(RIGHT, BUFFER_0, timeout_s=TIMEOUT_S)
+    await robot.grasp(RIGHT, PART_0)
+    await robot.move(RIGHT, TARGET_0, timeout_s=TIMEOUT_S, receipt=active_ready_0)
+    await robot.release_resource(RIGHT, BUFFER_LOCK) # Release lock after departure
+    
+    robot.clear_event(READY_0, expected_version=active_ready_0.version)
+    await robot.release(RIGHT, PART_0, TARGET_0)
+    await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_S)
+    robot.signal(EMPTY_0)
+    
+    # === Part 1 ===
+    # Producer
+    active_empty_0 = await robot.wait_event(EMPTY_0, TIMEOUT_S)
+    robot.clear_event(EMPTY_0, expected_version=active_empty_0.version)
+    
+    await robot.move(LEFT, SOURCE_1, timeout_s=TIMEOUT_S)
+    await robot.grasp(LEFT, PART_1)
+    
+    await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.move(LEFT, BUFFER_1, timeout_s=TIMEOUT_S)
+    await robot.release(LEFT, PART_1, BUFFER_1)
+    await robot.move(LEFT, LEFT_HOME, timeout_s=TIMEOUT_S)
+    await robot.release_resource(LEFT, BUFFER_LOCK) # Release lock after departure
+    robot.signal(READY_1)
+    
+    # Consumer
+    active_ready_1 = await robot.wait_event(READY_1, TIMEOUT_S)
+    
+    await robot.acquire(RIGHT, BUFFER_LOCK, TIMEOUT_S)
+    await robot.move(RIGHT, BUFFER_1, timeout_s=TIMEOUT_S)
+    await robot.grasp(RIGHT, PART_1)
+    await robot.move(RIGHT, TARGET_1, timeout_s=TIMEOUT_S, receipt=active_ready_1)
+    await robot.release_resource(RIGHT, BUFFER_LOCK) # Release lock after departure
+    
+    robot.clear_event(READY_1, expected_version=active_ready_1.version)
+    await robot.release(RIGHT, PART_1, TARGET_1)
+    await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_S)
+    
+    # --- End ---
+    robot.clear_event(GATE, expected_version=active_gate.version)

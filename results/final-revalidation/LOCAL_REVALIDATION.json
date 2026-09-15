@@ -1,0 +1,465 @@
+{
+  "status": "PASS",
+  "python": "3.10.12",
+  "scope": "Offline aggregation and file integrity; no new generations, execution, or human review",
+  "checks": {
+    "manifest": {
+      "status": "PASS",
+      "result": {
+        "status": "PASS",
+        "checked_files": 22400
+      }
+    },
+    "assignments": {
+      "status": "PASS",
+      "result": {
+        "main384": 384,
+        "factorial320": 320,
+        "coherent96": 96,
+        "judge_slots": 798
+      }
+    },
+    "main384": {
+      "status": "PASS",
+      "result": {
+        "adjudicated": {
+          "UNSAFE": 248,
+          "UNKNOWN": 64,
+          "SAFE": 72
+        },
+        "safe_and_task_complete": 69,
+        "unsafe_bases": {
+          "TABULATED_SAFETY_V": 183,
+          "API_ONLY": 55,
+          "GEOMETRY_ONLY": 8,
+          "API_AND_GEOMETRY": 2
+        },
+        "original": {
+          "reviewer1": {
+            "UNKNOWN": 33,
+            "SAFE": 73,
+            "UNSAFE": 278
+          },
+          "reviewer2": {
+            "UNKNOWN": 96,
+            "SAFE": 71,
+            "UNSAFE": 217
+          }
+        },
+        "judgments": 2184
+      }
+    },
+    "methods": {
+      "status": "PASS",
+      "result": {
+        "confusion_tables_recomputed": 252,
+        "scope": "Aggregation of supplied independently bound scoring rows, not a new truth audit"
+      }
+    },
+    "factorial320": {
+      "status": "PASS",
+      "result": {
+        "assigned": 320,
+        "cell_endpoints_checked": 48
+      }
+    },
+    "coherent96": {
+      "status": "PASS",
+      "result": {
+        "assigned_rows": 6144,
+        "F_counts_each_out_of_768": {
+          "BASE": {
+            "SERIAL_SHORT": 64,
+            "SERIAL_LONG": 64,
+            "CONCURRENT_SHORT": 240,
+            "CONCURRENT_LONG": 768
+          },
+          "EXPLICIT": {
+            "SERIAL_SHORT": 0,
+            "SERIAL_LONG": 0,
+            "CONCURRENT_SHORT": 4,
+            "CONCURRENT_LONG": 16
+          }
+        },
+        "interaction_reduction": 0.671875,
+        "bootstrap95": [
+          0.609375,
+          0.734375
+        ]
+      }
+    },
+    "recomposition360": {
+      "status": "PASS",
+      "result": {
+        "trace_rows": 5760,
+        "program_conditions": 360,
+        "direct_P_V": 0,
+        "scope": "Fixed qualified exploratory pool; not equivalence"
+      }
+    },
+    "manuscript_tables": {
+      "status": "PASS",
+      "result": {
+        "table1": {
+          "outcomes": {
+            "R1": {
+              "UNKNOWN": 33,
+              "SAFE": 73,
+              "UNSAFE": 278
+            },
+            "R2": {
+              "UNKNOWN": 96,
+              "SAFE": 71,
+              "UNSAFE": 217
+            },
+            "Joint": {
+              "UNKNOWN": 26,
+              "SAFE": 67,
+              "UNSAFE": 204,
+              "DISAGREE": 87
+            },
+            "R3": {
+              "UNSAFE": 248,
+              "UNKNOWN": 64,
+              "SAFE": 72
+            }
+          },
+          "categories": {
+            "R1": {
+              "RESOURCE_OWNERSHIP": 52,
+              "MOTION_LIFECYCLE": 112,
+              "EVENT_DEPENDENCY_PROTOCOL": 143,
+              "OBSERVATION_BRANCHING": 26,
+              "COMPOSITION_STRUCTURE": 100
+            },
+            "R2": {
+              "RESOURCE_OWNERSHIP": 55,
+              "EVENT_DEPENDENCY_PROTOCOL": 117,
+              "OBSERVATION_BRANCHING": 26,
+              "COMPOSITION_STRUCTURE": 102,
+              "MOTION_LIFECYCLE": 16
+            },
+            "Joint": {
+              "RESOURCE_OWNERSHIP": 51,
+              "EVENT_DEPENDENCY_PROTOCOL": 99,
+              "OBSERVATION_BRANCHING": 26,
+              "COMPOSITION_STRUCTURE": 81,
+              "MOTION_LIFECYCLE": 15
+            },
+            "R3": {
+              "COMPOSITION_STRUCTURE": 97,
+              "EVENT_DEPENDENCY_PROTOCOL": 69,
+              "RESOURCE_OWNERSHIP": 52,
+              "MOTION_LIFECYCLE": 16,
+              "OBSERVATION_BRANCHING": 8
+            }
+          },
+          "assigned": {
+            "MOTION_LIFECYCLE": 384,
+            "COMPOSITION_STRUCTURE": 240,
+            "EVENT_DEPENDENCY_PROTOCOL": 312,
+            "RESOURCE_OWNERSHIP": 240,
+            "OBSERVATION_BRANCHING": 96
+          }
+        },
+        "table3": {
+          "glm46": [
+            4,
+            5,
+            0,
+            15
+          ],
+          "glm47": [
+            4,
+            5,
+            1,
+            14
+          ],
+          "glm5": [
+            13,
+            13,
+            12,
+            5
+          ],
+          "glm52": [
+            12,
+            12,
+            15,
+            10
+          ]
+        },
+        "table4": {
+          "glm46": {
+            "machine": [
+              9,
+              34
+            ],
+            "Reviewer1": [
+              8,
+              33
+            ],
+            "Reviewer2": [
+              8,
+              33
+            ]
+          },
+          "glm47": {
+            "machine": [
+              10,
+              33
+            ],
+            "Reviewer1": [
+              8,
+              31
+            ],
+            "Reviewer2": [
+              8,
+              31
+            ]
+          },
+          "glm5": {
+            "machine": [
+              11,
+              26
+            ],
+            "Reviewer1": [
+              9,
+              26
+            ],
+            "Reviewer2": [
+              6,
+              22
+            ]
+          },
+          "glm52": {
+            "machine": [
+              10,
+              24
+            ],
+            "Reviewer1": [
+              7,
+              25
+            ],
+            "Reviewer2": [
+              6,
+              22
+            ]
+          }
+        }
+      }
+    },
+    "rq4_supporting_cohorts": {
+      "status": "PASS",
+      "result": {
+        "status": "PASS",
+        "scope": "Descriptive observation/branching counts. Reviewer channels share programs; cohorts are not pooled and are not direct physical-temporal endpoints.",
+        "prospective": {
+          "Reviewer1": {
+            "rows": 120,
+            "paired_tasks": 60,
+            "label_counts": {
+              "glm47": {
+                "V": 9,
+                "U": 19,
+                "C": 11,
+                "NA": 21
+              },
+              "glm5": {
+                "NA": 20,
+                "U": 18,
+                "V": 19,
+                "C": 3
+              }
+            }
+          },
+          "Reviewer2": {
+            "rows": 120,
+            "paired_tasks": 60,
+            "label_counts": {
+              "glm47": {
+                "V": 8,
+                "U": 21,
+                "C": 10,
+                "NA": 21
+              },
+              "glm5": {
+                "NA": 21,
+                "U": 18,
+                "V": 18,
+                "C": 3
+              }
+            }
+          }
+        },
+        "legacy_adjudication": {
+          "rows": 48,
+          "triads": 48,
+          "label_counts": {
+            "glm47": {
+              "V": 9,
+              "U": 13,
+              "C": 26
+            },
+            "deepseek_flash": {
+              "C": 35,
+              "V": 8,
+              "U": 5
+            },
+            "glm5": {
+              "U": 15,
+              "V": 13,
+              "C": 20
+            }
+          }
+        },
+        "manuscript_counts": {
+          "Reviewer1": {
+            "glm47": 9,
+            "glm5": 19
+          },
+          "Reviewer2": {
+            "glm47": 8,
+            "glm5": 18
+          },
+          "FinalTruth": {
+            "glm47": 9,
+            "glm5": 13
+          }
+        }
+      }
+    },
+    "figures": {
+      "status": "PASS",
+      "result": {
+        "checked_images": 4,
+        "figure3a_structure_V_and_exposure": {
+          "machine": {
+            "SERIAL": [
+              54,
+              58
+            ],
+            "CONCURRENT": [
+              85,
+              38
+            ]
+          },
+          "Reviewer1": {
+            "SERIAL": [
+              47,
+              55
+            ],
+            "CONCURRENT": [
+              123,
+              38
+            ]
+          },
+          "Reviewer2": {
+            "SERIAL": [
+              48,
+              51
+            ],
+            "CONCURRENT": [
+              70,
+              38
+            ]
+          }
+        },
+        "figure3b_base_and_explicit_interactions": {
+          "assembly": [
+            0.75,
+            0.0
+          ],
+          "handover": [
+            0.65625,
+            0.0
+          ],
+          "insertion": [
+            0.65625,
+            0.0
+          ],
+          "inspection": [
+            0.65625,
+            0.0
+          ],
+          "packaging": [
+            0.65625,
+            0.0
+          ],
+          "shared_resource": [
+            0.75,
+            0.09375
+          ]
+        },
+        "figure4_denominator_nondetection_false_compliance": {
+          "dynamic": {
+            "BUFFER_EVENT_PROTOCOL": [
+              27,
+              1,
+              1
+            ],
+            "BUFFER_OCCUPANCY_OWNER": [
+              48,
+              0,
+              0
+            ],
+            "LONG_RANGE_DEPENDENCY": [
+              31,
+              14,
+              1
+            ],
+            "ATTRIBUTE_COMBINATION": [
+              69,
+              64,
+              8
+            ]
+          },
+          "deepseek_flash": {
+            "BUFFER_EVENT_PROTOCOL": [
+              27,
+              19,
+              17
+            ],
+            "BUFFER_OCCUPANCY_OWNER": [
+              48,
+              41,
+              34
+            ],
+            "LONG_RANGE_DEPENDENCY": [
+              31,
+              28,
+              17
+            ],
+            "ATTRIBUTE_COMBINATION": [
+              69,
+              59,
+              38
+            ]
+          },
+          "glm5": {
+            "BUFFER_EVENT_PROTOCOL": [
+              27,
+              15,
+              5
+            ],
+            "BUFFER_OCCUPANCY_OWNER": [
+              48,
+              34,
+              22
+            ],
+            "LONG_RANGE_DEPENDENCY": [
+              31,
+              26,
+              16
+            ],
+            "ATTRIBUTE_COMBINATION": [
+              69,
+              51,
+              27
+            ]
+          }
+        },
+        "scope": "Image-byte integrity, evidence-source binding, and printed numerical payload; not deterministic figure regeneration"
+      }
+    }
+  }
+}

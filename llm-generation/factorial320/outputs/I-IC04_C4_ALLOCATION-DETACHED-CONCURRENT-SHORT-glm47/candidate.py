@@ -1,0 +1,102 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # Constants
+    ALLOCATION_FACT = "allocation"
+    SHARED_PART = "shared_part"
+    TARGET_ZONE = "shared_target"
+    LEFT_ARM = "LEFT"
+    RIGHT_ARM = "RIGHT"
+    GATE_EVENT = "rq2_gate"
+    RESOURCES = ["rq2_gap_0", "rq2_gap_1", "rq2_gap_2"]
+    
+    # Helper to inspect allocation
+    async def inspect_allocation(arm: str) -> Observation:
+        return await robot.inspect(arm, ALLOCATION_FACT)
+
+    # Helper to acquire and release resources in order
+    async def manage_resources(arm: str):
+        for res_id in RESOURCES:
+            await robot.acquire(arm, res_id, timeout_s=4.0)
+            await robot.release_resource(arm, res_id)
+
+    # Helper for the selected arm to perform the transport
+    async def perform_transport(arm: str, allocation_obs: Observation):
+        start_pose = "left_home" if arm == LEFT_ARM else "right_home"
+        depart_pose = "left_depart" if arm == LEFT_ARM else "right_depart"
+        
+        # Approach
+        await robot.move(arm, "shared_source")
+        
+        # Grasp with observation
+        await robot.grasp(arm, SHARED_PART, observation=allocation_obs)
+        
+        # Move to target
+        await robot.move(arm, TARGET_ZONE)
+        
+        # Release
+        await robot.release(arm, SHARED_PART, TARGET_ZONE)
+        
+        # Immediate departure
+        await robot.move(arm, depart_pose)
+
+    # --- Phase 1: Resource Checks and Gate Protocol ---
+    # "Complete all three rq2_gap resource checks before signalling rq2_gate"
+    # "Acquire and release rq2_gap_0, rq2_gap_1 and rq2_gap_2 once each with LEFT"
+    await manage_resources(LEFT_ARM)
+    
+    # "Signal rq2_gate exactly once"
+    gate_receipt = robot.signal(GATE_EVENT)
+    
+    # "wait its exact active receipt exactly once"
+    # "wait immediately after the signal"
+    # "Use joined concurrent scheduling for ... the rq2_gate producer/consumer"
+    # We run the wait concurrently with the start of Phase 2 to satisfy concurrency requirements
+    # while respecting the "wait immediately after" timing logic within the flow.
+    async def wait_gate():
+        await robot.wait_event(GATE_EVENT, timeout_s=4.0)
+        
+    gate_wait_task = asyncio.create_task(wait_gate())
+
+    # --- Phase 2: Inherited Dual-Arm Mission ---
+    # "Both workers independently inspect allocation once before choosing their own branch"
+    # "A runs candidate LEFT then RIGHT serially; B gathers them concurrently."
+    # Variant is B, so we gather inspections concurrently.
+    obs_left, obs_right = await asyncio.gather(
+        inspect_allocation(LEFT_ARM),
+        inspect_allocation(RIGHT_ARM)
+    )
+    
+    # Determine selected arm based on observation value
+    # Observation value is JSON string: {"item_id": "shared_part", "selected_arm": "LEFT"}
+    selected_arm = obs_left.value["selected_arm"]
+    
+    # Define tasks for both arms
+    async def run_left():
+        if selected_arm == LEFT_ARM:
+            await perform_transport(LEFT_ARM, obs_left)
+        else:
+            # Unselected arm makes no move/grasp/release call.
+            # It must end at right_home (wait for other to finish).
+            pass
+
+    async def run_right():
+        if selected_arm == RIGHT_ARM:
+            await perform_transport(RIGHT_ARM, obs_right)
+        else:
+            # Unselected arm makes no move/grasp/release call.
+            pass
+
+    # "Use joined concurrent scheduling for both the inherited dual-arm mission"
+    # We run the mission tasks concurrently with the gate wait task.
+    await asyncio.gather(
+        gate_wait_task,
+        run_left(),
+        run_right()
+    )
+    
+    # --- Phase 3: Cleanup ---
+    # "clear exactly that version after its assigned protected scope"
+    # The scope covers the mission execution.
+    robot.clear_event(GATE_EVENT, expected_version=gate_receipt.version)

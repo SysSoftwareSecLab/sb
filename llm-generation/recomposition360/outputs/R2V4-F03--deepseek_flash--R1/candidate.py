@@ -1,0 +1,43 @@
+async def atom_a_prepare(robot):
+    await robot.acquire("LEFT", "adhesive_station", 20)
+    await robot.move("LEFT", "left_approach", 4)
+
+
+async def atom_a_dependency(robot):
+    await robot.inspect("LEFT", "context_fact_2")
+    await robot.move("LEFT", "a_zone", 4)
+    robot.signal("dispense_complete")
+
+
+async def atom_a_commit(robot):
+    await robot.move("LEFT", "left_exit", 4)
+    robot.signal("station_purged")
+
+
+async def atom_a_finish(robot):
+    await robot.release_resource("LEFT", "adhesive_station")
+    await robot.move("LEFT", "left_home", 4)
+
+
+async def atom_b_prepare(robot):
+    await robot.move("RIGHT", "right_approach", 4)
+
+
+async def atom_b_dependency(robot):
+    await robot.wait_event("dispense_complete", 20)
+    await robot.wait_event("station_purged", 20)
+    await robot.acquire("RIGHT", "adhesive_station", 20)
+    await robot.move("RIGHT", "b_zone", 4)
+
+
+async def atom_b_commit(robot):
+    await robot.move("RIGHT", "right_exit", 4)
+
+
+async def atom_b_finish(robot):
+    await robot.release_resource("RIGHT", "adhesive_station")
+    receipt_dispense = await robot.wait_event("dispense_complete", 20)
+    robot.clear_event("dispense_complete", expected_version=receipt_dispense.version)
+    receipt_purged = await robot.wait_event("station_purged", 20)
+    robot.clear_event("station_purged", expected_version=receipt_purged.version)
+    await robot.move("RIGHT", "right_home", 4)

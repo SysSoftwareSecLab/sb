@@ -1,0 +1,102 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    MOVE_TIMEOUT = 4
+
+    async def producer_episode(i: int, empty_receipt):
+        # Producer waits and clears the exact empty_0 receipt before entering buffer with the second part.
+        if i == 1:
+            empty_receipt = await robot.wait_event("empty_0", 120)
+            clear_event("empty_0", expected_version=empty_receipt.version)
+
+        # Acquire tool for buffer placement; LEFT owns tool during every buffer placement.
+        await robot.acquire("LEFT", "tool", 120)
+
+        # Approach source from left_home (i==0) / left_wait (i==1); immediately grasp.
+        start_pose = "left_home" if i == 0 else "left_wait"
+        source = f"source_{i}"
+        await robot.move("LEFT", start_pose, MOVE_TIMEOUT)
+        await robot.grasp("LEFT", source)
+
+        # Acquire buffer_lock for buffer entry and departure.
+        await robot.acquire("LEFT", "buffer_lock", 120)
+
+        # Move to buffer and release part there.
+        buffer = f"buffer_{i}"
+        await robot.move("LEFT", buffer, MOVE_TIMEOUT)
+        await robot.release("LEFT", source, buffer)
+
+        # Depart immediately before ready publication.
+        await robot.move("LEFT", start_pose, MOVE_TIMEOUT)
+
+        # Release buffer_lock during/after departure.
+        await robot.release_resource("LEFT", "buffer_lock")
+
+        # Publish ready_i for the placed part.
+        ready_event = f"ready_{i}"
+        ready_receipt = signal(ready_event, source)
+
+        # Release tool on normal exit.
+        await robot.release_resource("LEFT", "tool")
+
+        return ready_receipt
+
+    async def consumer_episode(i: int, ready_receipt):
+        # Consumer waits the corresponding ready receipt before pickup.
+        waited_receipt = await robot.wait_event(f"ready_{i}", 120)
+
+        # For the second item, after empty_0 is waited and cleared, inspect checks with gather.
+        if i == 1:
+            line_clear_obs, receiver_ready_obs = await asyncio.gather(
+                robot.inspect("LEFT", "line_clear"),
+                robot.inspect("RIGHT", "receiver_ready"),
+            )
+            lc = line_clear_obs.value
+            rr = receiver_ready_obs.value
+            if not (lc.get("clear") is True and lc.get("item_id") == "part_1"
+                    and rr.get("ready") is True and rr.get("item_id") == "part_1"):
+                raise RuntimeError("second-item checks failed")
+
+        # Acquire buffer_lock for buffer entry and departure.
+        await robot.acquire("RIGHT", "buffer_lock", 120)
+
+        # Approach buffer from right_home (i==0) / right_wait (i==1); immediately grasp.
+        start_pose = "right_home" if i == 0 else "right_wait"
+        source = f"source_{i}"
+        buffer = f"buffer_{i}"
+        await robot.move("RIGHT", start_pose, MOVE_TIMEOUT)
+        await robot.grasp("RIGHT", source)
+
+        # Supply the exact active item receipt on carried move to target.
+        target = f"target_{i}"
+        await robot.move("RIGHT", target, MOVE_TIMEOUT, receipt=waited_receipt)
+
+        # Clear ready after the carried move.
+        clear_event(f"ready_{i}", expected_version=waited_receipt.version)
+
+        # Release on target and depart before publishing empty_0.
+        await robot.release("RIGHT", source, target)
+        await robot.move("RIGHT", start_pose, MOVE_TIMEOUT)
+
+        # Release buffer_lock during/after departure.
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+        # Publish empty_0 after departure.
+        empty_receipt = signal("empty_0", source)
+        return empty_receipt
+
+    # Episode 0: producer then consumer (A alternates complete episodes).
+    ready_receipt_0 = await producer_episode(0, None)
+    empty_receipt_0 = await consumer_episode(0, ready_receipt_0)
+
+    # Episode 1: B runs producer and consumer coroutines together.
+    # Producer waits empty_0 (signaled by consumer) before entering buffer.
+    producer_task = asyncio.create_task(producer_episode(1, None))
+    consumer_task = asyncio.create_task(consumer_episode(1, None))
+    await asyncio.gather(producer_task, consumer_task)
+
+    # Terminal: arms at homes, buffer empty, lock free, events inactive.
+    await robot.move("LEFT", "left_home", MOVE_TIMEOUT)
+    await robot.move("RIGHT", "right_home", MOVE_TIMEOUT)

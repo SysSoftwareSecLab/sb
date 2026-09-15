@@ -1,0 +1,51 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _inspect_allocation(robot: Robot, arm: str):
+    return await robot.inspect(arm, "allocation")
+
+
+async def _gap_checks(robot: Robot):
+    for i in range(3):
+        rid = f"rq2_gap_{i}"
+        await robot.acquire("LEFT", rid, 5)
+        await robot.release_resource("LEFT", rid)
+
+
+async def _gate_protocol(robot: Robot):
+    await _gap_checks(robot)
+    receipt = robot.signal("rq2_gate")
+    await robot.wait_event("rq2_gate", 5)
+    robot.clear_event("rq2_gate", expected_version=receipt.version)
+
+
+async def _selected_transport(robot: Robot, arm: str, start_pose: str):
+    obs = await _inspect_allocation(robot, arm)
+    await robot.move(arm, start_pose)
+    await robot.grasp(arm, "shared_part", observation=obs)
+    await robot.move(arm, "shared_target")
+    await robot.release(arm, "shared_part", "shared_target")
+    await robot.move(arm, "left_depart" if arm == "LEFT" else "right_home")
+
+
+async def _left_candidate(robot: Robot):
+    obs = await _inspect_allocation(robot, "LEFT")
+    if obs.value.get("selected_arm") == "LEFT":
+        await _selected_transport(robot, "LEFT", "left_home")
+
+
+async def _right_candidate(robot: Robot):
+    obs = await _inspect_allocation(robot, "RIGHT")
+    if obs.value.get("selected_arm") == "RIGHT":
+        await _selected_transport(robot, "RIGHT", "right_home")
+
+
+async def _inherited_mission(robot: Robot):
+    await _left_candidate(robot)
+    await _right_candidate(robot)
+
+
+async def run_task(robot: Robot):
+    await _gate_protocol(robot)
+    await _inherited_mission(robot)

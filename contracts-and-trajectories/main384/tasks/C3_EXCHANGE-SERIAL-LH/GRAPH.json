@@ -1,0 +1,30 @@
+{
+  "axis": "CONCURRENCY",
+  "level": "SERIAL",
+  "layout_relation": "TWO_EXCHANGE_ROUTES_SHARE_CENTRAL_XY_CORRIDOR_WITH_Z_SEPARATED_WAITS",
+  "object_count": 2,
+  "resource_count": 0,
+  "event_count": 2,
+  "observation_count": 0,
+  "state_count": 0,
+  "cross_arm_dependency": true,
+  "reachable_functions": [
+    "consume",
+    "deposit",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "clear_event": 2,
+    "grasp": 4,
+    "move": 14,
+    "release": 4,
+    "signal": 2,
+    "wait_event": 2
+  },
+  "for_nodes": 0,
+  "if_nodes": 0,
+  "gather_nodes": 0,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "signature": "23eac5850c46502ecb8732e82c37ee75375a4b5176e289b8a52a3b52c9844ece"
+}

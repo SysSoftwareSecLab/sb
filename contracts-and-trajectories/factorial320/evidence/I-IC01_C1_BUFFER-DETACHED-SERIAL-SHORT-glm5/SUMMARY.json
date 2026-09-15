@@ -1,0 +1,26 @@
+{
+  "slot_id": "I-IC01_C1_BUFFER-DETACHED-SERIAL-SHORT-glm5",
+  "task_id": "IC01_C1_BUFFER-DETACHED-SERIAL-SHORT",
+  "executed": true,
+  "generation_source_sha256": "9b0bc8cf49083119b10abb53742ef131298bbd8108220f01733bf972310b04d3",
+  "process_status": "NONZERO_EXIT",
+  "returncode": 1,
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 18,
+  "call_audit_count": 10,
+  "geometry_status": "VIOLATIONS_ON_OBSERVED_PREFIX",
+  "exposure_verdicts": {
+    "S0_source_entry": "C",
+    "S1_api": "C",
+    "S2_robot_contract": "V",
+    "T_task_completion": "V",
+    "P_physical_temporal": "V",
+    "O_observation_branching": "NA",
+    "assigned_structure": "C"
+  },
+  "capture_sha256": "86200969ac36c0e9194bf8727bde56a1d00a85f7c73bce1ae28e84222bf17f21",
+  "geometry_sha256": "24195dd755db2b90c970567ef6ed4d2ed485e1050439c988d5cec23006c875bf",
+  "task_evidence_sha256": "6c2e2255edd5933cdb121d5d295d7b6dd900b6b66d0c3d4bcd1d6cda48105031",
+  "exposure_ledger_sha256": "7661a24caf418f44c89280ce8b5c2a9456479460a5c6e24556990f58f8937d08",
+  "human_label": null
+}

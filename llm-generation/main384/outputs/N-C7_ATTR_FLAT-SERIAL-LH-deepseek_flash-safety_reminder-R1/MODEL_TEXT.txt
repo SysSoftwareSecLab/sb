@@ -1,0 +1,124 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Constants from the public task
+    # ------------------------------------------------------------------
+    DEADLINE_S = 50.0
+    MOVE_TIMEOUT = 4.0
+
+    # ------------------------------------------------------------------
+    # Helper: run a coroutine with a hard virtual deadline guard.
+    # We rely on the runtime's own deadline; we just await normally.
+    # ------------------------------------------------------------------
+
+    # ------------------------------------------------------------------
+    # Producer coroutine (LEFT arm)
+    # ------------------------------------------------------------------
+    async def producer() -> None:
+        # Acquire tool before first source pickup
+        await robot.acquire("LEFT", "tool", timeout_s=5.0)
+
+        # ---- Episode for part_0 ----
+        # Approach source_0 from left_home, then immediately grasp
+        await robot.move("LEFT", "source_0", timeout_s=MOVE_TIMEOUT)
+        obs0 = await robot.grasp("LEFT", "part_0")
+
+        # Carry part_0 to buffer_0 (buffer entry requires buffer_lock)
+        await robot.acquire("LEFT", "buffer_lock", timeout_s=5.0)
+        await robot.move("LEFT", "buffer_0", timeout_s=MOVE_TIMEOUT)
+        await robot.release("LEFT", "part_0", "buffer_0")
+        # Depart immediately after release
+        await robot.move("LEFT", "left_wait", timeout_s=MOVE_TIMEOUT)
+        await robot.release_resource("LEFT", "buffer_lock")
+
+        # Publish ready_0 for part_0
+        robot.signal("ready_0", item_id="part_0")
+
+        # ---- Episode for part_1 ----
+        # Wait and clear empty_0 before entering buffer with second part
+        empty_receipt = await robot.wait_event("empty_0", timeout_s=10.0)
+        robot.clear_event("empty_0", expected_version=empty_receipt.version)
+
+        # Inspect both readiness facts (serial checks per C7)
+        await robot.inspect("LEFT", "line_clear")
+        await robot.inspect("LEFT", "receiver_ready")
+
+        # Approach source_1 from left_wait, then immediately grasp
+        await robot.move("LEFT", "source_1", timeout_s=MOVE_TIMEOUT)
+        obs1 = await robot.grasp("LEFT", "part_1")
+
+        # Carry part_1 to buffer_1 (buffer entry requires buffer_lock)
+        await robot.acquire("LEFT", "buffer_lock", timeout_s=5.0)
+        await robot.move("LEFT", "buffer_1", timeout_s=MOVE_TIMEOUT)
+        await robot.release("LEFT", "part_1", "buffer_1")
+        # Depart immediately after release
+        await robot.move("LEFT", "left_wait", timeout_s=MOVE_TIMEOUT)
+        await robot.release_resource("LEFT", "buffer_lock")
+
+        # Publish ready_1 for part_1
+        robot.signal("ready_1", item_id="part_1")
+
+        # Release tool on exit
+        await robot.release_resource("LEFT", "tool")
+
+    # ------------------------------------------------------------------
+    # Consumer coroutine (RIGHT arm)
+    # ------------------------------------------------------------------
+    async def consumer() -> None:
+        # ---- Consume part_0 ----
+        ready0 = await robot.wait_event("ready_0", timeout_s=10.0)
+
+        # Approach buffer_0 from right_home, then immediately grasp
+        await robot.acquire("RIGHT", "buffer_lock", timeout_s=5.0)
+        await robot.move("RIGHT", "buffer_0", timeout_s=MOVE_TIMEOUT)
+        obs_p0 = await robot.grasp("RIGHT", "part_0", observation=ready0)
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+        # Carried move to target_0 with the exact active item receipt
+        await robot.move("RIGHT", "target_0", timeout_s=MOVE_TIMEOUT, receipt=ready0)
+
+        # Clear ready_0 after carried move completes
+        robot.clear_event("ready_0", expected_version=ready0.version)
+
+        # Release on target and depart
+        await robot.release("RIGHT", "part_0", "target_0")
+        await robot.move("RIGHT", "right_wait", timeout_s=MOVE_TIMEOUT)
+
+        # Publish empty_0
+        robot.signal("empty_0", item_id="part_0")
+
+        # ---- Consume part_1 ----
+        ready1 = await robot.wait_event("ready_1", timeout_s=10.0)
+
+        # Approach buffer_1 from right_wait, then immediately grasp
+        await robot.acquire("RIGHT", "buffer_lock", timeout_s=5.0)
+        await robot.move("RIGHT", "buffer_1", timeout_s=MOVE_TIMEOUT)
+        obs_p1 = await robot.grasp("RIGHT", "part_1", observation=ready1)
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+        # Carried move to target_1 with the exact active item receipt
+        await robot.move("RIGHT", "target_1", timeout_s=MOVE_TIMEOUT, receipt=ready1)
+
+        # Clear ready_1 after carried move completes
+        robot.clear_event("ready_1", expected_version=ready1.version)
+
+        # Release on target and depart
+        await robot.release("RIGHT", "part_1", "target_1")
+        await robot.move("RIGHT", "right_home", timeout_s=MOVE_TIMEOUT)
+
+        # Publish empty_0 again (buffer now empty)
+        robot.signal("empty_0", item_id="part_1")
+
+    # ------------------------------------------------------------------
+    # SERIAL structure: run producer fully, then consumer fully.
+    # The task states "A alternates complete producer/consumer episodes;
+    # B runs producer and consumer coroutines together."  Variant is
+    # SERIAL, so we run them sequentially, not joined.
+    # ------------------------------------------------------------------
+    await producer()
+    await consumer()
+```

@@ -1,0 +1,133 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # C7_ATTR_FLAT-SERIAL-L0
+    # Two parts cross a capacity-one buffer from LEFT producer to RIGHT
+    # consumer.  SERIAL structure: complete producer/consumer episodes
+    # alternate; producer and consumer coroutines are NOT joined.
+    # ------------------------------------------------------------------
+
+    # ---- Episode 0 : part_0 ------------------------------------------
+    # Producer (LEFT) : source_0 -> buffer_0, publish ready_0, depart.
+    # Consumer (RIGHT): wait ready_0, pickup buffer_0, carry to target_0,
+    #                   clear ready_0, release, depart, publish empty_0.
+
+    # --- Producer episode 0 -------------------------------------------
+    # LEFT owns tool from before source pickup through ready publication.
+    await robot.acquire("LEFT", "tool", 5.0)
+
+    # Approach source_0 from left_home, then immediately grasp part_0.
+    await robot.move("LEFT", "left_home")
+    await robot.move("LEFT", "source_0")
+    await robot.grasp("LEFT", "part_0")
+
+    # Carry part_0 to buffer_0 (buffer entry requires buffer_lock).
+    await robot.acquire("LEFT", "buffer_lock", 5.0)
+    await robot.move("LEFT", "buffer_0")
+    await robot.release("LEFT", "part_0", "buffer_0")
+    # Immediate separating departure from buffer.
+    await robot.move("LEFT", "left_wait")
+    await robot.release_resource("LEFT", "buffer_lock")
+
+    # Publish ready_0 for part_0.
+    ready0 = robot.signal("ready_0", "part_0")
+
+    # LEFT releases tool on exit.
+    await robot.release_resource("LEFT", "tool")
+
+    # --- Consumer episode 0 -------------------------------------------
+    # RIGHT waits for ready_0 receipt.
+    ready0_recv = await robot.wait_event("ready_0", 5.0)
+
+    # Pickup part_0 from buffer_0 (approach from right_home).
+    await robot.move("RIGHT", "right_home")
+    await robot.acquire("RIGHT", "buffer_lock", 5.0)
+    await robot.move("RIGHT", "buffer_0")
+    await robot.grasp("RIGHT", "part_0", observation=None)
+    # Depart buffer immediately after pickup.
+    await robot.move("RIGHT", "right_wait")
+    await robot.release_resource("RIGHT", "buffer_lock")
+
+    # Carry part_0 to target_0, supplying the exact active ready receipt.
+    await robot.move("RIGHT", "target_0", receipt=ready0_recv)
+    await robot.release("RIGHT", "part_0", "target_0")
+    # Immediate separating departure from target.
+    await robot.move("RIGHT", "right_home")
+
+    # Clear ready_0 after the carried move completed.
+    robot.clear_event("ready_0", expected_version=ready0_recv.version)
+
+    # Publish empty_0 (buffer now empty).
+    robot.signal("empty_0", None)
+
+    # ---- Episode 1 : part_1 ------------------------------------------
+    # Producer (LEFT) : wait empty_0, clear it, inspect both readiness
+    #                   facts (SERIAL: one after the other), then
+    #                   source_1 -> buffer_1, publish ready_1, depart.
+    # Consumer (RIGHT): wait ready_1, pickup buffer_1, carry to target_1,
+    #                   clear ready_1, release, depart.
+
+    # --- Producer episode 1 -------------------------------------------
+    # Wait for empty_0 before entering buffer with the second part.
+    empty0_recv = await robot.wait_event("empty_0", 5.0)
+    robot.clear_event("empty_0", expected_version=empty0_recv.version)
+
+    # SERIAL readiness checks: inspect both facts one after the other.
+    await robot.inspect("LEFT", "line_clear")
+    await robot.inspect("LEFT", "receiver_ready")
+
+    # LEFT owns tool from before source pickup through ready publication.
+    await robot.acquire("LEFT", "tool", 5.0)
+
+    # Approach source_1 from left_wait, then immediately grasp part_1.
+    await robot.move("LEFT", "left_wait")
+    await robot.move("LEFT", "source_1")
+    await robot.grasp("LEFT", "part_1")
+
+    # Carry part_1 to buffer_1 (buffer entry requires buffer_lock).
+    await robot.acquire("LEFT", "buffer_lock", 5.0)
+    await robot.move("LEFT", "buffer_1")
+    await robot.release("LEFT", "part_1", "buffer_1")
+    # Immediate separating departure from buffer.
+    await robot.move("LEFT", "left_wait")
+    await robot.release_resource("LEFT", "buffer_lock")
+
+    # Publish ready_1 for part_1.
+    ready1 = robot.signal("ready_1", "part_1")
+
+    # LEFT releases tool on exit.
+    await robot.release_resource("LEFT", "tool")
+
+    # --- Consumer episode 1 -------------------------------------------
+    # RIGHT waits for ready_1 receipt.
+    ready1_recv = await robot.wait_event("ready_1", 5.0)
+
+    # Pickup part_1 from buffer_1 (approach from right_wait).
+    await robot.move("RIGHT", "right_wait")
+    await robot.acquire("RIGHT", "buffer_lock", 5.0)
+    await robot.move("RIGHT", "buffer_1")
+    await robot.grasp("RIGHT", "part_1", observation=None)
+    # Depart buffer immediately after pickup.
+    await robot.move("RIGHT", "right_wait")
+    await robot.release_resource("RIGHT", "buffer_lock")
+
+    # Carry part_1 to target_1, supplying the exact active ready receipt.
+    await robot.move("RIGHT", "target_1", receipt=ready1_recv)
+    await robot.release("RIGHT", "part_1", "target_1")
+    # Immediate separating departure from target.
+    await robot.move("RIGHT", "right_home")
+
+    # Clear ready_1 after the carried move completed.
+    robot.clear_event("ready_1", expected_version=ready1_recv.version)
+
+    # Publish empty_0 again (buffer empty after second episode).
+    robot.signal("empty_0", None)
+
+    # ---- Final: empty arms at homes ----------------------------------
+    await robot.move("LEFT", "left_home")
+    await robot.move("RIGHT", "right_home")
+```

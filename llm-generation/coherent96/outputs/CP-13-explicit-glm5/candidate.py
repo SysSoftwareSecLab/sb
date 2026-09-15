@@ -1,0 +1,8 @@
+async def consumer_policy(robot, cached_left, cached_right):
+    left_first = await robot.observe_authorization("welder_workspace_lease")
+    right_first = await robot.observe_authorization("welder_tool_lease")
+    left_second = await robot.observe_authorization("welder_workspace_lease")
+    if left_first.coordination_generation != left_second.coordination_generation:
+        left_second = left_first
+        right_first = await robot.observe_authorization("welder_tool_lease")
+    await robot.protected_action("execute_reserved_weld", left_second, right_first)

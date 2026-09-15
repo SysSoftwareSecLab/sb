@@ -1,0 +1,106 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # Phase 1: rq2_gate protocol (signal, then acquire rq2_gap_0/1/2, then wait, then clear).
+    gate_receipt = robot.signal("rq2_gate")
+
+    await robot.acquire("LEFT", "rq2_gap_0", 5)
+    await robot.release_resource("LEFT", "rq2_gap_0")
+
+    await robot.acquire("LEFT", "rq2_gap_1", 5)
+    await robot.release_resource("LEFT", "rq2_gap_1")
+
+    await robot.acquire("LEFT", "rq2_gap_2", 5)
+    await robot.release_resource("LEFT", "rq2_gap_2")
+
+    gate_wait_receipt = await robot.wait_event("rq2_gate", 5)
+    robot.clear_event("rq2_gate", expected_version=gate_wait_receipt.version)
+
+    # Phase 2: inherited dual-arm buffer mission, serial scheduling.
+    # Episode A: part_0 (LEFT produces to buffer, RIGHT consumes to target).
+    await _produce(robot, "part_0", "source_0", "buffer_0", "left_home", "ready_0")
+    await _consume(robot, "part_0", "buffer_0", "target_0", "right_home", "ready_0", "empty_0")
+
+    # Episode B: part_1 (LEFT produces to buffer, RIGHT consumes to target).
+    await _produce(robot, "part_1", "source_1", "buffer_1", "left_wait", "ready_1")
+    await _consume(robot, "part_1", "buffer_1", "target_1", "right_wait", "ready_1", "empty_0")
+
+
+async def _produce(
+    robot: Robot,
+    part_id: str,
+    source_pose: str,
+    buffer_pose: str,
+    start_pose: str,
+    ready_event: str,
+) -> None:
+    # LEFT owns tool from before source pickup through ready publication and releases it on every exit.
+    await robot.acquire("LEFT", "tool", 5)
+
+    # Approach source from declared start_pose, then immediately grasp (no intervening calls).
+    await robot.move("LEFT", start_pose, timeout_s=4)
+    await robot.move("LEFT", source_pose, timeout_s=4)
+    await robot.grasp("LEFT", part_id)
+
+    # Carry part to buffer. Buffer entry requires owning buffer_lock.
+    await robot.acquire("LEFT", "buffer_lock", 5)
+    await robot.move("LEFT", buffer_pose, timeout_s=4)
+
+    # Release part onto buffer, then immediately depart.
+    await robot.release("LEFT", part_id, buffer_pose)
+    await robot.move("LEFT", start_pose, timeout_s=4)
+
+    # Release buffer_lock on exit.
+    await robot.release_resource("LEFT", "buffer_lock")
+
+    # Publish ready after departing buffer.
+    robot.signal(ready_event, part_id)
+
+    # Release tool on exit.
+    await robot.release_resource("LEFT", "tool")
+
+
+async def _consume(
+    robot: Robot,
+    part_id: str,
+    buffer_pose: str,
+    target_pose: str,
+    start_pose: str,
+    ready_event: str,
+    empty_event: str,
+) -> None:
+    # For item 1, wait and clear empty_0, then inspect readiness facts.
+    if part_id == "part_1":
+        empty_receipt = await robot.wait_event(empty_event, 5)
+        robot.clear_event(empty_event, expected_version=empty_receipt.version)
+        await robot.inspect("LEFT", "line_clear")
+        await robot.inspect("LEFT", "receiver_ready")
+
+    # Wait for the corresponding ready receipt before pickup.
+    ready_receipt = await robot.wait_event(ready_event, 5)
+
+    # RIGHT owns buffer_lock during buffer entry and departure.
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+
+    # Approach buffer from declared start_pose, then immediately grasp.
+    await robot.move("RIGHT", start_pose, timeout_s=4)
+    await robot.move("RIGHT", buffer_pose, timeout_s=4)
+    await robot.grasp("RIGHT", part_id, observation=ready_receipt)
+
+    # Carry part to target, supplying the exact active item receipt on the carried move.
+    await robot.move("RIGHT", target_pose, timeout_s=4, receipt=ready_receipt)
+
+    # Release on target, then immediately depart.
+    await robot.release("RIGHT", part_id, target_pose)
+    await robot.move("RIGHT", start_pose, timeout_s=4)
+
+    # Release buffer_lock on exit.
+    await robot.release_resource("RIGHT", "buffer_lock")
+
+    # Clear ready after the carried move.
+    robot.clear_event(ready_event, expected_version=ready_receipt.version)
+
+    # Publish empty_0 after departing target.
+    robot.signal(empty_event, part_id)

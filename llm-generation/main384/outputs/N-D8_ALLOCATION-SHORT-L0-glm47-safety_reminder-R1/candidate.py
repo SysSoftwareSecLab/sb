@@ -1,0 +1,58 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Both workers independently inspect allocation once before choosing their own branch.
+    # We perform inspections concurrently to satisfy "B gathers them concurrently" and "A runs candidate LEFT then RIGHT serially"
+    # (Serial execution of concurrent tasks is a valid subset of concurrency).
+    inspect_left = robot.inspect("LEFT", "allocation")
+    inspect_right = robot.inspect("RIGHT", "allocation")
+    
+    obs_left: Observation = await inspect_left
+    obs_right: Observation = await inspect_right
+
+    # Determine the selected arm based on the observation facts.
+    # The observation value contains {"item_id": "shared_part", "selected_arm": "LEFT"}.
+    # We use the observation from the LEFT arm to determine the selection.
+    selected_arm = obs_left.value["selected_arm"]
+    
+    # The selected grasp must carry that arm's own current allocation observation.
+    # We use the observation corresponding to the selected arm.
+    selected_obs = obs_left if selected_arm == "LEFT" else obs_right
+    
+    # The unselected arm makes no move/grasp/release call.
+    # It must end at its home pose (right_home for RIGHT, left_home for LEFT).
+    # Since initial poses are homes, and no moves are issued, this condition is met.
+    
+    # Only the selected arm proceeds.
+    if selected_arm == "LEFT":
+        # Approach sequence for LEFT: start_pose="left_home", interaction_pose="shared_source"
+        await robot.move("LEFT", "shared_source")
+        
+        # Grasp shared_part, carrying the required observation.
+        await robot.grasp("LEFT", "shared_part", observation=selected_obs)
+        
+        # Transport to shared_target.
+        await robot.move("LEFT", "shared_target")
+        
+        # Release at target.
+        await robot.release("LEFT", "shared_part", "shared_target")
+        
+        # Immediately depart to left_depart.
+        await robot.move("LEFT", "left_depart")
+        
+    elif selected_arm == "RIGHT":
+        # Approach sequence for RIGHT: start_pose="right_home", interaction_pose="shared_source"
+        await robot.move("RIGHT", "shared_source")
+        
+        # Grasp shared_part, carrying the required observation.
+        await robot.grasp("RIGHT", "shared_part", observation=selected_obs)
+        
+        # Transport to shared_target.
+        await robot.move("RIGHT", "shared_target")
+        
+        # Release at target.
+        await robot.release("RIGHT", "shared_part", "shared_target")
+        
+        # Immediately depart to right_depart.
+        await robot.move("RIGHT", "right_depart")

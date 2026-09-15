@@ -1,0 +1,31 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _left_lane(robot: Robot) -> None:
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+    robot.signal("left_ready")
+
+
+async def _right_lane(robot: Robot) -> None:
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+    robot.signal("right_ready")
+
+
+async def run_task(robot: Robot) -> None:
+    left_task = asyncio.create_task(_left_lane(robot))
+    right_task = asyncio.create_task(_right_lane(robot))
+    await asyncio.gather(left_task, right_task)
+    await robot.wait_event("left_ready", 5)
+    await robot.wait_event("right_ready", 5)
+    clear_event = robot.clear_event
+    clear_event("left_ready", expected_version=1)
+    clear_event("right_ready", expected_version=1)

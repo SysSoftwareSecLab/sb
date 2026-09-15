@@ -1,0 +1,41 @@
+```python
+async def atom_a_prepare(robot):
+    await robot.inspect("LEFT", "context_fact_0")
+    await robot.acquire("LEFT", "dual_load_ready", 20)
+    await robot.move("LEFT", "left_approach", 4)
+
+
+async def atom_a_dependency(robot):
+    await robot.move("LEFT", "support_pose", 4)
+    robot.signal("support_ready")
+
+
+async def atom_a_commit(robot):
+    await robot.wait_event("b_committed", 20)
+    receipt_support = await robot.wait_event("support_ready", 20)
+    receipt_b = robot.signal("b_committed")
+    robot.clear_event("b_committed", expected_version=receipt_b.version)
+    robot.clear_event("support_ready", expected_version=receipt_support.version)
+
+
+async def atom_a_finish(robot):
+    await robot.release_resource("LEFT", "dual_load_ready")
+    await robot.move("LEFT", "left_home", 4)
+
+
+async def atom_b_prepare(robot):
+    await robot.move("RIGHT", "right_approach", 4)
+
+
+async def atom_b_dependency(robot):
+    await robot.wait_event("support_ready", 20)
+    await robot.move("RIGHT", "right_protected", 4)
+
+
+async def atom_b_commit(robot):
+    robot.signal("b_committed")
+
+
+async def atom_b_finish(robot):
+    await robot.move("RIGHT", "right_home", 4)
+```

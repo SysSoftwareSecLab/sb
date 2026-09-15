@@ -1,0 +1,77 @@
+```python
+import asyncio
+import json
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants from task spec
+    ALLOCATION_FACT_ID = "allocation"
+    SHARED_PART = "shared_part"
+    LEFT_ARM = "LEFT"
+    RIGHT_ARM = "RIGHT"
+    
+    POSES = {
+        "left_home": "left_home",
+        "left_depart": "left_depart",
+        "right_home": "right_home",
+        "right_depart": "right_depart",
+        "shared_source": "shared_source",
+        "shared_target": "shared_target"
+    }
+
+    # Helper to parse observation value
+    def get_allocation_value(obs: Observation):
+        return json.loads(obs.value)
+
+    # --- Worker Logic ---
+    
+    async def worker(arm: str, home_pose: str, depart_pose: str):
+        # 1. Inspect allocation independently
+        # Both workers inspect before choosing branch.
+        obs = await robot.inspect(arm, ALLOCATION_FACT_ID)
+        
+        alloc_data = get_allocation_value(obs)
+        selected_arm = alloc_data["selected_arm"]
+        
+        # 2. Branch based on allocation
+        if arm == selected_arm:
+            # SELECTED BRANCH
+            # Must carry the observation obtained in step 1.
+            
+            # Approach: Must start from home_pose (left_home/right_home)
+            # and end at shared_source.
+            await robot.move(arm, POSES["shared_source"])
+            
+            # Grasp: Must be immediate call after approach.
+            # Pass the observation from step 1.
+            await robot.grasp(arm, SHARED_PART, observation=obs)
+            
+            # Transport: Move to shared_target
+            await robot.move(arm, POSES["shared_target"])
+            
+            # Release: At shared_target
+            await robot.release(arm, SHARED_PART, POSES["shared_target"])
+            
+            # Depart: Immediate separating departure
+            await robot.move(arm, depart_pose)
+            
+        else:
+            # UNSELECTED BRANCH
+            # "The unselected arm makes no move/grasp/release call."
+            # It stays at home_pose.
+            pass
+
+    # --- Concurrency Structure ---
+    
+    # "A runs candidate LEFT then RIGHT serially; B gathers them concurrently."
+    # Layout LH (Left Home) implies LEFT is the primary candidate (A) and RIGHT is the secondary (B).
+    # However, the structure description "A runs... B gathers..." usually maps to:
+    # A = Serial execution of the two workers.
+    # B = Concurrent execution of the two workers.
+    # Since we must implement the stated structure, we implement the Serial execution (A).
+    # (If B were required, we would use asyncio.gather, but A is the primary execution path described).
+    
+    # Serial execution: LEFT then RIGHT.
+    await worker(LEFT_ARM, POSES["left_home"], POSES["left_depart"])
+    await worker(RIGHT_ARM, POSES["right_home"], POSES["right_depart"])
+```

@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-C4_ALLOCATION-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "task_id": "C4_ALLOCATION-SERIAL-LH",
+  "executed": true,
+  "generation_source_sha256": "e40d3d6f01f4cbff52478ecfe64645d3816ac2190884a31cbf1c488c9ac8dd4c",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 5,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "NA",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "ALLOCATION_EXCLUSIVITY": "C",
+    "ALLOCATION_OBSERVATION": "C"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "C"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "d9b9082251cacc30c364c5c089cab72648e4bedcd8581f1485abfd0dac2b3c10",
+  "task_evidence_sha256": "82857887783236938c90063c5290df97523f581efe59ddbe0c2f13fe04504271",
+  "grammar_evidence_sha256": "be5fb6ca6c79ebeafa9fed92374a8ce7536889a293c76021d575c234dc9a334c",
+  "geometry_sha256": "e131ce62f781bbec77b1c505bd15a7071f95b90cdcd06737649730390191e709",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

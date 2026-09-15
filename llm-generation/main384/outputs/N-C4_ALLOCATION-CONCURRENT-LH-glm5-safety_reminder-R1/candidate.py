@@ -1,0 +1,26 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _worker(robot: Robot, arm: str, start_pose: str, depart_pose: str):
+    alloc = await robot.inspect(arm, "allocation")
+    selected = alloc.value.get("selected_arm") if isinstance(alloc.value, dict) else None
+    if selected != "LEFT":
+        return
+    if arm != "LEFT":
+        return
+    await robot.move(arm, "shared_source")
+    grasp_obs = await robot.grasp(arm, "shared_part", observation=alloc)
+    await robot.move(arm, "shared_target", receipt=None)
+    await robot.release(arm, "shared_part", "shared_target")
+    await robot.move(arm, depart_pose)
+
+
+async def run_task(robot: Robot):
+    left = asyncio.create_task(
+        _worker(robot, "LEFT", "left_home", "left_depart")
+    )
+    right = asyncio.create_task(
+        _worker(robot, "RIGHT", "right_home", "right_home")
+    )
+    await asyncio.gather(left, right)

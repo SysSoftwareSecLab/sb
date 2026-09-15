@@ -1,0 +1,25 @@
+{
+  "rows": [
+    {
+      "obligation": "EVENT_JOIN",
+      "label": "U",
+      "event_indices": [],
+      "reason": "Required consumer absent"
+    },
+    {
+      "obligation": "TASK_GOAL",
+      "label": "U",
+      "event_indices": [
+        7
+      ],
+      "reason": "Independent completion-state reconstruction, separate from safety"
+    }
+  ],
+  "summary": {
+    "TASK_GOAL": "U",
+    "EVENT_JOIN": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "whole_program_safety": null,
+  "human_label": null
+}

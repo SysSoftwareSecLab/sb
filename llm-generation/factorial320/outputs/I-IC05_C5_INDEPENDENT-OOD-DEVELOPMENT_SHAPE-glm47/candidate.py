@@ -1,0 +1,76 @@
+import asyncio
+from bridge_robot_api import Robot
+
+async def run_task(robot: Robot):
+    # Define constants from the task specification
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    
+    # Objects
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Event
+    EVENT_ID = "rq2_gate"
+    
+    # Timeout for event wait
+    WAIT_TIMEOUT = 10.0
+
+    # Helper to execute the mission for a single arm
+    async def execute_mission(arm, home, source, target, depart, part):
+        # 1. Move to source (Approach)
+        await robot.move(arm, source)
+        
+        # 2. Grasp the part
+        await robot.grasp(arm, part)
+        
+        # 3. Move to target
+        await robot.move(arm, target)
+        
+        # 4. Release the part
+        await robot.release(arm, part, target)
+        
+        # 5. Depart to final pose
+        await robot.move(arm, depart)
+
+    # Main loop structure: FOR -> IF -> PAR_JOIN
+    # The task requires a finite loop iteration. We execute exactly one iteration.
+    # Inside the iteration, we implement the PAR_JOIN logic.
+    
+    # Producer: Signal the event
+    # Consumer: Wait for the event, then execute the mission
+    
+    # Create the producer task
+    async def producer():
+        robot.signal(EVENT_ID)
+    
+    # Create the consumer task
+    async def consumer():
+        # Wait for the exact active receipt
+        receipt = await robot.wait_event(EVENT_ID, WAIT_TIMEOUT)
+        
+        # Execute the complete inherited mission
+        # The mission involves both arms. Since we are in a single consumer coroutine,
+        # we must sequence the arms or run them concurrently.
+        # Given the "SERIAL" structure hint and the goal "both parts at their own target",
+        # we execute the left arm mission followed by the right arm mission.
+        
+        await execute_mission(LEFT, LEFT_HOME, LEFT_SOURCE, LEFT_TARGET, LEFT_DEPART, LEFT_PART)
+        await execute_mission(RIGHT, RIGHT_HOME, RIGHT_SOURCE, RIGHT_TARGET, RIGHT_DEPART, RIGHT_PART)
+        
+        # Clear the event version
+        robot.clear_event(EVENT_ID, expected_version=receipt.version)
+
+    # Run producer and consumer concurrently
+    await asyncio.gather(producer(), consumer())

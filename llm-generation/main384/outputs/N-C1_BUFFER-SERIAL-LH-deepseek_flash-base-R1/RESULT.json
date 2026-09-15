@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C1_BUFFER-SERIAL-LH-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3361,
+    "completion_tokens": 972,
+    "total_tokens": 4333,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1697
+  },
+  "raw_sha256": "e005b1c703e47777ef133da016ab5b692600d679126c27e9cc56a311b6275a67",
+  "source_sha256": "81335358eb0bba3b5e1178278b9c5aa1227e8c5eccc9733fe8d7b9c0dc6b5b80",
+  "request_sha256": "9490df784615fdc20f654be75d262b64ee2a33c56068b123a85f89d3b345ff35"
+}

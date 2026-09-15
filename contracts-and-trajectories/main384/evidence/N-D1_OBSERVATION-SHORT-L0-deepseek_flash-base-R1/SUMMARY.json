@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-D1_OBSERVATION-SHORT-L0-deepseek_flash-base-R1",
+  "task_id": "D1_OBSERVATION-SHORT-L0",
+  "executed": true,
+  "generation_source_sha256": "2d3d79f63cec01557cc7589822e7adfcaed701b518b979915158e0a5071f98f1",
+  "process_status": "EXITED",
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 34,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "C",
+    "GEOMETRY": "C",
+    "REWORK_OBSERVATION": "C",
+    "REWORK_BRANCH": "C"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "C"
+  },
+  "geometry_status": "NO_FORBIDDEN_CONTACT_IN_DECLARED_FIXED_AABB_TRANSLATIONS",
+  "capture_sha256": "84285eb428dd509633cacd3162410db151daa4e25e02c6f10848ab9b08016601",
+  "task_evidence_sha256": "b9920f439b2ed501e974ffd4d82034a2d587884c57b9e191986b1426e1caaaab",
+  "grammar_evidence_sha256": "602cb7648d5ce9d604ed51131e896ac42d1db2aa3499a01addc424ae8230745f",
+  "geometry_sha256": "c12afe98683489319938a27b3c5cf2a091f66393d3b51a615ff8f7279457b414",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

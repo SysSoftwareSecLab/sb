@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C8_ATTR_NESTED-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3539,
+    "completion_tokens": 1451,
+    "total_tokens": 4990,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1875
+  },
+  "raw_sha256": "6fe214609e6a37c5b73c65141431890c9d89d7351768bebebe16ac152c2518f3",
+  "source_sha256": "b378f0d7f664d8c4c2cf0c8dc5cf2064d7d7bfe084373a7fa3c0bef2fd17e6fa",
+  "request_sha256": "5b1b330581cb877faeaf780d7dbde2f1e78519db8184f4ce6a7b156543475ce3"
+}

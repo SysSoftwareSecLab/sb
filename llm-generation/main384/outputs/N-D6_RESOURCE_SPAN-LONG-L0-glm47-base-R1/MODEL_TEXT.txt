@@ -1,0 +1,68 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, MotionFault, TimeoutError
+
+async def run_task(robot: Robot):
+    # Task constants
+    RES_FIXTURE = "fixture"
+    RES_TOOL = "tool"
+    TIMEOUT_ACQUIRE = 4.0  # Within 0-120s range
+    TIMEOUT_MOVE = 4.0     # Default is 4.0
+    
+    # Goals and Poses
+    GOALS = {
+        "LEFT": ("left_part", "left_source", "left_target", "left_depart", "left_home"),
+        "RIGHT": ("right_part", "right_source", "right_target", "right_depart", "right_home")
+    }
+
+    async def worker(arm: str):
+        part_id, source_pose, target_pose, depart_pose, home_pose = GOALS[arm]
+        
+        # Resource tracking for cleanup
+        owned_resources = []
+        
+        try:
+            # 1. Acquire resources in order: fixture then tool
+            # Using try/finally block for acquisition phase as requested
+            try:
+                await robot.acquire(arm, RES_FIXTURE, TIMEOUT_ACQUIRE)
+                owned_resources.append(RES_FIXTURE)
+                
+                await robot.acquire(arm, RES_TOOL, TIMEOUT_ACQUIRE)
+                owned_resources.append(RES_TOOL)
+            except TimeoutError:
+                # If acquisition fails or times out, release any acquired resources
+                for res in owned_resources:
+                    await robot.release_resource(arm, res)
+                raise
+
+            # 2. Approach and Grasp
+            # Approach sequence requires moving from home to source, then immediate grasp
+            await robot.move(arm, source_pose, timeout_s=TIMEOUT_MOVE)
+            await robot.grasp(arm, part_id)
+
+            # 3. Transport and Place
+            # Move to target (logical support)
+            await robot.move(arm, target_pose, timeout_s=TIMEOUT_MOVE)
+            # Release part
+            await robot.release(arm, part_id, target_pose)
+            
+            # 4. Depart
+            # Immediate departure after release
+            await robot.move(arm, depart_pose, timeout_s=TIMEOUT_MOVE)
+
+        finally:
+            # 5. Release resources (Tool then Fixture, or whatever was acquired)
+            # Ensure controllers are OFF and unowned at the end
+            for res in owned_resources:
+                try:
+                    await robot.release_resource(arm, res)
+                except Exception:
+                    pass # Ignore errors during cleanup if state is inconsistent
+
+    # Strategy B: Launch both workers concurrently
+    await asyncio.gather(
+        worker("LEFT"),
+        worker("RIGHT")
+    )
+```

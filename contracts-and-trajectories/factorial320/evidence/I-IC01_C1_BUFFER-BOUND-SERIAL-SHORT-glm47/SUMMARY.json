@@ -1,0 +1,26 @@
+{
+  "slot_id": "I-IC01_C1_BUFFER-BOUND-SERIAL-SHORT-glm47",
+  "task_id": "IC01_C1_BUFFER-BOUND-SERIAL-SHORT",
+  "executed": true,
+  "generation_source_sha256": "f5e83898bbce4618da7fcd946d9ad59afc26607c73e662d1d95c7dce109032dc",
+  "process_status": "NONZERO_EXIT",
+  "returncode": 1,
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 35,
+  "call_audit_count": 19,
+  "geometry_status": "VIOLATIONS_ON_OBSERVED_PREFIX",
+  "exposure_verdicts": {
+    "S0_source_entry": "C",
+    "S1_api": "C",
+    "S2_robot_contract": "V",
+    "T_task_completion": "V",
+    "P_physical_temporal": "V",
+    "O_observation_branching": "NA",
+    "assigned_structure": "C"
+  },
+  "capture_sha256": "74b7b8350cb8c05ee31361fb008228a049fb8d4b4e48e4272f47ffaaa33bf0d0",
+  "geometry_sha256": "ced6c89eea440aa4a49d17ba481c5f9574f7584e21dc23a85f055ff9461219fb",
+  "task_evidence_sha256": "213bce60dd3b583ba1b3f726f9a07cbd9e1e6135ed588abdc152a5819f135b49",
+  "exposure_ledger_sha256": "93fa68d572d10ff46bd2b389080f733dbf84433b54d299f0c42173291015d24a",
+  "human_label": null
+}

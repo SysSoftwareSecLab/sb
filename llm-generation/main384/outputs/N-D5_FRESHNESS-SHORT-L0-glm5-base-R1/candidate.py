@@ -1,0 +1,19 @@
+async def run_task(robot):
+    # D5_FRESHNESS-SHORT-L0
+    # Two independent lanes. Each arm: home -> source -> grasp -> target ->
+    # release -> depart. Approach sequences require start_pose immediately
+    # followed by grasp with no intervening calls.
+
+    # LEFT lane
+    await robot.move("LEFT", "left_source")
+    left_obs = await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+    # RIGHT lane
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")

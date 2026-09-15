@@ -1,0 +1,68 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants derived from PUBLIC TASK
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    
+    FACT_ROUTE = "route"
+    
+    # Default timeout from task
+    TIMEOUT = 4.0
+
+    async def left_arm_task():
+        # 1. Approach left_part
+        await robot.move(ARM_LEFT, POSE_LEFT_SOURCE, timeout_s=TIMEOUT)
+        
+        # 2. Grasp left_part
+        # Observation of 'route' is required by development_contract
+        # We must inspect the fact to get the Observation object
+        obs_route = await robot.inspect(ARM_LEFT, FACT_ROUTE)
+        await robot.grasp(ARM_LEFT, OBJ_LEFT, observation=obs_route)
+        
+        # 3. Move to left_target
+        await robot.move(ARM_LEFT, POSE_LEFT_TARGET, timeout_s=TIMEOUT)
+        
+        # 4. Release left_part
+        await robot.release(ARM_LEFT, OBJ_LEFT, POSE_LEFT_TARGET)
+        
+        # 5. Depart to left_depart
+        await robot.move(ARM_LEFT, POSE_LEFT_DEPART, timeout_s=TIMEOUT)
+
+    async def right_arm_task():
+        # 1. Approach right_part
+        await robot.move(ARM_RIGHT, POSE_RIGHT_SOURCE, timeout_s=TIMEOUT)
+        
+        # 2. Grasp right_part
+        await robot.grasp(ARM_RIGHT, OBJ_RIGHT)
+        
+        # 3. Move to right_target
+        await robot.move(ARM_RIGHT, POSE_RIGHT_TARGET, timeout_s=TIMEOUT)
+        
+        # 4. Release right_part
+        await robot.release(ARM_RIGHT, OBJ_RIGHT, POSE_RIGHT_TARGET)
+        
+        # 5. Depart to right_depart
+        await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART, timeout_s=TIMEOUT)
+
+    # Run both arms concurrently
+    await asyncio.gather(
+        left_arm_task(),
+        right_arm_task()
+    )
+```

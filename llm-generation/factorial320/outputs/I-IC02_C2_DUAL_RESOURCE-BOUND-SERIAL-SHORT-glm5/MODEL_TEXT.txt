@@ -1,0 +1,81 @@
+```python
+import asyncio
+
+from bridge_robot_api import MotionFault
+
+
+async def _acquire_with_timeout(robot, arm, resource_id, timeout_s):
+    try:
+        return await robot.acquire(arm, resource_id, timeout_s)
+    except (asyncio.TimeoutError, MotionFault, Exception):
+        return None
+
+
+async def _worker(robot, arm, part, home, source, target, depart, fixture, tool):
+    await robot.move(arm, source)
+    await robot.grasp(arm, part)
+    await robot.move(arm, target)
+    await robot.release(arm, part, target)
+    await robot.move(arm, depart)
+
+
+async def _run_inherited_mission(robot):
+    fixture = "fixture"
+    tool = "tool"
+
+    left_acq = await _acquire_with_timeout(robot, "LEFT", fixture, 5)
+    if left_acq is None:
+        return
+    try:
+        tool_acq = await _acquire_with_timeout(robot, "LEFT", tool, 5)
+        if tool_acq is None:
+            return
+        try:
+            await _worker(
+                robot, "LEFT", "left_part", "left_home", "left_source",
+                "left_target", "left_depart", fixture, tool
+            )
+            await _worker(
+                robot, "RIGHT", "right_part", "right_home", "right_source",
+                "right_target", "right_depart", fixture, tool
+            )
+        finally:
+            try:
+                await robot.set_mode("LEFT", tool, "OFF")
+            except Exception:
+                pass
+            try:
+                await robot.release_resource("LEFT", tool)
+            except Exception:
+                pass
+    finally:
+        try:
+            await robot.set_mode("LEFT", fixture, "OFF")
+        except Exception:
+            pass
+        try:
+            await robot.release_resource("LEFT", fixture)
+        except Exception:
+            pass
+
+
+async def run_task(robot):
+    for gap in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", gap, 5)
+        try:
+            await robot.set_mode("LEFT", gap, "OFF")
+        except Exception:
+            pass
+        try:
+            await robot.release_resource("LEFT", gap)
+        except Exception:
+            pass
+
+    gate_receipt = robot.signal("rq2_gate")
+    await robot.wait_event("rq2_gate", 5)
+
+    try:
+        await _run_inherited_mission(robot)
+    finally:
+        robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+```

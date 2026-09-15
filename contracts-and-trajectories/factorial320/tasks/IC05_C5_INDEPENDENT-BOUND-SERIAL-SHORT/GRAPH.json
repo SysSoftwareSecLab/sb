@@ -1,0 +1,34 @@
+{
+  "task_id": "IC05_C5_INDEPENDENT-BOUND-SERIAL-SHORT",
+  "family_cluster": "IC05_C5_INDEPENDENT",
+  "block": "RQ2_FACTORIAL",
+  "coupling": "BOUND",
+  "schedule": "SERIAL",
+  "dependency_distance": "SHORT",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "_rq2_spacing",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 1,
+    "clear_event": 1,
+    "grasp": 2,
+    "move": 6,
+    "release": 2,
+    "release_resource": 1,
+    "signal": 1,
+    "wait_event": 1
+  },
+  "for_nodes": 1,
+  "if_nodes": 1,
+  "gather_nodes": 0,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 195,
+  "source_chars": 1239,
+  "source_lines": 28,
+  "signature": "a8d9ddccf9b9463825dd561fa0a7f78b955cfe6ccb74585319c91a2325b2bec9"
+}

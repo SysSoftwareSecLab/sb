@@ -1,0 +1,53 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # Variant A: serial structure.
+    # Phase 1: LEFT deposits left_part on left_pad, clears left_ready.
+    # Phase 2: RIGHT deposits right_part on right_pad, clears right_ready.
+    # Phase 3: LEFT waits for right_ready, carries right_part to left_target, clears right_ready.
+    # Phase 4: RIGHT waits for left_ready, carries left_part to right_target, clears left_ready.
+
+    # --- Phase 1: LEFT deposits left_part on left_pad ---
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_pad")
+    await robot.release("LEFT", "left_part", "left_pad")
+    await robot.move("LEFT", "left_clear")
+    left_ready_receipt = robot.signal("left_ready", "left_part")
+    robot.clear_event("left_ready", expected_version=left_ready_receipt.version)
+
+    # --- Phase 2: RIGHT deposits right_part on right_pad ---
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_pad")
+    await robot.release("RIGHT", "right_part", "right_pad")
+    await robot.move("RIGHT", "right_clear")
+    right_ready_receipt = robot.signal("right_ready", "right_part")
+    robot.clear_event("right_ready", expected_version=right_ready_receipt.version)
+
+    # --- Phase 3: LEFT consumes right_part ---
+    # Wait for peer ready (right_ready) before picking up peer item.
+    # But right_ready was already signaled and cleared in Phase 2.
+    # Re-signal right_ready so LEFT can wait for it.
+    right_ready_receipt2 = robot.signal("right_ready", "right_part")
+    waited_right = await robot.wait_event("right_ready", timeout_s=5.0)
+    await robot.move("LEFT", "left_pickup_wait")
+    await robot.grasp("LEFT", "right_part")
+    await robot.move("LEFT", "left_target", receipt=waited_right)
+    await robot.release("LEFT", "right_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+    robot.clear_event("right_ready", expected_version=waited_right.version)
+
+    # --- Phase 4: RIGHT consumes left_part ---
+    left_ready_receipt2 = robot.signal("left_ready", "left_part")
+    waited_left = await robot.wait_event("left_ready", timeout_s=5.0)
+    await robot.move("RIGHT", "right_pickup_wait")
+    await robot.grasp("RIGHT", "left_part")
+    await robot.move("RIGHT", "right_target", receipt=waited_left)
+    await robot.release("RIGHT", "left_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+    robot.clear_event("left_ready", expected_version=waited_left.version)
+```

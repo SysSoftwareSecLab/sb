@@ -1,0 +1,73 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _gap_checks(robot: Robot) -> None:
+    for rid in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", rid, 5)
+        try:
+            await robot.release_resource("LEFT", rid)
+        finally:
+            pass
+
+
+async def _worker(robot: Robot, arm: str, home: str, source: str,
+                  target: str, depart: str, part: str,
+                  fixture_owned: asyncio.Event, tool_owned: asyncio.Event) -> None:
+    await robot.move(arm, source)
+    await robot.grasp(arm, part)
+    await robot.move(arm, target)
+    await robot.release(arm, target)
+    await robot.move(arm, depart)
+
+
+async def _dual_arm_mission(robot: Robot) -> None:
+    fixture_owned = asyncio.Event()
+    tool_owned = asyncio.Event()
+
+    async def left_worker() -> None:
+        await robot.acquire("LEFT", "fixture", 5)
+        fixture_owned.set()
+        try:
+            await robot.acquire("LEFT", "tool", 5)
+            tool_owned.set()
+            try:
+                await _worker(robot, "LEFT", "left_home", "left_source",
+                              "left_target", "left_depart", "left_part",
+                              fixture_owned, tool_owned)
+            finally:
+                await robot.release_resource("LEFT", "tool")
+        finally:
+            await robot.release_resource("LEFT", "fixture")
+
+    async def right_worker() -> None:
+        await robot.acquire("RIGHT", "fixture", 5)
+        fixture_owned.set()
+        try:
+            await robot.acquire("RIGHT", "tool", 5)
+            tool_owned.set()
+            try:
+                await _worker(robot, "RIGHT", "right_home", "right_source",
+                              "right_target", "right_depart", "right_part",
+                              fixture_owned, tool_owned)
+            finally:
+                await robot.release_resource("RIGHT", "tool")
+        finally:
+            await robot.release_resource("RIGHT", "fixture")
+
+    await asyncio.gather(left_worker(), right_worker())
+
+
+async def run_task(robot: Robot) -> None:
+    await _gap_checks(robot)
+
+    gate_receipt = robot.signal("rq2_gate")
+
+    async def protected_mission() -> None:
+        await robot.wait_event("rq2_gate", 5)
+        await _dual_arm_mission(robot)
+
+    try:
+        await protected_mission()
+    finally:
+        robot.clear_event("rq2_gate", expected_version=gate_receipt.version)

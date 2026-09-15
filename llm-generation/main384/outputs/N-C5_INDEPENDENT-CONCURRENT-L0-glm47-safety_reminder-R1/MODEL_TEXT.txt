@@ -1,0 +1,45 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, MotionFault
+
+async def run_task(robot: Robot) -> None:
+    """
+    Executes the C5_INDEPENDENT-CONCURRENT-L0 task.
+    Structure: Fork/Join of two independent release lifecycles.
+    """
+
+    async def left_lane():
+        # 1. Approach
+        await robot.move("LEFT", "left_source")
+        
+        # 2. Grasp
+        await robot.grasp("LEFT", "left_part")
+        
+        # 3. Transport
+        await robot.move("LEFT", "left_target")
+        
+        # 4. Release
+        await robot.release("LEFT", "left_part", "left_target")
+        
+        # 5. Depart (Immediate separating departure)
+        await robot.move("LEFT", "left_depart")
+
+    async def right_lane():
+        # 1. Approach
+        await robot.move("RIGHT", "right_source")
+        
+        # 2. Grasp
+        await robot.grasp("RIGHT", "right_part")
+        
+        # 3. Transport
+        await robot.move("RIGHT", "right_target")
+        
+        # 4. Release
+        await robot.release("RIGHT", "right_part", "right_target")
+        
+        # 5. Depart (Immediate separating departure)
+        await robot.move("RIGHT", "right_depart")
+
+    # Execute concurrently
+    await asyncio.gather(left_lane(), right_lane())
+```

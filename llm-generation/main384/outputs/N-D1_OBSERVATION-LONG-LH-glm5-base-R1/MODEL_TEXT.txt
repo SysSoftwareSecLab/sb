@@ -1,0 +1,46 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # D1_OBSERVATION-LONG-LH: LEFT carries left_part through an inspection gate
+    # (accept on pass 1 per published accept_by_pass[0]=true), then to left_target.
+    # RIGHT carries right_part directly to right_target. LEFT places at inspection
+    # and immediately departs before RIGHT inspects quality.
+
+    # RIGHT: home -> right_source -> grasp right_part -> right_target -> release -> right_depart
+    async def right_pipeline() -> None:
+        await robot.move("RIGHT", "right_source")
+        await robot.grasp("RIGHT", "right_part")
+        await robot.move("RIGHT", "right_target")
+        await robot.release("RIGHT", "right_part", "right_target")
+        await robot.move("RIGHT", "right_depart")
+
+    # LEFT: home -> left_source -> grasp -> left_wait -> inspection -> grasp ->
+    # release -> left_wait (depart inspection) -> left_target -> release -> left_depart
+    async def left_pipeline() -> None:
+        await robot.move("LEFT", "left_source")
+        await robot.grasp("LEFT", "left_part")
+        await robot.move("LEFT", "left_wait")
+        await robot.move("LEFT", "inspection")
+        await robot.grasp("LEFT", "left_part")
+        await robot.release("LEFT", "left_part", "inspection")
+        await robot.move("LEFT", "left_wait")
+        await robot.move("LEFT", "left_target")
+        await robot.release("LEFT", "left_part", "left_target")
+        await robot.move("LEFT", "left_depart")
+
+    # RIGHT inspects quality after LEFT has placed at inspection and departed.
+    async def right_inspect() -> None:
+        await robot.inspect("RIGHT", "quality")
+
+    async def main_sequence() -> None:
+        rt = asyncio.create_task(right_pipeline())
+        lt = asyncio.create_task(left_pipeline())
+        await lt
+        await right_inspect()
+        await rt
+
+    await main_sequence()
+```

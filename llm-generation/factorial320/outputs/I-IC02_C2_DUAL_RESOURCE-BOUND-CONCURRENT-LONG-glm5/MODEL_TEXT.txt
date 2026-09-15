@@ -1,0 +1,56 @@
+```python
+import asyncio
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    # B variant: concurrent dual-arm mission with rq2_gate producer/consumer
+    # joined concurrently. Signal rq2_gate, complete all three rq2_gap checks,
+    # then wait for rq2_gate; clear after the mission.
+
+    async def worker(arm, part, source, target, depart):
+        # Acquire fixture then tool (same order for both arms).
+        await robot.acquire(arm, "fixture", 120)
+        try:
+            await robot.acquire(arm, "tool", 120)
+            try:
+                # Approach from start_pose and immediately grasp.
+                await robot.move(arm, source)
+                await robot.grasp(arm, part)
+                # Carry to target while owning both controllers.
+                await robot.move(arm, target)
+                # Release at target (a logical_support), then depart immediately.
+                await robot.release(arm, part, target)
+                await robot.move(arm, depart)
+            finally:
+                await robot.release_resource(arm, "tool")
+        finally:
+            await robot.release_resource(arm, "fixture")
+
+    async def gap_checks():
+        # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with
+        # LEFT, in numeric order; never retain them at return.
+        for rid in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+            await robot.acquire("LEFT", rid, 120)
+            await robot.release_resource("LEFT", rid)
+
+    # Signal rq2_gate exactly once.
+    gate_receipt = robot.signal("rq2_gate")
+
+    # Use joined concurrent scheduling for the inherited dual-arm mission and
+    # the rq2_gap resource checks. Complete all three rq2_gap checks before
+    # waiting for rq2_gate.
+    left_task = asyncio.create_task(worker("LEFT", "left_part", "left_source", "left_target", "left_depart"))
+    right_task = asyncio.create_task(worker("RIGHT", "right_part", "right_source", "right_target", "right_depart"))
+    gap_task = asyncio.create_task(gap_checks())
+
+    # Run mission and gap checks concurrently; wait for gap checks to finish
+    # before waiting for rq2_gate.
+    await asyncio.gather(left_task, right_task, gap_task)
+
+    # Wait for the exact active rq2_gate receipt exactly once.
+    await robot.wait_event("rq2_gate", 120)
+
+    # Clear exactly that version after the assigned protected scope.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+```

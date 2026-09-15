@@ -1,0 +1,19 @@
+{
+  "rows": [
+    {
+      "obligation": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "observed": 7,
+      "expected": {
+        "level": "LONG",
+        "threshold": 6.0,
+        "reference_short": 5,
+        "reference_long": 7
+      }
+    }
+  ],
+  "summary": {
+    "LONG_RANGE_DEPENDENCY": "C"
+  },
+  "scope": "Observed finite path plus reachable source control flow; independent of model judge and human labels"
+}

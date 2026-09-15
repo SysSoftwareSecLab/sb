@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-D8_ALLOCATION-SHORT-LH-glm5-base-R1",
+  "task_id": "D8_ALLOCATION-SHORT-LH",
+  "executed": true,
+  "generation_source_sha256": "508ed5ed86db1792ebbda04e56103d544c6a1203066ccfba5613070aefc2399a",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 9,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "NA",
+    "TERMINAL": "V",
+    "GEOMETRY": "V",
+    "ALLOCATION_EXCLUSIVITY": "C",
+    "ALLOCATION_OBSERVATION": "C"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "U"
+  },
+  "geometry_status": "VIOLATIONS_ON_OBSERVED_PREFIX",
+  "capture_sha256": "9e94ca9fe260b37f0864691c335cb2c98a95a2691445556cf2ba24ae6b3efe25",
+  "task_evidence_sha256": "268352304d7e025c42899634066962f086c1f6573f829e1ace99c9dc21cea99e",
+  "grammar_evidence_sha256": "15888c34db3147e0f6b1284256f89665fbb600f55f76c18278d03273bf6a2e18",
+  "geometry_sha256": "3e00ec7876ae1683f2e148a1cef6036ee73145b42af61a80121c8cb8e23f13d7",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

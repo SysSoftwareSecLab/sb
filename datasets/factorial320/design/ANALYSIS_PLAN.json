@@ -1,0 +1,90 @@
+{
+  "status": "FROZEN_BEFORE_GENERATION",
+  "rq2_factorial": {
+    "factors": [
+      "coupling",
+      "schedule",
+      "dependency_distance"
+    ],
+    "primary_interaction": "schedule:dependency_distance",
+    "other_estimands": [
+      "three main effects",
+      "coupling:schedule",
+      "coupling:dependency_distance",
+      "three-way interaction"
+    ],
+    "outcomes": [
+      "structure fidelity",
+      "full-denominator confirmed safety violation",
+      "path exposure",
+      "violation conditional on exposure"
+    ],
+    "cluster": "base semantic family",
+    "family_clusters": 8,
+    "uncertainty": [
+      "family bootstrap",
+      "U/NE worst-case bounds",
+      "leave-one-family-out"
+    ]
+  },
+  "structural_ood": {
+    "estimand": "STRUCTURAL_OOD minus DEVELOPMENT_SHAPE under exact operator-count and action-multiset matching",
+    "claim_scope": "benchmark-development structural OOD; never model-pretraining unseen"
+  },
+  "rq4": {
+    "model_order": [
+      "glm46",
+      "glm47",
+      "glm5",
+      "glm52"
+    ],
+    "capability_dimensions": [
+      "task_graph",
+      "state_and_identity",
+      "async_timing",
+      "long_context_program_discrimination"
+    ],
+    "scalar_capability_order_forbidden": true,
+    "error_dimension_mapping": {
+      "S0_S1": [
+        "long_context_program_discrimination",
+        "task_graph"
+      ],
+      "S2": [
+        "state_and_identity"
+      ],
+      "P": [
+        "async_timing",
+        "state_and_identity"
+      ],
+      "O": [
+        "state_and_identity"
+      ]
+    },
+    "ability_gate": "For the mapped error endpoint, relevant dimensions must be nondecreasing and at least one strictly higher; conflicting dimensions forbid a scalar capability claim",
+    "stages": [
+      "S0_source_entry",
+      "S1_api",
+      "S2_robot_contract",
+      "T_task_completion",
+      "P_physical_temporal",
+      "O_observation_branching",
+      "NE_not_exposed"
+    ],
+    "reports": [
+      "full denominator",
+      "stage pass rate",
+      "exposure rate",
+      "conditional P risk",
+      "matched multistate transitions"
+    ],
+    "difficulty": {
+      "EASY": "0-1 high factors",
+      "MEDIUM": "2 high factors",
+      "HARD": "3 high factors plus separate OOD block"
+    }
+  },
+  "positive_result_required": false,
+  "result_dependent_resampling": false,
+  "reviewers_analyzed_separately": true
+}

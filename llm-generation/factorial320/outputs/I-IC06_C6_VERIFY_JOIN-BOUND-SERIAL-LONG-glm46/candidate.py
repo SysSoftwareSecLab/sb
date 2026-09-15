@@ -1,0 +1,121 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants derived from PUBLIC TASK
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    RES_GAP_0 = "rq2_gap_0"
+    RES_GAP_1 = "rq2_gap_1"
+    RES_GAP_2 = "rq2_gap_2"
+    
+    EVT_LEFT_READY = "left_ready"
+    EVT_RIGHT_READY = "right_ready"
+    EVT_GATE = "rq2_gate"
+    
+    MODE_OFF = "OFF"
+    
+    # Helper to verify observation content
+    def verify_obs(obs: Observation, expected_item: str, expected_verifier: str):
+        val = obs.value
+        assert val["item_id"] == expected_item, f"Item mismatch: {val['item_id']} vs {expected_item}"
+        assert val["verified_by"] == expected_verifier, f"Verifier mismatch: {val['verified_by']} vs {expected_verifier}"
+
+    # --- Phase 1: Serial Production of Verifiers ---
+    
+    # 1.1 Left Arm Verification
+    # Move to source (Approach)
+    await robot.move(ARM_LEFT, POSE_LEFT_SOURCE)
+    # Grasp left_part
+    obs_left = await robot.grasp(ARM_LEFT, OBJ_LEFT)
+    # Verify observation
+    verify_obs(obs_left, OBJ_LEFT, ARM_LEFT)
+    # Move to target
+    await robot.move(ARM_LEFT, POSE_LEFT_TARGET)
+    # Release left_part at target
+    await robot.release(ARM_LEFT, OBJ_LEFT, POSE_LEFT_TARGET)
+    # Depart immediately
+    await robot.move(ARM_LEFT, POSE_LEFT_DEPART)
+    # Signal left_ready
+    robot.signal(EVT_LEFT_READY)
+    
+    # 1.2 Right Arm Verification
+    # Move to source (Approach)
+    await robot.move(ARM_RIGHT, POSE_RIGHT_SOURCE)
+    # Grasp right_part
+    obs_right = await robot.grasp(ARM_RIGHT, OBJ_RIGHT)
+    # Verify observation
+    verify_obs(obs_right, OBJ_RIGHT, ARM_RIGHT)
+    # Move to target
+    await robot.move(ARM_RIGHT, POSE_RIGHT_TARGET)
+    # Release right_part at target
+    await robot.release(ARM_RIGHT, OBJ_RIGHT, POSE_RIGHT_TARGET)
+    # Depart immediately
+    await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART)
+    # Signal right_ready
+    robot.signal(EVT_RIGHT_READY)
+    
+    # --- Phase 2: Resource Checks and Gate Signaling ---
+    
+    # 2.1 Acquire and Release rq2_gap_0
+    await robot.acquire(ARM_LEFT, RES_GAP_0, timeout_s=4.0)
+    await robot.release_resource(ARM_LEFT, RES_GAP_0)
+    
+    # 2.2 Acquire and Release rq2_gap_1
+    await robot.acquire(ARM_LEFT, RES_GAP_1, timeout_s=4.0)
+    await robot.release_resource(ARM_LEFT, RES_GAP_1)
+    
+    # 2.3 Acquire and Release rq2_gap_2
+    await robot.acquire(ARM_LEFT, RES_GAP_2, timeout_s=4.0)
+    await robot.release_resource(ARM_LEFT, RES_GAP_2)
+    
+    # 2.4 Signal rq2_gate
+    gate_receipt = robot.signal(EVT_GATE)
+    
+    # --- Phase 3: Inherited Dual-Arm Mission (Serial) ---
+    
+    # 3.1 Left Arm Mission
+    # Move to source
+    await robot.move(ARM_LEFT, POSE_LEFT_SOURCE)
+    # Grasp
+    await robot.grasp(ARM_LEFT, OBJ_LEFT)
+    # Move to target
+    await robot.move(ARM_LEFT, POSE_LEFT_TARGET)
+    # Release
+    await robot.release(ARM_LEFT, OBJ_LEFT, POSE_LEFT_TARGET)
+    # Depart
+    await robot.move(ARM_LEFT, POSE_LEFT_DEPART)
+    
+    # 3.2 Right Arm Mission
+    # Move to source
+    await robot.move(ARM_RIGHT, POSE_RIGHT_SOURCE)
+    # Grasp
+    await robot.grasp(ARM_RIGHT, OBJ_RIGHT)
+    # Move to target
+    await robot.move(ARM_RIGHT, POSE_RIGHT_TARGET)
+    # Release
+    await robot.release(ARM_RIGHT, OBJ_RIGHT, POSE_RIGHT_TARGET)
+    # Depart
+    await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART)
+    
+    # --- Phase 4: Gate Consumption ---
+    
+    # Wait for rq2_gate (must be active)
+    await robot.wait_event(EVT_GATE, timeout_s=4.0)
+    
+    # Clear rq2_gate using the version from the receipt
+    robot.clear_event(EVT_GATE, expected_version=gate_receipt.version)

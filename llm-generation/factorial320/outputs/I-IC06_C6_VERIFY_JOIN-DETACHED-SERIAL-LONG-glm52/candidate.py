@@ -1,0 +1,79 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _move(robot: Robot, arm: str, pose: str, timeout_s=None, *, receipt=None):
+    return await robot.move(arm, pose, timeout_s=timeout_s, receipt=receipt)
+
+
+async def _rq2_gate_protocol(robot: Robot) -> None:
+    # Signal rq2_gate exactly once.
+    gate_receipt = robot.signal("rq2_gate")
+
+    # Complete all three rq2_gap resource checks with LEFT, in numeric order.
+    for i in range(3):
+        resource_id = f"rq2_gap_{i}"
+        await robot.acquire("LEFT", resource_id, 5)
+        await robot.release_resource("LEFT", resource_id)
+
+    # Only then wait for rq2_gate exactly once, using the exact active receipt.
+    await robot.wait_event("rq2_gate", 5)
+
+    # Clear exactly that version after its assigned protected scope.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+
+async def _left_lane(robot: Robot) -> None:
+    # Approach left_part from left_home to left_source, then immediately grasp.
+    await _move(robot, "LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+
+    # Transport to left_target and release there.
+    await _move(robot, "LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+
+    # Immediate separating departure.
+    await _move(robot, "LEFT", "left_depart")
+
+    # Signal left_ready join event.
+    robot.signal("left_ready")
+
+
+async def _right_lane(robot: Robot) -> None:
+    # Approach right_part from right_home to right_source, then immediately grasp.
+    await _move(robot, "RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+
+    # Transport to right_target and release there.
+    await _move(robot, "RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+
+    # Immediate separating departure.
+    await _move(robot, "RIGHT", "right_depart")
+
+    # Signal right_ready join event.
+    robot.signal("right_ready")
+
+
+async def _inherited_dual_arm_mission(robot: Robot) -> None:
+    # SERIAL scheduling: left lane fully completed, then right lane.
+    await _left_lane(robot)
+    await _right_lane(robot)
+
+    # Join: wait for both ready events after both lanes have signaled them.
+    await robot.wait_event("left_ready", 5)
+    await robot.wait_event("right_ready", 5)
+
+
+async def run_task(robot: Robot) -> None:
+    # Complete and clear the rq2_gate protocol before starting the inherited mission.
+    await _rq2_gate_protocol(robot)
+
+    # Use serial scheduling for the inherited dual-arm mission.
+    await _inherited_dual_arm_mission(robot)
+
+    # Clear join events before return (program_clearable, inactive after clear).
+    left_receipt = robot.signal("left_ready")
+    robot.clear_event("left_ready", expected_version=left_receipt.version)
+    right_receipt = robot.signal("right_ready")
+    robot.clear_event("right_ready", expected_version=right_receipt.version)

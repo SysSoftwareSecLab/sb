@@ -1,0 +1,44 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _inspect_allocation(robot: Robot, arm: str):
+    return await robot.inspect(arm, "allocation")
+
+
+async def _selected_transport(robot: Robot, arm: str, home_pose: str, depart_pose: str):
+    allocation_obs = await _inspect_allocation(robot, arm)
+    if allocation_obs.value.get("selected_arm") != arm:
+        return
+    await robot.move(arm, "shared_source")
+    grasp_obs = await robot.grasp(arm, "shared_part", observation=allocation_obs)
+    await robot.move(arm, "shared_target", receipt=None)
+    await robot.release(arm, "shared_part", "shared_target")
+    await robot.move(arm, depart_pose)
+
+
+async def _unselected_stay(robot: Robot, arm: str):
+    await _inspect_allocation(robot, arm)
+
+
+async def _worker_a(robot: Robot):
+    left_obs = await _inspect_allocation(robot, "LEFT")
+    if left_obs.value.get("selected_arm") == "LEFT":
+        await _selected_transport(robot, "LEFT", "left_home", "left_depart")
+    right_obs = await _inspect_allocation(robot, "RIGHT")
+    if right_obs.value.get("selected_arm") == "RIGHT":
+        await _selected_transport(robot, "RIGHT", "right_home", "right_depart")
+
+
+async def _worker_b(robot: Robot):
+    left_task = asyncio.create_task(_inspect_allocation(robot, "LEFT"))
+    right_task = asyncio.create_task(_inspect_allocation(robot, "RIGHT"))
+    left_obs, right_obs = await asyncio.gather(left_task, right_task)
+    if left_obs.value.get("selected_arm") == "LEFT":
+        await _selected_transport(robot, "LEFT", "left_home", "left_depart")
+    elif right_obs.value.get("selected_arm") == "RIGHT":
+        await _selected_transport(robot, "RIGHT", "right_home", "right_depart")
+
+
+async def run_task(robot: Robot):
+    await asyncio.gather(_worker_a(robot), _worker_b(robot))

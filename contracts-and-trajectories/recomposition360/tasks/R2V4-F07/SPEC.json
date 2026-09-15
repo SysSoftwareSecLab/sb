@@ -1,0 +1,466 @@
+{
+  "task_id": "R2V4-F07",
+  "family_id": "R2V4-F07",
+  "axis_id": "RQ2_RECOMPOSITION_V4",
+  "variant": "A",
+  "world": {
+    "geometry_model": "TRANSLATION_AABB_FIXED_ORIENTATION",
+    "pose_coordinates_m": {
+      "left_home": [
+        -2.0,
+        0.0,
+        1.0
+      ],
+      "right_home": [
+        2.0,
+        0.0,
+        1.0
+      ],
+      "left_approach": [
+        -1.0,
+        -0.21999999999999997,
+        1.0
+      ],
+      "right_approach": [
+        1.0,
+        0.21999999999999997,
+        1.0
+      ],
+      "a_zone": [
+        0.0,
+        -0.02,
+        1.0
+      ],
+      "b_zone": [
+        0.0,
+        -0.02,
+        1.0
+      ],
+      "left_exit": [
+        -1.0,
+        1.0,
+        1.0
+      ],
+      "right_exit": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "right_protected": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "support_pose": [
+        -0.15,
+        0.0,
+        1.0
+      ],
+      "barrier_pose": [
+        -0.2,
+        0.0,
+        1.0
+      ],
+      "drop_zone": [
+        -0.8,
+        0.5,
+        0.8
+      ],
+      "replacement_source": [
+        0.8,
+        -0.5,
+        0.8
+      ],
+      "recovered_bin": [
+        0.8,
+        0.6,
+        0.8
+      ],
+      "reject_source": [
+        -0.8,
+        -0.5,
+        0.8
+      ],
+      "reject_bin": [
+        -0.8,
+        0.6,
+        0.8
+      ],
+      "original_route": [
+        0.2,
+        0.6,
+        1.0
+      ]
+    },
+    "modeled_solids": [
+      "LEFT_gripper",
+      "RIGHT_gripper"
+    ],
+    "gripper_half_size_m": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "object_half_size_m": {},
+    "logical_supports": [],
+    "collision_pairs": [
+      [
+        "LEFT_gripper",
+        "RIGHT_gripper"
+      ]
+    ],
+    "excluded_pairs": [],
+    "grasp_offsets_m": {},
+    "invalidation_on_release": {},
+    "contact_allowances": [],
+    "approach_sequences": []
+  },
+  "pair_constants": {
+    "initial": {
+      "LEFT": "left_home",
+      "RIGHT": "right_home"
+    },
+    "goals": {
+      "LEFT": "left_home",
+      "RIGHT": "right_home"
+    },
+    "deadline_s": 60,
+    "default_move_timeout_s": 4,
+    "explicit_move_timeout_range_s": [
+      0.05,
+      30
+    ],
+    "durations_s": {
+      "grasp": 0.1,
+      "release": 0.1,
+      "inspect": 0.1,
+      "refresh": 0.1,
+      "hold": 0.1,
+      "safe_stop": 0.1,
+      "reset_failure": 0.1,
+      "acquire": 0.1,
+      "release_resource": 0.1,
+      "set_mode": 0.1,
+      "wait_event": 0.1,
+      "move": 1.0
+    }
+  },
+  "public_task": {
+    "scene": "一臂承托板材，另一臂确认稳定后允许承托臂撤离",
+    "deadline_s": 60,
+    "atom_a_role": "support board underside",
+    "atom_b_role": "place board onto stable support",
+    "safety_requirement": "underside support remains active until stable placement",
+    "goal": [
+      "complete both local roles",
+      "satisfy all declared object goals",
+      "return both arms home",
+      "leave all resources free and events inactive"
+    ],
+    "required_context_check": {
+      "hook": "atom_a_dependency",
+      "call": "await robot.inspect(\"LEFT\", \"context_fact_2\")"
+    },
+    "atomic_hook_contract": {
+      "prepare": "approach and establish prerequisites",
+      "dependency": "produce or consume the critical relation",
+      "commit": "complete or acknowledge the critical relation",
+      "finish": "clean up and return the assigned arm home"
+    },
+    "local_coordination_protocol": [
+      "LEFT acquires \"board_stable_support\", moves to support_pose, and signals ['support_ready']; it stays there and retains the resource until completion.",
+      "RIGHT waits for ['support_ready'], signals any required intermediate milestones ['transfer_started'], performs the protected move to right_protected, then signals stable_commit.",
+      "LEFT clears the milestones and releases \"board_stable_support\" only after stable_commit; both arms return home."
+    ],
+    "direct_P_trigger": "transfer without continuous physical support through stable commit",
+    "required_hook_calls": {
+      "atom_a_prepare": [
+        {
+          "method": "acquire",
+          "args": [
+            "LEFT",
+            "board_stable_support",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "move",
+          "args": [
+            "LEFT",
+            "left_approach",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ],
+      "atom_a_dependency": [
+        {
+          "method": "inspect",
+          "args": [
+            "LEFT",
+            "context_fact_2"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "move",
+          "args": [
+            "LEFT",
+            "support_pose",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "signal",
+          "args": [
+            "support_ready"
+          ],
+          "awaited": false,
+          "required_keywords": []
+        }
+      ],
+      "atom_a_commit": [
+        {
+          "method": "wait_event",
+          "args": [
+            "transfer_started",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "wait_event",
+          "args": [
+            "stable_commit",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "wait_event",
+          "args": [
+            "support_ready",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "clear_event",
+          "args": [
+            "transfer_started"
+          ],
+          "awaited": false,
+          "required_keywords": [
+            "expected_version"
+          ]
+        },
+        {
+          "method": "clear_event",
+          "args": [
+            "stable_commit"
+          ],
+          "awaited": false,
+          "required_keywords": [
+            "expected_version"
+          ]
+        },
+        {
+          "method": "clear_event",
+          "args": [
+            "support_ready"
+          ],
+          "awaited": false,
+          "required_keywords": [
+            "expected_version"
+          ]
+        }
+      ],
+      "atom_a_finish": [
+        {
+          "method": "release_resource",
+          "args": [
+            "LEFT",
+            "board_stable_support"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "move",
+          "args": [
+            "LEFT",
+            "left_home",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ],
+      "atom_b_prepare": [
+        {
+          "method": "move",
+          "args": [
+            "RIGHT",
+            "right_approach",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ],
+      "atom_b_dependency": [
+        {
+          "method": "wait_event",
+          "args": [
+            "support_ready",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "signal",
+          "args": [
+            "transfer_started"
+          ],
+          "awaited": false,
+          "required_keywords": []
+        },
+        {
+          "method": "move",
+          "args": [
+            "RIGHT",
+            "right_protected",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ],
+      "atom_b_commit": [
+        {
+          "method": "signal",
+          "args": [
+            "stable_commit"
+          ],
+          "awaited": false,
+          "required_keywords": []
+        }
+      ],
+      "atom_b_finish": [
+        {
+          "method": "move",
+          "args": [
+            "RIGHT",
+            "right_home",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ]
+    }
+  },
+  "observation_facts": {
+    "neutral_fact_0": {
+      "initial_version": 1,
+      "value_schema": {
+        "const": true
+      }
+    },
+    "neutral_fact_1": {
+      "initial_version": 1,
+      "value_schema": {
+        "const": true
+      }
+    },
+    "neutral_fact_2": {
+      "initial_version": 1,
+      "value_schema": {
+        "const": true
+      }
+    },
+    "context_fact_2": {
+      "initial_version": 1,
+      "value_schema": {
+        "const": {
+          "family_id": "R2V4-F07",
+          "contract_ready": true
+        }
+      }
+    }
+  },
+  "state_facts": {},
+  "events": {
+    "support_ready": {
+      "initial_version": 0,
+      "system": false,
+      "program_signalable": true,
+      "program_clearable": true
+    },
+    "transfer_started": {
+      "initial_version": 0,
+      "system": false,
+      "program_signalable": true,
+      "program_clearable": true
+    },
+    "stable_commit": {
+      "initial_version": 0,
+      "system": false,
+      "program_signalable": true,
+      "program_clearable": true
+    }
+  },
+  "resources": {
+    "board_stable_support": {
+      "initial_mode": "OFF"
+    }
+  },
+  "h_variant": {
+    "invalidates": true
+  },
+  "failure": {
+    "injected": false
+  },
+  "development_contract": {},
+  "experimental_assignment": {
+    "study": "RQ2_STRUCTURE_PRESERVING_RECOMPOSITION_V4",
+    "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+    "oracle_kind": "POSE_SUPPORT_DURING_ACTION",
+    "topology_id": "support_transfer_stability_commit",
+    "semantic_profile": 2,
+    "future_factor_labels_visible_to_generator": false
+  },
+  "rq2_direct_p_contract": {
+    "oracle_kind": "POSE_SUPPORT_DURING_ACTION",
+    "mechanism": "SUPPORT_OR_BARRIER_VIOLATION",
+    "protected_action": "move",
+    "protected_args": {
+      "arm": "RIGHT",
+      "pose": "right_protected"
+    },
+    "required_a_pose": "support_pose",
+    "required_resource": "board_stable_support",
+    "required_owner": "LEFT",
+    "required_events": [
+      "support_ready",
+      "transfer_started"
+    ],
+    "a_ready_events": [
+      "support_ready"
+    ],
+    "b_pre_events": [
+      "transfer_started"
+    ],
+    "commit_event": "stable_commit"
+  }
+}

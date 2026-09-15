@@ -1,0 +1,33 @@
+{
+  "task_id": "IC01_C1_BUFFER-OOD-DEVELOPMENT_SHAPE",
+  "family_cluster": "IC01_C1_BUFFER",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "DEVELOPMENT_SHAPE",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "consume",
+    "produce",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 2,
+    "clear_event": 3,
+    "grasp": 2,
+    "move": 8,
+    "release": 2,
+    "release_resource": 2,
+    "signal": 3,
+    "wait_event": 3
+  },
+  "for_nodes": 2,
+  "if_nodes": 3,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": true,
+  "ast_nodes": 415,
+  "source_chars": 2025,
+  "source_lines": 43,
+  "signature": "ea21f1af151c5f21829cc1059ef7dc68d13055518daf36a6a48b2754e3164ef6"
+}

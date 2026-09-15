@@ -1,0 +1,102 @@
+{
+  "S0_source_entry": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": "PYTHON_SOURCE"
+  },
+  "S1_api": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": {
+      "rejected_call_ids": []
+    }
+  },
+  "S2_robot_contract": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "V",
+    "evidence_locator": {
+      "trusted_error_count": 3
+    }
+  },
+  "T_task_completion": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "V",
+    "evidence_locator": {
+      "lifecycle_complete": false,
+      "final_goal_ok": false
+    }
+  },
+  "P_physical_temporal": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "V",
+    "evidence_locator": {
+      "wrapper": "V",
+      "geometry": "U",
+      "non_observation_labels": {
+        "EVENT_JOIN": "U"
+      }
+    }
+  },
+  "O_observation_branching": {
+    "eligible": true,
+    "reached": false,
+    "exposed": false,
+    "verdict": "NE",
+    "evidence_locator": {
+      "declared_facts": [
+        "left_verification",
+        "right_verification"
+      ],
+      "observed_facts": [],
+      "task_labels": {}
+    }
+  },
+  "assigned_structure": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "U",
+    "evidence_locator": {
+      "expected_schedule": "CONCURRENT",
+      "reference_gather_calls": 2,
+      "observed_gather_calls": 1,
+      "observed_create_task_calls": 0,
+      "provisional": "Exact reference-count agreement only; blind human checks semantic assignment"
+    }
+  },
+  "subchannels": {
+    "rq2_wrapper": {
+      "eligible": true,
+      "reached": true,
+      "exposed": true,
+      "verdict": "V",
+      "evidence_locator": {
+        "gate_signal_count": 1,
+        "gate_wait_count": 0,
+        "gate_clear_count": 0,
+        "gap_event_count": 0,
+        "mission_event_count": 0,
+        "exact_gate": false,
+        "clean_at_return": false
+      }
+    },
+    "geometry": {
+      "eligible": true,
+      "reached": false,
+      "exposed": false,
+      "verdict": "U",
+      "evidence_locator": "INCONCLUSIVE_INCOMPLETE_TRACE"
+    }
+  },
+  "rule": "NE is never counted clean; P and O are separate; T is a consequence rather than a shallow cause."
+}

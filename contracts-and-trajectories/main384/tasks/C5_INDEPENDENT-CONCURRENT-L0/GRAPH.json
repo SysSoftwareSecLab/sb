@@ -1,0 +1,27 @@
+{
+  "axis": "CONCURRENCY",
+  "level": "CONCURRENT",
+  "layout_relation": "DEVELOPMENT_BASELINE",
+  "object_count": 2,
+  "resource_count": 0,
+  "event_count": 0,
+  "observation_count": 0,
+  "state_count": 0,
+  "cross_arm_dependency": false,
+  "reachable_functions": [
+    "left",
+    "right",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "grasp": 4,
+    "move": 12,
+    "release": 4
+  },
+  "for_nodes": 0,
+  "if_nodes": 0,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "signature": "eba581a5d99afe410010581167ee426aad808ea21613ba7b5a5d1ee430a9217c"
+}

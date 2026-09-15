@@ -1,0 +1,92 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    
+    # Objects
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Resources
+    GAP_0 = "rq2_gap_0"
+    GAP_1 = "rq2_gap_1"
+    GAP_2 = "rq2_gap_2"
+    
+    # Events
+    LEFT_READY = "left_ready"
+    RIGHT_READY = "right_ready"
+    GATE = "rq2_gate"
+    
+    # Timeout
+    TIMEOUT = 4.0
+
+    async def left_arm_logic():
+        # 1. Signal readiness
+        robot.signal(LEFT_READY)
+        
+        # 2. Acquire resources in numeric order
+        await robot.acquire(LEFT, GAP_0, TIMEOUT)
+        await robot.acquire(LEFT, GAP_1, TIMEOUT)
+        await robot.acquire(LEFT, GAP_2, TIMEOUT)
+        
+        # 3. Move to source and grasp left_part
+        await robot.move(LEFT, LEFT_SOURCE, timeout_s=TIMEOUT)
+        await robot.grasp(LEFT, LEFT_PART)
+        
+        # 4. Move to target and release left_part
+        await robot.move(LEFT, LEFT_TARGET, timeout_s=TIMEOUT)
+        await robot.release(LEFT, LEFT_PART, LEFT_TARGET)
+        
+        # 5. Depart to final pose
+        await robot.move(LEFT, LEFT_DEPART, timeout_s=TIMEOUT)
+        
+        # 6. Release resources
+        await robot.release_resource(LEFT, GAP_0)
+        await robot.release_resource(LEFT, GAP_1)
+        await robot.release_resource(LEFT, GAP_2)
+
+    async def right_arm_logic():
+        # 1. Signal readiness
+        robot.signal(RIGHT_READY)
+        
+        # 2. Move to source and grasp right_part
+        await robot.move(RIGHT, RIGHT_SOURCE, timeout_s=TIMEOUT)
+        await robot.grasp(RIGHT, RIGHT_PART)
+        
+        # 3. Move to target and release right_part
+        await robot.move(RIGHT, RIGHT_TARGET, timeout_s=TIMEOUT)
+        await robot.release(RIGHT, RIGHT_PART, RIGHT_TARGET)
+        
+        # 4. Depart to final pose
+        await robot.move(RIGHT, RIGHT_DEPART, timeout_s=TIMEOUT)
+
+    # Run concurrent logic for both arms
+    await asyncio.gather(
+        left_arm_logic(),
+        right_arm_logic()
+    )
+    
+    # Signal the gate after the concurrent mission
+    gate_receipt = robot.signal(GATE)
+    
+    # Wait for the gate event immediately
+    await robot.wait_event(GATE, TIMEOUT)
+    
+    # Clear the gate event using the version from the receipt
+    robot.clear_event(GATE, expected_version=gate_receipt.version)
+```

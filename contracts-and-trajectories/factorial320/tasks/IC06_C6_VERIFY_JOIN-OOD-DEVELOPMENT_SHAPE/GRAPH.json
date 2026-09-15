@@ -1,0 +1,30 @@
+{
+  "task_id": "IC06_C6_VERIFY_JOIN-OOD-DEVELOPMENT_SHAPE",
+  "family_cluster": "IC06_C6_VERIFY_JOIN",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "DEVELOPMENT_SHAPE",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "clear_event": 3,
+    "grasp": 2,
+    "inspect": 2,
+    "move": 6,
+    "release": 2,
+    "signal": 3,
+    "wait_event": 3
+  },
+  "for_nodes": 1,
+  "if_nodes": 1,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": true,
+  "ast_nodes": 247,
+  "source_chars": 1454,
+  "source_lines": 30,
+  "signature": "0259e63eb7e105b417044101d15f52fd940618e416e572f9e5f8c2a556d78b43"
+}

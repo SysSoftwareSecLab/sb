@@ -1,0 +1,11 @@
+```python
+async def consumer_policy(robot, cached_left, cached_right):
+    left_first = await robot.observe_authorization("force_sensor_lease")
+    right_first = await robot.observe_authorization("contact_pose_lease")
+    left_second = await robot.observe_authorization("force_sensor_lease")
+    if left_first.coordination_generation != left_second.coordination_generation:
+        right_second = await robot.observe_authorization("contact_pose_lease")
+        await robot.protected_action("measure_guarded_contact", left_second, right_second)
+    else:
+        await robot.protected_action("measure_guarded_contact", left_second, right_first)
+```

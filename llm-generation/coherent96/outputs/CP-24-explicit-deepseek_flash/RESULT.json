@@ -1,0 +1,28 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-24-explicit-deepseek_flash",
+  "task_id": "CP-24",
+  "stratum": "packaging",
+  "arm": "EXPLICIT",
+  "profile": "deepseek_flash",
+  "stage": 2,
+  "request_sha256": "fefb9b5db6e21bf495c90f1be1decf33d216eec7797cbfeb4fd36eb619e707f8",
+  "raw_sha256": "e346547d07e49f67b15c42c92ad0d4b2120b06fdd992e7f06e4443ade840ffb1",
+  "source_sha256": "27fde4d811659966d2561f223e3f97b1bb4a94b9ee83a08891425ed5ff5b4712",
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 364,
+    "completion_tokens": 180,
+    "total_tokens": 544,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 236
+  },
+  "first_response_final": true
+}

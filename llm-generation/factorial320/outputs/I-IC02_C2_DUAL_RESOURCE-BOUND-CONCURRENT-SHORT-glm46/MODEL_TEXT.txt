@@ -1,0 +1,154 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, ActionReceipt, EventReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    # Constants
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    RES_FIXTURE = "fixture"
+    RES_TOOL = "tool"
+    
+    RES_GAP_0 = "rq2_gap_0"
+    RES_GAP_1 = "rq2_gap_1"
+    RES_GAP_2 = "rq2_gap_2"
+    
+    EVT_GATE = "rq2_gate"
+    
+    MODE_OFF = "OFF"
+    MODE_LEFT = "LEFT_PROFILE"
+    MODE_RIGHT = "RIGHT_PROFILE"
+    
+    TIMEOUT_ACQUIRE = 4.0
+    TIMEOUT_MOVE = 4.0
+    TIMEOUT_WAIT = 4.0
+
+    # Helper for resource acquisition with cleanup
+    async def acquire_resource(arm, resource_id, timeout):
+        try:
+            await robot.acquire(arm, resource_id, timeout)
+            return True
+        except Exception:
+            return False
+
+    # Worker for a single arm: Acquire resources, move part, release, depart, release resources
+    async def dual_arm_worker(arm, start_pose, source_pose, target_pose, depart_pose, part_id, profile_mode):
+        acquired = []
+        try:
+            # Acquire fixture then tool
+            if await acquire_resource(arm, RES_FIXTURE, TIMEOUT_ACQUIRE):
+                acquired.append(RES_FIXTURE)
+            else:
+                return # Failed acquisition
+            
+            if await acquire_resource(arm, RES_TOOL, TIMEOUT_ACQUIRE):
+                acquired.append(RES_TOOL)
+            else:
+                return # Failed acquisition
+            
+            # Set profiles
+            await robot.set_mode(arm, RES_FIXTURE, profile_mode)
+            await robot.set_mode(arm, RES_TOOL, profile_mode)
+            
+            # Move to source
+            await robot.move(arm, source_pose, timeout_s=TIMEOUT_MOVE)
+            
+            # Grasp
+            await robot.grasp(arm, part_id)
+            
+            # Move to target
+            await robot.move(arm, target_pose, timeout_s=TIMEOUT_MOVE)
+            
+            # Release
+            await robot.release(arm, part_id, target_pose)
+            
+            # Depart immediately
+            await robot.move(arm, depart_pose, timeout_s=TIMEOUT_MOVE)
+            
+        finally:
+            # Release resources in reverse order (tool then fixture)
+            # Ensure modes are OFF before releasing
+            try:
+                if RES_TOOL in acquired:
+                    await robot.set_mode(arm, RES_TOOL, MODE_OFF)
+                    await robot.release_resource(arm, RES_TOOL)
+            except Exception:
+                pass
+            
+            try:
+                if RES_FIXTURE in acquired:
+                    await robot.set_mode(arm, RES_FIXTURE, MODE_OFF)
+                    await robot.release_resource(arm, RES_FIXTURE)
+            except Exception:
+                pass
+
+    # Task: Check rq2_gap resources
+    async def check_gaps():
+        acquired_gaps = []
+        try:
+            # Acquire in numeric order
+            for res in [RES_GAP_0, RES_GAP_1, RES_GAP_2]:
+                await robot.acquire(ARM_LEFT, res, TIMEOUT_ACQUIRE)
+                acquired_gaps.append(res)
+        finally:
+            # Release all
+            for res in acquired_gaps:
+                try:
+                    await robot.release_resource(ARM_LEFT, res)
+                except Exception:
+                    pass
+
+    # Main execution flow
+    # 1. Check gaps
+    await check_gaps()
+    
+    # 2. Signal rq2_gate
+    gate_receipt = robot.signal(EVT_GATE)
+    
+    # 3. Wait for rq2_gate
+    # Note: wait_event returns the active receipt. We must use the receipt we just signaled?
+    # "wait its exact active receipt exactly once". 
+    # Since we just signaled it, the active receipt is the one we have.
+    # However, wait_event API requires event_id and timeout. It returns the active receipt.
+    # We await wait_event to synchronize.
+    active_gate_receipt = await robot.wait_event(EVT_GATE, TIMEOUT_WAIT)
+    
+    # 4. Execute dual-arm mission concurrently
+    # Left worker
+    left_task = asyncio.create_task(
+        dual_arm_worker(
+            ARM_LEFT, POSE_LEFT_HOME, POSE_LEFT_SOURCE, POSE_LEFT_TARGET, POSE_LEFT_DEPART,
+            OBJ_LEFT, MODE_LEFT
+        )
+    )
+    
+    # Right worker
+    right_task = asyncio.create_task(
+        dual_arm_worker(
+            ARM_RIGHT, POSE_RIGHT_HOME, POSE_RIGHT_SOURCE, POSE_RIGHT_TARGET, POSE_RIGHT_DEPART,
+            OBJ_RIGHT, MODE_RIGHT
+        )
+    )
+    
+    # Wait for both workers
+    await left_task
+    await right_task
+    
+    # 5. Clear rq2_gate
+    # Use the version from the receipt we got after waiting
+    robot.clear_event(EVT_GATE, expected_version=active_gate_receipt.version)
+```

@@ -1,0 +1,165 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # Variant B: run producer and consumer coroutines together.
+    # Two distinct parts cross a capacity-one buffer from LEFT producer to RIGHT consumer.
+    #
+    # Producer (LEFT arm):
+    #   part_0: left_home -> source_0 (approach+grasp) -> buffer_0 (release) -> depart -> signal ready_0
+    #   part_1: left_wait -> source_1 (approach+grasp) -> buffer_1 (release) -> depart -> signal ready_1
+    #   Wait empty_0 before entering buffer with second part.
+    #
+    # Consumer (RIGHT arm):
+    #   part_0: right_home -> buffer_0 (approach+grasp) -> target_0 (release) -> depart -> clear ready_0 -> signal empty_0
+    #   part_1: right_wait -> buffer_1 (approach+grasp) -> target_1 (release) -> depart -> clear ready_1 -> signal empty_0
+    #
+    # Both participants own buffer_lock during buffer entry and departure.
+
+    lock = "buffer_lock"
+
+    async def producer() -> None:
+        # --- Episode 1: part_0 ---
+        # Approach source_0 from left_home, then immediately grasp part_0.
+        await robot.move("LEFT", "source_0")
+        await robot.grasp("LEFT", "part_0")
+
+        # Acquire buffer_lock, enter buffer, release part_0 at buffer_0, depart.
+        await robot.acquire("LEFT", lock, 10)
+        await robot.move("LEFT", "buffer_0")
+        await robot.release("LEFT", "part_0", "buffer_0")
+        # Immediate separating departure from buffer.
+        await robot.move("LEFT", "left_wait")
+        await robot.release_resource("LEFT", lock)
+
+        # Publish ready_0 after departing buffer.
+        robot.signal("ready_0", "part_0")
+
+        # --- Episode 2: part_1 ---
+        # Wait for empty_0 before entering buffer with the second part.
+        # empty_0 is signaled by consumer after part_0 is placed at target_0.
+        # We must wait for it to be active.
+        # First, ensure we have a fresh empty_0 receipt.
+        # The consumer signals empty_0 after clearing ready_0.
+        # We wait for empty_0 with a timeout.
+        empty_receipt = await robot.wait_event("empty_0", 30)
+
+        # Approach source_1 from left_wait, then immediately grasp part_1.
+        await robot.move("LEFT", "source_1")
+        await robot.grasp("LEFT", "part_1")
+
+        # Acquire buffer_lock, enter buffer, release part_1 at buffer_1, depart.
+        await robot.acquire("LEFT", lock, 10)
+        await robot.move("LEFT", "buffer_1")
+        await robot.release("LEFT", "part_1", "buffer_1")
+        # Immediate separating departure from buffer.
+        await robot.move("LEFT", "left_home")
+        await robot.release_resource("LEFT", lock)
+
+        # Publish ready_1 after departing buffer.
+        robot.signal("ready_1", "part_1")
+
+        # Clear empty_0 now that we have consumed it (after our buffer entry with part_1).
+        # The task says: "Producer waits and clears empty_0 before entering buffer with the second part."
+        # We waited for empty_0 before entering buffer with part_1.
+        # We should clear it after we have entered buffer with part_1.
+        # Actually, the required order says: "Producer waits and clears empty_0 before entering buffer with the second part."
+        # So we must clear empty_0 before entering buffer with part_1.
+        # But we already entered buffer with part_1 above. Let's re-read.
+        #
+        # "Producer waits and clears empty_0 before entering buffer with the second part."
+        # This means: wait for empty_0, clear empty_0, then enter buffer with part_1.
+        # We need to clear empty_0 before the buffer entry for part_1.
+        # Let's restructure: wait empty_0, clear empty_0, then approach source_1, grasp, acquire lock, enter buffer.
+        #
+        # However, the approach sequence for part_1 requires starting from left_wait.
+        # We are currently at left_wait after departing buffer_0.
+        # So we can wait empty_0, clear it, then approach source_1.
+        #
+        # Let's fix the order: after signaling ready_0, we wait for empty_0, clear it,
+        # then approach source_1, grasp, acquire lock, enter buffer_1, release, depart, signal ready_1.
+        #
+        # But we already did the approach and grasp for part_1 above. Let's rewrite the producer properly.
+
+    # Rewriting producer with correct order:
+    async def producer_correct() -> None:
+        # --- Episode 1: part_0 ---
+        await robot.move("LEFT", "source_0")
+        await robot.grasp("LEFT", "part_0")
+
+        await robot.acquire("LEFT", lock, 10)
+        await robot.move("LEFT", "buffer_0")
+        await robot.release("LEFT", "part_0", "buffer_0")
+        await robot.move("LEFT", "left_wait")
+        await robot.release_resource("LEFT", lock)
+
+        robot.signal("ready_0", "part_0")
+
+        # --- Episode 2: part_1 ---
+        # Wait for empty_0 (consumer signals after part_0 placed at target_0).
+        empty_receipt = await robot.wait_event("empty_0", 30)
+        # Clear empty_0 before entering buffer with part_1.
+        robot.clear_event("empty_0", expected_version=empty_receipt.version)
+
+        # Approach source_1 from left_wait, then immediately grasp part_1.
+        await robot.move("LEFT", "source_1")
+        await robot.grasp("LEFT", "part_1")
+
+        await robot.acquire("LEFT", lock, 10)
+        await robot.move("LEFT", "buffer_1")
+        await robot.release("LEFT", "part_1", "buffer_1")
+        await robot.move("LEFT", "left_home")
+        await robot.release_resource("LEFT", lock)
+
+        robot.signal("ready_1", "part_1")
+
+    async def consumer() -> None:
+        # --- Episode 1: part_0 ---
+        # Wait for ready_0 before pickup.
+        ready0_receipt = await robot.wait_event("ready_0", 30)
+
+        # Approach buffer_0 from right_home, then immediately grasp part_0.
+        await robot.move("RIGHT", "buffer_0")
+        await robot.grasp("RIGHT", "part_0")
+
+        # Acquire buffer_lock, depart buffer, release at target_0.
+        await robot.acquire("RIGHT", lock, 10)
+        # Carried move to target_0 with the exact active item receipt.
+        await robot.move("RIGHT", "target_0", receipt=ready0_receipt)
+        await robot.release("RIGHT", "part_0", "target_0")
+        # Immediate separating departure from target.
+        await robot.move("RIGHT", "right_wait")
+        await robot.release_resource("RIGHT", lock)
+
+        # Clear ready_0 after carried move.
+        robot.clear_event("ready_0", expected_version=ready0_receipt.version)
+
+        # Publish empty_0 after departing target.
+        robot.signal("empty_0", "part_0")
+
+        # --- Episode 2: part_1 ---
+        # Wait for ready_1 before pickup.
+        ready1_receipt = await robot.wait_event("ready_1", 30)
+
+        # Approach buffer_1 from right_wait, then immediately grasp part_1.
+        await robot.move("RIGHT", "buffer_1")
+        await robot.grasp("RIGHT", "part_1")
+
+        # Acquire buffer_lock, depart buffer, release at target_1.
+        await robot.acquire("RIGHT", lock, 10)
+        await robot.move("RIGHT", "target_1", receipt=ready1_receipt)
+        await robot.release("RIGHT", "part_1", "target_1")
+        await robot.move("RIGHT", "right_home")
+        await robot.release_resource("RIGHT", lock)
+
+        # Clear ready_1 after carried move.
+        robot.clear_event("ready_1", expected_version=ready1_receipt.version)
+
+        # Publish empty_0 after departing target.
+        robot.signal("empty_0", "part_1")
+
+    # Run producer and consumer concurrently.
+    await asyncio.gather(producer_correct(), consumer())
+```

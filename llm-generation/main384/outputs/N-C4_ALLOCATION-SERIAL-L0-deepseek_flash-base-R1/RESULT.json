@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C4_ALLOCATION-SERIAL-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2820,
+    "completion_tokens": 273,
+    "total_tokens": 3093,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1156
+  },
+  "raw_sha256": "adbfb3e1004940ee233dec7161ddf25d90cab2114ef38e97b3ca3f4b39403c19",
+  "source_sha256": "5fbc5e812043d7fc3020c6279d2cd6d47435cee0039e9f76d64f1da88bba9e7e",
+  "request_sha256": "478b79101f7045f713e299e37a1e6146f948cfac25dc9a0526c7fe81abca702c"
+}

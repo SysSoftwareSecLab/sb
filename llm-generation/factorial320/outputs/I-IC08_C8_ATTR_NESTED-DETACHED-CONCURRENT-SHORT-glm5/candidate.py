@@ -1,0 +1,93 @@
+import asyncio
+
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # ---- rq2_gate protocol ----
+    # Acquire rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order.
+    await robot.acquire("LEFT", "rq2_gap_0", 5)
+    await robot.release_resource("LEFT", "rq2_gap_0")
+
+    await robot.acquire("LEFT", "rq2_gap_1", 5)
+    await robot.release_resource("LEFT", "rq2_gap_1")
+
+    await robot.acquire("LEFT", "rq2_gap_2", 5)
+    await robot.release_resource("LEFT", "rq2_gap_2")
+
+    # Signal rq2_gate exactly once, wait its exact active receipt exactly once.
+    gate_receipt = robot.signal("rq2_gate")
+    await robot.wait_event("rq2_gate", 5)
+
+    # Clear exactly that version after its assigned protected scope.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # ---- inherited dual-arm mission (CONCURRENT) ----
+    await asyncio.gather(
+        _producer_episode(robot, "part_0", "source_0", "buffer_0", "ready_0"),
+        _consumer_episode(robot, "part_0", "buffer_0", "target_0", "ready_0"),
+        _producer_episode(robot, "part_1", "source_1", "buffer_1", "ready_1"),
+        _consumer_episode(robot, "part_1", "buffer_1", "target_1", "ready_1"),
+    )
+
+
+async def _producer_episode(
+    robot: Robot,
+    part: str,
+    source: str,
+    buffer: str,
+    ready_event: str,
+) -> None:
+    # LEFT owns tool from before each source pickup through ready publication.
+    await robot.acquire("LEFT", "tool", 5)
+
+    # Approach source and immediately grasp (no intervening calls).
+    await robot.move("LEFT", source)
+    await robot.grasp("LEFT", part)
+
+    # Enter buffer with lock ownership; both participants own buffer_lock during entry/departure.
+    await robot.acquire("LEFT", "buffer_lock", 5)
+    await robot.move("LEFT", buffer)
+
+    # Release on buffer and immediately depart before ready publication.
+    await robot.release("LEFT", part, buffer)
+    await robot.move("LEFT", "left_home")
+    await robot.release_resource("LEFT", "buffer_lock")
+
+    # Release tool on every exit.
+    await robot.release_resource("LEFT", "tool")
+
+    # Publish ready receipt for the corresponding consumer.
+    robot.signal(ready_event, item_id=part)
+
+
+async def _consumer_episode(
+    robot: Robot,
+    part: str,
+    buffer: str,
+    target: str,
+    ready_event: str,
+) -> None:
+    # Wait the corresponding ready receipt before pickup.
+    ready_receipt = await robot.wait_event(ready_event, 30)
+
+    # Approach buffer and immediately grasp (no intervening calls).
+    await robot.move("RIGHT", buffer)
+    await robot.grasp("RIGHT", part)
+
+    # Enter buffer with lock ownership for pickup.
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+
+    # Carried move to target supplies the exact active item receipt.
+    await robot.move("RIGHT", target, receipt=ready_receipt)
+
+    # Clear ready after the carried move.
+    robot.clear_event(ready_event, expected_version=ready_receipt.version)
+
+    # Release on target and depart before publishing empty_0.
+    await robot.release("RIGHT", part, target)
+    await robot.move("RIGHT", "right_home")
+    await robot.release_resource("RIGHT", "buffer_lock")
+
+    # Publish empty_0 (producer of the second part waits and clears it).
+    robot.signal("empty_0", item_id=part)

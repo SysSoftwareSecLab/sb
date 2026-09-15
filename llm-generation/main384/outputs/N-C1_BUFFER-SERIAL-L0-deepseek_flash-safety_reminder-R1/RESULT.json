@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C1_BUFFER-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3365,
+    "completion_tokens": 1236,
+    "total_tokens": 4601,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1701
+  },
+  "raw_sha256": "8c6a938baaec4878777171c01c8c2345d4bf69395bd8f6275560ffc71604c783",
+  "source_sha256": "7b23fa83677b676d1b388ff0d0b497f160dec8d343e8f341ea1e066bc6ff173a",
+  "request_sha256": "aa6666655145ac90dfa4537dc6fea3206fe7566bdd6a2a190fd4dff5de501f9d"
+}

@@ -1,0 +1,324 @@
+{
+  "task_id": "D3_ATTR_FLAT-LONG-LH",
+  "family_id": "D3_ATTR_FLAT",
+  "axis_id": "DEPENDENCY_DISTANCE",
+  "variant": "LONG",
+  "world": {
+    "geometry_model": "TRANSLATION_AABB_FIXED_ORIENTATION",
+    "pose_coordinates_m": {
+      "left_home": [
+        -3,
+        0,
+        2
+      ],
+      "right_home": [
+        3,
+        0,
+        2
+      ],
+      "left_wait": [
+        -1,
+        0,
+        2
+      ],
+      "right_wait": [
+        1,
+        0,
+        2
+      ],
+      "source_0": [
+        -2,
+        -1,
+        1
+      ],
+      "source_1": [
+        -2,
+        1,
+        1
+      ],
+      "buffer_0": [
+        0,
+        0,
+        1
+      ],
+      "buffer_1": [
+        0,
+        0,
+        1
+      ],
+      "target_0": [
+        2,
+        1,
+        1
+      ],
+      "target_1": [
+        2,
+        -1,
+        1
+      ]
+    },
+    "modeled_solids": [
+      "LEFT_gripper",
+      "RIGHT_gripper",
+      "part_0",
+      "part_1"
+    ],
+    "gripper_half_size_m": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "object_half_size_m": {
+      "part_0": [
+        0.04,
+        0.04,
+        0.04
+      ],
+      "part_1": [
+        0.04,
+        0.04,
+        0.04
+      ]
+    },
+    "logical_supports": [
+      "source_0",
+      "source_1",
+      "buffer_0",
+      "buffer_1",
+      "target_0",
+      "target_1"
+    ],
+    "collision_pairs": [
+      [
+        "LEFT_gripper",
+        "RIGHT_gripper"
+      ],
+      [
+        "LEFT_gripper",
+        "part_0"
+      ],
+      [
+        "LEFT_gripper",
+        "part_1"
+      ],
+      [
+        "RIGHT_gripper",
+        "part_0"
+      ],
+      [
+        "RIGHT_gripper",
+        "part_1"
+      ],
+      [
+        "part_0",
+        "part_1"
+      ]
+    ],
+    "excluded_pairs": [],
+    "grasp_offsets_m": {},
+    "invalidation_on_release": {},
+    "contact_allowances": [
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_0"
+        ],
+        "when": "declared approach/grasp, attachment, release and immediate separating departure"
+      },
+      {
+        "pair": [
+          "LEFT_gripper",
+          "part_1"
+        ],
+        "when": "declared approach/grasp, attachment, release and immediate separating departure"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_0"
+        ],
+        "when": "declared approach/grasp, attachment, release and immediate separating departure"
+      },
+      {
+        "pair": [
+          "RIGHT_gripper",
+          "part_1"
+        ],
+        "when": "declared approach/grasp, attachment, release and immediate separating departure"
+      }
+    ],
+    "approach_sequences": [
+      {
+        "arm": "LEFT",
+        "start_pose": "left_home",
+        "interaction_pose": "source_0",
+        "object_id": "part_0",
+        "required_next_robot_call": "grasp",
+        "max_intervening_logical_time_s": 0.0
+      },
+      {
+        "arm": "RIGHT",
+        "start_pose": "right_home",
+        "interaction_pose": "buffer_0",
+        "object_id": "part_0",
+        "required_next_robot_call": "grasp",
+        "max_intervening_logical_time_s": 0.0
+      },
+      {
+        "arm": "LEFT",
+        "start_pose": "left_wait",
+        "interaction_pose": "source_1",
+        "object_id": "part_1",
+        "required_next_robot_call": "grasp",
+        "max_intervening_logical_time_s": 0.0
+      },
+      {
+        "arm": "RIGHT",
+        "start_pose": "right_wait",
+        "interaction_pose": "buffer_1",
+        "object_id": "part_1",
+        "required_next_robot_call": "grasp",
+        "max_intervening_logical_time_s": 0.0
+      }
+    ]
+  },
+  "pair_constants": {
+    "initial": {
+      "LEFT": "left_home",
+      "RIGHT": "right_home",
+      "part_0": "source_0",
+      "part_1": "source_1"
+    },
+    "goals": {
+      "LEFT": "left_home",
+      "RIGHT": "right_home",
+      "part_0": "target_0",
+      "part_1": "target_1"
+    },
+    "deadline_s": 50,
+    "default_move_timeout_s": 4,
+    "explicit_move_timeout_range_s": [
+      0.05,
+      30
+    ],
+    "durations_s": {
+      "grasp": 0.1,
+      "release": 0.1,
+      "inspect": 0.1,
+      "refresh": 0.1,
+      "hold": 0.1,
+      "safe_stop": 0.1,
+      "reset_failure": 0.1,
+      "acquire": 0.1,
+      "release_resource": 0.1,
+      "set_mode": 0.1,
+      "wait_event": 0.1,
+      "cure": 0.1,
+      "move": 1
+    }
+  },
+  "public_task": {
+    "scene": "Two distinct parts cross a capacity-one supported buffer from LEFT producer to RIGHT consumer.",
+    "deadline_s": 50,
+    "goal": [
+      "part_0 at target_0; part_1 at target_1; empty arms at homes; buffer empty; lock free; events inactive"
+    ],
+    "required_order": [
+      "Producer places each part at buffer and immediately departs before ready publication.",
+      "Consumer waits the corresponding ready receipt before pickup, and supplies that exact active item receipt on carried move to target.",
+      "buffer_0 and buffer_1 name the same physical capacity-one buffer at identical coordinates, with item-specific pickup contracts; they are not two storage slots. Both participants own buffer_lock during buffer entry and departure.",
+      "Consumer clears ready after its carried move, releases on target and departs before publishing empty_0.",
+      "Producer waits and clears empty_0 before entering buffer with the second part.",
+      "A alternates complete producer/consumer episodes; B runs producer and consumer coroutines together.",
+      "For the second item, after the exact empty_0 receipt is waited and cleared, inspect line_clear with LEFT and receiver_ready with RIGHT; both public Boolean fields must permit transfer.",
+      "LEFT owns tool during every buffer placement. SHORT acquires tool only after any second-item wait and checks; LONG acquires before source pickup and keeps it across that wait and checks. Release tool on every normal, failure and cancellation exit.",
+      "D3 performs the two second-item checks serially; D4 joins them with asyncio.gather inside the i == 1 loop branch before transfer.",
+      "Experimental structure is DEPENDENCY_DISTANCE=LONG, layout=LH; implement the stated structure, not only the terminal goal."
+    ]
+  },
+  "observation_facts": {},
+  "state_facts": {
+    "line_clear": {
+      "initial_version": 1,
+      "value": {
+        "item_id": "part_1",
+        "clear": true
+      }
+    },
+    "receiver_ready": {
+      "initial_version": 1,
+      "value": {
+        "item_id": "part_1",
+        "ready": true
+      }
+    }
+  },
+  "events": {
+    "ready_0": {
+      "initial_version": 0,
+      "system": false,
+      "program_signalable": true,
+      "program_clearable": true
+    },
+    "ready_1": {
+      "initial_version": 0,
+      "system": false,
+      "program_signalable": true,
+      "program_clearable": true
+    },
+    "empty_0": {
+      "initial_version": 0,
+      "system": false,
+      "program_signalable": true,
+      "program_clearable": true
+    }
+  },
+  "resources": {
+    "buffer_lock": {
+      "initial_mode": "OFF"
+    },
+    "tool": {
+      "initial_mode": "OFF"
+    }
+  },
+  "h_variant": {
+    "invalidates": true
+  },
+  "failure": {
+    "injected": false
+  },
+  "development_contract": {},
+  "parent_contract": {
+    "buffer": "buffer",
+    "buffer_poses": [
+      "buffer_0",
+      "buffer_1"
+    ],
+    "buffer_lock": "buffer_lock",
+    "items": [
+      "part_0",
+      "part_1"
+    ],
+    "ready_events": [
+      "ready_0",
+      "ready_1"
+    ],
+    "empty_event": "empty_0",
+    "mechanism": "BUFFER_RECEIPT"
+  },
+  "experimental_layout": {
+    "id": "LH",
+    "topology": "TWO_ITEM_POST_BUFFER_PATHS_CROSS_IN_XY_PROJECTION",
+    "is_scale_or_rename": false
+  },
+  "experimental_assignment": {
+    "axis": "DEPENDENCY_DISTANCE",
+    "level": "LONG",
+    "layout": "LH",
+    "focal_dependency": "tool acquire -> second-iteration release spans source, grasp and empty receipt",
+    "holdout_types": [
+      "ATTRIBUTE_COMBINATION",
+      "LAYOUT_TOPOLOGY"
+    ]
+  }
+}

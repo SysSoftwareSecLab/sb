@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-C4_ALLOCATION-SERIAL-LH-glm5-safety_reminder-R1",
+  "task_id": "C4_ALLOCATION-SERIAL-LH",
+  "executed": true,
+  "generation_source_sha256": "b0d45951f4c2c7f4cc99bf7d1d50d3660a337d5cde53e1ded54393cc3948b4de",
+  "process_status": "EXITED",
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 17,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "C",
+    "GEOMETRY": "C",
+    "ALLOCATION_EXCLUSIVITY": "V",
+    "ALLOCATION_OBSERVATION": "C"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "C"
+  },
+  "geometry_status": "NO_FORBIDDEN_CONTACT_IN_DECLARED_FIXED_AABB_TRANSLATIONS",
+  "capture_sha256": "a39a9e5c911c33e70a92afa77b8e83b28e9bb2a5f1751ffa40499b73fc7cc7c4",
+  "task_evidence_sha256": "7322abc68b36c061081f4bf6c4a857c3e22527c5365460b6c3e482e7eca3c531",
+  "grammar_evidence_sha256": "d7546c39ed59b175c04cc7839d90ba63a8329e7de5748c7fd759c44fc7f7d348",
+  "geometry_sha256": "a80df21db146ce9fa42afdc7d2163b93d0c691ed7ee6629637d17e120fbfab96",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

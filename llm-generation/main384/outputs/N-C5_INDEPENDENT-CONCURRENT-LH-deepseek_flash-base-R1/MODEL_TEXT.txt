@@ -1,0 +1,41 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def _left_chain(robot: Robot) -> None:
+    # Approach left_part from left_home, then immediately grasp.
+    await robot.move("LEFT", "left_home")
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    # Transport to left_target and release.
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    # Depart.
+    await robot.move("LEFT", "left_depart")
+
+
+async def _right_chain(robot: Robot) -> None:
+    # Approach right_part from right_home, then immediately grasp.
+    await robot.move("RIGHT", "right_home")
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    # Transport to right_target and release.
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    # Depart.
+    await robot.move("RIGHT", "right_depart")
+
+
+async def run_task(robot: Robot) -> None:
+    # Fork/join: run both independent attachment chains concurrently.
+    left = asyncio.create_task(_left_chain(robot))
+    right = asyncio.create_task(_right_chain(robot))
+    try:
+        await asyncio.gather(left, right)
+    except BaseException:
+        left.cancel()
+        right.cancel()
+        await asyncio.gather(left, right, return_exceptions=True)
+        raise
+```

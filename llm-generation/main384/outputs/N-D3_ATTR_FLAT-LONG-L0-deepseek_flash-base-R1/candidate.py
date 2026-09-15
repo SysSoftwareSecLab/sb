@@ -1,0 +1,114 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # LONG variant: LEFT acquires tool BEFORE source pickup and keeps it
+    # across the second-item wait and checks.  Release tool on every exit.
+    # ------------------------------------------------------------------
+    tool_held = False
+    try:
+        # ---- acquire tool (LONG: before source pickup) ----------------
+        await robot.acquire("LEFT", "tool", 5.0)
+        tool_held = True
+
+        # ==============================================================
+        # Episode 1 : part_0  (producer LEFT -> buffer_0, consumer RIGHT)
+        # ==============================================================
+
+        # ---- producer: approach source_0 and grasp part_0 ------------
+        await robot.move("LEFT", "left_home")
+        await robot.move("LEFT", "source_0")
+        await robot.grasp("LEFT", "part_0")
+
+        # ---- producer: carry to buffer_0 -----------------------------
+        await robot.acquire("LEFT", "buffer_lock", 5.0)
+        await robot.move("LEFT", "buffer_0")
+        await robot.release("LEFT", "part_0", "buffer_0")
+        # immediate separating departure (same coroutine, same instant)
+        await robot.move("LEFT", "left_wait")
+        await robot.release_resource("LEFT", "buffer_lock")
+
+        # ---- producer publishes ready_0 ------------------------------
+        ready0 = robot.signal("ready_0", "part_0")
+
+        # ---- consumer: wait ready_0, approach buffer_0, grasp --------
+        receipt0 = await robot.wait_event("ready_0", 5.0)
+        await robot.move("RIGHT", "right_home")
+        await robot.move("RIGHT", "buffer_0")
+        await robot.grasp("RIGHT", "part_0")
+
+        # ---- consumer: carried move to target_0 with receipt ---------
+        await robot.move("RIGHT", "target_0", receipt=receipt0)
+        await robot.release("RIGHT", "part_0", "target_0")
+        await robot.move("RIGHT", "right_wait")
+
+        # ---- consumer clears ready_0 after carried move --------------
+        robot.clear_event("ready_0", expected_version=receipt0.version)
+
+        # ---- consumer publishes empty_0 ------------------------------
+        empty0 = robot.signal("empty_0", "part_0")
+
+        # ==============================================================
+        # Episode 2 : part_1
+        # ==============================================================
+
+        # ---- producer waits and clears empty_0 before entering buffer -
+        empty_receipt = await robot.wait_event("empty_0", 5.0)
+        robot.clear_event("empty_0", expected_version=empty_receipt.version)
+
+        # ---- second-item checks (serial, D3) -------------------------
+        line_obs = await robot.inspect("LEFT", "line_clear")
+        recv_obs = await robot.inspect("RIGHT", "receiver_ready")
+
+        # both public Boolean fields must permit transfer
+        line_val = line_obs.value
+        recv_val = recv_obs.value
+        if not (isinstance(line_val, dict) and line_val.get("clear") is True):
+            raise ContractError("line_clear does not permit transfer")
+        if not (isinstance(recv_val, dict) and recv_val.get("ready") is True):
+            raise ContractError("receiver_ready does not permit transfer")
+
+        # ---- producer: approach source_1 and grasp part_1 ------------
+        await robot.move("LEFT", "left_wait")
+        await robot.move("LEFT", "source_1")
+        await robot.grasp("LEFT", "part_1")
+
+        # ---- producer: carry to buffer_1 -----------------------------
+        await robot.acquire("LEFT", "buffer_lock", 5.0)
+        await robot.move("LEFT", "buffer_1")
+        await robot.release("LEFT", "part_1", "buffer_1")
+        await robot.move("LEFT", "left_wait")
+        await robot.release_resource("LEFT", "buffer_lock")
+
+        # ---- producer publishes ready_1 ------------------------------
+        ready1 = robot.signal("ready_1", "part_1")
+
+        # ---- consumer: wait ready_1, approach buffer_1, grasp --------
+        receipt1 = await robot.wait_event("ready_1", 5.0)
+        await robot.move("RIGHT", "right_wait")
+        await robot.move("RIGHT", "buffer_1")
+        await robot.grasp("RIGHT", "part_1")
+
+        # ---- consumer: carried move to target_1 with receipt ---------
+        await robot.move("RIGHT", "target_1", receipt=receipt1)
+        await robot.release("RIGHT", "part_1", "target_1")
+        await robot.move("RIGHT", "right_home")
+
+        # ---- consumer clears ready_1 after carried move --------------
+        robot.clear_event("ready_1", expected_version=receipt1.version)
+
+        # ---- consumer publishes empty_0 (final) ----------------------
+        robot.signal("empty_0", "part_1")
+
+        # ---- return LEFT to home -------------------------------------
+        await robot.move("LEFT", "left_home")
+
+    finally:
+        # ---- release tool on every normal / failure / cancellation exit
+        if tool_held:
+            try:
+                await robot.release_resource("LEFT", "tool")
+            except Exception:
+                pass

@@ -1,0 +1,27 @@
+{
+  "rows": [
+    {
+      "obligation": "OBS_CURRENT",
+      "label": "V",
+      "event_indices": [
+        2
+      ],
+      "reason": "Issued exact route record, current independently counted invalidation version; proposed-call scope"
+    },
+    {
+      "obligation": "TASK_GOAL",
+      "label": "U",
+      "event_indices": [
+        2
+      ],
+      "reason": "Independent completion-state reconstruction, separate from safety"
+    }
+  ],
+  "summary": {
+    "TASK_GOAL": "U",
+    "OBS_CURRENT": "V"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "whole_program_safety": null,
+  "human_label": null
+}

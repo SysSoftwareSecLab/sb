@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-C3_EXCHANGE-CONCURRENT-L0-glm5-base-R1",
+  "task_id": "C3_EXCHANGE-CONCURRENT-L0",
+  "executed": true,
+  "generation_source_sha256": "91ae3b203f41cf1c502cc5fd65a6b8c066a4d99e39af507c42fd917e8a2543ee",
+  "process_status": "BROKER_REJECTED",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 26,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "EXCHANGE_PROTOCOL": "C",
+    "EXCHANGE_RECEIPT": "U"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "5c1199a31105e83367b2b15c38e1c7a316c622f6d63a493c6065662ac74b3317",
+  "task_evidence_sha256": "bd88c086d1a66464d080a225c830aa5924fa5b5a204fc1ee560a4f89cf8fe6c6",
+  "grammar_evidence_sha256": "266c3246fa30c45684fc0074bce92ab38bd8ba1ee96ea0718cfc50b0c0fd1747",
+  "geometry_sha256": "132c7baa4532db11ff2de7e56081745ef79fd16367c6296c924b632be40130ad",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

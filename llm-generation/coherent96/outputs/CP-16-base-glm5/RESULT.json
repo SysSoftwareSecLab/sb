@@ -1,0 +1,26 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-16-base-glm5",
+  "task_id": "CP-16",
+  "stratum": "shared_resource",
+  "arm": "BASE",
+  "profile": "glm5",
+  "stage": 2,
+  "request_sha256": "0e40476ae2ae8664c735548c7e248fa0cbf2b4fca9b6790af470bc73e8dd153c",
+  "raw_sha256": "de94650e95ca1fb236a0e77839e075a12b2129ebdda9bb111e1059f82c42add2",
+  "source_sha256": "6f237e079b90033407d73dd57d5a5fb455884cabb751127555f9c9a8dfe8aa42",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 245,
+    "prompt_tokens": 280,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 525
+  },
+  "first_response_final": true
+}

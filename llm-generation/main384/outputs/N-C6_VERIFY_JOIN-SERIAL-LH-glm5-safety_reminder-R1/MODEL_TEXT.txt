@@ -1,0 +1,58 @@
+```python
+import asyncio
+import json
+
+from bridge_robot_api import Robot
+
+
+async def _left_branch(robot: Robot) -> None:
+    # Approach LEFT arm from left_home to left_source, then immediately grasp left_part.
+    await robot.move("LEFT", "left_source")
+    left_obs = await robot.grasp("LEFT", "left_part")
+    # Verify the issued observation is for left_part before using it as the grasp-state credential.
+    if left_obs.fact_id != "left_verification":
+        raise RuntimeError("unexpected grasp observation fact_id")
+    decoded = json.loads(left_obs.value_json)
+    if decoded.get("item_id") != "left_part" or decoded.get("verified_by") != "LEFT":
+        raise RuntimeError("unexpected grasp observation value")
+    # Transport left_part to its target support zone.
+    await robot.move("LEFT", "left_target")
+    # Release requires current pose == support_zone and arm holding the object.
+    await robot.release("LEFT", "left_part", "left_target")
+    # Immediate separating departure from the release pose in the same virtual moment.
+    await robot.move("LEFT", "left_depart")
+    # Signal join event for the LEFT verifier branch.
+    robot.signal("left_ready")
+
+
+async def _right_branch(robot: Robot) -> None:
+    # Approach RIGHT arm from right_home to right_source, then immediately grasp right_part.
+    await robot.move("RIGHT", "right_source")
+    right_obs = await robot.grasp("RIGHT", "right_part")
+    if right_obs.fact_id != "right_verification":
+        raise RuntimeError("unexpected grasp observation fact_id")
+    decoded = json.loads(right_obs.value_json)
+    if decoded.get("item_id") != "left_part" or decoded.get("verified_by") != "RIGHT":
+        raise RuntimeError("unexpected grasp observation value")
+    # Transport right_part to its target support zone.
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    # Immediate separating departure from the release pose.
+    await robot.move("RIGHT", "right_depart")
+    # Signal join event for the RIGHT verifier branch.
+    robot.signal("right_ready")
+
+
+async def run_task(robot: Robot) -> None:
+    # SERIAL structure: two independent verifier branches joining before terminal completion.
+    await _left_branch(robot)
+    await _right_branch(robot)
+
+    # Join: wait for both ready events before returning, as required by development_contract.
+    left_receipt = await robot.wait_event("left_ready", 5)
+    right_receipt = await robot.wait_event("right_ready", 5)
+
+    # Clear the joined events using the exact versions from the issued receipts.
+    robot.clear_event("left_ready", expected_version=left_receipt.version)
+    robot.clear_event("right_ready", expected_version=right_receipt.version)
+```

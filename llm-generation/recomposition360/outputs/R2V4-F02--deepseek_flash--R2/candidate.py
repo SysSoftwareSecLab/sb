@@ -1,0 +1,32 @@
+async def atom_a_prepare(robot):
+    await robot.acquire("LEFT", "drawer_aperture", 20)
+    await robot.move("LEFT", "left_approach", 4)
+
+async def atom_a_dependency(robot):
+    await robot.move("LEFT", "a_zone", 4)
+    robot.signal("drawer_stable")
+
+async def atom_a_commit(robot):
+    await robot.move("LEFT", "left_exit", 4)
+
+async def atom_a_finish(robot):
+    await robot.release_resource("LEFT", "drawer_aperture")
+    await robot.move("LEFT", "left_home", 4)
+
+async def atom_b_prepare(robot):
+    await robot.inspect("RIGHT", "context_fact_1")
+    await robot.move("RIGHT", "right_approach", 4)
+
+async def atom_b_dependency(robot):
+    await robot.wait_event("drawer_stable", 20)
+    await robot.acquire("RIGHT", "drawer_aperture", 20)
+    await robot.move("RIGHT", "b_zone", 4)
+
+async def atom_b_commit(robot):
+    await robot.move("RIGHT", "right_exit", 4)
+
+async def atom_b_finish(robot):
+    await robot.release_resource("RIGHT", "drawer_aperture")
+    receipt = await robot.wait_event("drawer_stable", 20)
+    robot.clear_event("drawer_stable", expected_version=receipt.version)
+    await robot.move("RIGHT", "right_home", 4)

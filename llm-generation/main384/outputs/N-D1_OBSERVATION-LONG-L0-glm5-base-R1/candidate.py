@@ -1,0 +1,77 @@
+import asyncio
+import json
+
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # D1_OBSERVATION-LONG-L0
+    # LEFT places left_part at inspection and immediately departs before RIGHT
+    # inspects quality. At most two inspection passes. A accepts on first pass,
+    # B on second (branch-path contrast). RIGHT issues each inspection
+    # observation. Every release onto inspection increments quality version.
+
+    # ---- LEFT: home -> source, grasp left_part ----
+    await robot.move("LEFT", "left_source")
+    left_obs_src = await robot.grasp("LEFT", "left_part")
+
+    # ---- LEFT: source -> wait -> inspection, release, depart ----
+    await robot.move("LEFT", "left_wait")
+    await robot.move("LEFT", "inspection")
+    await robot.release("LEFT", "left_part", "inspection")
+    await robot.move("LEFT", "left_wait")  # immediate separating departure
+
+    # ---- RIGHT inspects quality (pass 0) using newly issued current record ----
+    quality_obs_pass0 = await robot.inspect("RIGHT", "quality")
+    q0 = quality_obs_pass0.value
+    accept0 = bool(q0.get("accept_by_pass", [False, False])[0])
+
+    if accept0:
+        # Accept on first pass: LEFT re-grasps at inspection and goes to target.
+        await robot.move("LEFT", "inspection")
+        await robot.grasp("LEFT", "left_part", observation=quality_obs_pass0)
+        await robot.move("LEFT", "left_target")
+        await robot.release("LEFT", "left_part", "left_target")
+        await robot.move("LEFT", "left_depart")
+    else:
+        # Rework circuit: inspection -> rework_wait -> rework, release, depart.
+        await robot.move("LEFT", "rework_wait")
+        await robot.move("LEFT", "rework")
+        await robot.release("LEFT", "left_part", "rework")
+        await robot.move("LEFT", "rework_wait")  # immediate departure
+
+        # LEFT re-grasps at rework and returns to inspection for pass 1.
+        await robot.move("LEFT", "rework")
+        await robot.grasp("LEFT", "left_part")
+        await robot.move("LEFT", "rework_wait")
+        await robot.move("LEFT", "inspection")
+        await robot.release("LEFT", "left_part", "inspection")
+        await robot.move("LEFT", "left_wait")  # immediate departure
+
+        # RIGHT inspects quality again (pass 1) using newly issued record.
+        quality_obs_pass1 = await robot.inspect("RIGHT", "quality")
+        q1 = quality_obs_pass1.value
+        accept1 = bool(q1.get("accept_by_pass", [False, False])[1])
+
+        if accept1:
+            await robot.move("LEFT", "inspection")
+            await robot.grasp("LEFT", "left_part", observation=quality_obs_pass1)
+            await robot.move("LEFT", "left_target")
+            await robot.release("LEFT", "left_part", "left_target")
+            await robot.move("LEFT", "left_depart")
+        else:
+            # At most two passes; second pass is the accept branch in this task.
+            await robot.move("LEFT", "inspection")
+            await robot.grasp("LEFT", "left_part", observation=quality_obs_pass1)
+            await robot.move("LEFT", "left_target")
+            await robot.release("LEFT", "left_part", "left_target")
+            await robot.move("LEFT", "left_depart")
+
+    # ---- RIGHT: home -> source, grasp right_part -> target, depart ----
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+    return None

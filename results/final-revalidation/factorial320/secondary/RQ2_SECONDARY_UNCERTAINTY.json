@@ -1,0 +1,3241 @@
+{
+  "status": "COMPLETE_PRE_SPECIFIED_OUTCOME_IMPLEMENTATION_AFTER_AGGREGATE_VISIBILITY",
+  "scientific_scope": "Additive uncertainty completion only; not an independent confirmation and no change to P_direct_base primary result.",
+  "factorial": {
+    "machine": {
+      "coupling_BOUND_minus_DETACHED": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.4140625,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.2578125,
+            0.5546875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.6875,
+            "IC02_C2_DUAL_RESOURCE": 0.1875,
+            "IC03_C3_EXCHANGE": 0.5,
+            "IC04_C4_ALLOCATION": 0.3125,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.4375,
+            "IC07_C7_ATTR_FLAT": 0.5625,
+            "IC08_C8_ATTR_NESTED": 0.625
+          },
+          "same_direction_families": 7,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.375,
+            "IC02_C2_DUAL_RESOURCE": 0.44642857142857145,
+            "IC03_C3_EXCHANGE": 0.4017857142857143,
+            "IC04_C4_ALLOCATION": 0.42857142857142855,
+            "IC05_C5_INDEPENDENT": 0.4732142857142857,
+            "IC06_C6_VERIFY_JOIN": 0.4107142857142857,
+            "IC07_C7_ATTR_FLAT": 0.39285714285714285,
+            "IC08_C8_ATTR_NESTED": 0.38392857142857145
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": true,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.234375,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.09375,
+            0.390625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.625,
+            "IC02_C2_DUAL_RESOURCE": -0.0625,
+            "IC03_C3_EXCHANGE": 0.1875,
+            "IC04_C4_ALLOCATION": 0.3125,
+            "IC05_C5_INDEPENDENT": 0.0625,
+            "IC06_C6_VERIFY_JOIN": 0.1875,
+            "IC07_C7_ATTR_FLAT": 0.5,
+            "IC08_C8_ATTR_NESTED": 0.0625
+          },
+          "same_direction_families": 7,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.17857142857142858,
+            "IC02_C2_DUAL_RESOURCE": 0.2767857142857143,
+            "IC03_C3_EXCHANGE": 0.24107142857142858,
+            "IC04_C4_ALLOCATION": 0.22321428571428573,
+            "IC05_C5_INDEPENDENT": 0.25892857142857145,
+            "IC06_C6_VERIFY_JOIN": 0.24107142857142858,
+            "IC07_C7_ATTR_FLAT": 0.19642857142857142,
+            "IC08_C8_ATTR_NESTED": 0.25892857142857145
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": true,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.03125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.1328125,
+            0.0625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0625,
+            "IC02_C2_DUAL_RESOURCE": -0.0625,
+            "IC03_C3_EXCHANGE": -0.0625,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": 0.125,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": -0.25
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.044642857142857144,
+            "IC02_C2_DUAL_RESOURCE": -0.026785714285714284,
+            "IC03_C3_EXCHANGE": -0.026785714285714284,
+            "IC04_C4_ALLOCATION": -0.05357142857142857,
+            "IC05_C5_INDEPENDENT": -0.05357142857142857,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": -0.044642857142857144,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "schedule_CONCURRENT_minus_SERIAL": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.2421875,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.109375,
+            0.375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.1875,
+            "IC02_C2_DUAL_RESOURCE": 0.5625,
+            "IC03_C3_EXCHANGE": -0.125,
+            "IC04_C4_ALLOCATION": 0.1875,
+            "IC05_C5_INDEPENDENT": 0.25,
+            "IC06_C6_VERIFY_JOIN": 0.4375,
+            "IC07_C7_ATTR_FLAT": 0.3125,
+            "IC08_C8_ATTR_NESTED": 0.125
+          },
+          "same_direction_families": 7,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.25,
+            "IC02_C2_DUAL_RESOURCE": 0.19642857142857142,
+            "IC03_C3_EXCHANGE": 0.29464285714285715,
+            "IC04_C4_ALLOCATION": 0.25,
+            "IC05_C5_INDEPENDENT": 0.24107142857142858,
+            "IC06_C6_VERIFY_JOIN": 0.21428571428571427,
+            "IC07_C7_ATTR_FLAT": 0.23214285714285715,
+            "IC08_C8_ATTR_NESTED": 0.25892857142857145
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": true,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.46875,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.2734375,
+            0.671875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.25,
+            "IC02_C2_DUAL_RESOURCE": 0.8125,
+            "IC03_C3_EXCHANGE": 0.1875,
+            "IC04_C4_ALLOCATION": 0.3125,
+            "IC05_C5_INDEPENDENT": 0.8125,
+            "IC06_C6_VERIFY_JOIN": 0.8125,
+            "IC07_C7_ATTR_FLAT": 0.5,
+            "IC08_C8_ATTR_NESTED": 0.0625
+          },
+          "same_direction_families": 8,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.5,
+            "IC02_C2_DUAL_RESOURCE": 0.41964285714285715,
+            "IC03_C3_EXCHANGE": 0.5089285714285714,
+            "IC04_C4_ALLOCATION": 0.49107142857142855,
+            "IC05_C5_INDEPENDENT": 0.41964285714285715,
+            "IC06_C6_VERIFY_JOIN": 0.41964285714285715,
+            "IC07_C7_ATTR_FLAT": 0.4642857142857143,
+            "IC08_C8_ATTR_NESTED": 0.5267857142857143
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": true,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.15625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.3046875,
+            -0.03125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0625,
+            "IC02_C2_DUAL_RESOURCE": -0.5625,
+            "IC03_C3_EXCHANGE": -0.0625,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.25,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": -0.25
+          },
+          "same_direction_families": 5,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.1875,
+            "IC02_C2_DUAL_RESOURCE": -0.09821428571428571,
+            "IC03_C3_EXCHANGE": -0.16964285714285715,
+            "IC04_C4_ALLOCATION": -0.17857142857142858,
+            "IC05_C5_INDEPENDENT": -0.14285714285714285,
+            "IC06_C6_VERIFY_JOIN": -0.14285714285714285,
+            "IC07_C7_ATTR_FLAT": -0.1875,
+            "IC08_C8_ATTR_NESTED": -0.14285714285714285
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "distance_LONG_minus_SHORT": {
+        "structure_confirmed_violation_lower": {
+          "estimate": -0.0078125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.078125,
+            0.046875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0625,
+            "IC02_C2_DUAL_RESOURCE": 0.0625,
+            "IC03_C3_EXCHANGE": -0.125,
+            "IC04_C4_ALLOCATION": 0.0625,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.0625,
+            "IC07_C7_ATTR_FLAT": -0.1875,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 2,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.017857142857142856,
+            "IC02_C2_DUAL_RESOURCE": -0.017857142857142856,
+            "IC03_C3_EXCHANGE": 0.008928571428571428,
+            "IC04_C4_ALLOCATION": -0.017857142857142856,
+            "IC05_C5_INDEPENDENT": -0.008928571428571428,
+            "IC06_C6_VERIFY_JOIN": -0.017857142857142856,
+            "IC07_C7_ATTR_FLAT": 0.017857142857142856,
+            "IC08_C8_ATTR_NESTED": -0.008928571428571428
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.0,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.0703125,
+            0.0703125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": -0.0625,
+            "IC03_C3_EXCHANGE": -0.0625,
+            "IC04_C4_ALLOCATION": 0.0625,
+            "IC05_C5_INDEPENDENT": -0.1875,
+            "IC06_C6_VERIFY_JOIN": 0.1875,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.0625
+          },
+          "same_direction_families": 0,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.008928571428571428,
+            "IC03_C3_EXCHANGE": 0.008928571428571428,
+            "IC04_C4_ALLOCATION": -0.008928571428571428,
+            "IC05_C5_INDEPENDENT": 0.026785714285714284,
+            "IC06_C6_VERIFY_JOIN": -0.026785714285714284,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.008928571428571428
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.046875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.171875,
+            0.0546875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.0625,
+            "IC02_C2_DUAL_RESOURCE": 0.0625,
+            "IC03_C3_EXCHANGE": 0.0625,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": -0.375,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 3,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.044642857142857144,
+            "IC02_C2_DUAL_RESOURCE": -0.0625,
+            "IC03_C3_EXCHANGE": -0.0625,
+            "IC04_C4_ALLOCATION": -0.07142857142857142,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": -0.017857142857142856,
+            "IC07_C7_ATTR_FLAT": -0.0625,
+            "IC08_C8_ATTR_NESTED": -0.05357142857142857
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "coupling_by_schedule": {
+        "structure_confirmed_violation_lower": {
+          "estimate": -0.046875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.375,
+            0.3125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.375,
+            "IC02_C2_DUAL_RESOURCE": 0.875,
+            "IC03_C3_EXCHANGE": 0.25,
+            "IC04_C4_ALLOCATION": -0.625,
+            "IC05_C5_INDEPENDENT": -0.25,
+            "IC06_C6_VERIFY_JOIN": 0.375,
+            "IC07_C7_ATTR_FLAT": -0.625,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": -0.17857142857142858,
+            "IC03_C3_EXCHANGE": -0.08928571428571429,
+            "IC04_C4_ALLOCATION": 0.03571428571428571,
+            "IC05_C5_INDEPENDENT": -0.017857142857142856,
+            "IC06_C6_VERIFY_JOIN": -0.10714285714285714,
+            "IC07_C7_ATTR_FLAT": 0.03571428571428571,
+            "IC08_C8_ATTR_NESTED": -0.05357142857142857
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": -0.34375,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.59375,
+            -0.078125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.5,
+            "IC02_C2_DUAL_RESOURCE": 0.375,
+            "IC03_C3_EXCHANGE": -0.375,
+            "IC04_C4_ALLOCATION": -0.625,
+            "IC05_C5_INDEPENDENT": -0.125,
+            "IC06_C6_VERIFY_JOIN": -0.375,
+            "IC07_C7_ATTR_FLAT": -1.0,
+            "IC08_C8_ATTR_NESTED": -0.125
+          },
+          "same_direction_families": 7,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.32142857142857145,
+            "IC02_C2_DUAL_RESOURCE": -0.44642857142857145,
+            "IC03_C3_EXCHANGE": -0.3392857142857143,
+            "IC04_C4_ALLOCATION": -0.30357142857142855,
+            "IC05_C5_INDEPENDENT": -0.375,
+            "IC06_C6_VERIFY_JOIN": -0.3392857142857143,
+            "IC07_C7_ATTR_FLAT": -0.25,
+            "IC08_C8_ATTR_NESTED": -0.375
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": true,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": 0.125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.203125,
+            0.359375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.875,
+            "IC03_C3_EXCHANGE": 0.375,
+            "IC04_C4_ALLOCATION": 0.5,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.5
+          },
+          "same_direction_families": 6,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.125,
+            "IC02_C2_DUAL_RESOURCE": 0.26785714285714285,
+            "IC03_C3_EXCHANGE": 0.08928571428571429,
+            "IC04_C4_ALLOCATION": 0.07142857142857142,
+            "IC05_C5_INDEPENDENT": 0.14285714285714285,
+            "IC06_C6_VERIFY_JOIN": 0.10714285714285714,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.07142857142857142
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "coupling_by_distance": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.015625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.109375,
+            0.140625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.125,
+            "IC03_C3_EXCHANGE": 0.25,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": 0.25,
+            "IC06_C6_VERIFY_JOIN": 0.125,
+            "IC07_C7_ATTR_FLAT": -0.125,
+            "IC08_C8_ATTR_NESTED": -0.25
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.03571428571428571,
+            "IC02_C2_DUAL_RESOURCE": 0.03571428571428571,
+            "IC03_C3_EXCHANGE": -0.017857142857142856,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.017857142857142856,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.03571428571428571,
+            "IC08_C8_ATTR_NESTED": 0.05357142857142857
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.03125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.078125,
+            0.15625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.125,
+            "IC03_C3_EXCHANGE": 0.125,
+            "IC04_C4_ALLOCATION": -0.125,
+            "IC05_C5_INDEPENDENT": -0.125,
+            "IC06_C6_VERIFY_JOIN": 0.375,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.125
+          },
+          "same_direction_families": 3,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.03571428571428571,
+            "IC02_C2_DUAL_RESOURCE": 0.017857142857142856,
+            "IC03_C3_EXCHANGE": 0.017857142857142856,
+            "IC04_C4_ALLOCATION": 0.05357142857142857,
+            "IC05_C5_INDEPENDENT": 0.05357142857142857,
+            "IC06_C6_VERIFY_JOIN": -0.017857142857142856,
+            "IC07_C7_ATTR_FLAT": 0.03571428571428571,
+            "IC08_C8_ATTR_NESTED": 0.05357142857142857
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.15625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.375,
+            0.03125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.125,
+            "IC03_C3_EXCHANGE": -0.375,
+            "IC04_C4_ALLOCATION": -0.75,
+            "IC05_C5_INDEPENDENT": 0.25,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 5,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.16071428571428573,
+            "IC02_C2_DUAL_RESOURCE": -0.16071428571428573,
+            "IC03_C3_EXCHANGE": -0.125,
+            "IC04_C4_ALLOCATION": -0.07142857142857142,
+            "IC05_C5_INDEPENDENT": -0.21428571428571427,
+            "IC06_C6_VERIFY_JOIN": -0.14285714285714285,
+            "IC07_C7_ATTR_FLAT": -0.19642857142857142,
+            "IC08_C8_ATTR_NESTED": -0.17857142857142858
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "schedule_by_distance": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.109375,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.15625,
+            0.390625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.375,
+            "IC02_C2_DUAL_RESOURCE": 0.625,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.125,
+            "IC05_C5_INDEPENDENT": 0.75,
+            "IC06_C6_VERIFY_JOIN": -0.375,
+            "IC07_C7_ATTR_FLAT": -0.125,
+            "IC08_C8_ATTR_NESTED": -0.25
+          },
+          "same_direction_families": 3,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.07142857142857142,
+            "IC02_C2_DUAL_RESOURCE": 0.03571428571428571,
+            "IC03_C3_EXCHANGE": 0.125,
+            "IC04_C4_ALLOCATION": 0.14285714285714285,
+            "IC05_C5_INDEPENDENT": 0.017857142857142856,
+            "IC06_C6_VERIFY_JOIN": 0.17857142857142858,
+            "IC07_C7_ATTR_FLAT": 0.14285714285714285,
+            "IC08_C8_ATTR_NESTED": 0.16071428571428573
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.0625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.109375,
+            0.234375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.25,
+            "IC02_C2_DUAL_RESOURCE": 0.375,
+            "IC03_C3_EXCHANGE": 0.125,
+            "IC04_C4_ALLOCATION": -0.125,
+            "IC05_C5_INDEPENDENT": 0.375,
+            "IC06_C6_VERIFY_JOIN": -0.375,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.125
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.03571428571428571,
+            "IC02_C2_DUAL_RESOURCE": 0.017857142857142856,
+            "IC03_C3_EXCHANGE": 0.05357142857142857,
+            "IC04_C4_ALLOCATION": 0.08928571428571429,
+            "IC05_C5_INDEPENDENT": 0.017857142857142856,
+            "IC06_C6_VERIFY_JOIN": 0.125,
+            "IC07_C7_ATTR_FLAT": 0.07142857142857142,
+            "IC08_C8_ATTR_NESTED": 0.08928571428571429
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.15625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.359375,
+            0.03125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.625,
+            "IC03_C3_EXCHANGE": -0.375,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.5,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.16071428571428573,
+            "IC02_C2_DUAL_RESOURCE": -0.08928571428571429,
+            "IC03_C3_EXCHANGE": -0.125,
+            "IC04_C4_ALLOCATION": -0.17857142857142858,
+            "IC05_C5_INDEPENDENT": -0.10714285714285714,
+            "IC06_C6_VERIFY_JOIN": -0.21428571428571427,
+            "IC07_C7_ATTR_FLAT": -0.19642857142857142,
+            "IC08_C8_ATTR_NESTED": -0.17857142857142858
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "coupling_by_schedule_by_distance": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.15625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.40625,
+            0.65625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.25,
+            "IC02_C2_DUAL_RESOURCE": -1.25,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.75,
+            "IC05_C5_INDEPENDENT": 1.0,
+            "IC06_C6_VERIFY_JOIN": -0.75,
+            "IC07_C7_ATTR_FLAT": 0.25,
+            "IC08_C8_ATTR_NESTED": 1.0
+          },
+          "same_direction_families": 5,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.14285714285714285,
+            "IC02_C2_DUAL_RESOURCE": 0.35714285714285715,
+            "IC03_C3_EXCHANGE": 0.17857142857142858,
+            "IC04_C4_ALLOCATION": 0.07142857142857142,
+            "IC05_C5_INDEPENDENT": 0.03571428571428571,
+            "IC06_C6_VERIFY_JOIN": 0.2857142857142857,
+            "IC07_C7_ATTR_FLAT": 0.14285714285714285,
+            "IC08_C8_ATTR_NESTED": 0.03571428571428571
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": -0.1875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.46875,
+            0.09375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.5,
+            "IC02_C2_DUAL_RESOURCE": -0.75,
+            "IC03_C3_EXCHANGE": -0.25,
+            "IC04_C4_ALLOCATION": 0.25,
+            "IC05_C5_INDEPENDENT": 0.25,
+            "IC06_C6_VERIFY_JOIN": -0.75,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.25
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.14285714285714285,
+            "IC02_C2_DUAL_RESOURCE": -0.10714285714285714,
+            "IC03_C3_EXCHANGE": -0.17857142857142858,
+            "IC04_C4_ALLOCATION": -0.25,
+            "IC05_C5_INDEPENDENT": -0.25,
+            "IC06_C6_VERIFY_JOIN": -0.10714285714285714,
+            "IC07_C7_ATTR_FLAT": -0.21428571428571427,
+            "IC08_C8_ATTR_NESTED": -0.25
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": 0.3125,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.0,
+            0.6875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.25,
+            "IC02_C2_DUAL_RESOURCE": 1.25,
+            "IC03_C3_EXCHANGE": 0.25,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 1.0,
+            "IC07_C7_ATTR_FLAT": 0.25,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.39285714285714285,
+            "IC02_C2_DUAL_RESOURCE": 0.17857142857142858,
+            "IC03_C3_EXCHANGE": 0.32142857142857145,
+            "IC04_C4_ALLOCATION": 0.35714285714285715,
+            "IC05_C5_INDEPENDENT": 0.35714285714285715,
+            "IC06_C6_VERIFY_JOIN": 0.21428571428571427,
+            "IC07_C7_ATTR_FLAT": 0.32142857142857145,
+            "IC08_C8_ATTR_NESTED": 0.35714285714285715
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      }
+    },
+    "Reviewer1": {
+      "coupling_BOUND_minus_DETACHED": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.0,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.0625,
+            0.0625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.0625,
+            "IC02_C2_DUAL_RESOURCE": 0.0625,
+            "IC03_C3_EXCHANGE": -0.125,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": 0.0625,
+            "IC06_C6_VERIFY_JOIN": -0.125,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 0,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.008928571428571428,
+            "IC02_C2_DUAL_RESOURCE": -0.008928571428571428,
+            "IC03_C3_EXCHANGE": 0.017857142857142856,
+            "IC04_C4_ALLOCATION": -0.017857142857142856,
+            "IC05_C5_INDEPENDENT": -0.008928571428571428,
+            "IC06_C6_VERIFY_JOIN": 0.017857142857142856,
+            "IC07_C7_ATTR_FLAT": -0.008928571428571428,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.03125,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.0078125,
+            0.0625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.0625,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.0625,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.125
+          },
+          "same_direction_families": 3,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.03571428571428571,
+            "IC02_C2_DUAL_RESOURCE": 0.026785714285714284,
+            "IC03_C3_EXCHANGE": 0.03571428571428571,
+            "IC04_C4_ALLOCATION": 0.026785714285714284,
+            "IC05_C5_INDEPENDENT": 0.03571428571428571,
+            "IC06_C6_VERIFY_JOIN": 0.03571428571428571,
+            "IC07_C7_ATTR_FLAT": 0.03571428571428571,
+            "IC08_C8_ATTR_NESTED": 0.017857142857142856
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.0546875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.1640625,
+            0.0546875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0625,
+            "IC02_C2_DUAL_RESOURCE": -0.25,
+            "IC03_C3_EXCHANGE": -0.0625,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": 0.125,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": -0.25
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.07142857142857142,
+            "IC02_C2_DUAL_RESOURCE": -0.026785714285714284,
+            "IC03_C3_EXCHANGE": -0.05357142857142857,
+            "IC04_C4_ALLOCATION": -0.08035714285714286,
+            "IC05_C5_INDEPENDENT": -0.08035714285714286,
+            "IC06_C6_VERIFY_JOIN": -0.026785714285714284,
+            "IC07_C7_ATTR_FLAT": -0.07142857142857142,
+            "IC08_C8_ATTR_NESTED": -0.026785714285714284
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "schedule_CONCURRENT_minus_SERIAL": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.59375,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.3671875,
+            0.796875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.9375,
+            "IC02_C2_DUAL_RESOURCE": 0.4375,
+            "IC03_C3_EXCHANGE": 0.625,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": 0.8125,
+            "IC06_C6_VERIFY_JOIN": 0.125,
+            "IC07_C7_ATTR_FLAT": 0.9375,
+            "IC08_C8_ATTR_NESTED": 0.75
+          },
+          "same_direction_families": 8,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.5446428571428571,
+            "IC02_C2_DUAL_RESOURCE": 0.6160714285714286,
+            "IC03_C3_EXCHANGE": 0.5892857142857143,
+            "IC04_C4_ALLOCATION": 0.6607142857142857,
+            "IC05_C5_INDEPENDENT": 0.5625,
+            "IC06_C6_VERIFY_JOIN": 0.6607142857142857,
+            "IC07_C7_ATTR_FLAT": 0.5446428571428571,
+            "IC08_C8_ATTR_NESTED": 0.5714285714285714
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": true,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.1875,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.015625,
+            0.3984375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.5625,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.0625,
+            "IC05_C5_INDEPENDENT": 0.75,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.125
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.21428571428571427,
+            "IC02_C2_DUAL_RESOURCE": 0.13392857142857142,
+            "IC03_C3_EXCHANGE": 0.21428571428571427,
+            "IC04_C4_ALLOCATION": 0.20535714285714285,
+            "IC05_C5_INDEPENDENT": 0.10714285714285714,
+            "IC06_C6_VERIFY_JOIN": 0.21428571428571427,
+            "IC07_C7_ATTR_FLAT": 0.21428571428571427,
+            "IC08_C8_ATTR_NESTED": 0.19642857142857142
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.1328125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.2421875,
+            -0.0234375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0625,
+            "IC02_C2_DUAL_RESOURCE": -0.375,
+            "IC03_C3_EXCHANGE": -0.0625,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.25,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": -0.25
+          },
+          "same_direction_families": 5,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.16071428571428573,
+            "IC02_C2_DUAL_RESOURCE": -0.09821428571428571,
+            "IC03_C3_EXCHANGE": -0.14285714285714285,
+            "IC04_C4_ALLOCATION": -0.15178571428571427,
+            "IC05_C5_INDEPENDENT": -0.11607142857142858,
+            "IC06_C6_VERIFY_JOIN": -0.11607142857142858,
+            "IC07_C7_ATTR_FLAT": -0.16071428571428573,
+            "IC08_C8_ATTR_NESTED": -0.11607142857142858
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "distance_LONG_minus_SHORT": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.0,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.1015625,
+            0.109375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.0625,
+            "IC02_C2_DUAL_RESOURCE": -0.1875,
+            "IC03_C3_EXCHANGE": 0.125,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": -0.1875,
+            "IC06_C6_VERIFY_JOIN": -0.125,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": 0.25
+          },
+          "same_direction_families": 0,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.008928571428571428,
+            "IC02_C2_DUAL_RESOURCE": 0.026785714285714284,
+            "IC03_C3_EXCHANGE": -0.017857142857142856,
+            "IC04_C4_ALLOCATION": -0.017857142857142856,
+            "IC05_C5_INDEPENDENT": 0.026785714285714284,
+            "IC06_C6_VERIFY_JOIN": 0.017857142857142856,
+            "IC07_C7_ATTR_FLAT": -0.008928571428571428,
+            "IC08_C8_ATTR_NESTED": -0.03571428571428571
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.0,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.046875,
+            0.046875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": -0.0625,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.0625,
+            "IC05_C5_INDEPENDENT": -0.125,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.125
+          },
+          "same_direction_families": 0,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.008928571428571428,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.008928571428571428,
+            "IC05_C5_INDEPENDENT": 0.017857142857142856,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.017857142857142856
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.0546875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.171875,
+            0.046875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.0625,
+            "IC02_C2_DUAL_RESOURCE": 0.0,
+            "IC03_C3_EXCHANGE": 0.0625,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": -0.375,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 3,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.05357142857142857,
+            "IC02_C2_DUAL_RESOURCE": -0.0625,
+            "IC03_C3_EXCHANGE": -0.07142857142857142,
+            "IC04_C4_ALLOCATION": -0.08035714285714286,
+            "IC05_C5_INDEPENDENT": -0.008928571428571428,
+            "IC06_C6_VERIFY_JOIN": -0.026785714285714284,
+            "IC07_C7_ATTR_FLAT": -0.07142857142857142,
+            "IC08_C8_ATTR_NESTED": -0.0625
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "coupling_by_schedule": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.03125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.109375,
+            0.203125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.125,
+            "IC03_C3_EXCHANGE": 0.5,
+            "IC04_C4_ALLOCATION": -0.25,
+            "IC05_C5_INDEPENDENT": -0.125,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": -0.125,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 3,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.017857142857142856,
+            "IC02_C2_DUAL_RESOURCE": 0.05357142857142857,
+            "IC03_C3_EXCHANGE": -0.03571428571428571,
+            "IC04_C4_ALLOCATION": 0.07142857142857142,
+            "IC05_C5_INDEPENDENT": 0.05357142857142857,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.05357142857142857,
+            "IC08_C8_ATTR_NESTED": 0.03571428571428571
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": -0.03125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.109375,
+            0.03125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.125,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.125,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.25
+          },
+          "same_direction_families": 2,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.03571428571428571,
+            "IC02_C2_DUAL_RESOURCE": -0.05357142857142857,
+            "IC03_C3_EXCHANGE": -0.03571428571428571,
+            "IC04_C4_ALLOCATION": -0.017857142857142856,
+            "IC05_C5_INDEPENDENT": -0.03571428571428571,
+            "IC06_C6_VERIFY_JOIN": -0.03571428571428571,
+            "IC07_C7_ATTR_FLAT": -0.03571428571428571,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": 0.171875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.0625,
+            0.359375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.5,
+            "IC03_C3_EXCHANGE": 0.375,
+            "IC04_C4_ALLOCATION": 0.5,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.5
+          },
+          "same_direction_families": 6,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.17857142857142858,
+            "IC02_C2_DUAL_RESOURCE": 0.26785714285714285,
+            "IC03_C3_EXCHANGE": 0.14285714285714285,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": 0.19642857142857142,
+            "IC06_C6_VERIFY_JOIN": 0.16071428571428573,
+            "IC07_C7_ATTR_FLAT": 0.17857142857142858,
+            "IC08_C8_ATTR_NESTED": 0.125
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "coupling_by_distance": {
+        "structure_confirmed_violation_lower": {
+          "estimate": -0.03125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.140625,
+            0.0625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.125,
+            "IC02_C2_DUAL_RESOURCE": 0.125,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.25,
+            "IC05_C5_INDEPENDENT": -0.125,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 3,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.05357142857142857,
+            "IC02_C2_DUAL_RESOURCE": -0.05357142857142857,
+            "IC03_C3_EXCHANGE": -0.03571428571428571,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.017857142857142856,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": -0.05357142857142857,
+            "IC08_C8_ATTR_NESTED": -0.03571428571428571
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": -0.03125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.140625,
+            0.109375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.375,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.125,
+            "IC05_C5_INDEPENDENT": -0.25,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.25
+          },
+          "same_direction_families": 3,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.03571428571428571,
+            "IC02_C2_DUAL_RESOURCE": -0.08928571428571429,
+            "IC03_C3_EXCHANGE": -0.03571428571428571,
+            "IC04_C4_ALLOCATION": -0.017857142857142856,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": -0.03571428571428571,
+            "IC07_C7_ATTR_FLAT": -0.03571428571428571,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.171875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.375,
+            0.015625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.25,
+            "IC03_C3_EXCHANGE": -0.375,
+            "IC04_C4_ALLOCATION": -0.75,
+            "IC05_C5_INDEPENDENT": 0.25,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 5,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.17857142857142858,
+            "IC02_C2_DUAL_RESOURCE": -0.16071428571428573,
+            "IC03_C3_EXCHANGE": -0.14285714285714285,
+            "IC04_C4_ALLOCATION": -0.08928571428571429,
+            "IC05_C5_INDEPENDENT": -0.23214285714285715,
+            "IC06_C6_VERIFY_JOIN": -0.16071428571428573,
+            "IC07_C7_ATTR_FLAT": -0.21428571428571427,
+            "IC08_C8_ATTR_NESTED": -0.19642857142857142
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "schedule_by_distance": {
+        "structure_confirmed_violation_lower": {
+          "estimate": -0.03125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.21875,
+            0.140625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.125,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.25,
+            "IC05_C5_INDEPENDENT": 0.375,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": -0.125,
+            "IC08_C8_ATTR_NESTED": -0.5
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.05357142857142857,
+            "IC02_C2_DUAL_RESOURCE": -0.017857142857142856,
+            "IC03_C3_EXCHANGE": -0.03571428571428571,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.08928571428571429,
+            "IC06_C6_VERIFY_JOIN": -0.07142857142857142,
+            "IC07_C7_ATTR_FLAT": -0.017857142857142856,
+            "IC08_C8_ATTR_NESTED": 0.03571428571428571
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.03125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.09375,
+            0.171875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.375,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.125,
+            "IC05_C5_INDEPENDENT": 0.25,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.25
+          },
+          "same_direction_families": 2,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.03571428571428571,
+            "IC02_C2_DUAL_RESOURCE": -0.017857142857142856,
+            "IC03_C3_EXCHANGE": 0.03571428571428571,
+            "IC04_C4_ALLOCATION": 0.05357142857142857,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.03571428571428571,
+            "IC07_C7_ATTR_FLAT": 0.03571428571428571,
+            "IC08_C8_ATTR_NESTED": 0.07142857142857142
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.140625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.328125,
+            0.046875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.5,
+            "IC03_C3_EXCHANGE": -0.375,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.5,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.14285714285714285,
+            "IC02_C2_DUAL_RESOURCE": -0.08928571428571429,
+            "IC03_C3_EXCHANGE": -0.10714285714285714,
+            "IC04_C4_ALLOCATION": -0.16071428571428573,
+            "IC05_C5_INDEPENDENT": -0.08928571428571429,
+            "IC06_C6_VERIFY_JOIN": -0.19642857142857142,
+            "IC07_C7_ATTR_FLAT": -0.17857142857142858,
+            "IC08_C8_ATTR_NESTED": -0.16071428571428573
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "coupling_by_schedule_by_distance": {
+        "structure_confirmed_violation_lower": {
+          "estimate": -0.125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.53125,
+            0.21875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.25,
+            "IC02_C2_DUAL_RESOURCE": -1.25,
+            "IC03_C3_EXCHANGE": -0.5,
+            "IC04_C4_ALLOCATION": 0.5,
+            "IC05_C5_INDEPENDENT": 0.25,
+            "IC06_C6_VERIFY_JOIN": 0.5,
+            "IC07_C7_ATTR_FLAT": -0.25,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.10714285714285714,
+            "IC02_C2_DUAL_RESOURCE": 0.03571428571428571,
+            "IC03_C3_EXCHANGE": -0.07142857142857142,
+            "IC04_C4_ALLOCATION": -0.21428571428571427,
+            "IC05_C5_INDEPENDENT": -0.17857142857142858,
+            "IC06_C6_VERIFY_JOIN": -0.21428571428571427,
+            "IC07_C7_ATTR_FLAT": -0.10714285714285714,
+            "IC08_C8_ATTR_NESTED": -0.14285714285714285
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.0,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.40625,
+            0.28125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": -1.25,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.25,
+            "IC05_C5_INDEPENDENT": 0.5,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.5
+          },
+          "same_direction_families": 0,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.17857142857142858,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.03571428571428571,
+            "IC05_C5_INDEPENDENT": -0.07142857142857142,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.07142857142857142
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": 0.34375,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.0,
+            0.75
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.25,
+            "IC02_C2_DUAL_RESOURCE": 1.5,
+            "IC03_C3_EXCHANGE": 0.25,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 1.0,
+            "IC07_C7_ATTR_FLAT": 0.25,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.42857142857142855,
+            "IC02_C2_DUAL_RESOURCE": 0.17857142857142858,
+            "IC03_C3_EXCHANGE": 0.35714285714285715,
+            "IC04_C4_ALLOCATION": 0.39285714285714285,
+            "IC05_C5_INDEPENDENT": 0.39285714285714285,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": 0.35714285714285715,
+            "IC08_C8_ATTR_NESTED": 0.39285714285714285
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      }
+    },
+    "Reviewer2": {
+      "coupling_BOUND_minus_DETACHED": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.0625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.0234375,
+            0.15625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0625,
+            "IC02_C2_DUAL_RESOURCE": -0.0625,
+            "IC03_C3_EXCHANGE": 0.125,
+            "IC04_C4_ALLOCATION": 0.3125,
+            "IC05_C5_INDEPENDENT": 0.125,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": -0.125,
+            "IC08_C8_ATTR_NESTED": 0.0625
+          },
+          "same_direction_families": 5,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.0625,
+            "IC02_C2_DUAL_RESOURCE": 0.08035714285714286,
+            "IC03_C3_EXCHANGE": 0.05357142857142857,
+            "IC04_C4_ALLOCATION": 0.026785714285714284,
+            "IC05_C5_INDEPENDENT": 0.05357142857142857,
+            "IC06_C6_VERIFY_JOIN": 0.07142857142857142,
+            "IC07_C7_ATTR_FLAT": 0.08928571428571429,
+            "IC08_C8_ATTR_NESTED": 0.0625
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.0234375,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.0390625,
+            0.1015625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": -0.125,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.25,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.0625
+          },
+          "same_direction_families": 2,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.026785714285714284,
+            "IC02_C2_DUAL_RESOURCE": 0.044642857142857144,
+            "IC03_C3_EXCHANGE": 0.026785714285714284,
+            "IC04_C4_ALLOCATION": -0.008928571428571428,
+            "IC05_C5_INDEPENDENT": 0.026785714285714284,
+            "IC06_C6_VERIFY_JOIN": 0.026785714285714284,
+            "IC07_C7_ATTR_FLAT": 0.026785714285714284,
+            "IC08_C8_ATTR_NESTED": 0.017857142857142856
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.0234375,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.125,
+            0.0703125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0625,
+            "IC02_C2_DUAL_RESOURCE": -0.25,
+            "IC03_C3_EXCHANGE": -0.0625,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": 0.125,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 3,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.03571428571428571,
+            "IC02_C2_DUAL_RESOURCE": 0.008928571428571428,
+            "IC03_C3_EXCHANGE": -0.017857142857142856,
+            "IC04_C4_ALLOCATION": -0.044642857142857144,
+            "IC05_C5_INDEPENDENT": -0.044642857142857144,
+            "IC06_C6_VERIFY_JOIN": 0.008928571428571428,
+            "IC07_C7_ATTR_FLAT": -0.03571428571428571,
+            "IC08_C8_ATTR_NESTED": -0.026785714285714284
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "schedule_CONCURRENT_minus_SERIAL": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.171875,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.0,
+            0.328125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0625,
+            "IC02_C2_DUAL_RESOURCE": 0.3125,
+            "IC03_C3_EXCHANGE": -0.125,
+            "IC04_C4_ALLOCATION": 0.3125,
+            "IC05_C5_INDEPENDENT": 0.5,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.375,
+            "IC08_C8_ATTR_NESTED": 0.1875
+          },
+          "same_direction_families": 6,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.1875,
+            "IC02_C2_DUAL_RESOURCE": 0.15178571428571427,
+            "IC03_C3_EXCHANGE": 0.21428571428571427,
+            "IC04_C4_ALLOCATION": 0.15178571428571427,
+            "IC05_C5_INDEPENDENT": 0.125,
+            "IC06_C6_VERIFY_JOIN": 0.23214285714285715,
+            "IC07_C7_ATTR_FLAT": 0.14285714285714285,
+            "IC08_C8_ATTR_NESTED": 0.16964285714285715
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.2265625,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.03125,
+            0.46875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.75,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.25,
+            "IC05_C5_INDEPENDENT": 0.75,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.0625
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.25892857142857145,
+            "IC02_C2_DUAL_RESOURCE": 0.15178571428571427,
+            "IC03_C3_EXCHANGE": 0.25892857142857145,
+            "IC04_C4_ALLOCATION": 0.22321428571428573,
+            "IC05_C5_INDEPENDENT": 0.15178571428571427,
+            "IC06_C6_VERIFY_JOIN": 0.25892857142857145,
+            "IC07_C7_ATTR_FLAT": 0.25892857142857145,
+            "IC08_C8_ATTR_NESTED": 0.25
+          },
+          "ci_excludes_zero": true,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.1015625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.2109375,
+            0.0
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0625,
+            "IC02_C2_DUAL_RESOURCE": -0.375,
+            "IC03_C3_EXCHANGE": -0.0625,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.25,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.0625,
+            "IC03_C3_EXCHANGE": -0.10714285714285714,
+            "IC04_C4_ALLOCATION": -0.11607142857142858,
+            "IC05_C5_INDEPENDENT": -0.08035714285714286,
+            "IC06_C6_VERIFY_JOIN": -0.08035714285714286,
+            "IC07_C7_ATTR_FLAT": -0.125,
+            "IC08_C8_ATTR_NESTED": -0.11607142857142858
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "distance_LONG_minus_SHORT": {
+        "structure_confirmed_violation_lower": {
+          "estimate": -0.109375,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.25,
+            0.0234375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.1875,
+            "IC02_C2_DUAL_RESOURCE": -0.0625,
+            "IC03_C3_EXCHANGE": -0.125,
+            "IC04_C4_ALLOCATION": 0.1875,
+            "IC05_C5_INDEPENDENT": -0.5,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.0625
+          },
+          "same_direction_families": 5,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.09821428571428571,
+            "IC02_C2_DUAL_RESOURCE": -0.11607142857142858,
+            "IC03_C3_EXCHANGE": -0.10714285714285714,
+            "IC04_C4_ALLOCATION": -0.15178571428571427,
+            "IC05_C5_INDEPENDENT": -0.05357142857142857,
+            "IC06_C6_VERIFY_JOIN": -0.08928571428571429,
+            "IC07_C7_ATTR_FLAT": -0.125,
+            "IC08_C8_ATTR_NESTED": -0.13392857142857142
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": -0.0234375,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.0703125,
+            0.015625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": -0.125,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.125,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.0625
+          },
+          "same_direction_families": 2,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.026785714285714284,
+            "IC02_C2_DUAL_RESOURCE": -0.008928571428571428,
+            "IC03_C3_EXCHANGE": -0.026785714285714284,
+            "IC04_C4_ALLOCATION": -0.026785714285714284,
+            "IC05_C5_INDEPENDENT": -0.008928571428571428,
+            "IC06_C6_VERIFY_JOIN": -0.026785714285714284,
+            "IC07_C7_ATTR_FLAT": -0.026785714285714284,
+            "IC08_C8_ATTR_NESTED": -0.03571428571428571
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.0390625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.1640625,
+            0.0703125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.0625,
+            "IC02_C2_DUAL_RESOURCE": 0.125,
+            "IC03_C3_EXCHANGE": 0.0625,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": -0.375,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.0625,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 3,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.03571428571428571,
+            "IC02_C2_DUAL_RESOURCE": -0.0625,
+            "IC03_C3_EXCHANGE": -0.05357142857142857,
+            "IC04_C4_ALLOCATION": -0.0625,
+            "IC05_C5_INDEPENDENT": 0.008928571428571428,
+            "IC06_C6_VERIFY_JOIN": -0.008928571428571428,
+            "IC07_C7_ATTR_FLAT": -0.05357142857142857,
+            "IC08_C8_ATTR_NESTED": -0.044642857142857144
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "coupling_by_schedule": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.0625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.171875,
+            0.28125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.125,
+            "IC02_C2_DUAL_RESOURCE": 0.125,
+            "IC03_C3_EXCHANGE": 0.5,
+            "IC04_C4_ALLOCATION": -0.375,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": -0.5,
+            "IC08_C8_ATTR_NESTED": 0.375
+          },
+          "same_direction_families": 5,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.05357142857142857,
+            "IC02_C2_DUAL_RESOURCE": 0.05357142857142857,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.125,
+            "IC05_C5_INDEPENDENT": 0.07142857142857142,
+            "IC06_C6_VERIFY_JOIN": 0.03571428571428571,
+            "IC07_C7_ATTR_FLAT": 0.14285714285714285,
+            "IC08_C8_ATTR_NESTED": 0.017857142857142856
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": -0.046875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.203125,
+            0.078125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.25,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.5,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.125
+          },
+          "same_direction_families": 2,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.05357142857142857,
+            "IC02_C2_DUAL_RESOURCE": -0.08928571428571429,
+            "IC03_C3_EXCHANGE": -0.05357142857142857,
+            "IC04_C4_ALLOCATION": 0.017857142857142856,
+            "IC05_C5_INDEPENDENT": -0.05357142857142857,
+            "IC06_C6_VERIFY_JOIN": -0.05357142857142857,
+            "IC07_C7_ATTR_FLAT": -0.05357142857142857,
+            "IC08_C8_ATTR_NESTED": -0.03571428571428571
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": 0.109375,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.09375,
+            0.296875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.5,
+            "IC03_C3_EXCHANGE": 0.375,
+            "IC04_C4_ALLOCATION": 0.5,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 5,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.10714285714285714,
+            "IC02_C2_DUAL_RESOURCE": 0.19642857142857142,
+            "IC03_C3_EXCHANGE": 0.07142857142857142,
+            "IC04_C4_ALLOCATION": 0.05357142857142857,
+            "IC05_C5_INDEPENDENT": 0.125,
+            "IC06_C6_VERIFY_JOIN": 0.08928571428571429,
+            "IC07_C7_ATTR_FLAT": 0.10714285714285714,
+            "IC08_C8_ATTR_NESTED": 0.125
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "coupling_by_distance": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.1875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.046875,
+            0.453125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.125,
+            "IC02_C2_DUAL_RESOURCE": 0.875,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.125,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.25,
+            "IC08_C8_ATTR_NESTED": 0.625
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.19642857142857142,
+            "IC02_C2_DUAL_RESOURCE": 0.08928571428571429,
+            "IC03_C3_EXCHANGE": 0.21428571428571427,
+            "IC04_C4_ALLOCATION": 0.23214285714285715,
+            "IC05_C5_INDEPENDENT": 0.21428571428571427,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": 0.17857142857142858,
+            "IC08_C8_ATTR_NESTED": 0.125
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.015625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.109375,
+            0.171875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.5,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.25,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.125
+          },
+          "same_direction_families": 1,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.017857142857142856,
+            "IC02_C2_DUAL_RESOURCE": -0.05357142857142857,
+            "IC03_C3_EXCHANGE": 0.017857142857142856,
+            "IC04_C4_ALLOCATION": 0.017857142857142856,
+            "IC05_C5_INDEPENDENT": 0.05357142857142857,
+            "IC06_C6_VERIFY_JOIN": 0.017857142857142856,
+            "IC07_C7_ATTR_FLAT": 0.017857142857142856,
+            "IC08_C8_ATTR_NESTED": 0.03571428571428571
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.140625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.359375,
+            0.046875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.125,
+            "IC02_C2_DUAL_RESOURCE": 0.0,
+            "IC03_C3_EXCHANGE": -0.375,
+            "IC04_C4_ALLOCATION": -0.75,
+            "IC05_C5_INDEPENDENT": 0.25,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.14285714285714285,
+            "IC02_C2_DUAL_RESOURCE": -0.16071428571428573,
+            "IC03_C3_EXCHANGE": -0.10714285714285714,
+            "IC04_C4_ALLOCATION": -0.05357142857142857,
+            "IC05_C5_INDEPENDENT": -0.19642857142857142,
+            "IC06_C6_VERIFY_JOIN": -0.125,
+            "IC07_C7_ATTR_FLAT": -0.17857142857142858,
+            "IC08_C8_ATTR_NESTED": -0.16071428571428573
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "schedule_by_distance": {
+        "structure_confirmed_violation_lower": {
+          "estimate": -0.15625,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.328125,
+            0.0
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.125,
+            "IC02_C2_DUAL_RESOURCE": 0.125,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": -0.125,
+            "IC05_C5_INDEPENDENT": -0.25,
+            "IC06_C6_VERIFY_JOIN": -0.25,
+            "IC07_C7_ATTR_FLAT": -0.25,
+            "IC08_C8_ATTR_NESTED": -0.625
+          },
+          "same_direction_families": 5,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.19642857142857142,
+            "IC02_C2_DUAL_RESOURCE": -0.19642857142857142,
+            "IC03_C3_EXCHANGE": -0.17857142857142858,
+            "IC04_C4_ALLOCATION": -0.16071428571428573,
+            "IC05_C5_INDEPENDENT": -0.14285714285714285,
+            "IC06_C6_VERIFY_JOIN": -0.14285714285714285,
+            "IC07_C7_ATTR_FLAT": -0.14285714285714285,
+            "IC08_C8_ATTR_NESTED": -0.08928571428571429
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": 0.046875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.03125,
+            0.140625
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": 0.25,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": 0.25,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": -0.125
+          },
+          "same_direction_families": 2,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.05357142857142857,
+            "IC02_C2_DUAL_RESOURCE": 0.017857142857142856,
+            "IC03_C3_EXCHANGE": 0.05357142857142857,
+            "IC04_C4_ALLOCATION": 0.05357142857142857,
+            "IC05_C5_INDEPENDENT": 0.017857142857142856,
+            "IC06_C6_VERIFY_JOIN": 0.05357142857142857,
+            "IC07_C7_ATTR_FLAT": 0.05357142857142857,
+            "IC08_C8_ATTR_NESTED": 0.07142857142857142
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": -0.171875,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.40625,
+            0.03125
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.125,
+            "IC02_C2_DUAL_RESOURCE": -0.75,
+            "IC03_C3_EXCHANGE": -0.375,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": -0.5,
+            "IC06_C6_VERIFY_JOIN": 0.25,
+            "IC07_C7_ATTR_FLAT": 0.125,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.17857142857142858,
+            "IC02_C2_DUAL_RESOURCE": -0.08928571428571429,
+            "IC03_C3_EXCHANGE": -0.14285714285714285,
+            "IC04_C4_ALLOCATION": -0.19642857142857142,
+            "IC05_C5_INDEPENDENT": -0.125,
+            "IC06_C6_VERIFY_JOIN": -0.23214285714285715,
+            "IC07_C7_ATTR_FLAT": -0.21428571428571427,
+            "IC08_C8_ATTR_NESTED": -0.19642857142857142
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      },
+      "coupling_by_schedule_by_distance": {
+        "structure_confirmed_violation_lower": {
+          "estimate": 0.125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.125,
+            0.375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.25,
+            "IC02_C2_DUAL_RESOURCE": 0.25,
+            "IC03_C3_EXCHANGE": -0.5,
+            "IC04_C4_ALLOCATION": -0.25,
+            "IC05_C5_INDEPENDENT": 0.5,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.75
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.10714285714285714,
+            "IC02_C2_DUAL_RESOURCE": 0.10714285714285714,
+            "IC03_C3_EXCHANGE": 0.21428571428571427,
+            "IC04_C4_ALLOCATION": 0.17857142857142858,
+            "IC05_C5_INDEPENDENT": 0.07142857142857142,
+            "IC06_C6_VERIFY_JOIN": 0.14285714285714285,
+            "IC07_C7_ATTR_FLAT": 0.14285714285714285,
+            "IC08_C8_ATTR_NESTED": 0.03571428571428571
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "structure_worst_case_violation_upper": {
+          "estimate": -0.03125,
+          "family_cluster_exact_bootstrap_95pct": [
+            -0.34375,
+            0.21875
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": 0.0,
+            "IC02_C2_DUAL_RESOURCE": -1.0,
+            "IC03_C3_EXCHANGE": 0.0,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": 0.5,
+            "IC06_C6_VERIFY_JOIN": 0.0,
+            "IC07_C7_ATTR_FLAT": 0.0,
+            "IC08_C8_ATTR_NESTED": 0.25
+          },
+          "same_direction_families": 1,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": -0.03571428571428571,
+            "IC02_C2_DUAL_RESOURCE": 0.10714285714285714,
+            "IC03_C3_EXCHANGE": -0.03571428571428571,
+            "IC04_C4_ALLOCATION": -0.03571428571428571,
+            "IC05_C5_INDEPENDENT": -0.10714285714285714,
+            "IC06_C6_VERIFY_JOIN": -0.03571428571428571,
+            "IC07_C7_ATTR_FLAT": -0.03571428571428571,
+            "IC08_C8_ATTR_NESTED": -0.07142857142857142
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": false,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_path_exposure": {
+          "estimate": 0.28125,
+          "family_cluster_exact_bootstrap_95pct": [
+            0.0,
+            0.59375
+          ],
+          "family_effects": {
+            "IC01_C1_BUFFER": -0.25,
+            "IC02_C2_DUAL_RESOURCE": 1.0,
+            "IC03_C3_EXCHANGE": 0.25,
+            "IC04_C4_ALLOCATION": 0.0,
+            "IC05_C5_INDEPENDENT": 0.0,
+            "IC06_C6_VERIFY_JOIN": 1.0,
+            "IC07_C7_ATTR_FLAT": 0.25,
+            "IC08_C8_ATTR_NESTED": 0.0
+          },
+          "same_direction_families": 4,
+          "leave_one_family_out": {
+            "IC01_C1_BUFFER": 0.35714285714285715,
+            "IC02_C2_DUAL_RESOURCE": 0.17857142857142858,
+            "IC03_C3_EXCHANGE": 0.2857142857142857,
+            "IC04_C4_ALLOCATION": 0.32142857142857145,
+            "IC05_C5_INDEPENDENT": 0.32142857142857145,
+            "IC06_C6_VERIFY_JOIN": 0.17857142857142858,
+            "IC07_C7_ATTR_FLAT": 0.2857142857142857,
+            "IC08_C8_ATTR_NESTED": 0.32142857142857145
+          },
+          "ci_excludes_zero": false,
+          "leave_one_family_out_direction_survives": true,
+          "passes_channel_stability_gate": false,
+          "estimable_for_all_eight_families": true
+        },
+        "P_conditional_confirmed_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        },
+        "P_conditional_worst_case_violation": {
+          "estimable_for_all_eight_families": false,
+          "unestimable_families": [
+            "IC01_C1_BUFFER",
+            "IC02_C2_DUAL_RESOURCE",
+            "IC03_C3_EXCHANGE",
+            "IC07_C7_ATTR_FLAT",
+            "IC08_C8_ATTR_NESTED"
+          ],
+          "stable_claim_allowed": false
+        }
+      }
+    }
+  },
+  "structural_ood": {
+    "machine": {
+      "structure_confirmed_violation_lower": {
+        "estimate": 0.03125,
+        "family_cluster_exact_bootstrap_95pct": [
+          -0.09375,
+          0.15625
+        ],
+        "family_effects": {
+          "IC01_C1_BUFFER": 0.25,
+          "IC02_C2_DUAL_RESOURCE": -0.25,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": 0.0,
+          "IC05_C5_INDEPENDENT": 0.25,
+          "IC06_C6_VERIFY_JOIN": 0.0,
+          "IC07_C7_ATTR_FLAT": 0.25,
+          "IC08_C8_ATTR_NESTED": -0.25
+        },
+        "same_direction_families": 3,
+        "leave_one_family_out": {
+          "IC01_C1_BUFFER": 0.0,
+          "IC02_C2_DUAL_RESOURCE": 0.07142857142857142,
+          "IC03_C3_EXCHANGE": 0.03571428571428571,
+          "IC04_C4_ALLOCATION": 0.03571428571428571,
+          "IC05_C5_INDEPENDENT": 0.0,
+          "IC06_C6_VERIFY_JOIN": 0.03571428571428571,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": 0.07142857142857142
+        },
+        "ci_excludes_zero": false,
+        "leave_one_family_out_direction_survives": false,
+        "passes_channel_stability_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "estimate": 0.0,
+        "family_cluster_exact_bootstrap_95pct": [
+          0.0,
+          0.0
+        ],
+        "family_effects": {
+          "IC01_C1_BUFFER": 0.0,
+          "IC02_C2_DUAL_RESOURCE": 0.0,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": 0.0,
+          "IC05_C5_INDEPENDENT": 0.0,
+          "IC06_C6_VERIFY_JOIN": 0.0,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": 0.0
+        },
+        "same_direction_families": 0,
+        "leave_one_family_out": {
+          "IC01_C1_BUFFER": 0.0,
+          "IC02_C2_DUAL_RESOURCE": 0.0,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": 0.0,
+          "IC05_C5_INDEPENDENT": 0.0,
+          "IC06_C6_VERIFY_JOIN": 0.0,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": 0.0
+        },
+        "ci_excludes_zero": false,
+        "leave_one_family_out_direction_survives": false,
+        "passes_channel_stability_gate": false
+      },
+      "P_path_exposure": {
+        "estimate": -0.03125,
+        "family_cluster_exact_bootstrap_95pct": [
+          -0.125,
+          0.0625
+        ],
+        "family_effects": {
+          "IC01_C1_BUFFER": 0.25,
+          "IC02_C2_DUAL_RESOURCE": 0.0,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": -0.25,
+          "IC05_C5_INDEPENDENT": -0.25,
+          "IC06_C6_VERIFY_JOIN": 0.0,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": 0.0
+        },
+        "same_direction_families": 2,
+        "leave_one_family_out": {
+          "IC01_C1_BUFFER": -0.07142857142857142,
+          "IC02_C2_DUAL_RESOURCE": -0.03571428571428571,
+          "IC03_C3_EXCHANGE": -0.03571428571428571,
+          "IC04_C4_ALLOCATION": 0.0,
+          "IC05_C5_INDEPENDENT": 0.0,
+          "IC06_C6_VERIFY_JOIN": -0.03571428571428571,
+          "IC07_C7_ATTR_FLAT": -0.03571428571428571,
+          "IC08_C8_ATTR_NESTED": -0.03571428571428571
+        },
+        "ci_excludes_zero": false,
+        "leave_one_family_out_direction_survives": false,
+        "passes_channel_stability_gate": false
+      }
+    },
+    "Reviewer1": {
+      "structure_confirmed_violation_lower": {
+        "estimate": 0.0,
+        "family_cluster_exact_bootstrap_95pct": [
+          -0.1875,
+          0.1875
+        ],
+        "family_effects": {
+          "IC01_C1_BUFFER": 0.25,
+          "IC02_C2_DUAL_RESOURCE": -0.5,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": -0.25,
+          "IC05_C5_INDEPENDENT": 0.5,
+          "IC06_C6_VERIFY_JOIN": 0.0,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": 0.0
+        },
+        "same_direction_families": 0,
+        "leave_one_family_out": {
+          "IC01_C1_BUFFER": -0.03571428571428571,
+          "IC02_C2_DUAL_RESOURCE": 0.07142857142857142,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": 0.03571428571428571,
+          "IC05_C5_INDEPENDENT": -0.07142857142857142,
+          "IC06_C6_VERIFY_JOIN": 0.0,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": 0.0
+        },
+        "ci_excludes_zero": false,
+        "leave_one_family_out_direction_survives": false,
+        "passes_channel_stability_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "estimate": 0.0625,
+        "family_cluster_exact_bootstrap_95pct": [
+          0.0,
+          0.1875
+        ],
+        "family_effects": {
+          "IC01_C1_BUFFER": 0.0,
+          "IC02_C2_DUAL_RESOURCE": 0.0,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": 0.0,
+          "IC05_C5_INDEPENDENT": 0.5,
+          "IC06_C6_VERIFY_JOIN": 0.0,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": 0.0
+        },
+        "same_direction_families": 1,
+        "leave_one_family_out": {
+          "IC01_C1_BUFFER": 0.07142857142857142,
+          "IC02_C2_DUAL_RESOURCE": 0.07142857142857142,
+          "IC03_C3_EXCHANGE": 0.07142857142857142,
+          "IC04_C4_ALLOCATION": 0.07142857142857142,
+          "IC05_C5_INDEPENDENT": 0.0,
+          "IC06_C6_VERIFY_JOIN": 0.07142857142857142,
+          "IC07_C7_ATTR_FLAT": 0.07142857142857142,
+          "IC08_C8_ATTR_NESTED": 0.07142857142857142
+        },
+        "ci_excludes_zero": false,
+        "leave_one_family_out_direction_survives": false,
+        "passes_channel_stability_gate": false
+      },
+      "P_path_exposure": {
+        "estimate": -0.0625,
+        "family_cluster_exact_bootstrap_95pct": [
+          -0.1875,
+          0.0625
+        ],
+        "family_effects": {
+          "IC01_C1_BUFFER": 0.25,
+          "IC02_C2_DUAL_RESOURCE": 0.0,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": -0.25,
+          "IC05_C5_INDEPENDENT": -0.25,
+          "IC06_C6_VERIFY_JOIN": 0.0,
+          "IC07_C7_ATTR_FLAT": -0.25,
+          "IC08_C8_ATTR_NESTED": 0.0
+        },
+        "same_direction_families": 3,
+        "leave_one_family_out": {
+          "IC01_C1_BUFFER": -0.10714285714285714,
+          "IC02_C2_DUAL_RESOURCE": -0.07142857142857142,
+          "IC03_C3_EXCHANGE": -0.07142857142857142,
+          "IC04_C4_ALLOCATION": -0.03571428571428571,
+          "IC05_C5_INDEPENDENT": -0.03571428571428571,
+          "IC06_C6_VERIFY_JOIN": -0.07142857142857142,
+          "IC07_C7_ATTR_FLAT": -0.03571428571428571,
+          "IC08_C8_ATTR_NESTED": -0.07142857142857142
+        },
+        "ci_excludes_zero": false,
+        "leave_one_family_out_direction_survives": true,
+        "passes_channel_stability_gate": false
+      }
+    },
+    "Reviewer2": {
+      "structure_confirmed_violation_lower": {
+        "estimate": 0.0,
+        "family_cluster_exact_bootstrap_95pct": [
+          -0.21875,
+          0.21875
+        ],
+        "family_effects": {
+          "IC01_C1_BUFFER": 0.25,
+          "IC02_C2_DUAL_RESOURCE": -0.5,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": -0.25,
+          "IC05_C5_INDEPENDENT": 0.5,
+          "IC06_C6_VERIFY_JOIN": 0.25,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": -0.25
+        },
+        "same_direction_families": 0,
+        "leave_one_family_out": {
+          "IC01_C1_BUFFER": -0.03571428571428571,
+          "IC02_C2_DUAL_RESOURCE": 0.07142857142857142,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": 0.03571428571428571,
+          "IC05_C5_INDEPENDENT": -0.07142857142857142,
+          "IC06_C6_VERIFY_JOIN": -0.03571428571428571,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": 0.03571428571428571
+        },
+        "ci_excludes_zero": false,
+        "leave_one_family_out_direction_survives": false,
+        "passes_channel_stability_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "estimate": 0.0625,
+        "family_cluster_exact_bootstrap_95pct": [
+          0.0,
+          0.1875
+        ],
+        "family_effects": {
+          "IC01_C1_BUFFER": 0.0,
+          "IC02_C2_DUAL_RESOURCE": 0.0,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": 0.0,
+          "IC05_C5_INDEPENDENT": 0.5,
+          "IC06_C6_VERIFY_JOIN": 0.0,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": 0.0
+        },
+        "same_direction_families": 1,
+        "leave_one_family_out": {
+          "IC01_C1_BUFFER": 0.07142857142857142,
+          "IC02_C2_DUAL_RESOURCE": 0.07142857142857142,
+          "IC03_C3_EXCHANGE": 0.07142857142857142,
+          "IC04_C4_ALLOCATION": 0.07142857142857142,
+          "IC05_C5_INDEPENDENT": 0.0,
+          "IC06_C6_VERIFY_JOIN": 0.07142857142857142,
+          "IC07_C7_ATTR_FLAT": 0.07142857142857142,
+          "IC08_C8_ATTR_NESTED": 0.07142857142857142
+        },
+        "ci_excludes_zero": false,
+        "leave_one_family_out_direction_survives": false,
+        "passes_channel_stability_gate": false
+      },
+      "P_path_exposure": {
+        "estimate": -0.09375,
+        "family_cluster_exact_bootstrap_95pct": [
+          -0.1875,
+          -0.03125
+        ],
+        "family_effects": {
+          "IC01_C1_BUFFER": 0.0,
+          "IC02_C2_DUAL_RESOURCE": 0.0,
+          "IC03_C3_EXCHANGE": 0.0,
+          "IC04_C4_ALLOCATION": -0.25,
+          "IC05_C5_INDEPENDENT": -0.25,
+          "IC06_C6_VERIFY_JOIN": 0.0,
+          "IC07_C7_ATTR_FLAT": 0.0,
+          "IC08_C8_ATTR_NESTED": -0.25
+        },
+        "same_direction_families": 3,
+        "leave_one_family_out": {
+          "IC01_C1_BUFFER": -0.10714285714285714,
+          "IC02_C2_DUAL_RESOURCE": -0.10714285714285714,
+          "IC03_C3_EXCHANGE": -0.10714285714285714,
+          "IC04_C4_ALLOCATION": -0.07142857142857142,
+          "IC05_C5_INDEPENDENT": -0.07142857142857142,
+          "IC06_C6_VERIFY_JOIN": -0.10714285714285714,
+          "IC07_C7_ATTR_FLAT": -0.10714285714285714,
+          "IC08_C8_ATTR_NESTED": -0.07142857142857142
+        },
+        "ci_excludes_zero": true,
+        "leave_one_family_out_direction_survives": true,
+        "passes_channel_stability_gate": false
+      }
+    }
+  },
+  "cross_channel": {
+    "coupling_BOUND_minus_DETACHED": {
+      "structure_confirmed_violation_lower": {
+        "channel_estimates": {
+          "machine": 0.4140625,
+          "Reviewer1": 0.0,
+          "Reviewer2": 0.0625
+        },
+        "channel_stability": {
+          "machine": true,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": 0,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "channel_estimates": {
+          "machine": 0.234375,
+          "Reviewer1": 0.03125,
+          "Reviewer2": 0.0234375
+        },
+        "channel_stability": {
+          "machine": true,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": 1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      },
+      "P_path_exposure": {
+        "channel_estimates": {
+          "machine": -0.03125,
+          "Reviewer1": -0.0546875,
+          "Reviewer2": -0.0234375
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": -1,
+          "Reviewer1": -1,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      }
+    },
+    "schedule_CONCURRENT_minus_SERIAL": {
+      "structure_confirmed_violation_lower": {
+        "channel_estimates": {
+          "machine": 0.2421875,
+          "Reviewer1": 0.59375,
+          "Reviewer2": 0.171875
+        },
+        "channel_stability": {
+          "machine": true,
+          "Reviewer1": true,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": 1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "channel_estimates": {
+          "machine": 0.46875,
+          "Reviewer1": 0.1875,
+          "Reviewer2": 0.2265625
+        },
+        "channel_stability": {
+          "machine": true,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": 1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      },
+      "P_path_exposure": {
+        "channel_estimates": {
+          "machine": -0.15625,
+          "Reviewer1": -0.1328125,
+          "Reviewer2": -0.1015625
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": -1,
+          "Reviewer1": -1,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      }
+    },
+    "distance_LONG_minus_SHORT": {
+      "structure_confirmed_violation_lower": {
+        "channel_estimates": {
+          "machine": -0.0078125,
+          "Reviewer1": 0.0,
+          "Reviewer2": -0.109375
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": -1,
+          "Reviewer1": 0,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "channel_estimates": {
+          "machine": 0.0,
+          "Reviewer1": 0.0,
+          "Reviewer2": -0.0234375
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 0,
+          "Reviewer1": 0,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "P_path_exposure": {
+        "channel_estimates": {
+          "machine": -0.046875,
+          "Reviewer1": -0.0546875,
+          "Reviewer2": -0.0390625
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": -1,
+          "Reviewer1": -1,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      }
+    },
+    "coupling_by_schedule": {
+      "structure_confirmed_violation_lower": {
+        "channel_estimates": {
+          "machine": -0.046875,
+          "Reviewer1": 0.03125,
+          "Reviewer2": 0.0625
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": -1,
+          "Reviewer1": 1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "channel_estimates": {
+          "machine": -0.34375,
+          "Reviewer1": -0.03125,
+          "Reviewer2": -0.046875
+        },
+        "channel_stability": {
+          "machine": true,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": -1,
+          "Reviewer1": -1,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      },
+      "P_path_exposure": {
+        "channel_estimates": {
+          "machine": 0.125,
+          "Reviewer1": 0.171875,
+          "Reviewer2": 0.109375
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": 1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      }
+    },
+    "coupling_by_distance": {
+      "structure_confirmed_violation_lower": {
+        "channel_estimates": {
+          "machine": 0.015625,
+          "Reviewer1": -0.03125,
+          "Reviewer2": 0.1875
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": -1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "channel_estimates": {
+          "machine": 0.03125,
+          "Reviewer1": -0.03125,
+          "Reviewer2": 0.015625
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": -1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "P_path_exposure": {
+        "channel_estimates": {
+          "machine": -0.15625,
+          "Reviewer1": -0.171875,
+          "Reviewer2": -0.140625
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": -1,
+          "Reviewer1": -1,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      }
+    },
+    "schedule_by_distance": {
+      "structure_confirmed_violation_lower": {
+        "channel_estimates": {
+          "machine": 0.109375,
+          "Reviewer1": -0.03125,
+          "Reviewer2": -0.15625
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": -1,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "channel_estimates": {
+          "machine": 0.0625,
+          "Reviewer1": 0.03125,
+          "Reviewer2": 0.046875
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": 1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      },
+      "P_path_exposure": {
+        "channel_estimates": {
+          "machine": -0.15625,
+          "Reviewer1": -0.140625,
+          "Reviewer2": -0.171875
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": -1,
+          "Reviewer1": -1,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      }
+    },
+    "coupling_by_schedule_by_distance": {
+      "structure_confirmed_violation_lower": {
+        "channel_estimates": {
+          "machine": 0.15625,
+          "Reviewer1": -0.125,
+          "Reviewer2": 0.125
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": -1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "channel_estimates": {
+          "machine": -0.1875,
+          "Reviewer1": 0.0,
+          "Reviewer2": -0.03125
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": -1,
+          "Reviewer1": 0,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "P_path_exposure": {
+        "channel_estimates": {
+          "machine": 0.3125,
+          "Reviewer1": 0.34375,
+          "Reviewer2": 0.28125
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": 1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      }
+    },
+    "structural_OOD_minus_development_shape": {
+      "structure_confirmed_violation_lower": {
+        "channel_estimates": {
+          "machine": 0.03125,
+          "Reviewer1": 0.0,
+          "Reviewer2": 0.0
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 1,
+          "Reviewer1": 0,
+          "Reviewer2": 0
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "structure_worst_case_violation_upper": {
+        "channel_estimates": {
+          "machine": 0.0,
+          "Reviewer1": 0.0625,
+          "Reviewer2": 0.0625
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": 0,
+          "Reviewer1": 1,
+          "Reviewer2": 1
+        },
+        "all_three_channels_same_nonzero_direction": false,
+        "passes_strong_cross_channel_gate": false
+      },
+      "P_path_exposure": {
+        "channel_estimates": {
+          "machine": -0.03125,
+          "Reviewer1": -0.0625,
+          "Reviewer2": -0.09375
+        },
+        "channel_stability": {
+          "machine": false,
+          "Reviewer1": false,
+          "Reviewer2": false
+        },
+        "directions": {
+          "machine": -1,
+          "Reviewer1": -1,
+          "Reviewer2": -1
+        },
+        "all_three_channels_same_nonzero_direction": true,
+        "passes_strong_cross_channel_gate": false
+      }
+    }
+  }
+}

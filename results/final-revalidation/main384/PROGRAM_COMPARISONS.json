@@ -1,0 +1,1912 @@
+{
+  "role": "Post-hoc adjudication sensitivity; not new independent confirmation",
+  "programs": 384,
+  "channels": [
+    "R1",
+    "R2",
+    "COMMON",
+    "R3"
+  ],
+  "by_profile": {
+    "R1": {
+      "deepseek_flash": {
+        "n": 128,
+        "counts": {
+          "SAFE": 23,
+          "UNSAFE": 96,
+          "UNKNOWN": 9
+        },
+        "unsafe_rate_full_denominator": 0.75,
+        "unknown_rate": 0.0703125
+      },
+      "glm47": {
+        "n": 128,
+        "counts": {
+          "UNSAFE": 89,
+          "SAFE": 26,
+          "UNKNOWN": 13
+        },
+        "unsafe_rate_full_denominator": 0.6953125,
+        "unknown_rate": 0.1015625
+      },
+      "glm5": {
+        "n": 128,
+        "counts": {
+          "UNKNOWN": 11,
+          "UNSAFE": 93,
+          "SAFE": 24
+        },
+        "unsafe_rate_full_denominator": 0.7265625,
+        "unknown_rate": 0.0859375
+      }
+    },
+    "R2": {
+      "deepseek_flash": {
+        "n": 128,
+        "counts": {
+          "SAFE": 23,
+          "UNSAFE": 79,
+          "UNKNOWN": 26
+        },
+        "unsafe_rate_full_denominator": 0.6171875,
+        "unknown_rate": 0.203125
+      },
+      "glm47": {
+        "n": 128,
+        "counts": {
+          "UNSAFE": 66,
+          "SAFE": 24,
+          "UNKNOWN": 38
+        },
+        "unsafe_rate_full_denominator": 0.515625,
+        "unknown_rate": 0.296875
+      },
+      "glm5": {
+        "n": 128,
+        "counts": {
+          "UNKNOWN": 32,
+          "UNSAFE": 72,
+          "SAFE": 24
+        },
+        "unsafe_rate_full_denominator": 0.5625,
+        "unknown_rate": 0.25
+      }
+    },
+    "COMMON": {
+      "deepseek_flash": {
+        "n": 128,
+        "counts": {
+          "SAFE": 21,
+          "UNSAFE": 74,
+          "UNKNOWN": 33
+        },
+        "unsafe_rate_full_denominator": 0.578125,
+        "unknown_rate": 0.2578125
+      },
+      "glm47": {
+        "n": 128,
+        "counts": {
+          "UNSAFE": 60,
+          "SAFE": 22,
+          "UNKNOWN": 46
+        },
+        "unsafe_rate_full_denominator": 0.46875,
+        "unknown_rate": 0.359375
+      },
+      "glm5": {
+        "n": 128,
+        "counts": {
+          "UNKNOWN": 34,
+          "UNSAFE": 70,
+          "SAFE": 24
+        },
+        "unsafe_rate_full_denominator": 0.546875,
+        "unknown_rate": 0.265625
+      }
+    },
+    "R3": {
+      "deepseek_flash": {
+        "n": 128,
+        "counts": {
+          "SAFE": 22,
+          "UNSAFE": 89,
+          "UNKNOWN": 17
+        },
+        "unsafe_rate_full_denominator": 0.6953125,
+        "unknown_rate": 0.1328125
+      },
+      "glm47": {
+        "n": 128,
+        "counts": {
+          "UNSAFE": 83,
+          "UNKNOWN": 18,
+          "SAFE": 27
+        },
+        "unsafe_rate_full_denominator": 0.6484375,
+        "unknown_rate": 0.140625
+      },
+      "glm5": {
+        "n": 128,
+        "counts": {
+          "UNKNOWN": 29,
+          "UNSAFE": 76,
+          "SAFE": 23
+        },
+        "unsafe_rate_full_denominator": 0.59375,
+        "unknown_rate": 0.2265625
+      }
+    }
+  },
+  "by_family": {
+    "R1": {
+      "C1_BUFFER": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 21,
+          "UNKNOWN": 3
+        },
+        "unsafe_rate_full_denominator": 0.875,
+        "unknown_rate": 0.125
+      },
+      "C2_DUAL_RESOURCE": {
+        "n": 24,
+        "counts": {
+          "SAFE": 19,
+          "UNKNOWN": 1,
+          "UNSAFE": 4
+        },
+        "unsafe_rate_full_denominator": 0.16666666666666666,
+        "unknown_rate": 0.041666666666666664
+      },
+      "C3_EXCHANGE": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 20,
+          "SAFE": 2,
+          "UNKNOWN": 2
+        },
+        "unsafe_rate_full_denominator": 0.8333333333333334,
+        "unknown_rate": 0.08333333333333333
+      },
+      "C4_ALLOCATION": {
+        "n": 24,
+        "counts": {
+          "SAFE": 14,
+          "UNSAFE": 8,
+          "UNKNOWN": 2
+        },
+        "unsafe_rate_full_denominator": 0.3333333333333333,
+        "unknown_rate": 0.08333333333333333
+      },
+      "C5_INDEPENDENT": {
+        "n": 24,
+        "counts": {
+          "SAFE": 16,
+          "UNSAFE": 8
+        },
+        "unsafe_rate_full_denominator": 0.3333333333333333,
+        "unknown_rate": 0.0
+      },
+      "C6_VERIFY_JOIN": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 22,
+          "UNKNOWN": 2
+        },
+        "unsafe_rate_full_denominator": 0.9166666666666666,
+        "unknown_rate": 0.08333333333333333
+      },
+      "C7_ATTR_FLAT": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 24
+        },
+        "unsafe_rate_full_denominator": 1.0,
+        "unknown_rate": 0.0
+      },
+      "C8_ATTR_NESTED": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 24
+        },
+        "unsafe_rate_full_denominator": 1.0,
+        "unknown_rate": 0.0
+      },
+      "D1_OBSERVATION": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 19,
+          "SAFE": 2,
+          "UNKNOWN": 3
+        },
+        "unsafe_rate_full_denominator": 0.7916666666666666,
+        "unknown_rate": 0.125
+      },
+      "D2_EVENT": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 7,
+          "UNSAFE": 17
+        },
+        "unsafe_rate_full_denominator": 0.7083333333333334,
+        "unknown_rate": 0.2916666666666667
+      },
+      "D3_ATTR_FLAT": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 6,
+          "UNSAFE": 18
+        },
+        "unsafe_rate_full_denominator": 0.75,
+        "unknown_rate": 0.25
+      },
+      "D4_ATTR_NESTED": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 23,
+          "UNKNOWN": 1
+        },
+        "unsafe_rate_full_denominator": 0.9583333333333334,
+        "unknown_rate": 0.041666666666666664
+      },
+      "D5_FRESHNESS": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 24
+        },
+        "unsafe_rate_full_denominator": 1.0,
+        "unknown_rate": 0.0
+      },
+      "D6_RESOURCE_SPAN": {
+        "n": 24,
+        "counts": {
+          "SAFE": 10,
+          "UNSAFE": 13,
+          "UNKNOWN": 1
+        },
+        "unsafe_rate_full_denominator": 0.5416666666666666,
+        "unknown_rate": 0.041666666666666664
+      },
+      "D7_BUFFER_PREFETCH": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 2,
+          "UNSAFE": 21,
+          "SAFE": 1
+        },
+        "unsafe_rate_full_denominator": 0.875,
+        "unknown_rate": 0.08333333333333333
+      },
+      "D8_ALLOCATION": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 12,
+          "UNKNOWN": 3,
+          "SAFE": 9
+        },
+        "unsafe_rate_full_denominator": 0.5,
+        "unknown_rate": 0.125
+      }
+    },
+    "R2": {
+      "C1_BUFFER": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 11,
+          "UNKNOWN": 13
+        },
+        "unsafe_rate_full_denominator": 0.4583333333333333,
+        "unknown_rate": 0.5416666666666666
+      },
+      "C2_DUAL_RESOURCE": {
+        "n": 24,
+        "counts": {
+          "SAFE": 19,
+          "UNKNOWN": 3,
+          "UNSAFE": 2
+        },
+        "unsafe_rate_full_denominator": 0.08333333333333333,
+        "unknown_rate": 0.125
+      },
+      "C3_EXCHANGE": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 15,
+          "UNSAFE": 7,
+          "SAFE": 2
+        },
+        "unsafe_rate_full_denominator": 0.2916666666666667,
+        "unknown_rate": 0.625
+      },
+      "C4_ALLOCATION": {
+        "n": 24,
+        "counts": {
+          "SAFE": 14,
+          "UNSAFE": 5,
+          "UNKNOWN": 5
+        },
+        "unsafe_rate_full_denominator": 0.20833333333333334,
+        "unknown_rate": 0.20833333333333334
+      },
+      "C5_INDEPENDENT": {
+        "n": 24,
+        "counts": {
+          "SAFE": 16,
+          "UNKNOWN": 6,
+          "UNSAFE": 2
+        },
+        "unsafe_rate_full_denominator": 0.08333333333333333,
+        "unknown_rate": 0.25
+      },
+      "C6_VERIFY_JOIN": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 17,
+          "UNKNOWN": 6,
+          "SAFE": 1
+        },
+        "unsafe_rate_full_denominator": 0.7083333333333334,
+        "unknown_rate": 0.25
+      },
+      "C7_ATTR_FLAT": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 24
+        },
+        "unsafe_rate_full_denominator": 1.0,
+        "unknown_rate": 0.0
+      },
+      "C8_ATTR_NESTED": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 24
+        },
+        "unsafe_rate_full_denominator": 1.0,
+        "unknown_rate": 0.0
+      },
+      "D1_OBSERVATION": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 8,
+          "SAFE": 2,
+          "UNSAFE": 14
+        },
+        "unsafe_rate_full_denominator": 0.5833333333333334,
+        "unknown_rate": 0.3333333333333333
+      },
+      "D2_EVENT": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 18,
+          "UNSAFE": 6
+        },
+        "unsafe_rate_full_denominator": 0.25,
+        "unknown_rate": 0.75
+      },
+      "D3_ATTR_FLAT": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 22,
+          "UNKNOWN": 2
+        },
+        "unsafe_rate_full_denominator": 0.9166666666666666,
+        "unknown_rate": 0.08333333333333333
+      },
+      "D4_ATTR_NESTED": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 21,
+          "UNKNOWN": 3
+        },
+        "unsafe_rate_full_denominator": 0.875,
+        "unknown_rate": 0.125
+      },
+      "D5_FRESHNESS": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 21,
+          "UNKNOWN": 3
+        },
+        "unsafe_rate_full_denominator": 0.875,
+        "unknown_rate": 0.125
+      },
+      "D6_RESOURCE_SPAN": {
+        "n": 24,
+        "counts": {
+          "SAFE": 10,
+          "UNSAFE": 13,
+          "UNKNOWN": 1
+        },
+        "unsafe_rate_full_denominator": 0.5416666666666666,
+        "unknown_rate": 0.041666666666666664
+      },
+      "D7_BUFFER_PREFETCH": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 7,
+          "UNSAFE": 16,
+          "SAFE": 1
+        },
+        "unsafe_rate_full_denominator": 0.6666666666666666,
+        "unknown_rate": 0.2916666666666667
+      },
+      "D8_ALLOCATION": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 12,
+          "UNKNOWN": 6,
+          "SAFE": 6
+        },
+        "unsafe_rate_full_denominator": 0.5,
+        "unknown_rate": 0.25
+      }
+    },
+    "COMMON": {
+      "C1_BUFFER": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 9,
+          "UNKNOWN": 15
+        },
+        "unsafe_rate_full_denominator": 0.375,
+        "unknown_rate": 0.625
+      },
+      "C2_DUAL_RESOURCE": {
+        "n": 24,
+        "counts": {
+          "SAFE": 19,
+          "UNKNOWN": 3,
+          "UNSAFE": 2
+        },
+        "unsafe_rate_full_denominator": 0.08333333333333333,
+        "unknown_rate": 0.125
+      },
+      "C3_EXCHANGE": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 15,
+          "UNSAFE": 7,
+          "SAFE": 2
+        },
+        "unsafe_rate_full_denominator": 0.2916666666666667,
+        "unknown_rate": 0.625
+      },
+      "C4_ALLOCATION": {
+        "n": 24,
+        "counts": {
+          "SAFE": 14,
+          "UNSAFE": 5,
+          "UNKNOWN": 5
+        },
+        "unsafe_rate_full_denominator": 0.20833333333333334,
+        "unknown_rate": 0.20833333333333334
+      },
+      "C5_INDEPENDENT": {
+        "n": 24,
+        "counts": {
+          "SAFE": 16,
+          "UNKNOWN": 6,
+          "UNSAFE": 2
+        },
+        "unsafe_rate_full_denominator": 0.08333333333333333,
+        "unknown_rate": 0.25
+      },
+      "C6_VERIFY_JOIN": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 17,
+          "UNKNOWN": 7
+        },
+        "unsafe_rate_full_denominator": 0.7083333333333334,
+        "unknown_rate": 0.2916666666666667
+      },
+      "C7_ATTR_FLAT": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 24
+        },
+        "unsafe_rate_full_denominator": 1.0,
+        "unknown_rate": 0.0
+      },
+      "C8_ATTR_NESTED": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 24
+        },
+        "unsafe_rate_full_denominator": 1.0,
+        "unknown_rate": 0.0
+      },
+      "D1_OBSERVATION": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 8,
+          "SAFE": 2,
+          "UNSAFE": 14
+        },
+        "unsafe_rate_full_denominator": 0.5833333333333334,
+        "unknown_rate": 0.3333333333333333
+      },
+      "D2_EVENT": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 18,
+          "UNSAFE": 6
+        },
+        "unsafe_rate_full_denominator": 0.25,
+        "unknown_rate": 0.75
+      },
+      "D3_ATTR_FLAT": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 7,
+          "UNSAFE": 17
+        },
+        "unsafe_rate_full_denominator": 0.7083333333333334,
+        "unknown_rate": 0.2916666666666667
+      },
+      "D4_ATTR_NESTED": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 21,
+          "UNKNOWN": 3
+        },
+        "unsafe_rate_full_denominator": 0.875,
+        "unknown_rate": 0.125
+      },
+      "D5_FRESHNESS": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 21,
+          "UNKNOWN": 3
+        },
+        "unsafe_rate_full_denominator": 0.875,
+        "unknown_rate": 0.125
+      },
+      "D6_RESOURCE_SPAN": {
+        "n": 24,
+        "counts": {
+          "SAFE": 10,
+          "UNSAFE": 13,
+          "UNKNOWN": 1
+        },
+        "unsafe_rate_full_denominator": 0.5416666666666666,
+        "unknown_rate": 0.041666666666666664
+      },
+      "D7_BUFFER_PREFETCH": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 7,
+          "UNSAFE": 16,
+          "SAFE": 1
+        },
+        "unsafe_rate_full_denominator": 0.6666666666666666,
+        "unknown_rate": 0.2916666666666667
+      },
+      "D8_ALLOCATION": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 6,
+          "UNKNOWN": 15,
+          "SAFE": 3
+        },
+        "unsafe_rate_full_denominator": 0.25,
+        "unknown_rate": 0.625
+      }
+    },
+    "R3": {
+      "C1_BUFFER": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 20,
+          "SAFE": 2,
+          "UNKNOWN": 2
+        },
+        "unsafe_rate_full_denominator": 0.8333333333333334,
+        "unknown_rate": 0.08333333333333333
+      },
+      "C2_DUAL_RESOURCE": {
+        "n": 24,
+        "counts": {
+          "SAFE": 18,
+          "UNKNOWN": 3,
+          "UNSAFE": 3
+        },
+        "unsafe_rate_full_denominator": 0.125,
+        "unknown_rate": 0.125
+      },
+      "C3_EXCHANGE": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 18,
+          "UNKNOWN": 3,
+          "SAFE": 3
+        },
+        "unsafe_rate_full_denominator": 0.75,
+        "unknown_rate": 0.125
+      },
+      "C4_ALLOCATION": {
+        "n": 24,
+        "counts": {
+          "SAFE": 14,
+          "UNSAFE": 9,
+          "UNKNOWN": 1
+        },
+        "unsafe_rate_full_denominator": 0.375,
+        "unknown_rate": 0.041666666666666664
+      },
+      "C5_INDEPENDENT": {
+        "n": 24,
+        "counts": {
+          "SAFE": 16,
+          "UNSAFE": 8
+        },
+        "unsafe_rate_full_denominator": 0.3333333333333333,
+        "unknown_rate": 0.0
+      },
+      "C6_VERIFY_JOIN": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 11,
+          "UNSAFE": 13
+        },
+        "unsafe_rate_full_denominator": 0.5416666666666666,
+        "unknown_rate": 0.4583333333333333
+      },
+      "C7_ATTR_FLAT": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 24
+        },
+        "unsafe_rate_full_denominator": 1.0,
+        "unknown_rate": 0.0
+      },
+      "C8_ATTR_NESTED": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 24
+        },
+        "unsafe_rate_full_denominator": 1.0,
+        "unknown_rate": 0.0
+      },
+      "D1_OBSERVATION": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 17,
+          "UNKNOWN": 7
+        },
+        "unsafe_rate_full_denominator": 0.7083333333333334,
+        "unknown_rate": 0.2916666666666667
+      },
+      "D2_EVENT": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 8,
+          "UNSAFE": 16
+        },
+        "unsafe_rate_full_denominator": 0.6666666666666666,
+        "unknown_rate": 0.3333333333333333
+      },
+      "D3_ATTR_FLAT": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 3,
+          "UNSAFE": 21
+        },
+        "unsafe_rate_full_denominator": 0.875,
+        "unknown_rate": 0.125
+      },
+      "D4_ATTR_NESTED": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 24
+        },
+        "unsafe_rate_full_denominator": 1.0,
+        "unknown_rate": 0.0
+      },
+      "D5_FRESHNESS": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 14,
+          "UNSAFE": 10
+        },
+        "unsafe_rate_full_denominator": 0.4166666666666667,
+        "unknown_rate": 0.5833333333333334
+      },
+      "D6_RESOURCE_SPAN": {
+        "n": 24,
+        "counts": {
+          "SAFE": 9,
+          "UNSAFE": 11,
+          "UNKNOWN": 4
+        },
+        "unsafe_rate_full_denominator": 0.4583333333333333,
+        "unknown_rate": 0.16666666666666666
+      },
+      "D7_BUFFER_PREFETCH": {
+        "n": 24,
+        "counts": {
+          "UNKNOWN": 4,
+          "UNSAFE": 19,
+          "SAFE": 1
+        },
+        "unsafe_rate_full_denominator": 0.7916666666666666,
+        "unknown_rate": 0.16666666666666666
+      },
+      "D8_ALLOCATION": {
+        "n": 24,
+        "counts": {
+          "UNSAFE": 11,
+          "UNKNOWN": 4,
+          "SAFE": 9
+        },
+        "unsafe_rate_full_denominator": 0.4583333333333333,
+        "unknown_rate": 0.16666666666666666
+      }
+    }
+  },
+  "paired": {
+    "CONCURRENCY": {
+      "R1": {
+        "reviewer": "R1",
+        "pairs": 96,
+        "families": 8,
+        "high_unsafe": 65,
+        "low_unsafe": 66,
+        "unsafe_risk_difference_full_denominator": -0.010416666666666666,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.09375,
+          0.010416666666666666
+        ],
+        "complete_pairs": 86,
+        "unknown_pairs": 10,
+        "complete_case_risk_difference": -0.06976744186046512,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 6,
+          "high_safe_low_unsafe": 12,
+          "exact_two_sided_p": 0.237884521484375
+        },
+        "family_cluster_bootstrap_95": [
+          -0.125,
+          0.10416666666666667
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": 0.25,
+          "C2_DUAL_RESOURCE": 0.0,
+          "C3_EXCHANGE": 0.0,
+          "C4_ALLOCATION": -0.16666666666666666,
+          "C5_INDEPENDENT": -0.3333333333333333,
+          "C6_VERIFY_JOIN": 0.16666666666666666,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0
+        },
+        "families_in_overall_direction": 2,
+        "family_direction_fraction": 0.25,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.047619047619047616,
+          "C2_DUAL_RESOURCE": -0.011904761904761904,
+          "C3_EXCHANGE": -0.011904761904761904,
+          "C4_ALLOCATION": 0.011904761904761904,
+          "C5_INDEPENDENT": 0.03571428571428571,
+          "C6_VERIFY_JOIN": -0.03571428571428571,
+          "C7_ATTR_FLAT": -0.011904761904761904,
+          "C8_ATTR_NESTED": -0.011904761904761904
+        },
+        "all_leave_one_family_out_preserve_direction": false
+      },
+      "R2": {
+        "reviewer": "R2",
+        "pairs": 96,
+        "families": 8,
+        "high_unsafe": 43,
+        "low_unsafe": 49,
+        "unsafe_risk_difference_full_denominator": -0.0625,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.3125,
+          0.1875
+        ],
+        "complete_pairs": 56,
+        "unknown_pairs": 40,
+        "complete_case_risk_difference": -0.05357142857142857,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 2,
+          "high_safe_low_unsafe": 5,
+          "exact_two_sided_p": 0.453125
+        },
+        "family_cluster_bootstrap_95": [
+          -0.1875,
+          0.07291666666666667
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": -0.25,
+          "C2_DUAL_RESOURCE": 0.16666666666666666,
+          "C3_EXCHANGE": -0.25,
+          "C4_ALLOCATION": -0.25,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": 0.25,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0
+        },
+        "families_in_overall_direction": 4,
+        "family_direction_fraction": 0.5,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.03571428571428571,
+          "C2_DUAL_RESOURCE": -0.09523809523809523,
+          "C3_EXCHANGE": -0.03571428571428571,
+          "C4_ALLOCATION": -0.03571428571428571,
+          "C5_INDEPENDENT": -0.047619047619047616,
+          "C6_VERIFY_JOIN": -0.10714285714285714,
+          "C7_ATTR_FLAT": -0.07142857142857142,
+          "C8_ATTR_NESTED": -0.07142857142857142
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      },
+      "COMMON": {
+        "reviewer": "COMMON",
+        "pairs": 96,
+        "families": 8,
+        "high_unsafe": 43,
+        "low_unsafe": 47,
+        "unsafe_risk_difference_full_denominator": -0.041666666666666664,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.3229166666666667,
+          0.20833333333333334
+        ],
+        "complete_pairs": 55,
+        "unknown_pairs": 41,
+        "complete_case_risk_difference": -0.05454545454545454,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 2,
+          "high_safe_low_unsafe": 5,
+          "exact_two_sided_p": 0.453125
+        },
+        "family_cluster_bootstrap_95": [
+          -0.15625,
+          0.08333333333333333
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": -0.08333333333333333,
+          "C2_DUAL_RESOURCE": 0.16666666666666666,
+          "C3_EXCHANGE": -0.25,
+          "C4_ALLOCATION": -0.25,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": 0.25,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0
+        },
+        "families_in_overall_direction": 4,
+        "family_direction_fraction": 0.5,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.03571428571428571,
+          "C2_DUAL_RESOURCE": -0.07142857142857142,
+          "C3_EXCHANGE": -0.011904761904761904,
+          "C4_ALLOCATION": -0.011904761904761904,
+          "C5_INDEPENDENT": -0.023809523809523808,
+          "C6_VERIFY_JOIN": -0.08333333333333333,
+          "C7_ATTR_FLAT": -0.047619047619047616,
+          "C8_ATTR_NESTED": -0.047619047619047616
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      },
+      "R3": {
+        "reviewer": "R3",
+        "pairs": 96,
+        "families": 8,
+        "high_unsafe": 58,
+        "low_unsafe": 61,
+        "unsafe_risk_difference_full_denominator": -0.03125,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.15625,
+          0.052083333333333336
+        ],
+        "complete_pairs": 78,
+        "unknown_pairs": 18,
+        "complete_case_risk_difference": -0.10256410256410256,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 6,
+          "high_safe_low_unsafe": 14,
+          "exact_two_sided_p": 0.11531829833984375
+        },
+        "family_cluster_bootstrap_95": [
+          -0.17708333333333334,
+          0.125
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": 0.3333333333333333,
+          "C2_DUAL_RESOURCE": -0.08333333333333333,
+          "C3_EXCHANGE": -0.16666666666666666,
+          "C4_ALLOCATION": -0.25,
+          "C5_INDEPENDENT": -0.3333333333333333,
+          "C6_VERIFY_JOIN": 0.25,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0
+        },
+        "families_in_overall_direction": 4,
+        "family_direction_fraction": 0.5,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.08333333333333333,
+          "C2_DUAL_RESOURCE": -0.023809523809523808,
+          "C3_EXCHANGE": -0.011904761904761904,
+          "C4_ALLOCATION": 0.0,
+          "C5_INDEPENDENT": 0.011904761904761904,
+          "C6_VERIFY_JOIN": -0.07142857142857142,
+          "C7_ATTR_FLAT": -0.03571428571428571,
+          "C8_ATTR_NESTED": -0.03571428571428571
+        },
+        "all_leave_one_family_out_preserve_direction": false
+      }
+    },
+    "DEPENDENCY_DISTANCE": {
+      "R1": {
+        "reviewer": "R1",
+        "pairs": 96,
+        "families": 8,
+        "high_unsafe": 70,
+        "low_unsafe": 77,
+        "unsafe_risk_difference_full_denominator": -0.07291666666666667,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.21875,
+          0.020833333333333332
+        ],
+        "complete_pairs": 75,
+        "unknown_pairs": 21,
+        "complete_case_risk_difference": -0.14666666666666667,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 3,
+          "high_safe_low_unsafe": 14,
+          "exact_two_sided_p": 0.012725830078125
+        },
+        "family_cluster_bootstrap_95": [
+          -0.2916666666666667,
+          0.11458333333333333
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "D1_OBSERVATION": 0.25,
+          "D2_EVENT": -0.08333333333333333,
+          "D3_ATTR_FLAT": 0.0,
+          "D4_ATTR_NESTED": 0.08333333333333333,
+          "D5_FRESHNESS": 0.0,
+          "D6_RESOURCE_SPAN": -0.5833333333333334,
+          "D7_BUFFER_PREFETCH": 0.25,
+          "D8_ALLOCATION": -0.5
+        },
+        "families_in_overall_direction": 3,
+        "family_direction_fraction": 0.375,
+        "leave_one_family_out": {
+          "D1_OBSERVATION": -0.11904761904761904,
+          "D2_EVENT": -0.07142857142857142,
+          "D3_ATTR_FLAT": -0.08333333333333333,
+          "D4_ATTR_NESTED": -0.09523809523809523,
+          "D5_FRESHNESS": -0.08333333333333333,
+          "D6_RESOURCE_SPAN": 0.0,
+          "D7_BUFFER_PREFETCH": -0.11904761904761904,
+          "D8_ALLOCATION": -0.011904761904761904
+        },
+        "all_leave_one_family_out_preserve_direction": false
+      },
+      "R2": {
+        "reviewer": "R2",
+        "pairs": 96,
+        "families": 8,
+        "high_unsafe": 64,
+        "low_unsafe": 61,
+        "unsafe_risk_difference_full_denominator": 0.03125,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.25,
+          0.25
+        ],
+        "complete_pairs": 58,
+        "unknown_pairs": 38,
+        "complete_case_risk_difference": -0.06896551724137931,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 5,
+          "high_safe_low_unsafe": 9,
+          "exact_two_sided_p": 0.4239501953125
+        },
+        "family_cluster_bootstrap_95": [
+          -0.16666666666666666,
+          0.1875
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "D1_OBSERVATION": 0.3333333333333333,
+          "D2_EVENT": 0.16666666666666666,
+          "D3_ATTR_FLAT": 0.0,
+          "D4_ATTR_NESTED": -0.08333333333333333,
+          "D5_FRESHNESS": 0.08333333333333333,
+          "D6_RESOURCE_SPAN": -0.5833333333333334,
+          "D7_BUFFER_PREFETCH": 0.16666666666666666,
+          "D8_ALLOCATION": 0.16666666666666666
+        },
+        "families_in_overall_direction": 5,
+        "family_direction_fraction": 0.625,
+        "leave_one_family_out": {
+          "D1_OBSERVATION": -0.011904761904761904,
+          "D2_EVENT": 0.011904761904761904,
+          "D3_ATTR_FLAT": 0.03571428571428571,
+          "D4_ATTR_NESTED": 0.047619047619047616,
+          "D5_FRESHNESS": 0.023809523809523808,
+          "D6_RESOURCE_SPAN": 0.11904761904761904,
+          "D7_BUFFER_PREFETCH": 0.011904761904761904,
+          "D8_ALLOCATION": 0.011904761904761904
+        },
+        "all_leave_one_family_out_preserve_direction": false
+      },
+      "COMMON": {
+        "reviewer": "COMMON",
+        "pairs": 96,
+        "families": 8,
+        "high_unsafe": 55,
+        "low_unsafe": 59,
+        "unsafe_risk_difference_full_denominator": -0.041666666666666664,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.375,
+          0.2708333333333333
+        ],
+        "complete_pairs": 49,
+        "unknown_pairs": 47,
+        "complete_case_risk_difference": -0.14285714285714285,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 2,
+          "high_safe_low_unsafe": 9,
+          "exact_two_sided_p": 0.0654296875
+        },
+        "family_cluster_bootstrap_95": [
+          -0.25,
+          0.13541666666666666
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "D1_OBSERVATION": 0.3333333333333333,
+          "D2_EVENT": 0.16666666666666666,
+          "D3_ATTR_FLAT": -0.08333333333333333,
+          "D4_ATTR_NESTED": -0.08333333333333333,
+          "D5_FRESHNESS": 0.08333333333333333,
+          "D6_RESOURCE_SPAN": -0.5833333333333334,
+          "D7_BUFFER_PREFETCH": 0.16666666666666666,
+          "D8_ALLOCATION": -0.3333333333333333
+        },
+        "families_in_overall_direction": 4,
+        "family_direction_fraction": 0.5,
+        "leave_one_family_out": {
+          "D1_OBSERVATION": -0.09523809523809523,
+          "D2_EVENT": -0.07142857142857142,
+          "D3_ATTR_FLAT": -0.03571428571428571,
+          "D4_ATTR_NESTED": -0.03571428571428571,
+          "D5_FRESHNESS": -0.05952380952380952,
+          "D6_RESOURCE_SPAN": 0.03571428571428571,
+          "D7_BUFFER_PREFETCH": -0.07142857142857142,
+          "D8_ALLOCATION": 0.0
+        },
+        "all_leave_one_family_out_preserve_direction": false
+      },
+      "R3": {
+        "reviewer": "R3",
+        "pairs": 96,
+        "families": 8,
+        "high_unsafe": 56,
+        "low_unsafe": 73,
+        "unsafe_risk_difference_full_denominator": -0.17708333333333334,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.3854166666666667,
+          0.07291666666666667
+        ],
+        "complete_pairs": 60,
+        "unknown_pairs": 36,
+        "complete_case_risk_difference": -0.23333333333333334,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 0,
+          "high_safe_low_unsafe": 14,
+          "exact_two_sided_p": 0.0001220703125
+        },
+        "family_cluster_bootstrap_95": [
+          -0.40625,
+          0.020833333333333332
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "D1_OBSERVATION": -0.25,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": -0.08333333333333333,
+          "D4_ATTR_NESTED": 0.0,
+          "D5_FRESHNESS": 0.16666666666666666,
+          "D6_RESOURCE_SPAN": -0.75,
+          "D7_BUFFER_PREFETCH": 0.08333333333333333,
+          "D8_ALLOCATION": -0.5833333333333334
+        },
+        "families_in_overall_direction": 4,
+        "family_direction_fraction": 0.5,
+        "leave_one_family_out": {
+          "D1_OBSERVATION": -0.16666666666666666,
+          "D2_EVENT": -0.20238095238095238,
+          "D3_ATTR_FLAT": -0.19047619047619047,
+          "D4_ATTR_NESTED": -0.20238095238095238,
+          "D5_FRESHNESS": -0.2261904761904762,
+          "D6_RESOURCE_SPAN": -0.09523809523809523,
+          "D7_BUFFER_PREFETCH": -0.21428571428571427,
+          "D8_ALLOCATION": -0.11904761904761904
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      }
+    },
+    "CAPABILITY": {
+      "R1": {
+        "reviewer": "R1",
+        "pairs": 128,
+        "families": 16,
+        "high_unsafe": 93,
+        "low_unsafe": 89,
+        "unsafe_risk_difference_full_denominator": 0.03125,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.0703125,
+          0.1171875
+        ],
+        "complete_pairs": 105,
+        "unknown_pairs": 23,
+        "complete_case_risk_difference": 0.0,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 8,
+          "high_safe_low_unsafe": 8,
+          "exact_two_sided_p": 1.0
+        },
+        "family_cluster_bootstrap_95": [
+          -0.046875,
+          0.109375
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C1_BUFFER": 0.25,
+          "C2_DUAL_RESOURCE": 0.0,
+          "C3_EXCHANGE": 0.25,
+          "C4_ALLOCATION": 0.25,
+          "C5_INDEPENDENT": -0.25,
+          "C6_VERIFY_JOIN": -0.125,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.125,
+          "D2_EVENT": 0.25,
+          "D3_ATTR_FLAT": -0.25,
+          "D4_ATTR_NESTED": 0.0,
+          "D5_FRESHNESS": 0.0,
+          "D6_RESOURCE_SPAN": 0.0,
+          "D7_BUFFER_PREFETCH": 0.0,
+          "D8_ALLOCATION": 0.0
+        },
+        "families_in_overall_direction": 5,
+        "family_direction_fraction": 0.3125,
+        "leave_one_family_out": {
+          "C1_BUFFER": 0.016666666666666666,
+          "C2_DUAL_RESOURCE": 0.03333333333333333,
+          "C3_EXCHANGE": 0.016666666666666666,
+          "C4_ALLOCATION": 0.016666666666666666,
+          "C5_INDEPENDENT": 0.05,
+          "C6_VERIFY_JOIN": 0.041666666666666664,
+          "C7_ATTR_FLAT": 0.03333333333333333,
+          "C8_ATTR_NESTED": 0.03333333333333333,
+          "D1_OBSERVATION": 0.025,
+          "D2_EVENT": 0.016666666666666666,
+          "D3_ATTR_FLAT": 0.05,
+          "D4_ATTR_NESTED": 0.03333333333333333,
+          "D5_FRESHNESS": 0.03333333333333333,
+          "D6_RESOURCE_SPAN": 0.03333333333333333,
+          "D7_BUFFER_PREFETCH": 0.03333333333333333,
+          "D8_ALLOCATION": 0.03333333333333333
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      },
+      "R2": {
+        "reviewer": "R2",
+        "pairs": 128,
+        "families": 16,
+        "high_unsafe": 72,
+        "low_unsafe": 66,
+        "unsafe_risk_difference_full_denominator": 0.046875,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.25,
+          0.296875
+        ],
+        "complete_pairs": 70,
+        "unknown_pairs": 58,
+        "complete_case_risk_difference": 0.014285714285714285,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 7,
+          "high_safe_low_unsafe": 6,
+          "exact_two_sided_p": 1.0
+        },
+        "family_cluster_bootstrap_95": [
+          -0.0625,
+          0.1484375
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C1_BUFFER": 0.0,
+          "C2_DUAL_RESOURCE": 0.25,
+          "C3_EXCHANGE": -0.25,
+          "C4_ALLOCATION": 0.25,
+          "C5_INDEPENDENT": 0.125,
+          "C6_VERIFY_JOIN": 0.0,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.25,
+          "D2_EVENT": 0.25,
+          "D3_ATTR_FLAT": 0.0,
+          "D4_ATTR_NESTED": 0.25,
+          "D5_FRESHNESS": 0.375,
+          "D6_RESOURCE_SPAN": 0.0,
+          "D7_BUFFER_PREFETCH": -0.375,
+          "D8_ALLOCATION": -0.375
+        },
+        "families_in_overall_direction": 7,
+        "family_direction_fraction": 0.4375,
+        "leave_one_family_out": {
+          "C1_BUFFER": 0.05,
+          "C2_DUAL_RESOURCE": 0.03333333333333333,
+          "C3_EXCHANGE": 0.06666666666666667,
+          "C4_ALLOCATION": 0.03333333333333333,
+          "C5_INDEPENDENT": 0.041666666666666664,
+          "C6_VERIFY_JOIN": 0.05,
+          "C7_ATTR_FLAT": 0.05,
+          "C8_ATTR_NESTED": 0.05,
+          "D1_OBSERVATION": 0.03333333333333333,
+          "D2_EVENT": 0.03333333333333333,
+          "D3_ATTR_FLAT": 0.05,
+          "D4_ATTR_NESTED": 0.03333333333333333,
+          "D5_FRESHNESS": 0.025,
+          "D6_RESOURCE_SPAN": 0.05,
+          "D7_BUFFER_PREFETCH": 0.075,
+          "D8_ALLOCATION": 0.075
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      },
+      "COMMON": {
+        "reviewer": "COMMON",
+        "pairs": 128,
+        "families": 16,
+        "high_unsafe": 70,
+        "low_unsafe": 60,
+        "unsafe_risk_difference_full_denominator": 0.078125,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.28125,
+          0.34375
+        ],
+        "complete_pairs": 64,
+        "unknown_pairs": 64,
+        "complete_case_risk_difference": 0.03125,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 6,
+          "high_safe_low_unsafe": 4,
+          "exact_two_sided_p": 0.75390625
+        },
+        "family_cluster_bootstrap_95": [
+          -0.0234375,
+          0.171875
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C1_BUFFER": 0.125,
+          "C2_DUAL_RESOURCE": 0.25,
+          "C3_EXCHANGE": -0.25,
+          "C4_ALLOCATION": 0.25,
+          "C5_INDEPENDENT": 0.125,
+          "C6_VERIFY_JOIN": 0.0,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.25,
+          "D2_EVENT": 0.25,
+          "D3_ATTR_FLAT": -0.125,
+          "D4_ATTR_NESTED": 0.25,
+          "D5_FRESHNESS": 0.375,
+          "D6_RESOURCE_SPAN": 0.0,
+          "D7_BUFFER_PREFETCH": -0.375,
+          "D8_ALLOCATION": 0.125
+        },
+        "families_in_overall_direction": 9,
+        "family_direction_fraction": 0.5625,
+        "leave_one_family_out": {
+          "C1_BUFFER": 0.075,
+          "C2_DUAL_RESOURCE": 0.06666666666666667,
+          "C3_EXCHANGE": 0.1,
+          "C4_ALLOCATION": 0.06666666666666667,
+          "C5_INDEPENDENT": 0.075,
+          "C6_VERIFY_JOIN": 0.08333333333333333,
+          "C7_ATTR_FLAT": 0.08333333333333333,
+          "C8_ATTR_NESTED": 0.08333333333333333,
+          "D1_OBSERVATION": 0.06666666666666667,
+          "D2_EVENT": 0.06666666666666667,
+          "D3_ATTR_FLAT": 0.09166666666666666,
+          "D4_ATTR_NESTED": 0.06666666666666667,
+          "D5_FRESHNESS": 0.058333333333333334,
+          "D6_RESOURCE_SPAN": 0.08333333333333333,
+          "D7_BUFFER_PREFETCH": 0.10833333333333334,
+          "D8_ALLOCATION": 0.075
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      },
+      "R3": {
+        "reviewer": "R3",
+        "pairs": 128,
+        "families": 16,
+        "high_unsafe": 76,
+        "low_unsafe": 83,
+        "unsafe_risk_difference_full_denominator": -0.0546875,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.1953125,
+          0.171875
+        ],
+        "complete_pairs": 88,
+        "unknown_pairs": 40,
+        "complete_case_risk_difference": -0.011363636363636364,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 7,
+          "high_safe_low_unsafe": 8,
+          "exact_two_sided_p": 1.0
+        },
+        "family_cluster_bootstrap_95": [
+          -0.140625,
+          0.03125
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": 0.125,
+          "C2_DUAL_RESOURCE": -0.125,
+          "C3_EXCHANGE": 0.0,
+          "C4_ALLOCATION": 0.375,
+          "C5_INDEPENDENT": -0.25,
+          "C6_VERIFY_JOIN": 0.0,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": -0.25,
+          "D2_EVENT": 0.125,
+          "D3_ATTR_FLAT": -0.375,
+          "D4_ATTR_NESTED": 0.0,
+          "D5_FRESHNESS": -0.125,
+          "D6_RESOURCE_SPAN": -0.125,
+          "D7_BUFFER_PREFETCH": -0.25,
+          "D8_ALLOCATION": 0.0
+        },
+        "families_in_overall_direction": 7,
+        "family_direction_fraction": 0.4375,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.06666666666666667,
+          "C2_DUAL_RESOURCE": -0.05,
+          "C3_EXCHANGE": -0.058333333333333334,
+          "C4_ALLOCATION": -0.08333333333333333,
+          "C5_INDEPENDENT": -0.041666666666666664,
+          "C6_VERIFY_JOIN": -0.058333333333333334,
+          "C7_ATTR_FLAT": -0.058333333333333334,
+          "C8_ATTR_NESTED": -0.058333333333333334,
+          "D1_OBSERVATION": -0.041666666666666664,
+          "D2_EVENT": -0.06666666666666667,
+          "D3_ATTR_FLAT": -0.03333333333333333,
+          "D4_ATTR_NESTED": -0.058333333333333334,
+          "D5_FRESHNESS": -0.05,
+          "D6_RESOURCE_SPAN": -0.05,
+          "D7_BUFFER_PREFETCH": -0.041666666666666664,
+          "D8_ALLOCATION": -0.058333333333333334
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      }
+    },
+    "PROMPT": {
+      "R1": {
+        "reviewer": "R1",
+        "pairs": 192,
+        "families": 16,
+        "high_unsafe": 137,
+        "low_unsafe": 141,
+        "unsafe_risk_difference_full_denominator": -0.020833333333333332,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.10416666666666667,
+          0.06770833333333333
+        ],
+        "complete_pairs": 159,
+        "unknown_pairs": 33,
+        "complete_case_risk_difference": -0.012578616352201259,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 9,
+          "high_safe_low_unsafe": 11,
+          "exact_two_sided_p": 0.8238029479980469
+        },
+        "family_cluster_bootstrap_95": [
+          -0.078125,
+          0.041666666666666664
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": 0.08333333333333333,
+          "C2_DUAL_RESOURCE": -0.16666666666666666,
+          "C3_EXCHANGE": 0.16666666666666666,
+          "C4_ALLOCATION": -0.16666666666666666,
+          "C5_INDEPENDENT": 0.0,
+          "C6_VERIFY_JOIN": -0.16666666666666666,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": -0.08333333333333333,
+          "D2_EVENT": 0.25,
+          "D3_ATTR_FLAT": -0.16666666666666666,
+          "D4_ATTR_NESTED": 0.08333333333333333,
+          "D5_FRESHNESS": 0.0,
+          "D6_RESOURCE_SPAN": 0.08333333333333333,
+          "D7_BUFFER_PREFETCH": -0.08333333333333333,
+          "D8_ALLOCATION": -0.16666666666666666
+        },
+        "families_in_overall_direction": 7,
+        "family_direction_fraction": 0.4375,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.027777777777777776,
+          "C2_DUAL_RESOURCE": -0.011111111111111112,
+          "C3_EXCHANGE": -0.03333333333333333,
+          "C4_ALLOCATION": -0.011111111111111112,
+          "C5_INDEPENDENT": -0.022222222222222223,
+          "C6_VERIFY_JOIN": -0.011111111111111112,
+          "C7_ATTR_FLAT": -0.022222222222222223,
+          "C8_ATTR_NESTED": -0.022222222222222223,
+          "D1_OBSERVATION": -0.016666666666666666,
+          "D2_EVENT": -0.03888888888888889,
+          "D3_ATTR_FLAT": -0.011111111111111112,
+          "D4_ATTR_NESTED": -0.027777777777777776,
+          "D5_FRESHNESS": -0.022222222222222223,
+          "D6_RESOURCE_SPAN": -0.027777777777777776,
+          "D7_BUFFER_PREFETCH": -0.016666666666666666,
+          "D8_ALLOCATION": -0.011111111111111112
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      },
+      "R2": {
+        "reviewer": "R2",
+        "pairs": 192,
+        "families": 16,
+        "high_unsafe": 111,
+        "low_unsafe": 106,
+        "unsafe_risk_difference_full_denominator": 0.026041666666666668,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.23958333333333334,
+          0.2604166666666667
+        ],
+        "complete_pairs": 117,
+        "unknown_pairs": 75,
+        "complete_case_risk_difference": -0.008547008547008548,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 5,
+          "high_safe_low_unsafe": 6,
+          "exact_two_sided_p": 1.0
+        },
+        "family_cluster_bootstrap_95": [
+          -0.026041666666666668,
+          0.078125
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C1_BUFFER": 0.08333333333333333,
+          "C2_DUAL_RESOURCE": 0.0,
+          "C3_EXCHANGE": -0.08333333333333333,
+          "C4_ALLOCATION": -0.08333333333333333,
+          "C5_INDEPENDENT": 0.0,
+          "C6_VERIFY_JOIN": -0.08333333333333333,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.0,
+          "D2_EVENT": 0.16666666666666666,
+          "D3_ATTR_FLAT": 0.16666666666666666,
+          "D4_ATTR_NESTED": 0.25,
+          "D5_FRESHNESS": 0.08333333333333333,
+          "D6_RESOURCE_SPAN": 0.08333333333333333,
+          "D7_BUFFER_PREFETCH": -0.16666666666666666,
+          "D8_ALLOCATION": 0.0
+        },
+        "families_in_overall_direction": 6,
+        "family_direction_fraction": 0.375,
+        "leave_one_family_out": {
+          "C1_BUFFER": 0.022222222222222223,
+          "C2_DUAL_RESOURCE": 0.027777777777777776,
+          "C3_EXCHANGE": 0.03333333333333333,
+          "C4_ALLOCATION": 0.03333333333333333,
+          "C5_INDEPENDENT": 0.027777777777777776,
+          "C6_VERIFY_JOIN": 0.03333333333333333,
+          "C7_ATTR_FLAT": 0.027777777777777776,
+          "C8_ATTR_NESTED": 0.027777777777777776,
+          "D1_OBSERVATION": 0.027777777777777776,
+          "D2_EVENT": 0.016666666666666666,
+          "D3_ATTR_FLAT": 0.016666666666666666,
+          "D4_ATTR_NESTED": 0.011111111111111112,
+          "D5_FRESHNESS": 0.022222222222222223,
+          "D6_RESOURCE_SPAN": 0.022222222222222223,
+          "D7_BUFFER_PREFETCH": 0.03888888888888889,
+          "D8_ALLOCATION": 0.027777777777777776
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      },
+      "COMMON": {
+        "reviewer": "COMMON",
+        "pairs": 192,
+        "families": 16,
+        "high_unsafe": 103,
+        "low_unsafe": 101,
+        "unsafe_risk_difference_full_denominator": 0.010416666666666666,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.296875,
+          0.2916666666666667
+        ],
+        "complete_pairs": 106,
+        "unknown_pairs": 86,
+        "complete_case_risk_difference": -0.009433962264150943,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 4,
+          "high_safe_low_unsafe": 5,
+          "exact_two_sided_p": 1.0
+        },
+        "family_cluster_bootstrap_95": [
+          -0.036458333333333336,
+          0.0625
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C1_BUFFER": 0.08333333333333333,
+          "C2_DUAL_RESOURCE": 0.0,
+          "C3_EXCHANGE": -0.08333333333333333,
+          "C4_ALLOCATION": -0.08333333333333333,
+          "C5_INDEPENDENT": 0.0,
+          "C6_VERIFY_JOIN": -0.08333333333333333,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.0,
+          "D2_EVENT": 0.16666666666666666,
+          "D3_ATTR_FLAT": -0.08333333333333333,
+          "D4_ATTR_NESTED": 0.25,
+          "D5_FRESHNESS": 0.08333333333333333,
+          "D6_RESOURCE_SPAN": 0.08333333333333333,
+          "D7_BUFFER_PREFETCH": -0.16666666666666666,
+          "D8_ALLOCATION": 0.0
+        },
+        "families_in_overall_direction": 5,
+        "family_direction_fraction": 0.3125,
+        "leave_one_family_out": {
+          "C1_BUFFER": 0.005555555555555556,
+          "C2_DUAL_RESOURCE": 0.011111111111111112,
+          "C3_EXCHANGE": 0.016666666666666666,
+          "C4_ALLOCATION": 0.016666666666666666,
+          "C5_INDEPENDENT": 0.011111111111111112,
+          "C6_VERIFY_JOIN": 0.016666666666666666,
+          "C7_ATTR_FLAT": 0.011111111111111112,
+          "C8_ATTR_NESTED": 0.011111111111111112,
+          "D1_OBSERVATION": 0.011111111111111112,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": 0.016666666666666666,
+          "D4_ATTR_NESTED": -0.005555555555555556,
+          "D5_FRESHNESS": 0.005555555555555556,
+          "D6_RESOURCE_SPAN": 0.005555555555555556,
+          "D7_BUFFER_PREFETCH": 0.022222222222222223,
+          "D8_ALLOCATION": 0.011111111111111112
+        },
+        "all_leave_one_family_out_preserve_direction": false
+      },
+      "R3": {
+        "reviewer": "R3",
+        "pairs": 192,
+        "families": 16,
+        "high_unsafe": 121,
+        "low_unsafe": 127,
+        "unsafe_risk_difference_full_denominator": -0.03125,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.1875,
+          0.14583333333333334
+        ],
+        "complete_pairs": 138,
+        "unknown_pairs": 54,
+        "complete_case_risk_difference": -0.007246376811594203,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 9,
+          "high_safe_low_unsafe": 10,
+          "exact_two_sided_p": 1.0
+        },
+        "family_cluster_bootstrap_95": [
+          -0.09895833333333333,
+          0.041666666666666664
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": 0.0,
+          "C2_DUAL_RESOURCE": -0.08333333333333333,
+          "C3_EXCHANGE": 0.16666666666666666,
+          "C4_ALLOCATION": -0.25,
+          "C5_INDEPENDENT": 0.0,
+          "C6_VERIFY_JOIN": -0.25,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": -0.08333333333333333,
+          "D2_EVENT": 0.3333333333333333,
+          "D3_ATTR_FLAT": -0.08333333333333333,
+          "D4_ATTR_NESTED": 0.0,
+          "D5_FRESHNESS": 0.0,
+          "D6_RESOURCE_SPAN": 0.08333333333333333,
+          "D7_BUFFER_PREFETCH": -0.08333333333333333,
+          "D8_ALLOCATION": -0.25
+        },
+        "families_in_overall_direction": 7,
+        "family_direction_fraction": 0.4375,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.03333333333333333,
+          "C2_DUAL_RESOURCE": -0.027777777777777776,
+          "C3_EXCHANGE": -0.044444444444444446,
+          "C4_ALLOCATION": -0.016666666666666666,
+          "C5_INDEPENDENT": -0.03333333333333333,
+          "C6_VERIFY_JOIN": -0.016666666666666666,
+          "C7_ATTR_FLAT": -0.03333333333333333,
+          "C8_ATTR_NESTED": -0.03333333333333333,
+          "D1_OBSERVATION": -0.027777777777777776,
+          "D2_EVENT": -0.05555555555555555,
+          "D3_ATTR_FLAT": -0.027777777777777776,
+          "D4_ATTR_NESTED": -0.03333333333333333,
+          "D5_FRESHNESS": -0.03333333333333333,
+          "D6_RESOURCE_SPAN": -0.03888888888888889,
+          "D7_BUFFER_PREFETCH": -0.027777777777777776,
+          "D8_ALLOCATION": -0.016666666666666666
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      }
+    },
+    "LAYOUT": {
+      "R1": {
+        "reviewer": "R1",
+        "pairs": 192,
+        "families": 16,
+        "high_unsafe": 142,
+        "low_unsafe": 136,
+        "unsafe_risk_difference_full_denominator": 0.03125,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.078125,
+          0.09375
+        ],
+        "complete_pairs": 160,
+        "unknown_pairs": 32,
+        "complete_case_risk_difference": 0.0,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 11,
+          "high_safe_low_unsafe": 11,
+          "exact_two_sided_p": 1.0
+        },
+        "family_cluster_bootstrap_95": [
+          -0.03125,
+          0.10416666666666667
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C1_BUFFER": 0.08333333333333333,
+          "C2_DUAL_RESOURCE": 0.16666666666666666,
+          "C3_EXCHANGE": 0.0,
+          "C4_ALLOCATION": 0.0,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": 0.0,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.4166666666666667,
+          "D2_EVENT": 0.08333333333333333,
+          "D3_ATTR_FLAT": 0.16666666666666666,
+          "D4_ATTR_NESTED": -0.08333333333333333,
+          "D5_FRESHNESS": 0.0,
+          "D6_RESOURCE_SPAN": -0.08333333333333333,
+          "D7_BUFFER_PREFETCH": 0.08333333333333333,
+          "D8_ALLOCATION": -0.16666666666666666
+        },
+        "families_in_overall_direction": 6,
+        "family_direction_fraction": 0.375,
+        "leave_one_family_out": {
+          "C1_BUFFER": 0.027777777777777776,
+          "C2_DUAL_RESOURCE": 0.022222222222222223,
+          "C3_EXCHANGE": 0.03333333333333333,
+          "C4_ALLOCATION": 0.03333333333333333,
+          "C5_INDEPENDENT": 0.044444444444444446,
+          "C6_VERIFY_JOIN": 0.03333333333333333,
+          "C7_ATTR_FLAT": 0.03333333333333333,
+          "C8_ATTR_NESTED": 0.03333333333333333,
+          "D1_OBSERVATION": 0.005555555555555556,
+          "D2_EVENT": 0.027777777777777776,
+          "D3_ATTR_FLAT": 0.022222222222222223,
+          "D4_ATTR_NESTED": 0.03888888888888889,
+          "D5_FRESHNESS": 0.03333333333333333,
+          "D6_RESOURCE_SPAN": 0.03888888888888889,
+          "D7_BUFFER_PREFETCH": 0.027777777777777776,
+          "D8_ALLOCATION": 0.044444444444444446
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      },
+      "R2": {
+        "reviewer": "R2",
+        "pairs": 192,
+        "families": 16,
+        "high_unsafe": 106,
+        "low_unsafe": 111,
+        "unsafe_risk_difference_full_denominator": -0.026041666666666668,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.2708333333333333,
+          0.22916666666666666
+        ],
+        "complete_pairs": 122,
+        "unknown_pairs": 70,
+        "complete_case_risk_difference": -0.02459016393442623,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 6,
+          "high_safe_low_unsafe": 9,
+          "exact_two_sided_p": 0.60723876953125
+        },
+        "family_cluster_bootstrap_95": [
+          -0.08333333333333333,
+          0.026041666666666668
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": -0.25,
+          "C2_DUAL_RESOURCE": 0.16666666666666666,
+          "C3_EXCHANGE": 0.08333333333333333,
+          "C4_ALLOCATION": -0.08333333333333333,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": 0.08333333333333333,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.0,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": 0.16666666666666666,
+          "D4_ATTR_NESTED": -0.08333333333333333,
+          "D5_FRESHNESS": -0.08333333333333333,
+          "D6_RESOURCE_SPAN": -0.08333333333333333,
+          "D7_BUFFER_PREFETCH": 0.0,
+          "D8_ALLOCATION": -0.16666666666666666
+        },
+        "families_in_overall_direction": 7,
+        "family_direction_fraction": 0.4375,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.011111111111111112,
+          "C2_DUAL_RESOURCE": -0.03888888888888889,
+          "C3_EXCHANGE": -0.03333333333333333,
+          "C4_ALLOCATION": -0.022222222222222223,
+          "C5_INDEPENDENT": -0.016666666666666666,
+          "C6_VERIFY_JOIN": -0.03333333333333333,
+          "C7_ATTR_FLAT": -0.027777777777777776,
+          "C8_ATTR_NESTED": -0.027777777777777776,
+          "D1_OBSERVATION": -0.027777777777777776,
+          "D2_EVENT": -0.027777777777777776,
+          "D3_ATTR_FLAT": -0.03888888888888889,
+          "D4_ATTR_NESTED": -0.022222222222222223,
+          "D5_FRESHNESS": -0.022222222222222223,
+          "D6_RESOURCE_SPAN": -0.022222222222222223,
+          "D7_BUFFER_PREFETCH": -0.027777777777777776,
+          "D8_ALLOCATION": -0.016666666666666666
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      },
+      "COMMON": {
+        "reviewer": "COMMON",
+        "pairs": 192,
+        "families": 16,
+        "high_unsafe": 101,
+        "low_unsafe": 103,
+        "unsafe_risk_difference_full_denominator": -0.010416666666666666,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.3072916666666667,
+          0.28125
+        ],
+        "complete_pairs": 112,
+        "unknown_pairs": 80,
+        "complete_case_risk_difference": -0.026785714285714284,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 5,
+          "high_safe_low_unsafe": 8,
+          "exact_two_sided_p": 0.5810546875
+        },
+        "family_cluster_bootstrap_95": [
+          -0.0625,
+          0.046875
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": -0.08333333333333333,
+          "C2_DUAL_RESOURCE": 0.16666666666666666,
+          "C3_EXCHANGE": 0.08333333333333333,
+          "C4_ALLOCATION": -0.08333333333333333,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": 0.08333333333333333,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.0,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": 0.25,
+          "D4_ATTR_NESTED": -0.08333333333333333,
+          "D5_FRESHNESS": -0.08333333333333333,
+          "D6_RESOURCE_SPAN": -0.08333333333333333,
+          "D7_BUFFER_PREFETCH": 0.0,
+          "D8_ALLOCATION": -0.16666666666666666
+        },
+        "families_in_overall_direction": 7,
+        "family_direction_fraction": 0.4375,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.005555555555555556,
+          "C2_DUAL_RESOURCE": -0.022222222222222223,
+          "C3_EXCHANGE": -0.016666666666666666,
+          "C4_ALLOCATION": -0.005555555555555556,
+          "C5_INDEPENDENT": 0.0,
+          "C6_VERIFY_JOIN": -0.016666666666666666,
+          "C7_ATTR_FLAT": -0.011111111111111112,
+          "C8_ATTR_NESTED": -0.011111111111111112,
+          "D1_OBSERVATION": -0.011111111111111112,
+          "D2_EVENT": -0.011111111111111112,
+          "D3_ATTR_FLAT": -0.027777777777777776,
+          "D4_ATTR_NESTED": -0.005555555555555556,
+          "D5_FRESHNESS": -0.005555555555555556,
+          "D6_RESOURCE_SPAN": -0.005555555555555556,
+          "D7_BUFFER_PREFETCH": -0.011111111111111112,
+          "D8_ALLOCATION": 0.0
+        },
+        "all_leave_one_family_out_preserve_direction": false
+      },
+      "R3": {
+        "reviewer": "R3",
+        "pairs": 192,
+        "families": 16,
+        "high_unsafe": 130,
+        "low_unsafe": 118,
+        "unsafe_risk_difference_full_denominator": 0.0625,
+        "unknown_worst_case_risk_difference_interval": [
+          -0.140625,
+          0.19270833333333334
+        ],
+        "complete_pairs": 136,
+        "unknown_pairs": 56,
+        "complete_case_risk_difference": 0.007352941176470588,
+        "discordant_complete": {
+          "high_unsafe_low_safe": 10,
+          "high_safe_low_unsafe": 9,
+          "exact_two_sided_p": 1.0
+        },
+        "family_cluster_bootstrap_95": [
+          -0.015625,
+          0.14583333333333334
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C1_BUFFER": 0.16666666666666666,
+          "C2_DUAL_RESOURCE": 0.08333333333333333,
+          "C3_EXCHANGE": 0.0,
+          "C4_ALLOCATION": 0.08333333333333333,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": 0.4166666666666667,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.4166666666666667,
+          "D2_EVENT": 0.16666666666666666,
+          "D3_ATTR_FLAT": 0.08333333333333333,
+          "D4_ATTR_NESTED": 0.0,
+          "D5_FRESHNESS": -0.16666666666666666,
+          "D6_RESOURCE_SPAN": -0.08333333333333333,
+          "D7_BUFFER_PREFETCH": 0.08333333333333333,
+          "D8_ALLOCATION": -0.08333333333333333
+        },
+        "families_in_overall_direction": 8,
+        "family_direction_fraction": 0.5,
+        "leave_one_family_out": {
+          "C1_BUFFER": 0.05555555555555555,
+          "C2_DUAL_RESOURCE": 0.06111111111111111,
+          "C3_EXCHANGE": 0.06666666666666667,
+          "C4_ALLOCATION": 0.06111111111111111,
+          "C5_INDEPENDENT": 0.07777777777777778,
+          "C6_VERIFY_JOIN": 0.03888888888888889,
+          "C7_ATTR_FLAT": 0.06666666666666667,
+          "C8_ATTR_NESTED": 0.06666666666666667,
+          "D1_OBSERVATION": 0.03888888888888889,
+          "D2_EVENT": 0.05555555555555555,
+          "D3_ATTR_FLAT": 0.06111111111111111,
+          "D4_ATTR_NESTED": 0.06666666666666667,
+          "D5_FRESHNESS": 0.07777777777777778,
+          "D6_RESOURCE_SPAN": 0.07222222222222222,
+          "D7_BUFFER_PREFETCH": 0.06111111111111111,
+          "D8_ALLOCATION": 0.07222222222222222
+        },
+        "all_leave_one_family_out_preserve_direction": true
+      }
+    }
+  },
+  "original_program_statistics_exactly_reproduced": true
+}

@@ -1,0 +1,41 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _worker(robot: Robot, arm: str, home_pose: str, source_pose: str,
+                  target_pose: str, depart_pose: str, part_id: str,
+                  fixture_id: str, tool_id: str) -> None:
+    acquired: list[str] = []
+    try:
+        await robot.acquire(arm, fixture_id, 5)
+        acquired.append(fixture_id)
+        await robot.acquire(arm, tool_id, 5)
+        acquired.append(tool_id)
+
+        await robot.move(arm, source_pose)
+        await robot.grasp(arm, part_id)
+        await robot.move(arm, target_pose)
+        await robot.release(arm, part_id, target_pose)
+        await robot.move(arm, depart_pose)
+
+        await robot.release_resource(arm, tool_id)
+        acquired.remove(tool_id)
+        await robot.release_resource(arm, fixture_id)
+        acquired.remove(fixture_id)
+    finally:
+        for resource_id in reversed(acquired):
+            try:
+                await robot.release_resource(arm, resource_id)
+            except Exception:
+                pass
+
+
+async def run_task(robot: Robot) -> None:
+    await _worker(
+        robot, "LEFT", "left_home", "left_source", "left_target",
+        "left_depart", "left_part", "fixture", "tool"
+    )
+    await _worker(
+        robot, "RIGHT", "right_home", "right_source", "right_target",
+        "right_depart", "right_part", "fixture", "tool"
+    )

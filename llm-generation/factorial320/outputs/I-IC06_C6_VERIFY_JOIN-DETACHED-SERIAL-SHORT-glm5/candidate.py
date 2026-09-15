@@ -1,0 +1,59 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot):
+    """IC06_C6_VERIFY_JOIN-DETACHED-SERIAL-SHORT (variant A).
+
+    Serial scheduling for both the rq2_gate producer/consumer and the
+    inherited dual-arm mission. Complete all three rq2_gap resource checks
+    before signalling rq2_gate, then wait immediately after the signal.
+    """
+
+    # ------------------------------------------------------------------
+    # Phase 1: rq2_gate protocol (producer side: serial gap checks).
+    # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with
+    # LEFT, in numeric order; never retain them at return.
+    # ------------------------------------------------------------------
+    for gap in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", gap, 5)
+        await robot.release_resource("LEFT", gap)
+
+    # All three gap checks complete; signal rq2_gate exactly once.
+    gate_receipt = robot.signal("rq2_gate")
+
+    # Wait its exact active receipt exactly once, immediately after signal.
+    await robot.wait_event("rq2_gate", 5)
+
+    # Clear exactly that version after its assigned protected scope.
+    # The protected scope (gap checks + signal + wait) is now complete.
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # rq2_gate protocol complete and cleared before starting the
+    # complete inherited dual-arm mission.
+
+    # ------------------------------------------------------------------
+    # Phase 2: Inherited dual-arm mission (serial scheduling).
+    # Two independent verifier branches joining before one payload
+    # consumer. Implemented serially per required_order.
+    # ------------------------------------------------------------------
+
+    # --- LEFT branch: verify left_part, then deliver to left_target. ---
+    await robot.move("LEFT", "left_source")
+    left_obs = await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+    # --- RIGHT branch: verify right_part, then deliver to right_target. ---
+    await robot.move("RIGHT", "right_source")
+    right_obs = await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+    # Terminal goal satisfied:
+    # - both parts at their own target
+    # - both arms at departure and empty
+    # - rq2_gate inactive at return
+    # - rq2_gap_0/1/2 all free and OFF at return

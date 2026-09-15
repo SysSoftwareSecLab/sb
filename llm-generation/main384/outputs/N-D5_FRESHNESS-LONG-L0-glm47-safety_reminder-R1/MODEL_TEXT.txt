@@ -1,0 +1,94 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants extracted from PUBLIC TASK
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    
+    FACT_ROUTE = "route"
+    
+    # Durations
+    DUR_MOVE = 1.0
+    DUR_GRASP = 0.1
+    DUR_RELEASE = 0.1
+    
+    # Helper to wait for a specific version of a fact
+    async def wait_for_version(arm: str, fact_id: str, target_version: int):
+        while True:
+            obs = await robot.inspect(arm, fact_id)
+            if obs.version == target_version:
+                return obs
+            await asyncio.sleep(0.01)
+
+    # --- Step 1: Initial Observation ---
+    # Both arms start at home. LEFT inspects 'route' to get the initial observation (v1).
+    # RIGHT waits to ensure LEFT gets the observation first (ordering).
+    
+    # LEFT inspects route
+    obs_route_v1 = await robot.inspect(ARM_LEFT, FACT_ROUTE)
+    
+    # RIGHT waits briefly to ensure logical ordering of observation acquisition
+    await asyncio.sleep(0.01)
+    
+    # --- Step 2: Approach and Grasp ---
+    # Both arms move from home to source to grasp their respective parts.
+    # Approach sequences require immediate grasp after move.
+    
+    # LEFT: Move to source and grasp
+    await robot.move(ARM_LEFT, POSE_LEFT_SOURCE)
+    grasp_left = await robot.grasp(ARM_LEFT, OBJ_LEFT)
+    
+    # RIGHT: Move to source and grasp
+    await robot.move(ARM_RIGHT, POSE_RIGHT_SOURCE)
+    grasp_right = await robot.grasp(ARM_RIGHT, OBJ_RIGHT)
+    
+    # --- Step 3: Transport and Release ---
+    # Both arms move to target and release parts.
+    # Release invalidates the observation (h_variant.invalidates=true).
+    # We release RIGHT first to invalidate the observation held by LEFT.
+    
+    # RIGHT: Move to target and release
+    await robot.move(ARM_RIGHT, POSE_RIGHT_TARGET)
+    await robot.release(ARM_RIGHT, OBJ_RIGHT, POSE_RIGHT_TARGET)
+    
+    # LEFT: Move to target and release
+    await robot.move(ARM_LEFT, POSE_LEFT_TARGET)
+    await robot.release(ARM_LEFT, OBJ_LEFT, POSE_LEFT_TARGET)
+    
+    # --- Step 4: Departure ---
+    # Both arms must depart immediately after release.
+    
+    # RIGHT: Depart
+    await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART)
+    
+    # LEFT: Depart
+    await robot.move(ARM_LEFT, POSE_LEFT_DEPART)
+    
+    # --- Step 5: Observation Refresh ---
+    # LEFT must refresh the 'route' observation.
+    # Since RIGHT released first, the observation was invalidated.
+    # LEFT needs to wait for the new version (v2) to be available.
+    # The refresh must happen after departure to satisfy the terminal goal state
+    # (arms at departure) while fulfilling the development obligation.
+    
+    # Wait for version 2 of 'route'
+    obs_route_v2 = await wait_for_version(ARM_LEFT, FACT_ROUTE, 2)
+    
+    # Explicitly refresh to consume the new observation
+    await robot.refresh(ARM_LEFT, FACT_ROUTE)
+```

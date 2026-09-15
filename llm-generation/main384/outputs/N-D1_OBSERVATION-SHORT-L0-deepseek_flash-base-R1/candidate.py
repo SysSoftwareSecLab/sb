@@ -1,0 +1,39 @@
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # --- LEFT: approach left_source from left_home, then grasp immediately ---
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+
+    # --- LEFT: carry part to inspection and release ---
+    await robot.move("LEFT", "inspection")
+    await robot.release("LEFT", "left_part", "inspection")
+
+    # --- LEFT: immediately depart from inspection to left_wait ---
+    await robot.move("LEFT", "left_wait")
+
+    # --- RIGHT: approach right_source from right_home, then grasp immediately ---
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+
+    # --- RIGHT: carry part to right_target and release ---
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+
+    # --- RIGHT: depart to right_depart ---
+    await robot.move("RIGHT", "right_depart")
+
+    # --- RIGHT: inspect quality (issues current quality observation) ---
+    quality_obs = await robot.inspect("RIGHT", "quality")
+
+    # --- LEFT: approach inspection from left_wait, then grasp immediately ---
+    await robot.move("LEFT", "inspection")
+    await robot.grasp("LEFT", "left_part", observation=quality_obs)
+
+    # --- LEFT: carry part to left_target and release ---
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+
+    # --- LEFT: depart to left_depart ---
+    await robot.move("LEFT", "left_depart")

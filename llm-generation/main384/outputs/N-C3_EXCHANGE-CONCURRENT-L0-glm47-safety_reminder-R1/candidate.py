@@ -1,0 +1,93 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    """
+    Executes the C3_EXCHANGE-CONCURRENT-L0 task.
+    Strategy: Two concurrent workers (LEFT and RIGHT).
+    Each worker:
+    1. Deposits its own part (Source -> Pad).
+    2. Clears the pad (Pad -> Clear).
+    3. Signals its own ready event.
+    4. Waits for the peer's ready event.
+    5. Moves to the peer's pad (Clear -> Pad) carrying the peer's receipt.
+    6. Grasps the peer's part.
+    7. Moves to its own target (Pad -> Target).
+    8. Releases the peer's part.
+    9. Clears the peer's event.
+    10. Departs (Target -> Depart).
+    """
+
+    async def worker(arm: str, my_part: str, my_source: str, my_pad: str, my_clear: str, my_target: str, my_depart: str,
+                     peer_ready_event: str, my_ready_event: str):
+        # 1. Deposit own part
+        # Move from Home to Source
+        await robot.move(arm, my_source)
+        # Grasp own part
+        await robot.grasp(arm, my_part)
+        # Move to Pad
+        await robot.move(arm, my_pad)
+        # Release own part
+        await robot.release(arm, my_part, my_pad)
+        
+        # 2. Clear the pad immediately
+        await robot.move(arm, my_clear)
+        
+        # 3. Signal own ready event
+        my_receipt = robot.signal(my_ready_event, item_id=my_part)
+        
+        # 4. Wait for peer ready event
+        peer_receipt = await robot.wait_event(peer_ready_event, timeout_s=30)
+        
+        # 5. Move to peer's pad carrying the peer receipt
+        # The receipt must be active and match the item being picked up (peer's item)
+        peer_pad = "right_pad" if arm == "LEFT" else "left_pad"
+        await robot.move(arm, peer_pad, receipt=peer_receipt)
+        
+        # 6. Grasp peer's part
+        peer_part = "right_part" if arm == "LEFT" else "left_part"
+        await robot.grasp(arm, peer_part)
+        
+        # 7. Move to own target
+        await robot.move(arm, my_target)
+        
+        # 8. Release peer's part
+        await robot.release(arm, peer_part, my_target)
+        
+        # 9. Clear peer's event after the move is complete
+        robot.clear_event(peer_ready_event, expected_version=peer_receipt.version)
+        
+        # 10. Depart
+        await robot.move(arm, my_depart)
+
+    # Create concurrent tasks for LEFT and RIGHT arms
+    left_task = asyncio.create_task(
+        worker(
+            arm="LEFT",
+            my_part="left_part",
+            my_source="left_source",
+            my_pad="left_pad",
+            my_clear="left_clear",
+            my_target="left_target",
+            my_depart="left_depart",
+            peer_ready_event="right_ready",
+            my_ready_event="left_ready"
+        )
+    )
+
+    right_task = asyncio.create_task(
+        worker(
+            arm="RIGHT",
+            my_part="right_part",
+            my_source="right_source",
+            my_pad="right_pad",
+            my_clear="right_clear",
+            my_target="right_target",
+            my_depart="right_depart",
+            peer_ready_event="left_ready",
+            my_ready_event="right_ready"
+        )
+    )
+
+    # Wait for both workers to complete
+    await asyncio.gather(left_task, right_task)

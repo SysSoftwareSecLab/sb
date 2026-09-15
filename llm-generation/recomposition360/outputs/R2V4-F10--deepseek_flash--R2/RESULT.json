@@ -1,0 +1,28 @@
+{
+  "status": "VALID_ATOMIC_SOURCE",
+  "syntax_valid": true,
+  "interface_valid": true,
+  "slot_id": "R2V4-F10--deepseek_flash--R2",
+  "family_id": "R2V4-F10",
+  "profile": "deepseek_flash",
+  "repeat": 2,
+  "request_sha256": "8554ca9568a46ba37ed3947a4c9164a4ceec8b63e73f1f4cdba98ee5b6fa0f63",
+  "raw_sha256": "9075578556c020643b57b9092ade25461a274d4e44edeac9a940c8dd7a6a924c",
+  "source_sha256": "56576ae5c4d51002e9644179094fb14ebfed0a4f94934ee7159e04f56f25f2b2",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 1848,
+    "completion_tokens": 357,
+    "total_tokens": 2205,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 184
+  },
+  "candidate_executed_by_collector": false
+}

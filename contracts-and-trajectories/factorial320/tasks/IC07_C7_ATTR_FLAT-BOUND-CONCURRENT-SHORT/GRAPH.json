@@ -1,0 +1,39 @@
+{
+  "task_id": "IC07_C7_ATTR_FLAT-BOUND-CONCURRENT-SHORT",
+  "family_cluster": "IC07_C7_ATTR_FLAT",
+  "block": "RQ2_FACTORIAL",
+  "coupling": "BOUND",
+  "schedule": "CONCURRENT",
+  "dependency_distance": "SHORT",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "_rq2_spacing",
+    "consume",
+    "consumer",
+    "produce",
+    "producer",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 4,
+    "clear_event": 3,
+    "grasp": 2,
+    "inspect": 2,
+    "move": 8,
+    "release": 2,
+    "release_resource": 4,
+    "signal": 3,
+    "wait_event": 3
+  },
+  "for_nodes": 3,
+  "if_nodes": 5,
+  "gather_nodes": 2,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 554,
+  "source_chars": 3026,
+  "source_lines": 63,
+  "signature": "8ab5b5fa7c494c32a425c34d10efd6bfb04515d90b118875b772ede70e6b4c29"
+}

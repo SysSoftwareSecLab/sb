@@ -1,0 +1,835 @@
+{
+  "focal_pairs": {
+    "CONCURRENCY_FOCAL": {
+      "R1": {
+        "pairs": 96,
+        "family_clusters": 8,
+        "high_violation_n": 14,
+        "low_violation_n": 19,
+        "violation_risk_difference": -0.052083,
+        "unknown_na_worst_case_interval": [
+          -0.052083,
+          -0.041667
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.21875,
+          0.125
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": 0.3333333333333333,
+          "C2_DUAL_RESOURCE": 0.08333333333333333,
+          "C3_EXCHANGE": -0.16666666666666666,
+          "C4_ALLOCATION": -0.25,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": -0.3333333333333333,
+          "C7_ATTR_FLAT": 0.3333333333333333,
+          "C8_ATTR_NESTED": -0.25
+        },
+        "families_in_direction_n": 5,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.10714285714285714,
+          "C2_DUAL_RESOURCE": -0.07142857142857142,
+          "C3_EXCHANGE": -0.03571428571428571,
+          "C4_ALLOCATION": -0.023809523809523808,
+          "C5_INDEPENDENT": -0.03571428571428571,
+          "C6_VERIFY_JOIN": -0.011904761904761904,
+          "C7_ATTR_FLAT": -0.10714285714285714,
+          "C8_ATTR_NESTED": -0.023809523809523808
+        },
+        "all_leave_one_family_out_preserve_direction": true,
+        "transition_counts": {
+          "C->C": 66,
+          "C->U": 1,
+          "C->V": 10,
+          "V->C": 15,
+          "V->V": 4
+        }
+      },
+      "R2": {
+        "pairs": 96,
+        "family_clusters": 8,
+        "high_violation_n": 1,
+        "low_violation_n": 19,
+        "violation_risk_difference": -0.1875,
+        "unknown_na_worst_case_interval": [
+          -0.1875,
+          -0.135417
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.3125,
+          -0.072917
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": 0.0,
+          "C2_DUAL_RESOURCE": 0.0,
+          "C3_EXCHANGE": -0.25,
+          "C4_ALLOCATION": -0.25,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": -0.3333333333333333,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": -0.5
+        },
+        "families_in_direction_n": 5,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.21428571428571427,
+          "C2_DUAL_RESOURCE": -0.21428571428571427,
+          "C3_EXCHANGE": -0.17857142857142858,
+          "C4_ALLOCATION": -0.17857142857142858,
+          "C5_INDEPENDENT": -0.19047619047619047,
+          "C6_VERIFY_JOIN": -0.16666666666666666,
+          "C7_ATTR_FLAT": -0.21428571428571427,
+          "C8_ATTR_NESTED": -0.14285714285714285
+        },
+        "all_leave_one_family_out_preserve_direction": true,
+        "transition_counts": {
+          "C->C": 72,
+          "C->U": 4,
+          "C->V": 1,
+          "V->C": 18,
+          "V->U": 1
+        }
+      },
+      "COMMON": {
+        "pairs": 96,
+        "family_clusters": 8,
+        "high_violation_n": 1,
+        "low_violation_n": 18,
+        "violation_risk_difference": -0.177083,
+        "unknown_na_worst_case_interval": [
+          -0.197917,
+          -0.010417
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.302083,
+          -0.0625
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": 0.0,
+          "C2_DUAL_RESOURCE": 0.0,
+          "C3_EXCHANGE": -0.16666666666666666,
+          "C4_ALLOCATION": -0.25,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": -0.3333333333333333,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": -0.5
+        },
+        "families_in_direction_n": 5,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.20238095238095238,
+          "C2_DUAL_RESOURCE": -0.20238095238095238,
+          "C3_EXCHANGE": -0.17857142857142858,
+          "C4_ALLOCATION": -0.16666666666666666,
+          "C5_INDEPENDENT": -0.17857142857142858,
+          "C6_VERIFY_JOIN": -0.15476190476190477,
+          "C7_ATTR_FLAT": -0.20238095238095238,
+          "C8_ATTR_NESTED": -0.13095238095238096
+        },
+        "all_leave_one_family_out_preserve_direction": true,
+        "transition_counts": {
+          "C->C": 63,
+          "C->U": 12,
+          "C->V": 1,
+          "U->C": 1,
+          "U->U": 1,
+          "V->C": 15,
+          "V->U": 3
+        }
+      },
+      "R3": {
+        "pairs": 96,
+        "family_clusters": 8,
+        "high_violation_n": 13,
+        "low_violation_n": 14,
+        "violation_risk_difference": -0.010417,
+        "unknown_na_worst_case_interval": [
+          -0.09375,
+          0.09375
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.177083,
+          0.1875
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": 0.4166666666666667,
+          "C2_DUAL_RESOURCE": 0.0,
+          "C3_EXCHANGE": -0.16666666666666666,
+          "C4_ALLOCATION": -0.25,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": -0.3333333333333333,
+          "C7_ATTR_FLAT": 0.4166666666666667,
+          "C8_ATTR_NESTED": 0.0
+        },
+        "families_in_direction_n": 4,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.07142857142857142,
+          "C2_DUAL_RESOURCE": -0.011904761904761904,
+          "C3_EXCHANGE": 0.011904761904761904,
+          "C4_ALLOCATION": 0.023809523809523808,
+          "C5_INDEPENDENT": 0.011904761904761904,
+          "C6_VERIFY_JOIN": 0.03571428571428571,
+          "C7_ATTR_FLAT": -0.07142857142857142,
+          "C8_ATTR_NESTED": -0.011904761904761904
+        },
+        "all_leave_one_family_out_preserve_direction": false,
+        "transition_counts": {
+          "C->C": 60,
+          "C->U": 5,
+          "C->V": 9,
+          "U->C": 2,
+          "U->U": 3,
+          "U->V": 3,
+          "V->C": 11,
+          "V->U": 2,
+          "V->V": 1
+        }
+      }
+    },
+    "DEPENDENCY_DISTANCE_FOCAL": {
+      "R1": {
+        "pairs": 96,
+        "family_clusters": 8,
+        "high_violation_n": 30,
+        "low_violation_n": 33,
+        "violation_risk_difference": -0.03125,
+        "unknown_na_worst_case_interval": [
+          -0.541667,
+          0.364583
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.364583,
+          0.291667
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "D1_OBSERVATION": 0.5833333333333334,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": -0.08333333333333333,
+          "D4_ATTR_NESTED": -0.16666666666666666,
+          "D5_FRESHNESS": 0.25,
+          "D6_RESOURCE_SPAN": -0.8333333333333334,
+          "D7_BUFFER_PREFETCH": 0.5833333333333334,
+          "D8_ALLOCATION": -0.5833333333333334
+        },
+        "families_in_direction_n": 4,
+        "leave_one_family_out": {
+          "D1_OBSERVATION": -0.11904761904761904,
+          "D2_EVENT": -0.03571428571428571,
+          "D3_ATTR_FLAT": -0.023809523809523808,
+          "D4_ATTR_NESTED": -0.011904761904761904,
+          "D5_FRESHNESS": -0.07142857142857142,
+          "D6_RESOURCE_SPAN": 0.08333333333333333,
+          "D7_BUFFER_PREFETCH": -0.11904761904761904,
+          "D8_ALLOCATION": 0.047619047619047616
+        },
+        "all_leave_one_family_out_preserve_direction": false,
+        "transition_counts": {
+          "C->C": 2,
+          "C->U": 4,
+          "C->V": 8,
+          "U->C": 8,
+          "U->U": 28,
+          "U->V": 13,
+          "V->C": 18,
+          "V->U": 6,
+          "V->V": 9
+        }
+      },
+      "R2": {
+        "pairs": 96,
+        "family_clusters": 8,
+        "high_violation_n": 34,
+        "low_violation_n": 25,
+        "violation_risk_difference": 0.09375,
+        "unknown_na_worst_case_interval": [
+          -0.479167,
+          0.5
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.208333,
+          0.34375
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "D1_OBSERVATION": 0.5,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": 0.0,
+          "D4_ATTR_NESTED": 0.0,
+          "D5_FRESHNESS": 0.25,
+          "D6_RESOURCE_SPAN": -0.8333333333333334,
+          "D7_BUFFER_PREFETCH": 0.5833333333333334,
+          "D8_ALLOCATION": 0.25
+        },
+        "families_in_direction_n": 4,
+        "leave_one_family_out": {
+          "D1_OBSERVATION": 0.03571428571428571,
+          "D2_EVENT": 0.10714285714285714,
+          "D3_ATTR_FLAT": 0.10714285714285714,
+          "D4_ATTR_NESTED": 0.10714285714285714,
+          "D5_FRESHNESS": 0.07142857142857142,
+          "D6_RESOURCE_SPAN": 0.2261904761904762,
+          "D7_BUFFER_PREFETCH": 0.023809523809523808,
+          "D8_ALLOCATION": 0.07142857142857142
+        },
+        "all_leave_one_family_out_preserve_direction": true,
+        "transition_counts": {
+          "C->C": 2,
+          "C->U": 4,
+          "C->V": 10,
+          "U->C": 9,
+          "U->U": 34,
+          "U->V": 12,
+          "V->C": 12,
+          "V->U": 1,
+          "V->V": 12
+        }
+      },
+      "COMMON": {
+        "pairs": 96,
+        "family_clusters": 8,
+        "high_violation_n": 26,
+        "low_violation_n": 24,
+        "violation_risk_difference": 0.020833,
+        "unknown_na_worst_case_interval": [
+          -0.604167,
+          0.53125
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.291667,
+          0.3125
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "D1_OBSERVATION": 0.5833333333333334,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": 0.0,
+          "D4_ATTR_NESTED": -0.08333333333333333,
+          "D5_FRESHNESS": 0.25,
+          "D6_RESOURCE_SPAN": -0.8333333333333334,
+          "D7_BUFFER_PREFETCH": 0.5833333333333334,
+          "D8_ALLOCATION": -0.3333333333333333
+        },
+        "families_in_direction_n": 3,
+        "leave_one_family_out": {
+          "D1_OBSERVATION": -0.05952380952380952,
+          "D2_EVENT": 0.023809523809523808,
+          "D3_ATTR_FLAT": 0.023809523809523808,
+          "D4_ATTR_NESTED": 0.03571428571428571,
+          "D5_FRESHNESS": -0.011904761904761904,
+          "D6_RESOURCE_SPAN": 0.14285714285714285,
+          "D7_BUFFER_PREFETCH": -0.05952380952380952,
+          "D8_ALLOCATION": 0.07142857142857142
+        },
+        "all_leave_one_family_out_preserve_direction": false,
+        "transition_counts": {
+          "C->C": 2,
+          "C->U": 4,
+          "C->V": 6,
+          "U->C": 7,
+          "U->U": 41,
+          "U->V": 12,
+          "V->C": 12,
+          "V->U": 4,
+          "V->V": 8
+        }
+      },
+      "R3": {
+        "pairs": 96,
+        "family_clusters": 8,
+        "high_violation_n": 12,
+        "low_violation_n": 19,
+        "violation_risk_difference": -0.072917,
+        "unknown_na_worst_case_interval": [
+          -0.8125,
+          0.583333
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.375,
+          0.1875
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "D1_OBSERVATION": 0.0,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": 0.16666666666666666,
+          "D4_ATTR_NESTED": 0.16666666666666666,
+          "D5_FRESHNESS": 0.0,
+          "D6_RESOURCE_SPAN": -0.8333333333333334,
+          "D7_BUFFER_PREFETCH": 0.5,
+          "D8_ALLOCATION": -0.5833333333333334
+        },
+        "families_in_direction_n": 2,
+        "leave_one_family_out": {
+          "D1_OBSERVATION": -0.08333333333333333,
+          "D2_EVENT": -0.08333333333333333,
+          "D3_ATTR_FLAT": -0.10714285714285714,
+          "D4_ATTR_NESTED": -0.10714285714285714,
+          "D5_FRESHNESS": -0.08333333333333333,
+          "D6_RESOURCE_SPAN": 0.03571428571428571,
+          "D7_BUFFER_PREFETCH": -0.15476190476190477,
+          "D8_ALLOCATION": 0.0
+        },
+        "all_leave_one_family_out_preserve_direction": false,
+        "transition_counts": {
+          "C->C": 2,
+          "C->U": 2,
+          "C->V": 2,
+          "U->C": 4,
+          "U->U": 57,
+          "U->V": 10,
+          "V->C": 15,
+          "V->U": 4
+        }
+      }
+    },
+    "LAYOUT_SAFETY_ANY_V": {
+      "R1": {
+        "pairs": 180,
+        "family_clusters": 15,
+        "high_violation_n": 139,
+        "low_violation_n": 132,
+        "violation_risk_difference": 0.038889,
+        "unknown_na_worst_case_interval": [
+          -0.055556,
+          0.094444
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.027778,
+          0.111111
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C1_BUFFER": 0.08333333333333333,
+          "C2_DUAL_RESOURCE": 0.16666666666666666,
+          "C3_EXCHANGE": 0.0,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": 0.0,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.4166666666666667,
+          "D2_EVENT": 0.08333333333333333,
+          "D3_ATTR_FLAT": 0.16666666666666666,
+          "D4_ATTR_NESTED": 0.0,
+          "D5_FRESHNESS": 0.0,
+          "D6_RESOURCE_SPAN": -0.08333333333333333,
+          "D7_BUFFER_PREFETCH": 0.08333333333333333,
+          "D8_ALLOCATION": -0.16666666666666666
+        },
+        "families_in_direction_n": 6,
+        "leave_one_family_out": {
+          "C1_BUFFER": 0.03571428571428571,
+          "C2_DUAL_RESOURCE": 0.02976190476190476,
+          "C3_EXCHANGE": 0.041666666666666664,
+          "C5_INDEPENDENT": 0.05357142857142857,
+          "C6_VERIFY_JOIN": 0.041666666666666664,
+          "C7_ATTR_FLAT": 0.041666666666666664,
+          "C8_ATTR_NESTED": 0.041666666666666664,
+          "D1_OBSERVATION": 0.011904761904761904,
+          "D2_EVENT": 0.03571428571428571,
+          "D3_ATTR_FLAT": 0.02976190476190476,
+          "D4_ATTR_NESTED": 0.041666666666666664,
+          "D5_FRESHNESS": 0.041666666666666664,
+          "D6_RESOURCE_SPAN": 0.047619047619047616,
+          "D7_BUFFER_PREFETCH": 0.03571428571428571,
+          "D8_ALLOCATION": 0.05357142857142857
+        },
+        "all_leave_one_family_out_preserve_direction": true,
+        "transition_counts": {
+          "C->C": 19,
+          "C->V": 12,
+          "U->C": 3,
+          "U->U": 1,
+          "U->V": 13,
+          "V->C": 9,
+          "V->U": 9,
+          "V->V": 114
+        }
+      },
+      "R2": {
+        "pairs": 180,
+        "family_clusters": 15,
+        "high_violation_n": 104,
+        "low_violation_n": 108,
+        "violation_risk_difference": -0.022222,
+        "unknown_na_worst_case_interval": [
+          -0.233333,
+          0.194444
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.083333,
+          0.033333
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": -0.25,
+          "C2_DUAL_RESOURCE": 0.16666666666666666,
+          "C3_EXCHANGE": 0.08333333333333333,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": 0.08333333333333333,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.0,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": 0.16666666666666666,
+          "D4_ATTR_NESTED": -0.08333333333333333,
+          "D5_FRESHNESS": -0.08333333333333333,
+          "D6_RESOURCE_SPAN": -0.08333333333333333,
+          "D7_BUFFER_PREFETCH": 0.0,
+          "D8_ALLOCATION": -0.16666666666666666
+        },
+        "families_in_direction_n": 6,
+        "leave_one_family_out": {
+          "C1_BUFFER": -0.005952380952380952,
+          "C2_DUAL_RESOURCE": -0.03571428571428571,
+          "C3_EXCHANGE": -0.02976190476190476,
+          "C5_INDEPENDENT": -0.011904761904761904,
+          "C6_VERIFY_JOIN": -0.02976190476190476,
+          "C7_ATTR_FLAT": -0.023809523809523808,
+          "C8_ATTR_NESTED": -0.023809523809523808,
+          "D1_OBSERVATION": -0.023809523809523808,
+          "D2_EVENT": -0.023809523809523808,
+          "D3_ATTR_FLAT": -0.03571428571428571,
+          "D4_ATTR_NESTED": -0.017857142857142856,
+          "D5_FRESHNESS": -0.017857142857142856,
+          "D6_RESOURCE_SPAN": -0.017857142857142856,
+          "D7_BUFFER_PREFETCH": -0.023809523809523808,
+          "D8_ALLOCATION": -0.011904761904761904
+        },
+        "all_leave_one_family_out_preserve_direction": true,
+        "transition_counts": {
+          "C->C": 26,
+          "C->U": 2,
+          "C->V": 6,
+          "U->C": 3,
+          "U->U": 21,
+          "U->V": 14,
+          "V->C": 8,
+          "V->U": 16,
+          "V->V": 84
+        }
+      },
+      "COMMON": {
+        "pairs": 180,
+        "family_clusters": 15,
+        "high_violation_n": 96,
+        "low_violation_n": 97,
+        "violation_risk_difference": -0.005556,
+        "unknown_na_worst_case_interval": [
+          -0.4,
+          0.388889
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.061111,
+          0.061111
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": -0.08333333333333333,
+          "C2_DUAL_RESOURCE": 0.08333333333333333,
+          "C3_EXCHANGE": 0.08333333333333333,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": 0.08333333333333333,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.0,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": 0.3333333333333333,
+          "D4_ATTR_NESTED": -0.08333333333333333,
+          "D5_FRESHNESS": -0.08333333333333333,
+          "D6_RESOURCE_SPAN": -0.08333333333333333,
+          "D7_BUFFER_PREFETCH": 0.0,
+          "D8_ALLOCATION": -0.16666666666666666
+        },
+        "families_in_direction_n": 6,
+        "leave_one_family_out": {
+          "C1_BUFFER": 0.0,
+          "C2_DUAL_RESOURCE": -0.011904761904761904,
+          "C3_EXCHANGE": -0.011904761904761904,
+          "C5_INDEPENDENT": 0.005952380952380952,
+          "C6_VERIFY_JOIN": -0.011904761904761904,
+          "C7_ATTR_FLAT": -0.005952380952380952,
+          "C8_ATTR_NESTED": -0.005952380952380952,
+          "D1_OBSERVATION": -0.005952380952380952,
+          "D2_EVENT": -0.005952380952380952,
+          "D3_ATTR_FLAT": -0.02976190476190476,
+          "D4_ATTR_NESTED": 0.0,
+          "D5_FRESHNESS": 0.0,
+          "D6_RESOURCE_SPAN": 0.0,
+          "D7_BUFFER_PREFETCH": -0.005952380952380952,
+          "D8_ALLOCATION": 0.005952380952380952
+        },
+        "all_leave_one_family_out_preserve_direction": false,
+        "transition_counts": {
+          "C->C": 5,
+          "C->U": 5,
+          "C->V": 2,
+          "U->C": 5,
+          "U->U": 46,
+          "U->V": 20,
+          "V->C": 3,
+          "V->U": 20,
+          "V->V": 74
+        }
+      },
+      "R3": {
+        "pairs": 180,
+        "family_clusters": 15,
+        "high_violation_n": 88,
+        "low_violation_n": 90,
+        "violation_risk_difference": -0.011111,
+        "unknown_na_worst_case_interval": [
+          -0.355556,
+          0.333333
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.1,
+          0.072222
+        ],
+        "direction": "NEGATIVE",
+        "family_means": {
+          "C1_BUFFER": -0.3333333333333333,
+          "C2_DUAL_RESOURCE": 0.08333333333333333,
+          "C3_EXCHANGE": 0.16666666666666666,
+          "C5_INDEPENDENT": -0.16666666666666666,
+          "C6_VERIFY_JOIN": 0.08333333333333333,
+          "C7_ATTR_FLAT": 0.0,
+          "C8_ATTR_NESTED": 0.0,
+          "D1_OBSERVATION": 0.16666666666666666,
+          "D2_EVENT": 0.0,
+          "D3_ATTR_FLAT": 0.3333333333333333,
+          "D4_ATTR_NESTED": 0.0,
+          "D5_FRESHNESS": -0.3333333333333333,
+          "D6_RESOURCE_SPAN": -0.08333333333333333,
+          "D7_BUFFER_PREFETCH": 0.0,
+          "D8_ALLOCATION": -0.08333333333333333
+        },
+        "families_in_direction_n": 5,
+        "leave_one_family_out": {
+          "C1_BUFFER": 0.011904761904761904,
+          "C2_DUAL_RESOURCE": -0.017857142857142856,
+          "C3_EXCHANGE": -0.023809523809523808,
+          "C5_INDEPENDENT": 0.0,
+          "C6_VERIFY_JOIN": -0.017857142857142856,
+          "C7_ATTR_FLAT": -0.011904761904761904,
+          "C8_ATTR_NESTED": -0.011904761904761904,
+          "D1_OBSERVATION": -0.023809523809523808,
+          "D2_EVENT": -0.011904761904761904,
+          "D3_ATTR_FLAT": -0.03571428571428571,
+          "D4_ATTR_NESTED": -0.011904761904761904,
+          "D5_FRESHNESS": 0.011904761904761904,
+          "D6_RESOURCE_SPAN": -0.005952380952380952,
+          "D7_BUFFER_PREFETCH": -0.011904761904761904,
+          "D8_ALLOCATION": -0.005952380952380952
+        },
+        "all_leave_one_family_out_preserve_direction": false,
+        "transition_counts": {
+          "C->C": 18,
+          "C->U": 8,
+          "C->V": 2,
+          "U->C": 7,
+          "U->U": 33,
+          "U->V": 22,
+          "V->C": 5,
+          "V->U": 21,
+          "V->V": 64
+        }
+      }
+    },
+    "NESTED_ON_ATTRIBUTE": {
+      "R1": {
+        "pairs": 48,
+        "family_clusters": 2,
+        "high_violation_n": 37,
+        "low_violation_n": 35,
+        "violation_risk_difference": 0.041667,
+        "unknown_na_worst_case_interval": [
+          -0.1875,
+          0.208333
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.125,
+          0.208333
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C7_ATTR_FLAT->C8_ATTR_NESTED": -0.125,
+          "D3_ATTR_FLAT->D4_ATTR_NESTED": 0.20833333333333334
+        },
+        "families_in_direction_n": 1,
+        "leave_one_family_out": {
+          "C7_ATTR_FLAT->C8_ATTR_NESTED": 0.20833333333333334,
+          "D3_ATTR_FLAT->D4_ATTR_NESTED": -0.125
+        },
+        "all_leave_one_family_out_preserve_direction": false,
+        "transition_counts": {
+          "C->C": 1,
+          "C->U": 1,
+          "U->C": 1,
+          "U->U": 3,
+          "U->V": 7,
+          "V->C": 1,
+          "V->U": 4,
+          "V->V": 30
+        }
+      },
+      "R2": {
+        "pairs": 48,
+        "family_clusters": 2,
+        "high_violation_n": 32,
+        "low_violation_n": 31,
+        "violation_risk_difference": 0.020833,
+        "unknown_na_worst_case_interval": [
+          -0.166667,
+          0.270833
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.041667,
+          0.083333
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C7_ATTR_FLAT->C8_ATTR_NESTED": -0.041666666666666664,
+          "D3_ATTR_FLAT->D4_ATTR_NESTED": 0.08333333333333333
+        },
+        "families_in_direction_n": 1,
+        "leave_one_family_out": {
+          "C7_ATTR_FLAT->C8_ATTR_NESTED": 0.08333333333333333,
+          "D3_ATTR_FLAT->D4_ATTR_NESTED": -0.041666666666666664
+        },
+        "all_leave_one_family_out_preserve_direction": false,
+        "transition_counts": {
+          "C->C": 3,
+          "C->U": 2,
+          "C->V": 3,
+          "U->U": 3,
+          "U->V": 6,
+          "V->C": 1,
+          "V->U": 7,
+          "V->V": 23
+        }
+      },
+      "COMMON": {
+        "pairs": 48,
+        "family_clusters": 2,
+        "high_violation_n": 29,
+        "low_violation_n": 27,
+        "violation_risk_difference": 0.041667,
+        "unknown_na_worst_case_interval": [
+          -0.354167,
+          0.395833
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.125,
+          0.208333
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C7_ATTR_FLAT->C8_ATTR_NESTED": -0.125,
+          "D3_ATTR_FLAT->D4_ATTR_NESTED": 0.20833333333333334
+        },
+        "families_in_direction_n": 1,
+        "leave_one_family_out": {
+          "C7_ATTR_FLAT->C8_ATTR_NESTED": 0.20833333333333334,
+          "D3_ATTR_FLAT->D4_ATTR_NESTED": -0.125
+        },
+        "all_leave_one_family_out_preserve_direction": false,
+        "transition_counts": {
+          "C->C": 1,
+          "C->U": 1,
+          "U->C": 1,
+          "U->U": 10,
+          "U->V": 8,
+          "V->U": 6,
+          "V->V": 21
+        }
+      },
+      "R3": {
+        "pairs": 48,
+        "family_clusters": 2,
+        "high_violation_n": 37,
+        "low_violation_n": 32,
+        "violation_risk_difference": 0.104167,
+        "unknown_na_worst_case_interval": [
+          -0.229167,
+          0.333333
+        ],
+        "family_cluster_bootstrap_95": [
+          -0.083333,
+          0.291667
+        ],
+        "direction": "POSITIVE",
+        "family_means": {
+          "C7_ATTR_FLAT->C8_ATTR_NESTED": -0.08333333333333333,
+          "D3_ATTR_FLAT->D4_ATTR_NESTED": 0.2916666666666667
+        },
+        "families_in_direction_n": 1,
+        "leave_one_family_out": {
+          "C7_ATTR_FLAT->C8_ATTR_NESTED": 0.2916666666666667,
+          "D3_ATTR_FLAT->D4_ATTR_NESTED": -0.08333333333333333
+        },
+        "all_leave_one_family_out_preserve_direction": false,
+        "transition_counts": {
+          "U->U": 6,
+          "U->V": 10,
+          "V->U": 5,
+          "V->V": 27
+        }
+      }
+    }
+  },
+  "absolute_structural_OOD": {
+    "attribute_combination": {
+      "N": 96,
+      "families": 4,
+      "channels": {
+        "R1": {
+          "V": 72,
+          "U": 19,
+          "C": 5
+        },
+        "R2": {
+          "V": 63,
+          "C": 12,
+          "U": 21
+        },
+        "COMMON": {
+          "V": 56,
+          "U": 36,
+          "C": 4
+        },
+        "R3": {
+          "V": 69,
+          "U": 27
+        }
+      }
+    },
+    "control_flow": {
+      "N": 48,
+      "families": 2,
+      "channels": {
+        "R1": {
+          "V": 46,
+          "U": 1,
+          "C": 1
+        },
+        "R2": {
+          "V": 42,
+          "U": 6
+        },
+        "COMMON": {
+          "V": 41,
+          "U": 7
+        },
+        "R3": {
+          "V": 42,
+          "U": 5,
+          "C": 1
+        }
+      }
+    }
+  },
+  "boundary": "Main384 only; no change to independent320, coherent-pair96 or structure-preserving360; structural OOD is benchmark-development novelty, not model-training novelty."
+}

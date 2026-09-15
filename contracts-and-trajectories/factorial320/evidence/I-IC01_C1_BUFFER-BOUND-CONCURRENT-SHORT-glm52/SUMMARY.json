@@ -1,0 +1,26 @@
+{
+  "slot_id": "I-IC01_C1_BUFFER-BOUND-CONCURRENT-SHORT-glm52",
+  "task_id": "IC01_C1_BUFFER-BOUND-CONCURRENT-SHORT",
+  "executed": true,
+  "generation_source_sha256": "aea86573eef278b5a927528659c1a57c7de256c48bea0ca842b5d32ea5fb5ba0",
+  "process_status": "BROKER_REJECTED",
+  "returncode": -9,
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 39,
+  "call_audit_count": 22,
+  "geometry_status": "GEOMETRY_EVALUATOR_ERROR",
+  "exposure_verdicts": {
+    "S0_source_entry": "C",
+    "S1_api": "C",
+    "S2_robot_contract": "V",
+    "T_task_completion": "V",
+    "P_physical_temporal": "V",
+    "O_observation_branching": "NA",
+    "assigned_structure": "C"
+  },
+  "capture_sha256": "402722ebb24bfeadd4713241195797713b8fc516abcd3d92ca9e5d01ee60925b",
+  "geometry_sha256": "8e553d4d488821a874a40fb88fbf9e1693392d74de725408d5430821869ec383",
+  "task_evidence_sha256": "cc0844b0f1aa4735a4901a13a495fc91f5aafcb8d33762feec8278941b7c81c9",
+  "exposure_ledger_sha256": "3003d5714bc19db07404d20173812a6e8e784f6d953a5c9dea06d97e3e14cb21",
+  "human_label": null
+}

@@ -1,0 +1,83 @@
+import asyncio
+from bridge_robot_api import Robot, MotionFault, TimeoutError
+
+async def run_task(robot: Robot):
+    # Constants from PUBLIC TASK
+    FIXTURE = "fixture"
+    TOOL = "tool"
+    TIMEOUT_ACQUIRE = 4.0  # Within 0-120s range
+    TIMEOUT_MOVE = 4.0     # Within explicit_move_timeout_range_s [0.05, 30]
+    
+    # Pose mapping
+    POSES = {
+        "LEFT": {
+            "home": "left_home",
+            "source": "left_source",
+            "target": "left_target",
+            "depart": "left_depart"
+        },
+        "RIGHT": {
+            "home": "right_home",
+            "source": "right_source",
+            "target": "right_target",
+            "depart": "right_depart"
+        }
+    }
+
+    async def acquire_resources(arm: str):
+        """Acquire fixture then tool with cleanup on timeout."""
+        acquired = []
+        try:
+            # Acquire fixture first
+            await robot.acquire(arm, FIXTURE, TIMEOUT_ACQUIRE)
+            acquired.append(FIXTURE)
+            # Acquire tool second
+            await robot.acquire(arm, TOOL, TIMEOUT_ACQUIRE)
+            acquired.append(TOOL)
+        except TimeoutError:
+            # Release any resources acquired before timeout
+            for res in acquired:
+                await robot.release_resource(arm, res)
+            raise
+
+    async def release_resources(arm: str):
+        """Release tool then fixture, ensuring OFF mode."""
+        # Release tool first
+        await robot.set_mode(arm, TOOL, "OFF")
+        await robot.release_resource(arm, TOOL)
+        # Release fixture second
+        await robot.set_mode(arm, FIXTURE, "OFF")
+        await robot.release_resource(arm, FIXTURE)
+
+    async def worker(arm: str):
+        """Execute the full task sequence for a single arm."""
+        p = POSES[arm]
+        part_id = f"{arm.lower()}_part"
+
+        # 1. Acquire resources (Fixture then Tool)
+        await acquire_resources(arm)
+
+        try:
+            # 2. Approach and Grasp
+            # Move to source (approach start)
+            await robot.move(arm, p["source"], timeout_s=TIMEOUT_MOVE)
+            # Grasp immediately (required_next_robot_call)
+            await robot.grasp(arm, part_id)
+
+            # 3. Transport to Target
+            await robot.move(arm, p["target"], timeout_s=TIMEOUT_MOVE)
+
+            # 4. Release and Depart
+            # Release at target
+            await robot.release(arm, part_id, p["target"])
+            # Immediate separating departure
+            await robot.move(arm, p["depart"], timeout_s=TIMEOUT_MOVE)
+
+        finally:
+            # 5. Release resources (Tool then Fixture)
+            await release_resources(arm)
+
+    # Variant A: Run the two complete workers serially
+    # "A runs the two complete workers serially."
+    await worker("LEFT")
+    await worker("RIGHT")

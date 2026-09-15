@@ -1,0 +1,101 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _left_pipeline(robot: Robot) -> None:
+    # Approach left_part at left_source from left_home, then immediately grasp.
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+
+    # Carry left_part to inspection pickup pose and place it on inspection.
+    await robot.move("LEFT", "inspection")
+    await robot.release("LEFT", "left_part", "inspection")
+
+    # Release onto inspection increments the quality fact version. Departure
+    # must begin immediately in the same coroutine.
+    await robot.move("LEFT", "left_wait")
+
+    # RIGHT inspects quality using the newly issued current record. Wait for
+    # RIGHT to signal that the inspection result is available.
+    await robot.wait_event("quality_inspected", 10)
+
+    # Approach left_part on inspection from left_wait, then immediately grasp.
+    await robot.move("LEFT", "inspection")
+    await robot.grasp("LEFT", "left_part")
+
+    # Inspect the current quality fact on LEFT inspection pickup.
+    quality_obs = await robot.inspect("LEFT", "quality")
+    accept_by_pass = quality_obs.value["accept_by_pass"]
+    pass_index = quality_obs.version - 1
+    accepted = accept_by_pass[pass_index]
+
+    if accepted:
+        # A accepts on first pass: place left_part at left_target.
+        await robot.move("LEFT", "left_target")
+        await robot.release("LEFT", "left_part", "left_target")
+        await robot.move("LEFT", "left_depart")
+    else:
+        # Rework circuit: route through rework, then inspect again.
+        await robot.move("LEFT", "rework_wait")
+        await robot.move("LEFT", "rework")
+        await robot.release("LEFT", "left_part", "rework")
+        await robot.move("LEFT", "rework_wait")
+
+        await robot.wait_event("quality_refreshed", 10)
+
+        await robot.move("LEFT", "rework")
+        await robot.grasp("LEFT", "left_part")
+        await robot.move("LEFT", "left_wait")
+        await robot.move("LEFT", "inspection")
+        await robot.release("LEFT", "left_part", "inspection")
+        await robot.move("LEFT", "left_wait")
+
+        await robot.wait_event("quality_inspected", 10)
+
+        await robot.move("LEFT", "inspection")
+        await robot.grasp("LEFT", "left_part")
+
+        quality_obs = await robot.inspect("LEFT", "quality")
+        accept_by_pass = quality_obs.value["accept_by_pass"]
+        pass_index = quality_obs.version - 1
+        accepted = accept_by_pass[pass_index]
+
+        # B accepts on second pass: place left_part at left_target.
+        await robot.move("LEFT", "left_target")
+        await robot.release("LEFT", "left_part", "left_target")
+        await robot.move("LEFT", "left_depart")
+
+
+async def _right_pipeline(robot: Robot) -> None:
+    # RIGHT must wait until LEFT has placed at inspection and departed before
+    # inspecting quality.
+    await robot.wait_event("left_at_inspection_departed", 10)
+
+    # RIGHT issues each inspection observation for the current quality record.
+    await robot.inspect("RIGHT", "quality")
+    robot.signal("quality_inspected")
+
+    # If LEFT routed through rework, RIGHT refreshes quality after the rework
+    # release and issues the second inspection observation.
+    await robot.wait_event("left_at_rework_released", 10)
+    await robot.refresh("RIGHT", "quality")
+    robot.signal("quality_refreshed")
+
+    await robot.wait_event("left_at_inspection_departed_second", 10)
+    await robot.inspect("RIGHT", "quality")
+    robot.signal("quality_inspected_second")
+
+    # RIGHT handles right_part independently and places it at right_target.
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+
+async def run_task(robot: Robot) -> None:
+    left_task = asyncio.create_task(_left_pipeline(robot))
+    right_task = asyncio.create_task(_right_pipeline(robot))
+    await asyncio.gather(left_task, right_task)
+```

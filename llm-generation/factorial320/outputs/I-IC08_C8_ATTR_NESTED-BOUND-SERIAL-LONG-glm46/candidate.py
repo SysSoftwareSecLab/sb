@@ -1,0 +1,175 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Resources
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    RQ2_GAP_0 = "rq2_gap_0"
+    RQ2_GAP_1 = "rq2_gap_1"
+    RQ2_GAP_2 = "rq2_gap_2"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    RQ2_GATE = "rq2_gate"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Timeouts
+    TIMEOUT_S = 4.0
+    
+    # --- RQ2_GATE PRODUCER/CONSUMER SETUP ---
+    # Signal rq2_gate exactly once
+    gate_receipt = robot.signal(RQ2_GATE)
+    
+    # Acquire rq2_gap resources in numeric order with LEFT
+    await robot.acquire(LEFT, RQ2_GAP_0, TIMEOUT_S)
+    await robot.acquire(LEFT, RQ2_GAP_1, TIMEOUT_S)
+    await robot.acquire(LEFT, RQ2_GAP_2, TIMEOUT_S)
+    
+    # Release them immediately (requirement: never retain them at return)
+    await robot.release_resource(LEFT, RQ2_GAP_2)
+    await robot.release_resource(LEFT, RQ2_GAP_1)
+    await robot.release_resource(LEFT, RQ2_GAP_0)
+    
+    # Wait for rq2_gate exactly once
+    await robot.wait_event(RQ2_GATE, TIMEOUT_S)
+    
+    # --- INHERITED DUAL-ARM MISSION (SERIAL SCHEDULE) ---
+    
+    # === EPISODE 1: part_0 ===
+    
+    # 1. Producer (LEFT) picks up part_0 from source_0
+    # Approach sequence: start_pose=left_home -> interaction_pose=source_0 -> grasp
+    await robot.move(LEFT, SOURCE_0, timeout_s=TIMEOUT_S)
+    grasp_obs_0 = await robot.grasp(LEFT, PART_0)
+    
+    # Acquire tool
+    await robot.acquire(LEFT, TOOL, TIMEOUT_S)
+    
+    # Move to buffer
+    await robot.move(LEFT, BUFFER_0, timeout_s=TIMEOUT_S)
+    
+    # Acquire buffer_lock
+    await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_S)
+    
+    # Release part_0 at buffer_0
+    await robot.release(LEFT, PART_0, BUFFER_0)
+    
+    # Depart buffer (immediate separating departure)
+    await robot.move(LEFT, LEFT_HOME, timeout_s=TIMEOUT_S)
+    
+    # Release buffer_lock
+    await robot.release_resource(LEFT, BUFFER_LOCK)
+    
+    # Signal ready_0
+    ready_0_receipt = robot.signal(READY_0)
+    
+    # Release tool
+    await robot.release_resource(LEFT, TOOL)
+    
+    # 2. Consumer (RIGHT) waits for ready_0
+    await robot.wait_event(READY_0, TIMEOUT_S)
+    
+    # Approach sequence: start_pose=right_home -> interaction_pose=buffer_0 -> grasp
+    await robot.move(RIGHT, BUFFER_0, timeout_s=TIMEOUT_S)
+    await robot.grasp(RIGHT, PART_0)
+    
+    # Move to target_0 carrying the receipt
+    await robot.move(RIGHT, TARGET_0, timeout_s=TIMEOUT_S, receipt=ready_0_receipt)
+    
+    # Clear ready_0 after carried move
+    robot.clear_event(READY_0, expected_version=ready_0_receipt.version)
+    
+    # Release part_0 at target_0
+    await robot.release(RIGHT, PART_0, TARGET_0)
+    
+    # Depart target
+    await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_S)
+    
+    # Signal empty_0
+    empty_0_receipt = robot.signal(EMPTY_0)
+    
+    # === EPISODE 2: part_1 ===
+    
+    # 3. Producer (LEFT) waits and clears empty_0
+    await robot.wait_event(EMPTY_0, TIMEOUT_S)
+    robot.clear_event(EMPTY_0, expected_version=empty_0_receipt.version)
+    
+    # Inspect both readiness facts (C8 joins checks inside loop branch)
+    obs_line_clear = await robot.inspect(LEFT, FACT_LINE_CLEAR)
+    obs_receiver_ready = await robot.inspect(LEFT, FACT_RECEIVER_READY)
+    
+    # Approach sequence: start_pose=left_wait -> interaction_pose=source_1 -> grasp
+    await robot.move(LEFT, SOURCE_1, timeout_s=TIMEOUT_S)
+    grasp_obs_1 = await robot.grasp(LEFT, PART_1)
+    
+    # Acquire tool
+    await robot.acquire(LEFT, TOOL, TIMEOUT_S)
+    
+    # Move to buffer
+    await robot.move(LEFT, BUFFER_1, timeout_s=TIMEOUT_S)
+    
+    # Acquire buffer_lock
+    await robot.acquire(LEFT, BUFFER_LOCK, TIMEOUT_S)
+    
+    # Release part_1 at buffer_1
+    await robot.release(LEFT, PART_1, BUFFER_1)
+    
+    # Depart buffer
+    await robot.move(LEFT, LEFT_HOME, timeout_s=TIMEOUT_S)
+    
+    # Release buffer_lock
+    await robot.release_resource(LEFT, BUFFER_LOCK)
+    
+    # Signal ready_1
+    ready_1_receipt = robot.signal(READY_1)
+    
+    # Release tool
+    await robot.release_resource(LEFT, TOOL)
+    
+    # 4. Consumer (RIGHT) waits for ready_1
+    await robot.wait_event(READY_1, TIMEOUT_S)
+    
+    # Approach sequence: start_pose=right_wait -> interaction_pose=buffer_1 -> grasp
+    await robot.move(RIGHT, BUFFER_1, timeout_s=TIMEOUT_S)
+    await robot.grasp(RIGHT, PART_1)
+    
+    # Move to target_1 carrying the receipt
+    await robot.move(RIGHT, TARGET_1, timeout_s=TIMEOUT_S, receipt=ready_1_receipt)
+    
+    # Clear ready_1 after carried move
+    robot.clear_event(READY_1, expected_version=ready_1_receipt.version)
+    
+    # Release part_1 at target_1
+    await robot.release(RIGHT, PART_1, TARGET_1)
+    
+    # Depart target
+    await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_S)
+    
+    # --- FINALIZATION ---
+    
+    # Clear rq2_gate exactly that version after the mission
+    robot.clear_event(RQ2_GATE, expected_version=gate_receipt.version)

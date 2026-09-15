@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D7_BUFFER_PREFETCH-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3405,
+    "completion_tokens": 661,
+    "total_tokens": 4066,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1741
+  },
+  "raw_sha256": "d105a6aad64f32ab1a97ce8ad6bb7d4dcf16a8346b6c976e922fa413f744b326",
+  "source_sha256": "3b7891d27c74849c9c714092245333e39479d8a757e43fead5bcb3b5b4ab79f1",
+  "request_sha256": "e7060aa884d044af9546ab7689732bdfd490d805dfc19dd3fe079f95a48ac0d0"
+}

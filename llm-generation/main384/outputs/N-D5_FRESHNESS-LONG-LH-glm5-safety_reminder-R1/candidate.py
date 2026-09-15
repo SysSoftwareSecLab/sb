@@ -1,0 +1,18 @@
+async def run_task(robot):
+    """D5_FRESHNESS-LONG-LH: two independent carried lanes; preserve route observation."""
+    # LEFT lane: left_home -> left_source -> grasp left_part -> left_target -> release -> left_depart
+    await robot.move("LEFT", "left_source")
+    left_obs = await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+    # RIGHT lane: right_home -> right_source -> grasp right_part -> right_target -> release -> right_depart
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+    # Development contract: inspect route observation for left_part (preserve same closed-value observation).
+    await robot.inspect("LEFT", "route")

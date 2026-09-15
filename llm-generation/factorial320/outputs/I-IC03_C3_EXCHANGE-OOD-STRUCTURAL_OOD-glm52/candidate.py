@@ -1,0 +1,53 @@
+import asyncio
+
+from bridge_robot_api import Robot
+
+
+async def _deposit_own(arm: str, part: str, source: str, pad: str,
+                       clear: str, depart: str, ready_event: str,
+                       robot: Robot) -> None:
+    await robot.move(arm, source)
+    await robot.grasp(arm, part)
+    await robot.move(arm, pad)
+    await robot.release(arm, part, pad)
+    await robot.move(arm, clear)
+    robot.signal(ready_event, part)
+    await robot.move(arm, depart)
+
+
+async def _consume_peer(arm: str, peer_part: str, pickup_wait: str,
+                        peer_pad: str, target: str, depart: str,
+                        ready_event: str, robot: Robot,
+                        receipt) -> None:
+    await robot.wait_event(ready_event, 30)
+    await robot.move(arm, pickup_wait, receipt=receipt)
+    await robot.grasp(arm, peer_part)
+    await robot.move(arm, peer_pad)
+    await robot.release(arm, peer_part, peer_pad)
+    await robot.move(arm, depart)
+    robot.clear_event(ready_event, expected_version=receipt.version)
+
+
+async def _left_worker(robot: Robot) -> None:
+    await _deposit_own("LEFT", "left_part", "left_source", "left_pad",
+                       "left_clear", "left_depart", "left_ready", robot)
+    receipt = robot.signal("rq2_gate", "right_part")
+    await _consume_peer("LEFT", "right_part", "left_pickup_wait",
+                        "right_pad", "right_target", "left_depart",
+                        "right_ready", robot, receipt)
+
+
+async def _right_worker(robot: Robot) -> None:
+    await _deposit_own("RIGHT", "right_part", "right_source", "right_pad",
+                       "right_clear", "right_depart", "right_ready", robot)
+    receipt = robot.signal("rq2_gate", "left_part")
+    await _consume_peer("RIGHT", "left_part", "right_pickup_wait",
+                        "left_pad", "left_target", "right_depart",
+                        "left_ready", robot, receipt)
+
+
+async def run_task(robot: Robot) -> None:
+    for _ in range(2):
+        left_task = asyncio.create_task(_left_worker(robot))
+        right_task = asyncio.create_task(_right_worker(robot))
+        await asyncio.gather(left_task, right_task)

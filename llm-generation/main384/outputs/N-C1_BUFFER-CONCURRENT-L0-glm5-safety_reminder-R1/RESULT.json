@@ -1,0 +1,22 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C1_BUFFER-CONCURRENT-L0-glm5-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 757,
+    "prompt_tokens": 3204,
+    "prompt_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "total_tokens": 3961
+  },
+  "raw_sha256": "b7b04d77bf1e77a51de93238535b4ac5047ffa0e4944f4e867531c3502954559",
+  "source_sha256": "fc261c298c25628c4b7430935eb57df43a1a91d8bd8958da238a3b4767b61afe",
+  "request_sha256": "88af1425302efc59196079896cbd4d2b16a5f22833baee84c0e96f842c7cc33d"
+}

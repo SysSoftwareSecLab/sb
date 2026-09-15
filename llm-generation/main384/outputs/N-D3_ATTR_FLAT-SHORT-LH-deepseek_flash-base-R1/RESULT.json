@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D3_ATTR_FLAT-SHORT-LH-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3575,
+    "completion_tokens": 1017,
+    "total_tokens": 4592,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1911
+  },
+  "raw_sha256": "7b519442903af331fd3631ee2ce09680a0062c6d655aa8449e891f96b432e648",
+  "source_sha256": "b0c50646c7a13ad9db2feb80a307c089839a7c1dd2b51818d4d669d175d54e41",
+  "request_sha256": "149aa0bf28fb34a74bd9bf804eaba0038443e9c43ccbb2fa3260f0b2cafe92f2"
+}

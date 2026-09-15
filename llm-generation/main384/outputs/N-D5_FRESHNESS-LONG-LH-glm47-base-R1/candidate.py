@@ -1,0 +1,116 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, MotionFault
+
+async def run_task(robot: Robot):
+    # Task: D5_FRESHNESS-LONG-LH
+    # Goal: Move left_part to left_target, right_part to right_target.
+    #       End with LEFT at left_depart, RIGHT at right_depart, both empty.
+    # Structure: Serial carried paths crossing in XY projection.
+    #            Left arm moves from -X to +X. Right arm moves from +X to -X.
+    #            They cross in the middle.
+    # Dependency: "peer placement invalidates the first route observation before refresh".
+    #              This implies the first arm to finish (RIGHT) invalidates the observation
+    #              needed by the second arm (LEFT) if not handled correctly.
+    #              However, the task spec for `h_variant` says `invalidates: true`.
+    #              The `observation_facts` defines `route` for `left_part`.
+    #              The `development_contract` requires an observation of `route` for `left_part`.
+    #              Since `invalidation_on_release` is empty in the world spec, but the
+    #              experimental assignment mentions invalidation, we must assume the
+    #              `route` fact is invalidated by the peer's action (RIGHT releasing right_part).
+    #              To satisfy the dependency, LEFT must `refresh` the `route` fact
+    #              after RIGHT has released its part (invalidating the old observation),
+    #              and then use that fresh observation to complete its move.
+    #
+    # Strategy:
+    # 1. Start both arms at home.
+    # 2. RIGHT moves to right_source, grasps right_part, moves to right_target, releases right_part.
+    #    This action invalidates the initial `route` observation (version 1).
+    # 3. LEFT moves to left_source, grasps left_part.
+    # 4. LEFT refreshes `route` to get a valid observation (version 2).
+    # 5. LEFT uses the refreshed observation to move to left_target and release left_part.
+    # 6. LEFT moves to left_depart.
+    # 7. RIGHT moves to right_depart.
+
+    # Constants
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    
+    OBJ_LEFT_PART = "left_part"
+    OBJ_RIGHT_PART = "right_part"
+    
+    FACT_ROUTE = "route"
+    
+    # Timeout
+    TIMEOUT = 4.0
+
+    # --- RIGHT ARM SEQUENCE (The Invalidator) ---
+    # Move to source
+    await robot.move(ARM_RIGHT, POSE_RIGHT_SOURCE, timeout_s=TIMEOUT)
+    # Grasp part
+    await robot.grasp(ARM_RIGHT, OBJ_RIGHT_PART)
+    # Move to target
+    await robot.move(ARM_RIGHT, POSE_RIGHT_TARGET, timeout_s=TIMEOUT)
+    # Release part (This invalidates the 'route' fact for LEFT)
+    await robot.release(ARM_RIGHT, OBJ_RIGHT_PART, POSE_RIGHT_TARGET)
+
+    # --- LEFT ARM SEQUENCE (The Dependent) ---
+    # Move to source
+    await robot.move(ARM_LEFT, POSE_LEFT_SOURCE, timeout_s=TIMEOUT)
+    # Grasp part
+    await robot.grasp(ARM_LEFT, OBJ_LEFT_PART)
+    
+    # Refresh the route fact to get a valid observation after invalidation
+    # The task requires an observation of 'route' for 'left_part'.
+    # Since RIGHT has released, the old observation (v1) is invalid.
+    # We refresh to get v2.
+    route_obs: Observation = await robot.refresh(ARM_LEFT, FACT_ROUTE)
+    
+    # Move to target using the refreshed observation
+    # Note: The move accepts an observation via `receipt` parameter? 
+    # No, `move` signature is `move(arm, pose, timeout_s=None, *, receipt=None)`.
+    # The `receipt` parameter expects an `EventReceipt`, not `Observation`.
+    # However, the prompt says "grasp.observation: None or ...".
+    # The prompt also says "move.receipt: None or ... EventReceipt".
+    # Wait, the prompt says "grasp returns its grasp_state Observation".
+    # The prompt says "inspect and refresh return the value for the specified fact_id".
+    # The prompt says "move(receipt=...) uses active ... EventReceipt".
+    # There is no parameter in `move` to pass an `Observation`.
+    # But the task says "development_contract": {"observation": {"fact_id": "route", "object_id": "left_part"}}.
+    # And "focal_dependency": "peer placement invalidates the first route observation before refresh".
+    # This implies the *act* of refreshing is the dependency satisfaction.
+    # The `move` itself might not need the observation passed to it, but the *task logic*
+    # requires that we have a valid observation in hand (conceptually) or that the
+    # system state reflects the refresh.
+    # Given the API constraints, I will perform the refresh and then the move.
+    # If `move` required the observation, it would have a parameter for it.
+    # The `receipt` parameter is for `EventReceipt` (from `wait_event` or `signal`).
+    # Since there are no events defined in `resources` or `events`, we don't use `receipt`.
+    
+    await robot.move(ARM_LEFT, POSE_LEFT_TARGET, timeout_s=TIMEOUT)
+    
+    # Release part
+    await robot.release(ARM_LEFT, OBJ_LEFT_PART, POSE_LEFT_TARGET)
+    
+    # Move to depart
+    await robot.move(ARM_LEFT, POSE_LEFT_DEPART, timeout_s=TIMEOUT)
+
+    # --- RIGHT ARM FINAL MOVE ---
+    # Move to depart
+    await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART, timeout_s=TIMEOUT)
+
+    # End state:
+    # left_part at left_target (released)
+    # right_part at right_target (released)
+    # LEFT at left_depart
+    # RIGHT at right_depart
+    # Both empty.

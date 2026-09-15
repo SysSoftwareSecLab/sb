@@ -1,0 +1,102 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _producer_episode(robot: Robot, part: str, source: str,
+                             ready_event: str, empty_event: str) -> None:
+    """Producer: grasp part at source, place at buffer, depart, publish ready."""
+    # Approach source from left_home and immediately grasp.
+    await robot.move("LEFT", "left_home")
+    await robot.move("LEFT", source)
+    await robot.grasp("LEFT", part)
+
+    # Acquire buffer lock for entry.
+    await robot.acquire("LEFT", "buffer_lock", 120)
+
+    # Move to buffer and release part there.
+    await robot.move("LEFT", "buffer_0")
+    await robot.release("LEFT", part, "buffer_0")
+
+    # Depart immediately after release.
+    await robot.move("LEFT", "left_home")
+
+    # Release lock after departure.
+    await robot.release_resource("LEFT", "buffer_lock")
+
+    # Publish ready receipt for consumer.
+    robot.signal(ready_event, part)
+
+
+async def _consumer_episode(robot: Robot, part: str, ready_event: str,
+                            target: str, empty_event: str) -> None:
+    """Consumer: wait ready, pick from buffer, carry to target, clear ready."""
+    # Wait for producer's ready receipt.
+    receipt = await robot.wait_event(ready_event, 120)
+
+    # Acquire buffer lock for entry.
+    await robot.acquire("RIGHT", "buffer_lock", 120)
+
+    # Approach buffer from right_home and immediately grasp.
+    await robot.move("RIGHT", "right_home")
+    await robot.move("RIGHT", "buffer_0")
+    await robot.grasp("RIGHT", part)
+
+    # Carry to target using the active ready receipt.
+    await robot.move("RIGHT", target, receipt=receipt)
+
+    # Clear the ready event after carried move completes.
+    robot.clear_event(ready_event, expected_version=receipt.version)
+
+    # Release on target and depart.
+    await robot.release("RIGHT", part, target)
+    await robot.move("RIGHT", "right_home")
+
+    # Release lock after departure.
+    await robot.release_resource("RIGHT", "buffer_lock")
+
+    # Publish empty receipt for producer.
+    robot.signal(empty_event, part)
+
+
+async def _iteration(robot: Robot, part: str, source: str, target: str,
+                     ready_event: str, empty_event: str) -> None:
+    """One finite loop iteration: FOR -> IF -> PAR_JOIN."""
+    # Producer coroutine.
+    async def producer() -> None:
+        await _producer_episode(robot, part, source, ready_event, empty_event)
+
+    # Consumer coroutine (no mission guard).
+    async def consumer() -> None:
+        await _consumer_episode(robot, part, ready_event, target, empty_event)
+
+    # PAR_JOIN: concurrently join producer and consumer.
+    await asyncio.gather(producer(), consumer())
+
+    # IF: clear empty_0 after the joined episode.
+    empty_receipt = await robot.wait_event(empty_event, 120)
+    robot.clear_event(empty_event, expected_version=empty_receipt.version)
+
+
+async def run_task(robot: Robot) -> None:
+    """Execute the C1_BUFFER SERIAL-L0 development-shape task.
+
+    Structure: FOR (finite loop) -> IF (contains join + clear) -> PAR_JOIN.
+    Variant A alternates complete producer/consumer episodes.
+    """
+    # Ensure rq2_gate is inactive at return by clearing if active.
+    try:
+        gate_receipt = await robot.wait_event("rq2_gate", 0.05)
+        robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+    except TimeoutError:
+        pass
+
+    # FOR: finite loop over the two parts.
+    episodes = [
+        ("part_0", "source_0", "target_0", "ready_0", "empty_0"),
+        ("part_1", "source_1", "target_1", "ready_1", "empty_0"),
+    ]
+
+    for part, source, target, ready_event, empty_event in episodes:
+        await _iteration(robot, part, source, target, ready_event, empty_event)
+```

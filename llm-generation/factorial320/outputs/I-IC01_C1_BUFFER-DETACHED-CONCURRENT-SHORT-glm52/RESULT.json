@@ -1,0 +1,25 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "I-IC01_C1_BUFFER-DETACHED-CONCURRENT-SHORT-glm52",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5.2",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 989,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 3489,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "total_tokens": 4478
+  },
+  "raw_sha256": "cc0f20c8aa0cb25248672bcf0b19fa876824603b2a5c201b9d34b28b9bf3c151",
+  "request_sha256": "cffcfd6ef99cd8431f222c37164d02e56077ce9e42bdb950dafd73897715aade",
+  "source_sha256": "35c16c3caa70d828b5b89bc9e4e2a36cbfb2cb9e85d679dda8919b42db3b2926"
+}

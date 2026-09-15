@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C2_DUAL_RESOURCE-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2928,
+    "completion_tokens": 339,
+    "total_tokens": 3267,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1264
+  },
+  "raw_sha256": "dab42bceb17aa3a202544f8a6c23aaa21fe1cc563602e1ac7061416ab32cde42",
+  "source_sha256": "770dc1479d0a51531c1b66db81e2110e4ea4e29d42620f11af325fc858dbf5fc",
+  "request_sha256": "9b9e13f2f244f5b364dee680ff7a9f8d0c721115d34af0652a3b7be628ee47b0"
+}

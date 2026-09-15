@@ -1,0 +1,50 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def _inspect_allocation(robot: Robot, arm: str) -> Observation:
+    return await robot.inspect(arm, "allocation")
+
+
+async def _selected_transport(robot: Robot, arm: str, alloc_obs: Observation) -> None:
+    home_pose = "left_home" if arm == "LEFT" else "right_home"
+    if arm == "LEFT":
+        depart_pose = "left_depart"
+    else:
+        depart_pose = "right_depart"
+
+    await robot.move(arm, home_pose)
+    await robot.move(arm, "shared_source")
+    await robot.grasp(arm, "shared_part", observation=alloc_obs)
+    await robot.move(arm, "shared_target")
+    await robot.release(arm, "shared_part", "shared_target")
+    await robot.move(arm, depart_pose)
+
+
+async def _consumer(robot: Robot, gate_receipt: EventReceipt) -> None:
+    await robot.wait_event("rq2_gate", 5)
+    left_obs = await _inspect_allocation(robot, "LEFT")
+    selected = left_obs.value.get("selected_arm", "LEFT") if isinstance(left_obs.value, dict) else "LEFT"
+    if selected == "LEFT":
+        await _selected_transport(robot, "LEFT", left_obs)
+        right_obs = await _inspect_allocation(robot, "RIGHT")
+        if right_obs.version != left_obs.version:
+            raise ContractError("allocation version changed during LEFT transport")
+    else:
+        right_obs = await _inspect_allocation(robot, "RIGHT")
+        await _selected_transport(robot, "RIGHT", right_obs)
+        left_obs_after = await _inspect_allocation(robot, "LEFT")
+        if left_obs_after.version != right_obs.version:
+            raise ContractError("allocation version changed during RIGHT transport")
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+
+async def _producer(robot: Robot) -> EventReceipt:
+    return robot.signal("rq2_gate", item_id="shared_part")
+
+
+async def run_task(robot: Robot) -> None:
+    for _ in range(1):
+        gate_receipt = await _producer(robot)
+        await _consumer(robot, gate_receipt)
+    return

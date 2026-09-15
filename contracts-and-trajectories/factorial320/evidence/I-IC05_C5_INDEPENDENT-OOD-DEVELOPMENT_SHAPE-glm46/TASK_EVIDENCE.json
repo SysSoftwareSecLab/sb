@@ -1,0 +1,37 @@
+{
+  "rows": [
+    {
+      "obligation": "RELEASE_DEPARTURE",
+      "label": "C",
+      "event_indices": [
+        17,
+        19
+      ],
+      "reason": "Same-arm departure starts without positive virtual gap"
+    },
+    {
+      "obligation": "RELEASE_DEPARTURE",
+      "label": "C",
+      "event_indices": [
+        18,
+        20
+      ],
+      "reason": "Same-arm departure starts without positive virtual gap"
+    },
+    {
+      "obligation": "TASK_GOAL",
+      "label": "C",
+      "event_indices": [
+        24
+      ],
+      "reason": "Independent completion-state reconstruction, separate from safety"
+    }
+  ],
+  "summary": {
+    "RELEASE_DEPARTURE": "C",
+    "TASK_GOAL": "C"
+  },
+  "geometry_status": "GEOMETRY_EVALUATOR_ERROR",
+  "whole_program_safety": null,
+  "human_label": null
+}

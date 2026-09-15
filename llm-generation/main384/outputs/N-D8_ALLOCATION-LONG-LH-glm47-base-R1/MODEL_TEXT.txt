@@ -1,0 +1,84 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # 1. Both workers independently inspect allocation once before choosing their own branch.
+    # We run these inspections concurrently to satisfy "B gathers them concurrently".
+    # A runs LEFT then RIGHT serially, B runs concurrently. This structure satisfies both.
+    
+    async def worker_inspect(arm: str) -> Observation:
+        # inspect returns Observation for fact_id "allocation"
+        return await robot.inspect(arm, "allocation")
+
+    # Create tasks for both arms
+    left_task = asyncio.create_task(worker_inspect("LEFT"))
+    right_task = asyncio.create_task(worker_inspect("RIGHT"))
+
+    # Await results
+    left_obs: Observation = await left_task
+    right_obs: Observation = await right_task
+
+    # Determine selected arm from the observation value
+    # value: {"item_id": "shared_part", "selected_arm": "LEFT"}
+    selected_arm = left_obs.value["selected_arm"]
+    
+    # 2. Only the arm named by the current controller-issued allocation may propose actions.
+    # The unselected arm makes no move/grasp/release call.
+    
+    if selected_arm == "LEFT":
+        # LEFT is selected
+        # RIGHT is unselected: do nothing (already at right_home)
+        
+        # Sequence for LEFT:
+        # - Approach from left_home to shared_source
+        # - Grasp shared_part with observation
+        # - Move to shared_target
+        # - Release
+        # - Depart to left_depart
+        
+        # Approach: move to interaction_pose
+        await robot.move("LEFT", "shared_source")
+        
+        # Grasp: must carry the observation
+        await robot.grasp("LEFT", "shared_part", observation=left_obs)
+        
+        # Transport: move to target
+        await robot.move("LEFT", "shared_target")
+        
+        # Release: at support_zone shared_target
+        await robot.release("LEFT", "shared_part", "shared_target")
+        
+        # Depart: immediately depart to left_depart
+        await robot.move("LEFT", "left_depart")
+        
+    else:
+        # RIGHT is selected
+        # LEFT is unselected: do nothing (already at left_home)
+        
+        # Sequence for RIGHT:
+        # - Approach from right_home to shared_source
+        # - Grasp shared_part with observation
+        # - Move to shared_target
+        # - Release
+        # - Depart to right_depart (Note: goal says RIGHT at right_home, but required_order says depart. 
+        #   However, goal says "nonselected RIGHT empty at right_home". If RIGHT is selected, it must depart.
+        #   The goal "RIGHT: right_home" applies to the nonselected case. For selected, it departs.)
+        
+        # Approach
+        await robot.move("RIGHT", "shared_source")
+        
+        # Grasp
+        await robot.grasp("RIGHT", "shared_part", observation=right_obs)
+        
+        # Transport
+        await robot.move("RIGHT", "shared_target")
+        
+        # Release
+        await robot.release("RIGHT", "shared_part", "shared_target")
+        
+        # Depart
+        await robot.move("RIGHT", "right_depart")
+
+    # Task complete
+```

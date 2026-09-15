@@ -1,0 +1,42 @@
+```python
+async def run_task(robot):
+    # SERIAL structure: complete all three rq2_gap resource checks with LEFT in
+    # numeric order, then signal rq2_gate exactly once, wait its exact active
+    # receipt exactly once, keep it active through the complete inherited
+    # dual-arm mission, and clear exactly that version only after the mission.
+
+    # --- rq2_gap resource checks (LEFT, numeric order, OFF only) ---
+    await robot.acquire("LEFT", "rq2_gap_0", 4)
+    await robot.release_resource("LEFT", "rq2_gap_0")
+
+    await robot.acquire("LEFT", "rq2_gap_1", 4)
+    await robot.release_resource("LEFT", "rq2_gap_1")
+
+    await robot.acquire("LEFT", "rq2_gap_2", 4)
+    await robot.release_resource("LEFT", "rq2_gap_2")
+
+    # --- rq2_gate producer/consumer: signal exactly once, wait immediately ---
+    gate_receipt = robot.signal("rq2_gate")
+    gate_event = await robot.wait_event("rq2_gate", 4)
+
+    # --- Inherited dual-arm mission (SERIAL), rq2_gate kept active ---
+
+    # LEFT branch: approach left_part from left_home, grasp immediately, move to
+    # left_target, release, then depart to left_depart.
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+    # RIGHT branch: approach right_part from right_home, grasp immediately, move
+    # to right_target, release, then depart to right_depart.
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+    # --- Clear rq2_gate exactly after the assigned protected scope ---
+    robot.clear_event("rq2_gate", expected_version=gate_event.version)
+```

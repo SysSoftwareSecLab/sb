@@ -1,0 +1,25 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "I-IC05_C5_INDEPENDENT-BOUND-SERIAL-SHORT-glm52",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "glm-5.2",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 397,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2977,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "total_tokens": 3374
+  },
+  "raw_sha256": "4987deec9b5ae62579909bb9a44a7dd88a89485d0ed69b27d07cac11ddea7b89",
+  "request_sha256": "527fcbf38918aa7024d5318496261fc873548ab12922b3ba413b6cb624a683df",
+  "source_sha256": "e55e6901bec61bf15376927b41a4d86a22264ade14ee2364c7e184a075fd831e"
+}

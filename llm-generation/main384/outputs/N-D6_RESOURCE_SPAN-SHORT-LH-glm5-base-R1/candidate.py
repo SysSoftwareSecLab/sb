@@ -1,0 +1,52 @@
+import asyncio
+from bridge_robot_api import MotionFault
+
+FIXTURE = "fixture"
+TOOL = "tool"
+ACQUIRE_TIMEOUT = 120.0
+
+
+async def _worker(robot, arm, part, home, source, target, depart):
+    acquired_fixture = False
+    acquired_tool = False
+    try:
+        await robot.move(arm, home)
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+
+        await robot.acquire(arm, FIXTURE, ACQUIRE_TIMEOUT)
+        acquired_fixture = True
+        await robot.acquire(arm, TOOL, ACQUIRE_TIMEOUT)
+        acquired_tool = True
+
+        await robot.move(arm, target)
+        await robot.release(arm, part, target)
+        await robot.move(arm, depart)
+
+        await robot.release_resource(arm, TOOL)
+        acquired_tool = False
+        await robot.release_resource(arm, FIXTURE)
+        acquired_fixture = False
+    finally:
+        if acquired_tool:
+            try:
+                await robot.release_resource(arm, TOOL)
+            except Exception:
+                pass
+        if acquired_fixture:
+            try:
+                await robot.release_resource(arm, FIXTURE)
+            except Exception:
+                pass
+
+
+async def run_task(robot):
+    left = _worker(
+        robot, "LEFT", "left_part",
+        "left_home", "left_source", "left_target", "left_depart",
+    )
+    right = _worker(
+        robot, "RIGHT", "right_part",
+        "right_home", "right_source", "right_target", "right_depart",
+    )
+    await asyncio.gather(left, right)

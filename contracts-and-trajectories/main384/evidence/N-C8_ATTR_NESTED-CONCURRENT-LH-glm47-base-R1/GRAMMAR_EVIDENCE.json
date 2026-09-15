@@ -1,0 +1,46 @@
+{
+  "rows": [
+    {
+      "obligation": "COMPOSITION_CONCURRENCY",
+      "label": "U",
+      "observed": 0.19999999999999973,
+      "expected": {
+        "level": "CONCURRENT",
+        "threshold": 0.7500000000000004,
+        "reference_serial": 0.10000000000000053,
+        "reference_concurrent": 1.4000000000000004
+      }
+    },
+    {
+      "obligation": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "observed": {
+        "clear": 43,
+        "left_check": 65,
+        "right_check": 67,
+        "tool_acquire": 45,
+        "source1": 46,
+        "buffer1": 52
+      },
+      "expected": "empty receipt -> two checks -> buffer entry, with assigned tool span"
+    },
+    {
+      "obligation": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "observed": {
+        "gather_nodes": 1,
+        "loop_calls_gather_interprocedural": false,
+        "branch_calls_gather_interprocedural": false
+      },
+      "expected": {
+        "nested_for_if_join": true
+      }
+    }
+  ],
+  "summary": {
+    "COMPOSITION_CONCURRENCY": "U",
+    "ATTRIBUTE_COMBINATION": "U",
+    "CONTROL_FLOW_HOLDOUT": "U"
+  },
+  "scope": "Observed finite path plus reachable source control flow; independent of model judge and human labels"
+}

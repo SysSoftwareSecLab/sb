@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-C3_EXCHANGE-CONCURRENT-LH-deepseek_flash-base-R1",
+  "task_id": "C3_EXCHANGE-CONCURRENT-LH",
+  "executed": true,
+  "generation_source_sha256": "20b3c4d2ff1ab2eb4e8b0c4a8601e4d06bf5dbfa024d58caa44405c8aa1a1255",
+  "process_status": "BROKER_REJECTED",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 26,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "EXCHANGE_PROTOCOL": "V",
+    "EXCHANGE_RECEIPT": "U"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "1e805aa9752004d4831cf10d3791c95920073df30b4ffb8b65e4cc63378a62b3",
+  "task_evidence_sha256": "c98b4d5cb339aec7ad6c6bffb2809c81ea867f5ff647d48b59c7a1b10c61f78b",
+  "grammar_evidence_sha256": "266c3246fa30c45684fc0074bce92ab38bd8ba1ee96ea0718cfc50b0c0fd1747",
+  "geometry_sha256": "de2a055c2f546a4a2c4edcbfa910d570fa63c6dd94f6a6263ab81d425d45303c",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

@@ -1,0 +1,68 @@
+import asyncio
+from bridge_robot_api import Robot
+
+async def run_task(robot: Robot):
+    # 1. Acquire resources rq2_gap_0, rq2_gap_1, rq2_gap_2 with LEFT arm in numeric order.
+    #    Task requires: "Acquire and release ... once each with LEFT, in numeric order".
+    #    Initial mode is OFF, so we can acquire directly.
+    await robot.acquire("LEFT", "rq2_gap_0", timeout_s=4.0)
+    await robot.acquire("LEFT", "rq2_gap_1", timeout_s=4.0)
+    await robot.acquire("LEFT", "rq2_gap_2", timeout_s=4.0)
+
+    # 2. Signal rq2_gate.
+    #    Task requires: "Signal rq2_gate exactly once".
+    gate_receipt = robot.signal("rq2_gate")
+
+    # 3. Wait for rq2_gate.
+    #    Task requires: "wait its exact active receipt exactly once".
+    #    Note: The signal call above makes the event active. 
+    #    The wait must happen immediately after the signal as per required_order.
+    await robot.wait_event("rq2_gate", timeout_s=4.0)
+
+    # 4. Clear rq2_gate.
+    #    Task requires: "clear exactly that version after its assigned protected scope".
+    #    The scope is the dual-arm mission below.
+    #    We will clear it after the mission completes.
+
+    # 5. Execute the dual-arm mission concurrently.
+    #    Task requires: "Use joined concurrent scheduling for both the inherited dual-arm mission".
+    #    LEFT: left_part from left_source to left_target.
+    #    RIGHT: right_part from right_source to right_target.
+
+    async def left_mission():
+        # Move to source (approach)
+        await robot.move("LEFT", "left_source")
+        # Grasp left_part
+        await robot.grasp("LEFT", "left_part")
+        # Move to target
+        await robot.move("LEFT", "left_target")
+        # Release left_part
+        await robot.release("LEFT", "left_part", "left_target")
+        # Depart to left_depart
+        await robot.move("LEFT", "left_depart")
+
+    async def right_mission():
+        # Move to source (approach)
+        await robot.move("RIGHT", "right_source")
+        # Grasp right_part
+        await robot.grasp("RIGHT", "right_part")
+        # Move to target
+        await robot.move("RIGHT", "right_target")
+        # Release right_part
+        await robot.release("RIGHT", "right_part", "right_target")
+        # Depart to right_depart
+        await robot.move("RIGHT", "right_depart")
+
+    # Run both missions concurrently and wait for them to finish.
+    await asyncio.gather(left_mission(), right_mission())
+
+    # 6. Clear rq2_gate.
+    #    Task requires: "clear exactly that version".
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+    # 7. Release resources.
+    #    Task requires: "never retain them at return".
+    #    Resources must be OFF to release. They were acquired as OFF and never set_mode'd.
+    await robot.release_resource("LEFT", "rq2_gap_0")
+    await robot.release_resource("LEFT", "rq2_gap_1")
+    await robot.release_resource("LEFT", "rq2_gap_2")

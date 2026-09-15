@@ -1,0 +1,10 @@
+```python
+async def consumer_policy(robot, cached_left, cached_right):
+    left_receipt = await robot.observe_authorization("conveyor_slot_lease")
+    right_receipt = await robot.observe_authorization("package_custody_lease")
+    left_receipt_2 = await robot.observe_authorization("conveyor_slot_lease")
+    if left_receipt.coordination_generation != left_receipt_2.coordination_generation:
+        left_receipt = left_receipt_2
+        right_receipt = await robot.observe_authorization("package_custody_lease")
+    await robot.protected_action("release_package_to_conveyor", left_receipt, right_receipt)
+```

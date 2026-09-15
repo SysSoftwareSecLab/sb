@@ -1,0 +1,118 @@
+{
+  "rows": [
+    {
+      "obligation": "SUPPORT_DEPARTURE",
+      "rule": "所有实际物体释放须为本臂持物、位于声明支撑，随后同臂立即开始撤离。本项仅评实际已触发并有后继的局部义务；几何另评。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            14
+          ],
+          "reason": "Held item at declared support on release commit",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            15
+          ],
+          "reason": "Held item at declared support on release commit",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            14,
+            16
+          ],
+          "reason": "First subsequent same-arm action begins departure with no virtual delay",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            15,
+            17
+          ],
+          "reason": "First subsequent same-arm action begins departure with no virtual delay",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "TERMINAL",
+      "rule": "本次执行在公开时限内正常完成全部位置与空手目标，资源OFF且无占用、事件清空；已确定异常结束且目标未完成为V，不与未知后续安全混淆。",
+      "label": "V",
+      "instances": [
+        {
+          "label": "V",
+          "event_indices": [
+            25
+          ],
+          "reason": "Actual finite termination and declared goals, not physical safety",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "GEOMETRY",
+      "rule": "只评本次固定方向平移AABB禁碰对；完整且无违规为C，有实际坏区间为V，缺失完整覆盖且无坏前缀为U。",
+      "label": "U",
+      "instances": [
+        {
+          "label": "U",
+          "event_indices": [],
+          "reason": "INCONCLUSIVE_INCOMPLETE_TRACE",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "EXCHANGE_PROTOCOL",
+      "rule": "各臂在自身物体放入自身pad并立即撤离后才发布自身ready；取对方物体前，自身放置撤离和对方ready的wait均已完成；对应ready只能在带凭据目标搬运完成后清除。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            20
+          ],
+          "reason": "Ready publication follows actual supported deposit and producer departure",
+          "request_id": 11
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            22
+          ],
+          "reason": "Ready publication follows actual supported deposit and producer departure",
+          "request_id": 13
+        }
+      ]
+    },
+    {
+      "obligation": "EXCHANGE_RECEIPT",
+      "rule": "搬向自身target的每个携物调用必须传入刚等待的、仍active、与对方物体匹配的原始ready凭据；提议参数也计入本义务。",
+      "label": "U",
+      "instances": []
+    }
+  ],
+  "summary": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "EXCHANGE_PROTOCOL": "C",
+    "EXCHANGE_RECEIPT": "U"
+  },
+  "input_integrity": true,
+  "human_label": null,
+  "scope": "Finite public task binding; common independent checkers unchanged",
+  "technical_adapter": {
+    "id": "TECHNICAL_AMENDMENT_001",
+    "malformed_signal_calls_mapped_to_protocol_violation": 0,
+    "stored_capture_modified": false,
+    "scientific_rule_changed": false
+  }
+}

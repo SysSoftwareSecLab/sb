@@ -1,0 +1,94 @@
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Public task constants (from PUBLIC TASK)
+    # ------------------------------------------------------------------
+    DEADLINE_S = 30
+    DEFAULT_MOVE_TIMEOUT_S = 4
+    MOVE_TIMEOUT_S = 4  # within explicit range [0.05, 30]
+
+    # ------------------------------------------------------------------
+    # Phase 0: serial verifier production (CONCURRENCY=SERIAL)
+    # The task requires the stated structure: two verifier branches
+    # joined before one payload consumer.  In SERIAL layout the two
+    # verifier branches are produced one after the other, then joined.
+    # ------------------------------------------------------------------
+
+    # LEFT verifier branch
+    left_obs = await robot.inspect("LEFT", "left_verification")
+    assert isinstance(left_obs, Observation)
+    assert left_obs.fact_id == "left_verification"
+    assert left_obs.version == 1
+
+    # RIGHT verifier branch
+    right_obs = await robot.inspect("RIGHT", "right_verification")
+    assert isinstance(right_obs, Observation)
+    assert right_obs.fact_id == "right_verification"
+    assert right_obs.version == 1
+
+    # ------------------------------------------------------------------
+    # Join: both verifier branches must complete before the payload
+    # consumer proceeds.  The join events are left_ready / right_ready.
+    # Signal both, then wait for both to be active.
+    # ------------------------------------------------------------------
+    left_receipt = robot.signal("left_ready")
+    assert isinstance(left_receipt, EventReceipt)
+    assert left_receipt.event_id == "left_ready"
+    assert left_receipt.version == 1
+
+    right_receipt = robot.signal("right_ready")
+    assert isinstance(right_receipt, EventReceipt)
+    assert right_receipt.event_id == "right_ready"
+    assert right_receipt.version == 1
+
+    left_wait = await robot.wait_event("left_ready", timeout_s=1)
+    assert isinstance(left_wait, EventReceipt)
+    assert left_wait.event_id == "left_ready"
+    assert left_wait.version == 1
+
+    right_wait = await robot.wait_event("right_ready", timeout_s=1)
+    assert isinstance(right_wait, EventReceipt)
+    assert right_wait.event_id == "right_ready"
+    assert right_wait.version == 1
+
+    # ------------------------------------------------------------------
+    # Phase 1: LEFT lane — approach, grasp, transport, release, depart
+    # ------------------------------------------------------------------
+    # Approach: must start from left_home, interaction pose left_source,
+    # required next robot call is grasp with zero intervening logical time.
+    await robot.move("LEFT", "left_home", timeout_s=MOVE_TIMEOUT_S)
+    await robot.move("LEFT", "left_source", timeout_s=MOVE_TIMEOUT_S)
+    await robot.grasp("LEFT", "left_part", observation=left_obs)
+
+    # Transport to target
+    await robot.move("LEFT", "left_target", timeout_s=MOVE_TIMEOUT_S)
+
+    # Release at target support zone
+    await robot.release("LEFT", "left_part", "left_target")
+
+    # Immediate separating departure
+    await robot.move("LEFT", "left_depart", timeout_s=MOVE_TIMEOUT_S)
+
+    # ------------------------------------------------------------------
+    # Phase 2: RIGHT lane — approach, grasp, transport, release, depart
+    # ------------------------------------------------------------------
+    await robot.move("RIGHT", "right_home", timeout_s=MOVE_TIMEOUT_S)
+    await robot.move("RIGHT", "right_source", timeout_s=MOVE_TIMEOUT_S)
+    await robot.grasp("RIGHT", "right_part", observation=right_obs)
+
+    await robot.move("RIGHT", "right_target", timeout_s=MOVE_TIMEOUT_S)
+
+    await robot.release("RIGHT", "right_part", "right_target")
+
+    await robot.move("RIGHT", "right_depart", timeout_s=MOVE_TIMEOUT_S)
+
+    # ------------------------------------------------------------------
+    # Clear join events after the payload consumer has completed.
+    # The task states clear must wait until the corresponding move
+    # truly completes; here the consumer (transport moves) is done.
+    # ------------------------------------------------------------------
+    robot.clear_event("left_ready", expected_version=left_receipt.version)
+    robot.clear_event("right_ready", expected_version=right_receipt.version)

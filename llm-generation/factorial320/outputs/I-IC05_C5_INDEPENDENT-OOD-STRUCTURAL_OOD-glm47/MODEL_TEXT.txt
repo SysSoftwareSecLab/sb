@@ -1,0 +1,72 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants derived from PUBLIC TASK
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_TARGET = "left_target"
+    POSE_LEFT_DEPART = "left_depart"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_TARGET = "right_target"
+    POSE_RIGHT_DEPART = "right_depart"
+    
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    EVENT_ID = "rq2_gate"
+    TIMEOUT_S = 4.0  # Within explicit_move_timeout_range_s and < 120
+    
+    # Helper to execute the complete mission for one arm
+    async def execute_mission(arm: str, home_pose: str, source_pose: str, target_pose: str, depart_pose: str, object_id: str):
+        # 1. Approach (Move to source)
+        await robot.move(arm, source_pose, timeout_s=TIMEOUT_S)
+        
+        # 2. Grasp
+        await robot.grasp(arm, object_id)
+        
+        # 3. Transport (Move to target)
+        await robot.move(arm, target_pose, timeout_s=TIMEOUT_S)
+        
+        # 4. Release
+        await robot.release(arm, object_id, target_pose)
+        
+        # 5. Depart (Move to depart)
+        await robot.move(arm, depart_pose, timeout_s=TIMEOUT_S)
+
+    # Structural-OOD shape: FOR -> PAR_JOIN -> consumer IF
+    # The task specifies "Inside one finite loop iteration".
+    # We implement a single iteration loop to satisfy the structural requirement.
+    for _ in range(1):
+        # PAR_JOIN: Concurrently start the producer (signal) and consumer (wait_event)
+        # The producer signals the event.
+        # The consumer waits for the event, then executes the complete mission, then clears the event.
+        
+        async def producer():
+            # Signal the event to make it active
+            robot.signal(EVENT_ID)
+            
+        async def consumer():
+            # Wait for the exact active receipt
+            receipt = await robot.wait_event(EVENT_ID, TIMEOUT_S)
+            
+            # Execute the complete inherited mission for both arms
+            # The task requires "both parts at their own target; both arms at departure and empty"
+            # We run these sequentially within the consumer as implied by the single consumer context.
+            await execute_mission(ARM_LEFT, POSE_LEFT_HOME, POSE_LEFT_SOURCE, POSE_LEFT_TARGET, POSE_LEFT_DEPART, OBJ_LEFT)
+            await execute_mission(ARM_RIGHT, POSE_RIGHT_HOME, POSE_RIGHT_SOURCE, POSE_RIGHT_TARGET, POSE_RIGHT_DEPART, OBJ_RIGHT)
+            
+            # Clear that version of the event
+            robot.clear_event(EVENT_ID, expected_version=receipt.version)
+            
+        # Run producer and consumer concurrently
+        await asyncio.gather(producer(), consumer())
+
+    # Goal: "rq2_gate inactive at return" is satisfied by the consumer's clear_event call.
+```

@@ -1,0 +1,29 @@
+{
+  "axis": "CONCURRENCY",
+  "level": "SERIAL",
+  "layout_relation": "SERIAL_CARRIED_PATHS_CROSS_IN_XY_PROJECTION",
+  "object_count": 2,
+  "resource_count": 0,
+  "event_count": 2,
+  "observation_count": 2,
+  "state_count": 0,
+  "cross_arm_dependency": true,
+  "reachable_functions": [
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "clear_event": 2,
+    "grasp": 2,
+    "inspect": 2,
+    "move": 6,
+    "release": 2,
+    "signal": 2,
+    "wait_event": 2
+  },
+  "for_nodes": 0,
+  "if_nodes": 0,
+  "gather_nodes": 0,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "signature": "720fc1ff7d350ba9007b56533039e30bf54475823ecf450eae7db1d865e4cb85"
+}

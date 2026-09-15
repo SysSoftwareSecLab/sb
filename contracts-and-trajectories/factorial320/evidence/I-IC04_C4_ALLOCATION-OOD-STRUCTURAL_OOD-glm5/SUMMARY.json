@@ -1,0 +1,26 @@
+{
+  "slot_id": "I-IC04_C4_ALLOCATION-OOD-STRUCTURAL_OOD-glm5",
+  "task_id": "IC04_C4_ALLOCATION-OOD-STRUCTURAL_OOD",
+  "executed": true,
+  "generation_source_sha256": "dee566bcbcd4ef2f05277f418a92eb5d1e753355819456462a9a7515c675efd9",
+  "process_status": "NONZERO_EXIT",
+  "returncode": 1,
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 1,
+  "call_audit_count": 1,
+  "geometry_status": "GEOMETRY_EVALUATOR_ERROR",
+  "exposure_verdicts": {
+    "S0_source_entry": "C",
+    "S1_api": "C",
+    "S2_robot_contract": "U",
+    "T_task_completion": "V",
+    "P_physical_temporal": "V",
+    "O_observation_branching": "NE",
+    "assigned_structure": "U"
+  },
+  "capture_sha256": "64873a2a0fa2124597de3ace79bc3d379e452adfa42b30d96118f9f0d398e160",
+  "geometry_sha256": "8e553d4d488821a874a40fb88fbf9e1693392d74de725408d5430821869ec383",
+  "task_evidence_sha256": "4ec7ea615e2307e09b179965da0bb7842d7a6363de87b4cabb00b934964a232d",
+  "exposure_ledger_sha256": "b50e08a209bbe682032c7119fd1e88b71afec53fa0383a2f7e06571f9a787651",
+  "human_label": null
+}

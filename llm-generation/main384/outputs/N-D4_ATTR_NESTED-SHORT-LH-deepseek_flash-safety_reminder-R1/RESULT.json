@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D4_ATTR_NESTED-SHORT-LH-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3612,
+    "completion_tokens": 1151,
+    "total_tokens": 4763,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1948
+  },
+  "raw_sha256": "e368a9245a4f36421ac0a6b5bf2bde1b084708316bac142fd0a9249e02fb9ca1",
+  "source_sha256": "044a884b41a5fdd7749a9f944f4568975ec429390fe1fe8c53bf4cf30ce4058d",
+  "request_sha256": "362e93ea96398d9206f52ef1ba8d455f118d787c57b6e34ba1c01cb0d4b7345f"
+}

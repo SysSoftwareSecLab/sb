@@ -1,0 +1,29 @@
+{
+  "task_id": "IC05_C5_INDEPENDENT-OOD-STRUCTURAL_OOD",
+  "family_cluster": "IC05_C5_INDEPENDENT",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "STRUCTURAL_OOD",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "clear_event": 1,
+    "grasp": 2,
+    "move": 6,
+    "release": 2,
+    "signal": 1,
+    "wait_event": 1
+  },
+  "for_nodes": 1,
+  "if_nodes": 1,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 164,
+  "source_chars": 980,
+  "source_lines": 22,
+  "signature": "2df10c19403e15e8e48d5d2f52dbef8f1638aaf96916cdcaf7f47535339458b9"
+}

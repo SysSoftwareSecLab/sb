@@ -1,0 +1,26 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-17-explicit-glm5",
+  "task_id": "CP-17",
+  "stratum": "inspection",
+  "arm": "EXPLICIT",
+  "profile": "glm5",
+  "stage": 2,
+  "request_sha256": "e58687162ee01d81cd8f5a3c7cae12a1548ba17677cdea01aa60220ec9cf8129",
+  "raw_sha256": "bb4c3c1409df9f18b534d102046136a0ff155b4502e247483017dade0ca5a0a8",
+  "source_sha256": "0c7241eef1d7cc6159310557ed5ef1e3c49bf592f55fabf988b57747a1de5756",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 132,
+    "prompt_tokens": 337,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 469
+  },
+  "first_response_final": true
+}

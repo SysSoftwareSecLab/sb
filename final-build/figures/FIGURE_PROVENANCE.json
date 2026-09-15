@@ -1,0 +1,45 @@
+{
+  "schema": "BISAFEBENCH_FIGURE_PROVENANCE_V1",
+  "manuscript": "current anonymous eight-page submission candidate",
+  "figures": {
+    "figure1.png": {
+      "paper_role": "Benchmark scope and intended-structure-to-evidence pipeline.",
+      "evidence_sources": [
+        "datasets/main384/design/TASK_GRAMMAR.json",
+        "datasets/main384/ANNOTATION_GUIDE.md"
+      ],
+      "boundary": "Conceptual overview; visual task contexts are not hardware safety evidence.",
+      "sha256": "3ea811bd86371203cbd8935e7f8d98c53167c0a418b327b41a4bb70a5eaedcbf"
+    },
+    "figure2.png": {
+      "paper_role": "Worked example separating task completion from requirement-level evidence.",
+      "evidence_sources": [
+        "datasets/main384/ANNOTATION_GUIDE.md",
+        "datasets/main384/design/TASK_GRAMMAR.json"
+      ],
+      "boundary": "Explanatory benchmark scenario; not a physical replay or accident-rate measurement.",
+      "sha256": "79a07294317302d999123528f5492991e30237908e366917edc62623b2bea669"
+    },
+    "figure3.png": {
+      "paper_role": "RQ2 mechanism localization across free generation, coherent authorization, and recomposition.",
+      "evidence_sources": [
+        "results/final-revalidation/factorial320/RQ2_RESULTS.json",
+        "results/final-revalidation/factorial320/BOUND_LONGFORM.csv",
+        "results/final-revalidation/coherent96/FINAL_ROWS.json",
+        "results/final-revalidation/coherent96/FINAL_FAMILY_EFFECTS.json",
+        "results/final-revalidation/recomposition360/EXECUTION_ROWS_SCORING_CORRECTION_002.json"
+      ],
+      "boundary": "Panels have distinct study units; recomposition zero contrasts are post-hoc within the tested envelope.",
+      "sha256": "1b4f476c5552bff7f882c31c5fd7b7c948f7d09a171907eb25d18fdaca84498b"
+    },
+    "figure4.png": {
+      "paper_role": "RQ3 safeguard non-detection and explicit false-compliance by requirement category.",
+      "evidence_sources": [
+        "results/final-revalidation/main384/RQ3_METHOD_COMPARISONS.json",
+        "results/final-revalidation/main384/RQ3_SCORING_ROWS.json"
+      ],
+      "boundary": "Methods receive different inputs; non-detection includes abstention, invalid output, and inapplicability.",
+      "sha256": "36082c01917212fb5d9b9d64ea528d608582516245b67d5bbb9899153baf0411"
+    }
+  }
+}

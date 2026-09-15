@@ -1,0 +1,41 @@
+{
+  "task_id": "IC08_C8_ATTR_NESTED-BOUND-CONCURRENT-LONG",
+  "family_cluster": "IC08_C8_ATTR_NESTED",
+  "block": "RQ2_FACTORIAL",
+  "coupling": "BOUND",
+  "schedule": "CONCURRENT",
+  "dependency_distance": "LONG",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "_rq2_spacing",
+    "check_left",
+    "check_right",
+    "consume",
+    "consumer",
+    "produce",
+    "producer",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 4,
+    "clear_event": 3,
+    "grasp": 2,
+    "inspect": 2,
+    "move": 8,
+    "release": 2,
+    "release_resource": 4,
+    "signal": 3,
+    "wait_event": 3
+  },
+  "for_nodes": 3,
+  "if_nodes": 5,
+  "gather_nodes": 3,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": true,
+  "ast_nodes": 573,
+  "source_chars": 3198,
+  "source_lines": 66,
+  "signature": "7825bec57d5b720c6b30a9a6073c4d14560ac1c811aaabbee41f8ebbdc016290"
+}

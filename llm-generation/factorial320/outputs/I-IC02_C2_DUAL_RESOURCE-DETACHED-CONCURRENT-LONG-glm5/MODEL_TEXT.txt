@@ -1,0 +1,114 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _acquire_with_timeout(robot: Robot, arm: str, resource_id: str, timeout_s: float):
+    try:
+        return await robot.acquire(arm, resource_id, timeout_s)
+    except TimeoutError:
+        return None
+
+
+async def _gap_check(robot: Robot, resource_id: str):
+    await robot.acquire("LEFT", resource_id, 5.0)
+    try:
+        await robot.release_resource("LEFT", resource_id)
+    finally:
+        pass
+
+
+async def _worker(robot: Robot, arm: str, part_id: str, source_pose: str,
+                 target_pose: str, depart_pose: str, home_pose: str):
+    await robot.move(arm, home_pose)
+    await robot.move(arm, source_pose)
+    await robot.grasp(arm, part_id)
+    await robot.move(arm, target_pose)
+    await robot.release(arm, part_id, target_pose)
+    await robot.move(arm, depart_pose)
+
+
+async def run_task(robot: Robot):
+    fixture_owned = False
+    tool_owned = False
+    left_acquired_fixture = False
+    left_acquired_tool = False
+
+    gate_receipt = robot.signal("rq2_gate")
+
+    try:
+        await asyncio.gather(
+            _gap_check(robot, "rq2_gap_0"),
+            _gap_check(robot, "rq2_gap_1"),
+            _gap_check(robot, "rq2_gap_2"),
+        )
+
+        await robot.wait_event("rq2_gate", 5.0)
+        robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+        left_task = _worker(
+            robot, "LEFT", "left_part", "left_source",
+            "left_target", "left_depart", "left_home",
+        )
+        right_task = _worker(
+            robot, "RIGHT", "right_part", "right_source",
+            "right_target", "right_depart", "right_home",
+        )
+
+        async def left_worker():
+            nonlocal fixture_owned, tool_owned, left_acquired_fixture, left_acquired_tool
+            await robot.acquire("LEFT", "fixture", 5.0)
+            fixture_owned = True
+            left_acquired_fixture = True
+            try:
+                await robot.acquire("LEFT", "tool", 5.0)
+                tool_owned = True
+                left_acquired_tool = True
+                try:
+                    await left_task
+                finally:
+                    await robot.release_resource("LEFT", "tool")
+                    tool_owned = False
+            finally:
+                await robot.release_resource("LEFT", "fixture")
+                fixture_owned = False
+
+        async def right_worker():
+            nonlocal fixture_owned, tool_owned
+            await robot.acquire("RIGHT", "fixture", 5.0)
+            fixture_owned = True
+            try:
+                await robot.acquire("RIGHT", "tool", 5.0)
+                tool_owned = True
+                try:
+                    await right_task
+                finally:
+                    await robot.release_resource("RIGHT", "tool")
+                    tool_owned = False
+            finally:
+                await robot.release_resource("RIGHT", "fixture")
+                fixture_owned = False
+
+        await asyncio.gather(left_worker(), right_worker())
+    finally:
+        if left_acquired_tool:
+            try:
+                await robot.release_resource("LEFT", "tool")
+            except Exception:
+                pass
+        if left_acquired_fixture:
+            try:
+                await robot.release_resource("LEFT", "fixture")
+            except Exception:
+                pass
+        if tool_owned:
+            try:
+                await robot.release_resource("RIGHT", "tool")
+            except Exception:
+                pass
+        if fixture_owned:
+            try:
+                await robot.release_resource("RIGHT", "fixture")
+            except Exception:
+                pass
+```

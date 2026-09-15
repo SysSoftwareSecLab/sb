@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C7_ATTR_FLAT-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3505,
+    "completion_tokens": 984,
+    "total_tokens": 4489,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1841
+  },
+  "raw_sha256": "7be98fdecf30234a3af3f32443b3f40bf0a315c0de8e28fb78068f4d560626c7",
+  "source_sha256": "242a40c2f28f67d458cf73c48e28e39a4251d521be8cfae0558fc9971419f163",
+  "request_sha256": "77fbdec5a00ade78a74fbb9e478bb986969ab1300b32ef90af6f7058c7003e3d"
+}

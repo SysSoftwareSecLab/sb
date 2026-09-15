@@ -1,0 +1,53 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # Phase 1: each arm deposits its own part on its own pad, then clears the pad.
+    # LEFT: left_home -> left_source (approach), grasp left_part, move to left_pad, release, move to left_clear.
+    # RIGHT: right_home -> right_source (approach), grasp right_part, move to right_pad, release, move to right_clear.
+
+    async def deposit_left():
+        await robot.move("LEFT", "left_source")
+        await robot.grasp("LEFT", "left_part")
+        await robot.move("LEFT", "left_pad")
+        await robot.release("LEFT", "left_part", "left_pad")
+        await robot.move("LEFT", "left_clear")
+        robot.signal("left_ready", "left_part")
+
+    async def deposit_right():
+        await robot.move("RIGHT", "right_source")
+        await robot.grasp("RIGHT", "right_part")
+        await robot.move("RIGHT", "right_pad")
+        await robot.release("RIGHT", "right_part", "right_pad")
+        await robot.move("RIGHT", "right_clear")
+        robot.signal("right_ready", "right_part")
+
+    # Phase 2: each arm waits for peer ready, then picks up peer item from peer pad,
+    # carries it to its own target, releases, then clears the event.
+
+    async def consume_left():
+        # LEFT consumes right_part from right_pad, carries to left_target.
+        receipt = await robot.wait_event("right_ready", 10)
+        await robot.move("LEFT", "left_pickup_wait")
+        await robot.grasp("LEFT", "right_part")
+        await robot.move("LEFT", "left_target", receipt=receipt)
+        await robot.release("LEFT", "right_part", "left_target")
+        robot.clear_event("right_ready", expected_version=receipt.version)
+        await robot.move("LEFT", "left_depart")
+
+    async def consume_right():
+        # RIGHT consumes left_part from left_pad, carries to right_target.
+        receipt = await robot.wait_event("left_ready", 10)
+        await robot.move("RIGHT", "right_pickup_wait")
+        await robot.grasp("RIGHT", "left_part")
+        await robot.move("RIGHT", "right_target", receipt=receipt)
+        await robot.release("RIGHT", "left_part", "right_target")
+        robot.clear_event("left_ready", expected_version=receipt.version)
+        await robot.move("RIGHT", "right_depart")
+
+    # Run deposits concurrently (each arm independent), then consumes concurrently.
+    await asyncio.gather(deposit_left(), deposit_right())
+    await asyncio.gather(consume_left(), consume_right())
+```

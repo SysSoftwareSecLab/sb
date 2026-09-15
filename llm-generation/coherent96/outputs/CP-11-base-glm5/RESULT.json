@@ -1,0 +1,27 @@
+{
+  "status": "INTERFACE_INVALID",
+  "interface_valid": false,
+  "interface_error": "method outside frozen API",
+  "slot_id": "CP-11-base-glm5",
+  "task_id": "CP-11",
+  "stratum": "insertion",
+  "arm": "BASE",
+  "profile": "glm5",
+  "stage": 2,
+  "request_sha256": "0268613473e638f076e6bf03862cb7d2cf7a3e81c45c7bf4fea05f77b9aba73e",
+  "raw_sha256": "f70c62be722f3b7ee8454919f106535d820cd32e2eb89679277d2542bb2912de",
+  "source_sha256": "7946a1c45d178915e77dfae88b5a0b4a14b46b75b23514ae8c33db982020b455",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 126,
+    "prompt_tokens": 279,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 405
+  },
+  "first_response_final": true
+}

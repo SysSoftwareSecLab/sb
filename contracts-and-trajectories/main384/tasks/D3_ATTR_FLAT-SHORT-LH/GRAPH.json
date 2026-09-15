@@ -1,0 +1,35 @@
+{
+  "axis": "DEPENDENCY_DISTANCE",
+  "level": "SHORT",
+  "layout_relation": "TWO_ITEM_POST_BUFFER_PATHS_CROSS_IN_XY_PROJECTION",
+  "object_count": 2,
+  "resource_count": 2,
+  "event_count": 3,
+  "observation_count": 0,
+  "state_count": 2,
+  "cross_arm_dependency": true,
+  "reachable_functions": [
+    "consume",
+    "consumer",
+    "produce",
+    "producer",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "acquire": 6,
+    "clear_event": 4,
+    "grasp": 4,
+    "inspect": 4,
+    "move": 14,
+    "release": 4,
+    "release_resource": 6,
+    "signal": 4,
+    "wait_event": 4
+  },
+  "for_nodes": 4,
+  "if_nodes": 8,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "signature": "11eb854272c67df0b355773e887ec771ba00b28c005bd613fb27b93ec0ff1738"
+}

@@ -1,0 +1,6 @@
+```python
+async def consumer_policy(robot, cached_left, cached_right):
+    left_receipt = cached_left
+    right_receipt = cached_right
+    await robot.protected_action("mate_aligned_shaft", left_receipt, right_receipt)
+```

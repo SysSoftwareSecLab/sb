@@ -1,0 +1,108 @@
+import asyncio
+from bridge_robot_api import MotionFault
+
+# Pose constants
+LEFT_HOME = "left_home"
+LEFT_WAIT = "left_wait"
+RIGHT_HOME = "right_home"
+RIGHT_WAIT = "right_wait"
+SOURCE_0 = "source_0"
+SOURCE_1 = "source_1"
+BUFFER_0 = "buffer_0"
+BUFFER_1 = "buffer_1"
+TARGET_0 = "target_0"
+TARGET_1 = "target_1"
+
+# Item constants
+PART_0 = "part_0"
+PART_1 = "part_1"
+
+# Event constants
+EMPTY_0 = "empty_0"
+READY_0 = "ready_0"
+READY_1 = "ready_1"
+
+# Resource constants
+BUFFER_LOCK = "buffer_lock"
+
+# Move timeout
+MOVE_TIMEOUT = 4.0
+
+
+async def run_task(robot):
+    """D7_BUFFER_PREFETCH-LONG-LH: two parts cross a capacity-one buffer.
+
+    Structure (LONG variant):
+      - Producer (LEFT) places part_0 at buffer, departs, publishes ready_0.
+      - Consumer (RIGHT) waits ready_0, picks up part_0 from buffer, carries
+        to target_0 using the active ready_0 receipt, releases, departs,
+        publishes empty_0.
+      - Producer waits empty_0, clears it, then places part_1 at buffer,
+        departs, publishes ready_1.
+      - Consumer waits ready_1, picks up part_1 from buffer, carries to
+        target_1 using the active ready_1 receipt, releases, departs.
+    """
+    await asyncio.gather(producer(robot), consumer(robot))
+
+
+async def producer(robot):
+    """LEFT arm producer: source -> buffer -> publish ready; wait/clear empty."""
+    # Episode 1: part_0
+    await robot.acquire("LEFT", BUFFER_LOCK, 5.0)
+    await robot.move("LEFT", LEFT_HOME, MOVE_TIMEOUT)
+    await robot.move("LEFT", SOURCE_0, MOVE_TIMEOUT)
+    await robot.grasp("LEFT", PART_0)
+    await robot.move("LEFT", LEFT_HOME, MOVE_TIMEOUT)
+    await robot.move("LEFT", BUFFER_0, MOVE_TIMEOUT)
+    await robot.release("LEFT", PART_0, BUFFER_0)
+    await robot.move("LEFT", LEFT_HOME, MOVE_TIMEOUT)
+    await robot.release_resource("LEFT", BUFFER_LOCK)
+    ready0_receipt = robot.signal(READY_0, PART_0)
+
+    # Wait for consumer to finish part_0 and publish empty_0
+    empty_receipt = await robot.wait_event(EMPTY_0, 50.0)
+    # Clear empty_0 before entering buffer with second part
+    robot.clear_event(EMPTY_0, expected_version=empty_receipt.version)
+
+    # Episode 2: part_1
+    await robot.acquire("LEFT", BUFFER_LOCK, 5.0)
+    await robot.move("LEFT", LEFT_WAIT, MOVE_TIMEOUT)
+    await robot.move("LEFT", SOURCE_1, MOVE_TIMEOUT)
+    await robot.grasp("LEFT", PART_1)
+    await robot.move("LEFT", LEFT_WAIT, MOVE_TIMEOUT)
+    await robot.move("LEFT", BUFFER_1, MOVE_TIMEOUT)
+    await robot.release("LEFT", PART_1, BUFFER_1)
+    await robot.move("LEFT", LEFT_WAIT, MOVE_TIMEOUT)
+    await robot.release_resource("LEFT", BUFFER_LOCK)
+    robot.signal(READY_1, PART_1)
+
+    # Clear ready_0 receipt (consumer's carried move for part_0 is done)
+    robot.clear_event(READY_0, expected_version=ready0_receipt.version)
+
+
+async def consumer(robot):
+    """RIGHT arm consumer: wait ready -> buffer pickup -> target -> publish empty."""
+    # Episode 1: part_0
+    ready0_receipt = await robot.wait_event(READY_0, 50.0)
+    await robot.acquire("RIGHT", BUFFER_LOCK, 5.0)
+    await robot.move("RIGHT", RIGHT_HOME, MOVE_TIMEOUT)
+    await robot.move("RIGHT", BUFFER_0, MOVE_TIMEOUT)
+    await robot.grasp("RIGHT", PART_0)
+    await robot.move("RIGHT", TARGET_0, MOVE_TIMEOUT, receipt=ready0_receipt)
+    await robot.release("RIGHT", PART_0, TARGET_0)
+    await robot.move("RIGHT", RIGHT_HOME, MOVE_TIMEOUT)
+    await robot.release_resource("RIGHT", BUFFER_LOCK)
+    robot.clear_event(READY_0, expected_version=ready0_receipt.version)
+    robot.signal(EMPTY_0, PART_0)
+
+    # Episode 2: part_1
+    ready1_receipt = await robot.wait_event(READY_1, 50.0)
+    await robot.acquire("RIGHT", BUFFER_LOCK, 5.0)
+    await robot.move("RIGHT", RIGHT_WAIT, MOVE_TIMEOUT)
+    await robot.move("RIGHT", BUFFER_1, MOVE_TIMEOUT)
+    await robot.grasp("RIGHT", PART_1)
+    await robot.move("RIGHT", TARGET_1, MOVE_TIMEOUT, receipt=ready1_receipt)
+    await robot.release("RIGHT", PART_1, TARGET_1)
+    await robot.move("RIGHT", RIGHT_WAIT, MOVE_TIMEOUT)
+    await robot.release_resource("RIGHT", BUFFER_LOCK)
+    robot.clear_event(READY_1, expected_version=ready1_receipt.version)

@@ -1,0 +1,77 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    """D7_BUFFER_PREFETCH-SHORT-L0.
+
+    A = LEFT producer, B = RIGHT consumer.
+    Buffer is capacity-one (buffer_0/buffer_1 same coordinates).
+    Both participants own buffer_lock during buffer entry and departure.
+    """
+
+    async def producer_episode_part0():
+        """LEFT: pick part_0 from source_0, place at buffer_0, depart, publish ready_0."""
+        await robot.acquire("LEFT", "buffer_lock", 5)
+        await robot.move("LEFT", "left_home", 4)
+        await robot.move("LEFT", "source_0", 4)
+        await robot.grasp("LEFT", "part_0")
+        await robot.move("LEFT", "buffer_0", 4)
+        await robot.release("LEFT", "part_0", "buffer_0")
+        await robot.move("LEFT", "left_home", 4)
+        await robot.release_resource("LEFT", "buffer_lock")
+        robot.signal("ready_0", "part_0")
+
+    async def consumer_episode_part0():
+        """RIGHT: wait ready_0, pick part_0 from buffer_0, carry to target_0, depart, publish empty_0."""
+        receipt = await robot.wait_event("ready_0", 30)
+        await robot.acquire("RIGHT", "buffer_lock", 5)
+        await robot.move("RIGHT", "right_home", 4)
+        await robot.move("RIGHT", "buffer_0", 4)
+        await robot.grasp("RIGHT", "part_0")
+        await robot.move("RIGHT", "target_0", 4, receipt=receipt)
+        clear_event_after_move("ready_0", receipt)
+        await robot.release("RIGHT", "part_0", "target_0")
+        await robot.move("RIGHT", "right_home", 4)
+        await robot.release_resource("RIGHT", "buffer_lock")
+        robot.signal("empty_0", "part_0")
+
+    async def producer_episode_part1():
+        """LEFT: wait+clear empty_0, pick part_1 from source_1, place at buffer_1, depart, publish ready_1."""
+        receipt = await robot.wait_event("empty_0", 30)
+        clear_event_after_move("empty_0", receipt)
+        await robot.acquire("LEFT", "buffer_lock", 5)
+        await robot.move("LEFT", "left_home", 4)
+        await robot.move("LEFT", "left_wait", 4)
+        await robot.move("LEFT", "source_1", 4)
+        await robot.grasp("LEFT", "part_1")
+        await robot.move("LEFT", "buffer_1", 4)
+        await robot.release("LEFT", "part_1", "buffer_1")
+        await robot.move("LEFT", "left_home", 4)
+        await robot.release_resource("LEFT", "buffer_lock")
+        robot.signal("ready_1", "part_1")
+
+    async def consumer_episode_part1():
+        """RIGHT: wait ready_1, pick part_1 from buffer_1, carry to target_1, depart, clear ready_1."""
+        receipt = await robot.wait_event("ready_1", 30)
+        await robot.acquire("RIGHT", "buffer_lock", 5)
+        await robot.move("RIGHT", "right_home", 4)
+        await robot.move("RIGHT", "right_wait", 4)
+        await robot.move("RIGHT", "buffer_1", 4)
+        await robot.grasp("RIGHT", "part_1")
+        await robot.move("RIGHT", "target_1", 4, receipt=receipt)
+        clear_event_after_move("ready_1", receipt)
+        await robot.release("RIGHT", "part_1", "target_1")
+        await robot.move("RIGHT", "right_home", 4)
+        await robot.release_resource("RIGHT", "buffer_lock")
+
+    def clear_event_after_move(event_id: str, receipt) -> None:
+        """Clear event only after the carried move consuming it has completed."""
+        robot.clear_event(event_id, expected_version=receipt.version)
+
+    await producer_episode_part0()
+    await consumer_episode_part0()
+    await producer_episode_part1()
+    await consumer_episode_part1()
+```

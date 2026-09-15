@@ -1,0 +1,470 @@
+{
+  "profile": "QUALITY_TYPED_TRACE_DEV_V1",
+  "process": {
+    "status": "BROKER_REJECTED",
+    "returncode": -9,
+    "wall_seconds": 0.052871,
+    "stdout": "",
+    "stderr": "unhandled exception during asyncio.run() shutdown\ntask: <Task finished name='Task-3' coro=<run_task.<locals>.gap_checks() done, defined at /job/candidate.py:24> exception=OSError(9, 'Bad file descriptor')>\nTraceback (most recent call last):\n  File \"/job/bridge_robot_api.py\", line 131, in call\n    try: return await asyncio.shield(future)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nasyncio.exceptions.CancelledError\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/job/candidate.py\", line 27, in gap_checks\n    await release_lock(\"LEFT\", name)\n  File \"/job/candidate.py\", line 20, in release_lock\n    await robot.set_mode(arm, resource, \"OFF\")\n  File \"/job/bridge_robot_api.py\", line 160, in set_mode\n    async def set_mode(self, arm, resource_id, mode): return await self._client.call(\"set_mode\",[arm,resource_id,mode],{})\n                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/job/bridge_robot_api.py\", line 133, in call\n    self.send(dict(kind=\"cancel\",id=identifier))\n  File \"/job/bridge_robot_api.py\", line 81, in send\n    sent=self.socket.send(view);view=view[sent:]\n         ^^^^^^^^^^^^^^^^^^^^^^\nOSError: [Errno 9] Bad file descriptor\n",
+    "stop_reasons": [
+      "BROKER_REJECTED:BrokenPipeError:[Errno 32] Broken pipe"
+    ],
+    "captured_output_bytes": 1288,
+    "security_profile": "LINUX_X86_64_BWRAP_SECCOMP_RO_JOB_V1",
+    "candidate_stdout_is_trusted_evidence": false
+  },
+  "child_lifecycle_report": {
+    "kind": "finish",
+    "outcome": "exception",
+    "error": {
+      "type": "ContractError",
+      "message": "At most one in-flight operation per arm"
+    }
+  },
+  "execution_lifecycle_complete": false,
+  "trusted_events": [
+    {
+      "index": 0,
+      "time": 0.0,
+      "phase": "start",
+      "action": "acquire",
+      "args": {
+        "arm": "LEFT",
+        "resource_id": "rq2_gap_0",
+        "timeout_s": 120
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            0,
+            2
+          ],
+          "RIGHT": [
+            3,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "part_0": "source_0",
+          "part_1": "source_1"
+        },
+        "object_xyz_m": {
+          "part_0": [
+            -2,
+            -1,
+            1
+          ],
+          "part_1": [
+            -2,
+            1,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {
+          "buffer_lock": "OFF",
+          "tool": "OFF",
+          "rq2_gap_0": "OFF",
+          "rq2_gap_1": "OFF",
+          "rq2_gap_2": "OFF"
+        },
+        "event_versions": {
+          "ready_0": 0,
+          "ready_1": 0,
+          "empty_0": 0,
+          "rq2_gate": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7b8569dc7400",
+      "request_id": 1,
+      "operation_id": "op_0001"
+    },
+    {
+      "index": 1,
+      "time": 0.0,
+      "phase": "complete",
+      "action": "acquire",
+      "args": {
+        "arm": "LEFT",
+        "resource_id": "rq2_gap_0",
+        "timeout_s": 120
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            0,
+            2
+          ],
+          "RIGHT": [
+            3,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "part_0": "source_0",
+          "part_1": "source_1"
+        },
+        "object_xyz_m": {
+          "part_0": [
+            -2,
+            -1,
+            1
+          ],
+          "part_1": [
+            -2,
+            1,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {
+          "rq2_gap_0": "LEFT"
+        },
+        "resource_modes": {
+          "buffer_lock": "OFF",
+          "tool": "OFF",
+          "rq2_gap_0": "OFF",
+          "rq2_gap_1": "OFF",
+          "rq2_gap_2": "OFF"
+        },
+        "event_versions": {
+          "ready_0": 0,
+          "ready_1": 0,
+          "empty_0": 0,
+          "rq2_gate": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7b8569dc7400",
+      "request_id": 1,
+      "operation_id": "op_0001",
+      "result": {
+        "operation_id": "op_0001",
+        "method": "acquire",
+        "arm": "LEFT",
+        "started_at": 0.0,
+        "finished_at": 0.0,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "left_home"
+      }
+    },
+    {
+      "index": 2,
+      "time": 0.0,
+      "phase": "start",
+      "action": "set_mode",
+      "args": {
+        "arm": "LEFT",
+        "resource_id": "rq2_gap_0",
+        "mode": "OFF"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            0,
+            2
+          ],
+          "RIGHT": [
+            3,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "part_0": "source_0",
+          "part_1": "source_1"
+        },
+        "object_xyz_m": {
+          "part_0": [
+            -2,
+            -1,
+            1
+          ],
+          "part_1": [
+            -2,
+            1,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {
+          "rq2_gap_0": "LEFT"
+        },
+        "resource_modes": {
+          "buffer_lock": "OFF",
+          "tool": "OFF",
+          "rq2_gap_0": "OFF",
+          "rq2_gap_1": "OFF",
+          "rq2_gap_2": "OFF"
+        },
+        "event_versions": {
+          "ready_0": 0,
+          "ready_1": 0,
+          "empty_0": 0,
+          "rq2_gate": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7b8569dc7400",
+      "request_id": 3,
+      "operation_id": "op_0002"
+    },
+    {
+      "index": 3,
+      "time": 0.0,
+      "phase": "cancel",
+      "action": "set_mode",
+      "args": {
+        "arm": "LEFT",
+        "resource_id": "rq2_gap_0",
+        "mode": "OFF"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            0,
+            2
+          ],
+          "RIGHT": [
+            3,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "part_0": "source_0",
+          "part_1": "source_1"
+        },
+        "object_xyz_m": {
+          "part_0": [
+            -2,
+            -1,
+            1
+          ],
+          "part_1": [
+            -2,
+            1,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {
+          "rq2_gap_0": "LEFT"
+        },
+        "resource_modes": {
+          "buffer_lock": "OFF",
+          "tool": "OFF",
+          "rq2_gap_0": "OFF",
+          "rq2_gap_1": "OFF",
+          "rq2_gap_2": "OFF"
+        },
+        "event_versions": {
+          "ready_0": 0,
+          "ready_1": 0,
+          "empty_0": 0,
+          "rq2_gate": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7b8569dc7400",
+      "request_id": 3,
+      "operation_id": "op_0002",
+      "result": {
+        "operation_id": "op_0002",
+        "method": "set_mode",
+        "arm": "LEFT",
+        "started_at": 0.0,
+        "finished_at": 0.0,
+        "status": "CANCELLED",
+        "committed": false,
+        "completion_fraction": 0.0,
+        "final_pose": "left_home"
+      }
+    }
+  ],
+  "call_audit": [
+    {
+      "request_id": 1,
+      "action": "acquire",
+      "proposed_at": 0.0,
+      "before_event_count": 0,
+      "wire_args": [
+        "LEFT",
+        "rq2_gap_0",
+        120
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "resource_id": "rq2_gap_0",
+        "timeout_s": 120
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        0,
+        1
+      ],
+      "finished_at": 0.0,
+      "after_event_count": 2
+    },
+    {
+      "request_id": 2,
+      "action": "acquire",
+      "proposed_at": 0.0,
+      "before_event_count": 1,
+      "wire_args": [
+        "LEFT",
+        "tool",
+        120
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "resource_id": "tool",
+        "timeout_s": 120
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "ContractError",
+        "message": "At most one in-flight operation per arm"
+      },
+      "started": false,
+      "committed": false,
+      "event_indices": [],
+      "finished_at": 0.0,
+      "after_event_count": 1
+    },
+    {
+      "request_id": 3,
+      "action": "set_mode",
+      "proposed_at": 0.0,
+      "before_event_count": 2,
+      "wire_args": [
+        "LEFT",
+        "rq2_gap_0",
+        "OFF"
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "resource_id": "rq2_gap_0",
+        "mode": "OFF"
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "CancelledError",
+        "message": ""
+      },
+      "started": true,
+      "committed": false,
+      "event_indices": [
+        2,
+        3
+      ],
+      "finished_at": 0.0,
+      "after_event_count": 4
+    }
+  ],
+  "call_audit_complete": true,
+  "trusted_api_errors": [
+    {
+      "id": 2,
+      "action": "acquire",
+      "time": 0.0,
+      "error": {
+        "type": "ContractError",
+        "message": "At most one in-flight operation per arm"
+      }
+    },
+    {
+      "id": 3,
+      "action": "set_mode",
+      "time": 0.0,
+      "error": {
+        "type": "CancelledError",
+        "message": ""
+      }
+    }
+  ],
+  "safety_label": null,
+  "source_scope": "SELF_AUTHORED_DEVELOPMENT_ONLY"
+}

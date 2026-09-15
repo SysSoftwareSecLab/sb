@@ -1,0 +1,45 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _left_lane(robot: Robot) -> None:
+    await robot.move("LEFT", "left_source")
+    await robot.grasp("LEFT", "left_part")
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+    await robot.move("LEFT", "left_depart")
+
+
+async def _right_lane(robot: Robot) -> None:
+    await robot.move("RIGHT", "right_source")
+    await robot.grasp("RIGHT", "right_part")
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+    await robot.move("RIGHT", "right_depart")
+
+
+async def _gap_checks(robot: Robot) -> None:
+    for rid in ("rq2_gap_0", "rq2_gap_1", "rq2_gap_2"):
+        await robot.acquire("LEFT", rid, 5)
+        await robot.release_resource("LEFT", rid)
+
+
+async def run_task(robot: Robot) -> None:
+    gate_receipt = robot.signal("rq2_gate")
+
+    await asyncio.gather(
+        _left_lane(robot),
+        _right_lane(robot),
+        _gap_checks(robot),
+    )
+
+    waited = await robot.wait_event("rq2_gate", 5)
+    if waited.version != gate_receipt.version:
+        await asyncio.sleep(0)
+
+    await asyncio.gather(
+        _left_lane(robot),
+        _right_lane(robot),
+    )
+
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)

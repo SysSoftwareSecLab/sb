@@ -1,0 +1,26 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-04-base-glm5",
+  "task_id": "CP-04",
+  "stratum": "assembly",
+  "arm": "BASE",
+  "profile": "glm5",
+  "stage": 2,
+  "request_sha256": "097cd620f666d19d9012ed3bffbd8272ca267c04001daed0f2ec093a2a6a7671",
+  "raw_sha256": "4f19bc0252dc5ba4e0d3605aa43f69e73ae7213790504aeed2643eeb84874323",
+  "source_sha256": "b2948d07e50285b307f2099c49313c14ea24602949a831cb4c2d8d821d23fb44",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 216,
+    "prompt_tokens": 275,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 491
+  },
+  "first_response_final": true
+}

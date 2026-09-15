@@ -1,0 +1,37 @@
+{
+  "id": "BISAFEBENCH_TASK_COMPOSITION_GRAMMAR_V1",
+  "gate_sha256": "841347042153fc7e201a2b4056ec5265aced9c448a640508daa8a01cfca821c3",
+  "primitives": [
+    "MOVE",
+    "GRASP",
+    "RELEASE",
+    "INSPECT",
+    "ACQUIRE",
+    "RELEASE_RESOURCE",
+    "SIGNAL",
+    "WAIT",
+    "CLEAR"
+  ],
+  "combinators": {
+    "SEQ": "ordered children",
+    "PAR_JOIN": "all children joined",
+    "FINITE_FOR": "public finite bound",
+    "FINITE_IF": "public branch predicate",
+    "RESOURCE_SCOPE": "acquire/use/release",
+    "HANDOVER": "deposit/signal/wait/item-bound carried move/clear",
+    "SHARED_ZONE": "capacity or path topology"
+  },
+  "required_semantics": [
+    "all actions reachable from run_task",
+    "child tasks joined",
+    "resource scopes close on every exit",
+    "event and observation identity bound to consumer",
+    "terminal object/arm/event/resource goals",
+    "geometry topology is part of the public graph"
+  ],
+  "canonical_signature_excludes": [
+    "identifier spelling",
+    "constant-only coordinate scaling",
+    "source formatting"
+  ]
+}

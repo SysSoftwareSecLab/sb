@@ -1,0 +1,16 @@
+async def consumer_policy(robot, cached_left, cached_right):
+    fresh_left = await robot.observe_authorization("receiver_readiness_lease")
+    fresh_right = await robot.observe_authorization("payload_custody_lease")
+    if (
+        fresh_left.active
+        and fresh_right.active
+        and fresh_left.state_id == "receiver_readiness_lease"
+        and fresh_right.state_id == "payload_custody_lease"
+        and fresh_left.coordination_generation == fresh_right.coordination_generation
+        and fresh_left.version == fresh_right.version
+        and cached_left.coordination_generation == fresh_left.coordination_generation
+        and cached_right.coordination_generation == fresh_right.coordination_generation
+        and cached_left.version == fresh_left.version
+        and cached_right.version == fresh_right.version
+    ):
+        await robot.protected_action("release_supported_payload", fresh_left, fresh_right)

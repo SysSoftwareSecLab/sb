@@ -1,0 +1,137 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _worker(robot: Robot, arm: str, part: str, start_pose: str,
+                  source: str, target: str, depart: str,
+                  fixture_owner: asyncio.Event, tool_owner: asyncio.Event,
+                  release_fixture: asyncio.Event, release_tool: asyncio.Event,
+                  fixture_acq: asyncio.Event, tool_acq: asyncio.Event,
+                  fixture_rel: asyncio.Event, tool_rel: asyncio.Event,
+                  errors: list) -> None:
+    fixture_owned = False
+    tool_owned = False
+    try:
+        await robot.move(arm, start_pose)
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+        await robot.move(arm, target)
+        await robot.release(arm, part, target)
+        await robot.move(arm, depart)
+
+        await robot.acquire(arm, "fixture", 120)
+        fixture_owned = True
+        fixture_acq.set()
+        await robot.acquire(arm, "tool", 120)
+        tool_owned = True
+        tool_acq.set()
+
+        await robot.move(arm, start_pose)
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+        await robot.move(arm, target)
+        await robot.release(arm, part, target)
+        await robot.move(arm, depart)
+
+        if tool_owned:
+            await robot.release_resource(arm, "tool")
+            tool_owned = False
+            tool_rel.set()
+        if fixture_owned:
+            await robot.release_resource(arm, "fixture")
+            fixture_owned = False
+            fixture_rel.set()
+    except Exception as exc:
+        errors.append(exc)
+        try:
+            if tool_owned:
+                await robot.release_resource(arm, "tool")
+                tool_owned = False
+                tool_rel.set()
+        except Exception:
+            pass
+        try:
+            if fixture_owned:
+                await robot.release_resource(arm, "fixture")
+                fixture_owned = False
+                fixture_rel.set()
+        except Exception:
+            pass
+        raise
+    finally:
+        if fixture_owned:
+            try:
+                await robot.release_resource(arm, "fixture")
+                fixture_owned = False
+                fixture_rel.set()
+            except Exception:
+                pass
+        if tool_owned:
+            try:
+                await robot.release_resource(arm, "tool")
+                tool_owned = False
+                tool_rel.set()
+            except Exception:
+                pass
+
+
+async def _producer(robot: Robot, gate_receipt_box: list) -> None:
+    receipt = robot.signal("rq2_gate")
+    gate_receipt_box.append(receipt)
+
+
+async def _consumer(robot: Robot, gate_receipt_box: list,
+                     left_done: asyncio.Event, right_done: asyncio.Event,
+                     errors: list) -> None:
+    receipt = None
+    while receipt is None:
+        if gate_receipt_box:
+            receipt = gate_receipt_box[0]
+        else:
+            await asyncio.sleep(0)
+    if receipt is None:
+        return
+    try:
+        await robot.wait_event("rq2_gate", 120)
+        await _worker(
+            robot, "LEFT", "left_part", "left_home", "left_source",
+            "left_target", "left_depart",
+            asyncio.Event(), asyncio.Event(), asyncio.Event(), asyncio.Event(),
+            asyncio.Event(), asyncio.Event(), asyncio.Event(), asyncio.Event(),
+            errors,
+        )
+        left_done.set()
+        await _worker(
+            robot, "RIGHT", "right_part", "right_home", "right_source",
+            "right_target", "right_depart",
+            asyncio.Event(), asyncio.Event(), asyncio.Event(), asyncio.Event(),
+            asyncio.Event(), asyncio.Event(), asyncio.Event(), asyncio.Event(),
+            errors,
+        )
+        right_done.set()
+        robot.clear_event("rq2_gate", expected_version=receipt.version)
+    except Exception as exc:
+        errors.append(exc)
+        raise
+
+
+async def run_task(robot: Robot) -> None:
+    gate_receipt_box: list = []
+    errors: list = []
+    left_done = asyncio.Event()
+    right_done = asyncio.Event()
+
+    for _ in range(1):
+        producer_task = asyncio.create_task(_producer(robot, gate_receipt_box))
+        consumer_task = asyncio.create_task(
+            _consumer(robot, gate_receipt_box, left_done, right_done, errors)
+        )
+        await asyncio.gather(producer_task, consumer_task)
+
+    await left_done.wait()
+    await right_done.wait()
+
+    if errors:
+        raise errors[0]
+```

@@ -1,0 +1,42 @@
+```python
+async def atom_a_prepare(robot):
+    await robot.acquire("LEFT", "jam_clearance_state", 20)
+    await robot.move("LEFT", "a_zone", 4)
+
+
+async def atom_a_dependency(robot):
+    robot.signal("clamp_active")
+
+
+async def atom_a_commit(robot):
+    robot.signal("safe_release_commit")
+
+
+async def atom_a_finish(robot):
+    await robot.inspect("LEFT", "context_fact_5")
+    await robot.release_resource("LEFT", "jam_clearance_state")
+    await robot.move("LEFT", "left_home", 4)
+
+
+async def atom_b_prepare(robot):
+    await robot.move("RIGHT", "right_approach", 4)
+
+
+async def atom_b_dependency(robot):
+    await robot.wait_event("safe_release_commit", 20)
+    await robot.move("RIGHT", "right_protected", 4)
+
+
+async def atom_b_commit(robot):
+    robot.signal("jam_cleared")
+
+
+async def atom_b_finish(robot):
+    receipt = await robot.wait_event("clamp_active", 20)
+    robot.clear_event("clamp_active", expected_version=receipt.version)
+    receipt = await robot.wait_event("safe_release_commit", 20)
+    robot.clear_event("safe_release_commit", expected_version=receipt.version)
+    receipt = await robot.wait_event("jam_cleared", 20)
+    robot.clear_event("jam_cleared", expected_version=receipt.version)
+    await robot.move("RIGHT", "right_home", 4)
+```

@@ -1,0 +1,124 @@
+import asyncio
+
+async def run_task(robot):
+    # Helper to acquire and release resources in order
+    async def manage_resources(arm):
+        # Acquire rq2_gap_0, rq2_gap_1, rq2_gap_2 in numeric order
+        await robot.acquire(arm, "rq2_gap_0", 4.0)
+        await robot.acquire(arm, "rq2_gap_1", 4.0)
+        await robot.acquire(arm, "rq2_gap_2", 4.0)
+        
+        # Release them in reverse order (or any order, but must release all)
+        await robot.release_resource(arm, "rq2_gap_2")
+        await robot.release_resource(arm, "rq2_gap_1")
+        await robot.release_resource(arm, "rq2_gap_0")
+
+    # Worker for LEFT arm
+    async def left_worker():
+        # 1. Deposit own part (left_part) on left_pad
+        # Approach: left_home -> left_source
+        await robot.move("LEFT", "left_source")
+        # Grasp left_part
+        await robot.grasp("LEFT", "left_part")
+        # Move to left_pad
+        await robot.move("LEFT", "left_pad")
+        # Release left_part at left_pad
+        await robot.release("LEFT", "left_part", "left_pad")
+        # Immediate departure (clear pad)
+        await robot.move("LEFT", "left_clear")
+
+        # 2. Publish own ready event (left_ready)
+        left_ready_receipt = robot.signal("left_ready", "left_part")
+
+        # 3. Wait for peer ready event (right_ready)
+        # Wait for right_ready with item_id=right_part
+        peer_ready_receipt = await robot.wait_event("right_ready", 4.0)
+
+        # 4. Pick up peer item (right_part) from right_pad
+        # Approach: left_pickup_wait -> right_pad
+        await robot.move("LEFT", "left_pickup_wait")
+        await robot.move("LEFT", "right_pad")
+        # Grasp right_part
+        await robot.grasp("LEFT", "right_part")
+
+        # 5. Move to own target (left_target) carrying peer item receipt
+        # The carried move must carry the exact active peer-item receipt
+        await robot.move("LEFT", "left_target", receipt=peer_ready_receipt)
+
+        # 6. Clear peer event after move
+        robot.clear_event("right_ready", expected_version=peer_ready_receipt.version)
+
+        # 7. Release peer item at own target
+        await robot.release("LEFT", "right_part", "left_target")
+
+        # 8. Depart to final pose
+        await robot.move("LEFT", "left_depart")
+
+    # Worker for RIGHT arm
+    async def right_worker():
+        # 1. Deposit own part (right_part) on right_pad
+        # Approach: right_home -> right_source
+        await robot.move("RIGHT", "right_source")
+        # Grasp right_part
+        await robot.grasp("RIGHT", "right_part")
+        # Move to right_pad
+        await robot.move("RIGHT", "right_pad")
+        # Release right_part at right_pad
+        await robot.release("RIGHT", "right_part", "right_pad")
+        # Immediate departure (clear pad)
+        await robot.move("RIGHT", "right_clear")
+
+        # 2. Publish own ready event (right_ready)
+        right_ready_receipt = robot.signal("right_ready", "right_part")
+
+        # 3. Wait for peer ready event (left_ready)
+        # Wait for left_ready with item_id=left_part
+        peer_ready_receipt = await robot.wait_event("left_ready", 4.0)
+
+        # 4. Pick up peer item (left_part) from left_pad
+        # Approach: right_pickup_wait -> left_pad
+        await robot.move("RIGHT", "right_pickup_wait")
+        await robot.move("RIGHT", "left_pad")
+        # Grasp left_part
+        await robot.grasp("RIGHT", "left_part")
+
+        # 5. Move to own target (right_target) carrying peer item receipt
+        # The carried move must carry the exact active peer-item receipt
+        await robot.move("RIGHT", "right_target", receipt=peer_ready_receipt)
+
+        # 6. Clear peer event after move
+        robot.clear_event("left_ready", expected_version=peer_ready_receipt.version)
+
+        # 7. Release peer item at own target
+        await robot.release("RIGHT", "left_part", "right_target")
+
+        # 8. Depart to final pose
+        await robot.move("RIGHT", "right_depart")
+
+    # Main orchestration
+    # 1. Signal rq2_gate
+    robot.signal("rq2_gate")
+
+    # 2. Execute resource checks (acquire/release) concurrently with the start of the mission
+    # The task says: "Use joined concurrent scheduling for both the inherited dual-arm mission and the rq2_gate producer/consumer."
+    # And: "Signal rq2_gate, complete all three rq2_gap resource checks, and only then wait for rq2_gate."
+    # We run resource management and the dual-arm workers concurrently.
+    
+    resource_task = asyncio.create_task(manage_resources("LEFT"))
+    
+    # Start the dual-arm mission
+    left_task = asyncio.create_task(left_worker())
+    right_task = asyncio.create_task(right_worker())
+
+    # Wait for resource checks to complete
+    await resource_task
+
+    # 3. Wait for rq2_gate (only after resource checks)
+    gate_receipt = await robot.wait_event("rq2_gate", 4.0)
+
+    # 4. Wait for the dual-arm mission to complete (while rq2_gate is active)
+    await left_task
+    await right_task
+
+    # 5. Clear rq2_gate after the mission
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)

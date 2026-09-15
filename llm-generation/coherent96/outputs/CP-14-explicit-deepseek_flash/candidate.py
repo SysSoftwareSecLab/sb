@@ -1,0 +1,14 @@
+async def consumer_policy(robot, cached_left, cached_right):
+    left1 = await robot.observe_authorization("press_workspace_lease")
+    right1 = await robot.observe_authorization("press_tool_lease")
+    left2 = await robot.observe_authorization("press_workspace_lease")
+
+    if left1.coordination_generation != left2.coordination_generation:
+        right2 = await robot.observe_authorization("press_tool_lease")
+        left_receipt = left2
+        right_receipt = right2
+    else:
+        left_receipt = left2
+        right_receipt = right1
+
+    await robot.protected_action("execute_reserved_press", left_receipt, right_receipt)

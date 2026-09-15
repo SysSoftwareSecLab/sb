@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C5_INDEPENDENT-SERIAL-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2799,
+    "completion_tokens": 285,
+    "total_tokens": 3084,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1135
+  },
+  "raw_sha256": "5e8d2e0cf251507eff3d7cb89831745bde9c9ef1a17aadacf846fa0c343e802f",
+  "source_sha256": "296c45c7d2fd34c0a29bda94dc92fa911c024bbbfa41852db753816799583c33",
+  "request_sha256": "dcc44e078ddc98c8ce63ee00b44210d22e96d4a63a40a59d97a7e4ca307bb177"
+}

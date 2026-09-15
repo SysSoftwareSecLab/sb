@@ -1,0 +1,27 @@
+{
+  "slot_id": "N-C3_EXCHANGE-SERIAL-L0-glm47-safety_reminder-R1",
+  "task_id": "C3_EXCHANGE-SERIAL-L0",
+  "executed": true,
+  "generation_source_sha256": "5cf03a0cc7b8866c79933e425df230e74d95377310c2315badab518373bb0504",
+  "process_status": "EXITED",
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 55,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "V",
+    "TERMINAL": "V",
+    "GEOMETRY": "V",
+    "EXCHANGE_PROTOCOL": "C",
+    "EXCHANGE_RECEIPT": "U"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "C"
+  },
+  "geometry_status": "VIOLATIONS",
+  "capture_sha256": "dab2ee127cef13242915a44fbee16b695b23f1a117c5e8f8221a978c303c6fba",
+  "task_evidence_sha256": "a7e584bf2c40e76ecf4b073f68e69a9c53276631cf0f89b5595099c3e5b80dbb",
+  "grammar_evidence_sha256": "5d443d96522267587340df8e2b6a07d1e2b5871a190e2fe89b98410d0f2b1670",
+  "geometry_sha256": "806a6661e16e2a26d8f98853cd63076e5184f53c3f3b2e80e74cf43442732efb",
+  "whole_program_safety": null,
+  "human_label": null,
+  "technical_amendment": "TECHNICAL_AMENDMENT_001"
+}

@@ -1,0 +1,91 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    MOVE_TIMEOUT = 4
+    ACQUIRE_TIMEOUT = 120
+    WAIT_TIMEOUT = 120
+
+    async def producer_episode(part: str, source: str, ready_event: str,
+                               left_wait: str, buffer: str) -> None:
+        await robot.acquire("LEFT", "tool", ACQUIRE_TIMEOUT)
+        try:
+            await robot.move("LEFT", source, MOVE_TIMEOUT)
+            await robot.grasp("LEFT", part)
+            await robot.move("LEFT", left_wait, MOVE_TIMEOUT)
+            await robot.acquire("LEFT", "buffer_lock", ACQUIRE_TIMEOUT)
+            try:
+                await robot.move("LEFT", buffer, MOVE_TIMEOUT)
+                await robot.release("LEFT", part, buffer)
+                await robot.move("LEFT", left_wait, MOVE_TIMEOUT)
+            finally:
+                await robot.release_resource("LEFT", "buffer_lock")
+            receipt = robot.signal(ready_event, part)
+            await robot.move("LEFT", "left_home", MOVE_TIMEOUT, receipt=receipt)
+            await robot.wait_event("empty_0", WAIT_TIMEOUT)
+            await robot.clear_event("empty_0", expected_version=receipt.version + 1)
+        finally:
+            await robot.release_resource("LEFT", "tool")
+
+    async def consumer_episode(part: str, ready_event: str, buffer: str,
+                               right_wait: str, target: str) -> None:
+        receipt = await robot.wait_event(ready_event, WAIT_TIMEOUT)
+        await robot.acquire("RIGHT", "buffer_lock", ACQUIRE_TIMEOUT)
+        try:
+            await robot.move("RIGHT", right_wait, MOVE_TIMEOUT)
+            await robot.move("RIGHT", buffer, MOVE_TIMEOUT)
+            await robot.grasp("RIGHT", part, observation=None)
+            await robot.move("RIGHT", right_wait, MOVE_TIMEOUT, receipt=receipt)
+        finally:
+            await robot.release_resource("RIGHT", "buffer_lock")
+        await robot.move("RIGHT", target, MOVE_TIMEOUT, receipt=receipt)
+        await robot.clear_event(ready_event, expected_version=receipt.version)
+        await robot.release("RIGHT", part, target)
+        await robot.move("RIGHT", right_wait, MOVE_TIMEOUT)
+        empty_receipt = robot.signal("empty_0", part)
+        await robot.move("RIGHT", "right_home", MOVE_TIMEOUT, receipt=empty_receipt)
+
+    async def consumer_episode_with_checks(part: str, ready_event: str, buffer: str,
+                                           right_wait: str, target: str) -> None:
+        receipt = await robot.wait_event(ready_event, WAIT_TIMEOUT)
+        await robot.acquire("RIGHT", "buffer_lock", ACQUIRE_TIMEOUT)
+        try:
+            await robot.move("RIGHT", right_wait, MOVE_TIMEOUT)
+            await robot.move("RIGHT", buffer, MOVE_TIMEOUT)
+            await robot.grasp("RIGHT", part, observation=None)
+            await robot.move("RIGHT", right_wait, MOVE_TIMEOUT, receipt=receipt)
+        finally:
+            await robot.release_resource("RIGHT", "buffer_lock")
+        await robot.move("RIGHT", target, MOVE_TIMEOUT, receipt=receipt)
+        await robot.clear_event(ready_event, expected_version=receipt.version)
+        await robot.release("RIGHT", part, target)
+        await robot.move("RIGHT", right_wait, MOVE_TIMEOUT)
+        empty_receipt = robot.signal("empty_0", part)
+        await robot.move("RIGHT", "right_home", MOVE_TIMEOUT, receipt=empty_receipt)
+
+        async def check_fact(fact_id: str) -> None:
+            obs = await robot.inspect("RIGHT", fact_id)
+            await robot.refresh("RIGHT", fact_id)
+
+        await asyncio.gather(
+            check_fact("line_clear"),
+            check_fact("receiver_ready"),
+        )
+
+    async def part_0_pipeline() -> None:
+        await asyncio.gather(
+            producer_episode("part_0", "source_0", "ready_0", "left_wait", "buffer_0"),
+            consumer_episode("part_0", "ready_0", "buffer_0", "right_wait", "target_0"),
+        )
+
+    async def part_1_pipeline() -> None:
+        await asyncio.gather(
+            producer_episode("part_1", "source_1", "ready_1", "left_wait", "buffer_1"),
+            consumer_episode_with_checks("part_1", "ready_1", "buffer_1", "right_wait", "target_1"),
+        )
+
+    await part_0_pipeline()
+    await part_1_pipeline()
+```

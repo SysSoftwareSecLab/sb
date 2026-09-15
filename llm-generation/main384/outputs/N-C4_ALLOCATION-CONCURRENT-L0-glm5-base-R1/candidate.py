@@ -1,0 +1,61 @@
+import asyncio
+import json
+
+from bridge_robot_api import Robot
+
+
+async def _worker(robot: Robot, arm: str, allocation_obs) -> str | None:
+    """Inspect allocation once, then branch: selected arm transports, other stays home."""
+    # Each worker independently inspects allocation once before choosing branch.
+    obs = await robot.inspect(arm, "allocation")
+
+    value = obs.value
+    if isinstance(value, str):
+        value = json.loads(value)
+
+    selected_arm = value.get("selected_arm")
+
+    if selected_arm != arm:
+        # Unselected arm makes no move/grasp/release call.
+        return None
+
+    # Selected arm: approach shared_source from its home, immediately grasp.
+    if arm == "LEFT":
+        start_pose = "left_home"
+        depart_pose = "left_depart"
+    else:
+        start_pose = "right_home"
+        depart_pose = "right_depart"
+
+    # Approach must start from start_pose; immediately call grasp after move.
+    await robot.move(arm, "shared_source")
+    grasp_obs = await robot.grasp(arm, "shared_part", observation=allocation_obs)
+
+    # Carry to shared_target, release there, immediately depart.
+    await robot.move(arm, "shared_target")
+    await robot.release(arm, "shared_part", "shared_target")
+    await robot.move(arm, depart_pose)
+
+    return arm
+
+
+async def run_task(robot: Robot) -> None:
+    """Variant B: gather two worker candidates concurrently.
+
+    Both workers inspect allocation once; exactly the selected arm transports
+    shared_part from shared_source to shared_target, then departs. The other
+    remains at home.
+    """
+    # Pre-inspect allocation once to obtain a controller-issued observation for
+    # the selected grasp (grasp must carry the arm's own current allocation obs).
+    left_alloc_obs = await robot.inspect("LEFT", "allocation")
+    right_alloc_obs = await robot.inspect("RIGHT", "allocation")
+
+    # B gathers them concurrently; both perform the same inspections and one
+    # selected transport.
+    results = await asyncio.gather(
+        _worker(robot, "LEFT", left_alloc_obs),
+        _worker(robot, "RIGHT", right_alloc_obs),
+    )
+
+    return None

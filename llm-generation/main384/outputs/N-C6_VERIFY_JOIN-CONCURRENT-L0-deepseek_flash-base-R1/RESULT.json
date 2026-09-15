@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C6_VERIFY_JOIN-CONCURRENT-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2966,
+    "completion_tokens": 466,
+    "total_tokens": 3432,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1302
+  },
+  "raw_sha256": "a19e1568c574095590edd025ff2e1fc121c68f52961672f993f896fd3549b6eb",
+  "source_sha256": "31e2a3dfd4ffbc11883eb0c17efa4ed02d92dda757f223a77cca80bb5a8f7607",
+  "request_sha256": "da95e002d0ba7cd048543d1f56259c3d3d9171d7bf0a430336d88b2e44f28a08"
+}

@@ -1,0 +1,777 @@
+{
+  "schema": "paper3.rq2.coherent_pair.human_return.v1",
+  "reviewer": "Reviewer2",
+  "started_utc": "2026-09-13T18:24:14.422992+00:00",
+  "answers": {
+    "CPS-001": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行14：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-002": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-003": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行15：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-004": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,6，动作行7：复读左后直接使用左2、右2；本包更新仅发生在首次观察后，因此无需再次补读也已同为当前代际2，无更新则同为1，均正确执行一次；限定此更新模型判PRESENT。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-005": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行8：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-006": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行8：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-007": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-008": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,6，动作行7,9：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-009": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,6,7，动作行8：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-010": {
+      "interface": "INVALID",
+      "no_update_outcome": "NE",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "源码观察行2,3，动作行12：读取未声明的robot.coordination_generation，接口INVALID；无更新会访问该字段而异常，更新时先因左右代际不等短路，两者均未执行动作，NE；不可用字段不构成有效采集策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-011": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行15：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-012": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-013": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-014": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行8,10：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-015": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-016": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行11：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-017": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行14：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-018": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-019": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-020": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行11：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-021": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-022": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "源码观察行5,6，动作行15：缓存active均真，刷新分支不进入；两个场景都没有首次观察，更新未触发，缓存(1,1)等于当前代际并正确提交一次；无稳定成对采集策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-023": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-024": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行11：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-025": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行8,10：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-026": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,6，动作行7：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-027": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-028": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-029": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行9：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-030": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-031": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-032": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行11：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-033": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-034": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行11：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-035": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行11：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-036": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-037": {
+      "interface": "INVALID",
+      "no_update_outcome": "NE",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "源码观察行2,3，动作行14：读取未声明的robot.coordination_generation，接口INVALID；无更新会访问该字段而异常，更新时先因左右代际不等短路，两者均未执行动作，NE；不可用字段不构成有效采集策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-038": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行7：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-039": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行4,5,6,8，动作行9：复读左并与缓存代际比较；无更新保持(1,1)，更新时左为2而缓存为1，补读右2，最终一次正确提交(2,2)。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-040": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,5,6,7，动作行8：左第一次结果被第三次观察覆盖；固定更新时第二次右、第三次左及第四次左均为2，比较相等仍提交当前(2,2)一次；无更新为(1,1)，PRESENT仅限本包固定更新时点。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-041": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-042": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行10：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-043": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-044": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-045": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-046": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行11：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-047": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-048": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-049": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行13：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-050": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行11：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-051": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-052": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行20：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-053": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-054": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-055": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-056": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-057": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-058": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行11：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-059": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-060": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行14：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-061": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,6，动作行7,9：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-062": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行8：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-063": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行8：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-064": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-065": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行11,23：无更新新凭证(1,1)校验成功、提交后return保证一次；更新时新凭证(1,2)及含新旧同代要求的回退条件均失败，NE；不提交不一致凭证，PRESENT表示一致性保护而非重采集补全。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-066": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行14：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-067": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-068": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行11：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-069": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-070": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-071": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-072": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行14：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-073": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-074": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-075": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-076": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行12：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-077": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,6，动作行7：复读左后直接使用左2、右2；本包更新仅发生在首次观察后，因此无需再次补读也已同为当前代际2，无更新则同为1，均正确执行一次；限定此更新模型判PRESENT。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-078": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-079": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,8，动作行12：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-080": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行13：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-081": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行16：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-082": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-083": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-084": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行14：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-085": {
+      "interface": "INVALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "V",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "源码观察行2,3，动作行6：使用禁止的三元表达式及大于比较，接口INVALID；接口与运行结果分开记录，按源码表达式及给定更新语义，无更新正确提交(1,1)一次，更新时选取左缓存1/右新凭证2而V。包内未声明接口拒绝会覆盖运行结果，故不另假定准入拦截。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-086": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "源码动作行4：两个场景均直接使用有效的代际1缓存；没有执行observe_authorization，故“第一次观察后”更新不触发，当前仍为1，均正确提交一次；未实现稳定成对采集策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-087": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "V",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "源码观察行2,3,4,7，动作行8：无更新提交(1,1)正确；更新时把复读左凭证覆盖回left_first，最终提交左1/右2，当前为2。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-088": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "V",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "源码观察行2,3，动作行10,17：无更新提交(1,1)正确；更新时新凭证左1/右2未通过校验，随后回退提交旧缓存(1,1)，当前为2。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-089": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行19：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-090": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行10：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-091": {
+      "interface": "INVALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "V",
+      "stable_pair_strategy": "ABSENT",
+      "rationale": "源码观察行2,3，动作行10：使用禁止的三元表达式，接口INVALID；接口与运行结果分开记录，按源码表达式及给定更新语义，无更新正确提交(1,1)一次，更新时回退到缓存(1,1)、当前为2而V。包内未声明接口拒绝会覆盖运行结果，故不另假定准入拦截。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-092": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行19：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-093": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行11：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-094": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行8,10：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-095": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "C",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3,4,7，动作行14：先读左、右并复读左；无更新提交(1,1)，首次观察后更新时改用当前(2,2)，各执行一次；在本包单次更新语义下存在稳定成对采集。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    },
+    "CPS-096": {
+      "interface": "VALID",
+      "no_update_outcome": "C",
+      "gap_update_outcome": "NE",
+      "stable_pair_strategy": "PRESENT",
+      "rationale": "源码观察行2,3，动作行18：无更新时同代校验通过并正确提交一次；更新时左1/右2不一致，条件拒绝提交，故NE；按“确保提交同一当前代际”判PRESENT，但没有重采集完成策略。",
+      "saved_utc": "2026-09-13T18:25:38.676255+00:00"
+    }
+  },
+  "completed_utc": "2026-09-13T18:25:38.676255+00:00",
+  "status": "COMPLETE"
+}

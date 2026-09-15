@@ -1,0 +1,70 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # Variant A: A alternates complete producer/consumer episodes.
+    # Episode 1: LEFT produces part_0 to buffer_0, RIGHT consumes part_0 to target_0.
+    # Episode 2: LEFT produces part_1 to buffer_1, RIGHT consumes part_1 to target_1.
+    # Buffer is capacity-one; buffer_lock owned during entry and departure.
+
+    # ---- Episode 1: part_0 ----
+    # LEFT producer: left_home -> source_0, grasp part_0, -> buffer_0, release, depart.
+    await robot.move("LEFT", "source_0")
+    obs_p0 = await robot.grasp("LEFT", "part_0")
+    await robot.acquire("LEFT", "buffer_lock", 5)
+    await robot.move("LEFT", "buffer_0")
+    await robot.release("LEFT", "part_0", "buffer_0")
+    await robot.move("LEFT", "left_home")
+    await robot.release_resource("LEFT", "buffer_lock")
+    ready_p0 = robot.signal("ready_0", "part_0")
+
+    # RIGHT consumer: right_home -> buffer_0, grasp part_0, -> target_0, release, depart.
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+    await robot.move("RIGHT", "buffer_0")
+    await robot.grasp("RIGHT", "part_0", observation=obs_p0)
+    await robot.move("RIGHT", "target_0", receipt=ready_p0)
+    clear_event_after_move("ready_0", ready_p0, robot)
+    await robot.release("RIGHT", "part_0", "target_0")
+    await robot.move("RIGHT", "right_home")
+    await robot.release_resource("RIGHT", "buffer_lock")
+    empty_p0 = robot.signal("empty_0", "part_0")
+    # Producer waits and clears empty_0 before entering buffer with second part.
+    await robot.wait_event("empty_0", 5)
+    clear_event_after_wait("empty_0", empty_p0, robot)
+
+    # ---- Episode 2: part_1 ----
+    # LEFT producer: left_home -> left_wait -> source_1, grasp part_1, -> buffer_1, release, depart.
+    await robot.move("LEFT", "left_wait")
+    await robot.move("LEFT", "source_1")
+    obs_p1 = await robot.grasp("LEFT", "part_1")
+    await robot.acquire("LEFT", "buffer_lock", 5)
+    await robot.move("LEFT", "buffer_1")
+    await robot.release("LEFT", "part_1", "buffer_1")
+    await robot.move("LEFT", "left_home")
+    await robot.release_resource("LEFT", "buffer_lock")
+    ready_p1 = robot.signal("ready_1", "part_1")
+
+    # RIGHT consumer: right_home -> right_wait -> buffer_1, grasp part_1, -> target_1, release, depart.
+    await robot.acquire("RIGHT", "buffer_lock", 5)
+    await robot.move("RIGHT", "right_wait")
+    await robot.move("RIGHT", "buffer_1")
+    await robot.grasp("RIGHT", "part_1", observation=obs_p1)
+    await robot.move("RIGHT", "target_1", receipt=ready_p1)
+    clear_event_after_move("ready_1", ready_p1, robot)
+    await robot.release("RIGHT", "part_1", "target_1")
+    await robot.move("RIGHT", "right_home")
+    await robot.release_resource("RIGHT", "buffer_lock")
+    empty_p1 = robot.signal("empty_0", "part_1")
+    await robot.wait_event("empty_0", 5)
+    clear_event_after_wait("empty_0", empty_p1, robot)
+
+
+def clear_event_after_move(event_id: str, receipt, robot: Robot) -> None:
+    # clear_event is synchronous; call only after the carried move truly completed.
+    robot.clear_event(event_id, expected_version=receipt.version)
+
+
+def clear_event_after_wait(event_id: str, receipt, robot: Robot) -> None:
+    # The signaled receipt version is known; clear with that exact version after wait.
+    robot.clear_event(event_id, expected_version=receipt.version)

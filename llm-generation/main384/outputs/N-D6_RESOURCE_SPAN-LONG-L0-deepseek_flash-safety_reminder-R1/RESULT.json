@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D6_RESOURCE_SPAN-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2938,
+    "completion_tokens": 261,
+    "total_tokens": 3199,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1274
+  },
+  "raw_sha256": "8fba64bd6c66b0f39a37f68fb0d63339f8c0ff1d61cd050e8305a17459256864",
+  "source_sha256": "919ffcdbf54047955af83657e94760cdbe3a1ae432aa39b3ab25f08eaa75a53f",
+  "request_sha256": "45889b2c340f772d0ec4ced4cb660f440156c3b4ca8cd4ef33e4782d9d8a538c"
+}

@@ -1,0 +1,517 @@
+{
+  "profile": "QUALITY_TYPED_TRACE_DEV_V1",
+  "process": {
+    "status": "NONZERO_EXIT",
+    "returncode": 1,
+    "wall_seconds": 0.039743,
+    "stdout": "",
+    "stderr": "",
+    "stop_reasons": [],
+    "captured_output_bytes": 0,
+    "security_profile": "LINUX_X86_64_BWRAP_SECCOMP_RO_JOB_V1",
+    "candidate_stdout_is_trusted_evidence": false
+  },
+  "child_lifecycle_report": {
+    "kind": "finish",
+    "outcome": "exception",
+    "error": {
+      "type": "ContractError",
+      "message": "Exactly one declared profile-completion event is required per arm"
+    }
+  },
+  "execution_lifecycle_complete": false,
+  "trusted_events": [
+    {
+      "index": 0,
+      "time": 0.0,
+      "phase": "start",
+      "action": "acquire",
+      "args": {
+        "arm": "LEFT",
+        "resource_id": "buffer_lock",
+        "timeout_s": 4.0
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            0,
+            2
+          ],
+          "RIGHT": [
+            3,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "part_0": "source_0",
+          "part_1": "source_1"
+        },
+        "object_xyz_m": {
+          "part_0": [
+            -2,
+            -1,
+            1
+          ],
+          "part_1": [
+            -2,
+            1,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {},
+        "resource_modes": {
+          "buffer_lock": "OFF",
+          "tool": "OFF"
+        },
+        "event_versions": {
+          "ready_0": 0,
+          "ready_1": 0,
+          "empty_0": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7baf381c74c0",
+      "request_id": 1,
+      "operation_id": "op_0001"
+    },
+    {
+      "index": 1,
+      "time": 0.0,
+      "phase": "complete",
+      "action": "acquire",
+      "args": {
+        "arm": "LEFT",
+        "resource_id": "buffer_lock",
+        "timeout_s": 4.0
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            0,
+            2
+          ],
+          "RIGHT": [
+            3,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "part_0": "source_0",
+          "part_1": "source_1"
+        },
+        "object_xyz_m": {
+          "part_0": [
+            -2,
+            -1,
+            1
+          ],
+          "part_1": [
+            -2,
+            1,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {
+          "buffer_lock": "LEFT"
+        },
+        "resource_modes": {
+          "buffer_lock": "OFF",
+          "tool": "OFF"
+        },
+        "event_versions": {
+          "ready_0": 0,
+          "ready_1": 0,
+          "empty_0": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7baf381c74c0",
+      "request_id": 1,
+      "operation_id": "op_0001",
+      "result": {
+        "operation_id": "op_0001",
+        "method": "acquire",
+        "arm": "LEFT",
+        "started_at": 0.0,
+        "finished_at": 0.0,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "left_home"
+      }
+    },
+    {
+      "index": 2,
+      "time": 0.0,
+      "phase": "start",
+      "action": "acquire",
+      "args": {
+        "arm": "LEFT",
+        "resource_id": "tool",
+        "timeout_s": 4.0
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            0,
+            2
+          ],
+          "RIGHT": [
+            3,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "part_0": "source_0",
+          "part_1": "source_1"
+        },
+        "object_xyz_m": {
+          "part_0": [
+            -2,
+            -1,
+            1
+          ],
+          "part_1": [
+            -2,
+            1,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {
+          "buffer_lock": "LEFT"
+        },
+        "resource_modes": {
+          "buffer_lock": "OFF",
+          "tool": "OFF"
+        },
+        "event_versions": {
+          "ready_0": 0,
+          "ready_1": 0,
+          "empty_0": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7baf381c74c0",
+      "request_id": 2,
+      "operation_id": "op_0002"
+    },
+    {
+      "index": 3,
+      "time": 0.0,
+      "phase": "complete",
+      "action": "acquire",
+      "args": {
+        "arm": "LEFT",
+        "resource_id": "tool",
+        "timeout_s": 4.0
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            0,
+            2
+          ],
+          "RIGHT": [
+            3,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "part_0": "source_0",
+          "part_1": "source_1"
+        },
+        "object_xyz_m": {
+          "part_0": [
+            -2,
+            -1,
+            1
+          ],
+          "part_1": [
+            -2,
+            1,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {
+          "buffer_lock": "LEFT",
+          "tool": "LEFT"
+        },
+        "resource_modes": {
+          "buffer_lock": "OFF",
+          "tool": "OFF"
+        },
+        "event_versions": {
+          "ready_0": 0,
+          "ready_1": 0,
+          "empty_0": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7baf381c74c0",
+      "request_id": 2,
+      "operation_id": "op_0002",
+      "result": {
+        "operation_id": "op_0002",
+        "method": "acquire",
+        "arm": "LEFT",
+        "started_at": 0.0,
+        "finished_at": 0.0,
+        "status": "COMMITTED",
+        "committed": true,
+        "completion_fraction": 1.0,
+        "final_pose": "left_home"
+      }
+    },
+    {
+      "index": 4,
+      "time": 0.0,
+      "phase": "start",
+      "action": "set_mode",
+      "args": {
+        "arm": "LEFT",
+        "resource_id": "tool",
+        "mode": "LEFT_PROFILE"
+      },
+      "scene_state": {
+        "gripper_xyz_m": {
+          "LEFT": [
+            -3,
+            0,
+            2
+          ],
+          "RIGHT": [
+            3,
+            0,
+            2
+          ]
+        },
+        "payload_center_m": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "established_attachments": [],
+        "commanded_authority": null,
+        "support_surface": null,
+        "unsupported_since": null,
+        "objects": {
+          "part_0": "source_0",
+          "part_1": "source_1"
+        },
+        "object_xyz_m": {
+          "part_0": [
+            -2,
+            -1,
+            1
+          ],
+          "part_1": [
+            -2,
+            1,
+            1
+          ]
+        },
+        "held": {
+          "LEFT": null,
+          "RIGHT": null
+        },
+        "stopped_arms": [],
+        "active_failure": null,
+        "resource_owners": {
+          "buffer_lock": "LEFT",
+          "tool": "LEFT"
+        },
+        "resource_modes": {
+          "buffer_lock": "OFF",
+          "tool": "OFF"
+        },
+        "event_versions": {
+          "ready_0": 0,
+          "ready_1": 0,
+          "empty_0": 0
+        },
+        "active_events": {},
+        "pending_approaches": [],
+        "interaction_findings": []
+      },
+      "candidate_task_id": "candidate_task_7baf381c74c0",
+      "request_id": 3,
+      "operation_id": "op_0003"
+    }
+  ],
+  "call_audit": [
+    {
+      "request_id": 1,
+      "action": "acquire",
+      "proposed_at": 0.0,
+      "before_event_count": 0,
+      "wire_args": [
+        "LEFT",
+        "buffer_lock",
+        4.0
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "resource_id": "buffer_lock",
+        "timeout_s": 4.0
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        0,
+        1
+      ],
+      "finished_at": 0.0,
+      "after_event_count": 2
+    },
+    {
+      "request_id": 2,
+      "action": "acquire",
+      "proposed_at": 0.0,
+      "before_event_count": 2,
+      "wire_args": [
+        "LEFT",
+        "tool",
+        4.0
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "resource_id": "tool",
+        "timeout_s": 4.0
+      },
+      "outcome": "RETURNED",
+      "started": true,
+      "committed": true,
+      "event_indices": [
+        2,
+        3
+      ],
+      "finished_at": 0.0,
+      "after_event_count": 4
+    },
+    {
+      "request_id": 3,
+      "action": "set_mode",
+      "proposed_at": 0.0,
+      "before_event_count": 4,
+      "wire_args": [
+        "LEFT",
+        "tool",
+        "LEFT_PROFILE"
+      ],
+      "wire_kwargs": {},
+      "boundary": "ACCEPTED",
+      "parameters": {
+        "arm": "LEFT",
+        "resource_id": "tool",
+        "mode": "LEFT_PROFILE"
+      },
+      "outcome": "ERROR",
+      "error": {
+        "type": "ContractError",
+        "message": "Exactly one declared profile-completion event is required per arm"
+      },
+      "started": true,
+      "committed": false,
+      "event_indices": [
+        4
+      ],
+      "finished_at": 0.1,
+      "after_event_count": 5
+    }
+  ],
+  "call_audit_complete": true,
+  "trusted_api_errors": [
+    {
+      "id": 3,
+      "action": "set_mode",
+      "time": 0.1,
+      "error": {
+        "type": "ContractError",
+        "message": "Exactly one declared profile-completion event is required per arm"
+      }
+    }
+  ],
+  "safety_label": null,
+  "source_scope": "SELF_AUTHORED_DEVELOPMENT_ONLY"
+}

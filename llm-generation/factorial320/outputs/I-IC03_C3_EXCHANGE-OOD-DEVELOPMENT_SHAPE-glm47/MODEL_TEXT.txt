@@ -1,0 +1,126 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants derived from PUBLIC TASK
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    RIGHT_HOME = "right_home"
+    LEFT_SOURCE = "left_source"
+    RIGHT_SOURCE = "right_source"
+    LEFT_PAD = "left_pad"
+    RIGHT_PAD = "right_pad"
+    LEFT_TARGET = "left_target"
+    RIGHT_TARGET = "right_target"
+    LEFT_DEPART = "left_depart"
+    RIGHT_DEPART = "right_depart"
+    LEFT_PICKUP_WAIT = "left_pickup_wait"
+    RIGHT_PICKUP_WAIT = "right_pickup_wait"
+    
+    # Objects
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Events
+    LEFT_READY = "left_ready"
+    RIGHT_READY = "right_ready"
+    RQ2_GATE = "rq2_gate"
+    
+    # Durations
+    MOVE_DURATION = 1.0
+    
+    # Helper to execute the inherited mission (Deposit -> Wait -> Consume)
+    # This implements the "Consumer" logic described in the task.
+    async def inherited_mission(arm: str, own_part: str, own_source: str, own_pad: str, own_target: str, own_depart: str, 
+                                peer_ready_event: str, peer_part: str, peer_pad: str, peer_pickup_wait: str):
+        
+        # 1. Deposit own part
+        # Approach and Grasp own part
+        await robot.move(arm, own_source)
+        await robot.grasp(arm, own_part)
+        
+        # Move to pad and release
+        await robot.move(arm, own_pad)
+        await robot.release(arm, own_part, own_pad)
+        
+        # Immediate departure (clear the pad)
+        await robot.move(arm, own_depart)
+        
+        # 2. Publish own ready event
+        # "Each arm deposits its own part ... and immediately clears the pad before publishing its own item-bound ready event."
+        receipt = robot.signal(peer_ready_event, peer_part)
+        
+        # 3. Wait for peer ready
+        # "Before an arm picks up the peer item, both own deposit/clear and a wait for peer ready must have completed."
+        peer_receipt = await robot.wait_event(peer_ready_event, timeout_s=30)
+        
+        # 4. Consume peer item
+        # Approach peer pad
+        await robot.move(arm, peer_pickup_wait)
+        await robot.move(arm, peer_pad)
+        
+        # Grasp peer part
+        # "The carried move to its own target must carry the exact active peer-item receipt returned by wait"
+        await robot.grasp(arm, peer_part)
+        
+        # Move to own target carrying the receipt
+        await robot.move(arm, own_target, receipt=peer_receipt)
+        
+        # Release peer part
+        await robot.release(arm, peer_part, own_target)
+        
+        # Clear the peer ready event
+        # "clear that event after that move"
+        robot.clear_event(peer_ready_event, expected_version=peer_receipt.version)
+        
+        # Depart to final state
+        await robot.move(arm, own_depart)
+
+    # Main execution structure
+    # "Use the development shape FOR -> IF -> PAR_JOIN"
+    # "Inside one finite loop iteration, concurrently join an rq2_gate producer and consumer"
+    
+    # We run one iteration of the loop as implied by the finite nature and the specific goal state.
+    
+    # Define the producer task for the gate
+    async def gate_producer():
+        # Signal the gate event
+        robot.signal(RQ2_GATE)
+    
+    # Define the consumer task for the gate
+    async def gate_consumer():
+        # Wait for the gate event
+        gate_receipt = await robot.wait_event(RQ2_GATE, timeout_s=30)
+        
+        # Execute the complete inherited mission
+        # We run the two arms' missions concurrently within the consumer context
+        # to satisfy the "Experimental structure is CONCURRENCY=SERIAL" (which implies 
+        # the logical steps of the exchange happen, but here we are inside the gate consumer).
+        # The task says "Inside one finite loop iteration, concurrently join an rq2_gate producer and consumer; 
+        # the consumer waits the exact active receipt, executes the complete inherited mission".
+        # The inherited mission involves both arms.
+        
+        await asyncio.gather(
+            inherited_mission(
+                LEFT, LEFT_PART, LEFT_SOURCE, LEFT_PAD, LEFT_TARGET, LEFT_DEPART,
+                LEFT_READY, RIGHT_PART, RIGHT_PAD, RIGHT_PICKUP_WAIT
+            ),
+            inherited_mission(
+                RIGHT, RIGHT_PART, RIGHT_SOURCE, RIGHT_PAD, RIGHT_TARGET, RIGHT_DEPART,
+                RIGHT_READY, LEFT_PART, LEFT_PAD, LEFT_PICKUP_WAIT
+            )
+        )
+        
+        # Clear the gate event after mission completion
+        robot.clear_event(RQ2_GATE, expected_version=gate_receipt.version)
+
+    # Execute the loop (one iteration)
+    # FOR -> IF -> PAR_JOIN
+    # We join the producer and consumer concurrently.
+    await asyncio.gather(gate_producer(), gate_consumer())
+
+```

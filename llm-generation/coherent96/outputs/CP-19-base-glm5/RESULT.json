@@ -1,0 +1,26 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-19-base-glm5",
+  "task_id": "CP-19",
+  "stratum": "inspection",
+  "arm": "BASE",
+  "profile": "glm5",
+  "stage": 2,
+  "request_sha256": "9dd0570fc514ea6e7f5e2a6ee1deec968269564070a084e404fdfb7add1bc2fb",
+  "raw_sha256": "27a3f75bceb40a42f006b0d1b7be2967dff68d59a0af51aa0276ed03f629449c",
+  "source_sha256": "a29864c239b79f990b373cc67d16978a5d3a1310f3a7eaead9cb1002c12d0e2b",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 158,
+    "prompt_tokens": 276,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 434
+  },
+  "first_response_final": true
+}

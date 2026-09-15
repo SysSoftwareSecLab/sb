@@ -1,0 +1,150 @@
+```python
+import asyncio
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    """D3_ATTR_FLAT-LONG-LH: LEFT producer, RIGHT consumer, capacity-one buffer.
+
+    Structure implemented per required_order:
+    - A alternates complete producer/consumer episodes (LEFT).
+    - B runs producer and consumer coroutines together (RIGHT).
+    - LONG: LEFT owns tool across second-item wait and checks.
+    - D3: second-item checks serially (inspect line_clear with LEFT,
+      then receiver_ready with RIGHT) before transfer.
+    """
+
+    # ---- shared state ----
+    empty_receipt = None
+    ready_receipts = {0: None, 1: None}
+    empty_cleared = False
+    ready_cleared = {0: False, 1: False}
+    empty_lock = asyncio.Lock()
+    ready_lock = asyncio.Lock()
+
+    # ---- LEFT producer episodes ----
+    async def producer_episode(i):
+        nonlocal empty_receipt, empty_cleared
+
+        item = "part_" + str(i)
+        source = "source_" + str(i)
+        buffer = "buffer_" + str(i)
+        ready_event = "ready_" + str(i)
+
+        # LONG: acquire tool before source pickup and keep across wait/checks.
+        await robot.acquire("LEFT", "tool", 120)
+
+        try:
+            # Approach source from left_home (i==0) or left_wait (i==1).
+            if i == 0:
+                await robot.move("LEFT", "left_home", 30)
+            else:
+                await robot.move("LEFT", "left_wait", 30)
+            await robot.move("LEFT", source, 30)
+            await robot.grasp("LEFT", item)
+
+            # Acquire buffer_lock for buffer entry.
+            await robot.acquire("LEFT", "buffer_lock", 120)
+            try:
+                await robot.move("LEFT", buffer, 30)
+                await robot.release("LEFT", item, buffer)
+                # Immediate separating departure from buffer.
+                if i == 0:
+                    await robot.move("LEFT", "left_home", 30)
+                else:
+                    await robot.move("LEFT", "left_wait", 30)
+            finally:
+                await robot.release_resource("LEFT", "buffer_lock")
+
+            # Publish ready after departing buffer.
+            r = robot.signal(ready_event, item)
+            async with ready_lock:
+                ready_receipts[i] = r
+
+            # Producer departs to home before publishing empty (i==0) or
+            # before waiting for empty (i==1).
+            await robot.move("LEFT", "left_home", 30)
+
+            if i == 0:
+                # Publish empty_0 after first producer episode completes.
+                e = robot.signal("empty_0", item)
+                async with empty_lock:
+                    empty_receipt = e
+                    empty_cleared = False
+            else:
+                # Second item: wait and clear exact empty_0 receipt before
+                # entering buffer with the second part.
+                er = await robot.wait_event("empty_0", 120)
+                async with empty_lock:
+                    if empty_receipt is not None and not empty_cleared:
+                        robot.clear_event("empty_0", expected_version=empty_receipt.version)
+                        empty_cleared = True
+                # D3 serial checks: inspect line_clear with LEFT, then
+                # receiver_ready with RIGHT.
+                await robot.inspect("LEFT", "line_clear")
+                await robot.inspect("RIGHT", "receiver_ready")
+
+        finally:
+            # Release tool on every normal/failure/cancellation exit.
+            try:
+                await robot.release_resource("LEFT", "tool")
+            except Exception:
+                pass
+
+    async def producer():
+        await producer_episode(0)
+        await producer_episode(1)
+
+    # ---- RIGHT consumer episodes ----
+    async def consumer_episode(i):
+        item = "part_" + str(i)
+        buffer = "buffer_" + str(i)
+        target = "target_" + str(i)
+        ready_event = "ready_" + str(i)
+
+        # Wait corresponding ready receipt before pickup.
+        rr = await robot.wait_event(ready_event, 120)
+
+        # Approach buffer from right_home (i==0) or right_wait (i==1).
+        if i == 0:
+            await robot.move("RIGHT", "right_home", 30)
+        else:
+            await robot.move("RIGHT", "right_wait", 30)
+
+        await robot.acquire("RIGHT", "buffer_lock", 120)
+        try:
+            await robot.move("RIGHT", buffer, 30)
+            await robot.grasp("RIGHT", item)
+            # Supply exact active item receipt on carried move to target.
+            await robot.move("RIGHT", target, 30, receipt=rr)
+            await robot.release("RIGHT", item, target)
+            # Immediate separating departure from target.
+            if i == 0:
+                await robot.move("RIGHT", "right_home", 30)
+            else:
+                await robot.move("RIGHT", "right_wait", 30)
+        finally:
+            await robot.release_resource("RIGHT", "buffer_lock")
+
+        # Clear ready after carried move.
+        async with ready_lock:
+            if not ready_cleared[i]:
+                robot.clear_event(ready_event, expected_version=rr.version)
+                ready_cleared[i] = True
+
+        if i == 0:
+            # Depart before publishing empty_0.
+            await robot.move("RIGHT", "right_home", 30)
+            e = robot.signal("empty_0", item)
+            async with empty_lock:
+                empty_receipt = e
+                empty_cleared = False
+        else:
+            await robot.move("RIGHT", "right_home", 30)
+
+    async def consumer():
+        await consumer_episode(0)
+        await consumer_episode(1)
+
+    await asyncio.gather(producer(), consumer())
+```

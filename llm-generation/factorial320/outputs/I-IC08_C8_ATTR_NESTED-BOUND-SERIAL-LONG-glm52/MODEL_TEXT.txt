@@ -1,0 +1,116 @@
+```python
+import asyncio
+
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # ---- helpers -----------------------------------------------------------
+    async def move(arm: str, pose: str, timeout_s: float | None = None):
+        await robot.move(arm, pose, timeout_s)
+
+    async def acquire(arm: str, resource_id: str, timeout_s: float):
+        await robot.acquire(arm, resource_id, timeout_s)
+
+    async def release_resource(arm: str, resource_id: str):
+        await robot.release_resource(arm, resource_id)
+
+    async def set_mode(arm: str, resource_id: str, mode: str):
+        await robot.set_mode(arm, resource_id, mode)
+
+    def signal(event_id: str, item_id: str | None = None):
+        return robot.signal(event_id, item_id)
+
+    async def wait_event(event_id: str, timeout_s: float):
+        return await robot.wait_event(event_id, timeout_s)
+
+    def clear_event(event_id: str, expected_version: int):
+        robot.clear_event(event_id, expected_version=expected_version)
+
+    # ---- LEFT producer episode for part_0 ----------------------------------
+    # LEFT owns tool from before each source pickup through ready publication
+    # and releases it on every exit.
+    await acquire("LEFT", "tool", 5)
+    await move("LEFT", "source_0")  # approach start_pose=left_home -> source_0
+    await robot.grasp("LEFT", "part_0")  # immediate grasp after approach
+
+    await acquire("LEFT", "buffer_lock", 5)
+    await move("LEFT", "buffer_0")
+    await robot.release("LEFT", "part_0", "buffer_0")
+    await move("LEFT", "left_home")  # depart before ready publication
+    await release_resource("LEFT", "buffer_lock")
+    await release_resource("LEFT", "tool")  # release tool on exit
+
+    ready_0_receipt = signal("ready_0", "part_0")
+
+    # ---- RIGHT consumer episode for part_0 ---------------------------------
+    await wait_event("ready_0", 5)
+    await acquire("RIGHT", "buffer_lock", 5)
+    await move("RIGHT", "buffer_0")  # approach start_pose=right_home -> buffer_0
+    await robot.grasp("RIGHT", "part_0")  # immediate grasp after approach
+
+    # carried move to target supplies exact active item receipt
+    await move("RIGHT", "target_0", receipt=ready_0_receipt)
+    clear_event("ready_0", ready_0_receipt.version)  # clear after carried move
+    await robot.release("RIGHT", "part_0", "target_0")
+    await move("RIGHT", "right_home")  # depart before publishing empty_0
+    await release_resource("RIGHT", "buffer_lock")
+
+    empty_0_receipt = signal("empty_0", "part_0")
+
+    # ---- LEFT producer episode for part_1 ----------------------------------
+    await wait_event("empty_0", 5)
+    clear_event("empty_0", empty_0_receipt.version)
+
+    # For item 1: inspect both readiness facts serially (C7 checks serially).
+    await robot.inspect("LEFT", "line_clear")
+    await robot.inspect("LEFT", "receiver_ready")
+
+    await acquire("LEFT", "tool", 5)
+    await move("LEFT", "left_wait")  # approach start_pose for source_1
+    await move("LEFT", "source_1")
+    await robot.grasp("LEFT", "part_1")  # immediate grasp after approach
+
+    await acquire("LEFT", "buffer_lock", 5)
+    await move("LEFT", "buffer_1")
+    await robot.release("LEFT", "part_1", "buffer_1")
+    await move("LEFT", "left_home")  # depart before ready publication
+    await release_resource("LEFT", "buffer_lock")
+    await release_resource("LEFT", "tool")  # release tool on exit
+
+    ready_1_receipt = signal("ready_1", "part_1")
+
+    # ---- RIGHT consumer episode for part_1 ---------------------------------
+    await wait_event("ready_1", 5)
+    await acquire("RIGHT", "buffer_lock", 5)
+    await move("RIGHT", "right_wait")  # approach start_pose for buffer_1
+    await move("RIGHT", "buffer_1")
+    await robot.grasp("RIGHT", "part_1")  # immediate grasp after approach
+
+    # carried move to target supplies exact active item receipt
+    await move("RIGHT", "target_1", receipt=ready_1_receipt)
+    clear_event("ready_1", ready_1_receipt.version)  # clear after carried move
+    await robot.release("RIGHT", "part_1", "target_1")
+    await move("RIGHT", "right_home")  # depart before publishing empty_0
+    await release_resource("RIGHT", "buffer_lock")
+
+    # ---- rq2_gate protected scope ------------------------------------------
+    # Signal rq2_gate exactly once.
+    gate_receipt = signal("rq2_gate")
+
+    # Complete all three rq2_gap resource checks, in numeric order, once each.
+    await acquire("LEFT", "rq2_gap_0", 5)
+    await release_resource("LEFT", "rq2_gap_0")
+    await acquire("LEFT", "rq2_gap_1", 5)
+    await release_resource("LEFT", "rq2_gap_1")
+    await acquire("LEFT", "rq2_gap_2", 5)
+    await release_resource("LEFT", "rq2_gap_2")
+
+    # Only then wait for rq2_gate exactly once.
+    await wait_event("rq2_gate", 5)
+
+    # Clear rq2_gate after its assigned protected scope.
+    clear_event("rq2_gate", gate_receipt.version)
+
+    # All tasks created by this coroutine are awaited before return.
+```

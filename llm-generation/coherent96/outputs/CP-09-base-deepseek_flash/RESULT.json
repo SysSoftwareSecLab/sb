@@ -1,0 +1,28 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-09-base-deepseek_flash",
+  "task_id": "CP-09",
+  "stratum": "insertion",
+  "arm": "BASE",
+  "profile": "deepseek_flash",
+  "stage": 1,
+  "request_sha256": "88807521cd673f74d69e6e30fcd977c5e08927afbc76cdcaa5e03ca529b8c66b",
+  "raw_sha256": "7de4b78fad27eaaece1b46006aa4698b50aec58e3f53b25964e61d90ad4be7d7",
+  "source_sha256": "15b3af264333e0bd79d8e259a8b10272519d1123039b31c35d3e731834ff58bf",
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 296,
+    "completion_tokens": 138,
+    "total_tokens": 434,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 296
+  },
+  "first_response_final": true
+}

@@ -1,0 +1,65 @@
+import asyncio
+from bridge_robot_api import MotionFault
+
+async def run_task(robot):
+    """
+    D7_BUFFER_PREFETCH-LONG-L0
+    A: LEFT producer alternates complete producer/consumer episodes.
+    B: RIGHT runs producer and consumer coroutines together.
+    DEPENDENCY_DISTANCE=LONG: second item is picked before waiting for empty receipt.
+    """
+
+    # ---- LEFT producer coroutine ----
+    async def left_producer():
+        # Episode 1: produce part_0 -> buffer_0
+        await robot.move("LEFT", "source_0", timeout_s=4)
+        await robot.grasp("LEFT", "part_0")
+        await robot.acquire("LEFT", "buffer_lock", 5)
+        await robot.move("LEFT", "buffer_0", timeout_s=4)
+        await robot.release("LEFT", "part_0", "buffer_0")
+        await robot.move("LEFT", "left_home", timeout_s=4)
+        robot.signal("ready_0", "part_0")
+        await robot.release_resource("LEFT", "buffer_lock")
+
+        # Episode 2: produce part_1 -> buffer_1
+        # LONG: pick part_1 before waiting for empty_0.
+        await robot.move("LEFT", "left_wait", timeout_s=4)
+        await robot.move("LEFT", "source_1", timeout_s=4)
+        await robot.grasp("LEFT", "part_1")
+        await robot.move("LEFT", "left_wait", timeout_s=4)
+
+        # Wait for empty_0 before entering buffer with second part.
+        empty_receipt = await robot.wait_event("empty_0", 30)
+        await robot.acquire("LEFT", "buffer_lock", 5)
+        await robot.move("LEFT", "buffer_1", timeout_s=4, receipt=empty_receipt)
+        await robot.release("LEFT", "part_1", "buffer_1")
+        await robot.move("LEFT", "left_home", timeout_s=4)
+        robot.signal("ready_1", "part_1")
+        await robot.release_resource("LEFT", "buffer_lock")
+
+    # ---- RIGHT consumer coroutine ----
+    async def right_consumer():
+        # Episode 1: consume part_0 from buffer_0 -> target_0
+        ready_receipt_0 = await robot.wait_event("ready_0", 30)
+        await robot.acquire("RIGHT", "buffer_lock", 5)
+        await robot.move("RIGHT", "buffer_0", timeout_s=4, receipt=ready_receipt_0)
+        await robot.grasp("RIGHT", "part_0")
+        await robot.move("RIGHT", "target_0", timeout_s=4)
+        await robot.release("RIGHT", "part_0", "target_0")
+        await robot.move("RIGHT", "right_home", timeout_s=4)
+        await robot.release_resource("RIGHT", "buffer_lock")
+        robot.clear_event("ready_0", expected_version=ready_receipt_0.version)
+        robot.signal("empty_0", "part_0")
+
+        # Episode 2: consume part_1 from buffer_1 -> target_1
+        ready_receipt_1 = await robot.wait_event("ready_1", 30)
+        await robot.acquire("RIGHT", "buffer_lock", 5)
+        await robot.move("RIGHT", "buffer_1", timeout_s=4, receipt=ready_receipt_1)
+        await robot.grasp("RIGHT", "part_1")
+        await robot.move("RIGHT", "target_1", timeout_s=4)
+        await robot.release("RIGHT", "part_1", "target_1")
+        await robot.move("RIGHT", "right_home", timeout_s=4)
+        await robot.release_resource("RIGHT", "buffer_lock")
+        robot.clear_event("ready_1", expected_version=ready_receipt_1.version)
+
+    await asyncio.gather(left_producer(), right_consumer())

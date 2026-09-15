@@ -1,0 +1,71 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+import asyncio
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Phase 1: each arm deposits its own part on its own pad, clears the
+    # pad, and publishes its own item-bound ready event.
+    # ------------------------------------------------------------------
+
+    async def deposit_own(arm: str, part: str, source: str, pad: str,
+                          ready_event: str) -> None:
+        # Approach: must start from home, then immediately grasp.
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+        # Carry own part to own pad.
+        await robot.move(arm, pad)
+        # Release on the pad.
+        await robot.release(arm, part, pad)
+        # Immediately separate from the pad (same coroutine, same instant).
+        await robot.move(arm, "left_clear" if arm == "LEFT" else "right_clear")
+        # Publish own item-bound ready event.
+        robot.signal(ready_event, part)
+
+    # ------------------------------------------------------------------
+    # Phase 2: each arm waits for peer ready, then consumes the peer item.
+    # ------------------------------------------------------------------
+
+    async def consume_peer(arm: str, peer_part: str, peer_pad: str,
+                           peer_ready: str, own_target: str,
+                           pickup_wait: str) -> None:
+        # Wait for peer ready event.
+        receipt = await robot.wait_event(peer_ready, 30)
+        # Move to the pickup wait pose (approach start).
+        await robot.move(arm, pickup_wait)
+        # Approach to peer pad and immediately grasp.
+        await robot.move(arm, peer_pad)
+        await robot.grasp(arm, peer_part)
+        # Carry peer part to own target, using the peer receipt.
+        await robot.move(arm, own_target, receipt=receipt)
+        # Clear the peer event after the move completes.
+        robot.clear_event(peer_ready, expected_version=receipt.version)
+        # Release peer part on own target.
+        await robot.release(arm, peer_part, own_target)
+        # Depart to own departure pose.
+        await robot.move(arm, "left_depart" if arm == "LEFT" else "right_depart")
+
+    # ------------------------------------------------------------------
+    # Variant B: gather two workers; each worker deposits, waits for peer,
+    # then consumes.  Obligations and action multiset are identical.
+    # ------------------------------------------------------------------
+
+    async def worker_left() -> None:
+        await deposit_own("LEFT", "left_part", "left_source", "left_pad",
+                          "left_ready")
+        await consume_peer("LEFT", "right_part", "right_pad", "right_ready",
+                           "left_target", "left_pickup_wait")
+
+    async def worker_right() -> None:
+        await deposit_own("RIGHT", "right_part", "right_source", "right_pad",
+                          "right_ready")
+        await consume_peer("RIGHT", "left_part", "left_pad", "left_ready",
+                           "right_target", "right_pickup_wait")
+
+    left_task = asyncio.create_task(worker_left())
+    right_task = asyncio.create_task(worker_right())
+
+    await left_task
+    await right_task
+```

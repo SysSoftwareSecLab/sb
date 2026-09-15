@@ -1,0 +1,181 @@
+{
+  "claim_boundary": "The machine schedule establishes the pre-registered concurrency-by-window interaction. Human review independently confirms source/interface semantics and the direction of update susceptibility. Two no-observation policies differ only because the human vignette conditioned publication on a first observation; both labels are retained and the conservative human counts remain strongly supportive.",
+  "final_claim": "Concurrent peer updates interacting with longer exposure windows robustly increase cross-model failure when separately observed resource authorizations are treated as one coherent snapshot; an explicit stable-pair collection pattern strongly reduces the increase.",
+  "human_base_by_profile": {
+    "deepseek_flash": {
+      "all": 24,
+      "susceptible": 24,
+      "valid": 24
+    },
+    "glm5": {
+      "all": 24,
+      "susceptible": 18,
+      "valid": 20
+    }
+  },
+  "human_base_by_stratum": {
+    "assembly": {
+      "all": 8,
+      "susceptible": 6,
+      "valid": 8
+    },
+    "handover": {
+      "all": 8,
+      "susceptible": 7,
+      "valid": 7
+    },
+    "insertion": {
+      "all": 8,
+      "susceptible": 7,
+      "valid": 7
+    },
+    "inspection": {
+      "all": 8,
+      "susceptible": 7,
+      "valid": 7
+    },
+    "packaging": {
+      "all": 8,
+      "susceptible": 7,
+      "valid": 7
+    },
+    "shared_resource": {
+      "all": 8,
+      "susceptible": 8,
+      "valid": 8
+    }
+  },
+  "human_by_arm": {
+    "BASE": {
+      "all_first_responses": 48,
+      "gap_update_outcomes_all": {
+        "C": 2,
+        "NE": 43,
+        "V": 3
+      },
+      "gap_update_outcomes_valid": {
+        "C": 2,
+        "NE": 41,
+        "V": 1
+      },
+      "interface_valid": 44,
+      "stable_pair_counts": {
+        "ABSENT": 7,
+        "PRESENT": 41
+      },
+      "susceptible_fraction_of_valid": 0.9545454545454546,
+      "susceptible_valid_programs": 42
+    },
+    "EXPLICIT": {
+      "all_first_responses": 48,
+      "gap_update_outcomes_all": {
+        "C": 47,
+        "V": 1
+      },
+      "gap_update_outcomes_valid": {
+        "C": 47,
+        "V": 1
+      },
+      "interface_valid": 48,
+      "stable_pair_counts": {
+        "ABSENT": 1,
+        "PRESENT": 47
+      },
+      "susceptible_fraction_of_valid": 0.020833333333333332,
+      "susceptible_valid_programs": 1
+    }
+  },
+  "human_machine_alignment": {
+    "gap_update_among_machine_valid": {
+      "exact": 90,
+      "total": 92
+    },
+    "interface": {
+      "exact": 96,
+      "total": 96
+    },
+    "no_update_among_machine_valid": {
+      "exact": 92,
+      "total": 92
+    },
+    "scope_divergences": [
+      {
+        "blind_id": "CPS-022",
+        "human_gap_after_first_observation": "C",
+        "human_rationale": "缓存有效时完全跳过观察，故题面“首次观察后更新”不会触发；两场景提交代际1缓存一次，未实现稳定成对采集。",
+        "machine_concurrent_long": "V",
+        "scope_explanation": "The policy performs no observation. The machine schedule publishes before protected use; the human vignette specified publication after the first observation, so its trigger is absent. Labels are retained without adjudication.",
+        "slot_id": "CP-02-base-glm5"
+      },
+      {
+        "blind_id": "CPS-086",
+        "human_gap_after_first_observation": "C",
+        "human_rationale": "直接使用代际1缓存，不采集新快照；固定场景中未发生首次观察，因此不会触发同行更新，两场景均提交(1,1)，但没有稳定成对采集策略。",
+        "machine_concurrent_long": "V",
+        "scope_explanation": "The policy performs no observation. The machine schedule publishes before protected use; the human vignette specified publication after the first observation, so its trigger is absent. Labels are retained without adjudication.",
+        "slot_id": "CP-03-base-glm5"
+      }
+    ]
+  },
+  "machine_primary": {
+    "base_mechanism_positive_programs": 44,
+    "base_profile_mean_I_F": {
+      "deepseek_flash": 0.75,
+      "glm5": 0.625
+    },
+    "explicit_mechanism_positive_programs": 1,
+    "families": 24,
+    "interface_valid_base": 44,
+    "interface_valid_explicit": 48,
+    "max_stratum_positive_contribution": 0.18181818181818182,
+    "maximum_calls": 96,
+    "mitigation_cluster_bootstrap_95_CI": [
+      0.609375,
+      0.734375
+    ],
+    "mitigation_gates": {
+      "both_profiles_positive": true,
+      "paired_cluster_CI_lower_gt_zero": true
+    },
+    "mitigation_mean_D_F": 0.671875,
+    "mitigation_profile_mean_D_F": {
+      "deepseek_flash": 0.75,
+      "glm5": 0.59375
+    },
+    "mitigation_supported": true,
+    "primary_cluster_bootstrap_95_CI": [
+      0.625,
+      0.734375
+    ],
+    "primary_gates": {
+      "at_least_5_of_6_strata_positive": true,
+      "both_profiles_positive": true,
+      "cluster_CI_lower_gt_zero": true,
+      "no_stratum_over_half_positive_effect": true,
+      "reference_and_oracle_gate_pass": true
+    },
+    "primary_mean_base_I_F": 0.6875,
+    "programs": 96,
+    "rows": 6144,
+    "schema": "paper3.rq2.coherent_pair_confirmation.final_machine_result.v1",
+    "secondary_mean_base_I_NE": 0.640625,
+    "secondary_mean_base_I_V": 0.046875,
+    "status": "MACHINE_STRONG_SUPPORT_HUMAN_REVIEW_PENDING",
+    "stratum_mean_base_I_F": {
+      "assembly": 0.75,
+      "handover": 0.65625,
+      "insertion": 0.65625,
+      "inspection": 0.65625,
+      "packaging": 0.65625,
+      "shared_resource": 0.75
+    }
+  },
+  "paired_mitigation": {
+    "base_failure_explicit_success": 41,
+    "base_success_explicit_failure": 0,
+    "both_failure": 1,
+    "both_success_or_not_susceptible": 6
+  },
+  "schema": "paper3.rq2.coherent_pair.final_human_validated_result.v1",
+  "status": "FINAL_RQ2_STRONG_SUPPORT"
+}

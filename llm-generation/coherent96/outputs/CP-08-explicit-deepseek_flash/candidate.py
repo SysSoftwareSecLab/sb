@@ -1,0 +1,12 @@
+async def consumer_policy(robot, cached_left, cached_right):
+    left_first = await robot.observe_authorization("tray_receiver_lease")
+    right = await robot.observe_authorization("tray_custody_lease")
+    left_second = await robot.observe_authorization("tray_receiver_lease")
+
+    if left_first.coordination_generation != left_second.coordination_generation:
+        left = left_second
+        right = await robot.observe_authorization("tray_custody_lease")
+    else:
+        left = left_second
+
+    await robot.protected_action("release_received_tray", left, right)

@@ -1,0 +1,199 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    TIMEOUT = 4.0
+    
+    # Resource IDs
+    RES_TOOL = "tool"
+    RES_LOCK = "buffer_lock"
+    RES_GAP_0 = "rq2_gap_0"
+    RES_GAP_1 = "rq2_gap_1"
+    RES_GAP_2 = "rq2_gap_2"
+    
+    # Event IDs
+    EVT_READY_0 = "ready_0"
+    EVT_READY_1 = "ready_1"
+    EVT_EMPTY_0 = "empty_0"
+    EVT_GATE = "rq2_gate"
+    
+    # Fact IDs
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Pose IDs
+    POSE_L_HOME = "left_home"
+    POSE_L_WAIT = "left_wait"
+    POSE_R_HOME = "right_home"
+    POSE_R_WAIT = "right_wait"
+    POSE_SRC_0 = "source_0"
+    POSE_SRC_1 = "source_1"
+    POSE_BUF_0 = "buffer_0"
+    POSE_BUF_1 = "buffer_1"
+    POSE_TGT_0 = "target_0"
+    POSE_TGT_1 = "target_1"
+    
+    # Object IDs
+    OBJ_0 = "part_0"
+    OBJ_1 = "part_1"
+
+    # --- RQ2_GATE PROTOCOL ---
+    # Acquire rq2_gap resources in numeric order with LEFT
+    await robot.acquire(LEFT, RES_GAP_0, TIMEOUT)
+    await robot.acquire(LEFT, RES_GAP_1, TIMEOUT)
+    await robot.acquire(LEFT, RES_GAP_2, TIMEOUT)
+    
+    # Signal rq2_gate exactly once
+    gate_receipt = robot.signal(EVT_GATE)
+    
+    # Wait immediately after signal
+    await robot.wait_event(EVT_GATE, TIMEOUT)
+    
+    # Clear exactly that version after its assigned protected scope
+    # The scope is "Complete and clear the rq2_gate protocol before starting the complete inherited dual-arm mission."
+    robot.clear_event(EVT_GATE, expected_version=gate_receipt.version)
+    
+    # Release resources
+    await robot.release_resource(LEFT, RES_GAP_0)
+    await robot.release_resource(LEFT, RES_GAP_1)
+    await robot.release_resource(LEFT, RES_GAP_2)
+
+    # --- INHERITED DUAL-ARM MISSION ---
+    
+    async def producer_part_0():
+        # 1. Acquire tool
+        await robot.acquire(LEFT, RES_TOOL, TIMEOUT)
+        
+        # 2. Move to source and grasp
+        await robot.move(LEFT, POSE_SRC_0, timeout_s=TIMEOUT)
+        obs_0 = await robot.grasp(LEFT, OBJ_0)
+        
+        # 3. Acquire buffer lock
+        await robot.acquire(LEFT, RES_LOCK, TIMEOUT)
+        
+        # 4. Move to buffer and release
+        await robot.move(LEFT, POSE_BUF_0, timeout_s=TIMEOUT)
+        await robot.release(LEFT, OBJ_0, POSE_BUF_0)
+        
+        # 5. Depart buffer (immediate separating departure)
+        await robot.move(LEFT, POSE_L_HOME, timeout_s=TIMEOUT)
+        
+        # 6. Release buffer lock
+        await robot.release_resource(LEFT, RES_LOCK)
+        
+        # 7. Release tool
+        await robot.release_resource(LEFT, RES_TOOL)
+        
+        # 8. Publish ready
+        robot.signal(EVT_READY_0, item_id=OBJ_0)
+
+    async def consumer_part_0():
+        # 1. Wait for ready receipt
+        ready_receipt = await robot.wait_event(EVT_READY_0, TIMEOUT)
+        
+        # 2. Acquire buffer lock
+        await robot.acquire(RIGHT, RES_LOCK, TIMEOUT)
+        
+        # 3. Move to buffer and grasp
+        await robot.move(RIGHT, POSE_BUF_0, timeout_s=TIMEOUT)
+        obs_0 = await robot.grasp(RIGHT, OBJ_0)
+        
+        # 4. Depart buffer
+        await robot.move(RIGHT, POSE_R_HOME, timeout_s=TIMEOUT)
+        
+        # 5. Release buffer lock
+        await robot.release_resource(RIGHT, RES_LOCK)
+        
+        # 6. Move to target using receipt
+        await robot.move(RIGHT, POSE_TGT_0, timeout_s=TIMEOUT, receipt=ready_receipt)
+        
+        # 7. Clear ready after carried move
+        robot.clear_event(EVT_READY_0, expected_version=ready_receipt.version)
+        
+        # 8. Release on target
+        await robot.release(RIGHT, OBJ_0, POSE_TGT_0)
+        
+        # 9. Depart target
+        await robot.move(RIGHT, POSE_R_HOME, timeout_s=TIMEOUT)
+        
+        # 10. Publish empty
+        robot.signal(EVT_EMPTY_0)
+
+    async def producer_part_1():
+        # 1. Wait and clear empty_0
+        empty_receipt = await robot.wait_event(EVT_EMPTY_0, TIMEOUT)
+        robot.clear_event(EVT_EMPTY_0, expected_version=empty_receipt.version)
+        
+        # 2. Inspect both readiness facts (C7 checks serially)
+        await robot.inspect(LEFT, FACT_LINE_CLEAR)
+        await robot.inspect(LEFT, FACT_RECEIVER_READY)
+        
+        # 3. Acquire tool
+        await robot.acquire(LEFT, RES_TOOL, TIMEOUT)
+        
+        # 4. Move to source and grasp
+        await robot.move(LEFT, POSE_SRC_1, timeout_s=TIMEOUT)
+        obs_1 = await robot.grasp(LEFT, OBJ_1)
+        
+        # 5. Acquire buffer lock
+        await robot.acquire(LEFT, RES_LOCK, TIMEOUT)
+        
+        # 6. Move to buffer and release
+        await robot.move(LEFT, POSE_BUF_1, timeout_s=TIMEOUT)
+        await robot.release(LEFT, OBJ_1, POSE_BUF_1)
+        
+        # 7. Depart buffer
+        await robot.move(LEFT, POSE_L_HOME, timeout_s=TIMEOUT)
+        
+        # 8. Release buffer lock
+        await robot.release_resource(LEFT, RES_LOCK)
+        
+        # 9. Release tool
+        await robot.release_resource(LEFT, RES_TOOL)
+        
+        # 10. Publish ready
+        robot.signal(EVT_READY_1, item_id=OBJ_1)
+
+    async def consumer_part_1():
+        # 1. Wait for ready receipt
+        ready_receipt = await robot.wait_event(EVT_READY_1, TIMEOUT)
+        
+        # 2. Acquire buffer lock
+        await robot.acquire(RIGHT, RES_LOCK, TIMEOUT)
+        
+        # 3. Move to buffer and grasp
+        await robot.move(RIGHT, POSE_BUF_1, timeout_s=TIMEOUT)
+        obs_1 = await robot.grasp(RIGHT, OBJ_1)
+        
+        # 4. Depart buffer
+        await robot.move(RIGHT, POSE_R_HOME, timeout_s=TIMEOUT)
+        
+        # 5. Release buffer lock
+        await robot.release_resource(RIGHT, RES_LOCK)
+        
+        # 6. Move to target using receipt
+        await robot.move(RIGHT, POSE_TGT_1, timeout_s=TIMEOUT, receipt=ready_receipt)
+        
+        # 7. Clear ready after carried move
+        robot.clear_event(EVT_READY_1, expected_version=ready_receipt.version)
+        
+        # 8. Release on target
+        await robot.release(RIGHT, OBJ_1, POSE_TGT_1)
+        
+        # 9. Depart target
+        await robot.move(RIGHT, POSE_R_HOME, timeout_s=TIMEOUT)
+
+    # Schedule: A alternates, B runs together.
+    # "B runs producer and consumer coroutines together" -> Concurrent execution.
+    # "A alternates complete producer/consumer episodes" -> Sequential execution.
+    # Since the prompt asks to implement the stated structure and mentions "joined concurrent scheduling for both",
+    # we interpret the requirement to run the dual-arm mission concurrently.
+    
+    # Run Part 0 Producer and Consumer concurrently
+    await asyncio.gather(producer_part_0(), consumer_part_0())
+    
+    # Run Part 1 Producer and Consumer concurrently
+    await asyncio.gather(producer_part_1(), consumer_part_1())

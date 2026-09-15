@@ -1,0 +1,69 @@
+```python
+import asyncio
+
+from bridge_robot_api import Robot
+
+
+async def _worker(robot: Robot, arm: str, part: str, source: str, target: str,
+                  depart: str, home: str, fixture: str, tool: str) -> None:
+    """Carry one part to its target while owning both controllers, then depart.
+
+    Acquisition order is fixture then tool. A try/finally ensures that any
+    successfully acquired controller is released if an acquisition times out.
+    """
+    acquired_fixture = False
+    acquired_tool = False
+    try:
+        await robot.acquire(arm, fixture, 120)
+        acquired_fixture = True
+        await robot.acquire(arm, tool, 120)
+        acquired_tool = True
+
+        await robot.move(arm, source)
+        await robot.grasp(arm, part)
+        await robot.move(arm, target)
+        await robot.release(arm, part, target)
+        await robot.move(arm, depart)
+
+        await robot.release_resource(arm, tool)
+        acquired_tool = False
+        await robot.release_resource(arm, fixture)
+        acquired_fixture = False
+    finally:
+        if acquired_tool:
+            await robot.release_resource(arm, tool)
+        if acquired_fixture:
+            await robot.release_resource(arm, fixture)
+
+
+async def run_task(robot: Robot) -> None:
+    """Execute the SERIAL variant: two complete workers run one after another.
+
+    Variant A requires the two workers to run serially using the same
+    acquisition order (fixture then tool). Each worker acquires both
+    controllers, carries its part to target, releases the part, departs, then
+    releases the tool and fixture.
+    """
+    await _worker(
+        robot,
+        arm="LEFT",
+        part="left_part",
+        source="left_source",
+        target="left_target",
+        depart="left_depart",
+        home="left_home",
+        fixture="fixture",
+        tool="tool",
+    )
+    await _worker(
+        robot,
+        arm="RIGHT",
+        part="right_part",
+        source="right_source",
+        target="right_target",
+        depart="right_depart",
+        home="right_home",
+        fixture="fixture",
+        tool="tool",
+    )
+```

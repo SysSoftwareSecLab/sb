@@ -1,0 +1,26 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-04-explicit-glm5",
+  "task_id": "CP-04",
+  "stratum": "assembly",
+  "arm": "EXPLICIT",
+  "profile": "glm5",
+  "stage": 2,
+  "request_sha256": "70b38abd9be5201fa587e1bc9266fd3a925b7f672288f6f848c6af19f7ff7e3b",
+  "raw_sha256": "b423f398fead71f6c539afb8c2e55f1f3d2e76c5c65858de888144585883fcbf",
+  "source_sha256": "af5fb60b010a8962a39b83476487dc182ddd347adcba83d5fd297dd5342f985b",
+  "response_json_valid": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 132,
+    "prompt_tokens": 336,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 468
+  },
+  "first_response_final": true
+}

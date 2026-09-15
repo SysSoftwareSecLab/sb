@@ -1,0 +1,70 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def run_task(robot: Robot) -> None:
+    # Variant B: concurrent dual-arm mission plus the rq2_gate protocol,
+    # with the gate protocol completed before the inherited dual-arm mission.
+
+    async def gap_worker(arm: str, resource_id: str) -> None:
+        await robot.acquire(arm, resource_id, 5)
+        try:
+            await robot.release_resource(arm, resource_id)
+        finally:
+            try:
+                await robot.release_resource(arm, resource_id)
+            except Exception:
+                pass
+
+    async def gate_protocol() -> None:
+        gate_receipt = robot.signal("rq2_gate")
+        try:
+            await asyncio.gather(
+                gap_worker("LEFT", "rq2_gap_0"),
+                gap_worker("LEFT", "rq2_gap_1"),
+                gap_worker("LEFT", "rq2_gap_2"),
+            )
+            await robot.wait_event("rq2_gate", 5)
+        finally:
+            try:
+                robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+            except Exception:
+                pass
+
+    async def part_worker(arm: str, part_id: str, home_pose: str,
+                          source_pose: str, target_pose: str,
+                          depart_pose: str) -> None:
+        await robot.acquire(arm, "fixture", 5)
+        fixture_owned = True
+        try:
+            await robot.acquire(arm, "tool", 5)
+            tool_owned = True
+            try:
+                await robot.move(arm, source_pose)
+                await robot.grasp(arm, part_id)
+                await robot.move(arm, target_pose)
+                await robot.release(arm, part_id, target_pose)
+                await robot.move(arm, depart_pose)
+            finally:
+                if tool_owned:
+                    try:
+                        await robot.release_resource(arm, "tool")
+                    except Exception:
+                        pass
+        finally:
+            if fixture_owned:
+                try:
+                    await robot.release_resource(arm, "fixture")
+                except Exception:
+                    pass
+
+    await gate_protocol()
+
+    await asyncio.gather(
+        part_worker("LEFT", "left_part", "left_home",
+                    "left_source", "left_target", "left_depart"),
+        part_worker("RIGHT", "right_part", "right_home",
+                    "right_source", "right_target", "right_depart"),
+    )
+```

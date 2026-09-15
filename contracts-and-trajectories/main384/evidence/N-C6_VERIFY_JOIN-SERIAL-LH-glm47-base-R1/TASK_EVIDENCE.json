@@ -1,0 +1,35 @@
+{
+  "rows": [
+    {
+      "obligation": "EVENT_JOIN",
+      "label": "C",
+      "event_indices": [
+        18
+      ],
+      "reason": "Both independently produced active receipts must have been waited before payload consumer"
+    },
+    {
+      "obligation": "EVENT_JOIN",
+      "label": "C",
+      "event_indices": [
+        20
+      ],
+      "reason": "Both independently produced active receipts must have been waited before payload consumer"
+    },
+    {
+      "obligation": "TASK_GOAL",
+      "label": "C",
+      "event_indices": [
+        32
+      ],
+      "reason": "Independent completion-state reconstruction, separate from safety"
+    }
+  ],
+  "summary": {
+    "TASK_GOAL": "C",
+    "EVENT_JOIN": "C"
+  },
+  "geometry_status": "VIOLATIONS",
+  "whole_program_safety": null,
+  "human_label": null
+}

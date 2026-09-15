@@ -1,0 +1,110 @@
+```python
+import asyncio
+import json
+
+async def run_task(robot):
+    """D3_ATTR_FLAT-SHORT-LH: capacity-one buffer crossing, SHORT variant.
+
+    LEFT is producer (source -> buffer), RIGHT is consumer (buffer -> target).
+    SHORT: tool acquired only after second-item empty wait and checks.
+    D3: second-item checks performed serially.
+    """
+
+    # ---- helpers -------------------------------------------------------
+    async def acquire_lock(arm, resource_id):
+        await robot.acquire(arm, resource_id, 120)
+
+    async def release_lock(arm, resource_id):
+        await robot.set_mode(arm, resource_id, "OFF")
+        await robot.release_resource(arm, resource_id)
+
+    # ---- producer episode (LEFT) -------------------------------------
+    async def produce(part_id, source_pose, buffer_pose, ready_event,
+                      left_wait_pose, need_tool):
+        # Approach source and grasp immediately (same virtual moment).
+        await robot.move("LEFT", source_pose)
+        await robot.grasp("LEFT", part_id)
+
+        # Carry to buffer.
+        await robot.move("LEFT", buffer_pose)
+
+        # Enter buffer: own lock, place part, depart, release lock.
+        await acquire_lock("LEFT", "buffer_lock")
+        await robot.release("LEFT", part_id, buffer_pose)
+        await robot.move("LEFT", left_wait_pose)
+        await release_lock("LEFT", "buffer_lock")
+
+        # Publish ready receipt for consumer's carried move.
+        ready_receipt = robot.signal(ready_event, part_id)
+
+        # SHORT: acquire tool only after second-item wait/checks.
+        if need_tool:
+            await acquire_lock("LEFT", "tool")
+
+        return ready_receipt
+
+    # ---- consumer episode (RIGHT) ------------------------------------
+    async def consume(part_id, buffer_pose, target_pose, ready_event,
+                      right_wait_pose, ready_receipt):
+        # Wait for producer's ready receipt before pickup.
+        await robot.wait_event(ready_event, 120)
+
+        # Approach buffer and grasp immediately.
+        await robot.move("RIGHT", buffer_pose)
+        await robot.grasp("RIGHT", part_id, observation=ready_receipt)
+
+        # Carry to target using the exact active item receipt.
+        await robot.move("RIGHT", target_pose, receipt=ready_receipt)
+
+        # Clear ready after carried move completes.
+        robot.clear_event(ready_event, expected_version=ready_receipt.version)
+
+        # Release on target and depart.
+        await robot.release("RIGHT", part_id, target_pose)
+        await robot.move("RIGHT", right_wait_pose)
+
+    # ---- first item ---------------------------------------------------
+    r0 = await produce(
+        "part_0", "source_0", "buffer_0", "ready_0", "left_wait",
+        need_tool=False,
+    )
+    await consume(
+        "part_0", "buffer_0", "target_0", "ready_0", "right_wait", r0,
+    )
+
+    # ---- second item: wait empty, clear, serial checks, then transfer
+    empty_receipt = await robot.wait_event("empty_0", 120)
+    robot.clear_event("empty_0", expected_version=empty_receipt.version)
+
+    # D3: serial second-item checks.
+    line_obs = await robot.inspect("LEFT", "line_clear")
+    line_val = json.loads(line_obs.value_json)
+    if not (line_val.get("clear") is True
+            and line_val.get("item_id") == "part_1"):
+        raise RuntimeError("line_clear check failed")
+
+    recv_obs = await robot.inspect("RIGHT", "receiver_ready")
+    recv_val = json.loads(recv_obs.value_json)
+    if not (recv_val.get("ready") is True
+            and recv_val.get("item_id") == "part_1"):
+        raise RuntimeError("receiver_ready check failed")
+
+    # SHORT: tool acquired only after second-item wait and checks.
+    r1 = await produce(
+        "part_1", "source_1", "buffer_1", "ready_1", "left_wait",
+        need_tool=True,
+    )
+    await consume(
+        "part_1", "buffer_1", "target_1", "ready_1", "right_wait", r1,
+    )
+
+    # Release tool on normal exit.
+    await release_lock("LEFT", "tool")
+
+    # ---- publish empty and return arms home --------------------------
+    empty_final = robot.signal("empty_0", "part_1")
+    robot.clear_event("empty_0", expected_version=empty_final.version)
+
+    await robot.move("LEFT", "left_home")
+    await robot.move("RIGHT", "right_home")
+```

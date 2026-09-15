@@ -1,0 +1,26 @@
+{
+  "slot_id": "N-D1_OBSERVATION-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "task_id": "D1_OBSERVATION-LONG-LH",
+  "executed": true,
+  "generation_source_sha256": "1d2946f6a72263a00f07d8bac357e31b3eb44f26ac50b0f2d91a48e4ddc1774e",
+  "process_status": "EXITED",
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 34,
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "C",
+    "GEOMETRY": "C",
+    "REWORK_OBSERVATION": "C",
+    "REWORK_BRANCH": "C"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "V"
+  },
+  "geometry_status": "NO_FORBIDDEN_CONTACT_IN_DECLARED_FIXED_AABB_TRANSLATIONS",
+  "capture_sha256": "2cdf376458b0f0781eecb92b44b282be21abeae6135642f815461182fac95b0b",
+  "task_evidence_sha256": "b9920f439b2ed501e974ffd4d82034a2d587884c57b9e191986b1426e1caaaab",
+  "grammar_evidence_sha256": "4e6ceeb4da326e9e0902b5ed238e0b79eb11f049d273e4d973c25bd6f0c6d6b2",
+  "geometry_sha256": "15efdb8d96cd0abd1651f4fdbb6b35c248f1014a55fe652d3c9aaa7bc7b21073",
+  "whole_program_safety": null,
+  "human_label": null
+}

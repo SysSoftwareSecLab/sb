@@ -1,0 +1,37 @@
+```python
+async def atom_a_prepare(robot):
+    await robot.inspect("LEFT", "context_fact_0")
+    await robot.acquire("LEFT", "fixture_zone", 20)
+    await robot.move("LEFT", "left_approach", 4)
+
+
+async def atom_a_dependency(robot):
+    await robot.move("LEFT", "a_zone", 4)
+
+
+async def atom_a_commit(robot):
+    await robot.move("LEFT", "left_exit", 4)
+
+
+async def atom_a_finish(robot):
+    await robot.release_resource("LEFT", "fixture_zone")
+    await robot.move("LEFT", "left_home", 4)
+
+
+async def atom_b_prepare(robot):
+    await robot.move("RIGHT", "right_approach", 4)
+
+
+async def atom_b_dependency(robot):
+    await robot.acquire("RIGHT", "fixture_zone", 20)
+    await robot.move("RIGHT", "b_zone", 4)
+
+
+async def atom_b_commit(robot):
+    await robot.move("RIGHT", "right_exit", 4)
+
+
+async def atom_b_finish(robot):
+    await robot.release_resource("RIGHT", "fixture_zone")
+    await robot.move("RIGHT", "right_home", 4)
+```

@@ -1,0 +1,31 @@
+{
+  "task_id": "IC03_C3_EXCHANGE-OOD-STRUCTURAL_OOD",
+  "family_cluster": "IC03_C3_EXCHANGE",
+  "block": "STRUCTURAL_OOD",
+  "structural_split": "STRUCTURAL_OOD",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "consume",
+    "deposit",
+    "run_task"
+  ],
+  "robot_call_multiset": {
+    "clear_event": 2,
+    "grasp": 2,
+    "move": 7,
+    "release": 2,
+    "signal": 2,
+    "wait_event": 2
+  },
+  "for_nodes": 1,
+  "if_nodes": 1,
+  "gather_nodes": 1,
+  "loop_calls_gather_interprocedural": true,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 336,
+  "source_chars": 1563,
+  "source_lines": 34,
+  "signature": "43d02de231e2f86395afbb6d023492404b94f29380007435fc6c5fe4b3a05d8b"
+}

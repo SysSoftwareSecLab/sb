@@ -1,0 +1,163 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Resources
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    RQ2_GATE = "rq2_gate"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Helper to clear event
+    def clear_event_sync(event_id: str, receipt: EventReceipt):
+        robot.clear_event(event_id, expected_version=receipt.version)
+
+    # --- PART 0 HANDLING (Producer/Consumer) ---
+    
+    # 1. Producer (LEFT) for Part 0
+    # Acquire tool
+    await robot.acquire(LEFT, TOOL, timeout_s=4)
+    
+    # Move to source and grasp
+    await robot.move(LEFT, SOURCE_0)
+    obs_p0 = await robot.grasp(LEFT, PART_0)
+    
+    # Move to buffer
+    await robot.acquire(LEFT, BUFFER_LOCK, timeout_s=4)
+    await robot.move(LEFT, BUFFER_0)
+    await robot.release(LEFT, PART_0, BUFFER_0)
+    
+    # Depart buffer
+    await robot.move(LEFT, LEFT_HOME)
+    await robot.release_resource(LEFT, BUFFER_LOCK)
+    
+    # Publish Ready
+    receipt_ready_0 = robot.signal(READY_0, item_id=PART_0)
+    
+    # Release tool
+    await robot.release_resource(LEFT, TOOL)
+    
+    # 2. Consumer (RIGHT) for Part 0
+    # Wait for ready
+    receipt_ready_0_waited = await robot.wait_event(READY_0, timeout_s=4)
+    
+    # Acquire tool
+    await robot.acquire(RIGHT, TOOL, timeout_s=4)
+    
+    # Move to buffer and grasp
+    await robot.acquire(RIGHT, BUFFER_LOCK, timeout_s=4)
+    await robot.move(RIGHT, BUFFER_0)
+    await robot.grasp(RIGHT, PART_0)
+    
+    # Depart buffer
+    await robot.move(RIGHT, RIGHT_HOME)
+    await robot.release_resource(RIGHT, BUFFER_LOCK)
+    
+    # Move to target with receipt
+    await robot.move(RIGHT, TARGET_0, receipt=receipt_ready_0_waited)
+    
+    # Clear ready after carried move
+    clear_event_sync(READY_0, receipt_ready_0_waited)
+    
+    # Release
+    await robot.release(RIGHT, PART_0, TARGET_0)
+    await robot.move(RIGHT, RIGHT_HOME)
+    
+    # Publish Empty
+    robot.signal(EMPTY_0)
+    await robot.release_resource(RIGHT, TOOL)
+
+    # --- PART 1 HANDLING (Loop with RQ2_GATE) ---
+    
+    # Wait and clear empty_0 before entering buffer with second part
+    receipt_empty_0 = await robot.wait_event(EMPTY_0, timeout_s=4)
+    clear_event_sync(EMPTY_0, receipt_empty_0)
+    
+    # Inspect both readiness facts
+    obs_line_clear = await robot.inspect(LEFT, FACT_LINE_CLEAR)
+    obs_receiver_ready = await robot.inspect(LEFT, FACT_RECEIVER_READY)
+    
+    # Loop structure: FOR -> PAR_JOIN -> consumer IF
+    # We have one iteration for Part 1.
+    
+    # Define RQ2 Producer
+    async def rq2_producer():
+        # Signal rq2_gate
+        robot.signal(RQ2_GATE)
+    
+    # Define RQ2 Consumer
+    async def rq2_consumer():
+        # Wait for exact active receipt
+        receipt_rq2 = await robot.wait_event(RQ2_GATE, timeout_s=4)
+        
+        # Execute complete inherited mission (Part 1)
+        
+        # Producer (LEFT) for Part 1
+        await robot.acquire(LEFT, TOOL, timeout_s=4)
+        await robot.move(LEFT, SOURCE_1)
+        obs_p1 = await robot.grasp(LEFT, PART_1)
+        
+        await robot.acquire(LEFT, BUFFER_LOCK, timeout_s=4)
+        await robot.move(LEFT, BUFFER_1)
+        await robot.release(LEFT, PART_1, BUFFER_1)
+        
+        await robot.move(LEFT, LEFT_HOME)
+        await robot.release_resource(LEFT, BUFFER_LOCK)
+        
+        receipt_ready_1 = robot.signal(READY_1, item_id=PART_1)
+        await robot.release_resource(LEFT, TOOL)
+        
+        # Consumer (RIGHT) for Part 1
+        receipt_ready_1_waited = await robot.wait_event(READY_1, timeout_s=4)
+        
+        await robot.acquire(RIGHT, TOOL, timeout_s=4)
+        await robot.acquire(RIGHT, BUFFER_LOCK, timeout_s=4)
+        await robot.move(RIGHT, BUFFER_1)
+        await robot.grasp(RIGHT, PART_1)
+        
+        await robot.move(RIGHT, RIGHT_HOME)
+        await robot.release_resource(RIGHT, BUFFER_LOCK)
+        
+        await robot.move(RIGHT, TARGET_1, receipt=receipt_ready_1_waited)
+        
+        clear_event_sync(READY_1, receipt_ready_1_waited)
+        
+        await robot.release(RIGHT, PART_1, TARGET_1)
+        await robot.move(RIGHT, RIGHT_HOME)
+        
+        await robot.release_resource(RIGHT, TOOL)
+        
+        # Clear rq2_gate after mission
+        clear_event_sync(RQ2_GATE, receipt_rq2)
+    
+    # Concurrent Join
+    await asyncio.gather(rq2_producer(), rq2_consumer())
+    
+    # Final state: rq2_gate inactive at return is ensured by clear_event_sync inside consumer.

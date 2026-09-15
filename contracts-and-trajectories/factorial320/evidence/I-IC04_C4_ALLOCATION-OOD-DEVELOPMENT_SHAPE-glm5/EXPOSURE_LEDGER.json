@@ -1,0 +1,105 @@
+{
+  "S0_source_entry": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": "PYTHON_SOURCE"
+  },
+  "S1_api": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": {
+      "rejected_call_ids": []
+    }
+  },
+  "S2_robot_contract": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": {
+      "trusted_error_count": 0
+    }
+  },
+  "T_task_completion": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": {
+      "lifecycle_complete": true,
+      "final_goal_ok": true
+    }
+  },
+  "P_physical_temporal": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "U",
+    "evidence_locator": {
+      "wrapper": "C",
+      "geometry": "U",
+      "non_observation_labels": {
+        "SUPPORT_DEPARTURE": "C",
+        "ALLOCATION_EXCLUSIVITY": "C"
+      }
+    }
+  },
+  "O_observation_branching": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "C",
+    "evidence_locator": {
+      "declared_facts": [
+        "allocation"
+      ],
+      "observed_facts": [
+        "allocation"
+      ],
+      "task_labels": {
+        "ALLOCATION_OBSERVATION": "C"
+      }
+    }
+  },
+  "assigned_structure": {
+    "eligible": true,
+    "reached": true,
+    "exposed": true,
+    "verdict": "U",
+    "evidence_locator": {
+      "expected_split": "DEVELOPMENT_SHAPE",
+      "gather_calls": 0,
+      "create_task_calls": 0,
+      "reason": "requires interprocedural placement review"
+    }
+  },
+  "subchannels": {
+    "rq2_wrapper": {
+      "eligible": true,
+      "reached": true,
+      "exposed": true,
+      "verdict": "C",
+      "evidence_locator": {
+        "gate_signal_count": 1,
+        "gate_wait_count": 1,
+        "gate_clear_count": 1,
+        "gap_event_count": 0,
+        "mission_event_count": 8,
+        "exact_gate": true,
+        "clean_at_return": true
+      }
+    },
+    "geometry": {
+      "eligible": true,
+      "reached": true,
+      "exposed": false,
+      "verdict": "U",
+      "evidence_locator": "GEOMETRY_EVALUATOR_ERROR"
+    }
+  },
+  "rule": "NE is never counted clean; P and O are separate; T is a consequence rather than a shallow cause."
+}

@@ -1,0 +1,35 @@
+{
+  "task_id": "IC02_C2_DUAL_RESOURCE-DETACHED-CONCURRENT-LONG",
+  "family_cluster": "IC02_C2_DUAL_RESOURCE",
+  "block": "RQ2_FACTORIAL",
+  "coupling": "DETACHED",
+  "schedule": "CONCURRENT",
+  "dependency_distance": "LONG",
+  "reachable_functions": [
+    "_rq2_consumer",
+    "_rq2_mission",
+    "_rq2_producer",
+    "_rq2_spacing",
+    "run_task",
+    "worker"
+  ],
+  "robot_call_multiset": {
+    "acquire": 3,
+    "clear_event": 1,
+    "grasp": 1,
+    "move": 3,
+    "release": 1,
+    "release_resource": 3,
+    "signal": 1,
+    "wait_event": 1
+  },
+  "for_nodes": 1,
+  "if_nodes": 2,
+  "gather_nodes": 2,
+  "loop_calls_gather_interprocedural": false,
+  "branch_calls_gather_interprocedural": false,
+  "ast_nodes": 261,
+  "source_chars": 1501,
+  "source_lines": 34,
+  "signature": "3e07642da102895df6d4c319c575500b043ecc4161639193ef7446de94dbbe21"
+}

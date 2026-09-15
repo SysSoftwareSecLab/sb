@@ -1,0 +1,92 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, MotionFault, TimeoutError
+
+async def run_task(robot: Robot):
+    """
+    D6_RESOURCE_SPAN-SHORT-L0 Implementation.
+    
+    Strategy:
+    - Two concurrent workers (LEFT and RIGHT).
+    - Each worker performs the sequence: Acquire Fixture -> Acquire Tool -> Move to Source -> Grasp -> Move to Target -> Release -> Move to Depart -> Release Tool -> Release Fixture.
+    - Strict acquisition order (Fixture then Tool) is enforced by the workers.
+    - Resources are released in a finally block to handle timeouts.
+    - The task requires both parts at targets, arms empty at departures, and controllers OFF/unowned.
+    """
+
+    async def worker(arm: str, home_pose: str, source_pose: str, target_pose: str, depart_pose: str, part_id: str):
+        acquired_resources = []
+        try:
+            # 1. Acquire Fixture
+            await robot.acquire(arm, "fixture", 4.0)
+            acquired_resources.append("fixture")
+            
+            # 2. Acquire Tool
+            await robot.acquire(arm, "tool", 4.0)
+            acquired_resources.append("tool")
+            
+            # 3. Move to Source (Approach)
+            await robot.move(arm, source_pose)
+            
+            # 4. Grasp Part
+            # No observation required by task spec for grasp.
+            await robot.grasp(arm, part_id)
+            
+            # 5. Move to Target
+            await robot.move(arm, target_pose)
+            
+            # 6. Release Part
+            # target_pose is a valid logical_support.
+            await robot.release(arm, part_id, target_pose)
+            
+            # 7. Move to Depart
+            await robot.move(arm, depart_pose)
+            
+        except (MotionFault, TimeoutError) as e:
+            # Log or handle error, ensure cleanup happens in finally
+            print(f"Worker {arm} failed: {e}")
+            raise
+        finally:
+            # Release resources in reverse order or any order, ensuring OFF mode.
+            # set_mode to OFF is required before release_resource.
+            for res_id in reversed(acquired_resources):
+                try:
+                    await robot.set_mode(arm, res_id, "OFF")
+                    await robot.release_resource(arm, res_id)
+                except Exception:
+                    # Best effort cleanup
+                    pass
+
+    # Define parameters for LEFT and RIGHT arms based on PUBLIC TASK
+    left_params = {
+        "arm": "LEFT",
+        "home": "left_home",
+        "source": "left_source",
+        "target": "left_target",
+        "depart": "left_depart",
+        "part": "left_part"
+    }
+    
+    right_params = {
+        "arm": "RIGHT",
+        "home": "right_home",
+        "source": "right_source",
+        "target": "right_target",
+        "depart": "right_depart",
+        "part": "right_part"
+    }
+
+    # Launch workers concurrently
+    # The task spec "B launches both workers concurrently using the same acquisition order"
+    # implies we should run them in parallel.
+    try:
+        await asyncio.gather(
+            worker(**left_params),
+            worker(**right_params)
+        )
+    except Exception:
+        # If one worker fails, the other might still be running or finished.
+        # The task requirements imply a successful completion of the goal.
+        # Re-raise to indicate failure if necessary, though the spec focuses on the logic structure.
+        raise
+```

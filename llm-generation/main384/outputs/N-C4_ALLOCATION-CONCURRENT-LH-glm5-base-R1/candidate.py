@@ -1,0 +1,40 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _inspect_allocation(robot: Robot, arm: str):
+    """Worker candidate inspects the allocation fact once before branching."""
+    return await robot.inspect(arm, "allocation")
+
+
+async def _selected_transport(robot: Robot, arm: str, start_pose: str, obs):
+    """Selected arm: approach shared_source, grasp shared_part, transport to shared_target, release, depart."""
+    await robot.move(arm, start_pose)
+    await robot.move(arm, "shared_source")
+    await robot.grasp(arm, "shared_part", observation=obs)
+    await robot.move(arm, "shared_target")
+    await robot.release(arm, "shared_part", "shared_target")
+    await robot.move(arm, "left_depart" if arm == "LEFT" else "right_home")
+
+
+async def _left_candidate(robot: Robot):
+    obs = await _inspect_allocation(robot, "LEFT")
+    if obs.value.get("selected_arm") == "LEFT":
+        await _selected_transport(robot, "LEFT", "left_home", obs)
+
+
+async def _right_candidate(robot: Robot):
+    obs = await _inspect_allocation(robot, "RIGHT")
+    if obs.value.get("selected_arm") == "RIGHT":
+        await _selected_transport(robot, "RIGHT", "right_home", obs)
+
+
+async def run_task(robot: Robot):
+    """Variant B: gather LEFT and RIGHT worker candidates concurrently.
+
+    Both candidates independently inspect the allocation fact once, then choose
+    their branch. Exactly the selected arm (LEFT per public initial allocation)
+    approaches, grasps, transports, releases, and departs. The nonselected arm
+    makes no move/grasp/release call and remains at home.
+    """
+    await asyncio.gather(_left_candidate(robot), _right_candidate(robot))

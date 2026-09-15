@@ -1,0 +1,101 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    SHARED_PART = "shared_part"
+    ALLOCATION_FACT = "allocation"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_DEPART = "left_depart"
+    RIGHT_HOME = "right_home"
+    RIGHT_DEPART = "right_depart"
+    SHARED_SOURCE = "shared_source"
+    SHARED_TARGET = "shared_target"
+    
+    # Resources & Events
+    GAP_0 = "rq2_gap_0"
+    GAP_1 = "rq2_gap_1"
+    GAP_2 = "rq2_gap_2"
+    GATE_EVENT = "rq2_gate"
+    
+    # Timeouts
+    TIMEOUT_S = 4.0
+    
+    # --- Phase 1: Resource Checks (Serial, LEFT only) ---
+    # Acquire and release rq2_gap_0, rq2_gap_1, rq2_gap_2 once each with LEFT, in numeric order.
+    for res_id in [GAP_0, GAP_1, GAP_2]:
+        await robot.acquire(LEFT, res_id, TIMEOUT_S)
+        await robot.release_resource(LEFT, res_id)
+        
+    # --- Phase 2: Gate Protocol (Serial) ---
+    # Signal rq2_gate exactly once
+    gate_receipt = robot.signal(GATE_EVENT)
+    
+    # Wait its exact active receipt exactly once
+    # Note: wait_event returns the active receipt. Since we just signaled it,
+    # it should be active immediately.
+    await robot.wait_event(GATE_EVENT, TIMEOUT_S)
+    
+    # Clear exactly that version after its assigned protected scope.
+    # The scope is "before starting the complete inherited dual-arm mission".
+    robot.clear_event(GATE_EVENT, expected_version=gate_receipt.version)
+    
+    # --- Phase 3: Inherited Dual-Arm Mission (Serial) ---
+    # "A runs candidate LEFT then RIGHT serially"
+    # "Both workers independently inspect allocation once before choosing their own branch."
+    
+    # 1. LEFT Inspect
+    obs_left = await robot.inspect(LEFT, ALLOCATION_FACT)
+    
+    # 2. RIGHT Inspect
+    obs_right = await robot.inspect(RIGHT, ALLOCATION_FACT)
+    
+    # Determine selected arm from LEFT's observation
+    # Value structure: {"item_id": "shared_part", "selected_arm": "LEFT"}
+    selected_arm = obs_left.value["selected_arm"]
+    
+    # Execute logic based on selection
+    if selected_arm == LEFT:
+        # LEFT is selected: Approach, Grasp, Transport, Release, Depart
+        # RIGHT is unselected: No move/grasp/release calls.
+        
+        # Approach (move to shared_source)
+        await robot.move(LEFT, SHARED_SOURCE, timeout_s=TIMEOUT_S)
+        
+        # Grasp (must carry current allocation observation)
+        await robot.grasp(LEFT, SHARED_PART, observation=obs_left)
+        
+        # Transport (move to shared_target)
+        await robot.move(LEFT, SHARED_TARGET, timeout_s=TIMEOUT_S)
+        
+        # Release (at target)
+        await robot.release(LEFT, SHARED_PART, SHARED_TARGET)
+        
+        # Depart (immediately after release)
+        await robot.move(LEFT, LEFT_DEPART, timeout_s=TIMEOUT_S)
+        
+    else:
+        # RIGHT is selected: Approach, Grasp, Transport, Release, Depart
+        # LEFT is unselected: No move/grasp/release calls.
+        
+        # Approach (move to shared_source)
+        await robot.move(RIGHT, SHARED_SOURCE, timeout_s=TIMEOUT_S)
+        
+        # Grasp (must carry current allocation observation)
+        # Note: obs_right was inspected by RIGHT, so it is the "own current allocation observation" for RIGHT.
+        await robot.grasp(RIGHT, SHARED_PART, observation=obs_right)
+        
+        # Transport (move to shared_target)
+        await robot.move(RIGHT, SHARED_TARGET, timeout_s=TIMEOUT_S)
+        
+        # Release (at target)
+        await robot.release(RIGHT, SHARED_PART, SHARED_TARGET)
+        
+        # Depart (immediately after release)
+        await robot.move(RIGHT, RIGHT_DEPART, timeout_s=TIMEOUT_S)
+        
+    # End of task

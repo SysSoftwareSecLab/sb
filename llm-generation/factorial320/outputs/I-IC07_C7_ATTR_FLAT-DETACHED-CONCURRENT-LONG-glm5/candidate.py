@@ -1,0 +1,79 @@
+import asyncio
+
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    # ---- rq2_gate protocol ----
+    gate_receipt = robot.signal("rq2_gate")
+
+    async def gap_check(idx):
+        rid = f"rq2_gap_{idx}"
+        await robot.acquire("LEFT", rid, 5)
+        await robot.release_resource("LEFT", rid)
+
+    await asyncio.gather(gap_check(0), gap_check(1), gap_check(2))
+
+    gate_event = await robot.wait_event("rq2_gate", 5)
+    robot.clear_event("rq2_gate", expected_version=gate_event.version)
+
+    # ---- inherited dual-arm buffer mission ----
+    empty_receipts = {}
+
+    async def producer(part, src, buf, ready, left_wait):
+        await robot.acquire("LEFT", "buffer_lock", 5)
+        await robot.move("LEFT", "left_home")
+        await robot.move("LEFT", src)
+        await robot.grasp("LEFT", part)
+        await robot.move("LEFT", "left_home")
+        await robot.move("LEFT", left_wait)
+        await robot.move("LEFT", buf)
+        await robot.release("LEFT", part, buf)
+        await robot.move("LEFT", left_wait)
+        await robot.move("LEFT", "left_home")
+        await robot.release_resource("LEFT", "buffer_lock")
+        robot.signal(ready)
+
+    async def consumer(part, buf, tgt, ready, right_wait):
+        ready_receipt = await robot.wait_event(ready, 30)
+        await robot.acquire("RIGHT", "buffer_lock", 5)
+        await robot.move("RIGHT", "right_home")
+        await robot.move("RIGHT", right_wait)
+        await robot.move("RIGHT", buf, receipt=ready_receipt)
+        await robot.grasp("RIGHT", part)
+        await robot.move("RIGHT", right_wait)
+        await robot.move("RIGHT", "right_home")
+        await robot.move("RIGHT", tgt)
+        await robot.release("RIGHT", part, tgt)
+        await robot.move("RIGHT", right_wait)
+        await robot.move("RIGHT", "right_home")
+        await robot.release_resource("RIGHT", "buffer_lock")
+        robot.clear_event(ready, expected_version=ready_receipt.version)
+        empty_receipts[part] = robot.signal("empty_0")
+
+    async def episode_0():
+        p = asyncio.create_task(
+            producer("part_0", "source_0", "buffer_0", "ready_0", "left_wait")
+        )
+        c = asyncio.create_task(
+            consumer("part_0", "buffer_0", "target_0", "ready_0", "right_wait")
+        )
+        await p
+        await c
+
+    async def episode_1():
+        empty_receipt = await robot.wait_event("empty_0", 30)
+        robot.clear_event("empty_0", expected_version=empty_receipt.version)
+        await robot.inspect("LEFT", "line_clear")
+        await robot.inspect("LEFT", "receiver_ready")
+
+        p = asyncio.create_task(
+            producer("part_1", "source_1", "buffer_1", "ready_1", "left_wait")
+        )
+        c = asyncio.create_task(
+            consumer("part_1", "buffer_1", "target_1", "ready_1", "right_wait")
+        )
+        await p
+        await c
+
+    await asyncio.gather(episode_0(), episode_1())

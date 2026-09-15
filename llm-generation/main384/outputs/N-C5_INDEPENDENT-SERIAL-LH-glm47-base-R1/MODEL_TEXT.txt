@@ -1,0 +1,47 @@
+```python
+import asyncio
+from bridge_robot_api import Robot
+
+async def run_task(robot: Robot) -> None:
+    """
+    Executes the C5_INDEPENDENT-SERIAL-LH task.
+    Structure: Serial execution of two independent lanes.
+    Lane 1 (LEFT): Move to source, grasp, move to target, release, move to depart.
+    Lane 2 (RIGHT): Move to source, grasp, move to target, release, move to depart.
+    """
+
+    # --- Lane 1: LEFT Arm ---
+    # 1. Move to approach start (left_home) -> interaction pose (left_source)
+    await robot.move("LEFT", "left_source")
+    
+    # 2. Grasp the object (left_part)
+    # Observation is optional per task spec (observation_facts empty), so omitted.
+    await robot.grasp("LEFT", "left_part")
+    
+    # 3. Move to target (left_target)
+    await robot.move("LEFT", "left_target")
+    
+    # 4. Release the object
+    # support_zone must be the current pose name, which is "left_target".
+    await robot.release("LEFT", "left_part", "left_target")
+    
+    # 5. Depart to final pose (left_depart)
+    await robot.move("LEFT", "left_depart")
+
+    # --- Lane 2: RIGHT Arm ---
+    # 1. Move to approach start (right_home) -> interaction pose (right_source)
+    await robot.move("RIGHT", "right_source")
+    
+    # 2. Grasp the object (right_part)
+    await robot.grasp("RIGHT", "right_part")
+    
+    # 3. Move to target (right_target)
+    await robot.move("RIGHT", "right_target")
+    
+    # 4. Release the object
+    # support_zone must be the current pose name, which is "right_target".
+    await robot.release("RIGHT", "right_part", "right_target")
+    
+    # 5. Depart to final pose (right_depart)
+    await robot.move("RIGHT", "right_depart")
+```

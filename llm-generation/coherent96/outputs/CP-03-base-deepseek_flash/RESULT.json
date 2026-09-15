@@ -1,0 +1,28 @@
+{
+  "status": "VALID_SOURCE",
+  "interface_valid": true,
+  "slot_id": "CP-03-base-deepseek_flash",
+  "task_id": "CP-03",
+  "stratum": "assembly",
+  "arm": "BASE",
+  "profile": "deepseek_flash",
+  "stage": 2,
+  "request_sha256": "9f6b265b4d3a49e0dc524e5ffc3f81402b23fa8e77355efc8bcbdadbde546688",
+  "raw_sha256": "548cc644c09f7f0b6b56197aaad93095e9a41c7a56f3289e71647f051e08ffdd",
+  "source_sha256": "5f2ec62869a13616ea05d9303ae70cca90ab281326144eb16b1d91dac463e35e",
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 301,
+    "completion_tokens": 139,
+    "total_tokens": 440,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 173
+  },
+  "first_response_final": true
+}

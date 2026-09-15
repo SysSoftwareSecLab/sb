@@ -1,0 +1,143 @@
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_SOURCE = "left_source"
+    LEFT_PAD = "left_pad"
+    LEFT_PICKUP_WAIT = "left_pickup_wait"
+    LEFT_TARGET = "left_target"
+    LEFT_DEPART = "left_depart"
+    
+    RIGHT_HOME = "right_home"
+    RIGHT_SOURCE = "right_source"
+    RIGHT_PAD = "right_pad"
+    RIGHT_PICKUP_WAIT = "right_pickup_wait"
+    RIGHT_TARGET = "right_target"
+    RIGHT_DEPART = "right_depart"
+    
+    # Objects
+    LEFT_PART = "left_part"
+    RIGHT_PART = "right_part"
+    
+    # Events
+    LEFT_READY = "left_ready"
+    RIGHT_READY = "right_ready"
+    RQ2_GATE = "rq2_gate"
+    
+    # Resources
+    RQ2_GAP_0 = "rq2_gap_0"
+    RQ2_GAP_1 = "rq2_gap_1"
+    RQ2_GAP_2 = "rq2_gap_2"
+    
+    # Timeout
+    TIMEOUT = 4.0
+
+    # --- Phase 1: Resource Acquisition (LEFT only) ---
+    # "Acquire and release rq2_gap_0, rq2_gap_1 and rq2_gap_2 once each with LEFT, in numeric order"
+    await robot.acquire(LEFT, RQ2_GAP_0, TIMEOUT)
+    await robot.acquire(LEFT, RQ2_GAP_1, TIMEOUT)
+    await robot.acquire(LEFT, RQ2_GAP_2, TIMEOUT)
+
+    # --- Phase 2: Gate Producer/Consumer Setup ---
+    # "Signal rq2_gate exactly once"
+    gate_receipt = robot.signal(RQ2_GATE)
+    
+    # "complete all three rq2_gap resource checks, and only then wait for rq2_gate"
+    # "Acquire and release ... once each ... never retain them at return"
+    # We release them now to satisfy "complete checks" and "never retain".
+    # Note: set_mode OFF is required before release_resource.
+    await robot.set_mode(LEFT, RQ2_GAP_0, "OFF")
+    await robot.release_resource(LEFT, RQ2_GAP_0)
+    
+    await robot.set_mode(LEFT, RQ2_GAP_1, "OFF")
+    await robot.release_resource(LEFT, RQ2_GAP_1)
+    
+    await robot.set_mode(LEFT, RQ2_GAP_2, "OFF")
+    await robot.release_resource(LEFT, RQ2_GAP_2)
+    
+    # "wait its exact active receipt exactly once"
+    # "wait_event ... returns当时活动的EventReceipt"
+    active_gate_receipt = await robot.wait_event(RQ2_GATE, TIMEOUT)
+
+    # --- Phase 3: Inherited Dual-Arm Mission (Serial) ---
+    # "Use serial scheduling for both the inherited dual-arm mission"
+    # "A: deposit LEFT then RIGHT, then consume LEFT then RIGHT"
+    
+    # 1. LEFT deposits its own part (left_part) on left_pad
+    # Approach: left_home -> left_source
+    await robot.move(LEFT, LEFT_SOURCE, TIMEOUT)
+    # Grasp left_part
+    await robot.grasp(LEFT, LEFT_PART)
+    # Move to left_pad
+    await robot.move(LEFT, LEFT_PAD, TIMEOUT)
+    # Release left_part on left_pad
+    await robot.release(LEFT, LEFT_PART, LEFT_PAD)
+    # "immediately clears the pad"
+    await robot.move(LEFT, LEFT_DEPART, TIMEOUT)
+    # "publishing its own item-bound ready event"
+    robot.signal(LEFT_READY, LEFT_PART)
+
+    # 2. RIGHT deposits its own part (right_part) on right_pad
+    # Approach: right_home -> right_source
+    await robot.move(RIGHT, RIGHT_SOURCE, TIMEOUT)
+    # Grasp right_part
+    await robot.grasp(RIGHT, RIGHT_PART)
+    # Move to right_pad
+    await robot.move(RIGHT, RIGHT_PAD, TIMEOUT)
+    # Release right_part on right_pad
+    await robot.release(RIGHT, RIGHT_PART, RIGHT_PAD)
+    # "immediately clears the pad"
+    await robot.move(RIGHT, RIGHT_DEPART, TIMEOUT)
+    # "publishing its own item-bound ready event"
+    robot.signal(RIGHT_READY, RIGHT_PART)
+
+    # 3. LEFT consumes peer item (right_part)
+    # "Before an arm picks up the peer item, both own deposit/clear and a wait for peer ready must have completed"
+    # Wait for RIGHT_READY
+    right_ready_receipt = await robot.wait_event(RIGHT_READY, TIMEOUT)
+    
+    # Approach: left_pickup_wait -> right_pad
+    await robot.move(LEFT, LEFT_PICKUP_WAIT, TIMEOUT)
+    # Grasp right_part
+    await robot.grasp(LEFT, RIGHT_PART)
+    
+    # "The carried move to its own target must carry the exact active peer-item receipt returned by wait"
+    # Move to left_target (LEFT's own target for the peer item)
+    await robot.move(LEFT, LEFT_TARGET, TIMEOUT, receipt=right_ready_receipt)
+    # Release right_part on left_target
+    await robot.release(LEFT, RIGHT_PART, LEFT_TARGET)
+    # Depart
+    await robot.move(LEFT, LEFT_DEPART, TIMEOUT)
+    # "clear that event after that move"
+    robot.clear_event(RIGHT_READY, expected_version=right_ready_receipt.version)
+
+    # 4. RIGHT consumes peer item (left_part)
+    # Wait for LEFT_READY
+    left_ready_receipt = await robot.wait_event(LEFT_READY, TIMEOUT)
+    
+    # Approach: right_pickup_wait -> left_pad
+    await robot.move(RIGHT, RIGHT_PICKUP_WAIT, TIMEOUT)
+    # Grasp left_part
+    await robot.grasp(RIGHT, LEFT_PART)
+    
+    # "The carried move to its own target must carry the exact active peer-item receipt returned by wait"
+    # Move to right_target (RIGHT's own target for the peer item)
+    await robot.move(RIGHT, RIGHT_TARGET, TIMEOUT, receipt=left_ready_receipt)
+    # Release left_part on right_target
+    await robot.release(RIGHT, LEFT_PART, RIGHT_TARGET)
+    # Depart
+    await robot.move(RIGHT, RIGHT_DEPART, TIMEOUT)
+    # "clear that event after that move"
+    robot.clear_event(LEFT_READY, expected_version=left_ready_receipt.version)
+
+    # --- Phase 4: Gate Cleanup ---
+    # "Keep rq2_gate active while executing the complete inherited dual-arm mission after the wait"
+    # "clear only after the mission"
+    # "clear exactly that version after its assigned protected scope"
+    robot.clear_event(RQ2_GATE, expected_version=active_gate_receipt.version)

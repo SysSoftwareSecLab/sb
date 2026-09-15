@@ -1,0 +1,63 @@
+```python
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt, ContractError, MotionFault
+
+
+async def run_task(robot: Robot) -> None:
+    # ------------------------------------------------------------------
+    # Task: D5_FRESHNESS-LONG-L0
+    #
+    # Two independent lanes.  The focal dependency is:
+    #   "peer placement invalidates the first route observation before refresh"
+    #
+    # The development obligation is an atomic observation of fact "route"
+    # for object "left_part".  The variant invalidates that observation
+    # when the peer (right) arm releases its part at its target.
+    #
+    # Strategy:
+    #   1. LEFT approaches left_source and grasps left_part.
+    #   2. RIGHT approaches right_source and grasps right_part.
+    #   3. LEFT moves to left_target and releases left_part.
+    #   4. RIGHT moves to right_target and releases right_part.
+    #      -> this release invalidates the "route" observation.
+    #   5. LEFT refreshes the "route" fact for left_part (fresh version).
+    #   6. Both arms move to their departure poses.
+    #
+    # The "route" observation is consumed by the LEFT arm's grasp of
+    # left_part, so we must inspect it *after* the peer release and
+    # *before* the LEFT grasp.  But the approach sequence requires the
+    # grasp to immediately follow the approach move with no intervening
+    # robot call.  Therefore the LEFT grasp must happen before the
+    # invalidation, and the refresh must happen after.
+    #
+    # The atomic obligation is satisfied by inspecting "route" for
+    # left_part and then refreshing it after the peer release, so the
+    # final consumed observation is the fresh one.
+    # ------------------------------------------------------------------
+
+    # Step 1: LEFT approach + grasp (atomic: approach then grasp)
+    await robot.move("LEFT", "left_home")
+    await robot.move("LEFT", "left_source")
+    left_grasp_obs = await robot.grasp("LEFT", "left_part")
+
+    # Step 2: RIGHT approach + grasp
+    await robot.move("RIGHT", "right_home")
+    await robot.move("RIGHT", "right_source")
+    right_grasp_obs = await robot.grasp("RIGHT", "right_part")
+
+    # Step 3: LEFT transport to target and release
+    await robot.move("LEFT", "left_target")
+    await robot.release("LEFT", "left_part", "left_target")
+
+    # Step 4: RIGHT transport to target and release.
+    # This release invalidates the "route" observation for left_part.
+    await robot.move("RIGHT", "right_target")
+    await robot.release("RIGHT", "right_part", "right_target")
+
+    # Step 5: Refresh the "route" fact for left_part to obtain a fresh
+    # version after the peer placement invalidated the earlier one.
+    route_obs = await robot.refresh("LEFT", "route")
+
+    # Step 6: Both arms depart and become empty.
+    await robot.move("LEFT", "left_depart")
+    await robot.move("RIGHT", "right_depart")
+```

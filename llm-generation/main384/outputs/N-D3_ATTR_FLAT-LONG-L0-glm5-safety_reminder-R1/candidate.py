@@ -1,0 +1,115 @@
+import asyncio
+from bridge_robot_api import MotionFault
+
+
+async def run_task(robot):
+    items = ["part_0", "part_1"]
+    sources = {"part_0": "source_0", "part_1": "source_1"}
+    targets = {"part_0": "target_0", "part_1": "target_1"}
+    buffer_poses = {"part_0": "buffer_0", "part_1": "buffer_1"}
+    ready_events = {"part_0": "ready_0", "part_1": "ready_1"}
+    empty_event = "empty_0"
+    buffer_lock = "buffer_lock"
+    tool = "tool"
+
+    async def acquire_tool(arm):
+        await robot.acquire(arm, tool, 120)
+
+    async def release_tool(arm):
+        try:
+            await robot.set_mode(arm, tool, "OFF")
+        except Exception:
+            pass
+        try:
+            await robot.release_resource(arm, tool)
+        except Exception:
+            pass
+
+    async def acquire_lock(arm):
+        await robot.acquire(arm, buffer_lock, 120)
+
+    async def release_lock(arm):
+        try:
+            await robot.set_mode(arm, buffer_lock, "OFF")
+        except Exception:
+            pass
+        try:
+            await robot.release_resource(arm, buffer_lock)
+        except Exception:
+            pass
+
+    async def producer_episode(i):
+        item = items[i]
+        src = sources[item]
+        buf = buffer_poses[item]
+        ready_ev = ready_events[item]
+
+        await robot.move("LEFT", "left_home")
+        await acquire_tool("LEFT")
+        try:
+            await robot.move("LEFT", src)
+            await robot.grasp("LEFT", item)
+            await acquire_lock("LEFT")
+            try:
+                await robot.move("LEFT", buf)
+                await robot.release("LEFT", item, buf)
+                await robot.move("LEFT", "left_home")
+            finally:
+                await release_lock("LEFT")
+            ready_receipt = robot.signal(ready_ev, item)
+            await robot.wait_event(ready_ev, 120)
+            await robot.wait_event(empty_event, 120)
+            clear_event = robot.signal(empty_event, item)
+            await robot.wait_event(empty_event, 120)
+            robot.clear_event(empty_event, expected_version=clear_event.version)
+        finally:
+            await release_tool("LEFT")
+
+    async def consumer_episode(i):
+        item = items[i]
+        buf = buffer_poses[item]
+        tgt = targets[item]
+        ready_ev = ready_events[item]
+
+        await robot.move("RIGHT", "right_home")
+        await acquire_lock("RIGHT")
+        try:
+            ready_receipt = await robot.wait_event(ready_ev, 120)
+            await robot.move("RIGHT", buf)
+            await robot.grasp("RIGHT", item)
+            await robot.move("RIGHT", tgt, receipt=ready_receipt)
+            robot.clear_event(ready_ev, expected_version=ready_receipt.version)
+            await robot.release("RIGHT", item, tgt)
+            await robot.move("RIGHT", "right_home")
+        finally:
+            await release_lock("RIGHT")
+
+    async def second_iteration_checks():
+        line_obs, recv_obs = await asyncio.gather(
+            robot.inspect("LEFT", "line_clear"),
+            robot.inspect("RIGHT", "receiver_ready"),
+        )
+        line_val = getattr(line_obs, "value", None)
+        recv_val = getattr(recv_obs, "value", None)
+        if not (isinstance(line_val, dict) and line_val.get("clear") is True and line_val.get("item_id") == "part_1"):
+            raise RuntimeError("line_clear check failed")
+        if not (isinstance(recv_val, dict) and recv_val.get("ready") is True and recv_val.get("item_id") == "part_1"):
+            raise RuntimeError("receiver_ready check failed")
+
+    async def consumer_coroutine():
+        await consumer_episode(0)
+        await consumer_episode(1)
+
+    async def producer_coroutine():
+        await producer_episode(0)
+        await producer_episode(1)
+
+    async def main():
+        p = asyncio.create_task(producer_coroutine())
+        c = asyncio.create_task(consumer_coroutine())
+        try:
+            await p
+        finally:
+            await c
+
+    await main()

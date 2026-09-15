@@ -1,0 +1,173 @@
+import asyncio
+from bridge_robot_api import Robot, MotionFault, ContractError
+
+
+async def run_task(robot: Robot) -> None:
+    # Shared mutable state for coordination between producer and consumer.
+    state = {
+        "ready_0": None,   # EventReceipt for part_0 ready at buffer
+        "ready_1": None,   # EventReceipt for part_1 ready at buffer
+        "empty_0": None,   # EventReceipt for buffer empty after consumer departs
+        "part_0_done": False,
+        "part_1_done": False,
+        "error": None,
+    }
+
+    async def producer_part_0() -> None:
+        """LEFT produces part_0: source_0 -> buffer_0, then departs before signaling ready_0."""
+        try:
+            await robot.acquire("LEFT", "tool", 5)
+            await robot.set_mode("LEFT", "tool", "OFF")
+
+            # Approach source_0 from left_home, then immediately grasp part_0.
+            await robot.move("LEFT", "source_0", timeout_s=4)
+            await robot.grasp("LEFT", "part_0")
+
+            # Carry part_0 to buffer_0.
+            await robot.move("LEFT", "buffer_0", timeout_s=4)
+
+            # Release part_0 at buffer_0, then immediately depart.
+            await robot.release("LEFT", "part_0", "buffer_0")
+            await robot.move("LEFT", "left_home", timeout_s=4)
+
+            # Release tool on exit.
+            await robot.set_mode("LEFT", "tool", "OFF")
+            await robot.release_resource("LEFT", "tool")
+
+            # Publish ready_0 after departing buffer.
+            receipt = robot.signal("ready_0", "part_0")
+            state["ready_0"] = receipt
+        except (MotionFault, ContractError, TimeoutError, Exception) as exc:
+            state["error"] = exc
+
+    async def consumer_part_0() -> None:
+        """RIGHT consumes part_0: wait ready_0, pickup from buffer_0, carry to target_0, clear ready_0."""
+        try:
+            # Wait for producer to publish ready_0.
+            while state["ready_0"] is None and state["error"] is None:
+                await asyncio.sleep(0)
+            if state["error"] is not None:
+                return
+            ready_receipt = state["ready_0"]
+
+            await robot.acquire("RIGHT", "buffer_lock", 5)
+            await robot.set_mode("RIGHT", "buffer_lock", "OFF")
+
+            # Approach buffer_0 from right_home, then immediately grasp part_0.
+            await robot.move("RIGHT", "buffer_0", timeout_s=4)
+            await robot.grasp("RIGHT", "part_0")
+
+            # Carry part_0 to target_0, supplying the active ready receipt.
+            await robot.move("RIGHT", "target_0", timeout_s=4, receipt=ready_receipt)
+
+            # Clear ready_0 after the carried move completes.
+            robot.clear_event("ready_0", expected_version=ready_receipt.version)
+
+            # Release part_0 at target_0, then immediately depart.
+            await robot.release("RIGHT", "part_0", "target_0")
+            await robot.move("RIGHT", "right_home", timeout_s=4)
+
+            # Release buffer_lock on exit.
+            await robot.set_mode("RIGHT", "buffer_lock", "OFF")
+            await robot.release_resource("RIGHT", "buffer_lock")
+
+            # Publish empty_0 after departing buffer.
+            receipt = robot.signal("empty_0", "part_0")
+            state["empty_0"] = receipt
+            state["part_0_done"] = True
+        except (MotionFault, ContractError, TimeoutError, Exception) as exc:
+            state["error"] = exc
+
+    async def producer_part_1() -> None:
+        """LEFT produces part_1: wait/clear empty_0, inspect readiness, source_1 -> buffer_1, depart, signal ready_1."""
+        try:
+            # Wait for empty_0 (buffer free after part_0 consumed).
+            while state["empty_0"] is None and state["error"] is None:
+                await asyncio.sleep(0)
+            if state["error"] is not None:
+                return
+            empty_receipt = state["empty_0"]
+
+            # Clear empty_0 before entering buffer with second part.
+            robot.clear_event("empty_0", expected_version=empty_receipt.version)
+
+            # Inspect both readiness facts (serial checks for C7).
+            await robot.inspect("LEFT", "line_clear")
+            await robot.inspect("LEFT", "receiver_ready")
+
+            await robot.acquire("LEFT", "tool", 5)
+            await robot.set_mode("LEFT", "tool", "OFF")
+
+            # Move to left_wait first (start_pose for source_1 approach).
+            await robot.move("LEFT", "left_wait", timeout_s=4)
+
+            # Approach source_1 from left_wait, then immediately grasp part_1.
+            await robot.move("LEFT", "source_1", timeout_s=4)
+            await robot.grasp("LEFT", "part_1")
+
+            # Carry part_1 to buffer_1.
+            await robot.move("LEFT", "buffer_1", timeout_s=4)
+
+            # Release part_1 at buffer_1, then immediately depart.
+            await robot.release("LEFT", "part_1", "buffer_1")
+            await robot.move("LEFT", "left_home", timeout_s=4)
+
+            # Release tool on exit.
+            await robot.set_mode("LEFT", "tool", "OFF")
+            await robot.release_resource("LEFT", "tool")
+
+            # Publish ready_1 after departing buffer.
+            receipt = robot.signal("ready_1", "part_1")
+            state["ready_1"] = receipt
+        except (MotionFault, ContractError, TimeoutError, Exception) as exc:
+            state["error"] = exc
+
+    async def consumer_part_1() -> None:
+        """RIGHT consumes part_1: wait ready_1, pickup from buffer_1, carry to target_1, clear ready_1."""
+        try:
+            # Wait for producer to publish ready_1.
+            while state["ready_1"] is None and state["error"] is None:
+                await asyncio.sleep(0)
+            if state["error"] is not None:
+                return
+            ready_receipt = state["ready_1"]
+
+            await robot.acquire("RIGHT", "buffer_lock", 5)
+            await robot.set_mode("RIGHT", "buffer_lock", "OFF")
+
+            # Move to right_wait first (start_pose for buffer_1 approach).
+            await robot.move("RIGHT", "right_wait", timeout_s=4)
+
+            # Approach buffer_1 from right_wait, then immediately grasp part_1.
+            await robot.move("RIGHT", "buffer_1", timeout_s=4)
+            await robot.grasp("RIGHT", "part_1")
+
+            # Carry part_1 to target_1, supplying the active ready receipt.
+            await robot.move("RIGHT", "target_1", timeout_s=4, receipt=ready_receipt)
+
+            # Clear ready_1 after the carried move completes.
+            robot.clear_event("ready_1", expected_version=ready_receipt.version)
+
+            # Release part_1 at target_1, then immediately depart.
+            await robot.release("RIGHT", "part_1", "target_1")
+            await robot.move("RIGHT", "right_home", timeout_s=4)
+
+            # Release buffer_lock on exit.
+            await robot.set_mode("RIGHT", "buffer_lock", "OFF")
+            await robot.release_resource("RIGHT", "buffer_lock")
+
+            state["part_1_done"] = True
+        except (MotionFault, ContractError, TimeoutError, Exception) as exc:
+            state["error"] = exc
+
+    # Episode A: serial alternating complete producer/consumer episode for part_0.
+    await producer_part_0()
+    if state["error"] is None:
+        await consumer_part_0()
+
+    # Episode B: producer and consumer coroutines joined together for part_1.
+    if state["error"] is None:
+        await asyncio.gather(producer_part_1(), consumer_part_1())
+
+    if state["error"] is not None:
+        raise state["error"]

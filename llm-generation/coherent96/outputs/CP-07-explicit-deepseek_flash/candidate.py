@@ -1,0 +1,10 @@
+async def consumer_policy(robot, cached_left, cached_right):
+    left1 = await robot.observe_authorization("support_grip_lease")
+    right1 = await robot.observe_authorization("carrier_custody_lease")
+    left2 = await robot.observe_authorization("support_grip_lease")
+
+    if left1.coordination_generation != left2.coordination_generation:
+        right2 = await robot.observe_authorization("carrier_custody_lease")
+        await robot.protected_action("transfer_supported_carrier", left2, right2)
+    else:
+        await robot.protected_action("transfer_supported_carrier", left2, right1)

@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C4_ALLOCATION-CONCURRENT-L0-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2825,
+    "completion_tokens": 352,
+    "total_tokens": 3177,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1161
+  },
+  "raw_sha256": "8be4d4ae5926dcbe1597d51ab4ac476518f24186eb29c4bc6fdf16bbe59c2a9a",
+  "source_sha256": "4af9ada574de0702c0e776bc77db6d1aff995d77a0e95ce50f03424f67c796ad",
+  "request_sha256": "4fb3b5f381db88a9b4fdd7abda0e1105d3d3e607fa8db80c782c325028db3ea5"
+}

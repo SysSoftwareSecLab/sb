@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-D3_ATTR_FLAT-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3578,
+    "completion_tokens": 1463,
+    "total_tokens": 5041,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1914
+  },
+  "raw_sha256": "7bb263cfdd0270c936b1c6a71b5834389d7287d7831231d8f076ba990bb57e52",
+  "source_sha256": "f955167b96394d13724180343148eecc418c83154b42f4acf8ab91206e820183",
+  "request_sha256": "9efda90ee6041ebbcf6a47bdcd7913efb297f2c81c603a3e03324246d65550d1"
+}

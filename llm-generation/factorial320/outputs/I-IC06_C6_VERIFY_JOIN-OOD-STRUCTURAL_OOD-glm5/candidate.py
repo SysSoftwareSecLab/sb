@@ -1,0 +1,52 @@
+import asyncio
+from bridge_robot_api import Robot
+
+
+async def _left_branch(robot: Robot, gate_receipt_box: list):
+    arm = "LEFT"
+    await robot.move(arm, "left_source")
+    left_obs = await robot.grasp(arm, "left_part")
+    await robot.move(arm, "left_target")
+    await robot.release(arm, "left_part", "left_target")
+    await robot.move(arm, "left_depart")
+    receipt = robot.signal("left_ready", "left_part")
+    gate_receipt_box.append(receipt)
+    return left_obs
+
+
+async def _right_branch(robot: Robot, gate_receipt_box: list):
+    arm = "RIGHT"
+    await robot.move(arm, "right_source")
+    right_obs = await robot.grasp(arm, "right_part")
+    await robot.move(arm, "right_target")
+    await robot.release(arm, "right_part", "right_target")
+    await robot.move(arm, "right_depart")
+    receipt = robot.signal("right_ready", "right_part")
+    gate_receipt_box.append(receipt)
+    return right_obs
+
+
+async def _consumer(robot: Robot, gate_receipt):
+    await robot.wait_event("rq2_gate", 5)
+    await robot.move("LEFT", "left_target", receipt=gate_receipt)
+    await robot.move("LEFT", "left_depart")
+    robot.clear_event("rq2_gate", expected_version=gate_receipt.version)
+
+
+async def run_task(robot: Robot):
+    gate_receipt_box: list = []
+
+    async def _gate_producer():
+        await asyncio.gather(
+            _left_branch(robot, gate_receipt_box),
+            _right_branch(robot, gate_receipt_box),
+        )
+        receipt = robot.signal("rq2_gate", "left_part")
+        gate_receipt_box.append(receipt)
+
+    # FOR -> PAR_JOIN -> consumer IF
+    for _ in range(1):
+        await _gate_producer()
+        if len(gate_receipt_box) >= 3:
+            gate_receipt = gate_receipt_box[2]
+            await _consumer(robot, gate_receipt)

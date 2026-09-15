@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C7_ATTR_FLAT-CONCURRENT-LH-deepseek_flash-base-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3508,
+    "completion_tokens": 1295,
+    "total_tokens": 4803,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1844
+  },
+  "raw_sha256": "e66bb126faa796a51206688aefc7625d4e99065bbbd524598374edab29f337c2",
+  "source_sha256": "3843f03b01c41c7f15ea38476808898b976d4c8d2d30f33f8e0f71f384ddbf2a",
+  "request_sha256": "b29c63341d09e6a217d1415143ad91afa0774c0a2a55b1d6b6c6c3fdeb5e41a4"
+}

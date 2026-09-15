@@ -1,0 +1,24 @@
+{
+  "status": "PYTHON_SOURCE",
+  "syntax_valid": true,
+  "entry_present": true,
+  "slot_id": "N-C3_EXCHANGE-CONCURRENT-LH-deepseek_flash-safety_reminder-R1",
+  "response_received": true,
+  "response_json_valid": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 3354,
+    "completion_tokens": 516,
+    "total_tokens": 3870,
+    "prompt_tokens_details": {
+      "cached_tokens": 1664
+    },
+    "prompt_cache_hit_tokens": 1664,
+    "prompt_cache_miss_tokens": 1690
+  },
+  "raw_sha256": "9a718a71fca8d7991d28e1bd84d690954527037e91a521780231cb87392fa1fb",
+  "source_sha256": "028c357faacf382e69c72b80f47cde0e9df405f6ab041de8c845d121b02021bf",
+  "request_sha256": "42337af78d5e0c2fc159b72be37c65c96e16b8de3aa5ffb10146eed7df009a76"
+}

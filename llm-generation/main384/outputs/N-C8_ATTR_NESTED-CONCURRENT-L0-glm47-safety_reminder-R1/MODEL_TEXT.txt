@@ -1,0 +1,213 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot):
+    # Constants
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
+    # Poses
+    LEFT_HOME = "left_home"
+    LEFT_WAIT = "left_wait"
+    RIGHT_HOME = "right_home"
+    RIGHT_WAIT = "right_wait"
+    
+    SOURCE_0 = "source_0"
+    SOURCE_1 = "source_1"
+    BUFFER_0 = "buffer_0"
+    BUFFER_1 = "buffer_1"
+    TARGET_0 = "target_0"
+    TARGET_1 = "target_1"
+    
+    # Items
+    PART_0 = "part_0"
+    PART_1 = "part_1"
+    
+    # Resources
+    TOOL = "tool"
+    BUFFER_LOCK = "buffer_lock"
+    
+    # Events
+    READY_0 = "ready_0"
+    READY_1 = "ready_1"
+    EMPTY_0 = "empty_0"
+    
+    # Facts
+    FACT_LINE_CLEAR = "line_clear"
+    FACT_RECEIVER_READY = "receiver_ready"
+    
+    # Timeouts
+    TIMEOUT_S = 10.0
+    
+    # --- Helper Functions ---
+    
+    async def acquire_tool(arm: str):
+        await robot.acquire(arm, TOOL, TIMEOUT_S)
+        await robot.set_mode(arm, TOOL, "OFF")
+    
+    async def release_tool(arm: str):
+        await robot.set_mode(arm, TOOL, "OFF")
+        await robot.release_resource(arm, TOOL)
+    
+    async def acquire_buffer_lock(arm: str):
+        await robot.acquire(arm, BUFFER_LOCK, TIMEOUT_S)
+        await robot.set_mode(arm, BUFFER_LOCK, "OFF")
+    
+    async def release_buffer_lock(arm: str):
+        await robot.set_mode(arm, BUFFER_LOCK, "OFF")
+        await robot.release_resource(arm, BUFFER_LOCK)
+    
+    # --- Producer Coroutine (LEFT) ---
+    
+    async def producer():
+        # --- Episode 0: part_0 ---
+        
+        # 1. Acquire tool
+        await acquire_tool(LEFT)
+        
+        # 2. Pick up part_0 from source_0
+        await robot.move(LEFT, SOURCE_0, timeout_s=TIMEOUT_S)
+        await robot.grasp(LEFT, PART_0)
+        
+        # 3. Acquire buffer lock
+        await acquire_buffer_lock(LEFT)
+        
+        # 4. Move to buffer and release
+        await robot.move(LEFT, BUFFER_0, timeout_s=TIMEOUT_S)
+        await robot.release(LEFT, PART_0, BUFFER_0)
+        
+        # 5. Depart buffer immediately
+        await robot.move(LEFT, LEFT_WAIT, timeout_s=TIMEOUT_S)
+        
+        # 6. Release buffer lock
+        await release_buffer_lock(LEFT)
+        
+        # 7. Publish ready_0
+        ready_0_receipt = robot.signal(READY_0, PART_0)
+        
+        # 8. Release tool
+        await release_tool(LEFT)
+        
+        # --- Episode 1: part_1 ---
+        
+        # 1. Wait and clear empty_0
+        empty_0_receipt = await robot.wait_event(EMPTY_0, TIMEOUT_S)
+        robot.clear_event(EMPTY_0, expected_version=empty_0_receipt.version)
+        
+        # 2. Acquire tool
+        await acquire_tool(LEFT)
+        
+        # 3. Pick up part_1 from source_1
+        await robot.move(LEFT, SOURCE_1, timeout_s=TIMEOUT_S)
+        await robot.grasp(LEFT, PART_1)
+        
+        # 4. Acquire buffer lock
+        await acquire_buffer_lock(LEFT)
+        
+        # 5. Move to buffer and release
+        await robot.move(LEFT, BUFFER_1, timeout_s=TIMEOUT_S)
+        await robot.release(LEFT, PART_1, BUFFER_1)
+        
+        # 6. Depart buffer immediately
+        await robot.move(LEFT, LEFT_HOME, timeout_s=TIMEOUT_S)
+        
+        # 7. Release buffer lock
+        await release_buffer_lock(LEFT)
+        
+        # 8. Publish ready_1
+        robot.signal(READY_1, PART_1)
+        
+        # 9. Release tool
+        await release_tool(LEFT)
+    
+    # --- Consumer Coroutine (RIGHT) ---
+    
+    async def consumer():
+        # --- Episode 0: part_0 ---
+        
+        # 1. Wait for ready_0
+        ready_0_receipt = await robot.wait_event(READY_0, TIMEOUT_S)
+        
+        # 2. Acquire buffer lock
+        await acquire_buffer_lock(RIGHT)
+        
+        # 3. Pick up part_0 from buffer
+        await robot.move(RIGHT, BUFFER_0, timeout_s=TIMEOUT_S)
+        await robot.grasp(RIGHT, PART_0)
+        
+        # 4. Depart buffer immediately
+        await robot.move(RIGHT, RIGHT_WAIT, timeout_s=TIMEOUT_S)
+        
+        # 5. Release buffer lock
+        await release_buffer_lock(RIGHT)
+        
+        # 6. Move to target using receipt
+        await robot.move(RIGHT, TARGET_0, timeout_s=TIMEOUT_S, receipt=ready_0_receipt)
+        
+        # 7. Clear ready_0
+        robot.clear_event(READY_0, expected_version=ready_0_receipt.version)
+        
+        # 8. Release part_0
+        await robot.release(RIGHT, PART_0, TARGET_0)
+        
+        # 9. Depart target immediately
+        await robot.move(RIGHT, RIGHT_WAIT, timeout_s=TIMEOUT_S)
+        
+        # 10. Publish empty_0
+        robot.signal(EMPTY_0)
+        
+        # --- Episode 1: part_1 ---
+        
+        # 1. Wait for ready_1
+        ready_1_receipt = await robot.wait_event(READY_1, TIMEOUT_S)
+        
+        # 2. Inspect both readiness facts (C8 joined concurrency)
+        # "For item 1, wait and clear empty_0, then inspect both readiness facts; 
+        # C7 checks serially and C8 joins the two checks inside the loop branch."
+        # Since we are not in a loop branch here, we join them.
+        obs_line_clear, obs_receiver_ready = await asyncio.gather(
+            robot.inspect(RIGHT, FACT_LINE_CLEAR),
+            robot.inspect(RIGHT, FACT_RECEIVER_READY)
+        )
+        
+        # 3. Acquire buffer lock
+        await acquire_buffer_lock(RIGHT)
+        
+        # 4. Pick up part_1 from buffer
+        await robot.move(RIGHT, BUFFER_1, timeout_s=TIMEOUT_S)
+        await robot.grasp(RIGHT, PART_1)
+        
+        # 5. Depart buffer immediately
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_S)
+        
+        # 6. Release buffer lock
+        await release_buffer_lock(RIGHT)
+        
+        # 7. Move to target using receipt
+        await robot.move(RIGHT, TARGET_1, timeout_s=TIMEOUT_S, receipt=ready_1_receipt)
+        
+        # 8. Clear ready_1
+        robot.clear_event(READY_1, expected_version=ready_1_receipt.version)
+        
+        # 9. Release part_1
+        await robot.release(RIGHT, PART_1, TARGET_1)
+        
+        # 10. Depart target immediately
+        await robot.move(RIGHT, RIGHT_HOME, timeout_s=TIMEOUT_S)
+        
+        # 11. Publish empty_0 (Final state requires empty_0 active? No, "events inactive")
+        # Goal: "events inactive". So we do not signal empty_0 here.
+        # However, Producer waits for empty_0 before Ep 1. 
+        # Consumer signaled empty_0 after Ep 0. Producer cleared it.
+        # So empty_0 is currently inactive (cleared).
+        # We leave it inactive.
+    
+    # --- Main Execution ---
+    
+    # "B runs producer and consumer coroutines together."
+    await asyncio.gather(
+        producer(),
+        consumer()
+    )
+```

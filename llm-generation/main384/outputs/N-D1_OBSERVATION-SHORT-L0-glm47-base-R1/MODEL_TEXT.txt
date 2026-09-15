@@ -1,0 +1,98 @@
+```python
+import asyncio
+from bridge_robot_api import Robot, Observation, EventReceipt, ActionReceipt
+
+async def run_task(robot: Robot) -> None:
+    # Constants derived from PUBLIC TASK
+    ARM_LEFT = "LEFT"
+    ARM_RIGHT = "RIGHT"
+    
+    OBJ_LEFT = "left_part"
+    OBJ_RIGHT = "right_part"
+    
+    POSE_LEFT_HOME = "left_home"
+    POSE_LEFT_SOURCE = "left_source"
+    POSE_LEFT_WAIT = "left_wait"
+    POSE_LEFT_DEPART = "left_depart"
+    POSE_LEFT_TARGET = "left_target"
+    
+    POSE_RIGHT_HOME = "right_home"
+    POSE_RIGHT_SOURCE = "right_source"
+    POSE_RIGHT_DEPART = "right_depart"
+    POSE_RIGHT_TARGET = "right_target"
+    
+    POSE_INSPECTION = "inspection"
+    POSE_REWORK = "rework"
+    POSE_REWORK_WAIT = "rework_wait"
+    
+    FACT_QUALITY = "quality"
+    
+    # Initial State
+    # LEFT: left_home, RIGHT: right_home
+    # left_part: left_source, right_part: right_source
+    
+    # --- Phase 1: Initial Pickup ---
+    
+    # LEFT moves to left_source and grasps left_part
+    await robot.move(ARM_LEFT, POSE_LEFT_SOURCE)
+    await robot.grasp(ARM_LEFT, OBJ_LEFT)
+    
+    # RIGHT moves to right_source and grasps right_part
+    await robot.move(ARM_RIGHT, POSE_RIGHT_SOURCE)
+    await robot.grasp(ARM_RIGHT, OBJ_RIGHT)
+    
+    # --- Phase 2: LEFT places at inspection ---
+    
+    # LEFT moves to inspection and releases left_part
+    await robot.move(ARM_LEFT, POSE_INSPECTION)
+    await robot.release(ARM_LEFT, OBJ_LEFT, POSE_INSPECTION)
+    
+    # LEFT immediately departs to left_depart
+    # "LEFT places at inspection and immediately departs"
+    await robot.move(ARM_LEFT, POSE_LEFT_DEPART)
+    
+    # --- Phase 3: RIGHT inspects quality ---
+    
+    # RIGHT moves to inspection (holding right_part)
+    await robot.move(ARM_RIGHT, POSE_INSPECTION)
+    
+    # RIGHT inspects quality fact
+    # "RIGHT issues each inspection observation"
+    # "before the quality observation" dependency satisfied by LEFT departure
+    quality_obs: Observation = await robot.inspect(ARM_RIGHT, FACT_QUALITY)
+    
+    # --- Phase 4: LEFT picks up based on quality ---
+    
+    # LEFT moves from left_depart to left_wait (approach start for inspection)
+    await robot.move(ARM_LEFT, POSE_LEFT_WAIT)
+    
+    # LEFT moves to inspection (approach) and grasps left_part
+    # "At each inspection pass use the newly issued current quality record on LEFT inspection pickup"
+    await robot.move(ARM_LEFT, POSE_INSPECTION)
+    await robot.grasp(ARM_LEFT, OBJ_LEFT, observation=quality_obs)
+    
+    # --- Phase 5: Branching Logic ---
+    
+    # "The published accept_by_pass[pass_index] selects target if true, otherwise rework"
+    # "A accepts on first pass, B on second"
+    # Initial value: {"accept_by_pass": [true, true], ...}
+    # Pass index 0: accept_by_pass[0] is True -> Target
+    
+    # LEFT moves to left_target and releases left_part
+    await robot.move(ARM_LEFT, POSE_LEFT_TARGET)
+    await robot.release(ARM_LEFT, OBJ_LEFT, POSE_LEFT_TARGET)
+    
+    # --- Phase 6: RIGHT places right_part ---
+    
+    # RIGHT moves to right_target and releases right_part
+    await robot.move(ARM_RIGHT, POSE_RIGHT_TARGET)
+    await robot.release(ARM_RIGHT, OBJ_RIGHT, POSE_RIGHT_TARGET)
+    
+    # --- Phase 7: Final Departures ---
+    
+    # LEFT moves to left_depart (already there? No, at left_target)
+    await robot.move(ARM_LEFT, POSE_LEFT_DEPART)
+    
+    # RIGHT moves to right_depart
+    await robot.move(ARM_RIGHT, POSE_RIGHT_DEPART)
+```

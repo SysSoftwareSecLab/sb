@@ -1,0 +1,18 @@
+{
+  "id": "PROTOCOL_ERRATUM_001",
+  "status": "POST_COLLECTION_TEXTUAL_CORRECTION_ONLY",
+  "created_utc": "2026-09-11T18:42:00+00:00",
+  "original_scientific_freeze_sha256": "ccfed41ad27ec9b685cc8984baf06f8c2e64072cdc4fcb6bea7662a7292b0063",
+  "location": "PROTOCOL.md / 论文主比较 / RQ2 bullet",
+  "frozen_text": "4 个并发族和 4 个长程依赖族",
+  "correct_text": "8 个并发族和 8 个长程依赖族",
+  "evidence_of_original_intent": [
+    "TASK_CATALOG.json contains C1-C8 and D1-D8 before collection.",
+    "TASK_GRAMMAR.json and GENERATION_MANIFEST.json were frozen before collection with all 16 families.",
+    "MAIN_TABLE_BINDING.json froze 192 paired blocks, 96 per axis, which requires 8 families per axis under the frozen layouts/models/prompts.",
+    "The finite-scale paragraph in the same frozen PROTOCOL.md explicitly states 16 task families."
+  ],
+  "scientific_inputs_changed": false,
+  "samples_changed": 0,
+  "analysis_changed": false
+}

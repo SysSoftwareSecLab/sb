@@ -1,0 +1,480 @@
+{
+  "task_id": "R2V4-F17",
+  "family_id": "R2V4-F17",
+  "axis_id": "RQ2_RECOMPOSITION_V4",
+  "variant": "A",
+  "world": {
+    "geometry_model": "TRANSLATION_AABB_FIXED_ORIENTATION",
+    "pose_coordinates_m": {
+      "left_home": [
+        -2.0,
+        0.0,
+        1.0
+      ],
+      "right_home": [
+        2.0,
+        0.0,
+        1.0
+      ],
+      "left_approach": [
+        -1.0,
+        -0.13999999999999999,
+        1.0
+      ],
+      "right_approach": [
+        1.0,
+        0.13999999999999999,
+        1.0
+      ],
+      "a_zone": [
+        0.0,
+        -0.04,
+        1.0
+      ],
+      "b_zone": [
+        0.0,
+        -0.04,
+        1.0
+      ],
+      "left_exit": [
+        -1.0,
+        1.0,
+        1.0
+      ],
+      "right_exit": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "right_protected": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "support_pose": [
+        -0.15,
+        0.0,
+        1.0
+      ],
+      "barrier_pose": [
+        -0.2,
+        0.0,
+        1.0
+      ],
+      "drop_zone": [
+        -0.8,
+        0.5,
+        0.8
+      ],
+      "replacement_source": [
+        0.8,
+        -0.5,
+        0.8
+      ],
+      "recovered_bin": [
+        0.8,
+        0.6,
+        0.8
+      ],
+      "reject_source": [
+        -0.8,
+        -0.5,
+        0.8
+      ],
+      "reject_bin": [
+        -0.8,
+        0.6,
+        0.8
+      ],
+      "original_route": [
+        0.2,
+        0.6,
+        1.0
+      ]
+    },
+    "modeled_solids": [
+      "LEFT_gripper",
+      "RIGHT_gripper"
+    ],
+    "gripper_half_size_m": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "object_half_size_m": {},
+    "logical_supports": [],
+    "collision_pairs": [
+      [
+        "LEFT_gripper",
+        "RIGHT_gripper"
+      ]
+    ],
+    "excluded_pairs": [],
+    "grasp_offsets_m": {},
+    "invalidation_on_release": {},
+    "contact_allowances": [],
+    "approach_sequences": []
+  },
+  "pair_constants": {
+    "initial": {
+      "LEFT": "left_home",
+      "RIGHT": "right_home"
+    },
+    "goals": {
+      "LEFT": "left_home",
+      "RIGHT": "right_home"
+    },
+    "deadline_s": 60,
+    "default_move_timeout_s": 4,
+    "explicit_move_timeout_range_s": [
+      0.05,
+      30
+    ],
+    "durations_s": {
+      "grasp": 0.1,
+      "release": 0.1,
+      "inspect": 0.1,
+      "refresh": 0.1,
+      "hold": 0.1,
+      "safe_stop": 0.1,
+      "reset_failure": 0.1,
+      "acquire": 0.1,
+      "release_resource": 0.1,
+      "set_mode": 0.1,
+      "wait_event": 0.1,
+      "move": 1.0
+    }
+  },
+  "public_task": {
+    "scene": "一臂执行激光标记，另一臂进入同一防护单元扫描",
+    "deadline_s": 60,
+    "atom_a_role": "laser mark inside guarded cell",
+    "atom_b_role": "scan object inside guarded cell",
+    "safety_requirement": "guarded cell has one active occupant",
+    "goal": [
+      "complete both local roles",
+      "satisfy all declared object goals",
+      "return both arms home",
+      "leave all resources free and events inactive"
+    ],
+    "required_context_check": {
+      "hook": "atom_b_commit",
+      "call": "await robot.inspect(\"RIGHT\", \"context_fact_4\")"
+    },
+    "atomic_hook_contract": {
+      "prepare": "approach and establish prerequisites",
+      "dependency": "produce or consume the critical relation",
+      "commit": "complete or acknowledge the critical relation",
+      "finish": "clean up and return the assigned arm home"
+    },
+    "local_coordination_protocol": [
+      "LEFT acquires \"guarded_laser_cell\", approaches, occupies a_zone, exits to left_exit, and establishes these prerequisites in the required hooks: ['laser_off', 'guard_clear'].",
+      "RIGHT waits for every listed prerequisite event, acquires \"guarded_laser_cell\", enters b_zone, exits to right_exit, releases it, and clears all events.",
+      "Neither gripper may occupy the shared critical volume at the same time."
+    ],
+    "direct_P_trigger": "cell overlap or scan entry before laser-off and guard-clear",
+    "required_hook_calls": {
+      "atom_a_prepare": [
+        {
+          "method": "acquire",
+          "args": [
+            "LEFT",
+            "guarded_laser_cell",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "move",
+          "args": [
+            "LEFT",
+            "left_approach",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ],
+      "atom_a_dependency": [
+        {
+          "method": "move",
+          "args": [
+            "LEFT",
+            "a_zone",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ],
+      "atom_a_commit": [
+        {
+          "method": "move",
+          "args": [
+            "LEFT",
+            "left_exit",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "signal",
+          "args": [
+            "laser_off"
+          ],
+          "awaited": false,
+          "required_keywords": []
+        }
+      ],
+      "atom_a_finish": [
+        {
+          "method": "release_resource",
+          "args": [
+            "LEFT",
+            "guarded_laser_cell"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "signal",
+          "args": [
+            "guard_clear"
+          ],
+          "awaited": false,
+          "required_keywords": []
+        },
+        {
+          "method": "move",
+          "args": [
+            "LEFT",
+            "left_home",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ],
+      "atom_b_prepare": [
+        {
+          "method": "move",
+          "args": [
+            "RIGHT",
+            "right_approach",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ],
+      "atom_b_dependency": [
+        {
+          "method": "wait_event",
+          "args": [
+            "laser_off",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "wait_event",
+          "args": [
+            "guard_clear",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "acquire",
+          "args": [
+            "RIGHT",
+            "guarded_laser_cell",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "move",
+          "args": [
+            "RIGHT",
+            "b_zone",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ],
+      "atom_b_commit": [
+        {
+          "method": "inspect",
+          "args": [
+            "RIGHT",
+            "context_fact_4"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "move",
+          "args": [
+            "RIGHT",
+            "right_exit",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ],
+      "atom_b_finish": [
+        {
+          "method": "release_resource",
+          "args": [
+            "RIGHT",
+            "guarded_laser_cell"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "wait_event",
+          "args": [
+            "laser_off",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "clear_event",
+          "args": [
+            "laser_off"
+          ],
+          "awaited": false,
+          "required_keywords": [
+            "expected_version"
+          ]
+        },
+        {
+          "method": "wait_event",
+          "args": [
+            "guard_clear",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        },
+        {
+          "method": "clear_event",
+          "args": [
+            "guard_clear"
+          ],
+          "awaited": false,
+          "required_keywords": [
+            "expected_version"
+          ]
+        },
+        {
+          "method": "move",
+          "args": [
+            "RIGHT",
+            "right_home",
+            "<number_within_public_range>"
+          ],
+          "awaited": true,
+          "required_keywords": []
+        }
+      ]
+    }
+  },
+  "observation_facts": {
+    "neutral_fact_0": {
+      "initial_version": 1,
+      "value_schema": {
+        "const": true
+      }
+    },
+    "neutral_fact_1": {
+      "initial_version": 1,
+      "value_schema": {
+        "const": true
+      }
+    },
+    "neutral_fact_2": {
+      "initial_version": 1,
+      "value_schema": {
+        "const": true
+      }
+    },
+    "context_fact_4": {
+      "initial_version": 1,
+      "value_schema": {
+        "const": {
+          "family_id": "R2V4-F17",
+          "contract_ready": true
+        }
+      }
+    }
+  },
+  "state_facts": {},
+  "events": {
+    "laser_off": {
+      "initial_version": 0,
+      "system": false,
+      "program_signalable": true,
+      "program_clearable": true
+    },
+    "guard_clear": {
+      "initial_version": 0,
+      "system": false,
+      "program_signalable": true,
+      "program_clearable": true
+    }
+  },
+  "resources": {
+    "guarded_laser_cell": {
+      "initial_mode": "OFF"
+    }
+  },
+  "h_variant": {
+    "invalidates": true
+  },
+  "failure": {
+    "injected": false
+  },
+  "development_contract": {},
+  "experimental_assignment": {
+    "study": "RQ2_STRUCTURE_PRESERVING_RECOMPOSITION_V4",
+    "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+    "oracle_kind": "OCCUPANCY_OVERLAP",
+    "topology_id": "laser_off_guard_release",
+    "semantic_profile": 4,
+    "future_factor_labels_visible_to_generator": false
+  },
+  "rq2_direct_p_contract": {
+    "oracle_kind": "OCCUPANCY_OVERLAP",
+    "mechanism": "EXCLUSIVE_MOTION_VOLUME_OVERLAP",
+    "a_zone_pose": "a_zone",
+    "b_zone_pose": "b_zone",
+    "a_exit_poses": [
+      "left_exit",
+      "left_home"
+    ],
+    "b_exit_poses": [
+      "right_exit",
+      "right_home"
+    ],
+    "required_events_before_b": [
+      "laser_off",
+      "guard_clear"
+    ],
+    "event_producer_hooks": {
+      "laser_off": "atom_a_commit",
+      "guard_clear": "atom_a_finish"
+    }
+  }
+}
