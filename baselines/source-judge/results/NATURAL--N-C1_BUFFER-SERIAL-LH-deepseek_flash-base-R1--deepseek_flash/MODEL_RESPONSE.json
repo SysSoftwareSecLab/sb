@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[57,62,75,84,88,89],\"reason\":\"Producer signals ready after departing buffer (line 57); consumer waits ready (62), clears ready with receipt version after carried move (75), and signals empty_0 after departing (84); producer waits and clears empty_0 (88-89). Order matches required protocol.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[47,49,50,52,54,65,67,68,70,72],\"reason\":\"Both producer and consumer acquire buffer_lock before entering buffer_pose and release it in finally after departing; capacity-one buffer accessed under lock with item-specific poses.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[62,75,78],\"reason\":\"Consumer waits ready receipt (62), clears with expected_version (75), and supplies the exact active receipt on carried move to target (78).\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[28,29,33,34,35],\"reason\":\"run_task awaits _produce then _consume serially for each part, implementing CONCURRENCY=SERIAL as declared.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[50,52,68,70,79,81],\"reason\":\"Each release is immediately followed by a same-arm move to a separating pose in the same coroutine: producer release at buffer_0 then move left_wait (50-52); consumer release at target then move right_home (79-81); consumer grasp at buffer then move right_wait (68-70).\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[28,29,34,35,84,88,89],\"reason\":\"Source implements both parts to targets, homes, lock release, and event clears, but finite execution outcome and deadline compliance cannot be confirmed from source alone.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7384,
+    "completion_tokens": 435,
+    "total_tokens": 7819,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7256
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

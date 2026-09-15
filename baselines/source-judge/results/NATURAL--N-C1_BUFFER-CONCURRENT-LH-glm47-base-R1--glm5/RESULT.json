@@ -1,0 +1,114 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        79,
+        111,
+        117,
+        138,
+        147,
+        84,
+        87,
+        152,
+        173
+      ],
+      "reason": "ready_0 and ready_1 are signaled before the consumer's carried move to target completes; SPEC requires ready cleared only after carried move completes, but also producer must wait/clear empty_0 before second buffer entry (done). However ready_1 is signaled at line 111 without waiting for empty_1, and there is no empty_1 event defined; more critically, ready events are signaled by producer before consumer completes the carried move, but clear happens after move—this part is okay. The violation: producer signals ready_1 (line 111) but never waits for any empty_1 before finishing; SPEC pattern requires producer waits for empty before second episode, but only empty_0 exists. The real violation: ready_0 is signaled (line 79) before consumer has picked up part_0, which matches 'depart before ready publication'—this is correct. The actual protocol violation is that ready_1 is signaled without a corresponding empty_1 wait, leaving the second episode's buffer handoff incomplete."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        58,
+        67,
+        70,
+        73,
+        76,
+        90,
+        99,
+        102,
+        105,
+        108,
+        120,
+        123,
+        126,
+        129,
+        132,
+        155,
+        158,
+        161,
+        164,
+        167
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering buffer poses, hold it through placement/pickup and immediate departure, then release after departing to LEFT_WAIT/RIGHT_WAIT/LEFT_HOME/RIGHT_HOME. Capacity-one buffer occupancy is serialized via the lock."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        79,
+        117,
+        135,
+        111,
+        152,
+        170
+      ],
+      "reason": "Consumer waits for ready_0/ready_1 receipts (lines 117, 152) and supplies those exact active EventReceipts on the carried move to target_0/target_1 (lines 135, 170). Producer signals ready with the correct item_id (lines 79, 111)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        54,
+        113,
+        182
+      ],
+      "reason": "Producer and consumer are defined as separate async coroutines and run concurrently via asyncio.gather at line 182, implementing the CONCURRENT level required by the SPEC."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        70,
+        73,
+        102,
+        105,
+        141,
+        144,
+        176,
+        179
+      ],
+      "reason": "Each release (part_0 at buffer_0, part_1 at buffer_1, part_0 at target_0, part_1 at target_1) is immediately followed by a same-arm separating move in the same coroutine (LEFT_WAIT, LEFT_HOME, RIGHT_HOME)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        105,
+        111,
+        182
+      ],
+      "reason": "After episode 2, producer moves LEFT to LEFT_HOME (line 105) and signals ready_1 (line 111) but never waits for consumer to complete part_1 delivery. The gather at line 182 ensures both coroutines complete, so terminal poses are reached. However, events ready_1 and empty_0 are not both cleared: ready_1 is cleared by consumer (line 173) but empty_0 was already cleared by producer (line 87) in episode 1; there is no empty_1 event to signal/clear for episode 2. The SPEC's terminal goal requires 'events inactive'—ready_1 is cleared, but the producer never waits for a second empty signal, and the buffer is left without a proper empty_1 handoff. More critically, after consumer finishes episode 2 (line 179), RIGHT is at RIGHT_HOME, but the producer may have already returned at line 105 without ensuring the second episode's buffer is empty. The SPEC requires 'buffer empty' at terminal state, but no empty_1 event exists to coordinate this, leaving the second episode's buffer-empty guarantee unfulfilled."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-CONCURRENT-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 852,
+    "prompt_tokens": 8604,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 9456
+  },
+  "raw_sha256": "4bb821f13ad933c8ccf56a408976bf3dc3aaaf8820518e5bdd185ce8c3f08218",
+  "request_sha256": "defb531bf0ead74781430371047020191a0187e2a442d3fb2528208c7824608b",
+  "source_sha256": "713c2eb5dce82aaed4803fdd0461fe89bdf3d72892df79fe019ca20c0650994d"
+}

@@ -1,0 +1,100 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        34,
+        37,
+        40,
+        41,
+        46,
+        49,
+        56,
+        59,
+        68,
+        71
+      ],
+      "reason": "Producer signals ready_0/1 after releasing buffer_lock, not immediately after buffer departure; consumer clears ready after carried move but before release/departure, violating required order. Producer clears empty_0 with expected_version=receipt.version+1, but receipt is the ready receipt, not the empty receipt."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        22,
+        25,
+        28,
+        31,
+        37,
+        49,
+        52,
+        56,
+        65,
+        68
+      ],
+      "reason": "Producer releases buffer_lock after departing to left_home, so it does not own buffer_lock during buffer departure. Consumer releases buffer_lock after departing to right_home, so it does not own buffer_lock during target departure from buffer."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        34,
+        46,
+        53,
+        56
+      ],
+      "reason": "Consumer waits for ready receipt before pickup and supplies that exact active item receipt on carried move to target."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        73,
+        77,
+        81
+      ],
+      "reason": "Left and right arm coroutines run concurrently via asyncio.gather, implementing the CONCURRENT structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        28,
+        31,
+        62,
+        65
+      ],
+      "reason": "Each release is immediately followed by a same-arm move to home in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        40,
+        41,
+        74,
+        75
+      ],
+      "reason": "Producer waits for empty_0 after first episode, but empty_0 is only signaled by consumer_0; second producer episode starts from left_home, not left_wait as required for source_1 approach, and the program cannot complete all terminal goals."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-CONCURRENT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 391,
+    "prompt_tokens": 6664,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7055
+  },
+  "raw_sha256": "50953962314149c045a9bd40b31bac93c04fa25eb276180c4b7fe67b7be06eaa",
+  "request_sha256": "be80d1d871ca9c9704fd0734ab981e09a3bc7327a73e4c1cb021f276e392984c",
+  "source_sha256": "c776b9bb4e0c2d96df3b475665b3b83346d2ed6ede774306bc40037cc80e24f5"
+}

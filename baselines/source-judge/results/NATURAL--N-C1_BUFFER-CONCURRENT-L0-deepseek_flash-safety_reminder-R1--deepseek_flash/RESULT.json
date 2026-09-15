@@ -1,0 +1,121 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        35,
+        39,
+        40,
+        55,
+        60,
+        78,
+        79,
+        83,
+        101
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer departure; consumer waits ready before pickup, clears ready_0 after carried move/release/departure then signals empty_0; producer waits and clears empty_0 before second buffer entry. Required ready/empty publications present."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        29,
+        31,
+        32,
+        47,
+        48,
+        49,
+        51,
+        52,
+        67,
+        68,
+        69,
+        90,
+        91,
+        92
+      ],
+      "reason": "Both arms acquire buffer_lock before entering buffer pose and release_resource only after departing to wait/home, so buffer_lock is owned during buffer entry/departure; capacity-one buffer respected by event handshake."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        60,
+        72,
+        83,
+        95
+      ],
+      "reason": "Consumer waits ready_0/ready_1 and passes the exact active EventReceipt (ready0/ready1) as receipt on the carried move to target_0/target_1."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        20,
+        57,
+        103,
+        104
+      ],
+      "reason": "producer() and consumer() coroutines are defined and run together via asyncio.gather, implementing the CONCURRENT variant B rather than serial episodes."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        29,
+        31,
+        49,
+        51,
+        73,
+        75,
+        96,
+        98
+      ],
+      "reason": "Each release at its declared support is immediately followed in the same coroutine by a same-arm separating move (buffer_0->left_wait, buffer_1->left_home, target_0->right_wait, target_1->right_home)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        23,
+        24,
+        43,
+        44,
+        63,
+        64,
+        72,
+        73,
+        86,
+        87,
+        95,
+        96,
+        104
+      ],
+      "reason": "Source implements the required action sequence and terminal poses/objects, but source-only evidence cannot confirm the finite execution actually reaches all terminal goals, empty hands, lock free, events inactive, and deadline within the single trajectory."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7803,
+    "completion_tokens": 499,
+    "total_tokens": 8302,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7675
+  },
+  "raw_sha256": "22db730323394b5f21dd843c4c2b1d1a5a1bbdefd99b9bee22c056fa94f9b324",
+  "request_sha256": "653d3fde644f85187f60c0f853bb5412217b44fb591b59dc3994d89314cdfd3e",
+  "source_sha256": "37421b2559af6350dd62d4c6500cc23ff093ddb0bd28266c85bc8fcad4e51631"
+}

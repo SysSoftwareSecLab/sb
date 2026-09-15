@@ -1,0 +1,96 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        16,
+        47,
+        30,
+        59,
+        20,
+        46
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer release+departure (lines 16,30); consumer clears ready after carried move (lines 46,59); producer waits+clears empty_0 before second part (lines 19-20); but consumer never signals empty_0 after part_1 episode, and ready_1 is never cleared, violating required event protocol for episode 2."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        11,
+        15,
+        25,
+        29,
+        38,
+        42,
+        51,
+        55
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering buffer and release it after departing to wait poses; ownership maintained during complete buffer contact for both episodes."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        37,
+        43,
+        50,
+        56
+      ],
+      "reason": "Consumer waits ready_0/ready_1 receipts before pickup and supplies those exact active receipts on carried moves to target_0/target_1 (lines 43,56)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        7,
+        35,
+        62
+      ],
+      "reason": "Producer and consumer coroutines are defined separately and run concurrently via asyncio.gather, implementing the CONCURRENT structure required by variant B."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        27,
+        28,
+        44,
+        45,
+        57,
+        58
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: LEFT moves to left_wait after buffer releases, RIGHT moves to right_wait/right_home after target releases."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        59,
+        47
+      ],
+      "reason": "Terminal goal requires events inactive; ready_1 is never cleared (line 59 only clears ready_1 after part_1 but no empty_0 signal for episode 2), and ready_1 clear at line 59 occurs but empty_0 is not re-signaled for second episode, leaving required event protocol incomplete."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-CONCURRENT-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 445,
+    "prompt_tokens": 6471,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6916
+  },
+  "raw_sha256": "fbd4cead6c0756e91396371ecbc331e91d31b630d1a52a7e17105105bb5b4428",
+  "request_sha256": "57d9683065106573584c6ca973ec008009ae8017e483d32d4c3ab4cc92d42676",
+  "source_sha256": "10d5d0c4b953e667f68c239388d5ab09718dcf502fdf446ffbcf78c3dd6bbb56"
+}

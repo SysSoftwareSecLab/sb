@@ -1,0 +1,108 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        46,
+        53,
+        54,
+        60,
+        82,
+        91,
+        92,
+        100,
+        101
+      ],
+      "reason": "Producer signals ready after buffer release/departure (L46); consumer waits ready before pickup (L60) and clears after carried move (L82); empty_0 signaled after first consumer episode (L92) and producer waits/clears before second part (L53-54). However, serial execution (L100-101) runs producer fully for both parts before consumer starts; producer signals ready_1 (L46) before consumer clears ready_0, and producer's empty_0 wait (L53) occurs inside producer before consumer runs, causing a protocol deadlock/order violation."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        29,
+        34,
+        35,
+        36,
+        39,
+        40,
+        43,
+        49,
+        63,
+        68,
+        69,
+        70,
+        73,
+        76
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry (L29,L63), hold it through approach/grasp/release/departure (L34-43,L68-73), and release it only after departing (L49,L76). Ownership spans the complete buffer contact interval for each participant."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        60,
+        79,
+        82,
+        85
+      ],
+      "reason": "Consumer waits for the corresponding ready receipt (L60), uses that exact receipt on the carried move to target (L79), clears ready after the carried move completes (L82), then releases on target (L85). Receipt dependency is preserved across the declared control flow."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        95,
+        96,
+        100,
+        101
+      ],
+      "reason": "SPEC requires variant A to alternate complete producer/consumer episodes (produce part_0, consume part_0, produce part_1, consume part_1). Source runs the entire producer for all parts first, then the entire consumer (L100-101), which is not alternating episodes and does not implement the stated SERIAL structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        39,
+        40,
+        43,
+        69,
+        70,
+        73,
+        85,
+        88
+      ],
+      "reason": "Each release (L40 producer buffer, L70 consumer buffer grasp-then-depart, L85 target release) is immediately followed by a same-arm separating move in the same coroutine: L43 after buffer release, L73 after buffer grasp, L88 after target release."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        100,
+        101,
+        53,
+        60
+      ],
+      "reason": "Serial producer-then-consumer execution creates a deadlock: producer signals ready_0 and ready_1 then waits for empty_0 (L53) before consumer runs; consumer waits for ready_0 (L60) which is already signaled, but after consuming part_0 and signaling empty_0, producer has already passed the wait. More critically, the non-alternating structure means producer places part_1 at buffer before consumer picks part_0, violating capacity-one buffer occupancy, preventing terminal goal achievement."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-SERIAL-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 652,
+    "prompt_tokens": 7116,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 7768
+  },
+  "raw_sha256": "da2af0780e9238fd167771ebdaffbf2d616da6f4c5948188bbfa80aaa29510d5",
+  "request_sha256": "bf7a8561f0d442deb75991f50e09cca7a986751642bedea47ef531019be525f2",
+  "source_sha256": "c1a31089583876f17e454277d44444e7ab81ee5b81513ba8b13db2d671305680"
+}

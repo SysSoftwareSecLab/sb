@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[73,74,75,98,111,128,131,140,35,41,45,51],\"reason\":\"Producer part_1 waits/clears empty_0 before buffer entry; consumer waits ready before pickup, clears ready after carried move, signals empty_0 after target release/departure; ready signaled after producer departs. But empty_0 is never cleared at end (signaled by consumer part_1, not cleared), violating events-inactive terminal.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[78,86,89,92,95,114,118,119,122,125],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry and release it after departure; occupancy is owned during complete contact interval for each episode.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[111,128,131],\"reason\":\"Consumer waits the corresponding ready receipt before pickup and supplies that exact active item receipt on the carried move to target.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[6,7,13,14,24,34,35,45],\"reason\":\"Variant A comment and serial structure: episodes alternate sequentially (producer_0, consumer_0, producer_1, consumer_1), matching CONCURRENCY=SERIAL layout=L0.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[89,92,134,137],\"reason\":\"Producer releases part at buffer_pose then immediately moves LEFT to approach_start; consumer releases at target_pose then immediately moves RIGHT to approach_start.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[140,35,41,45,51],\"reason\":\"After episode 1, consumer signals empty_0 (line 140) but no code clears it; terminal goal requires events inactive, so empty_0 remains active at normal return.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 421,
+    "prompt_tokens": 7711,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8132
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

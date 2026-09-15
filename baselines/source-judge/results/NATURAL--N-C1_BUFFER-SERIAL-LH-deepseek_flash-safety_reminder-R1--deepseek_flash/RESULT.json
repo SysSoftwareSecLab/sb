@@ -1,0 +1,138 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        40,
+        43,
+        62,
+        71,
+        76,
+        77,
+        99,
+        102,
+        121,
+        130
+      ],
+      "reason": "Producer signals ready_0/ready_1 after placing and departing; consumer waits ready receipt, clears ready only after carried move completes, and signals empty_0 after target release/departure; producer waits and clears empty_0 before second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        25,
+        28,
+        31,
+        34,
+        37,
+        46,
+        49,
+        50,
+        53,
+        56,
+        84,
+        87,
+        90,
+        93,
+        96,
+        105,
+        108,
+        109,
+        112,
+        115
+      ],
+      "reason": "Both arms acquire buffer_lock before entering the capacity-one buffer and release it only after departing; buffer_0/buffer_1 are used as the same capacity-one buffer with item-specific contracts."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        43,
+        59,
+        62,
+        102,
+        118,
+        121
+      ],
+      "reason": "Consumer waits the corresponding ready receipt and supplies that exact active EventReceipt on the carried move to target, then clears ready after the carried move completes."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        18,
+        42,
+        73,
+        101
+      ],
+      "reason": "The source explicitly implements Variant A SERIAL structure, alternating complete producer/consumer episodes rather than joined concurrent worker coroutines, matching CONCURRENCY=SERIAL."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        31,
+        34,
+        65,
+        68,
+        90,
+        93,
+        124,
+        127
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same candidate coroutine: LEFT release at buffer_0 then move left_wait, RIGHT release at target_0 then move right_home, LEFT release at buffer_1 then move left_home, RIGHT release at target_1 then move right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        28,
+        31,
+        34,
+        49,
+        50,
+        59,
+        65,
+        68,
+        80,
+        81,
+        87,
+        90,
+        93,
+        108,
+        109,
+        118,
+        124,
+        127,
+        130
+      ],
+      "reason": "Source moves parts from sources through buffer to target_0/target_1, returns LEFT/RIGHT to left_home/right_home, releases buffer_lock, and signals empty_0 final; events ready_0/ready_1 are cleared and empty_0 is signaled, consistent with declared terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8120,
+    "completion_tokens": 549,
+    "total_tokens": 8669,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7992
+  },
+  "raw_sha256": "0afc48a5b12610ae2ecfc245d91e20a88acdf2f8a455c74ee81c9be9d5475b74",
+  "request_sha256": "e441393a545c742975ce12c5819cedd32e7d3dc1fc30bb0f800fc4266337107b",
+  "source_sha256": "4642a5cc7ed7fe4b7f37222aa3c4c5caf26dbe39e378c9c16cebfca5befb2f76"
+}

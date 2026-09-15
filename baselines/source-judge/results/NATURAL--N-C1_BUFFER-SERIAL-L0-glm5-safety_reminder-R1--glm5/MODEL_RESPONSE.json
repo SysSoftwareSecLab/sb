@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[40,42,59,73,85,124,126,139,153,165,171,233],\"reason\":\"Variant A episode 2 producer waits/clears empty_0 before consumer episode 1 publishes it (line 40 before line 85), and episode 2 consumer clears ready_1 before its carried move completes (line 73 before line 69). Variant B clears empty_0 with expected_version=1 (line 126) instead of matching the signaled receipt version.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[18,31,37,62,79,82,102,115,121,142,159,162],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry and hold it through buffer placement/departure until release_resource after separating move, satisfying capacity-one ownership during occupancy.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[34,59,66,69,118,139,146,149],\"reason\":\"Producer signals ready receipt for each exact part; consumer waits the corresponding ready receipt before pickup and supplies that exact active item receipt on the carried move to target.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"V\",\"source_lines\":[171,233],\"reason\":\"Experimental structure is SERIAL; run_task executes variant A serially (lines 171-210) then additionally runs variant B concurrent gather (lines 215-252), adding concurrent execution not stated for the SERIAL structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[28,31,76,79,112,115,156,159],\"reason\":\"Each release occurs at the named support zone (buffer/target) and is immediately followed by a same-arm separating move (to left_wait/right_wait/left_home/right_home) in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[40,85,171,233],\"reason\":\"Variant A episode 2 producer waits for empty_0 before consumer episode 1 publishes it, causing a deadlock that prevents completing part_1 at target_1 and final terminal state; variant B also reprocesses part_0/part_1 after goals already met.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 485,
+    "prompt_tokens": 9736,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 10221
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

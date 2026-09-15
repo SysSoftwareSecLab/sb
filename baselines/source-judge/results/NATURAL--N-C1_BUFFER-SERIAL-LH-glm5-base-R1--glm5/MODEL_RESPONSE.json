@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[23,28,33,38,73,85,101,104,114,117,118],\"reason\":\"Producer publishes ready after departure (line 73); consumer waits ready before pickup (85), clears ready after carried move (101,104). But empty_0 wait/clear for producer is placed inside _consume_episode (117-118) after RIGHT publishes empty_0, not in producer before entering buffer with second part; episode 1 producer (34-37) never waits/clears empty_0 before buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[57,60,61,64,67,88,91,92,95,98],\"reason\":\"Both producer and consumer acquire buffer_lock before entering buffer, own it during entry/placement/departure, and release only after departing to wait pose; capacity-one buffer respected by serial episodes.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[85,92,95,104],\"reason\":\"Consumer waits corresponding ready receipt before pickup, supplies exact active item receipt on grasp and carried moves to target.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[23,28,33,38,44,76],\"reason\":\"SPEC requires SERIAL level variant A alternating complete producer/consumer episodes; code serially awaits _produce_episode then _consume_episode for each item, matching stated structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[61,64,92,95,105,108],\"reason\":\"Each release at buffer/target is immediately followed by same-arm separating move to wait pose in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[23,28,33,38,117,118],\"reason\":\"Parts reach targets and arms return home, but empty_0 wait/clear misplaced inside consumer episode causes producer episode 1 to not wait/clear empty_0 before buffer entry; also events ready_1 not cleared and empty_0 clearing ownership wrong, violating terminal event-cleared and required-order conditions.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 454,
+    "prompt_tokens": 7589,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8043
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

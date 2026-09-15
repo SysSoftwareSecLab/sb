@@ -1,0 +1,100 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        57,
+        66,
+        67,
+        72,
+        89,
+        103
+      ],
+      "reason": "Producer signals ready after departing buffer (line 57), consumer waits ready before pickup (line 72) and clears ready after carried move (line 89); producer waits and clears empty_0 before second buffer entry (lines 66-67); consumer signals empty_0 after release and departure (line 103). Order matches required_order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        40,
+        45,
+        48,
+        54,
+        62,
+        75,
+        79,
+        80,
+        85,
+        92,
+        96,
+        99
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry (lines 40,75) and release it after departing (lines 62,99); capacity-one buffer used serially with lock held during entry/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        72,
+        85,
+        89
+      ],
+      "reason": "Consumer waits ready receipt (line 72), supplies that exact active receipt on carried move to target (line 85), and clears ready with the receipt version after the move (line 89)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        110,
+        113,
+        119,
+        123
+      ],
+      "reason": "Experimental assignment is CONCURRENCY=SERIAL; run_task awaits producer then consumer episodes sequentially (lines 110,113,119,123), implementing the declared SERIAL structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        48,
+        54,
+        92,
+        96
+      ],
+      "reason": "Each release (lines 48,92) is immediately followed in the same coroutine by a same-arm separating move (lines 54,96) with no intervening same-arm request."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        110,
+        113,
+        119,
+        123
+      ],
+      "reason": "Sequential episodes place part_0 at target_0 and part_1 at target_1, return arms to left_home/right_home, release buffer_lock, and clear ready_0/empty_0; deadline 50s with ~14 moves at 1s each is within limit."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-SERIAL-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8131,
+    "completion_tokens": 480,
+    "total_tokens": 8611,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "prompt_cache_hit_tokens": 384,
+    "prompt_cache_miss_tokens": 7747
+  },
+  "raw_sha256": "d92e0773ff19e527a5126603b00e23ba9f220faec1d7fdf155240026129a51d5",
+  "request_sha256": "03034ef4ee2aa84cfb261758423fddfcf5da11d97b5ad3ff6db9663d1b1f703d",
+  "source_sha256": "7f107c8c855ea14a43510cfcf9d307b8313871a3203952a6b8070d2479440b1b"
+}

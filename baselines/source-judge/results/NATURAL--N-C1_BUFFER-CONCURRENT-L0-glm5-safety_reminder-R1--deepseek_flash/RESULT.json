@@ -1,0 +1,100 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        33,
+        35,
+        40,
+        56,
+        63
+      ],
+      "reason": "Producer waits empty_0 and clears it before the consumer has consumed part_0 (consumer only signals empty_0 at line 63 after its episode), and the producer's clear at line 35 occurs before any empty_0 signal exists; the required ready/empty ordering (consumer clears ready after carried move, releases, departs, then signals empty_0; producer waits/clears empty_0 before second entry) is not correctly sequenced in this concurrent variant."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "U",
+      "source_lines": [
+        17,
+        20,
+        21,
+        24,
+        27,
+        43,
+        46,
+        47,
+        50,
+        53
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock around buffer entry/departure, but the capacity-one buffer is shared by buffer_0 and buffer_1 at identical coordinates; source alone cannot determine whether the concurrent LEFT/RIGHT episodes actually serialize buffer occupancy without overlap."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        40,
+        47,
+        50,
+        56
+      ],
+      "reason": "Consumer waits ready receipt (line 40), supplies it as observation to grasp (line 47) and as receipt to the carried move to target (line 50), then clears ready with the matching version (line 56)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        82,
+        83,
+        84,
+        85,
+        86
+      ],
+      "reason": "run_task uses asyncio.gather to run left_episode, right_producer, and right_consumer concurrently, implementing the CONCURRENT level rather than serial alternation."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        21,
+        24,
+        59,
+        60
+      ],
+      "reason": "Each release (line 21 at buffer_pose, line 59 at target) is immediately followed in the same coroutine by a same-arm move (line 24 to wait_pose, line 60 to home)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        82,
+        83,
+        84,
+        85,
+        86
+      ],
+      "reason": "Source shows concurrent episodes but does not establish the finite terminal state (parts at targets, empty arms at homes, buffer empty, lock free, events inactive) within the deadline; source-only evidence cannot confirm completion."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-CONCURRENT-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7162,
+    "completion_tokens": 510,
+    "total_tokens": 7672,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7034
+  },
+  "raw_sha256": "a401c0721413246c4198f9a32c5b785dcf182c1f90c75cd80be313ca0633965e",
+  "request_sha256": "706c2ed9dfaf483d57acd9e032c3063ab4591c3f04962ef05a7803ccdebd746e",
+  "source_sha256": "fc261c298c25628c4b7430935eb57df43a1a91d8bd8958da238a3b4767b61afe"
+}

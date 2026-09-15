@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[49,66,69,72,73,89,104,107],\"reason\":\"ready_0 is signaled before consumer carried move completes; ready_1 cleared after release but before final empty_0; empty_0 signaled at line 69 before producer waits at line 72, and final empty_0 at line 107 is never cleared.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[41,46,54,58,82,86,93,96],\"reason\":\"buffer_lock acquired before buffer entry and released after departure for both producer and consumer episodes on both buffer_0 and buffer_1.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[49,55,61,89,94,99],\"reason\":\"Consumer grasps with producer observation, ready receipt supplied on carried move to target for both part_0 and part_1.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[37,38,41,42,43,45,46,49,52,54,55,57,58,61,62,63,66,69,72,73,78,79,82,83,84,85,86,89,92,93,94,95,96,99,100,101,104,107],\"reason\":\"Variant A SERIAL: complete producer/consumer episodes alternate serially with no concurrent worker coroutines, matching required_order.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[43,45,62,63,84,85,100,101],\"reason\":\"Each release at buffer and target is followed by immediate same-arm separating move in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[107,66,104],\"reason\":\"Final empty_0 signaled at line 107 is never cleared; ready_0 cleared prematurely at line 66 before carried move completes; events not all inactive at return.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 431,
+    "prompt_tokens": 7395,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7826
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

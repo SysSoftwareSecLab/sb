@@ -1,0 +1,104 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        53,
+        57,
+        58,
+        68,
+        77,
+        80,
+        89
+      ],
+      "reason": "Producer publishes ready (line 53) then immediately waits empty_0 (line 57) before consumer has necessarily completed its carried move; consumer clears ready after carried move (line 80) and publishes empty_0 (line 89). But producer's empty_receipt_holder stores ready_receipt (line 54) and waits empty_0 with no matching version guarantee; more critically, producer clears empty_0 at line 58 using empty_receipt.version, but the required order says producer waits and clears empty_0 before entering buffer with second part—episode_0 and episode_1 are serialized (lines 121-122), so empty_0 from episode_0 consumer is cleared by episode_0 producer, which is correct. However ready is cleared by consumer after carried move (line 80) which matches. The violation: producer signals ready then waits empty_0 within the same episode, but the SPEC requires producer waits empty_0 before entering buffer with the SECOND part, not within the same episode. In serialized episodes, episode_0 producer waits episode_0 consumer's empty_0, which is structurally correct. But episode_1 producer also waits empty_0 (line 57) which was already cleared by episode_0 producer (line 58), so episode_1 producer will timeout waiting for empty_0 that was never re-signaled—episode_0 consumer signaled it once and episode_0 producer cleared it."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        38,
+        41,
+        44,
+        47,
+        50,
+        71,
+        74,
+        77,
+        83,
+        86
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry and release it only after departure (lines 38,50,71,86). Capacity-one buffer occupancy is protected by lock ownership during entry and departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        53,
+        68,
+        77,
+        80
+      ],
+      "reason": "Consumer waits corresponding ready receipt (line 68) and supplies that exact active item receipt on carried move to target (line 77). Producer signals ready with part_id (line 53). Receipt matching is maintained."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        96,
+        100,
+        104,
+        110,
+        114,
+        118,
+        121,
+        122
+      ],
+      "reason": "Variant B runs producer and consumer coroutines together via asyncio.create_task and asyncio.gather within each episode (lines 96-104, 110-118), implementing the CONCURRENT level rather than serial reproduction."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        27,
+        28,
+        83,
+        27,
+        28
+      ],
+      "reason": "Each release (line 27 in _release_and_depart) is immediately followed by _move to depart_pose in the same coroutine (line 28). Producer releases on buffer_pose and departs to left_home (line 47); consumer releases on target_pose and departs to right_home (line 83)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        57,
+        58,
+        121,
+        122
+      ],
+      "reason": "Episode_1 producer waits empty_0 (line 57) but empty_0 was already signaled by episode_0 consumer (line 89) and cleared by episode_0 producer (line 58). No one re-signals empty_0 before episode_1, so episode_1 producer will timeout on wait_event, causing abnormal termination. Terminal goals (part_0 at target_0, part_1 at target_1, empty arms, lock free, events inactive) cannot all be achieved."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-CONCURRENT-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 769,
+    "prompt_tokens": 7578,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 8347
+  },
+  "raw_sha256": "45439ea556494f81ef66a5d26ad66a905f0f1d4d92884a5dc3d3405c3b216d6f",
+  "request_sha256": "3896677214fa9c6e4dcb7afe506f2aaf6b784dd18b903d9301c06f1d39106e20",
+  "source_sha256": "c600fa81b46ee33f75eb847f7cc8a49cabe0539a640269851af1a1fabc17591b"
+}

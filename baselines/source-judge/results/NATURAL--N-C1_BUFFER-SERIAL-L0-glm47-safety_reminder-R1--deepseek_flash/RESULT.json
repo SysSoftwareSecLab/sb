@@ -1,0 +1,100 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        52,
+        60,
+        81,
+        90,
+        99,
+        100
+      ],
+      "reason": "Producer signals ready after departing buffer (line 52); consumer waits ready (line 60), clears ready after carried move (line 81), signals empty_0 (line 90); producer waits and clears empty_0 before second buffer entry (lines 99-100). Order matches SPEC."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        40,
+        43,
+        46,
+        49,
+        55,
+        63,
+        66,
+        69,
+        72,
+        75
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering buffer and release after departing (lines 40/55, 63/75); capacity-one buffer respected by serial episodes and empty_0 wait before second part."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        60,
+        78
+      ],
+      "reason": "Consumer waits ready_event to obtain ready_receipt (line 60) and supplies that exact receipt on the carried move to target (line 78), matching the BUFFER_RECEIPT mechanism."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        92,
+        95,
+        96,
+        103,
+        104
+      ],
+      "reason": "SPEC declares CONCURRENCY=SERIAL, layout=L0; code executes producer and consumer episodes serially (lines 95-96, 103-104), implementing the stated serial structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        46,
+        49,
+        84,
+        87
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: release at buffer_0 then move to left_wait (lines 46,49); release at target then move to right_wait (lines 84,87)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        95,
+        96,
+        103,
+        104,
+        107,
+        108
+      ],
+      "reason": "Both parts moved to targets, arms return to homes (lines 107-108), buffer emptied via empty_0 wait, lock released, and ready/empty events cleared; deadline 50s not exceeded by declared durations."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-SERIAL-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7740,
+    "completion_tokens": 469,
+    "total_tokens": 8209,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7612
+  },
+  "raw_sha256": "1c17b1bad6d79bf3254a21318efd0fbb2c974993f656e0e4e31afedd43def6ca",
+  "request_sha256": "04b30aa8f3563bd76c96a5f4e362ac6694ce22ebd34f51450e892b2f83ceafe8",
+  "source_sha256": "506c58a9a25e9fc67e1e3a690c89f526306fda316441022d9d7cc52262b950b2"
+}

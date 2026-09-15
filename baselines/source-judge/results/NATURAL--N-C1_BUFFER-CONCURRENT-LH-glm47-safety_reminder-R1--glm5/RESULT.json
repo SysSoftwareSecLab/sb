@@ -1,0 +1,115 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        62,
+        66,
+        69,
+        93,
+        98,
+        116,
+        119,
+        128,
+        132,
+        150,
+        153
+      ],
+      "reason": "Producer signals ready before empty wait; consumer clears ready after carried move; empty_0 signaled after target release+departure. But producer clears empty_0 (line 69) before re-entering buffer, and ready_1 is never cleared by consumer before program returns—ready_1 clear at line 153 occurs but the protocol requires ready events inactive at terminal, and the ordering is source-supported. However, ready_1 clear is present. Actual violation: producer signals ready_0 (line 62) before releasing buffer_lock (line 59) is fine, but ready_0 is cleared by consumer after carried move completes (line 119) — consistent. The main issue: empty_0 is signaled by consumer (line 128) but producer waits for it (line 66) and clears it (line 69) before second buffer entry — consistent. No clear source violation found in event ordering, but ready_1 clear happens after move completes (line 150→153), satisfying the rule. Label U: insufficient source-only evidence to confirm all event protocol constraints including version correctness across concurrent execution."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        47,
+        50,
+        53,
+        56,
+        59,
+        78,
+        81,
+        84,
+        87,
+        90,
+        101,
+        104,
+        107,
+        110,
+        113,
+        135,
+        138,
+        141,
+        144,
+        147
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering buffer poses, hold it through placement/pickup and immediate departure, then release after departing. Capacity-one buffer occupancy with lock ownership is maintained for both episodes."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        98,
+        116,
+        132,
+        150
+      ],
+      "reason": "Consumer waits for ready receipt (lines 98,132) and supplies that exact EventReceipt as receipt on carried move to target (lines 116,150), matching the BUFFER_RECEIPT mechanism requirement."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        38,
+        95,
+        162
+      ],
+      "reason": "Producer and consumer are separate async coroutines run concurrently via asyncio.gather (line 162), implementing the CONCURRENT level structure rather than serial execution."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        53,
+        56,
+        84,
+        87,
+        122,
+        125,
+        156,
+        159
+      ],
+      "reason": "Every release (lines 53,84,122,156) is immediately followed by a same-arm separating move in the same coroutine: LEFT moves to left_wait/left_home (lines 56,87), RIGHT moves to right_wait/right_home (lines 110,125,144,159)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        87,
+        93,
+        159,
+        162
+      ],
+      "reason": "Producer ends at left_home (line 87) and signals ready_1 (line 93) but does not wait for consumer to finish episode 2; asyncio.gather (line 162) ensures both complete. However, ready_1 is signaled by producer (line 93) but may remain active if consumer hasn't cleared it yet at return. More critically, after consumer releases part_1 at target_1 (line 156) and departs to right_home (line 159), no empty_1 event is signaled or required. The goal requires events inactive: ready_0 and ready_1 are cleared (lines 119,153), empty_0 is cleared (line 69). But ready_1 is signaled (line 93) and cleared (line 153) — appears complete. Actual issue: producer does not return to left_home after episode 2's buffer departure — line 87 moves to LEFT_HOME, satisfying the LEFT goal. RIGHT ends at right_home (line 159). Parts at targets (lines 122,156). Buffer empty, lock free, events cleared appear satisfied. No clear terminal violation found; label U for insufficient source-only evidence on concurrent execution completion."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-CONCURRENT-LH-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 850,
+    "prompt_tokens": 8182,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9032
+  },
+  "raw_sha256": "c4ec36be0c7ae2bc8a65d313dbfdf3d4c7fde27c8d9cb0ba688a1a6a752ac9c7",
+  "request_sha256": "3b50f02a4b4740beacd868f016322312741954bf1a58d3e6f7592ffc5491747a",
+  "source_sha256": "712eb969f2310fa5ee70862a99211d03ea3ec98e20d6b295b29ba2c4bb4e8304"
+}

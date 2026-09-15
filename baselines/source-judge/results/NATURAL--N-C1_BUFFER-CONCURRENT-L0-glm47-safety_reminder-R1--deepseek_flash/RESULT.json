@@ -1,0 +1,126 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        65,
+        72,
+        93,
+        102,
+        106,
+        110,
+        134,
+        138,
+        159
+      ],
+      "reason": "Producer signals ready_0/ready_1 after placing and departing; consumer waits ready, clears ready only after carried move completes (lines 90/93, 156/159); empty_0 is signaled by C0 (line 102) and waited/cleared by P1 (lines 106,110), matching the required ready/empty publication order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        50,
+        53,
+        56,
+        59,
+        62,
+        75,
+        78,
+        81,
+        84,
+        87,
+        119,
+        122,
+        125,
+        128,
+        131,
+        141,
+        144,
+        147,
+        150,
+        153
+      ],
+      "reason": "Both arms acquire buffer_lock before entering buffer_0/buffer_1, release the part at the buffer, immediately depart, then release the lock; capacity-one buffer is respected with item-specific pickup contracts."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        65,
+        90,
+        138,
+        156
+      ],
+      "reason": "Consumer C0 passes producer_ready_receipt from signal(READY_0, PART_0) on the carried move to TARGET_0 (line 90); C1 passes ready_1_receipt from wait_event(READY_1) on the carried move to TARGET_1 (line 156), satisfying the exact active item receipt requirement."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        178,
+        189,
+        192,
+        197,
+        201,
+        204,
+        205,
+        206
+      ],
+      "reason": "Variant B is implemented: P0 runs as a task, C0 is created after P0's receipt, and P1/C1 are created concurrently as tasks and awaited, matching the CONCURRENT structure rather than a serial terminal-goal reproduction."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        56,
+        59,
+        81,
+        84,
+        96,
+        99,
+        125,
+        128,
+        147,
+        150,
+        162,
+        165
+      ],
+      "reason": "Every release at buffer_0/buffer_1/target_0/target_1 is immediately followed by a same-arm move in the same coroutine (release then move_to LEFT_WAIT/LEFT_HOME or RIGHT_WAIT/RIGHT_HOME), with no intervening same-arm proposal."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        99,
+        128,
+        165,
+        204,
+        205,
+        206
+      ],
+      "reason": "The program awaits all created tasks and returns normally; parts are released at target_0/target_1, arms end at left_home/right_home, buffer_lock is released, and ready_0/ready_1/empty_0 are cleared or inactive as required by the public goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-CONCURRENT-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9655,
+    "completion_tokens": 607,
+    "total_tokens": 10262,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 9399
+  },
+  "raw_sha256": "5964e3c79e15b5c60bb02b0fee8bb21555520491e0e2425456a83fe888947b74",
+  "request_sha256": "13da061d29367f45b27387f814344a070bbf02a26f33f33fc8be7ff260327aed",
+  "source_sha256": "a54f0717828c45bbb4b1e1bdf9afff047264216e6da4414578b9ec5c2b5d50e7"
+}

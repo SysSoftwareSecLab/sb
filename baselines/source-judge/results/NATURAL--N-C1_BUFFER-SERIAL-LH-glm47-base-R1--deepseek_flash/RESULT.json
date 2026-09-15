@@ -1,0 +1,89 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        100,
+        101
+      ],
+      "reason": "The SPEC requires producer and consumer coroutines to run together (variant B) and the experimental structure is CONCURRENCY=SERIAL meaning alternating complete producer/consumer episodes; the code runs the entire producer for both parts then the entire consumer, so the producer signals ready_0 and then waits for empty_0 before producing part_1, but empty_0 is only signaled by the consumer which has not yet run, causing a deadlock/timeout and violating the required ready/empty publication ordering."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        29,
+        49,
+        63,
+        76
+      ],
+      "reason": "The buffer is capacity-one and both participants must own buffer_lock during buffer entry and departure; the producer acquires the lock, places part_0, releases the lock, then waits for empty_0 before the second part, but the consumer only acquires the lock after waiting for ready_0, so the serial execution cannot maintain the required ownership/occupancy protocol and the producer's second-part entry occurs without the consumer having cleared the buffer."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "V",
+      "source_lines": [
+        60,
+        79,
+        82
+      ],
+      "reason": "The consumer must wait for the corresponding ready receipt before pickup and supply that exact active item receipt on the carried move to target; in the serial execution the consumer waits for ready_0 only after the producer has already timed out waiting for empty_0, so the required receipt dependency is not satisfied on the reachable path."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101
+      ],
+      "reason": "The SPEC's experimental structure is CONCURRENCY=SERIAL with variant A requiring alternating complete producer/consumer episodes, but the code runs the full producer sequence for all parts then the full consumer sequence for all parts, which is not the declared alternating episode structure and deadlocks on the empty_0 wait."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "U",
+      "source_lines": [
+        40,
+        43,
+        85,
+        88
+      ],
+      "reason": "Releases are proposed at buffer and target poses followed by same-arm moves, but the serial execution deadlocks before the consumer's releases complete, so the finite trajectory cannot be determined from source alone."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        100,
+        101
+      ],
+      "reason": "The declared terminal goal requires part_0 at target_0, part_1 at target_1, empty arms at homes, buffer empty, lock free, and events inactive; the serial execution deadlocks when the producer waits for empty_0 before the consumer runs, so the goal cannot be reached."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-SERIAL-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7557,
+    "completion_tokens": 584,
+    "total_tokens": 8141,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7429
+  },
+  "raw_sha256": "d634de261af874160c464de9c68a67dd4892ba509b511c2be47b94c01e93fab7",
+  "request_sha256": "38dca2f94fa9db4938e2bfcf5d9cb0ea2bc512c397134c0aae8987b7e084b0c4",
+  "source_sha256": "c1a31089583876f17e454277d44444e7ab81ee5b81513ba8b13db2d671305680"
+}

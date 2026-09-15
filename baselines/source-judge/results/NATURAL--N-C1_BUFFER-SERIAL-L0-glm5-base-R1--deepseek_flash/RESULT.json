@@ -1,0 +1,125 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        29,
+        32,
+        33,
+        36,
+        37,
+        46,
+        59,
+        71,
+        75,
+        76
+      ],
+      "reason": "Producer signals ready after departing buffer, consumer waits ready and clears it after the carried move using receipt.version, producer waits/clears empty_0 before second part, consumer signals empty_0 after departure; required ready/empty publications and clear ordering are present."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        14,
+        17,
+        20,
+        23,
+        26,
+        49,
+        52,
+        53,
+        56,
+        62,
+        65,
+        68
+      ],
+      "reason": "Both arms acquire buffer_lock before entering buffer_0/buffer_1, hold it through placement/pickup and departure, and release only after the separating move; capacity-one buffer is serialized by the lock."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        46,
+        56,
+        59,
+        115,
+        119,
+        120,
+        129,
+        133,
+        134
+      ],
+      "reason": "Consumer waits the corresponding ready receipt and passes that exact active EventReceipt to the carried move to target, then clears ready with the receipt version after the move completes."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        140,
+        149,
+        150,
+        152,
+        153,
+        155,
+        156,
+        158,
+        159
+      ],
+      "reason": "run_task implements the declared SERIAL/L0 structure by awaiting complete producer then consumer episodes sequentially for part_0 and part_1, matching the SPEC's stated serial composition rather than concurrent worker coroutines."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        23,
+        62,
+        65,
+        86,
+        87,
+        102,
+        103,
+        121,
+        122,
+        135,
+        136
+      ],
+      "reason": "Every release is immediately followed in the same coroutine by a same-arm separating move: LEFT release at buffer_0/buffer_1 then move to left_wait, RIGHT release at target_0/target_1 then move to right_wait/right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        110,
+        136,
+        150,
+        152,
+        156,
+        158
+      ],
+      "reason": "Source places part_0 at target_0 and part_1 at target_1, returns arms to left_home/right_home, releases buffer_lock, and clears/signals events so the declared terminal goal is implemented; deadline is not exceeded by the serial episode structure."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-SERIAL-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8901,
+    "completion_tokens": 522,
+    "total_tokens": 9423,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8773
+  },
+  "raw_sha256": "b5aed1ad709e139f0872b0a41efe23890d3a0a176df12104df0faf0174a89404",
+  "request_sha256": "2a0694ae0a85e523e96a3929bd3549361070de884b875a68f2d758b6d639ef47",
+  "source_sha256": "538828828be14ec692a404275a43e5233f68b0210b7a0981f9228a74aba62fcd"
+}

@@ -1,0 +1,92 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        41,
+        51,
+        73,
+        74,
+        75,
+        98,
+        131,
+        140
+      ],
+      "reason": "Episode 1 passes empty_event=\"empty_0\" for both producer and consumer, so the consumer signals empty_0 after part_1 (line 140) and the producer waits/clears empty_0 before part_1 (lines 73-75); the required per-episode empty publication/clear ordering is not correctly implemented for the second part, and ready_1 is signaled but empty_0 is reused."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        78,
+        95,
+        114,
+        125
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry and release it after departing from the buffer, matching the capacity-one buffer ownership requirement."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        111,
+        128
+      ],
+      "reason": "Consumer waits for the ready receipt and supplies that exact active EventReceipt on the carried move to target."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        14,
+        24,
+        35,
+        45
+      ],
+      "reason": "The task is explicitly SERIAL/L0 and run_task awaits complete producer then consumer episodes sequentially, matching the declared serial composition."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        89,
+        92,
+        134,
+        137
+      ],
+      "reason": "Each release is immediately followed by a same-arm move to the approach start in the same coroutine, satisfying the departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        41,
+        51,
+        140
+      ],
+      "reason": "The source does not show a completed finite trajectory; additionally the empty_0 reuse for episode 1 leaves event clearing and final goal state uncertain from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8127,
+    "completion_tokens": 391,
+    "total_tokens": 8518,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7999
+  },
+  "raw_sha256": "98792ac6162fa5dcaa48fde1ea12d81f506f6e29f8c6037b0ca74806280a2dde",
+  "request_sha256": "7f922dc208c58ea02a516a72e118cb406ee1200f941fddc6548a7205054b08fb",
+  "source_sha256": "4737d8f7d17f9145ad4b19e2bf853beb8be5e5d3a9747759cf0df1796d294101"
+}

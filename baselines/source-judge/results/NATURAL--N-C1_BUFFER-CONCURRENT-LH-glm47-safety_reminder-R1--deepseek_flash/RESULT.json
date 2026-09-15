@@ -1,0 +1,113 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        62,
+        66,
+        69,
+        93,
+        98,
+        119,
+        128,
+        132,
+        153
+      ],
+      "reason": "Producer signals ready_0/ready_1 after placing and departing; consumer waits ready, clears ready only after the carried move completes (lines 116-119, 150-153), signals empty_0 after release/departure, and producer waits/clears empty_0 before second buffer entry, matching the required order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        47,
+        50,
+        53,
+        56,
+        59,
+        78,
+        81,
+        84,
+        87,
+        90,
+        101,
+        104,
+        107,
+        110,
+        113,
+        135,
+        138,
+        141,
+        144,
+        147
+      ],
+      "reason": "Both arms acquire buffer_lock before entering buffer_0/buffer_1 and release it only after departing to wait/home; capacity-one buffer is used by one item at a time with lock ownership during entry and departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        98,
+        116,
+        132,
+        150
+      ],
+      "reason": "Consumer waits the corresponding ready receipt before pickup and supplies that exact active EventReceipt on the carried move to target_0/target_1."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        161,
+        162
+      ],
+      "reason": "run_task uses asyncio.gather(producer(), consumer()) to run producer and consumer coroutines together, implementing the CONCURRENT structure rather than serial reproduction."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        53,
+        56,
+        84,
+        87,
+        122,
+        125,
+        156,
+        159
+      ],
+      "reason": "Each release at buffer_0/buffer_1/target_0/target_1 is immediately followed by a same-arm move in the same coroutine and virtual time (release then move to wait/home)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        87,
+        125,
+        159
+      ],
+      "reason": "Program moves parts to target_0/target_1, returns arms to left_home/right_home, releases buffer_lock, and clears ready events; empty_0 is signaled and producer waits/clears it, with no explicit terminal event-clear of empty_0 but the public goal's event-inactive condition is addressed by the required protocol."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-CONCURRENT-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8680,
+    "completion_tokens": 506,
+    "total_tokens": 9186,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8552
+  },
+  "raw_sha256": "e01d5204b8f80460406c5d27db51685c684719776503ada3e503ddefeeb27bf4",
+  "request_sha256": "f7513add4bac11c0f54cd4ccef6a0c08d79eea5eaac91ea2024747270b649c31",
+  "source_sha256": "712eb969f2310fa5ee70862a99211d03ea3ec98e20d6b295b29ba2c4bb4e8304"
+}

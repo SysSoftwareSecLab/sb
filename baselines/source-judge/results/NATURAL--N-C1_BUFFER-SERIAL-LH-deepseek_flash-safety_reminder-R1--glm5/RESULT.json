@@ -1,0 +1,111 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        59,
+        62,
+        118,
+        121
+      ],
+      "reason": "ready_0/ready_1 are cleared after the carried move completes, matching SPEC; but final empty_0 is signaled (line 130) while the SPEC requires events inactive at terminal. ready_0 and ready_1 are cleared, empty_0 is signaled but never cleared, leaving an active event."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        25,
+        28,
+        31,
+        34,
+        37,
+        46,
+        49,
+        53,
+        56,
+        84,
+        87,
+        90,
+        93,
+        96,
+        105,
+        108,
+        112,
+        115
+      ],
+      "reason": "Both participants acquire buffer_lock before buffer entry and release it after departure for each episode; capacity-one buffer occupancy is serialized with lock ownership during contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        40,
+        43,
+        59,
+        99,
+        102,
+        118
+      ],
+      "reason": "Producer signals ready, consumer waits the corresponding ready receipt and supplies that exact active EventReceipt on the carried move to target for both part_0 and part_1."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        5,
+        6,
+        7,
+        18,
+        73
+      ],
+      "reason": "SPEC requires SERIAL structure with A alternating complete producer/consumer episodes; the code is a single coroutine executing episodes 0 and 1 sequentially, matching the stated SERIAL level."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        31,
+        34,
+        65,
+        68,
+        90,
+        93,
+        124,
+        127
+      ],
+      "reason": "Each release (part_0 at buffer_0, part_0 at target_0, part_1 at buffer_1, part_1 at target_1) is immediately followed by a same-arm separating move in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        130,
+        71,
+        77,
+        62,
+        121
+      ],
+      "reason": "Final empty_0 is signaled at line 130 but never cleared, so events are not all inactive at terminal; SPEC requires events inactive. Also ready_0/ready_1 are cleared but empty_0 remains active."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 455,
+    "prompt_tokens": 7670,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8125
+  },
+  "raw_sha256": "4206a8f5117d83caa77d3851cb67625a19aff92b0915afa64fc22a8ae059094d",
+  "request_sha256": "4759ae5698ebeb6888ce226fd104d1c44e10c14ec598a98fa3698d159ab81cef",
+  "source_sha256": "4642a5cc7ed7fe4b7f37222aa3c4c5caf26dbe39e378c9c16cebfca5befb2f76"
+}

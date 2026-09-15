@@ -1,0 +1,121 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        28,
+        29,
+        33,
+        34,
+        35,
+        57,
+        62,
+        75,
+        78,
+        84,
+        88,
+        89
+      ],
+      "reason": "Producer signals ready after departing buffer; consumer waits ready before pickup, clears after carried move completes; empty_0 published after consumer departs; producer waits/clears empty_0 before second part."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        47,
+        49,
+        50,
+        52,
+        54,
+        65,
+        67,
+        68,
+        70,
+        72
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering buffer and release it after departing; capacity-one buffer protected across all buffer contact operations."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        62,
+        75,
+        78
+      ],
+      "reason": "Consumer waits ready receipt, clears it after carried move, and supplies that exact active EventReceipt as receipt on the carried move to target."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        5,
+        28,
+        29,
+        33,
+        34,
+        35
+      ],
+      "reason": "Variant A implements SERIAL structure: complete producer-consumer episode for part_0, then wait/clear empty_0, then complete producer-consumer episode for part_1, with no concurrent worker coroutines."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        50,
+        52,
+        79,
+        81
+      ],
+      "reason": "Each release (LEFT at buffer, RIGHT at target) is immediately followed by a same-arm separating move in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        28,
+        29,
+        33,
+        34,
+        35,
+        41,
+        43,
+        44,
+        49,
+        50,
+        52,
+        54,
+        67,
+        68,
+        70,
+        72,
+        78,
+        79,
+        81,
+        84,
+        89
+      ],
+      "reason": "Both parts produced to buffer and consumed to targets; arms return to homes; buffer_lock released after each episode; events cleared; empty_0 cleared before second part; serial structure matches deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-SERIAL-LH-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 420,
+    "prompt_tokens": 6963,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7383
+  },
+  "raw_sha256": "b3deb07659905bf33e634b8907c7bbfd8f62fe292411373a0b49354c96f606f7",
+  "request_sha256": "9588b179b3d77b033b74184ce7eedab7262533f8745e1394e0a1b7cc4c3896c0",
+  "source_sha256": "81335358eb0bba3b5e1178278b9c5aa1227e8c5eccc9733fe8d7b9c0dc6b5b80"
+}
