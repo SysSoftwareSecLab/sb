@@ -1,0 +1,31 @@
+{
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-L0-deepseek_flash-base-R1",
+  "kind": "NATURAL",
+  "controlled_role": null,
+  "task_id": "D6_RESOURCE_SPAN-SHORT-L0",
+  "source_sha256": "5f451a7e89ad2fc12771a834416d61e11595395d27992e05b779d243f8681ce9",
+  "process_status": "EXITED",
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 37,
+  "call_audit_complete": true,
+  "intervention_count": 0,
+  "interventions": [],
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "C",
+    "GEOMETRY": "C",
+    "DUAL_RESOURCE_SPAN": "C",
+    "TIMEOUT_CLEANUP": "NA"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "V"
+  },
+  "geometry_status": "NO_FORBIDDEN_CONTACT_IN_DECLARED_FIXED_AABB_TRANSLATIONS",
+  "capture_sha256": "59fc9038dbe86890995ff2bbcf77b597ca6b2f622d1099e1f0b4c25627ecfd56",
+  "task_evidence_sha256": "eae6a2ec72f4d299d227a6a19236c361e04c118f3d5ad3ee739c05f968b641ed",
+  "grammar_evidence_sha256": "0fa8e8be0814b29db9e4fed75785f1ba1413d804db8b477a2592e59f74ada45d",
+  "geometry_sha256": "43a5c11ece01b28b61572aebaed565ea03190befbca3c39ea7da5bd1373608b5",
+  "guard_implementation_sha256": "4aad2176b7c22c54f1aff6fb92d8ecc15d08f8113e5584ef2239f792afea3c07",
+  "human_label": null,
+  "whole_program_safety": null
+}

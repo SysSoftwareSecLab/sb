@@ -1,0 +1,355 @@
+{
+  "rows": [
+    {
+      "obligation": "SUPPORT_DEPARTURE",
+      "rule": "每次释放须为本臂所持物体、位于声明支撑；随后同臂立即开始分离撤离，不产生正虚拟时间间隔。几何是否真正分离另见GEOMETRY。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            13
+          ],
+          "reason": "Held item at declared support on release commit",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            37
+          ],
+          "reason": "Held item at declared support on release commit",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            60
+          ],
+          "reason": "Held item at declared support on release commit",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            84
+          ],
+          "reason": "Held item at declared support on release commit",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            13,
+            14
+          ],
+          "reason": "First subsequent same-arm action begins departure with no virtual delay",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            37,
+            38
+          ],
+          "reason": "First subsequent same-arm action begins departure with no virtual delay",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            60,
+            61
+          ],
+          "reason": "First subsequent same-arm action begins departure with no virtual delay",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            84,
+            85
+          ],
+          "reason": "First subsequent same-arm action begins departure with no virtual delay",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "TERMINAL",
+      "rule": "正常路径须在时限内完成全部物体/机械臂目标，双臂空手、资源OFF且无人占用、事件清空。专门注入的获取超时场景仅按公开fault_path_goal要求检查，不要求完成正常任务。",
+      "label": "V",
+      "instances": [
+        {
+          "label": "V",
+          "event_indices": [
+            89
+          ],
+          "reason": "Finite task outcome, not whole-program safety; failed process cannot satisfy normal endpoint",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "GEOMETRY",
+      "rule": "仅判断本次声明的固定方向平移AABB实体及禁碰对；依据完整几何重建与发现，不推断力学、全关节或所有可能路径的安全。",
+      "label": "U",
+      "instances": [
+        {
+          "label": "U",
+          "event_indices": [],
+          "reason": "INCONCLUSIVE_INCOMPLETE_TRACE",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "BUFFER_OCCUPANCY_OWNER",
+      "rule": "buffer_0/1为同一物理容量1缓存；进入和离开缓存接触期间须持有buffer_lock；每次提交释放时最多一个物体在缓存。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            13
+          ],
+          "reason": "Capacity one across aliases of the same physical buffer at committed release",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            60
+          ],
+          "reason": "Capacity one across aliases of the same physical buffer at committed release",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            10,
+            11
+          ],
+          "reason": "Proposed buffer entry owns buffer lock",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            25,
+            26
+          ],
+          "reason": "Proposed buffer entry owns buffer lock",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            57,
+            58
+          ],
+          "reason": "Proposed buffer entry owns buffer lock",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            72,
+            73
+          ],
+          "reason": "Proposed buffer entry owns buffer lock",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            14,
+            15
+          ],
+          "reason": "Retain buffer lock until departure starts",
+          "request_id": 8
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            16,
+            17
+          ],
+          "reason": "Do not release lock before buffer departure completes",
+          "request_id": 9
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            29,
+            30
+          ],
+          "reason": "Retain buffer lock until departure starts",
+          "request_id": 16
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            31,
+            32
+          ],
+          "reason": "Do not release lock before buffer departure completes",
+          "request_id": 17
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            61,
+            62
+          ],
+          "reason": "Retain buffer lock until departure starts",
+          "request_id": 33
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            63,
+            64
+          ],
+          "reason": "Do not release lock before buffer departure completes",
+          "request_id": 34
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            76,
+            77
+          ],
+          "reason": "Retain buffer lock until departure starts",
+          "request_id": 41
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            78,
+            79
+          ],
+          "reason": "Do not release lock before buffer departure completes",
+          "request_id": 42
+        }
+      ]
+    },
+    {
+      "obligation": "BUFFER_EVENT_PROTOCOL",
+      "rule": "ready_i只能在对应物体放入缓存且LEFT已撤离后发布；RIGHT取件前已等待对应ready。empty_0只能在第一物体放入目标且RIGHT撤离后发布；LEFT第二次进入前须等待并清除empty_0。ready须在对应带凭据搬运之后清除。",
+      "label": "V",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            18
+          ],
+          "reason": "Ready producer requires corresponding supported item and completed LEFT departure",
+          "request_id": 10
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            27,
+            28
+          ],
+          "reason": "Ready receipt waited before consumer pickup",
+          "request_id": 15
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            40
+          ],
+          "reason": "Ready clear follows actual receipt consumer",
+          "request_id": 21
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            41
+          ],
+          "reason": "Empty producer follows item target placement and RIGHT departure",
+          "request_id": 22
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            57,
+            58
+          ],
+          "reason": "Second buffer entry follows waited and cleared empty acknowledgement",
+          "request_id": 31
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            65
+          ],
+          "reason": "Ready producer requires corresponding supported item and completed LEFT departure",
+          "request_id": 35
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            74,
+            75
+          ],
+          "reason": "Ready receipt waited before consumer pickup",
+          "request_id": 40
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            87
+          ],
+          "reason": "Ready clear follows actual receipt consumer",
+          "request_id": 46
+        },
+        {
+          "label": "V",
+          "event_indices": [],
+          "reason": "Empty producer follows item target placement and RIGHT departure",
+          "request_id": 47
+        }
+      ]
+    },
+    {
+      "obligation": "BUFFER_RECEIPT",
+      "rule": "RIGHT搬向target_i的调用须携带刚才等待的、仍活动的、匹配part_i的原始ready_i凭据。无凭据调用即使完成搬运也不合此义务。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            34,
+            35
+          ],
+          "reason": "Proposed carried consumer uses exact waited, active, item-matching ready receipt",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            81,
+            82
+          ],
+          "reason": "Proposed carried consumer uses exact waited, active, item-matching ready receipt",
+          "request_id": null
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "BUFFER_OCCUPANCY_OWNER": "C",
+    "BUFFER_EVENT_PROTOCOL": "V",
+    "BUFFER_RECEIPT": "C"
+  },
+  "input_integrity": true,
+  "scope": "Observed finite scenario and declared geometry only; public scheduling A/B is separately checked in PAIR_AUDIT",
+  "human_label": null,
+  "whole_program_safety": null
+}

@@ -1,0 +1,31 @@
+{
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-LONG-L0-glm5-base-R1",
+  "kind": "NATURAL",
+  "controlled_role": null,
+  "task_id": "D6_RESOURCE_SPAN-LONG-L0",
+  "source_sha256": "9ea6bf41b7c4cda4a9e218be99abb836de51a391fa2d0b71a5baf00692066a07",
+  "process_status": "EXITED",
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 45,
+  "call_audit_complete": true,
+  "intervention_count": 0,
+  "interventions": [],
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "C",
+    "GEOMETRY": "C",
+    "DUAL_RESOURCE_SPAN": "C",
+    "TIMEOUT_CLEANUP": "NA"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "C"
+  },
+  "geometry_status": "NO_FORBIDDEN_CONTACT_IN_DECLARED_FIXED_AABB_TRANSLATIONS",
+  "capture_sha256": "6045edfde3001a11fe2d53c848b816c9e438b7db0c9fbe0616771b616c5e5f22",
+  "task_evidence_sha256": "80a83b36f83c613a667af77d4d4fb356000b2fc708672cef49b9a976fb213e65",
+  "grammar_evidence_sha256": "9c69cff381582dba50f0117d9707597b8dcf01b56d844bbba63929e2348cd9a4",
+  "geometry_sha256": "6520b741b9802130ac6e77329505b2be991e913b41d0f7e038aec147f63cbf28",
+  "guard_implementation_sha256": "4aad2176b7c22c54f1aff6fb92d8ecc15d08f8113e5584ef2239f792afea3c07",
+  "human_label": null,
+  "whole_program_safety": null
+}
