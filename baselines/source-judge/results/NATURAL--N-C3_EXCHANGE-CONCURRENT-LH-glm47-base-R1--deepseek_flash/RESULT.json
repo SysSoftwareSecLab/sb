@@ -1,0 +1,100 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        108,
+        109,
+        126,
+        144
+      ],
+      "reason": "Two worker coroutines are created with asyncio.create_task and joined via asyncio.gather, implementing the SPEC's CONCURRENT level (variant B) rather than a serial reproduction."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        67,
+        69,
+        71,
+        73,
+        77,
+        80,
+        83,
+        89,
+        91,
+        94,
+        97,
+        100,
+        103,
+        106
+      ],
+      "reason": "Each worker deposits its own part on its own pad, clears the pad by moving to own_depart, signals its own item-bound ready event, waits for peer ready, then consumes the peer part and clears the peer event after the receipt-carrying move to target."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        83,
+        97,
+        103
+      ],
+      "reason": "The EventReceipt returned by wait_event(peer_event) is carried into the move to own_target via receipt=peer_receipt, and clear_event uses expected_version=peer_receipt.version after that move."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        73,
+        77,
+        100,
+        106
+      ],
+      "reason": "Each release at own_pad/own_target is immediately followed in the same worker coroutine by a same-arm move to own_depart with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        67,
+        69,
+        71,
+        73,
+        77,
+        80,
+        83,
+        89,
+        91,
+        94,
+        97,
+        100,
+        103,
+        106,
+        144
+      ],
+      "reason": "Source implements the intended exchange sequence and event clearing, but source-only evidence cannot confirm the actual finite execution reaches the declared terminal poses, empty hands, and inactive events within the 30s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8188,
+    "completion_tokens": 392,
+    "total_tokens": 8580,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8060
+  },
+  "raw_sha256": "5bfbf8123e346de52d9d42174bda9deb4b329cccc6d9d7164c6f0f052687fff9",
+  "request_sha256": "c4c2ea6c75826189d9b23c57c71c74df3efb2bd14976895a2b3cb1e43afd2b0e",
+  "source_sha256": "0b879b484df4e9923bff5ef69f682206531314ad638e23d4d35b84da11353fe0"
+}

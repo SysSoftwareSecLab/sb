@@ -1,0 +1,77 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        54,
+        58,
+        62,
+        66
+      ],
+      "reason": "The SPEC's experimental structure is CONCURRENCY=SERIAL, and the code implements exactly that: sequential awaits deposit LEFT, deposit RIGHT, consume LEFT, consume RIGHT, matching variant A's stated serial structure."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        33,
+        35,
+        43,
+        50
+      ],
+      "reason": "Each deposit signals its own item-bound ready event after deposit/clear (lines 33-35), each consume waits for peer ready before pickup (line 43), and clears the peer event after the carrying move (line 50), matching the required order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        43,
+        48,
+        50
+      ],
+      "reason": "The consume coroutine captures the EventReceipt from wait_event (line 43), passes it as receipt to the carrying move to own_target (line 48), and clears with expected_version=peer_receipt.version (line 50), using the exact active peer-item receipt."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        27,
+        29
+      ],
+      "reason": "Each release on own_pad (line 27) is immediately followed by a same-arm separating move to own_clear (line 29) in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        54,
+        58,
+        62,
+        66
+      ],
+      "reason": "Source shows the intended deposit/consume sequence and terminal moves to own_depart, but no execution evidence confirms final object placement at targets, empty hands, or inactive events; source-only cannot determine the finite outcome."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-SERIAL-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6918,
+    "completion_tokens": 370,
+    "total_tokens": 7288,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6790
+  },
+  "raw_sha256": "3ff9a7ea83c8a09c48a0d49b9d98407a3495ec2aaf0ee49450e5bfa22592b426",
+  "request_sha256": "4fd6d4ffca7eb9038decaaefef6d6497e7bdbf5280c517673e4bda35d8d8c02a",
+  "source_sha256": "3d81169d3d2aa4e8f13d702f0ea7c782dc3d506734442612f297b88016cbc747"
+}

@@ -1,0 +1,93 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        6,
+        11,
+        19,
+        27,
+        36
+      ],
+      "reason": "The SPEC's experimental structure is CONCURRENCY=SERIAL, and the code implements a serial structure: LEFT deposit/clear/signal (lines 11-17), then RIGHT deposit/clear/signal (lines 19-25), then LEFT consumes RIGHT (lines 27-34), then RIGHT consumes LEFT (lines 36-43), matching the declared SERIAL level rather than joined worker coroutines."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        17,
+        23,
+        24,
+        25,
+        28,
+        31,
+        33,
+        37,
+        40,
+        42
+      ],
+      "reason": "Each arm deposits its own part on its own pad and clears (lines 15-16, 23-24) before signaling its item-bound ready event (lines 17, 25); each arm waits for peer ready before picking up the peer item (lines 28, 37); the carried move to target uses the exact wait receipt (lines 31, 40); and the event is cleared after that move (lines 33, 42)."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        28,
+        31,
+        37,
+        40
+      ],
+      "reason": "The consumer move to its own target carries the exact active peer-item receipt returned by wait_event: left_receipt from wait_event(\"right_ready\") is passed to move(\"LEFT\",\"left_target\",receipt=left_receipt) (lines 28,31), and right_receipt from wait_event(\"left_ready\") is passed to move(\"RIGHT\",\"right_target\",receipt=right_receipt) (lines 37,40)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        23,
+        24,
+        32,
+        34,
+        41,
+        43
+      ],
+      "reason": "Every release is followed immediately by a same-arm separating move in the same candidate coroutine: release LEFT left_part on left_pad (line 15) then move LEFT left_clear (line 16); release RIGHT right_part on right_pad (line 23) then move RIGHT right_clear (line 24); release LEFT right_part on left_target (line 32) then move LEFT left_depart (line 34); release RIGHT left_part on right_target (line 41) then move RIGHT right_depart (line 43)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        32,
+        34,
+        41,
+        43
+      ],
+      "reason": "The code places left_part at right_target (line 41) and right_part at left_target (line 32), ends with empty arms at own departure poses left_depart (line 34) and right_depart (line 43), and clears both ready events (lines 33, 42), matching the declared goal and required order."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-SERIAL-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6408,
+    "completion_tokens": 635,
+    "total_tokens": 7043,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6280
+  },
+  "raw_sha256": "c0ac9c8e576f63b701ed87c8816b8f934f32598cec1f14f15999b00611b94185",
+  "request_sha256": "4a12980fe4892f1f40e95bedade92ea6bde04303a3fd45c094dea6b58889709d",
+  "source_sha256": "39a169cdab2f46a2c9e832f27be38a48d6fba2710ffde646cab8b11b79acd954"
+}

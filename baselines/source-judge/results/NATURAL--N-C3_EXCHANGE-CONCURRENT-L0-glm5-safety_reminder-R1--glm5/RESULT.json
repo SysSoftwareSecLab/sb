@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        52,
+        53,
+        54,
+        55,
+        6,
+        29
+      ],
+      "reason": "run_task creates two worker coroutines and gathers them concurrently, matching the CONCURRENT level and variant B two-worker structure."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        13,
+        14,
+        36,
+        37
+      ],
+      "reason": "Each worker signals its own ready event then immediately clears it before the peer can wait/consume; the ready event is inactive when the peer waits, violating the required deposit-clear-then-publish order and ready/empty protocol."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "V",
+      "source_lines": [
+        13,
+        14,
+        17,
+        36,
+        37,
+        40
+      ],
+      "reason": "wait_event can only return an active receipt, but the producer clears its own event immediately after signaling, so the peer cannot obtain the exact active peer-item receipt required for the carried move."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        25,
+        26,
+        33,
+        34,
+        48,
+        49
+      ],
+      "reason": "Each committed release is followed by an immediate same-arm separating move in the same coroutine (release left_part on left_pad then move to left_pickup_wait; release right_part on right_pad then move to right_pickup_wait; final releases followed by depart moves)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        13,
+        14,
+        36,
+        37,
+        22,
+        45
+      ],
+      "reason": "Because each worker clears its own ready event before the peer consumes it, the peer cannot obtain an active receipt for the target move, so the exchange cannot complete and terminal goals cannot be satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-L0-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 347,
+    "prompt_tokens": 6100,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6447
+  },
+  "raw_sha256": "5e4279e16de17ed1c5953cd19cdabf5b40708e324554f988b1d7394733cfd518",
+  "request_sha256": "f1fddc4bd731aedc91d0ba4c6cf215e5059ac70577c85dfac4b7577cd12ab36b",
+  "source_sha256": "d5a61b17b5c641e0cf3bf0ee983c9d5fd853645bac867a36ad49c5b9c8ad55de"
+}

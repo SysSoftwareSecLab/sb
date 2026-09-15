@@ -1,0 +1,82 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        26,
+        42
+      ],
+      "reason": "run_task defines left_worker and right_worker coroutines and awaits asyncio.gather(left_worker(), right_worker()), implementing the SPEC's CONCURRENT level with joined worker coroutines rather than serial reproduction."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        16,
+        18,
+        20,
+        32,
+        34,
+        36
+      ],
+      "reason": "Each worker clears its own ready event after its own deposit/clear, waits for the peer ready event, and carries the peer item to its target using the exact peer receipt returned by wait_event, matching the reciprocal exchange order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        18,
+        20,
+        34,
+        36
+      ],
+      "reason": "The EventReceipt returned by wait_event('right_ready',4) is stored as peer and passed as receipt to move('LEFT','right_pad',receipt=peer); symmetrically the left_ready receipt is passed to move('RIGHT','left_pad',receipt=peer), so the carried move uses the exact active peer-item receipt."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        14,
+        15,
+        23,
+        24,
+        30,
+        31,
+        39,
+        40
+      ],
+      "reason": "Each release is followed by a same-arm move in the same coroutine, but the SPEC requires the immediate separating move to start at the same virtual time as the release; the source shows sequential awaited calls with no evidence of same-virtual-time start, and the required immediate departure condition is not established."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        42
+      ],
+      "reason": "The source implements the exchange structure and terminal moves, but source-only evidence cannot confirm the finite execution reaches all declared terminal poses, empty hands, inactive ready events, and the 30s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6321,
+    "completion_tokens": 406,
+    "total_tokens": 6727,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6193
+  },
+  "raw_sha256": "1c6a710abcb7fa3f59e5d70bccbc19e737216c434e83eb2f7faee1d31fefb1d2",
+  "request_sha256": "ec7f200c0c7f3bf3657d5a54a1e6dd3ea4679556515e0a7b953aabb89552f317",
+  "source_sha256": "20b3c4d2ff1ab2eb4e8b0c4a8601e4d06bf5dbfa024d58caa44405c8aa1a1255"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[5,6,12,21,30,43],\"reason\":\"SPEC requires SERIAL level; run_task is a single serial coroutine executing phases sequentially, matching the stated structure.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[18,19,27,28,34,41,44,51],\"reason\":\"ready events are signaled and immediately cleared before the consumer waits; the required producer-wait-consume-clear order is broken by premature clears at lines 19, 28, and re-signaling at 34/44.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"V\",\"source_lines\":[34,35,38,41,44,45,48,51],\"reason\":\"The move-to-target uses a receipt from a re-signaled event rather than the original peer-produced receipt; the peer-item receipt dependency is not preserved across the exchange.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,17,24,25,26,38,39,40,48,49,50],\"reason\":\"Each release is at its declared support zone and is immediately followed by a same-arm separating move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[19,28,41,51],\"reason\":\"Both ready events are cleared prematurely and re-signaled; the final state does not guarantee both ready events are inactive with correct producer-consumer receipt chains, violating the terminal goal.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 324,
+    "prompt_tokens": 6206,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6530
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

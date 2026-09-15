@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[3,41,55,69,85,101],\"reason\":\"The SPEC's experimental structure is CONCURRENCY=SERIAL and variant A requires deposit LEFT then RIGHT, then consume LEFT then RIGHT; the code implements exactly this serial sequence in one run_task coroutine without spawning joined worker coroutines.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[43,45,47,49,51,53,57,59,61,63,65,67,71,73,75,77,79,81,83,87,89,91,93,95,97,99],\"reason\":\"Each arm deposits its own part on its own pad, departs, signals its item-bound ready event; each arm waits for peer ready before grasping the peer item, carries the exact wait receipt on the move to its own target, and clears the peer event after that move with the receipt version.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[71,79,83,87,95,99],\"reason\":\"The consumer moves to its own target pass the exact EventReceipt returned by wait_event (r_wait_receipt/l_wait_receipt), and clear_event uses expected_version from that same receipt after the move completes.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[49,53,63,67,81,97,103,104],\"reason\":\"Every release uses the held object at its declared support zone (left_part at left_pad, right_part at right_pad, right_part at left_target, left_part at right_target) and is immediately followed by a same-arm separating move in the same coroutine; final moves to departure poses follow the last releases.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[43,45,47,49,51,53,57,59,61,63,65,67,71,73,75,77,79,81,83,87,89,91,93,95,97,99,103,104],\"reason\":\"The code reaches the declared terminal poses and clears both ready events, but source-only evidence cannot confirm the finite execution outcome (empty hands, event inactive state, deadline) without an actual trajectory.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7653,
+    "completion_tokens": 504,
+    "total_tokens": 8157,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7525
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[9,29,49],\"reason\":\"Two worker coroutines are gathered concurrently, matching the CONCURRENT structure and variant B.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[16,36],\"reason\":\"Each worker clears its own ready event immediately after deposit, before publishing it; no signal call ever makes the ready event active, violating the required publish-ready protocol.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[19,24,26,39,44,46],\"reason\":\"Each worker waits for the peer ready EventReceipt and passes that exact receipt into the carried move to target, then clears that peer event after the move completes.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[13,14,15,33,34,35,24,25,27,44,45,47],\"reason\":\"Every release is immediately followed by a same-arm separating move in the same coroutine: left_clear/left_depart and right_clear/right_depart after deposits, and left_depart/right_depart after target releases.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[6,7,16,36,26,46],\"reason\":\"Ready events are never signaled active, so they cannot be properly cleared to inactive terminal state; the goal requires both ready events inactive, which the source fails to satisfy.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 304,
+    "prompt_tokens": 5950,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6254
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

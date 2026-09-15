@@ -1,0 +1,98 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        37,
+        38,
+        39,
+        53,
+        66,
+        67
+      ],
+      "reason": "run_task uses asyncio.gather over two _worker coroutines, implementing the CONCURRENT variant B structure rather than serial execution."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        21,
+        24,
+        25,
+        26,
+        27,
+        28,
+        31,
+        34
+      ],
+      "reason": "Each worker deposits own part, clears pad, signals own ready, waits for peer ready, carries peer item, then clears peer and own events in the required order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        21,
+        24,
+        31
+      ],
+      "reason": "peer_receipt from wait_event is passed as receipt to the carrying move to peer_pad, and later used as expected_version when clearing the peer event after that move."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        27,
+        28
+      ],
+      "reason": "Each release (own part on own_pad, peer part on own_target) is immediately followed by a same-arm move in the same coroutine: to own_pickup_wait and to own_depart respectively."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        13,
+        14,
+        24,
+        25,
+        26,
+        27,
+        28,
+        31,
+        34,
+        37,
+        67
+      ],
+      "reason": "Source moves left_part to right_target and right_part to left_target, arms depart to left_depart/right_depart, and both ready events are cleared, satisfying the terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 335,
+    "prompt_tokens": 6259,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6594
+  },
+  "raw_sha256": "511575e59196f11020082c3adf091d75bcfe00075d7ab822b9ce1fd467935b3f",
+  "request_sha256": "fbce2df6dd311d7a76433e80864ad30efdc48bbffcc06324c1076427deed0103",
+  "source_sha256": "91ae3b203f41cf1c502cc5fd65a6b8c066a4d99e39af507c42fd917e8a2543ee"
+}

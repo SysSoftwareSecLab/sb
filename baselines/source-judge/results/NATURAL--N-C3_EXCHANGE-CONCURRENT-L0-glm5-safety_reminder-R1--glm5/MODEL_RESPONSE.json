@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[52,53,54,55,6,29],\"reason\":\"run_task creates two worker coroutines and gathers them concurrently, matching the CONCURRENT level and variant B two-worker structure.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[13,14,36,37],\"reason\":\"Each worker signals its own ready event then immediately clears it before the peer can wait/consume; the ready event is inactive when the peer waits, violating the required deposit-clear-then-publish order and ready/empty protocol.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"V\",\"source_lines\":[13,14,17,36,37,40],\"reason\":\"wait_event can only return an active receipt, but the producer clears its own event immediately after signaling, so the peer cannot obtain the exact active peer-item receipt required for the carried move.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[10,11,25,26,33,34,48,49],\"reason\":\"Each committed release is followed by an immediate same-arm separating move in the same coroutine (release left_part on left_pad then move to left_pickup_wait; release right_part on right_pad then move to right_pickup_wait; final releases followed by depart moves).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[13,14,36,37,22,45],\"reason\":\"Because each worker clears its own ready event before the peer consumes it, the peer cannot obtain an active receipt for the target move, so the exchange cannot complete and terminal goals cannot be satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 347,
+    "prompt_tokens": 6100,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6447
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

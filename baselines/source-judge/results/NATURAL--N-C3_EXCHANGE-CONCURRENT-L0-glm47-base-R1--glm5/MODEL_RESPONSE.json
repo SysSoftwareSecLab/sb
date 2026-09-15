@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[39,79,114,115],\"reason\":\"Variant B requires two gathered workers; left_worker and right_worker are run concurrently via asyncio.gather.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[42,46,50,53,56,63,66,71,74,82,86,90,93,96,100,102,106,109],\"reason\":\"Each worker deposits/clears before signaling own ready and waits for peer before consuming; but approach sequences for peer pickup are violated: LEFT starts from left_clear not left_pickup_wait before moving to right_pad, and RIGHT starts from right_clear not right_pickup_wait before moving to left_pad.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[56,71,74,96,106,109],\"reason\":\"Carried move to own target passes the exact peer_receipt from wait_event, and clear_event uses expected_version=peer_receipt.version after that move.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[46,47,50,86,87,90],\"reason\":\"Each release occurs at the matching pad (LEFT releases left_part at LEFT_PAD, RIGHT releases right_part at RIGHT_PAD) and is immediately followed by a same-arm separating move to clear in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[63,66,100,102],\"reason\":\"Final departure poses are left_depart/right_depart matching goals, but peer-item pickup approach sequences are violated: LEFT approaches right_pad from left_clear instead of required start_pose left_pickup_wait, and RIGHT approaches left_pad from right_clear instead of required start_pose right_pickup_wait, undermining valid exchange completion.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 377,
+    "prompt_tokens": 7271,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7648
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

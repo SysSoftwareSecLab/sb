@@ -1,0 +1,110 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        3,
+        47,
+        63,
+        79,
+        98,
+        117
+      ],
+      "reason": "SPEC requires SERIAL level (Variant A): deposit LEFT then RIGHT, then consume LEFT then RIGHT. Source implements exactly this sequential single-coroutine structure with no worker gathering."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        50,
+        54,
+        58,
+        61,
+        66,
+        70,
+        74,
+        77,
+        82,
+        85,
+        88,
+        92,
+        96,
+        101,
+        104,
+        107,
+        111,
+        115
+      ],
+      "reason": "Each arm deposits own part, immediately clears pad, signals own ready; consumer waits for peer ready before pickup; clears event after carrying move completes. Order matches required_order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        82,
+        92,
+        96,
+        101,
+        111,
+        115
+      ],
+      "reason": "wait_event returns peer-item receipt; carried move to target passes that exact receipt; clear_event uses expected_version=wait receipt version after move completes."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        55,
+        58,
+        71,
+        74,
+        95,
+        58,
+        114,
+        120
+      ],
+      "reason": "Each release is at declared support zone and followed by immediate same-arm separating move in same coroutine: left_pad release then left_clear; right_pad release then right_clear; target releases followed by departure moves."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        50,
+        54,
+        88,
+        92,
+        95,
+        66,
+        70,
+        107,
+        111,
+        114,
+        120,
+        121,
+        96,
+        115
+      ],
+      "reason": "left_part delivered to left_target by RIGHT, right_part delivered to right_target by LEFT, both arms depart to own departure poses, both ready events cleared. Matches declared goals."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-SERIAL-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 367,
+    "prompt_tokens": 7457,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7824
+  },
+  "raw_sha256": "89abe5748d60a76cbc7b441159c820de81922023ee36909911c76ece2a6db2bc",
+  "request_sha256": "d6e918825cf190463afaae54ba2012ffd1ea2e89294d482d6e3aec53ea294e62",
+  "source_sha256": "2102ecc9afd16dea35bb9e277bcdfdaf0c9c0d44f3dda65db4defaea1b6d7a63"
+}

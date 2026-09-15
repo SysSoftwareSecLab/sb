@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"V\",\"source_lines\":[3,4,11,19,27,35],\"reason\":\"SPEC requires CONCURRENCY=SERIAL variant A: deposit LEFT then RIGHT, then consume LEFT then RIGHT. Code is a single coroutine with strictly sequential awaits matching this structure, not merely terminal goal.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[12,13,14,15,16,17,20,21,22,23,24,25,28,29,30,31,32,36,37,38,39,40],\"reason\":\"Each arm deposits own part, clears pad (left_clear/right_clear move), signals own item-bound ready; consumer waits for peer ready before grasp; clear after carried move. Order matches required_order.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[29,31,32,37,39,40],\"reason\":\"wait_event returns peer receipt; carried move to own target passes receipt=left_peer_receipt/right_peer_receipt; clear_event uses expected_version=receipt.version after that move.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,23,24,31,33,39,41],\"reason\":\"Each release (left_pad/right_pad) is immediately followed by same-arm separating move (left_clear/right_clear). Consumer releases at targets followed by depart moves. Same coroutine, no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[14,15,22,23,31,39,33,41,32,40],\"reason\":\"left_part deposited then moved to right_target by RIGHT; right_part deposited then moved to left_target by LEFT; arms end at left_depart/right_depart empty; both ready events cleared.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 382,
+    "prompt_tokens": 5926,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6308
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

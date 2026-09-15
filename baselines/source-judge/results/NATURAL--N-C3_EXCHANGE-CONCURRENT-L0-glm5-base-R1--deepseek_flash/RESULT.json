@@ -1,0 +1,83 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        37,
+        38,
+        39,
+        53,
+        67
+      ],
+      "reason": "run_task uses asyncio.gather over two _worker coroutines (LEFT and RIGHT), implementing the SPEC's CONCURRENT level rather than a serial reproduction."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        18,
+        21,
+        31,
+        34
+      ],
+      "reason": "Each worker signals its own item-bound ready event after deposit/clear, waits for peer ready before consuming, and clears the peer event after the receipt-carrying move completes, matching the required reciprocal exchange order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        21,
+        24,
+        31
+      ],
+      "reason": "The peer EventReceipt returned by wait_event is passed as receipt to the move to peer_pad and its version is used for clear_event, so the exact active peer-item receipt is consumed."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        27,
+        28
+      ],
+      "reason": "Each release is immediately followed in the same coroutine by a same-arm separating move (release own_part on own_pad then move to own_pickup_wait; release peer_part on own_target then move to own_depart)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        31,
+        34
+      ],
+      "reason": "Workers move peer parts to own targets, release them there, depart to own_depart, and clear both ready events, matching the declared terminal goal and event-clearing requirement."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6680,
+    "completion_tokens": 348,
+    "total_tokens": 7028,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6552
+  },
+  "raw_sha256": "ce8d68d27b67df9f906f2abdaa30d3ba9670ea938fa60c9cea024ddeb1bc9af0",
+  "request_sha256": "96cf6dfaf20fa065b011db38ae18dda8ce0403f4bb438c0113530d24d77991cd",
+  "source_sha256": "91ae3b203f41cf1c502cc5fd65a6b8c066a4d99e39af507c42fd917e8a2543ee"
+}

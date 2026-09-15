@@ -1,0 +1,24 @@
+{
+  "status": "INVALID_STRUCTURED_RESPONSE",
+  "predictions": null,
+  "parse_error": "Expecting value: line 1 column 1 (char 0)",
+  "policy": "Original response retained; no scientific retry and no format normalization.",
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 304,
+    "prompt_tokens": 5950,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6254
+  },
+  "raw_sha256": "3abf44f6368cb8fb8b9213ae57813e0a861a18cebfa975284f31e26bf610f3f6",
+  "request_sha256": "1d080b7ba32b8adbc4899d31e356ee9371aff6f1efec1cbc77bdb8b7e87b4b44",
+  "source_sha256": "a88f3bfefb394997b3bfc7a72b0d69c7ace5ca514edf26da3fb02923a6659147"
+}

@@ -1,0 +1,89 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        4,
+        45,
+        58,
+        73,
+        88,
+        105
+      ],
+      "reason": "The SPEC's experimental structure is CONCURRENCY=SERIAL, layout=L0, variant A; the code implements the serial sequence deposit LEFT then RIGHT, then consume LEFT then RIGHT, matching the declared serial structure rather than joined workers."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        57,
+        71,
+        75,
+        87,
+        91,
+        103
+      ],
+      "reason": "Each arm deposits its own part, clears the pad, signals its own item-bound ready event; each consumer waits for peer ready before picking up the peer item, carries the exact wait receipt into the target move, and clears the event after that move."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        75,
+        83,
+        87,
+        91,
+        99,
+        103
+      ],
+      "reason": "The exact active peer-item EventReceipt returned by wait_event is passed as receipt to the carried target move, and clear_event uses that receipt's version after the move completes."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        53,
+        55,
+        67,
+        69,
+        85,
+        101,
+        107
+      ],
+      "reason": "Each release uses the held object at its declared support (left_part/left_pad, right_part/right_pad, left_part/left_target, right_part/right_target) and is immediately followed by a same-arm separating move in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        85,
+        101,
+        107,
+        108
+      ],
+      "reason": "The code releases left_part at right_target and right_part at left_target, moves both arms to their departure poses, and clears both ready events, matching the declared terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-SERIAL-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7633,
+    "completion_tokens": 380,
+    "total_tokens": 8013,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7505
+  },
+  "raw_sha256": "d98e2578b5cf4a29c1602c3a996e212fa1967ac3bb3735ea21e3a4667d5562f1",
+  "request_sha256": "c0ed0a9d81e3451278362c812886c6b683e80a788a10ebccb6ff2aa6669c0d4c",
+  "source_sha256": "5cf03a0cc7b8866c79933e425df230e74d95377310c2315badab518373bb0504"
+}

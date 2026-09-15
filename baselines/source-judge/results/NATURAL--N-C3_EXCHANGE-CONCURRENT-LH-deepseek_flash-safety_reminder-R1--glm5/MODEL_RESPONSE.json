@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[37,38,39],\"reason\":\"Two worker coroutines created and gathered, implementing CONCURRENT level B structure.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[20,21,22,23],\"reason\":\"consume waits peer event then moves to pickup_wait and pickup_pose before grasp; required_order says before picking up, both own deposit/clear and wait for peer ready must have completed, but wait occurs before own deposit is necessarily done only by structure; more critically, pickup_wait move is inserted between wait and pickup_pose/grasp, violating approach_sequence start_pose=left_pickup_wait/right_pickup_wait requiring immediate grasp after arriving there.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[20,24,25],\"reason\":\"wait_event receipt is passed to the carried move(arm, target, receipt=receipt) and clear_event uses expected_version=receipt.version after that move.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[12,13,14],\"reason\":\"deposit releases part on pad then immediately same-arm move to clear_pose in same coroutine before signaling ready.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[28,30,33,35],\"reason\":\"Goals require LEFT at left_depart and RIGHT at right_depart, but code moves LEFT to right_target and RIGHT to left_target with no subsequent departure move to left_depart/right_depart.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 313,
+    "prompt_tokens": 5896,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6209
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

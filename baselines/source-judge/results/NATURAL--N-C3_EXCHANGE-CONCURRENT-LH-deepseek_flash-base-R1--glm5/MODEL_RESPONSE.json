@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[10,26,42],\"reason\":\"Variant B requires gather of two concurrent workers; left_worker and right_worker are defined and awaited via asyncio.gather, implementing the concurrent structure rather than serial execution.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[7,8,11,12,13,14,15,16,18,19,20,21,22,23,24,27,28,29,30,31,32,34,35,36,37,38,39,40],\"reason\":\"Each worker deposits own part on own pad, clears pad via move to clear, publishes ready via signal, waits for peer ready, then consumes peer item and clears event after the carrying move; matches required order.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[18,20,34,36],\"reason\":\"wait_event returns peer EventReceipt stored in peer, then passed as receipt to the move carrying the peer item to target; matches the required active peer-item receipt dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[14,15,30,31,23,24,39,40],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine: release left_part at left_pad then move LEFT to left_clear; release right_part at right_pad then move RIGHT to right_clear; similarly for target releases followed by depart moves.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[11,12,13,14,15,22,23,24,27,28,29,30,31,38,39,40,16,32,42],\"reason\":\"Source moves left_part to right_target and right_part to left_target, releases them, moves arms to left_depart and right_depart, clears both ready events, and gathers both workers to completion, matching all declared terminal goals.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 422,
+    "prompt_tokens": 5876,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6298
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

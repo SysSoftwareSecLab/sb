@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[5,6,7,10,41],\"reason\":\"SPEC requires CONCURRENCY=SERIAL, variant A: deposit LEFT then RIGHT, then consume LEFT then RIGHT, no joined worker coroutines. Source implements exactly this serial structure in run_task with no asyncio worker tasks.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[10,23,26,31,35,41],\"reason\":\"Each arm deposits own part, clears pad, publishes own ready; then waits for peer ready before consuming peer item; clears peer event after carrying move. Order matches required_order and reciprocal exchange protocol.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[26,29,30,35,38,39],\"reason\":\"wait_event returns active peer-item receipt; move to target carries that exact receipt; clear_event uses expected_version=receipt.version after the carrying move completes, matching the receipt contract.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[13,14,21,22,31,32,40,41],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine: release left_part on left_pad then move left_clear; release right_part on right_pad then move right_clear; release right_part at left_target then move left_depart; release left_part at right_target then move right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[13,21,31,40,32,41,30,39],\"reason\":\"left_part deposited then consumed to right_target; right_part deposited then consumed to left_target; arms depart to left_depart/right_depart; both ready events cleared; no resources declared; serial structure within deadline.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 376,
+    "prompt_tokens": 5856,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6232
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

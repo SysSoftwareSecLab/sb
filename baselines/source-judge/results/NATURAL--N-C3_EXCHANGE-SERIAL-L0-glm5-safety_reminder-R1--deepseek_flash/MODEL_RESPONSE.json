@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"V\",\"source_lines\":[3,12,13,14,15,16,17,20,21,22,23,24,25,28,29,30,31,32,33,36,37,38,39,40,41],\"reason\":\"SPEC requires CONCURRENCY=SERIAL with layout L0, but the source implements a single sequential run_task coroutine with no joined worker coroutines or serialized worker structure; the declared concurrent level is not implemented.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[12,13,14,15,16,17,20,21,22,23,24,25,28,29,30,31,32,33,36,37,38,39,40,41],\"reason\":\"Each arm deposits its own part on its own pad, clears the pad, signals its item-bound ready event, waits for the peer ready event before grasping the peer item, carries the exact peer receipt on the target move, and clears the event after that move, matching the required order.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[29,31,32,37,39,40],\"reason\":\"The carried move to each arm's target passes the exact active peer-item EventReceipt returned by wait_event, and clear_event uses that receipt's version after the move.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,23,24],\"reason\":\"Each release is immediately followed by a same-arm separating move (left_pad->left_clear, right_pad->right_clear) in the same coroutine and virtual time.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[3,12,13,14,15,16,17,20,21,22,23,24,25,28,29,30,31,32,33,36,37,38,39,40,41],\"reason\":\"Source shows the intended terminal moves and event clears, but no execution evidence confirms final poses, empty hands, inactive events, or deadline satisfaction; source-only evidence cannot determine the finite outcome.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6366,
+    "completion_tokens": 479,
+    "total_tokens": 6845,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6238
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

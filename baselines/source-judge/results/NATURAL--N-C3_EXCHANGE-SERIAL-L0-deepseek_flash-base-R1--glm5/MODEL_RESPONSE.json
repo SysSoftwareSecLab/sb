@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[5,6,12,20,28,38],\"reason\":\"SPEC requires SERIAL level (variant A: deposit LEFT then RIGHT, then consume LEFT then RIGHT). Source implements exactly this serialized single-coroutine sequence with no worker gathering.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[13,14,15,16,17,18,21,22,23,24,25,26,30,31,32,33,34,35,36,39,40,41,42,43,44,45],\"reason\":\"Each arm deposits own part, clears pad (move to left_clear/right_clear), signals own ready; consumer waits for peer ready before pickup; clears peer event after carrying move completes. Order matches required_order.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[30,33,36,39,42,45],\"reason\":\"wait_event returns active peer-item receipt; that exact receipt is passed to the carried move to target; clear_event uses expected_version=that receipt.version after the move completes, for both LEFT and RIGHT.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[16,17,24,25,34,35,43,44],\"reason\":\"Each release (left_pad, right_pad, left_target, right_target) is immediately followed by a same-arm separating move (left_clear, right_clear, left_depart, right_depart) in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[13,14,15,16,17,18,21,22,23,24,25,26,30,31,32,33,34,35,36,39,40,41,42,43,44,45],\"reason\":\"left_part delivered to right_target, right_part to left_target; arms end at left_depart/right_depart; both ready events cleared; no resources declared; serialized actions fit within 30s deadline (20 moves × 1s + overhead).\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 444,
+    "prompt_tokens": 5976,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6420
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

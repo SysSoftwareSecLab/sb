@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[4,45,59,73,89,105],\"reason\":\"SPEC requires SERIAL level L0; source implements strictly sequential phases A (deposit LEFT then RIGHT, consume LEFT then RIGHT, depart) with no worker coroutines, matching the stated structure.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[47,57,61,71,75,87,91,103],\"reason\":\"Each arm deposits own part, clears pad, signals own ready; consumer waits for peer ready before pickup; clears peer event after carrying move completes, matching required_order.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[75,83,87,91,99,103],\"reason\":\"wait_event returns peer receipt; move to target carries that exact receipt; clear_event uses expected_version=peer_receipt.version after the carrying move, matching the receipt contract.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[53,55,67,69,85,101],\"reason\":\"Each release is followed immediately by a same-arm separating move in the same coroutine: LEFT release at left_pad then move to left_clear; RIGHT release at right_pad then move to right_clear; final releases followed by departure moves.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[85,101,107,108,87,103],\"reason\":\"left_part released at left_target (consumed by RIGHT), right_part released at right_target (consumed by LEFT); arms depart to left_depart/right_depart; both ready events cleared; no resources in SPEC.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 346,
+    "prompt_tokens": 7132,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7478
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

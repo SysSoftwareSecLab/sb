@@ -1,0 +1,87 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        41,
+        55,
+        69,
+        85,
+        101
+      ],
+      "reason": "SPEC requires SERIAL Variant A: deposit LEFT then RIGHT, consume LEFT then RIGHT. Source implements exactly this serial sequence with no worker coroutines."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        51,
+        65,
+        83,
+        99
+      ],
+      "reason": "SPEC requires each arm to clear its own pad before publishing its own ready event. Source signals left_ready/right_ready after release but never clears own pad before signaling; also clears peer events after target move, but own-pad-clear-before-signal is omitted."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        71,
+        79,
+        83,
+        87,
+        95,
+        99
+      ],
+      "reason": "wait_event receipts are carried into the target move and clear_event uses expected_version=receipt.version for both peer events."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        49,
+        53,
+        63,
+        67,
+        81,
+        103,
+        97,
+        104
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: deposit releases then move to depart; consumption releases then move to depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        51,
+        65,
+        83,
+        99,
+        103,
+        104
+      ],
+      "reason": "Terminal goal requires both ready events inactive, but source clears only peer events (right_ready by LEFT, left_ready by RIGHT); each arm's own ready event is never cleared, so events remain active at return."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-SERIAL-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 323,
+    "prompt_tokens": 7138,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7461
+  },
+  "raw_sha256": "a8b1962fcf7017fa8d4d3d36589bbe61b57a58a7b68ed40f1e530ce9cb7a3c45",
+  "request_sha256": "b4a2bc0fb238ff1dc7ed3f8a879bbb52fbaca71b85a56dc1f007d43796a9698b",
+  "source_sha256": "b7b2eb1cd2f253b742452c7d5c7391473ecbebbc1c8afb7d31efb78b0ca0c16f"
+}

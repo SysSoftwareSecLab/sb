@@ -1,0 +1,100 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        114,
+        115
+      ],
+      "reason": "run_task uses asyncio.gather(left_worker(), right_worker()), implementing the SPEC's CONCURRENT level with two joined worker coroutines rather than a serial reproduction."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        42,
+        43,
+        46,
+        47,
+        50,
+        53,
+        56,
+        63,
+        66,
+        67,
+        71,
+        74,
+        82,
+        83,
+        86,
+        87,
+        90,
+        93,
+        96,
+        100,
+        102,
+        103,
+        106,
+        109
+      ],
+      "reason": "Each worker deposits its own part, clears the pad, signals its item-bound ready event, waits for peer ready, consumes the peer item, carries the peer receipt on the target move, and clears the peer event after that move, matching the required reciprocal exchange order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        56,
+        71,
+        96,
+        106
+      ],
+      "reason": "The peer EventReceipt returned by wait_event is passed as receipt= to the carried move to the arm's own target (LEFT_TARGET/RIGHT_TARGET), matching the required peer-item receipt dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        50,
+        87,
+        90
+      ],
+      "reason": "Each release at the declared pad support is immediately followed in the same worker coroutine by a same-arm separating move (LEFT_CLEAR/RIGHT_CLEAR) with no intervening same-arm request."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        71,
+        74,
+        77,
+        106,
+        109,
+        112
+      ],
+      "reason": "Source implements moves to left_depart/right_depart, carries left_part to right_target and right_part to left_target, and clears both ready events after the target moves, matching the declared terminal goals and event-clearing requirement."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7808,
+    "completion_tokens": 400,
+    "total_tokens": 8208,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7680
+  },
+  "raw_sha256": "6d940f0a39205bf7c76e5c1fe3735eee66990a574642823a55ecdabf11bc5889",
+  "request_sha256": "a9d8ba064b0da7fe67bd642301474c5bcb864bb9bd8000d9c0cc5b24cbbd95e4",
+  "source_sha256": "c280e3175d00fb039f2956a61b4633157eb81a1e5667fdf8c374ef56c3034610"
+}

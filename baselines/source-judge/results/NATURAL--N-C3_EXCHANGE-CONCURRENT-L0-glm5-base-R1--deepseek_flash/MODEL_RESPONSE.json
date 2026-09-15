@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[37,38,39,53,67],\"reason\":\"run_task uses asyncio.gather over two _worker coroutines (LEFT and RIGHT), implementing the SPEC's CONCURRENT level rather than a serial reproduction.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[18,21,31,34],\"reason\":\"Each worker signals its own item-bound ready event after deposit/clear, waits for peer ready before consuming, and clears the peer event after the receipt-carrying move completes, matching the required reciprocal exchange order.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[21,24,31],\"reason\":\"The peer EventReceipt returned by wait_event is passed as receipt to the move to peer_pad and its version is used for clear_event, so the exact active peer-item receipt is consumed.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[14,15,27,28],\"reason\":\"Each release is immediately followed in the same coroutine by a same-arm separating move (release own_part on own_pad then move to own_pickup_wait; release peer_part on own_target then move to own_depart).\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[24,25,26,27,28,31,34],\"reason\":\"Workers move peer parts to own targets, release them there, depart to own_depart, and clear both ready events, matching the declared terminal goal and event-clearing requirement.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6680,
+    "completion_tokens": 348,
+    "total_tokens": 7028,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6552
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

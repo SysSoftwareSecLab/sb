@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[5,6,7,9,10,11,12,13,14,15,17,18,19,20,21,22,23,25,26,27,28,29,30,31,32,34,35,36,37,38,39,40,41],\"reason\":\"The SPEC's experimental structure is CONCURRENCY=SERIAL, layout=L0, variant A: deposit LEFT then RIGHT, then consume LEFT then RIGHT. The source implements exactly this serial sequence with no joined worker coroutines, matching the declared serial level.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[10,11,12,13,14,15,18,19,20,21,22,23,26,27,28,29,30,31,32,35,36,37,38,39,40,41],\"reason\":\"Each arm deposits its own part on its own pad and clears the pad before signaling its item-bound ready event; each consumer waits for peer ready before picking up the peer item; the carried move to target uses the exact receipt from wait_event; clear_event uses expected_version from that receipt and occurs after the move completes.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[26,29,30,35,38,39],\"reason\":\"The carried move to left_target passes receipt=left_receipt returned by wait_event('right_ready'), and the carried move to right_target passes receipt=right_receipt returned by wait_event('left_ready'); clear_event uses the matching receipt.version.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[13,14,21,22,31,32,40,41],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same candidate coroutine: release LEFT left_part left_pad then move LEFT left_clear; release RIGHT right_part right_pad then move RIGHT right_clear; release LEFT right_part left_target then move LEFT left_depart; release RIGHT left_part right_target then move RIGHT right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[10,11,12,13,14,15,18,19,20,21,22,23,26,27,28,29,30,31,32,35,36,37,38,39,40,41],\"reason\":\"Source places left_part at right_target and right_part at left_target, ends with LEFT at left_depart and RIGHT at right_depart with empty hands, and clears both ready events; no resources are declared, and the serial action count fits within the 30s deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6292,
+    "completion_tokens": 598,
+    "total_tokens": 6890,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6164
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

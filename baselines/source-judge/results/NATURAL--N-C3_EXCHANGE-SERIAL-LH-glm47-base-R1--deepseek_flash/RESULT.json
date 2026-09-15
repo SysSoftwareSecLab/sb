@@ -1,0 +1,134 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        3,
+        41,
+        55,
+        69,
+        85,
+        101
+      ],
+      "reason": "The SPEC's experimental structure is CONCURRENCY=SERIAL and variant A requires deposit LEFT then RIGHT, then consume LEFT then RIGHT; the code implements exactly this serial sequence in one run_task coroutine without spawning joined worker coroutines."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        43,
+        45,
+        47,
+        49,
+        51,
+        53,
+        57,
+        59,
+        61,
+        63,
+        65,
+        67,
+        71,
+        73,
+        75,
+        77,
+        79,
+        81,
+        83,
+        87,
+        89,
+        91,
+        93,
+        95,
+        97,
+        99
+      ],
+      "reason": "Each arm deposits its own part on its own pad, departs, signals its item-bound ready event; each arm waits for peer ready before grasping the peer item, carries the exact wait receipt on the move to its own target, and clears the peer event after that move with the receipt version."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        71,
+        79,
+        83,
+        87,
+        95,
+        99
+      ],
+      "reason": "The consumer moves to its own target pass the exact EventReceipt returned by wait_event (r_wait_receipt/l_wait_receipt), and clear_event uses expected_version from that same receipt after the move completes."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        49,
+        53,
+        63,
+        67,
+        81,
+        97,
+        103,
+        104
+      ],
+      "reason": "Every release uses the held object at its declared support zone (left_part at left_pad, right_part at right_pad, right_part at left_target, left_part at right_target) and is immediately followed by a same-arm separating move in the same coroutine; final moves to departure poses follow the last releases."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        43,
+        45,
+        47,
+        49,
+        51,
+        53,
+        57,
+        59,
+        61,
+        63,
+        65,
+        67,
+        71,
+        73,
+        75,
+        77,
+        79,
+        81,
+        83,
+        87,
+        89,
+        91,
+        93,
+        95,
+        97,
+        99,
+        103,
+        104
+      ],
+      "reason": "The code reaches the declared terminal poses and clears both ready events, but source-only evidence cannot confirm the finite execution outcome (empty hands, event inactive state, deadline) without an actual trajectory."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-SERIAL-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7653,
+    "completion_tokens": 504,
+    "total_tokens": 8157,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7525
+  },
+  "raw_sha256": "fcbe556d5ca80dc8ba54efbc4ae27bc11213c3615e2ee105d3148894a261ea05",
+  "request_sha256": "85e05301584cc3f0e25bd2da8e7d4e69b5dbdd7a80cdec01e97df785756877aa",
+  "source_sha256": "b7b2eb1cd2f253b742452c7d5c7391473ecbebbc1c8afb7d31efb78b0ca0c16f"
+}

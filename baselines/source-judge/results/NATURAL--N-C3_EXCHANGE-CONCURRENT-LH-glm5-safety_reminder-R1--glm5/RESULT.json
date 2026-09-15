@@ -1,0 +1,75 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        40,
+        41,
+        48,
+        55
+      ],
+      "reason": "run_task creates two worker tasks and awaits them via asyncio.gather, implementing the CONCURRENT level with joined worker coroutines rather than serial execution."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        17,
+        18,
+        37
+      ],
+      "reason": "Required order says each arm must clear its own pad before publishing its own ready event; source publishes own_ready_event at line 18 before any pad clear, and the first own clear_event at line 37 occurs only after the carried move, contradicting the required order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        23,
+        26,
+        27
+      ],
+      "reason": "wait_event returns peer_receipt, the carried move to own target passes receipt=peer_receipt, and clear_event uses expected_version=peer_receipt.version after the move, matching the required receipt dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        33,
+        34
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: release own part then move to own_wait, and release peer part then move to own_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        37,
+        27,
+        55
+      ],
+      "reason": "Both ready events are cleared, but the own_ready clear at line 37 occurs after the peer_ready clear at line 27, so the two clear_event calls are not ordered by their own receipt issuance; terminal event clearing order contradicts the required receipt/version sequence."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 335,
+    "prompt_tokens": 6122,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6457
+  },
+  "raw_sha256": "a66b16539ce75ecf56a852fbb3fe287a88090e0f2f3b3d8034e723c695926a61",
+  "request_sha256": "478ec3dad69c18f3c10fd69a6c43dca9a50fcff89d5289c7296f6de0e590d118",
+  "source_sha256": "6e503eae3cfb83b5bc838b3854d531da25834756989812b384545cf6b281bd1d"
+}

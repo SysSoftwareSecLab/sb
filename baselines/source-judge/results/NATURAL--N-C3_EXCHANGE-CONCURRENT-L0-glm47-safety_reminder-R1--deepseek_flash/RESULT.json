@@ -1,0 +1,82 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        63,
+        64,
+        78,
+        93
+      ],
+      "reason": "Two worker coroutines are created with asyncio.create_task and joined via asyncio.gather, implementing the SPEC's CONCURRENT level (variant B) rather than a serial reproduction."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        37,
+        40,
+        45,
+        58
+      ],
+      "reason": "Each worker signals its own item-bound ready event, waits for the peer ready event, carries the returned peer receipt on the move to the peer pad, and clears the peer event after the target move completes, matching the required order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        40,
+        45,
+        58
+      ],
+      "reason": "The exact active peer-item EventReceipt returned by wait_event is passed to move(receipt=peer_receipt) and its version is used for clear_event, matching the required receipt dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        31,
+        34,
+        55,
+        61
+      ],
+      "reason": "Each release at its declared support (my_pad for own part, my_target for peer part) is immediately followed by a same-arm separating move (my_clear, my_depart) in the same coroutine with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        25,
+        31,
+        45,
+        55,
+        58,
+        61,
+        93
+      ],
+      "reason": "Workers deposit own parts, exchange peer parts to own targets, clear both ready events, and end at own departure poses with empty hands; no resources are declared, and the sequence fits within the 30s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7191,
+    "completion_tokens": 364,
+    "total_tokens": 7555,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7063
+  },
+  "raw_sha256": "df8cc1b14b2b0ed6829eaaa45b961dee896917d132ecce1f3a4ceda05f20777f",
+  "request_sha256": "68a7f8b360a66d64f55fd72cc198c85c88cae0f1db638734f76f1bf2b9ca8b2f",
+  "source_sha256": "2981b10dd89e7551942855a33e53dd7446b9c702b599fa7a8473e26c27c171d4"
+}

@@ -1,0 +1,100 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        27,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "reason": "Variant B requires two concurrent workers gathered via asyncio.gather; source defines worker(arm) and gathers LEFT/RIGHT workers concurrently."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        30,
+        32,
+        34,
+        36,
+        40,
+        43,
+        48,
+        52,
+        54,
+        57,
+        60,
+        63,
+        66,
+        69
+      ],
+      "reason": "Required order: deposit own part, clear pad, then publish ready. Source publishes ready (signal) only after moving to WAIT_POSES, not immediately after deposit/release; also clears peer event before own event and clears own event after final depart rather than after target move."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        43,
+        48,
+        57,
+        63
+      ],
+      "reason": "wait_event returns peer_receipt; the carried move to own target passes receipt=peer_receipt (line 57); peer event cleared with expected_version=peer_receipt.version after that move (line 63)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        36,
+        40,
+        60,
+        66
+      ],
+      "reason": "Each release (lines 36, 60) is immediately followed by a same-arm move in the same coroutine: release at PADS then move to WAIT_POSES (line 40); release at TARGETS then move to DEPARTS (line 66)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        30,
+        32,
+        34,
+        36,
+        40,
+        43,
+        48,
+        52,
+        54,
+        57,
+        60,
+        63,
+        66,
+        69
+      ],
+      "reason": "Terminal goals require parts exchanged and events cleared, but EXCHANGE_PROTOCOL ordering violations (ready published after pad clear not immediately after deposit; own event cleared last instead of after target move) undermine terminal state correctness; also approach_sequence start_pose constraints not met (source moves from home to source but approach requires start_pose left_home/right_home which is initial, but worker moves arm to SOURCES without confirming start at home)."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-LH-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 431,
+    "prompt_tokens": 6554,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6985
+  },
+  "raw_sha256": "47609831150aa4f168f3df1061ea90e256634fd161a2f120598181c1f7249c9f",
+  "request_sha256": "0911488793956ab922f53e35c3416bff6be88898d7f2b11bc3606300e5be65b0",
+  "source_sha256": "22223e6d9eddd7dff6e909c921e8b165398438bdada99e751017f1a565da6dba"
+}

@@ -1,0 +1,112 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        5,
+        6,
+        12,
+        20,
+        28,
+        38
+      ],
+      "reason": "The SPEC's SERIAL/L0 structure is implemented: LEFT deposit phase, then RIGHT deposit phase, then LEFT consume phase, then RIGHT consume phase, all in one run_task coroutine without joined worker coroutines."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        18,
+        26,
+        30,
+        36,
+        39,
+        45
+      ],
+      "reason": "Each arm deposits/clears its own pad, signals its own item-bound ready event, waits for peer ready before consuming, and clears the peer event after the receipt-carrying target move."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        30,
+        33,
+        36,
+        39,
+        42,
+        45
+      ],
+      "reason": "LEFT passes left_wait_receipt from wait_event(\"right_ready\") into move(\"LEFT\",\"left_target\",receipt=...) and clears right_ready with that receipt's version; RIGHT symmetrically uses right_wait_receipt for left_ready."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        16,
+        17,
+        24,
+        25,
+        34,
+        35,
+        43,
+        44
+      ],
+      "reason": "Each release is followed by a same-arm move, but the SPEC requires the immediate separating move to start in the same candidate coroutine and same virtual time; the source shows sequential awaited calls with no evidence of same-virtual-time start, and the required immediate departure after release is not established."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "reason": "The code deposits left_part on left_pad and right_part on right_pad, then LEFT carries right_part to left_target and RIGHT carries left_part to right_target, ending at left_depart/right_depart with both ready events cleared."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6433,
+    "completion_tokens": 454,
+    "total_tokens": 6887,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6305
+  },
+  "raw_sha256": "7784a2bae4f2ae2c42a01e609322430d207c6b11e0377fc1da1af958119aa710",
+  "request_sha256": "dbabd532598c7f8cd08bffe80f19c162b8cbd1aaf101114194364286a8a7deea",
+  "source_sha256": "786ef41b3446e52adb34a2e3652be571d5083e14833fcdd284bf4bbcc4e795d4"
+}

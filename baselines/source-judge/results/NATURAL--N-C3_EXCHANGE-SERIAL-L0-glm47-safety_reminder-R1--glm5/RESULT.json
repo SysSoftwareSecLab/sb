@@ -1,0 +1,90 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        4,
+        45,
+        59,
+        73,
+        89,
+        105
+      ],
+      "reason": "SPEC requires SERIAL level L0; source implements strictly sequential phases A (deposit LEFT then RIGHT, consume LEFT then RIGHT, depart) with no worker coroutines, matching the stated structure."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        47,
+        57,
+        61,
+        71,
+        75,
+        87,
+        91,
+        103
+      ],
+      "reason": "Each arm deposits own part, clears pad, signals own ready; consumer waits for peer ready before pickup; clears peer event after carrying move completes, matching required_order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        75,
+        83,
+        87,
+        91,
+        99,
+        103
+      ],
+      "reason": "wait_event returns peer receipt; move to target carries that exact receipt; clear_event uses expected_version=peer_receipt.version after the carrying move, matching the receipt contract."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        53,
+        55,
+        67,
+        69,
+        85,
+        101
+      ],
+      "reason": "Each release is followed immediately by a same-arm separating move in the same coroutine: LEFT release at left_pad then move to left_clear; RIGHT release at right_pad then move to right_clear; final releases followed by departure moves."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        85,
+        101,
+        107,
+        108,
+        87,
+        103
+      ],
+      "reason": "left_part released at left_target (consumed by RIGHT), right_part released at right_target (consumed by LEFT); arms depart to left_depart/right_depart; both ready events cleared; no resources in SPEC."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-SERIAL-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 346,
+    "prompt_tokens": 7132,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7478
+  },
+  "raw_sha256": "3d288612108fa9a57613265e3f5ff79f8480462763af7e659a7064e730d95d23",
+  "request_sha256": "dc8d4195a891a017655db945dd0160bf517b3e56ff1b6762fc09d6cc5c0614b6",
+  "source_sha256": "5cf03a0cc7b8866c79933e425df230e74d95377310c2315badab518373bb0504"
+}

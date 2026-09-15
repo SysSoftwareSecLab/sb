@@ -1,0 +1,77 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        37,
+        38,
+        39
+      ],
+      "reason": "run_task creates left_worker and right_worker as asyncio tasks and awaits asyncio.gather, implementing the SPEC's CONCURRENT level with joined worker coroutines rather than a serial action sequence."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        14,
+        20,
+        25
+      ],
+      "reason": "Each worker deposits/clears its own pad then signals its item-bound ready event; each consume waits for the peer ready event before picking up the peer item, and clears that event after the receipt-carrying move completes."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        20,
+        24,
+        25
+      ],
+      "reason": "consume stores the EventReceipt returned by wait_event, passes it as receipt to the target move, and clears the peer event using expected_version=receipt.version, matching the required receipt dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        12,
+        13
+      ],
+      "reason": "After release at the pad, the same coroutine does move to clear_pose, but the SPEC requires release to be followed by an immediate same-arm separating move in the same virtual time; the code inserts no explicit same-virtual-time guarantee and the declared approach/contact sequence for release/departure is not satisfied as written."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        28,
+        29,
+        30,
+        33,
+        34,
+        35
+      ],
+      "reason": "The code moves parts toward peer targets and returns arms to clear poses, but it never moves arms to the declared departure poses left_depart/right_depart, so the public terminal goal cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-CONCURRENT-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6299,
+    "completion_tokens": 376,
+    "total_tokens": 6675,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6171
+  },
+  "raw_sha256": "3425a09be1eed30a494ed446bc0a523eb64448c9703b6b858f2640a3a96da406",
+  "request_sha256": "fb21c7d9b8afa19dbc0b1aaf304ac5182ede1c6b0bd76a0d7c0f9ca43fe6d907",
+  "source_sha256": "028c357faacf382e69c72b80f47cde0e9df405f6ab041de8c845d121b02021bf"
+}

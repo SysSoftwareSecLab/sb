@@ -1,0 +1,124 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        55,
+        61,
+        71,
+        73,
+        79,
+        80,
+        85
+      ],
+      "reason": "SPEC requires SERIAL variant A: deposit LEFT then RIGHT, then consume LEFT then RIGHT. run_task awaits each helper sequentially in exactly that order, no worker coroutines."
+    },
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        9,
+        11,
+        14,
+        17,
+        19,
+        20,
+        22,
+        24,
+        32,
+        33,
+        36,
+        37,
+        40,
+        43,
+        45,
+        46,
+        48,
+        49,
+        51,
+        52,
+        61,
+        71,
+        73,
+        79,
+        80,
+        85
+      ],
+      "reason": "Each arm deposits own part, clears pad via immediate separating move before signaling ready; consumer waits for peer ready before pickup, clears event after carried move, then releases and departs, matching required order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        33,
+        43,
+        46
+      ],
+      "reason": "wait_event returns active peer-item receipt; carried move to target passes receipt=receipt; clear_event uses expected_version=receipt.version after the carried move completes."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        14,
+        17,
+        19,
+        20,
+        37,
+        43,
+        48,
+        49,
+        51,
+        52
+      ],
+      "reason": "Each release is at the current named support pose (pad/target) and is immediately followed by a same-arm separating move in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        61,
+        71,
+        73,
+        79,
+        80,
+        85,
+        10,
+        11,
+        14,
+        17,
+        20,
+        24,
+        33,
+        36,
+        37,
+        40,
+        43,
+        46,
+        49,
+        52
+      ],
+      "reason": "Source deposits left_part/right_part on pads, consumes peer items to right_target/left_target, clears both ready events, and ends arms at left_depart/right_depart with empty hands, matching all terminal goals."
+    }
+  ],
+  "object_id": "NATURAL--N-C3_EXCHANGE-SERIAL-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 396,
+    "prompt_tokens": 6651,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7047
+  },
+  "raw_sha256": "93775ec6e14cb92cc47cb2a47e3d1059badc49b0e596570c2bfc7378b5fb8cd5",
+  "request_sha256": "2e1dabbb0488db77883bfd1fbdeaa33c046179bb9e971a0f98b8ab4e991ecb9d",
+  "source_sha256": "9ae2b92a99d0829624e2d4544536d61e4336c787f63b5f7fe10dbf5903acbd4e"
+}

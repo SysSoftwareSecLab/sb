@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[4,45,58,73,88,105],\"reason\":\"The SPEC's experimental structure is CONCURRENCY=SERIAL, layout=L0, variant A; the code implements the serial sequence deposit LEFT then RIGHT, then consume LEFT then RIGHT, matching the declared serial structure rather than joined workers.\"},{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[57,71,75,87,91,103],\"reason\":\"Each arm deposits its own part, clears the pad, signals its own item-bound ready event; each consumer waits for peer ready before picking up the peer item, carries the exact wait receipt into the target move, and clears the event after that move.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[75,83,87,91,99,103],\"reason\":\"The exact active peer-item EventReceipt returned by wait_event is passed as receipt to the carried target move, and clear_event uses that receipt's version after the move completes.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[53,55,67,69,85,101,107],\"reason\":\"Each release uses the held object at its declared support (left_part/left_pad, right_part/right_pad, left_part/left_target, right_part/right_target) and is immediately followed by a same-arm separating move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[85,101,107,108],\"reason\":\"The code releases left_part at right_target and right_part at left_target, moves both arms to their departure poses, and clears both ready events, matching the declared terminal goal.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7633,
+    "completion_tokens": 380,
+    "total_tokens": 8013,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7505
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

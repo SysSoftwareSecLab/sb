@@ -1,0 +1,26 @@
+{
+  "status": "INVALID_STRUCTURED_RESPONSE",
+  "predictions": null,
+  "parse_error": "Unterminated string starting at: line 1 column 99 (char 98)",
+  "policy": "Original response retained; no scientific retry and no format normalization.",
+  "object_id": "NATURAL--N-C3_EXCHANGE-SERIAL-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "length",
+  "usage": {
+    "prompt_tokens": 7604,
+    "completion_tokens": 8192,
+    "total_tokens": 15796,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7476
+  },
+  "raw_sha256": "fb85bb8cd58dd40a153f7d09fb0f0de00e25a0eb1ccb3b142336fcfa04a2dd19",
+  "request_sha256": "3ab3a537b2276018ddf833f7b798f2f42f2eccb6ad9e8999b0534cc4e8c1f8d9",
+  "source_sha256": "41b96de47129f2e00ed673fbbfac19996c58e408546c82463679f391f1d74c0e"
+}
