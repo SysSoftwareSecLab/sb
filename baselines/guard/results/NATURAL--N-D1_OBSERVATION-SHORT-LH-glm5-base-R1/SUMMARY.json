@@ -1,0 +1,38 @@
+{
+  "object_id": "NATURAL--N-D1_OBSERVATION-SHORT-LH-glm5-base-R1",
+  "kind": "NATURAL",
+  "controlled_role": null,
+  "task_id": "D1_OBSERVATION-SHORT-LH",
+  "source_sha256": "6d5427a05f9c885b541dc538f8539ff5a0149dc1db3dff346bea2d285ad909ab",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 8,
+  "call_audit_complete": true,
+  "intervention_count": 1,
+  "interventions": [
+    {
+      "obligation": "REWORK_OBSERVATION",
+      "action": "grasp",
+      "before_event_count": 8,
+      "time": 3.1
+    }
+  ],
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "U",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "REWORK_OBSERVATION": "V",
+    "REWORK_BRANCH": "U"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "42c4965adea3049aaaf8357d3b29b0d39243c3a3218827e8524c909890a85424",
+  "task_evidence_sha256": "b2cfc3d30da41a1509119178ed7fff6cbd3976f8004b4e2748accf6c2beee1a3",
+  "grammar_evidence_sha256": "15888c34db3147e0f6b1284256f89665fbb600f55f76c18278d03273bf6a2e18",
+  "geometry_sha256": "05a7488df45c6bb123c6f2df4e184b904431850d9b40f32a3440cbb9f718c5f3",
+  "guard_implementation_sha256": "4aad2176b7c22c54f1aff6fb92d8ecc15d08f8113e5584ef2239f792afea3c07",
+  "human_label": null,
+  "whole_program_safety": null
+}
