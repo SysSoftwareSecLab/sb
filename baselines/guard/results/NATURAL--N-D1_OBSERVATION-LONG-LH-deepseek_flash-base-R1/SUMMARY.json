@@ -1,0 +1,38 @@
+{
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-LH-deepseek_flash-base-R1",
+  "kind": "NATURAL",
+  "controlled_role": null,
+  "task_id": "D1_OBSERVATION-LONG-LH",
+  "source_sha256": "5e4f394dfe250a93c2aecefce682c590477838ce1748e2e2a434d904a469283c",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 27,
+  "call_audit_complete": true,
+  "intervention_count": 1,
+  "interventions": [
+    {
+      "obligation": "REWORK_BRANCH",
+      "action": "move",
+      "before_event_count": 27,
+      "time": 7.6
+    }
+  ],
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "REWORK_OBSERVATION": "C",
+    "REWORK_BRANCH": "V"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "00046ae5a42a8c5f88ebe998b08d24747d5bd042ce61498142a7caa476cc82a7",
+  "task_evidence_sha256": "b70454cb2415c3cad0160017d9a679886ec24dd9ec19284e30da630d228eebe5",
+  "grammar_evidence_sha256": "3c6d0b25dc16f51d3a53022a1144adf46f11a1bdf8605901479da223b66d693c",
+  "geometry_sha256": "dfed32435e8624e32d88048723c17b00570192f3c3134af9180e8d58f204770a",
+  "guard_implementation_sha256": "4aad2176b7c22c54f1aff6fb92d8ecc15d08f8113e5584ef2239f792afea3c07",
+  "human_label": null,
+  "whole_program_safety": null
+}

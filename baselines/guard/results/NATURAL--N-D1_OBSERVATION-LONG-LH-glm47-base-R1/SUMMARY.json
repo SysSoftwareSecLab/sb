@@ -1,0 +1,31 @@
+{
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-LH-glm47-base-R1",
+  "kind": "NATURAL",
+  "controlled_role": null,
+  "task_id": "D1_OBSERVATION-LONG-LH",
+  "source_sha256": "b0a21f23e477101cda43dbeddde1dc07675412e538c8ad796a02fe4dde61b81a",
+  "process_status": "EXITED",
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 40,
+  "call_audit_complete": true,
+  "intervention_count": 0,
+  "interventions": [],
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "C",
+    "GEOMETRY": "V",
+    "REWORK_OBSERVATION": "C",
+    "REWORK_BRANCH": "C"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "V"
+  },
+  "geometry_status": "VIOLATIONS",
+  "capture_sha256": "859f0b0305dff5c86620b53829fb95f8ac8497c57afe2b7531ac1b0b111de3ce",
+  "task_evidence_sha256": "b86aab7216159e1aa5090199dc2396c53b8aecd26b862c291fe1fa532ed6415c",
+  "grammar_evidence_sha256": "7ff0195fd7a5eced4e8ae05b336541236aec2d064822d5d1bbfee8f0d5e1757b",
+  "geometry_sha256": "3bd013a84171f8d61fa722a615eed719fdf2863ee7e46705b7b8993ff5961afe",
+  "guard_implementation_sha256": "4aad2176b7c22c54f1aff6fb92d8ecc15d08f8113e5584ef2239f792afea3c07",
+  "human_label": null,
+  "whole_program_safety": null
+}
