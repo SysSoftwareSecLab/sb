@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        40,
+        47,
+        48,
+        55
+      ],
+      "reason": "The SPEC's experimental structure is CONCURRENCY=SERIAL, layout=L0; the source awaits worker(LEFT) to completion then awaits worker(RIGHT), implementing the required serial composition rather than concurrent workers."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        17,
+        19,
+        22,
+        23,
+        25,
+        26,
+        28,
+        30,
+        32
+      ],
+      "reason": "Each worker acquires fixture then tool, performs the carry/move/grasp/release/depart while owning both, then releases tool and fixture, matching the required dual-resource span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        26,
+        28
+      ],
+      "reason": "After release(arm, part, target), the same worker coroutine immediately calls move(arm, depart) as the next same-arm action, satisfying the required release-then-separating-move departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        40,
+        55
+      ],
+      "reason": "The source moves both parts to targets and departs, but it never calls set_mode to ensure both controllers are OFF/unowned at termination, so the full declared terminal goal is not source-supported."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        16,
+        38
+      ],
+      "reason": "The try/finally cleanup exists, but the finite source shows no actual acquire timeout event, so the timeout-cleanup trigger is not applicable on the supplied evidence."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5918,
+    "completion_tokens": 335,
+    "total_tokens": 6253,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5790
+  },
+  "raw_sha256": "0111f192648bdace9b530211dc04f6a9fc0d1bdd351b80e022b53d553fa15762",
+  "request_sha256": "b71e672b706e2e5bf75345619f92d95f0e77723fb67140e69c4a9275ec75afa6",
+  "source_sha256": "2f89a346521c8234e21e84635c57b5e5e5215055db6c918b53bfc90357534e3b"
+}

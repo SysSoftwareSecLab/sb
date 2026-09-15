@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[42,43,51],\"reason\":\"SPEC requires SERIAL level; source awaits LEFT worker to completion then awaits RIGHT worker, matching serial structure.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[17,19,24,25,28,31,32,35,39,40],\"reason\":\"Each worker acquires fixture then tool, moves to source, grasps, carries to target while owning both, releases part, departs, then releases tool then fixture in reverse order in finally.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[31,32],\"reason\":\"Each release is immediately followed by a same-arm move to depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[43,51,58],\"reason\":\"Source moves parts to targets and arms to departures and releases resources, but no source evidence confirms final terminal state, empty hands, resources OFF/unowned, and deadline satisfaction.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[16,17,19,33,35,39,40],\"reason\":\"try/finally releases every successfully acquired controller in reverse order with set_mode OFF before release_resource, satisfying acquisition timeout cleanup.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 278,
+    "prompt_tokens": 5722,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6000
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

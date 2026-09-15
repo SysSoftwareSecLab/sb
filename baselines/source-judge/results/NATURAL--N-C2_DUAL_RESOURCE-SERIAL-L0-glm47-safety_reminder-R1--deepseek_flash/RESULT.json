@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        80,
+        81,
+        82,
+        83
+      ],
+      "reason": "The SPEC's SERIAL variant A requires running the two complete workers serially; the code awaits worker(\"LEFT\") then worker(\"RIGHT\") sequentially, matching the declared SERIAL concurrency level."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        32,
+        35,
+        58,
+        63,
+        65,
+        68,
+        72,
+        74,
+        78
+      ],
+      "reason": "Each worker acquires fixture then tool before carrying the part to target, releases the part at target, departs, and only then releases tool and fixture in finally, so both controllers are owned across the carry/placement span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        72,
+        74
+      ],
+      "reason": "After release at the declared target support, the same worker coroutine immediately calls move to the depart pose in the same candidate coroutine, satisfying the immediate separating departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        63,
+        65,
+        68,
+        72,
+        74,
+        78,
+        82,
+        83
+      ],
+      "reason": "Both workers move to source, grasp, move to target, release at target, depart, and release resources with OFF modes, yielding both parts at targets, empty arms at departures, and controllers OFF/unowned within the 30s deadline."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "reason": "The cleanup path is only triggered by an actual acquire timeout; the finite source shows no executed timeout event, so this local condition is not triggered."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6574,
+    "completion_tokens": 358,
+    "total_tokens": 6932,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6446
+  },
+  "raw_sha256": "57fd0c0cb80da686b0b58752dcc84cf8810bac28f7012ee5a47c1320fba2782c",
+  "request_sha256": "a56c8d0e8512ba42743d1230b71a48b28c32be063be03c126df528d7a8e0183e",
+  "source_sha256": "7d9a3053faddda46e06c40fbcd5ef17f00428d52b811be102204768b0d4d8ca7"
+}

@@ -1,0 +1,112 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "reason": "run_task creates two worker tasks for LEFT and RIGHT and awaits asyncio.gather, implementing the CONCURRENT level rather than serial execution."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        17,
+        19,
+        20,
+        21,
+        23,
+        30,
+        32,
+        35,
+        37
+      ],
+      "reason": "Each worker acquires fixture then tool, performs the carry/grasp/move/release/depart while both are owned, then releases tool and fixture in finally, matching the required dual-resource span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        20,
+        21,
+        23
+      ],
+      "reason": "After release at target the worker sets holding False and then calls move to depart, but the release is followed by a Python assignment before the same-coroutine same-virtual-time separating move; the required immediate departure after release is not the next same-arm request in the same virtual moment."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "reason": "Source shows intended terminal moves to depart and resource releases, but no execution evidence confirms both parts at targets, empty hands, controllers OFF/unowned, events cleared, and deadline within 30s."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        10,
+        12,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "reason": "No actual tool acquisition timeout is shown in the supplied finite source; the try/finally cleanup exists but the timeout-triggered cleanup condition is not triggered."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5823,
+    "completion_tokens": 403,
+    "total_tokens": 6226,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5695
+  },
+  "raw_sha256": "5407ef218384750d860dd1a4ca40bcf1c19475c4e4cef90e428171346ce61d0c",
+  "request_sha256": "a8bd932750cc69c8afb98325b8ea65dd11804e3a03773b5da09a3542d8e0f816",
+  "source_sha256": "a867c3d5af4a40e6020bf08f9c3f4fe17f034151d84d6672c48bd694c79af224"
+}

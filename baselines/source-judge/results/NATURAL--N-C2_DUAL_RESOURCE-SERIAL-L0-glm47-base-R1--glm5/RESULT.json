@@ -1,0 +1,99 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        50,
+        52,
+        58,
+        60,
+        61,
+        67
+      ],
+      "reason": "SPEC requires SERIAL level L0: two workers run serially. Source awaits LEFT worker then awaits RIGHT worker sequentially, matching stated structure."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        20,
+        21,
+        22,
+        26,
+        29,
+        32,
+        35,
+        38,
+        44,
+        47,
+        48
+      ],
+      "reason": "Each worker acquires fixture then tool before carrying part to target, releases part and departs while owning both, then releases tool then fixture in finally; matches required resource span order."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        32,
+        35,
+        38
+      ],
+      "reason": "Each worker moves to target_pose, releases part at target_pose (a logical_support), then immediately calls move to depart_pose in same coroutine with no intervening same-arm action."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        52,
+        54,
+        55,
+        56,
+        57,
+        61,
+        63,
+        64,
+        65,
+        66,
+        44,
+        47,
+        48
+      ],
+      "reason": "Both workers place parts at targets, depart to left_depart/right_depart, release resources in finally; initial modes OFF and no set_mode called, satisfying terminal goals."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        19,
+        21,
+        22,
+        23,
+        40,
+        44,
+        47,
+        48
+      ],
+      "reason": "try/finally releases all successfully acquired resources in reverse order on any exception including acquisition timeout; acquired list tracks only successful acquisitions."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 329,
+    "prompt_tokens": 5893,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6222
+  },
+  "raw_sha256": "f424034fe8e9e8a85a8cefaaeab746f405fe9d7f65fc1835890d8dfc2b2e86a6",
+  "request_sha256": "61539a9d747a736b00ba98728ae4ed7e284c888baa65578a379f74fe1a63604b",
+  "source_sha256": "9d8b0373b377b82d9837cbea276230270a999e524acefb01d536b2ce159fdd3e"
+}

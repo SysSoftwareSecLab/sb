@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[35,46,57],\"reason\":\"run_task creates left_task and right_task via asyncio.create_task and awaits both with asyncio.gather, implementing the CONCURRENT structure required by the SPEC.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[11,13,16,17,18,19,20,22,24],\"reason\":\"Each worker acquires fixture then tool before moving/grasping/carrying/releasing the part and departing, then releases tool and fixture, matching the required dual-resource ownership span.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[18,19,20],\"reason\":\"Each worker moves to target, releases the part at target (a declared logical support), then immediately calls move to depart in the same coroutine with no intervening same-arm action.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[11,13,22,24],\"reason\":\"Workers release resources without calling set_mode to OFF before release_resource; SPEC requires resources OFF and unowned at terminal state, and release_resource requires mode OFF.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[10,11,12,13,14,26,27,29,30],\"reason\":\"try/finally tracks acquired resources in order and releases them in reverse on any exception including acquisition timeout, satisfying the required timeout cleanup.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 310,
+    "prompt_tokens": 5576,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5886
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

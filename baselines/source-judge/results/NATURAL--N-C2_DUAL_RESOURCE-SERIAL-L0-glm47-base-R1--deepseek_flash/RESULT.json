@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        50,
+        52,
+        61
+      ],
+      "reason": "SPEC requires CONCURRENCY=SERIAL layout L0; code runs the two complete workers serially with sequential awaits, matching the declared serial structure."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        23,
+        32,
+        35,
+        38,
+        47,
+        48
+      ],
+      "reason": "Each worker acquires fixture then tool before the carry move, releases the part, departs, and releases tool then fixture in finally, spanning the target carry while owning both resources."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        35,
+        38
+      ],
+      "reason": "After release at target_pose, the next same-arm request is a move to depart_pose, but release's support_zone is target_pose while the SPEC goal/support requires the part at left_target/right_target; the code passes target_pose as support_zone, which is not in logical_supports, so the release/departure contract is contradicted."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        52,
+        61
+      ],
+      "reason": "Source shows serial workers ending at depart poses with resources released, but no execution evidence confirms both parts at targets, empty hands, controllers OFF/unowned, events cleared, and deadline compliance."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        22,
+        44,
+        47,
+        48
+      ],
+      "reason": "No actual tool acquisition timeout is shown in the finite source; the try/finally cleanup path exists but the timeout trigger condition is not demonstrated."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6245,
+    "completion_tokens": 349,
+    "total_tokens": 6594,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6117
+  },
+  "raw_sha256": "fe7eb1694ef359f200058f9ef336982c0c468ed7ed7560c120c4aa5c40e86981",
+  "request_sha256": "b70af219ef0c13db59ff037e6c60f9ee61e01b49c86fea3a2cd29c1f485221c8",
+  "source_sha256": "9d8b0373b377b82d9837cbea276230270a999e524acefb01d536b2ce159fdd3e"
+}

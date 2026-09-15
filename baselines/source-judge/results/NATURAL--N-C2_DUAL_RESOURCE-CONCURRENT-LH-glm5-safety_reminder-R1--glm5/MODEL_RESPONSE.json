@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[42,46,50],\"reason\":\"run_task creates LEFT and RIGHT worker tasks and awaits them via asyncio.gather, implementing the CONCURRENT structure required by the SPEC.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"V\",\"source_lines\":[9,10,11,12,13,14,16,18,21,22,23,24,25,26],\"reason\":\"SPEC requires acquiring fixture then tool, then carrying the part to target while owning both. The code performs the first full carry (move/grasp/release/depart) before acquiring fixture and tool, violating the required dual-resource span order.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[12,13,14,24,25,26],\"reason\":\"Each release at target is immediately followed by a same-arm move to depart in the same coroutine, satisfying the support departure obligation.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[9,10,11,12,13,14,16,18,21,22,23,24,25,26,28,30,33,34,35,36],\"reason\":\"The code performs a full carry sequence before acquiring resources, violating the required order; terminal goal of parts at target with resources OFF/unowned is not met because the first carry occurs without required resource ownership.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[6,7,16,17,18,19,28,29,30,31,32,33,34,35,36],\"reason\":\"try/finally with fixture_owned/tool_owned flags ensures that if acquire times out, any successfully acquired resource is released in the finally block.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 373,
+    "prompt_tokens": 5575,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5948
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

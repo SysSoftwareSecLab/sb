@@ -1,0 +1,123 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58
+      ],
+      "reason": "The SPEC's experimental structure is CONCURRENCY=SERIAL; run_task awaits the LEFT worker to completion then awaits the RIGHT worker, implementing serial execution rather than concurrent joined workers."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        17,
+        19,
+        24,
+        25,
+        28,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "reason": "Each worker acquires fixture then tool, performs grasp/move/release/depart while owning both, and the finally block releases tool then fixture in reverse acquisition order."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        31,
+        32
+      ],
+      "reason": "After release at the target support zone, the same worker coroutine immediately calls robot.move(arm, depart) as the next same-arm action in the same virtual moment."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        24,
+        25,
+        28,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        51
+      ],
+      "reason": "Source shows both workers run and release resources, but no execution evidence confirms terminal poses, empty hands, OFF/unowned resources, cleared events, or deadline compliance."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "reason": "The try/finally cleanup exists, but the obligation is triggered only by an actual tool acquisition timeout; no execution evidence shows a timeout occurred."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6060,
+    "completion_tokens": 392,
+    "total_tokens": 6452,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5932
+  },
+  "raw_sha256": "0dc23133e6769be4eb2868206aa5140be65bf2590a1f80d54d7a93ce948162f0",
+  "request_sha256": "55e9ca7abc833cd81b00c16bad9ed65aad4e6f21b3940ea29696d108ace25a59",
+  "source_sha256": "cdd9a3753e467730fba57b561531d937de21535d5036e83db9e05e1799571945"
+}

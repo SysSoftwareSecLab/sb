@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[56,58,60,63,65,68,69],\"reason\":\"Both worker coroutines are created as asyncio tasks and awaited, implementing the CONCURRENT structure required by variant B.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[23,26,28,35,38,41,44,47,49,52,53,54],\"reason\":\"Each worker acquires fixture then tool, moves/grasps/carries/releases/departs while owning both, then releases in reverse order in finally.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[44,47],\"reason\":\"Each release at target is immediately followed by a same-arm move to depart in the same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[1,69],\"reason\":\"Source implements goal-oriented actions but terminal state, event clearing, and deadline cannot be confirmed from source-only evidence without execution.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[25,30,31,32,49,52,53,54],\"reason\":\"try/finally ensures any acquired resources are set OFF and released if acquisition times out or raises.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 272,
+    "prompt_tokens": 5951,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6223
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,78 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        45,
+        47,
+        56
+      ],
+      "reason": "Variant A explicitly runs the two workers serially via sequential awaits, matching the SPEC's CONCURRENCY=SERIAL level."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        21,
+        30,
+        33,
+        41,
+        42,
+        43
+      ],
+      "reason": "Each worker acquires fixture then tool, carries the part to target while owning both, releases the part, departs, then releases tool and fixture in reverse order."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        33,
+        36
+      ],
+      "reason": "After release at target_pose, the same worker coroutine immediately issues a same-arm move to depart_pose with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        47,
+        56
+      ],
+      "reason": "Both workers run to completion placing left_part at left_target and right_part at right_target, ending at depart poses with resources released and modes OFF."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        17,
+        38,
+        41
+      ],
+      "reason": "No tool acquisition timeout is triggered in this finite serial scenario; the try/finally cleanup exists but the timeout condition is not exercised."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6164,
+    "completion_tokens": 279,
+    "total_tokens": 6443,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6036
+  },
+  "raw_sha256": "09461116211f7ff9ba1398d4d2501dc3b963a4c79891c39c71e3cdbc9db2b749",
+  "request_sha256": "4741e82d3d043a6a5cb5d5f300157064bec6d061f16cec5abae3a0da9e288e1c",
+  "source_sha256": "b409f26c80facb218e287d101212ab30e775b13bce898c7425a199b9036c1124"
+}

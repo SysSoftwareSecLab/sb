@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[40,47,48,55],\"reason\":\"The SPEC's experimental structure is CONCURRENCY=SERIAL, layout=L0; the source awaits worker(LEFT) to completion then awaits worker(RIGHT), implementing the required serial composition rather than concurrent workers.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[17,19,22,23,25,26,28,30,32],\"reason\":\"Each worker acquires fixture then tool, performs the carry/move/grasp/release/depart while owning both, then releases tool and fixture, matching the required dual-resource span.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[26,28],\"reason\":\"After release(arm, part, target), the same worker coroutine immediately calls move(arm, depart) as the next same-arm action, satisfying the required release-then-separating-move departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[40,55],\"reason\":\"The source moves both parts to targets and departs, but it never calls set_mode to ensure both controllers are OFF/unowned at termination, so the full declared terminal goal is not source-supported.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[16,38],\"reason\":\"The try/finally cleanup exists, but the finite source shows no actual acquire timeout event, so the timeout-cleanup trigger is not applicable on the supplied evidence.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5918,
+    "completion_tokens": 335,
+    "total_tokens": 6253,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5790
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

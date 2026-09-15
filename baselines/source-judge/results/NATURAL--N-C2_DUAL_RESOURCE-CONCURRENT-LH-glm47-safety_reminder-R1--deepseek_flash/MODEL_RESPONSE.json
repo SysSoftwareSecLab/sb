@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[64,68,69,72,73,77],\"reason\":\"run_task creates two worker tasks with asyncio.create_task and awaits asyncio.gather, implementing the SPEC's CONCURRENT level rather than serial execution.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[19,20,23,24,27,30,33,36,39,44,50,54,60],\"reason\":\"Each worker acquires fixture then tool before carrying the part to target, releases the part and departs, then releases tool and fixture in finally, matching the required dual-resource span.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[36,39],\"reason\":\"After release(arm, part_id, target_pose) the same worker coroutine immediately calls move(arm, depart_pose) with no intervening same-arm call, satisfying immediate same-coroutine separating departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[19,23,27,30,33,36,39,44,46,50,54,56,60,77],\"reason\":\"Source implements the intended sequence and OFF releases, but source-only evidence cannot confirm the actual finite trajectory reaches both targets, empty hands, OFF/unowned controllers, cleared events, and the deadline.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[17,19,23,41,44,50,54,60],\"reason\":\"The try/finally cleanup exists, but the obligation is triggered only by an actual tool acquisition timeout; no execution evidence shows such a timeout occurred.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6467,
+    "completion_tokens": 367,
+    "total_tokens": 6834,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6339
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[86,89,97,99,107],\"reason\":\"SPEC requires SERIAL level: run two complete workers serially. Source awaits left worker fully then right worker, matching stated structure.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[43,47,51,54,57,60,63,74,76,80,82],\"reason\":\"Each worker acquires fixture then tool before moving/grasping/transporting/releasing/departing, and releases tool then fixture in finally after departure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[57,60,63],\"reason\":\"Each release uses target_pose as support_zone (logical_supports member), immediately followed by same-arm move to depart_pose in same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[89,97,99,107],\"reason\":\"Terminal goal requires arms at depart poses; but worker never moves arm from home to depart—home_pose parameter is unused, and no move to home_pose or depart after release is followed by final depart positioning. Arms end at depart_pose after worker, but left_part/right_part goals and empty hands are met; however arms do reach depart. Actually arms do move to depart. V: resources released but no set_mode OFF needed since never changed; terminal poses met. Re-evaluate: goals met. Label C.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[65,68,74,80],\"reason\":\"No actual tool acquisition timeout occurs in the source; TIMEOUT_CLEANUP only applies when an actual tool acquisition timeout occurs.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 363,
+    "prompt_tokens": 6636,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6999
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

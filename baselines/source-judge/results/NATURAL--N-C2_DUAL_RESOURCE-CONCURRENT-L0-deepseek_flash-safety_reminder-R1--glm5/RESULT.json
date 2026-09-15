@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        27,
+        30,
+        33
+      ],
+      "reason": "run_task creates two worker tasks and awaits them via asyncio.gather, implementing the required CONCURRENT structure rather than serial execution."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "V",
+      "source_lines": [
+        8,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        21
+      ],
+      "reason": "Each worker acquires fixture then tool and carries the part to target while owning both, matching the required order. However, release_resource in finally does not set mode OFF before releasing, and the required order says release tool then fixture, but code releases in reversed acquisition order (tool then fixture), contradicting the stated 'release tool and fixture' order."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        17
+      ],
+      "reason": "Each worker moves to target, releases the part at target, then immediately calls move to depart in the same coroutine, satisfying the immediate separating departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        19,
+        21,
+        22,
+        23
+      ],
+      "reason": "Terminal goal requires resources OFF and unowned; release_resource requires mode OFF per API spec, but code never calls set_mode OFF before release_resource. Also release order is reversed (tool then fixture) contradicting required order. Thus terminal state not satisfied."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "reason": "try/finally releases every successfully acquired resource (tracked in acquired list) in reverse order with exception swallowing, satisfying cleanup on acquisition timeout."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 355,
+    "prompt_tokens": 5249,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5604
+  },
+  "raw_sha256": "ced02b421c7a6a3b1061fc07d34e879fbc4d09e1acd63e7f8ae29d5d7ca21bad",
+  "request_sha256": "576bebee3ab0d9ab0b239be728afad0a59f2c2714b72f652e6c21cc20e779a54",
+  "source_sha256": "ccfab3f2ac3e888050909a0303f544596cafa3e9cf18059cc47b3ce49ecd7cce"
+}

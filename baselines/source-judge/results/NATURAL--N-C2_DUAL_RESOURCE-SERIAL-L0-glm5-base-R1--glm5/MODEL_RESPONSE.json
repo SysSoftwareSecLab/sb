@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[40,48],\"reason\":\"SPEC requires SERIAL level: LEFT worker runs to completion, then RIGHT worker. Source awaits worker(LEFT) then awaits worker(RIGHT) sequentially, matching the stated structure.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[17,19,22,25,26,28,30,32],\"reason\":\"Each worker acquires fixture then tool, moves to source, grasps part, moves to target, releases part, moves to depart, then releases tool and fixture, matching the required span order.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[25,26,28],\"reason\":\"Each release places the part at its target support zone (left_target/right_target) and is immediately followed by a same-arm move to depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[17,19,30,32],\"reason\":\"Resources fixture and tool are acquired but never set to OFF via set_mode before release_resource. SPEC requires resources OFF and unowned at terminal state; source only releases ownership without setting mode OFF.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[16,34,35,36,37,38],\"reason\":\"try/finally releases any successfully acquired controllers: acquired_tool and acquired_fixture flags track ownership, and finally releases whichever remain acquired on timeout or exception.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 311,
+    "prompt_tokens": 5583,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5894
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

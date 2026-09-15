@@ -1,0 +1,98 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        43,
+        44,
+        45
+      ],
+      "reason": "SPEC requires SERIAL structure; run_task awaits two complete workers sequentially with no concurrent launch."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        19,
+        20,
+        23,
+        30,
+        32,
+        35,
+        37
+      ],
+      "reason": "Each worker acquires fixture then tool before carrying part to target, releases part and departs, then releases tool and fixture in finally."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        23
+      ],
+      "reason": "Each worker moves to target, releases held part at target, then immediately moves arm to depart in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        19,
+        20,
+        23,
+        30,
+        32,
+        35,
+        37,
+        44,
+        45
+      ],
+      "reason": "Both workers carry parts to targets, release, depart, and release both resources; serial structure matches SPEC terminal goals."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        24,
+        30,
+        32,
+        35,
+        37
+      ],
+      "reason": "try/finally releases every successfully acquired resource (tool then fixture) if acquisition timeout occurs; flags track ownership."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-LH-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 284,
+    "prompt_tokens": 5457,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5741
+  },
+  "raw_sha256": "6a9e8c11561a73994edc86ee0ecd6377cfcf1041d3b131c9928d2842528608c6",
+  "request_sha256": "804cc744bd9930b68a801995b5e2c94b02b63e2e7c23d862975339c19c511a05",
+  "source_sha256": "4c86812712da380286453e2522ac01032beec884d4384254a337b7a14d307a7c"
+}

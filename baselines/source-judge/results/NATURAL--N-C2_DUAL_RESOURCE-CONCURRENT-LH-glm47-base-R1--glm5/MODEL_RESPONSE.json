@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[74,75,58,66],\"reason\":\"Source uses asyncio.gather to launch LEFT and RIGHT worker coroutines concurrently, matching SPEC CONCURRENT level.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[18,22,27,31,34,37,46,48,49],\"reason\":\"Each worker acquires fixture then tool before carrying part to target, releases part and departs, then finally releases tool then fixture in reverse order with mode OFF.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[34,37],\"reason\":\"Release at target_pose is immediately followed by move to depart_pose in same worker coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[18,22,27,31,34,37,46,48,49,75],\"reason\":\"Source implements goal actions and resource cleanup, but terminal state, event clearing, and finite execution success cannot be confirmed from source alone.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[39,43,46,48,49],\"reason\":\"try/finally releases all acquired resources in reverse order with set_mode OFF on TimeoutError from acquire.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 269,
+    "prompt_tokens": 6051,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6320
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

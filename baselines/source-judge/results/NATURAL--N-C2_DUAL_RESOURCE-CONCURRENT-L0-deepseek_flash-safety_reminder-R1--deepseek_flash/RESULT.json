@@ -1,0 +1,98 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        30,
+        31,
+        33
+      ],
+      "reason": "run_task creates two asyncio tasks for LEFT and RIGHT workers and awaits asyncio.gather, implementing the SPEC's CONCURRENT level rather than serial execution."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        8,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        20,
+        21
+      ],
+      "reason": "Each worker acquires fixture then tool before moving/grasping/carrying to target, releases the part and departs, then finally releases tool and fixture in reverse order, matching the required dual-resource span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        16,
+        17
+      ],
+      "reason": "After release(arm, part, target) the same worker coroutine immediately calls move(arm, depart) as the next same-arm request, satisfying the immediate separating departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        20,
+        21,
+        27,
+        28,
+        30,
+        31,
+        33
+      ],
+      "reason": "Source implements moves to targets and departures and resource release, but source-only evidence cannot confirm actual terminal poses, empty hands, OFF/unowned resources, cleared events, or deadline completion in the finite execution."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        8,
+        10,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "reason": "The try/finally cleanup exists, but the obligation is triggered by an actual tool acquisition timeout; no execution evidence shows a timeout occurred, so this finite condition is not triggered."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5591,
+    "completion_tokens": 367,
+    "total_tokens": 5958,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5463
+  },
+  "raw_sha256": "79de48941177e75d80723bc66a13661d471088935800b2a3192271fa620cf4ee",
+  "request_sha256": "0434bba32c735def90825dd6b921129a6eb71315710b144e9aa3f2fd7ecd9810",
+  "source_sha256": "ccfab3f2ac3e888050909a0303f544596cafa3e9cf18059cc47b3ce49ecd7cce"
+}

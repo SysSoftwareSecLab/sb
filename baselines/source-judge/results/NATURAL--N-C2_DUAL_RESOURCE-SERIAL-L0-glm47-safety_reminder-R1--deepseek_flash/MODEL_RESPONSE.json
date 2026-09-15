@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[80,81,82,83],\"reason\":\"The SPEC's SERIAL variant A requires running the two complete workers serially; the code awaits worker(\\\"LEFT\\\") then worker(\\\"RIGHT\\\") sequentially, matching the declared SERIAL concurrency level.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[32,35,58,63,65,68,72,74,78],\"reason\":\"Each worker acquires fixture then tool before carrying the part to target, releases the part at target, departs, and only then releases tool and fixture in finally, so both controllers are owned across the carry/placement span.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[72,74],\"reason\":\"After release at the declared target support, the same worker coroutine immediately calls move to the depart pose in the same candidate coroutine, satisfying the immediate separating departure requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[63,65,68,72,74,78,82,83],\"reason\":\"Both workers move to source, grasp, move to target, release at target, depart, and release resources with OFF modes, yielding both parts at targets, empty arms at departures, and controllers OFF/unowned within the 30s deadline.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[37,38,39,40,41],\"reason\":\"The cleanup path is only triggered by an actual acquire timeout; the finite source shows no executed timeout event, so this local condition is not triggered.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6574,
+    "completion_tokens": 358,
+    "total_tokens": 6932,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6446
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

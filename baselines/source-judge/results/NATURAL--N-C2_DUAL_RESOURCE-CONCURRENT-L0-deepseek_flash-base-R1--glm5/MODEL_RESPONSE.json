@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[42,43,44,45,46,47,48,49],\"reason\":\"run_task creates both LEFT and RIGHT workers as asyncio tasks and awaits them via gather, implementing the CONCURRENT structure required by the SPEC.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[10,11,12,13,15,16,19,20,23,30,32,35,37],\"reason\":\"Each worker acquires fixture then tool before moving/grasping/carrying to target, releases the part and departs while still owning both, then releases tool then fixture in finally, matching the required dual-resource span order.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,23],\"reason\":\"Each worker moves to target, releases the part at target, then immediately calls move to depart in the same coroutine, satisfying support-departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[1,49],\"reason\":\"Source shows the intended goal sequence and concurrent structure, but source-only evidence cannot confirm all terminal states (empty hands, resources OFF/unowned, deadline) are actually achieved in the finite trajectory.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"U\",\"source_lines\":[9,24,30,35],\"reason\":\"try/finally releases successfully acquired tool and fixture, but source-only evidence cannot determine whether an acquisition timeout actually occurs in the finite trajectory to confirm cleanup was triggered.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 324,
+    "prompt_tokens": 5476,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5800
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

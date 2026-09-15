@@ -1,0 +1,100 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        46,
+        51,
+        53,
+        54,
+        55,
+        59,
+        60,
+        61,
+        65
+      ],
+      "reason": "Variant B: both workers launched concurrently via asyncio.gather with a shared fixture_lock, matching the SPEC's CONCURRENT level."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        34,
+        36,
+        38,
+        40,
+        41,
+        42,
+        43
+      ],
+      "reason": "Each critical section acquires fixture then tool, carries the part via _worker, then releases tool and fixture in try/finally, matching the required dual-resource span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        21
+      ],
+      "reason": "_worker releases the part at target then immediately calls move to depart in the same coroutine, satisfying the immediate separating departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        34,
+        36,
+        41,
+        43,
+        65
+      ],
+      "reason": "Source implements carry and resource release for both arms, but no set_mode OFF calls appear; resources start OFF and are released, yet source-only evidence cannot confirm all terminal conditions including event clearance and deadline without execution."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "reason": "try/finally with fixture_owned/tool_owned flags releases every successfully acquired controller on acquisition timeout, matching the required cleanup."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 325,
+    "prompt_tokens": 5903,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6228
+  },
+  "raw_sha256": "9b938d025901ef5449e333ceb5ef6c5b302dd06b2ab187cd23ab144ac8e783fa",
+  "request_sha256": "376be23e15d20bebff3db0039934c3c24720609138cba3be777ff7a06a3acee8",
+  "source_sha256": "33fa1d2dba8296e30a8096db8755c93cb1efe225657401a7f99c7535d7876925"
+}

@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "reason": "Variant A explicitly runs the two complete workers serially via sequential awaits, matching the SPEC's CONCURRENCY=SERIAL level rather than launching concurrent workers."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        15,
+        17,
+        22,
+        23,
+        26,
+        30,
+        31,
+        35,
+        36,
+        37
+      ],
+      "reason": "Each worker acquires fixture then tool, carries the part to target while owning both, releases the part, departs, then releases tool then fixture in finally, matching the required dual-resource span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        30,
+        31
+      ],
+      "reason": "After release at target (the declared support_zone), the same worker coroutine immediately calls move to depart in the same virtual moment, satisfying the support-departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        42,
+        43,
+        44,
+        45
+      ],
+      "reason": "Source implements the serial worker sequence and declared goals, but no execution evidence confirms terminal poses, empty hands, resources OFF/unowned, or deadline compliance in the finite trajectory."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        13,
+        32,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "reason": "The try/finally cleanup exists, but no actual tool acquisition timeout is shown to have occurred in the finite trajectory, so this obligation is not triggered."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5866,
+    "completion_tokens": 329,
+    "total_tokens": 6195,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5738
+  },
+  "raw_sha256": "dafe3f040876d1c4975d4aa8ea21b5cf917ef9a0106bd772101b18786c20826f",
+  "request_sha256": "f1c10bd6f6965891d12eed13386b4ce7da9af5c8adc1d4b20dcc7fb687c43179",
+  "source_sha256": "a11804717ddd77fcfb2187f8b636dbcdf376178ae8781bfecbc1303d0009008b"
+}

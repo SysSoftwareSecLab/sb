@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        74,
+        75,
+        58,
+        66
+      ],
+      "reason": "Source uses asyncio.gather to launch LEFT and RIGHT worker coroutines concurrently, matching SPEC CONCURRENT level."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        18,
+        22,
+        27,
+        31,
+        34,
+        37,
+        46,
+        48,
+        49
+      ],
+      "reason": "Each worker acquires fixture then tool before carrying part to target, releases part and departs, then finally releases tool then fixture in reverse order with mode OFF."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        34,
+        37
+      ],
+      "reason": "Release at target_pose is immediately followed by move to depart_pose in same worker coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        18,
+        22,
+        27,
+        31,
+        34,
+        37,
+        46,
+        48,
+        49,
+        75
+      ],
+      "reason": "Source implements goal actions and resource cleanup, but terminal state, event clearing, and finite execution success cannot be confirmed from source alone."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        39,
+        43,
+        46,
+        48,
+        49
+      ],
+      "reason": "try/finally releases all acquired resources in reverse order with set_mode OFF on TimeoutError from acquire."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 269,
+    "prompt_tokens": 6051,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6320
+  },
+  "raw_sha256": "44bf3b4b2050f71f4034ce800a7cc3f42a60a668a57dfc0085a39441e53876ed",
+  "request_sha256": "f80c55f17e846fccfc8e38a6714f6790d2b6af1da8b7a108adc25151eab17595",
+  "source_sha256": "51e36721814842b3301d74047e0ff00f2529898e2bdacfa63e43068393724859"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[58,66,74,75],\"reason\":\"Variant B is implemented by creating left_task and right_task worker coroutines and awaiting asyncio.gather(left_task, right_task), which launches both workers concurrently rather than serially.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[18,19,22,23,27,28,31,34,37,46,47,48,49],\"reason\":\"Each worker acquires fixture then tool, records both in acquired_resources, carries the part through move/grasp/move/release/depart while both are owned, and releases tool then fixture in reverse order in finally.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"V\",\"source_lines\":[34,37],\"reason\":\"After release(arm, part_id, target_pose) the same worker immediately calls move(arm, depart_pose), but the release support_zone is target_pose while the declared goal/departure for the arm is depart_pose; the required immediate separating departure from the release support is not shown as a same-coroutine move from the release pose to the declared depart pose in the required order.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[18,22,27,28,31,34,37,46,47,48,49,75],\"reason\":\"The source aims both parts at targets, moves arms to depart poses, and sets resources OFF before release, but it does not explicitly clear events or prove final unowned/OFF state and deadline completion from source alone.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[18,22,39,43,46,47,48,49],\"reason\":\"The public scenario has no injected failure and the source contains no actual tool acquisition timeout event; the finally cleanup is present but the timeout-cleanup trigger did not occur.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6426,
+    "completion_tokens": 424,
+    "total_tokens": 6850,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6298
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

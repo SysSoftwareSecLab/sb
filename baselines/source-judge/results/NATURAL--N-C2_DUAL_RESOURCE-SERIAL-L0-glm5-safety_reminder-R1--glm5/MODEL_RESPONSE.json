@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[38,46,57],\"reason\":\"SPEC requires SERIAL variant A: two workers run one after another. run_task awaits _worker(LEFT) then awaits _worker(RIGHT), no concurrent launch.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[16,18,21,24,25,27,29],\"reason\":\"Each worker acquires fixture then tool, owns both during move/grasp/release/depart, then releases tool then fixture in required order.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[23,24,25],\"reason\":\"release is at target (support_zone in logical_supports) and is immediately followed by same-arm move to depart in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[21,23,24,25,27,29,46,57],\"reason\":\"Both parts moved to own targets, released, arms depart to left_depart/right_depart; resources released and OFF (never set_mode changed from initial OFF); serial structure matches deadline.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[13,15,16,17,18,19,31,32,33,34,35],\"reason\":\"try/finally with acquired_fixture/acquired_tool flags releases every successfully acquired controller if a subsequent acquisition times out.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 299,
+    "prompt_tokens": 5828,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6127
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "reason": "run_task creates both LEFT and RIGHT workers as asyncio tasks and awaits them via gather, implementing the CONCURRENT structure required by the SPEC."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        19,
+        20,
+        23,
+        30,
+        32,
+        35,
+        37
+      ],
+      "reason": "Each worker acquires fixture then tool before moving/grasping/carrying to target, releases the part and departs while still owning both, then releases tool then fixture in finally, matching the required dual-resource span order."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        23
+      ],
+      "reason": "Each worker moves to target, releases the part at target, then immediately calls move to depart in the same coroutine, satisfying support-departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        1,
+        49
+      ],
+      "reason": "Source shows the intended goal sequence and concurrent structure, but source-only evidence cannot confirm all terminal states (empty hands, resources OFF/unowned, deadline) are actually achieved in the finite trajectory."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "U",
+      "source_lines": [
+        9,
+        24,
+        30,
+        35
+      ],
+      "reason": "try/finally releases successfully acquired tool and fixture, but source-only evidence cannot determine whether an acquisition timeout actually occurs in the finite trajectory to confirm cleanup was triggered."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 324,
+    "prompt_tokens": 5476,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5800
+  },
+  "raw_sha256": "c4f71e80d35e6a1fe72c61aee8a1478a7baf2ccd6b3a430dbcc05a5553862e09",
+  "request_sha256": "007e98984d30466f8a6af936e8346240ff100c2475c4e5203ae305ae73c02525",
+  "source_sha256": "a867c3d5af4a40e6020bf08f9c3f4fe17f034151d84d6672c48bd694c79af224"
+}

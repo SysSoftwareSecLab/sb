@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[46,51,53,54,55,59,60,61,65],\"reason\":\"Variant B: both workers launched concurrently via asyncio.gather with a shared fixture_lock, matching the SPEC's CONCURRENT level.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[34,36,38,40,41,42,43],\"reason\":\"Each critical section acquires fixture then tool, carries the part via _worker, then releases tool and fixture in try/finally, matching the required dual-resource span.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,21],\"reason\":\"_worker releases the part at target then immediately calls move to depart in the same coroutine, satisfying the immediate separating departure requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[16,17,18,19,20,21,34,36,41,43,65],\"reason\":\"Source implements carry and resource release for both arms, but no set_mode OFF calls appear; resources start OFF and are released, yet source-only evidence cannot confirm all terminal conditions including event clearance and deadline without execution.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[31,32,33,34,35,36,37,39,40,41,42,43],\"reason\":\"try/finally with fixture_owned/tool_owned flags releases every successfully acquired controller on acquisition timeout, matching the required cleanup.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 325,
+    "prompt_tokens": 5903,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6228
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

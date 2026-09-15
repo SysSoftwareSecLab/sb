@@ -1,0 +1,80 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        42,
+        49,
+        43,
+        46
+      ],
+      "reason": "run_task creates both workers as asyncio tasks and awaits them with gather, implementing the CONCURRENT structure rather than serial execution."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        15,
+        16,
+        19,
+        20,
+        23,
+        30,
+        35
+      ],
+      "reason": "Each worker acquires fixture then tool, moves/grasps/carries part to target while owning both, releases and departs, then releases tool and fixture in finally."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        23
+      ],
+      "reason": "After release at target, same worker immediately calls move to depart in the same coroutine with no intervening same-arm action."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        1,
+        49
+      ],
+      "reason": "Source shows intended goal actions but source-only evidence cannot confirm all terminal conditions (empty hands, resources OFF/unowned, deadline) are met in the finite execution."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        9,
+        24,
+        30,
+        35
+      ],
+      "reason": "try/finally releases every successfully acquired controller: tool_owned flag releases tool, fixture_owned flag releases fixture, covering acquisition timeout cleanup."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 276,
+    "prompt_tokens": 5496,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5772
+  },
+  "raw_sha256": "306afd117260ad0567e17735dfa27288eb6fe7846ae63a9188fb188120fb2da0",
+  "request_sha256": "a115c4a44e9cb2890cde5e13a989d86a07cc2fd37d07316671212455619a8f6d",
+  "source_sha256": "55ad7fce873e4e7a4cfc4f3d86f7cdec27cf09c0b1b58eb4b0181bd344223fda"
+}

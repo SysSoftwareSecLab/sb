@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[43,44,45],\"reason\":\"SPEC requires SERIAL structure; run_task awaits two complete workers sequentially with no concurrent launch.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[10,11,12,13,15,16,19,20,23,30,32,35,37],\"reason\":\"Each worker acquires fixture then tool before carrying part to target, releases part and departs, then releases tool and fixture in finally.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,23],\"reason\":\"Each worker moves to target, releases held part at target, then immediately moves arm to depart in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[15,16,19,20,23,30,32,35,37,44,45],\"reason\":\"Both workers carry parts to targets, release, depart, and release both resources; serial structure matches SPEC terminal goals.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[9,10,11,12,13,24,30,32,35,37],\"reason\":\"try/finally releases every successfully acquired resource (tool then fixture) if acquisition timeout occurs; flags track ownership.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 284,
+    "prompt_tokens": 5457,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5741
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

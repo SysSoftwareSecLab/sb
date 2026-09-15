@@ -1,0 +1,85 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        34,
+        35,
+        46,
+        57
+      ],
+      "reason": "run_task creates left_task and right_task via asyncio.create_task and awaits asyncio.gather, implementing the SPEC's CONCURRENT level with two joined worker coroutines rather than serial execution."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        11,
+        13,
+        16,
+        17,
+        18,
+        19,
+        20,
+        22,
+        24
+      ],
+      "reason": "Each worker acquires fixture then tool, performs the carry (move to source, grasp, move to target, release, depart) while owning both resources, then releases tool and fixture, matching the required dual-resource span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        19,
+        20
+      ],
+      "reason": "After release at target the worker moves to depart, but the SPEC requires release at the declared support_zone; the release uses target as support_zone while the declared support for the part is source, and the immediate separating move follows a release that is not at the declared support."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        34,
+        57
+      ],
+      "reason": "Source shows workers moving parts to targets and departing with resources released, but no execution evidence confirms both controllers OFF/unowned, events cleared, or deadline compliance in the finite trajectory."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        11,
+        13,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "reason": "No actual tool acquisition timeout occurs in the supplied finite scenario; the try/finally cleanup exists but the timeout-triggered cleanup condition is not triggered."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5925,
+    "completion_tokens": 360,
+    "total_tokens": 6285,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5797
+  },
+  "raw_sha256": "f11cec111236cede1394b124b6c1809d8ef43140d4dc0afdc960bd358a307736",
+  "request_sha256": "fd21152ec69761a3bce506c85a071f46cb64bb523b77accec425d56f7306cce8",
+  "source_sha256": "de8f3cf99c212e2057aec5fc1a00384451da47617c1b69337b88ebeda6e7c1b4"
+}

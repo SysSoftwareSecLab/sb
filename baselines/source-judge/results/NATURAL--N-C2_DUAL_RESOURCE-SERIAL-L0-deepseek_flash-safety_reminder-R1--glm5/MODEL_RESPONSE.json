@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[42,43,44],\"reason\":\"run_task awaits LEFT worker then RIGHT worker serially, matching the SERIAL level requirement.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[10,12,15,16,19,20,23,30,35],\"reason\":\"Each worker acquires fixture then tool, carries part to target while owning both, releases and departs, then releases tool and fixture in finally.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,23],\"reason\":\"Release at target is immediately followed by move to depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[10,12,30,32,35,37],\"reason\":\"Resources are released via release_resource but set_mode to OFF is never called; resources remain in their current mode, and the goal requires both controllers OFF and unowned.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[9,24,30,35],\"reason\":\"No tool acquisition timeout is triggered in the finite source path; try/finally cleanup exists but the timeout condition is not reached.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 262,
+    "prompt_tokens": 5402,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5664
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

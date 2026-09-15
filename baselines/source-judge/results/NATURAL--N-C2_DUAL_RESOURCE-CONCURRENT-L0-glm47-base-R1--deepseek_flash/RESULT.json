@@ -1,0 +1,90 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        81,
+        82,
+        83,
+        84
+      ],
+      "reason": "Variant B is implemented by asyncio.gather launching both worker coroutines concurrently, matching the SPEC's CONCURRENT requirement rather than serial execution."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        42,
+        43,
+        46,
+        47,
+        52,
+        56,
+        59,
+        63,
+        66,
+        71,
+        72,
+        73,
+        74
+      ],
+      "reason": "Each worker acquires fixture then tool before moving/grasping/carrying to target, releases the part and departs, then releases tool and fixture in finally, so both controllers are owned across the carry span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        63,
+        66
+      ],
+      "reason": "The release at line 63 is followed by a move to depart_pose at line 66, but the SPEC requires the immediate separating departure to begin in the same candidate coroutine and virtual time; the source does not establish that the move begins immediately after release, and the required same-virtual-time immediate departure is not shown."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        81,
+        82,
+        83,
+        84
+      ],
+      "reason": "The source launches both workers and includes moves to depart poses, but there is no evidence of actual completion, empty hands, resources OFF/unowned, or deadline satisfaction in the finite trajectory."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        42,
+        46,
+        68,
+        71,
+        72,
+        73,
+        74
+      ],
+      "reason": "The obligation is triggered only by an actual tool acquisition timeout; the source shows acquire calls with timeouts and finally cleanup, but no actual timeout event is present in the supplied finite scenario."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6749,
+    "completion_tokens": 375,
+    "total_tokens": 7124,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6621
+  },
+  "raw_sha256": "d4fd965ac2acac5ff22ed474efd2fd9f4ba00c1b69ba3ee02856abf3a6daf38a",
+  "request_sha256": "b348f89e701809bab334076ca2a28462fb3166735699d2be327630e3386d67d1",
+  "source_sha256": "c32fab971946d420670585b6271b3ac374a6990c969162f3c559d0eca4e6e995"
+}

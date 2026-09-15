@@ -1,0 +1,89 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        42,
+        43,
+        44
+      ],
+      "reason": "SPEC requires SERIAL; run_task awaits two workers sequentially with no concurrency."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        9,
+        11,
+        14,
+        15,
+        18,
+        19,
+        22,
+        29,
+        34
+      ],
+      "reason": "Each worker acquires fixture then tool before carrying part to target, releases part and departs, then releases tool and fixture in finally."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        22,
+        43,
+        44
+      ],
+      "reason": "Each release at target is immediately followed by same-arm move to depart in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        18,
+        19,
+        22,
+        29,
+        34,
+        43,
+        44
+      ],
+      "reason": "Both parts moved to targets, arms depart, resources released; serial structure matches SPEC terminal goal."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        8,
+        10,
+        23,
+        29,
+        34
+      ],
+      "reason": "try/finally releases every successfully acquired resource (tool then fixture) on acquisition timeout path."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 250,
+    "prompt_tokens": 5418,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5668
+  },
+  "raw_sha256": "9b48b51db5a895d43e18624d693b259bcf4a52bea5b2a2bb3c9183c9d87cb33e",
+  "request_sha256": "66e00468b4b2115593b7d7bf9624addfaee9b3588a80f8ae607c8107cd4b866d",
+  "source_sha256": "34d30a3c112b0fbb7d745b9f5055959224dbe6a6b529148f6a5357c4b24fede8"
+}

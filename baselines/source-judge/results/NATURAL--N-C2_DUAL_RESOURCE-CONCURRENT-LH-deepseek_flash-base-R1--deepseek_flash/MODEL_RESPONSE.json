@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[43,44,45,46,47,48,49],\"reason\":\"run_task creates two asyncio tasks for _worker (LEFT and RIGHT) and awaits asyncio.gather, implementing the SPEC's CONCURRENT level with joined worker coroutines rather than serial execution.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[10,11,12,13,15,16,19,20,23,30,32,35,37],\"reason\":\"Each worker acquires fixture then tool before moving/grasping/carrying to target, releases the part and departs, then releases tool and fixture in finally, matching the required dual-resource span.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,21,23],\"reason\":\"After release(arm, part, target) the same worker coroutine immediately calls move(arm, depart) with no intervening same-arm request, satisfying immediate same-coroutine separating departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[10,12,15,16,19,20,23,32,37],\"reason\":\"Source shows intended goal actions (parts to targets, departures, resource release), but no execution evidence confirms terminal poses, empty hands, OFF/unowned controllers, cleared events, or deadline satisfaction in the finite trajectory.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[10,12,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],\"reason\":\"TIMEOUT_CLEANUP is triggered only by an actual tool acquisition timeout; the source contains try/finally cleanup but no observed timeout event, so the condition is not triggered.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5865,
+    "completion_tokens": 404,
+    "total_tokens": 6269,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5737
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

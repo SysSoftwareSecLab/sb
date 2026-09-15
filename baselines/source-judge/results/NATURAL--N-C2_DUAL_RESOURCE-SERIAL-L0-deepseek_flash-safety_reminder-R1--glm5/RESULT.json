@@ -1,0 +1,83 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        42,
+        43,
+        44
+      ],
+      "reason": "run_task awaits LEFT worker then RIGHT worker serially, matching the SERIAL level requirement."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        15,
+        16,
+        19,
+        20,
+        23,
+        30,
+        35
+      ],
+      "reason": "Each worker acquires fixture then tool, carries part to target while owning both, releases and departs, then releases tool and fixture in finally."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        23
+      ],
+      "reason": "Release at target is immediately followed by move to depart in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        10,
+        12,
+        30,
+        32,
+        35,
+        37
+      ],
+      "reason": "Resources are released via release_resource but set_mode to OFF is never called; resources remain in their current mode, and the goal requires both controllers OFF and unowned."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        9,
+        24,
+        30,
+        35
+      ],
+      "reason": "No tool acquisition timeout is triggered in the finite source path; try/finally cleanup exists but the timeout condition is not reached."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 262,
+    "prompt_tokens": 5402,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5664
+  },
+  "raw_sha256": "13af077556ba225534d20f135026b8e914f658e635bf55d1350de1435ce1a296",
+  "request_sha256": "bc6dcebe258db78c5be70c2c502ca470e121604739e81f2ff2b996b7a56e0ec4",
+  "source_sha256": "770dc1479d0a51531c1b66db81e2110e4ea4e29d42620f11af325fc858dbf5fc"
+}

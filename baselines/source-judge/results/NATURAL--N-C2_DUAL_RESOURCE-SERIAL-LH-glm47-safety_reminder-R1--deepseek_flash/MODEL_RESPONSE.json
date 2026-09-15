@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[86,87,90,100],\"reason\":\"Variant A requires serial execution of the two complete workers; the code awaits worker(LEFT,...) then worker(RIGHT,...) sequentially, matching the SERIAL concurrency level.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[43,47,51,54,57,60,63,74,80],\"reason\":\"Each worker acquires fixture then tool, carries the part to target while owning both, releases the part, departs, then releases tool and fixture in finally, matching the required dual-resource span.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"V\",\"source_lines\":[60,63],\"reason\":\"release is called with target_pose as support_zone, but the declared logical_supports are left_source/right_source/left_target/right_target; target_pose values are left_target/right_target which are valid supports, yet the immediate same-arm separating move is to depart_pose which is not a declared support and the release support_zone argument uses target_pose rather than the required support zone name, and the departure move is not guaranteed to be the immediate next same-arm call in the same virtual time as required.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[90,100],\"reason\":\"Source shows both workers run and release resources, but no execution evidence confirms final poses, empty hands, resources OFF/unowned, events cleared, or deadline compliance.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[43,47,65,68],\"reason\":\"No actual tool acquisition timeout occurs in the supplied finite source; the try/finally structure exists but the timeout-triggered cleanup condition is not triggered.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7083,
+    "completion_tokens": 390,
+    "total_tokens": 7473,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6955
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

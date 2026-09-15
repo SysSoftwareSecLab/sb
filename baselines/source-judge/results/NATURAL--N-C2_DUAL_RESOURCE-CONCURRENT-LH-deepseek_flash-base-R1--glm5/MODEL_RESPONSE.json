@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[42,43,44,45,46,47,48,49],\"reason\":\"run_task creates both LEFT and RIGHT worker tasks and awaits them via asyncio.gather, implementing the CONCURRENT structure required by the SPEC.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[10,11,12,13,15,16,19,20,23,30,32,35,37],\"reason\":\"Each worker acquires fixture then tool before moving/grasping/carrying the part, releases the part at target, departs, then releases tool and fixture in finally—matching the required dual-resource span order.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,23],\"reason\":\"Each worker releases the part at the target support zone and then immediately calls move to the depart pose in the same coroutine, satisfying the immediate separating departure requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[10,12,30,32,35,37],\"reason\":\"Resources are acquired but never set to OFF before release_resource; SPEC requires resources OFF and unowned at terminal state. Code only releases resources without set_mode OFF, and does not clear events (none exist), but the OFF requirement is omitted.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[9,24,30,32,35,37],\"reason\":\"try/finally releases every successfully acquired controller (tool then fixture) if acquisition times out, matching the required cleanup structure.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 338,
+    "prompt_tokens": 5513,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5851
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

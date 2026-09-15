@@ -1,0 +1,120 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        42,
+        43,
+        44
+      ],
+      "reason": "run_task awaits _worker LEFT then _worker RIGHT serially, matching the SPEC's CONCURRENCY=SERIAL, layout=L0 requirement rather than launching joined concurrent workers."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20,
+        22,
+        29,
+        30,
+        31,
+        34,
+        35,
+        36
+      ],
+      "reason": "Each worker acquires fixture then tool, carries the part to target while both are owned, releases the part and departs, then releases tool and fixture in finally, matching the required dual-resource span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        22
+      ],
+      "reason": "After release(arm, part, target) the same worker coroutine immediately calls move(arm, depart) with no intervening same-arm request, satisfying the immediate same-coroutine separating departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20,
+        22,
+        29,
+        30,
+        31,
+        34,
+        35,
+        36,
+        43,
+        44
+      ],
+      "reason": "Both workers move parts from source to target, release at target, move to depart, and release tool and fixture resources, matching the declared terminal goals and resource cleanup; deadline 30s is not exceeded by the serial durations."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        9,
+        11,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38
+      ],
+      "reason": "The source contains try/finally cleanup for acquisition timeouts, but no actual tool acquisition timeout is shown to have occurred in the finite scenario, so this obligation is not triggered."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5751,
+    "completion_tokens": 416,
+    "total_tokens": 6167,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 5751
+  },
+  "raw_sha256": "a153965151a2cdc4fd087dd82e145cfdd2d44705ae837f2ed98189e2255f6b92",
+  "request_sha256": "1dbd4a5195fa600ad3ec73d048820c6cf16cfe48344d1f457fe4964e9f5c3f44",
+  "source_sha256": "34d30a3c112b0fbb7d745b9f5055959224dbe6a6b529148f6a5357c4b24fede8"
+}

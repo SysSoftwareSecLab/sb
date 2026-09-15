@@ -1,0 +1,113 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        65,
+        111,
+        116,
+        122,
+        123,
+        124,
+        125,
+        128
+      ],
+      "reason": "run_task launches both left and right workers concurrently via asyncio.ensure_future and asyncio.gather, matching the CONCURRENT level requirement."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "V",
+      "source_lines": [
+        29,
+        31,
+        35,
+        36,
+        39,
+        40,
+        42,
+        43,
+        80,
+        84,
+        85,
+        87,
+        96,
+        100,
+        101,
+        103
+      ],
+      "reason": "Workers acquire fixture then tool and release tool then fixture, but the controller tasks re-arm futures after release; the second worker awaits the same initial futures that are already consumed by the first, so the serialization mechanism does not reliably grant both controllers to the second worker. More critically, the futures-based handshake does not guarantee that the arm owning both controllers is the one performing release/depart—both workers share the same future objects and can race on set_result, so the required dual-resource ownership span is not correctly enforced."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        35,
+        36
+      ],
+      "reason": "Each worker calls robot.release(arm, part, target) immediately followed by robot.move(arm, depart) in the same coroutine, satisfying the immediate same-arm separating departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        29,
+        31,
+        35,
+        36,
+        39,
+        40,
+        42,
+        43,
+        75,
+        76,
+        77,
+        78,
+        84,
+        86,
+        91,
+        92,
+        100,
+        102,
+        106,
+        107
+      ],
+      "reason": "The futures-based serialization is broken: both workers receive the same fixture_acq/tool_acq future objects. The first worker to set_result on release futures re-arms them inside the controller, but the second worker is still awaiting the original (now-completed) acquisition futures via asyncio.shield, which will not re-await the newly created futures. This means the second worker cannot properly acquire controllers, so the task cannot reliably complete both placements with controllers OFF and unowned."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        19,
+        30,
+        31,
+        45,
+        47,
+        50,
+        56,
+        61,
+        62
+      ],
+      "reason": "The worker uses try/except with acquired_fixture/acquired_tool flags; on any BaseException (including acquisition timeout from asyncio.shield), it releases any still-owned controllers via the release futures before re-raising, satisfying the try/finally cleanup requirement."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 510,
+    "prompt_tokens": 7141,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 7651
+  },
+  "raw_sha256": "a3af1c257ba3b5e6dda5496843613fdabb629d9fb6ebeb3fec320e966e5c0dab",
+  "request_sha256": "e1dc2b160e8cae909983215b2d082c1e90374d278f0638bea3893a0205ec2b45",
+  "source_sha256": "f8c424812d2ef3a75179aa30a80e9eb4afa6f874d77e7aa1325cb04dc95597c8"
+}

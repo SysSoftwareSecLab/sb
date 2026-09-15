@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[46,47,48,49,50,51,53,54,55,56,57,59,60,61,62,63,65],\"reason\":\"run_task creates a shared asyncio.Lock and launches left_worker and right_worker concurrently via asyncio.gather, matching the SPEC's CONCURRENT level with joined worker coroutines rather than serial execution.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[31,32,33,34,35,36,37,38,39,40,41,42,43],\"reason\":\"_critical_section acquires fixture then tool, sets ownership flags, performs the carry in _worker while both are owned, and releases tool then fixture in finally, matching the required dual-resource span.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,21],\"reason\":\"_worker releases the part at the target support zone and immediately follows with a same-arm move to depart in the same coroutine, satisfying the release-then-separating-move requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[16,17,18,19,20,21,34,36,38,40,41,42,43,46,47,48,49,50,51,53,54,55,56,57,59,60,61,62,63,65],\"reason\":\"Both workers move to home, source, grasp, move to target, release, and depart, then release tool and fixture; run_task awaits both workers, yielding both parts at targets, empty arms at departures, and controllers released (OFF/unowned).\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"U\",\"source_lines\":[33,34,35,36,37,39,40,41,42,43],\"reason\":\"The try/finally structure would release successfully acquired controllers on an acquisition timeout, but the finite trajectory does not show an actual tool acquisition timeout, so the timeout-cleanup condition is not triggered in the supplied source-only evidence.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6271,
+    "completion_tokens": 469,
+    "total_tokens": 6740,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6143
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

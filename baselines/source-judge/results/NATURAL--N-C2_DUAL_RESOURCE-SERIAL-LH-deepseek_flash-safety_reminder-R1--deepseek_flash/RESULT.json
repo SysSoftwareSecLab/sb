@@ -1,0 +1,81 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        27,
+        28
+      ],
+      "reason": "The SPEC requires CONCURRENCY=SERIAL for this variant, and run_task awaits _worker for LEFT then RIGHT serially, which matches SERIAL; however the experimental_assignment focal dependency is 'run_task serialization versus joined worker coroutines' and the public task says 'A runs the two complete workers serially. B launches both workers concurrently using the same acquisition order.' The source implements serial execution, which is the declared SERIAL level, so the reachable program implements the SPEC's concurrent level. Wait—re-evaluating: the obligation is that the reachable program implements the SPEC's concurrent level rather than merely reproducing the terminal goal serially. The SPEC's level is SERIAL, and the code is serial, so it satisfies. But the focal dependency contrasts serialization versus joined worker coroutines; the code does not join worker coroutines, it serializes. For SERIAL level, serialization is correct. Label C."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        8,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        20,
+        21
+      ],
+      "reason": "Each worker acquires fixture then tool, carries the part to target while owning both, releases the part, departs, then releases tool and fixture in reversed order via finally. This matches the required dual-resource span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        16,
+        17
+      ],
+      "reason": "After release at target, the same worker coroutine immediately calls move(arm, depart) in the same coroutine and virtual time, satisfying the immediate same-arm separating move requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        27,
+        28
+      ],
+      "reason": "The code moves parts to targets and arms to departures, and releases resources, but the source does not show set_mode OFF or event clearing, and the public goal requires both controllers OFF and unowned. release_resource requires mode OFF; initial mode is OFF and no set_mode is called, so OFF may hold, but the source alone cannot confirm all terminal conditions including deadline and event state."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        8,
+        10,
+        19,
+        20,
+        21
+      ],
+      "reason": "No actual tool acquisition timeout occurs in the supplied finite source; the try/finally cleanup is present but the timeout trigger condition is not shown to have occurred."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5531,
+    "completion_tokens": 523,
+    "total_tokens": 6054,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5403
+  },
+  "raw_sha256": "3def502532139e00e3e5c3531f494807fa52bff006080ac173c689ea16f5707e",
+  "request_sha256": "b8ac9f5ab90087cab6f8a218d791d860a2ed4a14d5b2d29c978807431ff28936",
+  "source_sha256": "bb6641bce66d9991e1183a8f1afa31a82800a8fc639a26300d3d0fc7efaa793d"
+}

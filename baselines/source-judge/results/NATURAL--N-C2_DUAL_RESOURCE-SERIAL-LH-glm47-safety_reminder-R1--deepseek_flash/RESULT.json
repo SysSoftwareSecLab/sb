@@ -1,0 +1,81 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        86,
+        87,
+        90,
+        100
+      ],
+      "reason": "Variant A requires serial execution of the two complete workers; the code awaits worker(LEFT,...) then worker(RIGHT,...) sequentially, matching the SERIAL concurrency level."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        43,
+        47,
+        51,
+        54,
+        57,
+        60,
+        63,
+        74,
+        80
+      ],
+      "reason": "Each worker acquires fixture then tool, carries the part to target while owning both, releases the part, departs, then releases tool and fixture in finally, matching the required dual-resource span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        60,
+        63
+      ],
+      "reason": "release is called with target_pose as support_zone, but the declared logical_supports are left_source/right_source/left_target/right_target; target_pose values are left_target/right_target which are valid supports, yet the immediate same-arm separating move is to depart_pose which is not a declared support and the release support_zone argument uses target_pose rather than the required support zone name, and the departure move is not guaranteed to be the immediate next same-arm call in the same virtual time as required."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        90,
+        100
+      ],
+      "reason": "Source shows both workers run and release resources, but no execution evidence confirms final poses, empty hands, resources OFF/unowned, events cleared, or deadline compliance."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        43,
+        47,
+        65,
+        68
+      ],
+      "reason": "No actual tool acquisition timeout occurs in the supplied finite source; the try/finally structure exists but the timeout-triggered cleanup condition is not triggered."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7083,
+    "completion_tokens": 390,
+    "total_tokens": 7473,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6955
+  },
+  "raw_sha256": "ff2cddec16f8ed29934bffce21a99b0a4f20d7c1d1fe5773019d3cb5b783afc6",
+  "request_sha256": "4f300062777b109949b40393762a176e0fd6a652605cd16eee5da70162d62eaa",
+  "source_sha256": "84ec6867fe52ad31963ea9999fa9a2ee52e312cba8b56a8742552a425d1804b1"
+}

@@ -1,0 +1,95 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        42,
+        43,
+        44
+      ],
+      "reason": "run_task awaits _worker for LEFT then RIGHT serially, matching the declared CONCURRENCY=SERIAL level rather than joined concurrent workers."
+    },
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        15,
+        16,
+        19,
+        20,
+        23,
+        30,
+        32,
+        35,
+        37
+      ],
+      "reason": "Each worker acquires fixture then tool, performs the carry/grasp/move/release/depart while owning both, then releases tool and fixture in finally, matching the required dual-resource span."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        21,
+        23
+      ],
+      "reason": "After release at target, the same coroutine immediately calls move to depart with no intervening same-arm call, satisfying the immediate separating departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        19,
+        20,
+        23,
+        30,
+        32,
+        35,
+        37,
+        43,
+        44
+      ],
+      "reason": "Both workers move parts to targets, release, depart, and release both resources; run_task awaits both serially, yielding empty arms at departures with controllers released."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "U",
+      "source_lines": [
+        10,
+        12,
+        24,
+        30,
+        32,
+        35,
+        37
+      ],
+      "reason": "The try/finally would release acquired resources on timeout, but no actual acquisition timeout event is evidenced in the finite source-only scenario."
+    }
+  ],
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5737,
+    "completion_tokens": 327,
+    "total_tokens": 6064,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 5737
+  },
+  "raw_sha256": "7a7fd29e37348cbe35cdbd9906fccc05dfd94ccc5dff31b6927f43aca0ef6e2f",
+  "request_sha256": "dff7270270dd4056e2535eb2046f5ac036c3b3a70993e03d686d94eec1ac38f3",
+  "source_sha256": "770dc1479d0a51531c1b66db81e2110e4ea4e29d42620f11af325fc858dbf5fc"
+}

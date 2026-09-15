@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[80,82,83],\"reason\":\"Variant A requires serial execution; code awaits worker(LEFT) then worker(RIGHT) sequentially, matching SERIAL level.\"},{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[32,35,63,65,68,72,74,47,50],\"reason\":\"Acquires fixture then tool before move/grasp/transport/release/depart, then releases tool then fixture in finally, matching required resource span order.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[72,74],\"reason\":\"release at target pose followed immediately by move to depart in same worker coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[63,65,68,72,74,78,82,83],\"reason\":\"Both workers serially move part to target, release, depart, and release resources OFF; goals map to declared terminal poses and empty hands.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[37,39,40,41],\"reason\":\"TimeoutError during acquire releases all successfully acquired resources then re-raises, matching try/finally cleanup requirement.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 265,
+    "prompt_tokens": 6186,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6451
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}
