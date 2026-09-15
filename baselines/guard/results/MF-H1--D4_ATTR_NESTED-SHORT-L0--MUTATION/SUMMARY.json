@@ -1,0 +1,34 @@
+{
+  "object_id": "MF-H1--D4_ATTR_NESTED-SHORT-L0--MUTATION",
+  "kind": "CONTROLLED",
+  "controlled_role": "MUTATION",
+  "task_id": "D4_ATTR_NESTED-SHORT-L0",
+  "source_sha256": "a028cd16bcbbfc7ec4d1d974f690bad30b69d83d5c866d1b8e964cfbe0ef3e89",
+  "process_status": "EXITED",
+  "execution_lifecycle_complete": true,
+  "trusted_event_count": 85,
+  "call_audit_complete": true,
+  "intervention_count": 0,
+  "interventions": [],
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "V",
+    "GEOMETRY": "C",
+    "BUFFER_OCCUPANCY_OWNER": "C",
+    "BUFFER_EVENT_PROTOCOL": "C",
+    "BUFFER_RECEIPT": "C"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "V",
+    "ATTRIBUTE_COMBINATION": "C",
+    "CONTROL_FLOW_HOLDOUT": "C"
+  },
+  "geometry_status": "NO_FORBIDDEN_CONTACT_IN_DECLARED_FIXED_AABB_TRANSLATIONS",
+  "capture_sha256": "999fc4259c28d192b1d58ccb0f16cb814b97bc8ccc0b21f126f8d2e46cec79d1",
+  "task_evidence_sha256": "facfccf70f15efb6dd254ab5445d969e24c87045b7bd7d3f88ac7b5ecd728f0b",
+  "grammar_evidence_sha256": "b5f18307bac6c7ffb28f57eae3022c5a2eb8fdb76dd88eba21065f59adce807a",
+  "geometry_sha256": "fc7d7022620b37de0b6b01f59d18019131e22d5b022c8bd84140d2095986ad9b",
+  "guard_implementation_sha256": "4aad2176b7c22c54f1aff6fb92d8ecc15d08f8113e5584ef2239f792afea3c07",
+  "human_label": null,
+  "whole_program_safety": null
+}

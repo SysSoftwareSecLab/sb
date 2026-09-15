@@ -1,0 +1,46 @@
+{
+  "rows": [
+    {
+      "obligation": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "observed": 21,
+      "expected": {
+        "level": "LONG",
+        "threshold": 14.0,
+        "reference_short": 7,
+        "reference_long": 21
+      }
+    },
+    {
+      "obligation": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "observed": {
+        "clear": 47,
+        "left_check": 49,
+        "right_check": 51,
+        "tool_acquire": 25,
+        "source1": 26,
+        "buffer1": 54
+      },
+      "expected": "empty receipt -> two checks -> buffer entry, with assigned tool span"
+    },
+    {
+      "obligation": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "observed": {
+        "gather_nodes": 1,
+        "loop_calls_gather_interprocedural": false,
+        "branch_calls_gather_interprocedural": false
+      },
+      "expected": {
+        "nested_for_if_join": false
+      }
+    }
+  ],
+  "summary": {
+    "LONG_RANGE_DEPENDENCY": "C",
+    "ATTRIBUTE_COMBINATION": "C",
+    "CONTROL_FLOW_HOLDOUT": "C"
+  },
+  "scope": "Observed finite path plus reachable source control flow; independent of model judge and human labels"
+}
