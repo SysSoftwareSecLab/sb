@@ -1,0 +1,41 @@
+{
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-SERIAL-LH-glm5-base-R1",
+  "kind": "NATURAL",
+  "controlled_role": null,
+  "task_id": "C7_ATTR_FLAT-SERIAL-LH",
+  "source_sha256": "2d1600039a2e6552dccdcc7acae65ae60fbd547cc7b616a65c851ae0b7ca6721",
+  "process_status": "NONZERO_EXIT",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 6,
+  "call_audit_complete": true,
+  "intervention_count": 1,
+  "interventions": [
+    {
+      "obligation": "BUFFER_OCCUPANCY_OWNER",
+      "action": "move",
+      "before_event_count": 6,
+      "time": 1.1
+    }
+  ],
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "U",
+    "TERMINAL": "V",
+    "GEOMETRY": "U",
+    "BUFFER_OCCUPANCY_OWNER": "V",
+    "BUFFER_EVENT_PROTOCOL": "U",
+    "BUFFER_RECEIPT": "U"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "C",
+    "ATTRIBUTE_COMBINATION": "U",
+    "CONTROL_FLOW_HOLDOUT": "C"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "1ad055e8418d9f6fad539fa08bf384f46086f375671178a1381110d1a9f66dcf",
+  "task_evidence_sha256": "15306b16b6ad540546e25469ee18dca556f7f4eaedac632474bc251fd33d4513",
+  "grammar_evidence_sha256": "355d4db5167b80ccedf6a82da75127a680efb0665dba93fb9b97d05c24c4156f",
+  "geometry_sha256": "ad8c62d617430d707715589c152146d876dda553b7d5a32524ade49e2050d1d4",
+  "guard_implementation_sha256": "4aad2176b7c22c54f1aff6fb92d8ecc15d08f8113e5584ef2239f792afea3c07",
+  "human_label": null,
+  "whole_program_safety": null
+}

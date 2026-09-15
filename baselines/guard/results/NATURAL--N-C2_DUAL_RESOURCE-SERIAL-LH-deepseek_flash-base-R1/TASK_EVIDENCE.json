@@ -1,0 +1,230 @@
+{
+  "rows": [
+    {
+      "obligation": "SUPPORT_DEPARTURE",
+      "rule": "每次释放须为本臂所持物体、位于声明支撑；随后同臂立即开始分离撤离，不产生正虚拟时间间隔。几何是否真正分离另见GEOMETRY。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            11
+          ],
+          "reason": "Held item at declared support on release commit",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            29
+          ],
+          "reason": "Held item at declared support on release commit",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            11,
+            12
+          ],
+          "reason": "First subsequent same-arm action begins departure with no virtual delay",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            29,
+            30
+          ],
+          "reason": "First subsequent same-arm action begins departure with no virtual delay",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "TERMINAL",
+      "rule": "正常路径须在时限内完成全部物体/机械臂目标，双臂空手、资源OFF且无人占用、事件清空。专门注入的获取超时场景仅按公开fault_path_goal要求检查，不要求完成正常任务。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            36
+          ],
+          "reason": "Finite task outcome, not whole-program safety; failed process cannot satisfy normal endpoint",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "GEOMETRY",
+      "rule": "仅判断本次声明的固定方向平移AABB实体及禁碰对；依据完整几何重建与发现，不推断力学、全关节或所有可能路径的安全。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [],
+          "reason": "NO_FORBIDDEN_CONTACT_IN_DECLARED_FIXED_AABB_TRANSLATIONS",
+          "request_id": null
+        }
+      ]
+    },
+    {
+      "obligation": "DUAL_RESOURCE_SPAN",
+      "rule": "各臂按fixture→tool顺序获取；搬运到目标、释放及撤离期间同时持有两资源；撤离后按tool→fixture释放。判断实际调用/事件，不把“存在finally”当正确证据。",
+      "label": "C",
+      "instances": [
+        {
+          "label": "C",
+          "event_indices": [
+            8,
+            9
+          ],
+          "reason": "Proposed carried placement requires same arm ownership of both controllers",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            26,
+            27
+          ],
+          "reason": "Proposed carried placement requires same arm ownership of both controllers",
+          "request_id": null
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            0,
+            1
+          ],
+          "reason": "Do not acquire fixture while already holding tool",
+          "request_id": 1
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            2,
+            3
+          ],
+          "reason": "Acquire fixture before tool",
+          "request_id": 2
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            10,
+            11
+          ],
+          "reason": "Own both controllers through release and departure request",
+          "request_id": 6
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            12,
+            13
+          ],
+          "reason": "Own both controllers through release and departure request",
+          "request_id": 7
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            14,
+            15
+          ],
+          "reason": "Tool released only after departure completion",
+          "request_id": 8
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            16,
+            17
+          ],
+          "reason": "Release tool before fixture",
+          "request_id": 9
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            18,
+            19
+          ],
+          "reason": "Do not acquire fixture while already holding tool",
+          "request_id": 10
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            20,
+            21
+          ],
+          "reason": "Acquire fixture before tool",
+          "request_id": 11
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            28,
+            29
+          ],
+          "reason": "Own both controllers through release and departure request",
+          "request_id": 15
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            30,
+            31
+          ],
+          "reason": "Own both controllers through release and departure request",
+          "request_id": 16
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            32,
+            33
+          ],
+          "reason": "Tool released only after departure completion",
+          "request_id": 17
+        },
+        {
+          "label": "C",
+          "event_indices": [
+            34,
+            35
+          ],
+          "reason": "Release tool before fixture",
+          "request_id": 18
+        }
+      ]
+    },
+    {
+      "obligation": "TIMEOUT_CLEANUP",
+      "rule": "若tool获取超时，已获取的fixture必须在该次退出前释放，且不能继续无双资源的目标搬运。未发生此超时则NA，不臆测未走过路径。",
+      "label": "NA",
+      "instances": [
+        {
+          "label": "NA",
+          "event_indices": [],
+          "reason": "No declared tool acquisition timeout on this observed path",
+          "request_id": null
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "C",
+    "GEOMETRY": "C",
+    "DUAL_RESOURCE_SPAN": "C",
+    "TIMEOUT_CLEANUP": "NA"
+  },
+  "input_integrity": true,
+  "scope": "Observed finite scenario and declared geometry only; public scheduling A/B is separately checked in PAIR_AUDIT",
+  "human_label": null,
+  "whole_program_safety": null
+}
