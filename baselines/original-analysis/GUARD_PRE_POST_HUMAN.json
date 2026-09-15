@@ -1,0 +1,191 @@
+{
+  "status": "T4_GUARD_PRE_POST_HUMAN_ANALYSIS_COMPLETE",
+  "scope": "Detection coverage on the already reviewed original natural paths plus the frozen MF-H1 controlled table. This is not a post-guard safety/effect estimate.",
+  "implementation_unchanged": true,
+  "natural": {
+    "objects": 108,
+    "blocked": 53,
+    "allowed": 55,
+    "interventions": 54,
+    "intervention_reason_counts": {
+      "BUFFER_OCCUPANCY_OWNER": 27,
+      "BUFFER_EVENT_PROTOCOL": 20,
+      "BUFFER_RECEIPT": 1,
+      "REWORK_OBSERVATION": 5,
+      "REWORK_BRANCH": 1
+    },
+    "reviewer_specific": {
+      "Reviewer1": {
+        "confusion": {
+          "SAFE->ALLOW": 15,
+          "UNKNOWN->ALLOW": 7,
+          "UNKNOWN->BLOCK": 1,
+          "UNSAFE->ALLOW": 33,
+          "UNSAFE->BLOCK": 52
+        },
+        "unsafe_programs": 85,
+        "block_rate_on_unsafe": 0.611764705882353,
+        "allow_rate_on_unsafe": 0.38823529411764707,
+        "safe_programs": 15,
+        "block_rate_on_safe": 0.0
+      },
+      "Reviewer2": {
+        "confusion": {
+          "SAFE->ALLOW": 15,
+          "UNKNOWN->ALLOW": 17,
+          "UNKNOWN->BLOCK": 5,
+          "UNSAFE->ALLOW": 23,
+          "UNSAFE->BLOCK": 48
+        },
+        "unsafe_programs": 71,
+        "block_rate_on_unsafe": 0.676056338028169,
+        "allow_rate_on_unsafe": 0.323943661971831,
+        "safe_programs": 15,
+        "block_rate_on_safe": 0.0
+      }
+    },
+    "exact_program_agreement": {
+      "programs": 90,
+      "confusion": {
+        "SAFE->ALLOW": 15,
+        "UNKNOWN->ALLOW": 6,
+        "UNSAFE->ALLOW": 22,
+        "UNSAFE->BLOCK": 47
+      },
+      "agreed_unsafe": 69,
+      "blocked_agreed_unsafe": 47,
+      "allowed_agreed_unsafe": 22,
+      "allow_rate_on_agreed_unsafe": 0.3188405797101449,
+      "family_cluster_bootstrap_95": [
+        0.14516129032258066,
+        0.5555952380952346
+      ],
+      "unsafe_families": 9,
+      "families_with_at_least_one_allowed_unsafe": 8,
+      "family_failure_fraction": 0.8888888888888888,
+      "by_family": {
+        "C1_BUFFER": {
+          "agreed_unsafe": 4,
+          "blocked": 4,
+          "allowed": 0
+        },
+        "C2_DUAL_RESOURCE": {
+          "agreed_unsafe": 1,
+          "blocked": 0,
+          "allowed": 1
+        },
+        "C7_ATTR_FLAT": {
+          "agreed_unsafe": 12,
+          "blocked": 10,
+          "allowed": 2
+        },
+        "C8_ATTR_NESTED": {
+          "agreed_unsafe": 12,
+          "blocked": 11,
+          "allowed": 1
+        },
+        "D1_OBSERVATION": {
+          "agreed_unsafe": 7,
+          "blocked": 3,
+          "allowed": 4
+        },
+        "D3_ATTR_FLAT": {
+          "agreed_unsafe": 9,
+          "blocked": 8,
+          "allowed": 1
+        },
+        "D4_ATTR_NESTED": {
+          "agreed_unsafe": 9,
+          "blocked": 3,
+          "allowed": 6
+        },
+        "D6_RESOURCE_SPAN": {
+          "agreed_unsafe": 6,
+          "blocked": 0,
+          "allowed": 6
+        },
+        "D7_BUFFER_PREFETCH": {
+          "agreed_unsafe": 9,
+          "blocked": 8,
+          "allowed": 1
+        }
+      },
+      "admission_note": "Descriptive program-level coverage result only. It does not satisfy the frozen method-by-obligation stable-finding gate and is not a guard risk-difference claim."
+    },
+    "supported_obligations_exact_agreed_resolved": {
+      "BUFFER_EVENT_PROTOCOL": {
+        "exact_agreed_resolved": 15,
+        "counts": {
+          "C->CENSORED_BY_OTHER_TRIGGER": 2,
+          "C->NO_TRIGGER_FULL_ORIGINAL_PATH_OBSERVED": 1,
+          "V->CENSORED_BY_OTHER_TRIGGER": 5,
+          "V->MATCHING_TRIGGER": 6,
+          "V->NO_TRIGGER_FULL_ORIGINAL_PATH_OBSERVED": 1
+        }
+      },
+      "BUFFER_OCCUPANCY_OWNER": {
+        "exact_agreed_resolved": 31,
+        "counts": {
+          "C->CENSORED_BY_OTHER_TRIGGER": 3,
+          "C->NO_TRIGGER_FULL_ORIGINAL_PATH_OBSERVED": 1,
+          "V->CENSORED_BY_OTHER_TRIGGER": 1,
+          "V->MATCHING_TRIGGER": 26
+        }
+      },
+      "BUFFER_RECEIPT": {
+        "exact_agreed_resolved": 19,
+        "counts": {
+          "C->CENSORED_BY_OTHER_TRIGGER": 11,
+          "C->NO_TRIGGER_FULL_ORIGINAL_PATH_OBSERVED": 1,
+          "V->CENSORED_BY_OTHER_TRIGGER": 6,
+          "V->MATCHING_TRIGGER": 1
+        }
+      },
+      "DUAL_RESOURCE_SPAN": {
+        "exact_agreed_resolved": 17,
+        "counts": {
+          "C->NO_TRIGGER_FULL_ORIGINAL_PATH_OBSERVED": 16,
+          "V->NO_TRIGGER_FULL_ORIGINAL_PATH_OBSERVED": 1
+        }
+      },
+      "REWORK_BRANCH": {
+        "exact_agreed_resolved": 8,
+        "counts": {
+          "C->CENSORED_BY_OTHER_TRIGGER": 1,
+          "C->NO_TRIGGER_FULL_ORIGINAL_PATH_OBSERVED": 5,
+          "V->CENSORED_BY_OTHER_TRIGGER": 1,
+          "V->MATCHING_TRIGGER": 1
+        }
+      },
+      "REWORK_OBSERVATION": {
+        "exact_agreed_resolved": 8,
+        "counts": {
+          "C->CENSORED_BY_OTHER_TRIGGER": 1,
+          "C->MATCHING_TRIGGER": 1,
+          "C->NO_TRIGGER_FULL_ORIGINAL_PATH_OBSERVED": 5,
+          "V->MATCHING_TRIGGER": 1
+        }
+      }
+    }
+  },
+  "controlled_mf_h1": {
+    "scope": "Separate controlled table; never pooled into natural defect rates.",
+    "mutation_family": "MF-H1_SECOND_ITERATION_SECONDARY_RESOURCE_RELEASE_OMISSION",
+    "mutations": 8,
+    "mutations_terminal_v": 8,
+    "mutations_blocked": 0,
+    "matched_references": 8,
+    "matched_references_terminal_c": 8,
+    "matched_references_blocked": 0,
+    "interpretation": "The unchanged scope-limited guard did not cover the secondary-resource cleanup omission: all eight qualified mutations passed without intervention, as did all eight matched correct references."
+  },
+  "post_guard_human": {
+    "changed_trajectories": 53,
+    "semantically_identical_reused": 55,
+    "status": "WAITING_FOR_SINGLE_DOUBLE_REVIEW_RETURN",
+    "effect_claim_allowed_now": false
+  },
+  "new_model_calls": 0,
+  "new_candidate_executions": 0,
+  "new_human_labels": 0
+}

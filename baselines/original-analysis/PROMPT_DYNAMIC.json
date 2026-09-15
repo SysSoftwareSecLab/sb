@@ -1,0 +1,1518 @@
+{
+  "status": "T4_EXISTING_PROMPT_AND_DYNAMIC_ANALYSIS_COMPLETE",
+  "dynamic": {
+    "scope": "Existing stored checker output only; no natural candidate rerun and no human disagreement adjudication.",
+    "reviewer_specific": {
+      "Reviewer1": {
+        "n": 1411,
+        "truth_counts": {
+          "C": 876,
+          "V": 535
+        },
+        "prediction_counts": {
+          "C": 828,
+          "NA": 58,
+          "V": 262,
+          "METHOD_INAPPLICABLE": 77,
+          "U": 186
+        },
+        "confusion": {
+          "C->C": 718,
+          "C->METHOD_INAPPLICABLE": 49,
+          "C->NA": 45,
+          "C->U": 29,
+          "C->V": 35,
+          "V->C": 110,
+          "V->METHOD_INAPPLICABLE": 28,
+          "V->NA": 13,
+          "V->U": 157,
+          "V->V": 227
+        },
+        "finite_coverage": 0.7725017717930546,
+        "true_v": 535,
+        "v_recall": 0.42429906542056073,
+        "wrong_c_on_v": 0.205607476635514,
+        "non_detection_on_v": 0.5757009345794393,
+        "true_c": 876,
+        "v_on_c": 0.03995433789954338
+      },
+      "Reviewer2": {
+        "n": 1651,
+        "truth_counts": {
+          "C": 1028,
+          "V": 623
+        },
+        "prediction_counts": {
+          "C": 989,
+          "V": 357,
+          "METHOD_INAPPLICABLE": 56,
+          "U": 248,
+          "NA": 1
+        },
+        "confusion": {
+          "C->C": 911,
+          "C->METHOD_INAPPLICABLE": 49,
+          "C->U": 39,
+          "C->V": 29,
+          "V->C": 78,
+          "V->METHOD_INAPPLICABLE": 7,
+          "V->NA": 1,
+          "V->U": 209,
+          "V->V": 328
+        },
+        "finite_coverage": 0.8152634766807996,
+        "true_v": 623,
+        "v_recall": 0.5264847512038523,
+        "wrong_c_on_v": 0.12520064205457465,
+        "non_detection_on_v": 0.47351524879614765,
+        "true_c": 1028,
+        "v_on_c": 0.02821011673151751
+      }
+    },
+    "exact_agreed_resolved": {
+      "n": 1151,
+      "truth_counts": {
+        "C": 804,
+        "V": 347
+      },
+      "prediction_counts": {
+        "C": 728,
+        "V": 237,
+        "METHOD_INAPPLICABLE": 56,
+        "U": 130
+      },
+      "confusion": {
+        "C->C": 707,
+        "C->METHOD_INAPPLICABLE": 49,
+        "C->U": 27,
+        "C->V": 21,
+        "V->C": 21,
+        "V->METHOD_INAPPLICABLE": 7,
+        "V->U": 103,
+        "V->V": 216
+      },
+      "finite_coverage": 0.838401390095569,
+      "true_v": 347,
+      "v_recall": 0.622478386167147,
+      "wrong_c_on_v": 0.06051873198847262,
+      "non_detection_on_v": 0.37752161383285304,
+      "true_c": 804,
+      "v_on_c": 0.026119402985074626
+    },
+    "by_obligation_exact_agreed_resolved": {
+      "ALLOCATION_EXCLUSIVITY": {
+        "n": 44,
+        "truth_counts": {
+          "V": 2,
+          "C": 42
+        },
+        "prediction_counts": {
+          "V": 2,
+          "C": 42
+        },
+        "confusion": {
+          "C->C": 42,
+          "V->V": 2
+        },
+        "finite_coverage": 1.0,
+        "true_v": 2,
+        "v_recall": 1.0,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.0,
+        "true_c": 42,
+        "v_on_c": 0.0
+      },
+      "ALLOCATION_OBSERVATION": {
+        "n": 41,
+        "truth_counts": {
+          "C": 39,
+          "V": 2
+        },
+        "prediction_counts": {
+          "C": 40,
+          "V": 1
+        },
+        "confusion": {
+          "C->C": 39,
+          "V->C": 1,
+          "V->V": 1
+        },
+        "finite_coverage": 1.0,
+        "true_v": 2,
+        "v_recall": 0.5,
+        "wrong_c_on_v": 0.5,
+        "non_detection_on_v": 0.5,
+        "true_c": 39,
+        "v_on_c": 0.0
+      },
+      "ATTRIBUTE_COMBINATION": {
+        "n": 60,
+        "truth_counts": {
+          "V": 56,
+          "C": 4
+        },
+        "prediction_counts": {
+          "U": 51,
+          "V": 7,
+          "C": 2
+        },
+        "confusion": {
+          "C->V": 4,
+          "V->C": 2,
+          "V->U": 51,
+          "V->V": 3
+        },
+        "finite_coverage": 0.15,
+        "true_v": 56,
+        "v_recall": 0.05357142857142857,
+        "wrong_c_on_v": 0.03571428571428571,
+        "non_detection_on_v": 0.9464285714285714,
+        "true_c": 4,
+        "v_on_c": 1.0
+      },
+      "BUFFER_EVENT_PROTOCOL": {
+        "n": 34,
+        "truth_counts": {
+          "C": 9,
+          "V": 25
+        },
+        "prediction_counts": {
+          "V": 30,
+          "C": 4
+        },
+        "confusion": {
+          "C->C": 4,
+          "C->V": 5,
+          "V->V": 25
+        },
+        "finite_coverage": 1.0,
+        "true_v": 25,
+        "v_recall": 1.0,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.0,
+        "true_c": 9,
+        "v_on_c": 0.5555555555555556
+      },
+      "BUFFER_OCCUPANCY_OWNER": {
+        "n": 56,
+        "truth_counts": {
+          "V": 47,
+          "C": 9
+        },
+        "prediction_counts": {
+          "V": 47,
+          "C": 9
+        },
+        "confusion": {
+          "C->C": 9,
+          "V->V": 47
+        },
+        "finite_coverage": 1.0,
+        "true_v": 47,
+        "v_recall": 1.0,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.0,
+        "true_c": 9,
+        "v_on_c": 0.0
+      },
+      "BUFFER_RECEIPT": {
+        "n": 35,
+        "truth_counts": {
+          "C": 23,
+          "V": 12
+        },
+        "prediction_counts": {
+          "C": 23,
+          "V": 12
+        },
+        "confusion": {
+          "C->C": 23,
+          "V->V": 12
+        },
+        "finite_coverage": 1.0,
+        "true_v": 12,
+        "v_recall": 1.0,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.0,
+        "true_c": 23,
+        "v_on_c": 0.0
+      },
+      "COMPOSITION_CONCURRENCY": {
+        "n": 174,
+        "truth_counts": {
+          "C": 155,
+          "V": 19
+        },
+        "prediction_counts": {
+          "C": 138,
+          "U": 27,
+          "V": 9
+        },
+        "confusion": {
+          "C->C": 128,
+          "C->U": 24,
+          "C->V": 3,
+          "V->C": 10,
+          "V->U": 3,
+          "V->V": 6
+        },
+        "finite_coverage": 0.8448275862068966,
+        "true_v": 19,
+        "v_recall": 0.3157894736842105,
+        "wrong_c_on_v": 0.5263157894736842,
+        "non_detection_on_v": 0.6842105263157895,
+        "true_c": 155,
+        "v_on_c": 0.01935483870967742
+      },
+      "CONTROL_FLOW_HOLDOUT": {
+        "n": 41,
+        "truth_counts": {
+          "V": 41
+        },
+        "prediction_counts": {
+          "U": 36,
+          "V": 5
+        },
+        "confusion": {
+          "V->U": 36,
+          "V->V": 5
+        },
+        "finite_coverage": 0.12195121951219512,
+        "true_v": 41,
+        "v_recall": 0.12195121951219512,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.8780487804878049,
+        "true_c": 0,
+        "v_on_c": null
+      },
+      "DUAL_RESOURCE_SPAN": {
+        "n": 40,
+        "truth_counts": {
+          "C": 38,
+          "V": 2
+        },
+        "prediction_counts": {
+          "C": 38,
+          "V": 2
+        },
+        "confusion": {
+          "C->C": 38,
+          "V->V": 2
+        },
+        "finite_coverage": 1.0,
+        "true_v": 2,
+        "v_recall": 1.0,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.0,
+        "true_c": 38,
+        "v_on_c": 0.0
+      },
+      "EVENT_JOIN": {
+        "n": 14,
+        "truth_counts": {
+          "V": 13,
+          "C": 1
+        },
+        "prediction_counts": {
+          "U": 3,
+          "V": 11
+        },
+        "confusion": {
+          "C->U": 1,
+          "V->U": 2,
+          "V->V": 11
+        },
+        "finite_coverage": 0.7857142857142857,
+        "true_v": 13,
+        "v_recall": 0.8461538461538461,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.15384615384615385,
+        "true_c": 1,
+        "v_on_c": 0.0
+      },
+      "EXCHANGE_PROTOCOL": {
+        "n": 21,
+        "truth_counts": {
+          "V": 11,
+          "C": 10
+        },
+        "prediction_counts": {
+          "V": 8,
+          "C": 13
+        },
+        "confusion": {
+          "C->C": 10,
+          "V->C": 3,
+          "V->V": 8
+        },
+        "finite_coverage": 1.0,
+        "true_v": 11,
+        "v_recall": 0.7272727272727273,
+        "wrong_c_on_v": 0.2727272727272727,
+        "non_detection_on_v": 0.2727272727272727,
+        "true_c": 10,
+        "v_on_c": 0.0
+      },
+      "EXCHANGE_RECEIPT": {
+        "n": 14,
+        "truth_counts": {
+          "C": 13,
+          "V": 1
+        },
+        "prediction_counts": {
+          "C": 13,
+          "V": 1
+        },
+        "confusion": {
+          "C->C": 13,
+          "V->V": 1
+        },
+        "finite_coverage": 1.0,
+        "true_v": 1,
+        "v_recall": 1.0,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.0,
+        "true_c": 13,
+        "v_on_c": 0.0
+      },
+      "LONG_RANGE_DEPENDENCY": {
+        "n": 83,
+        "truth_counts": {
+          "V": 50,
+          "C": 33
+        },
+        "prediction_counts": {
+          "V": 44,
+          "C": 30,
+          "U": 9
+        },
+        "confusion": {
+          "C->C": 27,
+          "C->V": 6,
+          "V->C": 3,
+          "V->U": 9,
+          "V->V": 38
+        },
+        "finite_coverage": 0.891566265060241,
+        "true_v": 50,
+        "v_recall": 0.76,
+        "wrong_c_on_v": 0.06,
+        "non_detection_on_v": 0.24,
+        "true_c": 33,
+        "v_on_c": 0.18181818181818182
+      },
+      "OBS_CURRENT": {
+        "n": 21,
+        "truth_counts": {
+          "V": 18,
+          "C": 3
+        },
+        "prediction_counts": {
+          "V": 18,
+          "C": 3
+        },
+        "confusion": {
+          "C->C": 3,
+          "V->V": 18
+        },
+        "finite_coverage": 1.0,
+        "true_v": 18,
+        "v_recall": 1.0,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.0,
+        "true_c": 3,
+        "v_on_c": 0.0
+      },
+      "RELEASE_DEPARTURE": {
+        "n": 18,
+        "truth_counts": {
+          "C": 18
+        },
+        "prediction_counts": {
+          "C": 18
+        },
+        "confusion": {
+          "C->C": 18
+        },
+        "finite_coverage": 1.0,
+        "true_v": 0,
+        "v_recall": null,
+        "wrong_c_on_v": null,
+        "non_detection_on_v": null,
+        "true_c": 18,
+        "v_on_c": 0.0
+      },
+      "REWORK_BRANCH": {
+        "n": 15,
+        "truth_counts": {
+          "C": 11,
+          "V": 4
+        },
+        "prediction_counts": {
+          "C": 12,
+          "V": 2,
+          "U": 1
+        },
+        "confusion": {
+          "C->C": 10,
+          "C->U": 1,
+          "V->C": 2,
+          "V->V": 2
+        },
+        "finite_coverage": 0.9333333333333333,
+        "true_v": 4,
+        "v_recall": 0.5,
+        "wrong_c_on_v": 0.5,
+        "non_detection_on_v": 0.5,
+        "true_c": 11,
+        "v_on_c": 0.0
+      },
+      "REWORK_OBSERVATION": {
+        "n": 17,
+        "truth_counts": {
+          "C": 12,
+          "V": 5
+        },
+        "prediction_counts": {
+          "C": 9,
+          "V": 5,
+          "U": 3
+        },
+        "confusion": {
+          "C->C": 9,
+          "C->U": 1,
+          "C->V": 2,
+          "V->U": 2,
+          "V->V": 3
+        },
+        "finite_coverage": 0.8235294117647058,
+        "true_v": 5,
+        "v_recall": 0.6,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.4,
+        "true_c": 12,
+        "v_on_c": 0.16666666666666666
+      },
+      "SUPPORT_DEPARTURE": {
+        "n": 246,
+        "truth_counts": {
+          "C": 231,
+          "V": 15
+        },
+        "prediction_counts": {
+          "C": 182,
+          "METHOD_INAPPLICABLE": 56,
+          "V": 8
+        },
+        "confusion": {
+          "C->C": 182,
+          "C->METHOD_INAPPLICABLE": 49,
+          "V->METHOD_INAPPLICABLE": 7,
+          "V->V": 8
+        },
+        "finite_coverage": 0.7723577235772358,
+        "true_v": 15,
+        "v_recall": 0.5333333333333333,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.4666666666666667,
+        "true_c": 231,
+        "v_on_c": 0.0
+      },
+      "TASK_GOAL": {
+        "n": 177,
+        "truth_counts": {
+          "C": 153,
+          "V": 24
+        },
+        "prediction_counts": {
+          "C": 152,
+          "V": 25
+        },
+        "confusion": {
+          "C->C": 152,
+          "C->V": 1,
+          "V->V": 24
+        },
+        "finite_coverage": 1.0,
+        "true_v": 24,
+        "v_recall": 1.0,
+        "wrong_c_on_v": 0.0,
+        "non_detection_on_v": 0.0,
+        "true_c": 153,
+        "v_on_c": 0.006535947712418301
+      }
+    },
+    "stable_blind_spot_gate": [
+      {
+        "obligation": "ALLOCATION_EXCLUSIVITY",
+        "resolved_v": 2,
+        "families": 2,
+        "non_detection_rate": 0.0,
+        "families_with_failure_fraction": 0.0,
+        "family_cluster_bootstrap_95": [
+          0.0,
+          0.0
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "ALLOCATION_OBSERVATION",
+        "resolved_v": 2,
+        "families": 2,
+        "non_detection_rate": 0.5,
+        "families_with_failure_fraction": 0.5,
+        "family_cluster_bootstrap_95": [
+          0.0,
+          1.0
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "ATTRIBUTE_COMBINATION",
+        "resolved_v": 56,
+        "families": 4,
+        "non_detection_rate": 0.9464285714285714,
+        "families_with_failure_fraction": 1.0,
+        "family_cluster_bootstrap_95": [
+          0.9047619047619048,
+          1.0
+        ],
+        "admitted": true
+      },
+      {
+        "obligation": "BUFFER_EVENT_PROTOCOL",
+        "resolved_v": 25,
+        "families": 6,
+        "non_detection_rate": 0.0,
+        "families_with_failure_fraction": 0.0,
+        "family_cluster_bootstrap_95": [
+          0.0,
+          0.0
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "BUFFER_OCCUPANCY_OWNER",
+        "resolved_v": 47,
+        "families": 6,
+        "non_detection_rate": 0.0,
+        "families_with_failure_fraction": 0.0,
+        "family_cluster_bootstrap_95": [
+          0.0,
+          0.0
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "BUFFER_RECEIPT",
+        "resolved_v": 12,
+        "families": 4,
+        "non_detection_rate": 0.0,
+        "families_with_failure_fraction": 0.0,
+        "family_cluster_bootstrap_95": [
+          0.0,
+          0.0
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "COMPOSITION_CONCURRENCY",
+        "resolved_v": 19,
+        "families": 6,
+        "non_detection_rate": 0.6842105263157895,
+        "families_with_failure_fraction": 0.8333333333333334,
+        "family_cluster_bootstrap_95": [
+          0.35,
+          0.9523809523809523
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "CONTROL_FLOW_HOLDOUT",
+        "resolved_v": 41,
+        "families": 2,
+        "non_detection_rate": 0.8780487804878049,
+        "families_with_failure_fraction": 1.0,
+        "family_cluster_bootstrap_95": [
+          0.8421052631578947,
+          0.9090909090909091
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "DUAL_RESOURCE_SPAN",
+        "resolved_v": 2,
+        "families": 2,
+        "non_detection_rate": 0.0,
+        "families_with_failure_fraction": 0.0,
+        "family_cluster_bootstrap_95": [
+          0.0,
+          0.0
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "EVENT_JOIN",
+        "resolved_v": 13,
+        "families": 1,
+        "non_detection_rate": 0.15384615384615385,
+        "families_with_failure_fraction": 1.0,
+        "family_cluster_bootstrap_95": [
+          0.15384615384615385,
+          0.15384615384615385
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "EXCHANGE_PROTOCOL",
+        "resolved_v": 11,
+        "families": 2,
+        "non_detection_rate": 0.2727272727272727,
+        "families_with_failure_fraction": 1.0,
+        "family_cluster_bootstrap_95": [
+          0.25,
+          0.2857142857142857
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "EXCHANGE_RECEIPT",
+        "resolved_v": 1,
+        "families": 1,
+        "non_detection_rate": 0.0,
+        "families_with_failure_fraction": 0.0,
+        "family_cluster_bootstrap_95": [
+          0.0,
+          0.0
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "LONG_RANGE_DEPENDENCY",
+        "resolved_v": 50,
+        "families": 6,
+        "non_detection_rate": 0.24,
+        "families_with_failure_fraction": 0.8333333333333334,
+        "family_cluster_bootstrap_95": [
+          0.14285714285714285,
+          0.42857142857142855
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "OBS_CURRENT",
+        "resolved_v": 18,
+        "families": 1,
+        "non_detection_rate": 0.0,
+        "families_with_failure_fraction": 0.0,
+        "family_cluster_bootstrap_95": [
+          0.0,
+          0.0
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "RELEASE_DEPARTURE",
+        "resolved_v": 0,
+        "families": 0,
+        "non_detection_rate": null,
+        "families_with_failure_fraction": null,
+        "family_cluster_bootstrap_95": [
+          null,
+          null
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "REWORK_BRANCH",
+        "resolved_v": 4,
+        "families": 1,
+        "non_detection_rate": 0.5,
+        "families_with_failure_fraction": 1.0,
+        "family_cluster_bootstrap_95": [
+          0.5,
+          0.5
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "REWORK_OBSERVATION",
+        "resolved_v": 5,
+        "families": 1,
+        "non_detection_rate": 0.4,
+        "families_with_failure_fraction": 1.0,
+        "family_cluster_bootstrap_95": [
+          0.4,
+          0.4
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "SUPPORT_DEPARTURE",
+        "resolved_v": 15,
+        "families": 7,
+        "non_detection_rate": 0.4666666666666667,
+        "families_with_failure_fraction": 0.2857142857142857,
+        "family_cluster_bootstrap_95": [
+          0.0,
+          0.8275862068965517
+        ],
+        "admitted": false
+      },
+      {
+        "obligation": "TASK_GOAL",
+        "resolved_v": 24,
+        "families": 9,
+        "non_detection_rate": 0.0,
+        "families_with_failure_fraction": 0.0,
+        "family_cluster_bootstrap_95": [
+          0.0,
+          0.0
+        ],
+        "admitted": false
+      }
+    ],
+    "admitted_stable_blind_spots": [
+      {
+        "obligation": "ATTRIBUTE_COMBINATION",
+        "resolved_v": 56,
+        "families": 4,
+        "non_detection_rate": 0.9464285714285714,
+        "families_with_failure_fraction": 1.0,
+        "family_cluster_bootstrap_95": [
+          0.9047619047619048,
+          1.0
+        ],
+        "admitted": true
+      }
+    ],
+    "method_inapplicable_exact": 78
+  },
+  "prompt_obligation_pairs": {
+    "Reviewer1": {
+      "ALLOCATION_EXCLUSIVITY": {
+        "pairs": 24,
+        "base_counts": {
+          "U": 2,
+          "C": 22
+        },
+        "safety_reminder_counts": {
+          "V": 2,
+          "C": 20,
+          "U": 2
+        },
+        "v_rate_difference_full_denominator": 0.08333333333333333,
+        "unknown_or_na_pair_count": 4
+      },
+      "ALLOCATION_OBSERVATION": {
+        "pairs": 24,
+        "base_counts": {
+          "U": 3,
+          "C": 19,
+          "V": 2
+        },
+        "safety_reminder_counts": {
+          "C": 20,
+          "U": 4
+        },
+        "v_rate_difference_full_denominator": -0.08333333333333333,
+        "unknown_or_na_pair_count": 6
+      },
+      "ATTRIBUTE_COMBINATION": {
+        "pairs": 48,
+        "base_counts": {
+          "V": 37,
+          "U": 8,
+          "C": 3
+        },
+        "safety_reminder_counts": {
+          "V": 35,
+          "U": 11,
+          "C": 2
+        },
+        "v_rate_difference_full_denominator": -0.041666666666666664,
+        "unknown_or_na_pair_count": 15
+      },
+      "BUFFER_EVENT_PROTOCOL": {
+        "pairs": 72,
+        "base_counts": {
+          "C": 12,
+          "V": 16,
+          "U": 44
+        },
+        "safety_reminder_counts": {
+          "C": 9,
+          "U": 47,
+          "V": 16
+        },
+        "v_rate_difference_full_denominator": 0.0,
+        "unknown_or_na_pair_count": 61
+      },
+      "BUFFER_OCCUPANCY_OWNER": {
+        "pairs": 72,
+        "base_counts": {
+          "V": 28,
+          "C": 4,
+          "U": 40
+        },
+        "safety_reminder_counts": {
+          "C": 5,
+          "V": 20,
+          "U": 47
+        },
+        "v_rate_difference_full_denominator": -0.1111111111111111,
+        "unknown_or_na_pair_count": 55
+      },
+      "BUFFER_RECEIPT": {
+        "pairs": 72,
+        "base_counts": {
+          "C": 12,
+          "V": 10,
+          "U": 50
+        },
+        "safety_reminder_counts": {
+          "C": 11,
+          "U": 51,
+          "V": 10
+        },
+        "v_rate_difference_full_denominator": 0.0,
+        "unknown_or_na_pair_count": 62
+      },
+      "COMPOSITION_CONCURRENCY": {
+        "pairs": 96,
+        "base_counts": {
+          "C": 76,
+          "V": 19,
+          "U": 1
+        },
+        "safety_reminder_counts": {
+          "C": 82,
+          "V": 14
+        },
+        "v_rate_difference_full_denominator": -0.052083333333333336,
+        "unknown_or_na_pair_count": 1
+      },
+      "CONTROL_FLOW_HOLDOUT": {
+        "pairs": 48,
+        "base_counts": {
+          "NA": 24,
+          "V": 23,
+          "U": 1
+        },
+        "safety_reminder_counts": {
+          "NA": 24,
+          "V": 23,
+          "C": 1
+        },
+        "v_rate_difference_full_denominator": 0.0,
+        "unknown_or_na_pair_count": 25
+      },
+      "DUAL_RESOURCE_SPAN": {
+        "pairs": 24,
+        "base_counts": {
+          "C": 16,
+          "U": 7,
+          "V": 1
+        },
+        "safety_reminder_counts": {
+          "C": 22,
+          "U": 1,
+          "V": 1
+        },
+        "v_rate_difference_full_denominator": 0.0,
+        "unknown_or_na_pair_count": 8
+      },
+      "EVENT_JOIN": {
+        "pairs": 12,
+        "base_counts": {
+          "V": 11,
+          "U": 1
+        },
+        "safety_reminder_counts": {
+          "U": 2,
+          "V": 9,
+          "C": 1
+        },
+        "v_rate_difference_full_denominator": -0.16666666666666666,
+        "unknown_or_na_pair_count": 3
+      },
+      "EXCHANGE_PROTOCOL": {
+        "pairs": 24,
+        "base_counts": {
+          "U": 10,
+          "V": 6,
+          "C": 8
+        },
+        "safety_reminder_counts": {
+          "V": 13,
+          "U": 8,
+          "C": 3
+        },
+        "v_rate_difference_full_denominator": 0.2916666666666667,
+        "unknown_or_na_pair_count": 15
+      },
+      "EXCHANGE_RECEIPT": {
+        "pairs": 24,
+        "base_counts": {
+          "U": 13,
+          "V": 2,
+          "C": 9
+        },
+        "safety_reminder_counts": {
+          "U": 16,
+          "V": 4,
+          "C": 4
+        },
+        "v_rate_difference_full_denominator": 0.08333333333333333,
+        "unknown_or_na_pair_count": 19
+      },
+      "LONG_RANGE_DEPENDENCY": {
+        "pairs": 96,
+        "base_counts": {
+          "U": 43,
+          "V": 31,
+          "C": 22
+        },
+        "safety_reminder_counts": {
+          "U": 44,
+          "C": 20,
+          "V": 32
+        },
+        "v_rate_difference_full_denominator": 0.010416666666666666,
+        "unknown_or_na_pair_count": 58
+      },
+      "OBS_CURRENT": {
+        "pairs": 12,
+        "base_counts": {
+          "V": 9,
+          "U": 2,
+          "C": 1
+        },
+        "safety_reminder_counts": {
+          "V": 9,
+          "U": 1,
+          "C": 2
+        },
+        "v_rate_difference_full_denominator": 0.0,
+        "unknown_or_na_pair_count": 2
+      },
+      "RELEASE_DEPARTURE": {
+        "pairs": 12,
+        "base_counts": {
+          "C": 9,
+          "V": 3
+        },
+        "safety_reminder_counts": {
+          "C": 9,
+          "V": 3
+        },
+        "v_rate_difference_full_denominator": 0.0,
+        "unknown_or_na_pair_count": 0
+      },
+      "REWORK_BRANCH": {
+        "pairs": 12,
+        "base_counts": {
+          "U": 4,
+          "C": 6,
+          "V": 2
+        },
+        "safety_reminder_counts": {
+          "V": 2,
+          "C": 5,
+          "U": 5
+        },
+        "v_rate_difference_full_denominator": 0.0,
+        "unknown_or_na_pair_count": 7
+      },
+      "REWORK_OBSERVATION": {
+        "pairs": 12,
+        "base_counts": {
+          "U": 4,
+          "C": 7,
+          "V": 1
+        },
+        "safety_reminder_counts": {
+          "V": 4,
+          "C": 5,
+          "U": 3
+        },
+        "v_rate_difference_full_denominator": 0.25,
+        "unknown_or_na_pair_count": 7
+      },
+      "SUPPORT_DEPARTURE": {
+        "pairs": 192,
+        "base_counts": {
+          "C": 106,
+          "V": 65,
+          "U": 21
+        },
+        "safety_reminder_counts": {
+          "C": 125,
+          "V": 47,
+          "U": 20
+        },
+        "v_rate_difference_full_denominator": -0.09375,
+        "unknown_or_na_pair_count": 38
+      },
+      "TASK_GOAL": {
+        "pairs": 192,
+        "base_counts": {
+          "U": 103,
+          "C": 75,
+          "V": 14
+        },
+        "safety_reminder_counts": {
+          "U": 104,
+          "C": 78,
+          "V": 10
+        },
+        "v_rate_difference_full_denominator": -0.020833333333333332,
+        "unknown_or_na_pair_count": 132
+      },
+      "TIMEOUT_CLEANUP": {
+        "pairs": 24,
+        "base_counts": {
+          "C": 21,
+          "V": 1,
+          "U": 2
+        },
+        "safety_reminder_counts": {
+          "C": 24
+        },
+        "v_rate_difference_full_denominator": -0.041666666666666664,
+        "unknown_or_na_pair_count": 2
+      }
+    },
+    "Reviewer2": {
+      "ALLOCATION_EXCLUSIVITY": {
+        "pairs": 24,
+        "base_counts": {
+          "NA": 1,
+          "C": 23
+        },
+        "safety_reminder_counts": {
+          "V": 2,
+          "C": 20,
+          "NA": 2
+        },
+        "v_rate_difference_full_denominator": 0.08333333333333333,
+        "unknown_or_na_pair_count": 3
+      },
+      "ALLOCATION_OBSERVATION": {
+        "pairs": 24,
+        "base_counts": {
+          "U": 3,
+          "C": 19,
+          "V": 2
+        },
+        "safety_reminder_counts": {
+          "C": 20,
+          "U": 4
+        },
+        "v_rate_difference_full_denominator": -0.08333333333333333,
+        "unknown_or_na_pair_count": 6
+      },
+      "ATTRIBUTE_COMBINATION": {
+        "pairs": 48,
+        "base_counts": {
+          "C": 7,
+          "U": 13,
+          "V": 28
+        },
+        "safety_reminder_counts": {
+          "V": 35,
+          "C": 5,
+          "U": 8
+        },
+        "v_rate_difference_full_denominator": 0.14583333333333334,
+        "unknown_or_na_pair_count": 19
+      },
+      "BUFFER_EVENT_PROTOCOL": {
+        "pairs": 72,
+        "base_counts": {
+          "C": 3,
+          "V": 21,
+          "U": 48
+        },
+        "safety_reminder_counts": {
+          "V": 16,
+          "U": 50,
+          "C": 6
+        },
+        "v_rate_difference_full_denominator": -0.06944444444444445,
+        "unknown_or_na_pair_count": 62
+      },
+      "BUFFER_OCCUPANCY_OWNER": {
+        "pairs": 72,
+        "base_counts": {
+          "V": 27,
+          "C": 34,
+          "NA": 10,
+          "U": 1
+        },
+        "safety_reminder_counts": {
+          "C": 41,
+          "V": 20,
+          "NA": 10,
+          "U": 1
+        },
+        "v_rate_difference_full_denominator": -0.09722222222222222,
+        "unknown_or_na_pair_count": 21
+      },
+      "BUFFER_RECEIPT": {
+        "pairs": 72,
+        "base_counts": {
+          "C": 33,
+          "V": 7,
+          "NA": 31,
+          "U": 1
+        },
+        "safety_reminder_counts": {
+          "C": 35,
+          "NA": 31,
+          "V": 5,
+          "U": 1
+        },
+        "v_rate_difference_full_denominator": -0.027777777777777776,
+        "unknown_or_na_pair_count": 51
+      },
+      "COMPOSITION_CONCURRENCY": {
+        "pairs": 96,
+        "base_counts": {
+          "C": 81,
+          "V": 13,
+          "U": 2
+        },
+        "safety_reminder_counts": {
+          "C": 86,
+          "V": 7,
+          "U": 3
+        },
+        "v_rate_difference_full_denominator": -0.0625,
+        "unknown_or_na_pair_count": 4
+      },
+      "CONTROL_FLOW_HOLDOUT": {
+        "pairs": 48,
+        "base_counts": {
+          "V": 39,
+          "U": 9
+        },
+        "safety_reminder_counts": {
+          "V": 47,
+          "U": 1
+        },
+        "v_rate_difference_full_denominator": 0.16666666666666666,
+        "unknown_or_na_pair_count": 10
+      },
+      "DUAL_RESOURCE_SPAN": {
+        "pairs": 24,
+        "base_counts": {
+          "C": 18,
+          "V": 4,
+          "U": 2
+        },
+        "safety_reminder_counts": {
+          "C": 22,
+          "V": 2
+        },
+        "v_rate_difference_full_denominator": -0.08333333333333333,
+        "unknown_or_na_pair_count": 2
+      },
+      "EVENT_JOIN": {
+        "pairs": 12,
+        "base_counts": {
+          "V": 6,
+          "U": 3,
+          "C": 3
+        },
+        "safety_reminder_counts": {
+          "U": 2,
+          "V": 7,
+          "C": 3
+        },
+        "v_rate_difference_full_denominator": 0.08333333333333333,
+        "unknown_or_na_pair_count": 5
+      },
+      "EXCHANGE_PROTOCOL": {
+        "pairs": 24,
+        "base_counts": {
+          "U": 11,
+          "V": 5,
+          "C": 8
+        },
+        "safety_reminder_counts": {
+          "U": 13,
+          "V": 7,
+          "C": 4
+        },
+        "v_rate_difference_full_denominator": 0.08333333333333333,
+        "unknown_or_na_pair_count": 18
+      },
+      "EXCHANGE_RECEIPT": {
+        "pairs": 24,
+        "base_counts": {
+          "NA": 15,
+          "C": 9
+        },
+        "safety_reminder_counts": {
+          "NA": 19,
+          "C": 4,
+          "V": 1
+        },
+        "v_rate_difference_full_denominator": 0.041666666666666664,
+        "unknown_or_na_pair_count": 20
+      },
+      "LONG_RANGE_DEPENDENCY": {
+        "pairs": 96,
+        "base_counts": {
+          "U": 49,
+          "V": 26,
+          "C": 21
+        },
+        "safety_reminder_counts": {
+          "U": 45,
+          "V": 33,
+          "C": 18
+        },
+        "v_rate_difference_full_denominator": 0.07291666666666667,
+        "unknown_or_na_pair_count": 59
+      },
+      "OBS_CURRENT": {
+        "pairs": 12,
+        "base_counts": {
+          "V": 9,
+          "U": 2,
+          "C": 1
+        },
+        "safety_reminder_counts": {
+          "V": 9,
+          "U": 1,
+          "C": 2
+        },
+        "v_rate_difference_full_denominator": 0.0,
+        "unknown_or_na_pair_count": 2
+      },
+      "RELEASE_DEPARTURE": {
+        "pairs": 12,
+        "base_counts": {
+          "C": 9,
+          "NA": 3
+        },
+        "safety_reminder_counts": {
+          "C": 9,
+          "NA": 3
+        },
+        "v_rate_difference_full_denominator": 0.0,
+        "unknown_or_na_pair_count": 5
+      },
+      "REWORK_BRANCH": {
+        "pairs": 12,
+        "base_counts": {
+          "U": 4,
+          "C": 6,
+          "V": 2
+        },
+        "safety_reminder_counts": {
+          "V": 2,
+          "C": 5,
+          "U": 5
+        },
+        "v_rate_difference_full_denominator": 0.0,
+        "unknown_or_na_pair_count": 7
+      },
+      "REWORK_OBSERVATION": {
+        "pairs": 12,
+        "base_counts": {
+          "U": 4,
+          "C": 7,
+          "V": 1
+        },
+        "safety_reminder_counts": {
+          "V": 4,
+          "C": 5,
+          "U": 3
+        },
+        "v_rate_difference_full_denominator": 0.25,
+        "unknown_or_na_pair_count": 7
+      },
+      "SUPPORT_DEPARTURE": {
+        "pairs": 192,
+        "base_counts": {
+          "C": 146,
+          "NA": 34,
+          "V": 9,
+          "U": 3
+        },
+        "safety_reminder_counts": {
+          "C": 162,
+          "NA": 23,
+          "V": 6,
+          "U": 1
+        },
+        "v_rate_difference_full_denominator": -0.015625,
+        "unknown_or_na_pair_count": 56
+      },
+      "TASK_GOAL": {
+        "pairs": 192,
+        "base_counts": {
+          "V": 113,
+          "C": 75,
+          "U": 4
+        },
+        "safety_reminder_counts": {
+          "V": 107,
+          "C": 78,
+          "U": 7
+        },
+        "v_rate_difference_full_denominator": -0.03125,
+        "unknown_or_na_pair_count": 11
+      },
+      "TIMEOUT_CLEANUP": {
+        "pairs": 24,
+        "base_counts": {
+          "NA": 22,
+          "U": 2
+        },
+        "safety_reminder_counts": {
+          "NA": 23,
+          "V": 1
+        },
+        "v_rate_difference_full_denominator": 0.041666666666666664,
+        "unknown_or_na_pair_count": 24
+      }
+    }
+  },
+  "prompt_program_level": {
+    "Reviewer1": {
+      "reviewer": "Reviewer1",
+      "pairs": 192,
+      "families": 16,
+      "high_unsafe": 137,
+      "low_unsafe": 141,
+      "unsafe_risk_difference_full_denominator": -0.020833333333333332,
+      "unknown_worst_case_risk_difference_interval": [
+        -0.10416666666666667,
+        0.06770833333333333
+      ],
+      "complete_pairs": 159,
+      "unknown_pairs": 33,
+      "complete_case_risk_difference": -0.012578616352201259,
+      "discordant_complete": {
+        "high_unsafe_low_safe": 9,
+        "high_safe_low_unsafe": 11,
+        "exact_two_sided_p": 0.8238029479980469
+      },
+      "family_cluster_bootstrap_95": [
+        -0.078125,
+        0.041666666666666664
+      ],
+      "direction": "NEGATIVE",
+      "family_means": {
+        "C1_BUFFER": 0.08333333333333333,
+        "C2_DUAL_RESOURCE": -0.16666666666666666,
+        "C3_EXCHANGE": 0.16666666666666666,
+        "C4_ALLOCATION": -0.16666666666666666,
+        "C5_INDEPENDENT": 0.0,
+        "C6_VERIFY_JOIN": -0.16666666666666666,
+        "C7_ATTR_FLAT": 0.0,
+        "C8_ATTR_NESTED": 0.0,
+        "D1_OBSERVATION": -0.08333333333333333,
+        "D2_EVENT": 0.25,
+        "D3_ATTR_FLAT": -0.16666666666666666,
+        "D4_ATTR_NESTED": 0.08333333333333333,
+        "D5_FRESHNESS": 0.0,
+        "D6_RESOURCE_SPAN": 0.08333333333333333,
+        "D7_BUFFER_PREFETCH": -0.08333333333333333,
+        "D8_ALLOCATION": -0.16666666666666666
+      },
+      "families_in_overall_direction": 7,
+      "family_direction_fraction": 0.4375,
+      "leave_one_family_out": {
+        "C1_BUFFER": -0.027777777777777776,
+        "C2_DUAL_RESOURCE": -0.011111111111111112,
+        "C3_EXCHANGE": -0.03333333333333333,
+        "C4_ALLOCATION": -0.011111111111111112,
+        "C5_INDEPENDENT": -0.022222222222222223,
+        "C6_VERIFY_JOIN": -0.011111111111111112,
+        "C7_ATTR_FLAT": -0.022222222222222223,
+        "C8_ATTR_NESTED": -0.022222222222222223,
+        "D1_OBSERVATION": -0.016666666666666666,
+        "D2_EVENT": -0.03888888888888889,
+        "D3_ATTR_FLAT": -0.011111111111111112,
+        "D4_ATTR_NESTED": -0.027777777777777776,
+        "D5_FRESHNESS": -0.022222222222222223,
+        "D6_RESOURCE_SPAN": -0.027777777777777776,
+        "D7_BUFFER_PREFETCH": -0.016666666666666666,
+        "D8_ALLOCATION": -0.011111111111111112
+      },
+      "all_leave_one_family_out_preserve_direction": true
+    },
+    "Reviewer2": {
+      "reviewer": "Reviewer2",
+      "pairs": 192,
+      "families": 16,
+      "high_unsafe": 111,
+      "low_unsafe": 106,
+      "unsafe_risk_difference_full_denominator": 0.026041666666666668,
+      "unknown_worst_case_risk_difference_interval": [
+        -0.23958333333333334,
+        0.2604166666666667
+      ],
+      "complete_pairs": 117,
+      "unknown_pairs": 75,
+      "complete_case_risk_difference": -0.008547008547008548,
+      "discordant_complete": {
+        "high_unsafe_low_safe": 5,
+        "high_safe_low_unsafe": 6,
+        "exact_two_sided_p": 1.0
+      },
+      "family_cluster_bootstrap_95": [
+        -0.026041666666666668,
+        0.078125
+      ],
+      "direction": "POSITIVE",
+      "family_means": {
+        "C1_BUFFER": 0.08333333333333333,
+        "C2_DUAL_RESOURCE": 0.0,
+        "C3_EXCHANGE": -0.08333333333333333,
+        "C4_ALLOCATION": -0.08333333333333333,
+        "C5_INDEPENDENT": 0.0,
+        "C6_VERIFY_JOIN": -0.08333333333333333,
+        "C7_ATTR_FLAT": 0.0,
+        "C8_ATTR_NESTED": 0.0,
+        "D1_OBSERVATION": 0.0,
+        "D2_EVENT": 0.16666666666666666,
+        "D3_ATTR_FLAT": 0.16666666666666666,
+        "D4_ATTR_NESTED": 0.25,
+        "D5_FRESHNESS": 0.08333333333333333,
+        "D6_RESOURCE_SPAN": 0.08333333333333333,
+        "D7_BUFFER_PREFETCH": -0.16666666666666666,
+        "D8_ALLOCATION": 0.0
+      },
+      "families_in_overall_direction": 6,
+      "family_direction_fraction": 0.375,
+      "leave_one_family_out": {
+        "C1_BUFFER": 0.022222222222222223,
+        "C2_DUAL_RESOURCE": 0.027777777777777776,
+        "C3_EXCHANGE": 0.03333333333333333,
+        "C4_ALLOCATION": 0.03333333333333333,
+        "C5_INDEPENDENT": 0.027777777777777776,
+        "C6_VERIFY_JOIN": 0.03333333333333333,
+        "C7_ATTR_FLAT": 0.027777777777777776,
+        "C8_ATTR_NESTED": 0.027777777777777776,
+        "D1_OBSERVATION": 0.027777777777777776,
+        "D2_EVENT": 0.016666666666666666,
+        "D3_ATTR_FLAT": 0.016666666666666666,
+        "D4_ATTR_NESTED": 0.011111111111111112,
+        "D5_FRESHNESS": 0.022222222222222223,
+        "D6_RESOURCE_SPAN": 0.022222222222222223,
+        "D7_BUFFER_PREFETCH": 0.03888888888888889,
+        "D8_ALLOCATION": 0.027777777777777776
+      },
+      "all_leave_one_family_out_preserve_direction": true
+    }
+  },
+  "new_model_calls": 0,
+  "new_candidate_executions": 0,
+  "new_human_labels": 0
+}

@@ -1,0 +1,167 @@
+{
+  "status": "PAPER_LEVEL_STABLE_FINDINGS_FROZEN_AFTER_ALL_T4_HUMAN_RETURNS",
+  "created_utc": "2026-09-12T09:14:00+00:00",
+  "purpose": "Count paper-level phenomena without double-counting the same obligation across methods.",
+  "paper_level_count": 4,
+  "method_obligation_admissions": 11,
+  "findings": [
+    {
+      "id": "F1_ATTRIBUTE_COMBINATION_BLIND_SPOT",
+      "paper_counted": true,
+      "mentor_question": "RQ3",
+      "contribution": "C4",
+      "claim": "Attribute-combination violations are a stable coverage blind spot shared by finite dynamic checking and both source-only judges.",
+      "truth": "56 two-reviewer-agreed, both-resolved V instances across 4 families",
+      "methods": {
+        "dynamic": {
+          "non_detection": "53/56",
+          "bootstrap_95": [
+            0.9047619047619048,
+            1.0
+          ]
+        },
+        "deepseek_flash": {
+          "non_detection": "46/56",
+          "wrong_c": "30/56",
+          "non_detection_bootstrap_95": [
+            0.7575757575757576,
+            0.9130434782608694
+          ],
+          "wrong_c_bootstrap_95": [
+            0.40476190476190477,
+            0.7058823529411765
+          ]
+        },
+        "glm5": {
+          "non_detection": "41/56",
+          "wrong_c": "23/56",
+          "non_detection_bootstrap_95": [
+            0.5555555555555556,
+            0.9411764705882353
+          ],
+          "wrong_c_bootstrap_95": [
+            0.30158730158730157,
+            0.5652173913043478
+          ]
+        }
+      }
+    },
+    {
+      "id": "F2_BUFFER_OWNERSHIP_BLIND_SPOT",
+      "paper_counted": true,
+      "mentor_question": "RQ3",
+      "contribution": "C4",
+      "claim": "Buffer-occupancy ownership violations are stably missed by both source-only judges.",
+      "truth": "47 two-reviewer-agreed, both-resolved V instances across 6 families",
+      "methods": {
+        "deepseek_flash": {
+          "non_detection": "40/47",
+          "wrong_c": "33/47",
+          "non_detection_bootstrap_95": [
+            0.6875,
+            0.9772727272727273
+          ],
+          "wrong_c_bootstrap_95": [
+            0.5384615384615384,
+            0.875
+          ]
+        },
+        "glm5": {
+          "non_detection": "33/47",
+          "wrong_c": "22/47",
+          "non_detection_bootstrap_95": [
+            0.4375,
+            0.9411764705882353
+          ],
+          "wrong_c_bootstrap_95": [
+            0.29411764705882354,
+            0.6571428571428571
+          ]
+        }
+      }
+    },
+    {
+      "id": "F3_LONG_RANGE_DEPENDENCY_BLIND_SPOT",
+      "paper_counted": true,
+      "mentor_question": "RQ3",
+      "contribution": "C4",
+      "claim": "Long-range dependency violations are stably missed by both source-only judges.",
+      "truth": "50 two-reviewer-agreed, both-resolved V instances across 6 families",
+      "methods": {
+        "deepseek_flash": {
+          "non_detection": "39/50",
+          "wrong_c": "27/50",
+          "non_detection_bootstrap_95": [
+            0.582089552238806,
+            0.9761904761904762
+          ],
+          "wrong_c_bootstrap_95": [
+            0.32142857142857145,
+            0.8571428571428571
+          ]
+        },
+        "glm5": {
+          "non_detection": "34/50",
+          "wrong_c": "22/50",
+          "non_detection_bootstrap_95": [
+            0.5079365079365079,
+            0.925
+          ],
+          "wrong_c_bootstrap_95": [
+            0.2641509433962264,
+            0.6774193548387096
+          ]
+        }
+      }
+    },
+    {
+      "id": "F4_BUFFER_EVENT_PROTOCOL_BLIND_SPOT",
+      "paper_counted": true,
+      "mentor_question": "RQ3",
+      "contribution": "C4",
+      "claim": "Buffer event-protocol violations have stable non-detection across both source-only judges.",
+      "truth": "25 two-reviewer-agreed, both-resolved V instances across 6 families",
+      "methods": {
+        "deepseek_flash": {
+          "non_detection": "17/25",
+          "wrong_c": "15/25",
+          "non_detection_bootstrap_95": [
+            0.56,
+            0.875
+          ],
+          "wrong_c_bootstrap_95": [
+            0.52,
+            0.7037037037037037
+          ]
+        },
+        "glm5": {
+          "non_detection": "13/25",
+          "wrong_c": "5/25",
+          "non_detection_bootstrap_95": [
+            0.3142857142857143,
+            0.8125
+          ],
+          "wrong_c_gate_admitted": false
+        }
+      }
+    }
+  ],
+  "secondary_not_paper_counted": [
+    {
+      "id": "TASK_GOAL_NON_DETECTION",
+      "reason": "Passes the method-by-obligation gate for both judges but is a terminal task-outcome pattern, not counted as a separate safety/structural paper phenomenon."
+    },
+    {
+      "id": "GUARD_PROGRAM_LEVEL_COVERAGE",
+      "reason": "Original-path coverage remains descriptive. Post-guard double review is now complete, but the paired post-minus-pre UNSAFE effect fails the frozen UNKNOWN, family-cluster, and recurrence gate."
+    },
+    {
+      "id": "GUARD_INTERVENTION_ALIGNMENT",
+      "reason": "Only 9/54 intervention object-obligation pairs have two-reviewer exact/resolved post judgments (8 V, 1 C); the remaining disagreements and unresolved labels are not adjudicated, so 8/9 cannot be presented as overall precision."
+    }
+  ],
+  "not_admitted": [
+    "Safety-reminder prompt effect",
+    "Guard post-minus-pre UNSAFE risk after post-guard human review"
+  ]
+}
