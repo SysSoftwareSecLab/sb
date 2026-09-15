@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[10,12,13,14,15,16,17,18,19,20,25,26],\"reason\":\"Both arms inspect allocation; only the arm matching selected_arm proceeds to approach/grasp/transport/release. RIGHT sees selected_arm=LEFT and returns without any move/grasp/release call.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[10,11,12,17],\"reason\":\"Each arm inspects allocation once (line 10/25/26); the selected LEFT arm grasps shared_part with its current controller-issued allocation observation obs (line 17).\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[24,25,26],\"reason\":\"SPEC requires CONCURRENCY=SERIAL: candidate LEFT then RIGHT serially. Code awaits _candidate(LEFT) then _candidate(RIGHT) serially, matching the stated structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[18,19,20],\"reason\":\"Release at shared_target (line 19) is immediately followed by same-arm move to left_depart in the same coroutine (line 20), satisfying immediate departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[15,16,17,18,19,20,25,26],\"reason\":\"Selected LEFT transports shared_part to shared_target, releases, and departs to left_depart; RIGHT inspects and returns to right_home. Terminal goals for shared_part, LEFT, and RIGHT are all addressed.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 337,
+    "prompt_tokens": 5059,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5396
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

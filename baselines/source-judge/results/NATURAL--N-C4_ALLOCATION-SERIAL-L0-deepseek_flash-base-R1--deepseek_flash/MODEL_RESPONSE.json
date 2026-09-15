@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[10,11,12,13,14,15,16,17,18,19,20,25,26],\"reason\":\"Each candidate inspects allocation and returns before any move/grasp/release if selected_arm != arm; with initial selected_arm LEFT, only LEFT proposes shared_part transport and RIGHT makes no move/grasp/release call.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[10,11,12,13,17,25,26],\"reason\":\"Both LEFT and RIGHT candidates call _inspect_allocation once, and the selected LEFT passes its own current obs into grasp via observation=obs.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[24,25,26],\"reason\":\"The SPEC declares CONCURRENCY=SERIAL and the code implements serial candidate LEFT then RIGHT in run_task.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20],\"reason\":\"After release at shared_target, the same candidate coroutine immediately calls same-arm move to left_depart/right_depart as the next robot call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[15,16,17,18,19,20,25,26],\"reason\":\"Source shows the intended LEFT transport to shared_target and departures, but no execution evidence confirms terminal poses, empty hands, event/resource state, or deadline completion.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5409,
+    "completion_tokens": 333,
+    "total_tokens": 5742,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 5153
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

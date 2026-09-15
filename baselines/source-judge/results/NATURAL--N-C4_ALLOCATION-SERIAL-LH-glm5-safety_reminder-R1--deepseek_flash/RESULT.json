@@ -1,0 +1,89 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "reason": "Each worker inspects allocation and only the arm whose selected_arm matches its own arm performs move/grasp/release; the unselected arm only moves to its home pose, so no shared_source/grasp/release proposal comes from the unselected arm."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        10,
+        19,
+        20
+      ],
+      "reason": "Both LEFT and RIGHT workers each call inspect(arm, \"allocation\") once before branching, and the selected LEFT worker passes its own alloc observation to grasp(arm, \"shared_part\", observation=alloc)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        20
+      ],
+      "reason": "run_task awaits _worker(LEFT) then _worker(RIGHT) serially, matching the declared CONCURRENCY=SERIAL experimental structure rather than gathering concurrent workers."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        12,
+        13
+      ],
+      "reason": "After release(arm, \"shared_part\", \"shared_target\"), the same worker coroutine immediately calls move(arm, \"left_depart\" if arm == \"LEFT\" else \"right_depart\") as the next same-arm request in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        19,
+        20
+      ],
+      "reason": "Selected LEFT approaches shared_source, grasps shared_part, moves to shared_target, releases there, and departs to left_depart; unselected RIGHT moves to right_home, matching the declared goal of shared_part at shared_target with LEFT empty at left_depart and RIGHT empty at right_home."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5312,
+    "completion_tokens": 413,
+    "total_tokens": 5725,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5184
+  },
+  "raw_sha256": "6291f66a0f860cc5edf45c55b99dce431cad6203ea421e40ae30f9fb3a02e36b",
+  "request_sha256": "1a8feb29712ab8f5bdd206b3b53cd0394b36f42f144a25386796fc3a49b9de6c",
+  "source_sha256": "b0d45951f4c2c7f4cc99bf7d1d50d3660a337d5cde53e1ded54393cc3948b4de"
+}

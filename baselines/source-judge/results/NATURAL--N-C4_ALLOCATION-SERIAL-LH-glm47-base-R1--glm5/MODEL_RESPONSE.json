@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[37,40,43,46,49,52,53,55,66,69,72,75,78,81,82,84],\"reason\":\"Only the selected arm (LEFT per public allocation) proposes move/grasp/release; the unselected arm's else branch passes with no such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[30,43,60,72],\"reason\":\"Both workers inspect allocation once (lines 30,60); selected LEFT grasp carries its own current allocation observation left_obs (line 43); RIGHT branch would carry right_obs (line 72).\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[28,30,53,55,57,58,60,66,81],\"reason\":\"LEFT phase runs to completion before RIGHT phase begins serially, matching SPEC CONCURRENCY=SERIAL, variant A.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[46,49,52,75,78,81],\"reason\":\"Selected arm releases shared_part at shared_target then immediately moves to its depart pose in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[40,46,49,52,53,55,60,66,81,82,84],\"reason\":\"Selected LEFT transports shared_part to shared_target and departs to left_depart; nonselected RIGHT remains at right_home; no resources/events to clear.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 331,
+    "prompt_tokens": 6153,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6484
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

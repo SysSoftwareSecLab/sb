@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[31,35,38,44,49,52,56,59,60,61,62,63,69,72],\"reason\":\"Each worker inspects allocation and only the arm whose name equals selected_arm performs move/grasp/release; the unselected branch makes no such calls. With allocation selected_arm=LEFT, RIGHT remains at home.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[31,34,35,38,49,69,72],\"reason\":\"Both LEFT and RIGHT workers independently call inspect(arm, ALLOCATION_FACT_ID) once before branching, and the selected arm passes that same obs to grasp.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[65,66,68,69,71,72],\"reason\":\"The SPEC's experimental structure is CONCURRENCY=SERIAL, layout=L0; the code awaits worker LEFT then worker RIGHT serially, matching the declared serial composition rather than concurrent gather.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[52,56,59],\"reason\":\"The selected arm releases shared_part at shared_target (a declared logical support) and immediately in the same worker coroutine calls move to its depart pose as the next same-arm action.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[44,49,52,56,59,60,63,69,72],\"reason\":\"Selected LEFT moves to shared_source, grasps shared_part, transports to shared_target, releases there, and departs to left_depart; unselected RIGHT makes no calls and remains at right_home, matching the declared goal and empty-hand terminal poses.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6369,
+    "completion_tokens": 386,
+    "total_tokens": 6755,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6241
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[13,14,15,16,21,30,31,32,35,39,40,52,53,56,57],\"reason\":\"Both workers inspect allocation; only the selected arm (LEFT per initial allocation) proposes move/grasp/release/transport, while the unselected arm (RIGHT) returns without any such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[13,32,52,53,56,57],\"reason\":\"Both LEFT and RIGHT inspect allocation once; the selected LEFT worker consumes its own current allocation_obs as the grasp observation.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[43,46,55,56,57],\"reason\":\"SPEC requires SERIAL structure A: run candidate LEFT then RIGHT serially. Source awaits _worker(LEFT) then _worker(RIGHT) sequentially, matching the declared concurrency level.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[35,39,40],\"reason\":\"Selected LEFT moves to shared_target, releases shared_part at shared_target (a declared logical_support), then immediately begins same-arm separating move to left_depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[13,14,15,16,30,31,32,35,39,40,48,49,56,57],\"reason\":\"LEFT transports shared_part to shared_target and departs to left_depart empty; RIGHT remains at right_home empty; no resources or events to clear; deadline 30s with move durations well within limit.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 349,
+    "prompt_tokens": 5675,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6024
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

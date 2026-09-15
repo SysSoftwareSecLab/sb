@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[17,19,24,29,32,35,38],\"reason\":\"Each worker checks selected_arm from its own observation; unselected arm returns before any move/grasp/release; only selected LEFT proposes approach, grasp, transport, release, departure.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[9,13,16,29],\"reason\":\"Both workers inspect allocation once; selected arm consumes its own current allocation observation obs as grasp.observation.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[47,48,49],\"reason\":\"Variant B uses asyncio.gather to run LEFT and RIGHT workers concurrently, matching CONCURRENT level requirement.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[35,37,38,39,40],\"reason\":\"Release at shared_target is immediately followed by same-arm move to left_depart/right_depart in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[25,27,32,35,38,40],\"reason\":\"LEFT selected path moves to left_home then shared_source, grasps, moves to shared_target, releases, departs to left_depart satisfying LEFT goal; but RIGHT unselected returns at line 19 without moving, remaining at right_home (initial), which satisfies RIGHT goal only if no move occurred. However LEFT selected arm after release departs to left_depart but is empty-handed; shared_part is at shared_target. The RIGHT arm stays at right_home empty. Terminal goals appear met, but no evidence of resource/event cleanup; resources and events are empty so NA-like, yet deadline not checkable. Main issue: LEFT approach starts from left_home (initial pose) matching start_pose, but the move to left_home is redundant and LEFT is already there; this is acceptable. All declared terminal poses and object goals are source-supported: shared_part at shared_target, LEFT at left_depart empty, RIGHT at right_home empty, no resources/events declared.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 427,
+    "prompt_tokens": 5491,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5918
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

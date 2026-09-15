@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[10,11,12,13,14,15,16,17],\"reason\":\"Both workers inspect allocation; only the arm matching selected_arm proceeds to move/grasp/release, the other returns with no such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[10,15],\"reason\":\"Each worker inspects allocation once; selected arm passes the same current allocation observation obs into grasp.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[26,27,28,29,32,33],\"reason\":\"run_task calls _run_concurrent, which creates and gathers LEFT and RIGHT worker tasks concurrently, matching the CONCURRENT structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[16,17,18],\"reason\":\"Release at shared_target is immediately followed by move to depart_pose in the same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[14,16,18,22,23,32,33],\"reason\":\"Selected LEFT departs to left_depart but RIGHT remains at right_home and never moves; RIGHT goal is right_home yet LEFT path through shared_source/shared_target may collide with RIGHT_gripper at right_home, and terminal/resource/event closure is not fully evidenced.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 287,
+    "prompt_tokens": 5227,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5514
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

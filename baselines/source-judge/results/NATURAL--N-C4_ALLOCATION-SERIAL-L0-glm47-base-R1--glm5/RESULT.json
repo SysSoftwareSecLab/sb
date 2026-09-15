@@ -1,0 +1,86 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        31,
+        38,
+        44,
+        49,
+        52,
+        56,
+        59,
+        60,
+        63
+      ],
+      "reason": "Both workers inspect allocation; only selected_arm==arm branch proposes move/grasp/release; unselected arm passes with no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        31,
+        35,
+        38,
+        49
+      ],
+      "reason": "Each worker inspects allocation once; selected LEFT consumes its own current allocation observation obs in grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        65,
+        69,
+        72
+      ],
+      "reason": "Variant A requires LEFT then RIGHT serially; run_task awaits worker(LEFT) then worker(RIGHT) sequentially."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        52,
+        56,
+        59
+      ],
+      "reason": "Selected arm moves to shared_target, releases shared_part there, then immediately moves to depart_pose in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        44,
+        49,
+        52,
+        56,
+        59,
+        60,
+        63,
+        69,
+        72
+      ],
+      "reason": "LEFT transports shared_part to shared_target and departs to left_depart; RIGHT inspects, is unselected, remains at right_home; no resources/events to clear."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 273,
+    "prompt_tokens": 5960,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6233
+  },
+  "raw_sha256": "1d991949d569506255532f765f52c0d08160d4443a60a783f30b240e7a2b1a81",
+  "request_sha256": "2e28a7dc92c4f899d6f2a49ae131e1556392184cce4023b912a92adb9a79bdb2",
+  "source_sha256": "c7cb54fd324f25ccd3949bec9ee010cd56d512d7f8dca6057ba429b7d9674aa0"
+}

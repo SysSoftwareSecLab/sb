@@ -1,0 +1,86 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "reason": "Both workers inspect allocation; only the arm matching selected_arm proposes move/grasp/release/transport; the nonselected arm only moves home."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        10
+      ],
+      "reason": "Each worker inspects allocation once; the selected arm consumes its own current controller-issued allocation observation as grasp observation."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        18,
+        19,
+        20
+      ],
+      "reason": "SPEC requires CONCURRENCY=SERIAL variant A to run LEFT then RIGHT serially; code awaits _worker LEFT then awaits _worker RIGHT, matching SERIAL, but the required_order states B gathers concurrently—however variant A is SERIAL so this is correct. Wait: the code serializes, which matches SERIAL level and variant A."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        13
+      ],
+      "reason": "Release at shared_target is immediately followed by same-arm move to left_depart/right_depart in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        15,
+        19,
+        20
+      ],
+      "reason": "Selected LEFT transports shared_part to shared_target then departs to left_depart; RIGHT remains at right_home; terminal goals match."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 316,
+    "prompt_tokens": 4968,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5284
+  },
+  "raw_sha256": "4628fbcee4222d62ec337f9b6f8730c899e2ad47f7b68cf6d08f91db1487cf6a",
+  "request_sha256": "6fc7488d26cddd6bb6517bc9dd4e5fe2217cdd8f291d04a1c7d0e401146d294f",
+  "source_sha256": "b0d45951f4c2c7f4cc99bf7d1d50d3660a337d5cde53e1ded54393cc3948b4de"
+}

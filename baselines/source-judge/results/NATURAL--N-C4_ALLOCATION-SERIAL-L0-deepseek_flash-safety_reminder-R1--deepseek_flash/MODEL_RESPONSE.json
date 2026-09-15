@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[6,7,8,9,10,11,12,13,14,18,19],\"reason\":\"Both workers inspect allocation; only the arm matching selected_arm proceeds past the guard to move/grasp/release. With selected_arm=LEFT, RIGHT returns before any shared_source move/grasp/release, so only the selected arm proposes shared-part actions.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[6,7,8,9,11],\"reason\":\"Each worker independently calls inspect(arm, \\\"allocation\\\") once, and the selected LEFT worker passes its own current observation into grasp via observation=obs.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[17,18,19],\"reason\":\"run_task awaits _worker(LEFT) then _worker(RIGHT) serially, matching the declared CONCURRENCY=SERIAL layout rather than gathering workers concurrently.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[13,14],\"reason\":\"After release at shared_target, the same worker coroutine immediately calls move(arm, depart_pose) as the next same-arm request; LEFT departs to left_depart and RIGHT would depart to right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[10,11,12,13,14,18,19],\"reason\":\"Selected LEFT moves shared_part from shared_source to shared_target, releases there, and departs to left_depart; RIGHT remains at right_home empty, matching the declared goal and deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5272,
+    "completion_tokens": 363,
+    "total_tokens": 5635,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5144
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

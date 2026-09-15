@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[22,23,28,29,12,13,14,15,16,17],\"reason\":\"Only LEFT branch matches selected_arm==LEFT and calls move/grasp/release; RIGHT branch checks selected_arm==RIGHT and will not match initial allocation, so no RIGHT move/grasp/release proposals.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[21,27,7,14,23,29],\"reason\":\"Both candidates inspect allocation once; selected LEFT passes its current allocation observation obs into grasp via observation=obs.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[40,20,26,32,33,34,35],\"reason\":\"Variant B uses asyncio.gather to run LEFT and RIGHT worker candidates concurrently, matching CONCURRENT level.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,17],\"reason\":\"Release at shared_target is immediately followed by same-arm move to left_depart in same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[12,13,14,15,16,17,22,23,28,29,40],\"reason\":\"Source implements selected transport and terminal departure, but source-only evidence cannot confirm full terminal state, empty hands, resource/event clearance, and deadline for the finite trajectory.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 305,
+    "prompt_tokens": 5389,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5694
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

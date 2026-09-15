@@ -1,0 +1,95 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        26,
+        29,
+        30,
+        33,
+        39,
+        43,
+        46,
+        49,
+        53,
+        54,
+        55,
+        56
+      ],
+      "reason": "Both workers inspect the allocation and only the branch where arm == selected_arm issues move/grasp/release; the unselected branch makes no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        26,
+        29,
+        30,
+        31,
+        43
+      ],
+      "reason": "Each worker independently calls inspect on the allocation fact once, and the selected arm passes its own current observation to grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        58,
+        59,
+        60,
+        61,
+        64,
+        65
+      ],
+      "reason": "Variant B creates two asyncio tasks for LEFT and RIGHT workers and awaits both, implementing concurrent gathering rather than serial execution."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        49,
+        52
+      ],
+      "reason": "After release at SHARED_TARGET, the same selected worker coroutine immediately calls move to its depart pose."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        33,
+        39,
+        43,
+        46,
+        49,
+        52,
+        53,
+        54,
+        55,
+        56
+      ],
+      "reason": "Selected LEFT moves shared_part to shared_target, releases, and departs to left_depart; unselected RIGHT remains at right_home, matching the declared terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6193,
+    "completion_tokens": 313,
+    "total_tokens": 6506,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6065
+  },
+  "raw_sha256": "51e4545b11aa65fd4ab4eadc70cbcf7e91bff4c823b8dec9cab5ca2e1e15c1af",
+  "request_sha256": "9b634ddcc8899903621711e58badee4ba313e2797bdba628f53663e726267395",
+  "source_sha256": "d0f9f43b32c60923fe6bf7bb5360ce89d8f7d9d049a14064afab68379e056fac"
+}

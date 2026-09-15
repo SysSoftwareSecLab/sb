@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[11,15,17,27,31,34,38,43,44,46],\"reason\":\"Both workers inspect allocation; only the arm matching selected_arm (LEFT per spec) calls move/grasp/release; the unselected arm falls through to pass with no such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[11,15,31],\"reason\":\"Each worker inspects allocation once; the selected worker's grasp passes its own current allocation observation obs as the observation argument.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[9,48,49,50,51,6],\"reason\":\"Variant B requires concurrent gathering; asyncio.gather runs both LEFT and RIGHT worker coroutines concurrently rather than serially.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[34,38,42,37],\"reason\":\"Selected arm releases shared_part at shared_target (a declared logical_support) and immediately calls move to its depart_pose in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[24,27,34,38,42,46],\"reason\":\"Source shows selected LEFT transport to shared_target and depart, RIGHT stays home, but source-only evidence cannot confirm full terminal state, empty hands, and deadline completion without execution.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 295,
+    "prompt_tokens": 5566,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5861
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

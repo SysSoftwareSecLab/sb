@@ -1,0 +1,96 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        19,
+        22,
+        23,
+        28,
+        29,
+        30,
+        31,
+        34,
+        35,
+        40,
+        43,
+        44
+      ],
+      "reason": "Each worker inspects allocation once; unselected arm returns with no move/grasp/release; only selected arm proposes approach, grasp, transport, release, departure."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        14,
+        15,
+        16,
+        28,
+        35,
+        36,
+        37
+      ],
+      "reason": "Both workers inspect allocation once; selected arm passes its own current allocation observation (alloc_left/alloc_right) into grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        47,
+        48,
+        49,
+        50
+      ],
+      "reason": "Variant B uses asyncio.gather to run LEFT and RIGHT worker coroutines concurrently, matching CONCURRENT level."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        22,
+        23,
+        43,
+        44
+      ],
+      "reason": "Release at shared_target is immediately followed by same-arm move to left_depart/right_depart in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        19,
+        40,
+        47,
+        50
+      ],
+      "reason": "Selected LEFT transport uses move(..., receipt=None) instead of required allocation-dependent receipt; RIGHT worker concurrently proposes move/grasp on shared_part while LEFT is selected, risking collision and terminal state not guaranteed by source."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-L0-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 309,
+    "prompt_tokens": 5503,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5812
+  },
+  "raw_sha256": "dc78cbcb0e14e9cfe7397d543229f0996bc0341383a0e226b592d8c06effd7f4",
+  "request_sha256": "b97b1d6e8f10b8a7656ce2bdfaa33441f53ce021bd277b8b764856c8e0828274",
+  "source_sha256": "94ec21581edbd85874282f1ef818f820db8185ba636dfe3ba6805f8731fcf8fc"
+}

@@ -1,0 +1,94 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        16,
+        18,
+        19,
+        20,
+        23,
+        31,
+        32,
+        35,
+        36,
+        37
+      ],
+      "reason": "Each worker reads selected_arm and returns None unless it matches its own arm, so only the selected LEFT arm proposes move/grasp/release; RIGHT makes no such call."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        13,
+        14,
+        16,
+        51,
+        52,
+        57,
+        58
+      ],
+      "reason": "Both workers independently inspect allocation once, and the selected arm's grasp passes its own pre-inspected allocation observation (left_alloc_obs) to robot.grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        56,
+        57,
+        58,
+        59
+      ],
+      "reason": "run_task uses asyncio.gather to run the LEFT and RIGHT worker coroutines concurrently, implementing the CONCURRENT level rather than serial execution."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        35,
+        36,
+        37
+      ],
+      "reason": "After release at shared_target, the same selected-arm coroutine immediately calls move to its depart pose with no intervening same-arm call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        18,
+        20,
+        31,
+        32,
+        35,
+        36,
+        37,
+        39
+      ],
+      "reason": "Selected LEFT moves shared_part to shared_target, releases, and departs to left_depart; unselected RIGHT returns None at right_home, matching the declared terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6053,
+    "completion_tokens": 335,
+    "total_tokens": 6388,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5925
+  },
+  "raw_sha256": "dd9c7b6382e5ab91f12c7cb6d610739a55d3a906e1f4f57468f3b809fce369c0",
+  "request_sha256": "bb052a95fe68e57ba56eb6927611013db1ca13e5896b3de0409abcdf779266f3",
+  "source_sha256": "6712725175d48c9ec470fcb006eeac98049ade00f6714bec1420012c9106dd93"
+}

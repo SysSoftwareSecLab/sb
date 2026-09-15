@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "reason": "Each worker inspects allocation and returns unless selected_arm equals its own arm and item is shared_part; only the selected LEFT worker proceeds to move/grasp/release, so no unselected-arm move/grasp/release proposal is present."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        19
+      ],
+      "reason": "Both workers independently call _inspect_allocation once before branching, and the selected arm passes its own current observation obs to grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        26,
+        27,
+        28
+      ],
+      "reason": "run_task creates LEFT and RIGHT worker coroutines and awaits asyncio.gather, implementing the CONCURRENT joined-worker structure rather than serial execution."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        21,
+        22
+      ],
+      "reason": "After release at shared_target, the same worker calls move(arm, depart_pose) in the same coroutine, but the required immediate same-virtual-time separating move is not established; the release is followed by a separate awaited move call rather than an immediate same-time departure, and the source does not show the required same virtual instant."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        18,
+        19,
+        20,
+        21,
+        22,
+        26,
+        27,
+        28
+      ],
+      "reason": "The selected LEFT worker moves to shared_source, grasps shared_part, moves to shared_target, releases, and departs to left_depart, while RIGHT returns to right_home; however source-only evidence does not close all terminal conditions such as empty hands, resource OFF/unowned, event clearing, and deadline satisfaction."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5459,
+    "completion_tokens": 398,
+    "total_tokens": 5857,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 5203
+  },
+  "raw_sha256": "5bd26bfb2bb3ca5264a231159b175d15422114a56a572c73102cd7949d57eb32",
+  "request_sha256": "eb01985d597919f031e92bff1648066173ccdfee5e9d227791cf5c097aada1f8",
+  "source_sha256": "340e800658eca4a60810a85526c982dd84276f478c8785ca393df28620b61869"
+}

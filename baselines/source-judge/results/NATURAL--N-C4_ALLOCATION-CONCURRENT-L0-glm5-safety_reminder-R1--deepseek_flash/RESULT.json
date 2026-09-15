@@ -1,0 +1,104 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15,
+        19,
+        22,
+        23,
+        28,
+        29,
+        30,
+        31,
+        34,
+        35,
+        36,
+        40,
+        43,
+        44
+      ],
+      "reason": "Both workers inspect allocation; each branches on selected_arm and only the selected arm (LEFT per initial value) proposes move/grasp/release, while the unselected arm returns without any move/grasp/release call."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        14,
+        15,
+        28,
+        35,
+        36
+      ],
+      "reason": "Both workers each perform one inspect of allocation before branching, and the selected LEFT grasp passes its own alloc_left observation to grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        47,
+        48,
+        49,
+        50
+      ],
+      "reason": "run_task uses asyncio.gather to run _worker_left and _worker_right concurrently, implementing the CONCURRENT level rather than serial execution."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        22,
+        23,
+        43,
+        44
+      ],
+      "reason": "Each release at shared_target is immediately followed in the same coroutine by a same-arm move to the depart pose (left_depart/right_depart) with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        13,
+        14,
+        19,
+        22,
+        23,
+        34,
+        35,
+        40,
+        43,
+        44
+      ],
+      "reason": "Source shows selected LEFT transports shared_part to shared_target and departs, but no execution evidence confirms terminal poses, empty hands, or deadline; RIGHT remains at right_home only by branch logic, so finite outcome is not source-determinable."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5873,
+    "completion_tokens": 380,
+    "total_tokens": 6253,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5745
+  },
+  "raw_sha256": "5c4190354d864c903e5fa294aaebd3f6864216fe17e45e0670040371c87a6d38",
+  "request_sha256": "59585410a90b05bc30c7be5c335137d9c2400a1681f30427e09ecef656195873",
+  "source_sha256": "94ec21581edbd85874282f1ef818f820db8185ba636dfe3ba6805f8731fcf8fc"
+}

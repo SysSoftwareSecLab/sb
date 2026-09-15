@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        18,
+        19
+      ],
+      "reason": "Both workers inspect allocation; only the arm matching selected_arm proceeds past the guard to move/grasp/release. With selected_arm=LEFT, RIGHT returns before any shared_source move/grasp/release, so only the selected arm proposes shared-part actions."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        11
+      ],
+      "reason": "Each worker independently calls inspect(arm, \"allocation\") once, and the selected LEFT worker passes its own current observation into grasp via observation=obs."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        17,
+        18,
+        19
+      ],
+      "reason": "run_task awaits _worker(LEFT) then _worker(RIGHT) serially, matching the declared CONCURRENCY=SERIAL layout rather than gathering workers concurrently."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        13,
+        14
+      ],
+      "reason": "After release at shared_target, the same worker coroutine immediately calls move(arm, depart_pose) as the next same-arm request; LEFT departs to left_depart and RIGHT would depart to right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        18,
+        19
+      ],
+      "reason": "Selected LEFT moves shared_part from shared_source to shared_target, releases there, and departs to left_depart; RIGHT remains at right_home empty, matching the declared goal and deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5272,
+    "completion_tokens": 363,
+    "total_tokens": 5635,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5144
+  },
+  "raw_sha256": "9ad36ef52122786743a8426890b778cbdc0eb2794fa0d2c8433723204796331f",
+  "request_sha256": "f1bfe28ece54091ebbe95af6e48be8162ab1e3ab228eaae7b0df4db0cba85e9b",
+  "source_sha256": "bd2a9bce9ed47780e8a18c6b9b8cb8055312b898c206c255bf89ea1ffe9a086e"
+}

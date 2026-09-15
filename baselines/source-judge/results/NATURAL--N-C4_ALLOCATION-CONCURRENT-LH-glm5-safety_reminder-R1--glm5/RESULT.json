@@ -1,0 +1,85 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "reason": "Both workers inspect allocation; only when selected_arm==LEFT and arm==LEFT does the worker propose move/grasp/release. RIGHT worker returns without any move/grasp/release."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        13
+      ],
+      "reason": "Both workers call inspect(allocation) once; the selected LEFT grasp passes that same current allocation observation via observation=alloc."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        21,
+        23,
+        24,
+        26
+      ],
+      "reason": "run_task creates LEFT and RIGHT worker tasks and awaits them with asyncio.gather, implementing the CONCURRENT structure rather than serial execution."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        16
+      ],
+      "reason": "LEFT releases shared_part at shared_target (a declared logical_support) and immediately calls move(arm, depart_pose) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        12,
+        14,
+        15,
+        16,
+        24,
+        26
+      ],
+      "reason": "RIGHT worker returns immediately at right_home, but LEFT moves to shared_source then shared_target and departs to left_depart; source does not move LEFT back to left_depart after release nor ensure RIGHT remains empty at right_home via a move, and terminal LEFT pose is left_depart only if depart_pose is reached, yet no final terminal verification or resource/event cleanup is present."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 333,
+    "prompt_tokens": 5071,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5404
+  },
+  "raw_sha256": "912d9bf597094d65cd6ff3a769dc2749e6bc95aad61307d96d83fe1ae03d35b6",
+  "request_sha256": "6167a907dd2087289aedea07cf264ad4d341a46d725ac643c6931655d0d91caf",
+  "source_sha256": "294148676872d0c2e803aeaab250526302453c615805d90862f5b070fa018a27"
+}

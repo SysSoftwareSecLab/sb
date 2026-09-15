@@ -1,0 +1,93 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        25,
+        26
+      ],
+      "reason": "Each candidate inspects allocation and returns before any move/grasp/release if selected_arm != arm; with initial selected_arm LEFT, only LEFT proposes shared_part transport and RIGHT makes no move/grasp/release call."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        17,
+        25,
+        26
+      ],
+      "reason": "Both LEFT and RIGHT candidates call _inspect_allocation once, and the selected LEFT passes its own current obs into grasp via observation=obs."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        24,
+        25,
+        26
+      ],
+      "reason": "The SPEC declares CONCURRENCY=SERIAL and the code implements serial candidate LEFT then RIGHT in run_task."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20
+      ],
+      "reason": "After release at shared_target, the same candidate coroutine immediately calls same-arm move to left_depart/right_depart as the next robot call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        25,
+        26
+      ],
+      "reason": "Source shows the intended LEFT transport to shared_target and departures, but no execution evidence confirms terminal poses, empty hands, event/resource state, or deadline completion."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5409,
+    "completion_tokens": 333,
+    "total_tokens": 5742,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 5153
+  },
+  "raw_sha256": "788c0e78e6352b6578bff5c715de0b2c1256c4ad0b0aa32189e1115ddf90d19a",
+  "request_sha256": "b8e300900f1719567814687f7d3b82a95a15ee0e6244282d7ef0d8bf1579ccfb",
+  "source_sha256": "5fbc5e812043d7fc3020c6279d2cd6d47435cee0039e9f76d64f1da88bba9e7e"
+}

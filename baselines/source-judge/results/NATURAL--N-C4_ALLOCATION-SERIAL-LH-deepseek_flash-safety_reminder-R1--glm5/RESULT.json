@@ -1,0 +1,83 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        13,
+        14,
+        16,
+        17,
+        18,
+        19,
+        21
+      ],
+      "reason": "Each worker inspects allocation and returns if not selected; only selected LEFT proposes move/grasp/release; RIGHT inspects and returns without action calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        17
+      ],
+      "reason": "Both workers inspect allocation once (lines 11-12); selected LEFT grasps with its current controller-issued observation obs (line 17)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        23,
+        24,
+        25
+      ],
+      "reason": "SPEC requires SERIAL level: LEFT then RIGHT serially. Code awaits worker(LEFT) then worker(RIGHT) sequentially, matching stated structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        21
+      ],
+      "reason": "Selected arm moves to shared_target, releases shared_part there, then immediately moves to left_depart in same coroutine with no intervening calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        16,
+        17,
+        18,
+        19,
+        21,
+        24,
+        25
+      ],
+      "reason": "Selected LEFT starts at left_home but moves to left_home (no-op) then grasps/transport/releases/departs, but RIGHT worker returns without moving so RIGHT stays at right_home; however LEFT's initial move to left_home is redundant and the approach sequence requires start_pose left_home which is satisfied, yet LEFT departs to left_depart and RIGHT remains at right_home with empty hands and no resources—terminal goals appear met but LEFT's move to left_home as approach start is a no-op that may not satisfy approach_sequence semantics requiring actual movement from start_pose."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 368,
+    "prompt_tokens": 5100,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5468
+  },
+  "raw_sha256": "d1c9b20038b3326e5def7334131e2e92ec48215b7a97549ce01d6e4b38b08fc2",
+  "request_sha256": "3c9fce139601d2d3984f9cba40e95af1717198d6ef60fe06a1e2a4f86a062b30",
+  "source_sha256": "e40d3d6f01f4cbff52478ecfe64645d3816ac2190884a31cbf1c488c9ac8dd4c"
+}

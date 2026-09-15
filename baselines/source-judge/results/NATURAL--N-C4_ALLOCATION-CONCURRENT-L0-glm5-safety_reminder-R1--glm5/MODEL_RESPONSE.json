@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[7,8,9,10,13,14,19,22,23,28,29,30,31,34,35,40,43,44],\"reason\":\"Each worker inspects allocation once; unselected arm returns with no move/grasp/release; only selected arm proposes approach, grasp, transport, release, departure.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[7,14,15,16,28,35,36,37],\"reason\":\"Both workers inspect allocation once; selected arm passes its own current allocation observation (alloc_left/alloc_right) into grasp.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[47,48,49,50],\"reason\":\"Variant B uses asyncio.gather to run LEFT and RIGHT worker coroutines concurrently, matching CONCURRENT level.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[22,23,43,44],\"reason\":\"Release at shared_target is immediately followed by same-arm move to left_depart/right_depart in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[19,40,47,50],\"reason\":\"Selected LEFT transport uses move(..., receipt=None) instead of required allocation-dependent receipt; RIGHT worker concurrently proposes move/grasp on shared_part while LEFT is selected, risking collision and terminal state not guaranteed by source.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 309,
+    "prompt_tokens": 5503,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5812
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        7,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16,
+        17,
+        18
+      ],
+      "reason": "Both workers inspect allocation; unselected arm returns before any move/grasp/release. Only selected arm (LEFT per initial value) proposes approach, grasp, transport, release."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        16,
+        9,
+        10
+      ],
+      "reason": "Both arms inspect allocation once (line 7). Selected arm passes its current controller-issued observation obs to grasp (line 16)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        28,
+        29,
+        30,
+        5,
+        6
+      ],
+      "reason": "Variant B creates LEFT and RIGHT worker tasks and gathers them concurrently via asyncio.gather, matching CONCURRENT structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        20,
+        21
+      ],
+      "reason": "Selected arm releases shared_part at shared_target (line 18) then immediately calls move to depart_pose in same coroutine (line 21)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        14,
+        15,
+        17,
+        18,
+        20,
+        21,
+        10,
+        12
+      ],
+      "reason": "LEFT selected: moves left_home→left_home (line 15), then to shared_target, releases, departs to left_depart — goal met. But RIGHT unselected returns at line 12 staying at right_home. RIGHT goal is right_home, so RIGHT is satisfied. However LEFT's initial pose is left_home and line 15 moves to left_home (no-op approach start), then grasp at shared_source requires being at shared_source; LEFT never moves to shared_source before grasp, so grasp cannot succeed and shared_part cannot reach shared_target."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 374,
+    "prompt_tokens": 5180,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5554
+  },
+  "raw_sha256": "f150cd90f32faf3b37f207e2406c04d0614b3df4aa720aae0bb7075d86da0f7e",
+  "request_sha256": "05293fa42ac72755bdefcc4742b3057b3d023b0b5278e5cec23b86c44ac443e1",
+  "source_sha256": "4af9ada574de0702c0e776bc77db6d1aff995d77a0e95ce50f03424f67c796ad"
+}

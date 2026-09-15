@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[22,23,28,29],\"reason\":\"Both candidates inspect allocation and only the arm whose selected_arm matches proceeds to _selected_transport; LEFT is selected per public initial allocation, so only LEFT proposes move/grasp/release, RIGHT makes no such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[21,22,23,27,28,29],\"reason\":\"Each worker independently calls _inspect_allocation once (lines 21 and 27) before branching, and the selected LEFT passes its own obs into _selected_transport for the grasp observation (line 23).\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[40],\"reason\":\"run_task uses asyncio.gather to run _left_candidate and _right_candidate concurrently, implementing the SPEC's CONCURRENT level rather than serial execution.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[16,17],\"reason\":\"After release at shared_target, the same _selected_transport coroutine immediately calls robot.move to left_depart (LEFT) or right_home (RIGHT) on the next line with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[12,13,14,15,16,17],\"reason\":\"Source implements the selected transport sequence and terminal poses, but source-only evidence cannot confirm actual execution completion, empty hands, event clearing, or deadline satisfaction in the finite trajectory.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5770,
+    "completion_tokens": 341,
+    "total_tokens": 6111,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5642
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

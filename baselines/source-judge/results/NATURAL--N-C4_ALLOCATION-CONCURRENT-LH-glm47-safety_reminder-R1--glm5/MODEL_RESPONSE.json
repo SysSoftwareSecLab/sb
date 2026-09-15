@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[29,33,39,42,45,48,51,52,58],\"reason\":\"Both workers inspect allocation; only the arm matching selected_arm issues move/grasp/release, the unselected arm issues pass.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[29,31,42],\"reason\":\"Each worker inspects allocation once; selected arm passes its own current alloc_obs into grasp.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[62,63,66,67],\"reason\":\"Variant B required concurrent workers; code creates and awaits both worker tasks concurrently.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[45,48,51],\"reason\":\"Selected arm releases shared_part at shared_target then immediately moves to depart_pose in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[39,51,58],\"reason\":\"LEFT goal is left_depart but selected LEFT path starts approach from left_home to shared_source; approach_sequences require start_pose left_home, yet code moves LEFT directly to shared_source then to left_depart, and RIGHT remains at right_home. However LEFT's initial approach start is left_home matching, but final LEFT pose is left_depart satisfying goal; RIGHT at right_home satisfies goal. Re-evaluating: goals appear satisfied by source logic. But approach_sequence start_pose for LEFT is left_home and code moves from left_home to shared_source, consistent. V reason not sustained. Label should be C.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 331,
+    "prompt_tokens": 5876,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6207
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

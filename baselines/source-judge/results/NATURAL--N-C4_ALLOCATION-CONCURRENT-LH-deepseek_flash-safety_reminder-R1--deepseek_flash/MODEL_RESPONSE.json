@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[10,11,12,13,14,15,16,17,18],\"reason\":\"Each worker inspects allocation and returns early unless selected_arm equals its own arm; only the selected LEFT arm proceeds to move/grasp/release, while RIGHT returns before any move/grasp/release.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[10,11,12,15],\"reason\":\"Both workers call _inspect_allocation once (line 10), and the selected arm passes its own current observation obs to grasp (line 15).\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[26,27,28,29,32,33],\"reason\":\"run_task calls _run_concurrent, which creates LEFT and RIGHT worker tasks and awaits asyncio.gather, implementing the CONCURRENT level rather than serial execution.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[17,18],\"reason\":\"After release at shared_target, the same worker coroutine immediately calls robot.move(arm, depart_pose) as the next same-arm request.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[12,13,14,15,16,17,18,22,23,27,28,29,32,33],\"reason\":\"Source implements selected LEFT transport to shared_target and departure, but the nonselected RIGHT worker returns at home without a move to right_home; source-only evidence cannot confirm all terminal poses and empty-hand/resource/event conditions.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5602,
+    "completion_tokens": 357,
+    "total_tokens": 5959,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5474
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

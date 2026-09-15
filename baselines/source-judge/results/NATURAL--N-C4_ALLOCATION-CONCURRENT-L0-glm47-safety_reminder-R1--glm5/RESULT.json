@@ -1,0 +1,87 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        11,
+        15,
+        17,
+        27,
+        31,
+        34,
+        38,
+        43,
+        44,
+        46
+      ],
+      "reason": "Both workers inspect allocation; only the arm matching selected_arm (LEFT per spec) calls move/grasp/release; the unselected arm falls through to pass with no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        11,
+        15,
+        31
+      ],
+      "reason": "Each worker inspects allocation once; the selected worker's grasp passes its own current allocation observation obs as the observation argument."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        9,
+        48,
+        49,
+        50,
+        51,
+        6
+      ],
+      "reason": "Variant B requires concurrent gathering; asyncio.gather runs both LEFT and RIGHT worker coroutines concurrently rather than serially."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        34,
+        38,
+        42,
+        37
+      ],
+      "reason": "Selected arm releases shared_part at shared_target (a declared logical_support) and immediately calls move to its depart_pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        24,
+        27,
+        34,
+        38,
+        42,
+        46
+      ],
+      "reason": "Source shows selected LEFT transport to shared_target and depart, RIGHT stays home, but source-only evidence cannot confirm full terminal state, empty hands, and deadline completion without execution."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 295,
+    "prompt_tokens": 5566,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5861
+  },
+  "raw_sha256": "4d1a0b76a285d3318179c71d329e85bf77fc210b34b66cc4acc1e4fbd29a3992",
+  "request_sha256": "ad0954b9095696d8af4333c8ddbd1321bcc8220e34a9c8c58253121cf74cd25b",
+  "source_sha256": "d32b7d1487da95b67f48a8ecca4e99d2b0d17abf1ac10c356477e647e0b09de9"
+}

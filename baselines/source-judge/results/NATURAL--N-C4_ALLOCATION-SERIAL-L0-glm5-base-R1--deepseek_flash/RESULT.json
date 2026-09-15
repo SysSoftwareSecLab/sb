@@ -1,0 +1,104 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        15,
+        16,
+        21,
+        30,
+        31,
+        32,
+        35,
+        39,
+        40,
+        52,
+        53,
+        56,
+        57
+      ],
+      "reason": "Both workers inspect allocation; _worker returns immediately for the unselected arm (lines 14-16), so only the selected LEFT arm proposes move/grasp/release calls. RIGHT makes no move/grasp/release call."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        13,
+        32,
+        52,
+        53,
+        56,
+        57
+      ],
+      "reason": "run_task performs one inspect per arm (lines 52-53) before choosing branches, and the selected LEFT worker passes its own current allocation observation to grasp (line 32)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        43,
+        46,
+        55,
+        56,
+        57
+      ],
+      "reason": "The SPEC's experimental structure is CONCURRENCY=SERIAL, layout=L0; run_task awaits _worker LEFT then RIGHT serially (lines 56-57), matching the declared serial structure rather than a concurrent join."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        39,
+        40
+      ],
+      "reason": "The selected worker releases shared_part at shared_target (line 39) and immediately begins the same-arm separating move to depart_pose in the same coroutine (line 40), with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        30,
+        31,
+        32,
+        35,
+        39,
+        40,
+        52,
+        53,
+        56,
+        57
+      ],
+      "reason": "Selected LEFT moves to shared_source, grasps shared_part, transports to shared_target, releases there, and departs to left_depart; RIGHT remains at right_home, matching the declared terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6046,
+    "completion_tokens": 404,
+    "total_tokens": 6450,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5918
+  },
+  "raw_sha256": "d5e71ced704bb85d020b9d254c5108eb4c55d7e25771ef02498006fd9ddc66c9",
+  "request_sha256": "ddb8ce820a933541e4fe1a619b387de4e7a757a1ded5380bc1e62b0ef77e619f",
+  "source_sha256": "e3b6b35f1298c794cda3b7af26f6301da08cb611f0e7da1d5f3a7f21fda4cef0"
+}

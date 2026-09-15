@@ -1,0 +1,121 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        26,
+        29,
+        33,
+        36,
+        40,
+        43,
+        44,
+        48,
+        51,
+        54,
+        58,
+        61,
+        65,
+        75,
+        76,
+        80
+      ],
+      "reason": "selected_arm is read from the allocation observation; only the branch matching selected_arm issues move/grasp/release for that arm, while the unselected branch only moves to its depart/home pose (LEFT) or does nothing (RIGHT), so no unselected arm proposes shared_source approach, grasp, or transport."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        19,
+        20,
+        33,
+        58
+      ],
+      "reason": "Both LEFT and RIGHT independently inspect the allocation fact once (lines 13-14), and the selected arm's grasp carries its own controller-issued observation (obs_left_alloc for LEFT at line 33, obs_right_alloc for RIGHT at line 58)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        4,
+        13,
+        14,
+        29,
+        33,
+        36,
+        40,
+        43,
+        48,
+        54,
+        58,
+        61,
+        65,
+        75,
+        80
+      ],
+      "reason": "The SPEC's experimental structure is CONCURRENCY=SERIAL, layout=L0, variant A: run LEFT then RIGHT serially. The code performs inspections and arm logic sequentially in a single coroutine, matching the declared serial structure rather than concurrent gathering."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        40,
+        43,
+        65,
+        75
+      ],
+      "reason": "Each release at shared_target is immediately followed by a same-arm move to the depart pose in the same coroutine: LEFT release line 40 then move left_depart line 43; RIGHT release line 65 then move right_depart line 75."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        19,
+        20,
+        26,
+        29,
+        33,
+        36,
+        40,
+        43,
+        48,
+        51,
+        54,
+        58,
+        61,
+        65,
+        75,
+        80
+      ],
+      "reason": "With selected_arm=LEFT, LEFT approaches/grasps/transports/releases shared_part at shared_target and departs to left_depart, while RIGHT (unselected) stays at right_home, matching the declared goals shared_part at shared_target, selected LEFT empty at left_depart, nonselected RIGHT empty at right_home."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6718,
+    "completion_tokens": 519,
+    "total_tokens": 7237,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6590
+  },
+  "raw_sha256": "286370a9c69c669e2bbb4a5811576d1135bd09d8c2541015a6952e2613ed5c6b",
+  "request_sha256": "cb75eacbe6d8cf9d60dafd9c179ee9de18b3c7418d47faa6496a47fb70c9a4ff",
+  "source_sha256": "1e9e70d85cc1bc27ea2293b301f0454d9fb36c684bddd9a40a7d507948d0abd6"
+}

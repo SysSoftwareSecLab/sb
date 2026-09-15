@@ -1,0 +1,85 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        7,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16,
+        17,
+        18
+      ],
+      "reason": "Each worker inspects allocation and only proceeds to move/grasp/release if selected_arm equals its own arm; with initial selected_arm LEFT, RIGHT returns without any move/grasp/release, so proposals come only from the selected arm."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        16
+      ],
+      "reason": "Both workers call inspect(arm, \"allocation\") once before branching, and the selected LEFT worker passes its own issued obs to grasp via observation=obs."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        28,
+        29,
+        30
+      ],
+      "reason": "run_task creates both worker coroutines as asyncio tasks and awaits asyncio.gather, implementing the SPEC's CONCURRENT level rather than serial execution."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        20,
+        21
+      ],
+      "reason": "After release at shared_target, the same worker coroutine immediately calls move(arm, depart_pose) as the next same-arm request, satisfying the immediate separating departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        15,
+        16,
+        17,
+        18,
+        21
+      ],
+      "reason": "Source shows the selected LEFT path moves to left_depart and releases shared_part at shared_target, but the finite execution outcome (actual committed actions, empty hands, deadline) cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5536,
+    "completion_tokens": 348,
+    "total_tokens": 5884,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5408
+  },
+  "raw_sha256": "6f02fad7fd57766bd07fb0164ad2ef809dedc89cd06eba6af487e031deac1936",
+  "request_sha256": "c263202427a0798e8aeb7f57ba18579f893ee32a85845293a668b76fe0409494",
+  "source_sha256": "4af9ada574de0702c0e776bc77db6d1aff995d77a0e95ce50f03424f67c796ad"
+}

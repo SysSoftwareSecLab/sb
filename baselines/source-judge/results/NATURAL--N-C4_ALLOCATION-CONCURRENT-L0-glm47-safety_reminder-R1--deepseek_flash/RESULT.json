@@ -1,0 +1,96 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        11,
+        15,
+        17,
+        24,
+        27,
+        31,
+        34,
+        38,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "reason": "Each worker inspects allocation and only the arm matching selected_arm (LEFT per initial value) enters the branch that proposes move/grasp/release; the unselected arm does nothing."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        11,
+        15,
+        17,
+        31,
+        49,
+        50,
+        51
+      ],
+      "reason": "Both LEFT and RIGHT workers each call inspect(arm, \"allocation\") once concurrently, and the selected LEFT grasp passes its own current observation obs."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        9,
+        48,
+        49,
+        50,
+        51,
+        52
+      ],
+      "reason": "run_task uses asyncio.gather to run worker(\"LEFT\") and worker(\"RIGHT\") concurrently, implementing the CONCURRENT structure rather than serial execution."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        38,
+        41,
+        42
+      ],
+      "reason": "The selected arm releases shared_part at shared_target and immediately, in the same coroutine and virtual time, calls move to its depart pose."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        24,
+        27,
+        31,
+        34,
+        38,
+        42,
+        46
+      ],
+      "reason": "Selected LEFT moves to shared_source, grasps shared_part, transports to shared_target, releases there, and departs to left_depart empty; RIGHT remains at right_home empty, matching the declared goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5923,
+    "completion_tokens": 352,
+    "total_tokens": 6275,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5795
+  },
+  "raw_sha256": "380dd5dc1e405c0f5c1060ce2f9387058a4b7ea33a515d6f26dcf9f76295c95b",
+  "request_sha256": "d244f1e403a45a8de33a325a714c24ce286a0c03e9c94f9bcdb8b8c917a34944",
+  "source_sha256": "d32b7d1487da95b67f48a8ecca4e99d2b0d17abf1ac10c356477e647e0b09de9"
+}

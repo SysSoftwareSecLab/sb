@@ -1,0 +1,98 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        8,
+        9,
+        11,
+        12,
+        13,
+        16,
+        18,
+        22,
+        23,
+        24,
+        25,
+        26,
+        28,
+        29
+      ],
+      "reason": "Both arms inspect allocation; LEFT branch guarded by selected_arm==LEFT performs move/grasp/release, RIGHT branch guarded by selected_arm==RIGHT is not entered since public allocation selects LEFT, so only the selected arm proposes transport actions."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        8,
+        9,
+        12,
+        13,
+        22,
+        23,
+        25,
+        26
+      ],
+      "reason": "Both LEFT and RIGHT independently inspect the allocation fact once, and the selected LEFT grasp passes its own current allocation observation (left_alloc) to grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        21,
+        22
+      ],
+      "reason": "The code runs candidate LEFT then candidate RIGHT serially in a single coroutine, matching the declared CONCURRENCY=SERIAL structure rather than concurrent workers."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        29,
+        30
+      ],
+      "reason": "Each release at shared_target is immediately followed by a same-arm separating move (LEFT to left_depart, RIGHT to right_depart) in the same coroutine; only LEFT release actually commits given the public allocation."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        9,
+        11,
+        16,
+        18,
+        19,
+        23,
+        31,
+        32
+      ],
+      "reason": "Source shows selected LEFT transports shared_part to shared_target and departs to left_depart, and RIGHT remains at right_home, but no execution evidence confirms terminal poses, empty hands, cleared events, or deadline satisfaction."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5651,
+    "completion_tokens": 380,
+    "total_tokens": 6031,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 5651
+  },
+  "raw_sha256": "899650874933faf8bd955debd8d9f9507d16b1bf43a910c8703b92fdcfb62ee9",
+  "request_sha256": "39a7e226a6c30065012ad8d048ef84b7016dc74bca6a11ace476adf7e9beea22",
+  "source_sha256": "03cca01a3f2f8d491103084c7195c432471bf07f8344b19a6db980eb90f5ad64"
+}

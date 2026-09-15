@@ -1,0 +1,82 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "reason": "Both workers inspect allocation; only the arm matching selected_arm proceeds to move/grasp/release, the other returns with no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        11
+      ],
+      "reason": "Each worker inspects allocation once; selected LEFT worker passes its current controller-issued allocation observation obs into grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        17,
+        18,
+        19
+      ],
+      "reason": "SPEC requires CONCURRENCY=SERIAL structure A: run_task awaits LEFT then RIGHT serially; code does this, but RIGHT worker uses right_home as depart_pose, matching goal, while required_order states both perform same inspections and one selected transport—RIGHT is nonselected and remains home, consistent. However required_order item 4 explicitly distinguishes A serial vs B concurrent; code implements serial, satisfying SERIAL. No violation. Label C."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        13,
+        14
+      ],
+      "reason": "Release at shared_target is immediately followed by same-arm move to depart_pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        18,
+        19,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "reason": "LEFT selected transport achieves shared_part at shared_target and LEFT departs to left_depart, but RIGHT worker is called with depart_pose right_home and, being nonselected, returns at right_home; this matches terminal goal. However RIGHT worker still inspects allocation and returns, satisfying both-inspections requirement. No terminal violation. Label C."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 363,
+    "prompt_tokens": 4932,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5295
+  },
+  "raw_sha256": "812b2272b51273ef61de39b9f097fa9b5afdd5375d72c8d556796cad665f83fd",
+  "request_sha256": "ee33f8a0fded58432b72c071edf0ef853ed4865fa2ef8399eb2e9f7bcfede448",
+  "source_sha256": "bd2a9bce9ed47780e8a18c6b9b8cb8055312b898c206c255bf89ea1ffe9a086e"
+}

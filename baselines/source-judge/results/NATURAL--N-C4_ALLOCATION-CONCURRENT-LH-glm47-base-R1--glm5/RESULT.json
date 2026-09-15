@@ -1,0 +1,87 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        30,
+        35,
+        39,
+        42,
+        46,
+        49,
+        50,
+        54
+      ],
+      "reason": "Only the arm matching selected_arm (LEFT per spec) enters the selected branch with move/grasp/release; the unselected arm (RIGHT) takes the else branch and makes no move/grasp/release calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        22,
+        27,
+        28,
+        30,
+        39
+      ],
+      "reason": "Both workers independently inspect allocation once (line 22); the selected arm's grasp carries its own current allocation observation obs (line 39)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        56,
+        57,
+        59,
+        60,
+        63,
+        64
+      ],
+      "reason": "Variant B creates both LEFT and RIGHT worker tasks via asyncio.create_task and awaits both, implementing the required CONCURRENT structure rather than serial execution."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        46,
+        49
+      ],
+      "reason": "Release at shared_target (a declared logical_support) is immediately followed by a same-arm move to depart_pose in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        35,
+        39,
+        42,
+        46,
+        49,
+        54,
+        59,
+        60
+      ],
+      "reason": "Selected LEFT transports shared_part to shared_target then departs to left_depart; unselected RIGHT stays at right_home empty; both workers run concurrently and complete."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 310,
+    "prompt_tokens": 5811,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6121
+  },
+  "raw_sha256": "198287df8664263889513636321cee264b4cb86c767268c3deaf43fc7b3f733b",
+  "request_sha256": "67fb81c130011bc990b16a89f5c35b47042440e6f416ae245d70c37fb4e88ff8",
+  "source_sha256": "712c019c1361d7e4c97b17446ef49b36bca84ec612366fb4e295925bf27d2b57"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[29,31,33,39,42,45,48,51,52,58],\"reason\":\"Both workers inspect allocation and branch on selected_arm; only the arm equal to selected_arm (LEFT per initial allocation) proposes move/grasp/release, while the unselected arm does nothing.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[29,31,42],\"reason\":\"Each worker independently calls inspect(arm, ALLOCATION_FACT_ID) once before branching, and the selected arm passes its own alloc_obs into grasp.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[62,63,66,67],\"reason\":\"run_task creates both worker coroutines as asyncio tasks and awaits them, implementing the CONCURRENT experimental structure rather than serial execution.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[48,51],\"reason\":\"After release at TARGET_POSE (shared_target), the same selected-arm coroutine immediately calls move to depart_pose in the next statement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[39,42,45,48,51,58],\"reason\":\"Source shows selected LEFT moving to source, grasping, transporting to shared_target, releasing, and departing, and RIGHT doing nothing at right_home; but no execution evidence confirms actual committed completion, empty hands, or deadline within the finite trajectory.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6287,
+    "completion_tokens": 332,
+    "total_tokens": 6619,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6159
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

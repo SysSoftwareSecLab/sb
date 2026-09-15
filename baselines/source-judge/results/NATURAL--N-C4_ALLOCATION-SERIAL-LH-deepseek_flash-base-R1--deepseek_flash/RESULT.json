@@ -1,0 +1,83 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "reason": "Each worker inspects allocation, reads selected_arm, and returns early unless selected equals its own arm; only the selected arm proceeds to move/grasp/release, so unselected arm makes no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        16
+      ],
+      "reason": "Both workers call _inspect_allocation once before branching, and the selected arm passes its own current observation obs to grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        23,
+        24,
+        25
+      ],
+      "reason": "SPEC experimental_assignment requires CONCURRENCY=SERIAL (A runs LEFT then RIGHT serially), but run_task creates both workers concurrently and gathers them, implementing concurrent rather than serial composition."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19
+      ],
+      "reason": "After release at shared_target, the same worker coroutine immediately calls move(arm, depart_pose) as the next same-arm action."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        22,
+        23,
+        24,
+        25
+      ],
+      "reason": "Source shows selected LEFT transports shared_part to shared_target and departs, but the unselected RIGHT worker returns at home without any move; whether RIGHT ends at right_home and all terminal conditions hold cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5432,
+    "completion_tokens": 330,
+    "total_tokens": 5762,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 5176
+  },
+  "raw_sha256": "4d1ca79959985d7b9cc78eedfed2de2a570a9a04a376eca919914e65834249d1",
+  "request_sha256": "29a57b6c93a8f2feb91017ae81700dbae9406c89458fbee5a56aa0da03b71576",
+  "source_sha256": "cabb8966f3fd386c491a2387138043d06caba181f8969d1b4a7e4bb91953104a"
+}

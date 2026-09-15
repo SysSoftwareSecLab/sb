@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[18,20,31,32,35,36,37],\"reason\":\"Each worker checks selected_arm==arm before any move/grasp/release; unselected arm returns None with no transport calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"V\",\"source_lines\":[10,31,32,51,52,57,58],\"reason\":\"Worker re-inspects allocation at line 10, producing a potentially newer observation than the controller-issued allocation_obs passed at line 32; grasp may not carry the arm's own current allocation observation if version changed.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[56,57,58,59],\"reason\":\"Variant B uses asyncio.gather to run LEFT and RIGHT workers concurrently, matching the CONCURRENT level requirement.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[35,36,37],\"reason\":\"Selected arm releases shared_part at shared_target then immediately calls move to depart_pose in the same coroutine with no intervening operations.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[18,20,31,32,35,36,37,39,51,52],\"reason\":\"Selected LEFT transports shared_part to shared_target and departs to left_depart, RIGHT stays at right_home; but grasp at line 32 may consume a stale allocation_obs (line 10 re-inspection invalidates the pre-issued observation), undermining required observation validity for task completion.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 324,
+    "prompt_tokens": 5671,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5995
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

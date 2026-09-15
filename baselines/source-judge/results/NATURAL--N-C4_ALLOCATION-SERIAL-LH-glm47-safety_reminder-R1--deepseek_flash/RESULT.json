@@ -1,0 +1,121 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        34,
+        38,
+        40,
+        43,
+        46,
+        49,
+        52,
+        55,
+        63,
+        66,
+        68,
+        71,
+        74,
+        77,
+        80,
+        83
+      ],
+      "reason": "Each arm inspects allocation and only the arm whose selected_arm matches proposes move/grasp/release; unselected branch is pass, so no unselected-arm shared_source approach, grasp, or transport is proposed."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        26,
+        29,
+        34,
+        38,
+        46,
+        63,
+        66,
+        74
+      ],
+      "reason": "Both LEFT and RIGHT independently call inspect(allocation) once before branching, and the selected arm passes its own current observation (obs_left/obs_right) to grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        4,
+        34,
+        40,
+        43,
+        46,
+        49,
+        52,
+        55,
+        63,
+        68,
+        71,
+        74,
+        77,
+        80,
+        83
+      ],
+      "reason": "The task is C4_ALLOCATION-SERIAL-LH with CONCURRENCY=SERIAL; run_task executes candidate LEFT then candidate RIGHT serially in one coroutine, matching the declared serial structure rather than joined worker coroutines."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        52,
+        55,
+        80,
+        83
+      ],
+      "reason": "Each release at shared_target is immediately followed in the same candidate coroutine by a same-arm move to the declared depart pose (left_depart/right_depart) with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        38,
+        40,
+        43,
+        46,
+        49,
+        52,
+        55,
+        56,
+        59,
+        66,
+        68,
+        71,
+        74,
+        77,
+        80,
+        83,
+        84,
+        87
+      ],
+      "reason": "With allocation selected_arm=LEFT, LEFT moves to shared_source, grasps shared_part with obs_left, transports to shared_target, releases, and departs to left_depart; RIGHT remains at right_home empty, satisfying the declared terminal goal within the 30s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-SERIAL-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6693,
+    "completion_tokens": 448,
+    "total_tokens": 7141,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6565
+  },
+  "raw_sha256": "fbc76ca475089a00c32f54133969cf6d3661b0619ce5c18eb9fb6dd3867a25d3",
+  "request_sha256": "edf6ba1d7ca54150528ce32b67e77aa05ec3231345a0bd9749bc418b1d3eea7c",
+  "source_sha256": "fa6a12b332fe84bc67821a0c7c3a355df3b5a20e56ac52fc3882e58f1dc8c01b"
+}

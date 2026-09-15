@@ -1,0 +1,93 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        28,
+        30,
+        35,
+        39,
+        42,
+        46,
+        49,
+        50,
+        54
+      ],
+      "reason": "Each worker inspects allocation and only the branch where selected_arm==arm issues move/grasp/release; the other branch passes with no robot calls, so only the selected arm proposes shared_source approach, grasp, transport, release, and departure."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        22,
+        27,
+        28,
+        39,
+        59,
+        60,
+        63,
+        64
+      ],
+      "reason": "Both LEFT and RIGHT workers independently call inspect_allocation once before branching, and the selected branch passes its own current obs into robot.grasp(arm, SHARED_PART, observation=obs)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        63,
+        64
+      ],
+      "reason": "Variant B is implemented by creating both worker coroutines as asyncio tasks and awaiting both, so the two inspections/workers are gathered concurrently rather than run serially."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        46,
+        49
+      ],
+      "reason": "After release at POSE_SHARED_TARGET, the same selected worker coroutine immediately calls robot.move(arm, depart_pose) as the next same-arm request, satisfying the required immediate separating departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        35,
+        39,
+        42,
+        46,
+        49,
+        50,
+        54
+      ],
+      "reason": "Source implements the selected LEFT transport to shared_target and departure, but the finite execution outcome (actual committed moves, empty hands, RIGHT at right_home, deadline) cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6229,
+    "completion_tokens": 380,
+    "total_tokens": 6609,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6101
+  },
+  "raw_sha256": "128c53425c7169bc9b32c2a9d374939413dd6cf803c340604b33a6d0d5dec618",
+  "request_sha256": "516e2d38516b7670dc28e55eade296b90153ebdbb2ee3941a59430966453c116",
+  "source_sha256": "712c019c1361d7e4c97b17446ef49b36bca84ec612366fb4e295925bf27d2b57"
+}

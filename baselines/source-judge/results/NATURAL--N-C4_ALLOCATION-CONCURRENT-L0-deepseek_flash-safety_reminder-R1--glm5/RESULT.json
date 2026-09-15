@@ -1,0 +1,84 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "reason": "Both workers inspect allocation; only the arm matching selected_arm and item shared_part proceeds to move/grasp/release; the other returns with no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        19
+      ],
+      "reason": "Each worker inspects allocation once (line 10); selected arm passes that same current observation into grasp (line 19)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        26,
+        27,
+        28
+      ],
+      "reason": "run_task creates LEFT and RIGHT worker tasks and awaits them via asyncio.gather, implementing the required CONCURRENT structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        21,
+        22
+      ],
+      "reason": "Release at shared_target is immediately followed by same-arm move to depart_pose in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        20,
+        21,
+        22,
+        26,
+        27,
+        28
+      ],
+      "reason": "Selected LEFT transports shared_part to shared_target then departs to left_depart; RIGHT returns empty at right_home; no resources/events to clear."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 275,
+    "prompt_tokens": 5100,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5375
+  },
+  "raw_sha256": "739f5fc103056448810ed100e1a3ed5a264e50a1b5fe0e22e9b181dbc012ac76",
+  "request_sha256": "1952029878a732d075d77181b919a08daef1d95770c15970e649271ad0da7faf",
+  "source_sha256": "340e800658eca4a60810a85526c982dd84276f478c8785ca393df28620b61869"
+}

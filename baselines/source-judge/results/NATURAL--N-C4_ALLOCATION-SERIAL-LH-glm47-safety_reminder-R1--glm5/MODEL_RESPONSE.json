@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[34,38,40,43,46,49,52,55,63,66,68,71,74,77,80,83],\"reason\":\"Only the selected arm (checked via allocation observation) proposes approach/grasp/transport/release/depart; the unselected arm falls to else:pass with no move/grasp/release calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[34,46,63,74],\"reason\":\"Both LEFT and RIGHT independently inspect allocation once (lines 34,63); the selected grasp carries that arm's own current allocation observation (lines 46,74).\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"V\",\"source_lines\":[32,34,61,63],\"reason\":\"SPEC requires CONCURRENCY=SERIAL with A running candidate LEFT then RIGHT serially; source implements exactly this serial structure, but the obligation asks to implement the SPEC's concurrent level rather than merely reproducing terminal goal serially. However, the SPEC's stated structure for variant A is serial, so this is satisfied.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[52,55,80,83],\"reason\":\"Each release at shared_target is immediately followed by a same-arm separating move to left_depart/right_depart in the same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[43,46,49,52,55,71,74,77,80,83],\"reason\":\"Selected LEFT transports shared_part to shared_target and departs to left_depart; RIGHT (unselected) stays at right_home empty. Terminal goals match: shared_part at shared_target, LEFT empty at left_depart, RIGHT empty at right_home.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 380,
+    "prompt_tokens": 6288,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6668
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

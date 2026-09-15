@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[30,35,39,42,46,49,50,54],\"reason\":\"Only the arm matching selected_arm (LEFT per spec) enters the selected branch with move/grasp/release; the unselected arm (RIGHT) takes the else branch and makes no move/grasp/release calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[22,27,28,30,39],\"reason\":\"Both workers independently inspect allocation once (line 22); the selected arm's grasp carries its own current allocation observation obs (line 39).\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[56,57,59,60,63,64],\"reason\":\"Variant B creates both LEFT and RIGHT worker tasks via asyncio.create_task and awaits both, implementing the required CONCURRENT structure rather than serial execution.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[46,49],\"reason\":\"Release at shared_target (a declared logical_support) is immediately followed by a same-arm move to depart_pose in the same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[35,39,42,46,49,54,59,60],\"reason\":\"Selected LEFT transports shared_part to shared_target then departs to left_depart; unselected RIGHT stays at right_home empty; both workers run concurrently and complete.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 310,
+    "prompt_tokens": 5811,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6121
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,80 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        29,
+        33,
+        39,
+        42,
+        45,
+        48,
+        51,
+        52,
+        58
+      ],
+      "reason": "Both workers inspect allocation; only the arm matching selected_arm issues move/grasp/release, the unselected arm issues pass."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        29,
+        31,
+        42
+      ],
+      "reason": "Each worker inspects allocation once; selected arm passes its own current alloc_obs into grasp."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        62,
+        63,
+        66,
+        67
+      ],
+      "reason": "Variant B required concurrent workers; code creates and awaits both worker tasks concurrently."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        45,
+        48,
+        51
+      ],
+      "reason": "Selected arm releases shared_part at shared_target then immediately moves to depart_pose in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        39,
+        51,
+        58
+      ],
+      "reason": "LEFT goal is left_depart but selected LEFT path starts approach from left_home to shared_source; approach_sequences require start_pose left_home, yet code moves LEFT directly to shared_source then to left_depart, and RIGHT remains at right_home. However LEFT's initial approach start is left_home matching, but final LEFT pose is left_depart satisfying goal; RIGHT at right_home satisfies goal. Re-evaluating: goals appear satisfied by source logic. But approach_sequence start_pose for LEFT is left_home and code moves from left_home to shared_source, consistent. V reason not sustained. Label should be C."
+    }
+  ],
+  "object_id": "NATURAL--N-C4_ALLOCATION-CONCURRENT-LH-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 331,
+    "prompt_tokens": 5876,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6207
+  },
+  "raw_sha256": "e252f22d74d9a3b5d417a11ad40ab85147eb47e6b05aa03139cfc8a67690cff2",
+  "request_sha256": "6d2f02700b805e732cce56734d9fc62f7a17b830056a0786ca0f9f3fd1be406c",
+  "source_sha256": "0709019de14a410e5d9fd743da9a06763aa3625d37c480e9fe83cf9c4c3bcded"
+}
