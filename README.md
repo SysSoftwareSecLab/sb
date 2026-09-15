@@ -1,6 +1,6 @@
-# BiSafeBench: anonymous evidence and reproduction materials
+# Anonymous evidence and reproduction materials
 
-BiSafeBench evaluates LLM-generated bimanual programs and their safeguards by aligning requested task structure, generated source, reached behavior, and requirement-level evidence.
+This evaluates LLM-generated bimanual programs and their safeguards by aligning requested task structure, generated source, reached behavior, and requirement-level evidence.
 
 This is a **local release candidate**, aligned with the current anonymous eight-page submission candidate. It has not been uploaded or assigned a public URL. The supported reproduction entry point is offline reanalysis of the supplied evidence; it does not regenerate model answers, independently reproduce human judgments, or certify a complete fresh-machine execution pipeline.
 
