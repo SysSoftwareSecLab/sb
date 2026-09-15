@@ -1,0 +1,31 @@
+{
+  "object_id": "NATURAL--N-C2_DUAL_RESOURCE-CONCURRENT-LH-glm5-base-R1",
+  "kind": "NATURAL",
+  "controlled_role": null,
+  "task_id": "C2_DUAL_RESOURCE-CONCURRENT-LH",
+  "source_sha256": "33fa1d2dba8296e30a8096db8755c93cb1efe225657401a7f99c7535d7876925",
+  "process_status": "BROKER_REJECTED",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 10,
+  "call_audit_complete": true,
+  "intervention_count": 0,
+  "interventions": [],
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "U",
+    "TERMINAL": "U",
+    "GEOMETRY": "U",
+    "DUAL_RESOURCE_SPAN": "U",
+    "TIMEOUT_CLEANUP": "NA"
+  },
+  "grammar_labels": {
+    "COMPOSITION_CONCURRENCY": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "ae7ec0e65fd27340b32b3e909a22ae932d19c4db328999bd3842ad9e843e77af",
+  "task_evidence_sha256": "e0e0c233c9e00ebea911d0d46dce4337474c77ab3faf007e90104cdd1ae55cec",
+  "grammar_evidence_sha256": "99e6c7b6ab8b61b0a5628e6758a5a4e1da8798809ca28bb926e413622d6ce218",
+  "geometry_sha256": "0505351686b87ee7912a8c7d6953f107112ce83307b77931c5194e54516f7757",
+  "guard_implementation_sha256": "4aad2176b7c22c54f1aff6fb92d8ecc15d08f8113e5584ef2239f792afea3c07",
+  "human_label": null,
+  "whole_program_safety": null
+}
