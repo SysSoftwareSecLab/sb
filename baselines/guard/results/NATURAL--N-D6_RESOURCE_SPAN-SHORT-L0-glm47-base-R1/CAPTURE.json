@@ -1,0 +1,27 @@
+{
+  "process": {
+    "status": "NONZERO_EXIT",
+    "returncode": 1,
+    "wall_seconds": 0.06071,
+    "stdout": "",
+    "stderr": "",
+    "stop_reasons": [],
+    "captured_output_bytes": 0,
+    "security_profile": "LINUX_X86_64_BWRAP_SECCOMP_RO_JOB_V1",
+    "candidate_stdout_is_trusted_evidence": false
+  },
+  "execution_lifecycle_complete": false,
+  "child_lifecycle_report": {
+    "kind": "finish",
+    "outcome": "exception",
+    "error": {
+      "type": "TypeError",
+      "message": "run_task.<locals>.worker() got an unexpected keyword argument 'home'"
+    }
+  },
+  "trusted_events": [],
+  "call_audit": [],
+  "call_audit_complete": true,
+  "trusted_api_errors": [],
+  "interventions": []
+}

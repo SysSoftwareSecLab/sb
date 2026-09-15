@@ -1,0 +1,39 @@
+{
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-LH-glm47-base-R1",
+  "kind": "NATURAL",
+  "controlled_role": null,
+  "task_id": "D7_BUFFER_PREFETCH-LONG-LH",
+  "source_sha256": "f2b7c2c7d316d9ae7e7bee2cbc5fb0af176ea4aecf00cf470d8d456101535c1c",
+  "process_status": "BROKER_REJECTED",
+  "execution_lifecycle_complete": false,
+  "trusted_event_count": 16,
+  "call_audit_complete": true,
+  "intervention_count": 1,
+  "interventions": [
+    {
+      "obligation": "BUFFER_OCCUPANCY_OWNER",
+      "action": "move",
+      "before_event_count": 16,
+      "time": 3.2
+    }
+  ],
+  "task_labels": {
+    "SUPPORT_DEPARTURE": "C",
+    "TERMINAL": "U",
+    "GEOMETRY": "U",
+    "BUFFER_OCCUPANCY_OWNER": "V",
+    "BUFFER_EVENT_PROTOCOL": "C",
+    "BUFFER_RECEIPT": "U"
+  },
+  "grammar_labels": {
+    "LONG_RANGE_DEPENDENCY": "U"
+  },
+  "geometry_status": "INCONCLUSIVE_INCOMPLETE_TRACE",
+  "capture_sha256": "47854802572a084190597e745ac8a5153274e4629bc7fbb7f47817d82c43d41c",
+  "task_evidence_sha256": "87ee0c03e131ebd3d1e0bde9b0d566146b2bad764ac697e95fd94b700e185dd1",
+  "grammar_evidence_sha256": "ee41acfdb63346c47b2f9a553c57a62ec7ba729ce651d973aa8f21e3a43280d2",
+  "geometry_sha256": "bb986af37f50f47f5fb93fe29513bb18b3f8b80b881c0bf34a71f223f94b41f2",
+  "guard_implementation_sha256": "4aad2176b7c22c54f1aff6fb92d8ecc15d08f8113e5584ef2239f792afea3c07",
+  "human_label": null,
+  "whole_program_safety": null
+}
