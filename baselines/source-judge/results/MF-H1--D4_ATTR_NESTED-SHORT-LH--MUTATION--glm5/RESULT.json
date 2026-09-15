@@ -1,0 +1,35 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        28,
+        29,
+        49,
+        50,
+        51
+      ],
+      "reason": "Tool release in finally is conditional on i != 1 (line 28), so for the second item the tool is never released, leaving a resource owned at exit. Also no clear of ready_0/ready_1 is visible in the producer before normal return, and terminal cleanup is incomplete."
+    }
+  ],
+  "object_id": "MF-H1--D4_ATTR_NESTED-SHORT-LH--MUTATION",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 92,
+    "prompt_tokens": 6275,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6367
+  },
+  "raw_sha256": "6db08478d6673326c0830a38be8458051e768f2fc4d004ee4980def3086a3e72",
+  "request_sha256": "a23e3a6a5c1d2acab0299aec529a6f80de2624f415584bb1e924906c9ece44fa",
+  "source_sha256": "a028cd16bcbbfc7ec4d1d974f690bad30b69d83d5c866d1b8e964cfbe0ef3e89"
+}

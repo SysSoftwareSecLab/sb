@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[25,26,38,39,47,48],\"reason\":\"Tool is never released for i==1 (line 25 skips release when i==1), so terminal state has LEFT owning tool, violating the required unowned/OFF terminal condition.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 71,
+    "prompt_tokens": 6209,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 6280
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

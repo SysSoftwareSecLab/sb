@@ -1,0 +1,36 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        1,
+        46,
+        47,
+        48
+      ],
+      "reason": "Source implements producer/consumer with buffer transfers and terminal moves to left_home/right_home, but source-only evidence cannot confirm the full finite trajectory (buffer empty, lock free, events inactive, deadline) actually completes; no execution evidence."
+    }
+  ],
+  "object_id": "MF-H1--D3_ATTR_FLAT-SHORT-L0--MUTATION",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6583,
+    "completion_tokens": 82,
+    "total_tokens": 6665,
+    "prompt_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "prompt_cache_hit_tokens": 4736,
+    "prompt_cache_miss_tokens": 1847
+  },
+  "raw_sha256": "03bd2d7f9bea620a39b7f9eded90290fc305e816da4285302fbfe4da339462f3",
+  "request_sha256": "f58a10616503573178830b3a0aec46a94684db7aee2d14f10c81315248923058",
+  "source_sha256": "65043a57455b28c5a35375598d9dffe411417ec3507e661fa5c7eda8bce05755"
+}

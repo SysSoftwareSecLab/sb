@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[46,47,48,39,12,34,22,37,26],\"reason\":\"Terminal goals partly addressed (homes, target releases, lock/tool release, ready/empty clears), but buffer_0/buffer_1 share identical coordinates; produce(0) releases part_0 at buffer_0 then produce(1) later releases part_1 at buffer_1 without source-localizable evidence of buffer emptiness/capacity-one safety, and final event-clearing/state completeness cannot be confirmed from source alone.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 126,
+    "prompt_tokens": 6183,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6309
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

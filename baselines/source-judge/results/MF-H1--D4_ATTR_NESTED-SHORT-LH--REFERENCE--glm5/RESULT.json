@@ -1,0 +1,34 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        37,
+        42,
+        50,
+        51
+      ],
+      "reason": "Source omits required terminal cleanup: ready_0/ready_1 are signaled but never cleared (only ready_i cleared in consume, but empty_0 signaled at line 42 is never cleared after final consume); buffer_lock and tool resource modes not verified OFF at exit; no explicit event-inactive verification before return."
+    }
+  ],
+  "object_id": "MF-H1--D4_ATTR_NESTED-SHORT-LH--REFERENCE",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 94,
+    "prompt_tokens": 6270,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6364
+  },
+  "raw_sha256": "43193665205375421b99bab3aa0265a5bd2ae0cdcda7376565524ded6f3b5857",
+  "request_sha256": "49ecbd7c9b9f9cd7148746fc2306601cfebc92a426cf2a49a939398e1c4dfc5c",
+  "source_sha256": "687476c6551543f340c595df5bfdb77b09d11d1259f45ecc69670a7fd2396dfc"
+}

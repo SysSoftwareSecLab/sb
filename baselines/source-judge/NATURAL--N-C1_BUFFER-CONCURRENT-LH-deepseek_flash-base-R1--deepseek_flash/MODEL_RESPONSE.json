@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[21,24,25,36,45,53,56,59,67],\"reason\":\"Producer signals ready_0/ready_1 after placing and departing; consumer waits ready receipts, clears ready_0/ready_1 after carried moves, signals empty_0 after release/departure; producer waits and clears empty_0 before second part.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[16,17,18,19,31,32,33,34,48,49,50,51,62,63,64,65],\"reason\":\"Both participants acquire buffer_lock around buffer entry/departure; capacity-one buffer used with item-specific buffer_0/buffer_1 poses and lock held during release/grasp.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[45,52,59,66],\"reason\":\"Consumer waits ready_0/ready_1 and passes the exact active EventReceipt to the carried move to target_0/target_1.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[11,40,71],\"reason\":\"Producer and consumer coroutines are defined and run together via asyncio.gather, implementing the CONCURRENT variant B structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[18,19,20,33,34,35,54,55,68,69],\"reason\":\"Each release is followed by an immediate same-arm move in the same coroutine: producer releases part_0 then moves to left_wait, part_1 then left_wait; consumer releases part_0 then right_wait, part_1 then right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[38,69,71],\"reason\":\"Source shows final moves to left_home/right_home and releases to targets, but source-only evidence cannot confirm all runtime terminal conditions (buffer empty, lock free, events inactive, deadline) for the finite execution.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7074,
+    "completion_tokens": 459,
+    "total_tokens": 7533,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6946
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

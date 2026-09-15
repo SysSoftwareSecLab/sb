@@ -1,0 +1,34 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        28,
+        29,
+        50,
+        51
+      ],
+      "reason": "Tool is acquired at line 6 for both iterations, but the finally block (lines 27-29) only releases tool when i != 1, so the i==1 tool is never released. Also, after the gather at line 49, lines 50-51 move arms home but there is no release of tool before returning, leaving a resource owned at normal exit."
+    }
+  ],
+  "object_id": "MF-H1--D4_ATTR_NESTED-LONG-L0--MUTATION",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 107,
+    "prompt_tokens": 6254,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6361
+  },
+  "raw_sha256": "605c04e6f20371bb986769cc1ea2afcc8f3ec494e24f9a2d6dcc977878d3a4d7",
+  "request_sha256": "5019457ec9eae8f620717ee57dbd7013d83d08ae21612c83bc1d848c843818d9",
+  "source_sha256": "79a519a0d75351d738fd7e37f2b4be46e8e5028f0634c35ddfddab52d6f8503e"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[25,26,38,39,47,48],\"reason\":\"Source omits required terminal state: tool never released for i==1 (line 25 skips release), empty_0 never signaled for i==1 (line 38 only signals for i==0), and final moves to homes (lines 47-48) occur after gather without ensuring all episodes completed.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 96,
+    "prompt_tokens": 6185,
+    "prompt_tokens_details": {
+      "cached_tokens": 4608
+    },
+    "total_tokens": 6281
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

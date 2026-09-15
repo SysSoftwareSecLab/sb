@@ -1,0 +1,113 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        51,
+        60,
+        81,
+        90,
+        94,
+        98,
+        119,
+        126,
+        147
+      ],
+      "reason": "Producer signals ready_0/ready_1 after placing and departing; consumer waits ready receipt, clears ready after carried move completes, signals empty_0 after release/departure; producer_1 waits and clears empty_0 before entering buffer."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        39,
+        54,
+        63,
+        75,
+        107,
+        122,
+        129,
+        141
+      ],
+      "reason": "Both producers and consumers acquire buffer_lock before buffer entry and release it after departing; capacity-one buffer respected with item-specific poses and lock ownership."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        51,
+        60,
+        78,
+        119,
+        126,
+        144
+      ],
+      "reason": "Consumers wait the corresponding ready receipt and pass that exact active EventReceipt on the carried move to target."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        157,
+        158,
+        159,
+        160,
+        161,
+        162
+      ],
+      "reason": "run_task uses asyncio.gather to run producer_part_0, consumer_part_0, producer_part_1, consumer_part_1 concurrently, implementing the CONCURRENT structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        45,
+        48,
+        69,
+        72,
+        84,
+        87,
+        113,
+        116,
+        135,
+        138,
+        150
+      ],
+      "reason": "Each release at a declared support is immediately followed in the same coroutine by a same-arm move to a wait/home pose; consumer_part_1 is already at right_home after release at target_1."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        157,
+        158,
+        159,
+        160,
+        161,
+        162
+      ],
+      "reason": "Source implements the required actions and terminal poses, but source-only evidence cannot confirm the actual finite execution reaches all terminal goals, empty hands, lock free, and events inactive within the deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C1_BUFFER-CONCURRENT-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8738,
+    "completion_tokens": 434,
+    "total_tokens": 9172,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "prompt_cache_hit_tokens": 640,
+    "prompt_cache_miss_tokens": 8098
+  },
+  "raw_sha256": "a12b74d180a3469a180ff9fe48368441ef406a5b6123d419ba9a6b5fbbd5e917",
+  "request_sha256": "18a28472baebd2ac8b19f6b07956b8678e42ed21db102ce8004ea872d604b8d1",
+  "source_sha256": "822ef678a5c23d79165249994f9c517ee837108e8f88144ce4c7f05ed6b326a8"
+}

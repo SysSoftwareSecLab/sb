@@ -1,0 +1,36 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        1,
+        49,
+        50,
+        51
+      ],
+      "reason": "Source implements producer/consumer with homes and targets, but source-only evidence cannot confirm the finite execution reaches all terminal goals (buffer empty, lock free, events inactive, deadline) without a trajectory; no localizable contradiction."
+    }
+  ],
+  "object_id": "MF-H1--D4_ATTR_NESTED-LONG-L0--REFERENCE",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6649,
+    "completion_tokens": 77,
+    "total_tokens": 6726,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 6393
+  },
+  "raw_sha256": "0c80b890893dbb9912b3d62198742687031888d4d808d19007eadba3a98f8b88",
+  "request_sha256": "4b4c7a3193959ce819defea306191a254edf54147a25c499f61bd6cdb55754c7",
+  "source_sha256": "221cf6f77b6b55175c021e5c422c3271dddd387f552d87875be9fcdc055812e3"
+}

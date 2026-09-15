@@ -1,0 +1,37 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        25,
+        26,
+        38,
+        39,
+        46,
+        47,
+        48
+      ],
+      "reason": "Tool acquired for i=0 (line 6) is never released: finally guard at line 25 skips i==1 but also skips i==0, so tool ownership persists at terminal; also empty_0 is signaled only for i==0 consumer, but producer waits/clears empty_0 only for i==1, leaving event/ownership state inconsistent with the declared terminal goal."
+    }
+  ],
+  "object_id": "MF-H1--D3_ATTR_FLAT-LONG-L0--MUTATION",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 115,
+    "prompt_tokens": 6188,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6303
+  },
+  "raw_sha256": "eff4fd8b7b42204213a58d334fcd8277de5a710e374d0e7226cc5fa23ce10202",
+  "request_sha256": "9e63109c29abb721c3a63185b11aee0091d3f6b559fe06269f1b2ba62d9acffa",
+  "source_sha256": "76307a20ab2e90cfdb08e5b31cb64902bca238e3966dea6b6eb3fca67952d02a"
+}

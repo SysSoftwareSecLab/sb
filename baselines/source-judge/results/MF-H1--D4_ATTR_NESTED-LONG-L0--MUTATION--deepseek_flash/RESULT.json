@@ -1,0 +1,36 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        1,
+        49,
+        50,
+        51
+      ],
+      "reason": "Source shows producer/consumer gather and final moves to left_home/right_home, but the finite trajectory outcome (buffer empty, lock free, events inactive, deadline) cannot be determined from source alone; no execution evidence."
+    }
+  ],
+  "object_id": "MF-H1--D4_ATTR_NESTED-LONG-L0--MUTATION",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6654,
+    "completion_tokens": 79,
+    "total_tokens": 6733,
+    "prompt_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "prompt_cache_hit_tokens": 4736,
+    "prompt_cache_miss_tokens": 1918
+  },
+  "raw_sha256": "005314b302d32a70d79d3aeb194e04842e3fadac79fdb652f49b0f8d0fc46da5",
+  "request_sha256": "e4d79dd2a38915da508ff19efa497f90da665ac81ce84b195d056e386526cc19",
+  "source_sha256": "79a519a0d75351d738fd7e37f2b4be46e8e5028f0634c35ddfddab52d6f8503e"
+}

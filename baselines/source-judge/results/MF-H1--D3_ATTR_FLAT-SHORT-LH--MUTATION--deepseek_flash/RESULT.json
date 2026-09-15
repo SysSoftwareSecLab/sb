@@ -1,0 +1,36 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        1,
+        46,
+        47,
+        48
+      ],
+      "reason": "Source implements producer/consumer with buffer and events, but source-only evidence cannot confirm the finite trajectory reaches all declared terminal goals (parts at targets, buffer empty, lock free, events inactive) within deadline; no execution evidence supplied."
+    }
+  ],
+  "object_id": "MF-H1--D3_ATTR_FLAT-SHORT-LH--MUTATION",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6609,
+    "completion_tokens": 79,
+    "total_tokens": 6688,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "prompt_cache_hit_tokens": 640,
+    "prompt_cache_miss_tokens": 5969
+  },
+  "raw_sha256": "0ca3e2423fac1d8d00cf06e9d383a9cbd633208f5f2fe4ce5e5a08dceb486984",
+  "request_sha256": "dbdfecc3b5be8c6354853679c99d7e583821e55461f551f36da6435a89e15be4",
+  "source_sha256": "65043a57455b28c5a35375598d9dffe411417ec3507e661fa5c7eda8bce05755"
+}

@@ -1,0 +1,36 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        25,
+        26,
+        38,
+        39,
+        47,
+        48
+      ],
+      "reason": "Source omits required terminal state: tool never released for i==1 (line 25 skips release), empty_0 never signaled for i==1 (line 38 only signals for i==0), and final moves to homes (lines 47-48) occur after gather without ensuring all episodes completed."
+    }
+  ],
+  "object_id": "MF-H1--D3_ATTR_FLAT-SHORT-L0--MUTATION",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 96,
+    "prompt_tokens": 6185,
+    "prompt_tokens_details": {
+      "cached_tokens": 4608
+    },
+    "total_tokens": 6281
+  },
+  "raw_sha256": "625c1216663e110405b0557b87091abd9c5930a30dacc218cd8831fe57ab9f88",
+  "request_sha256": "24041383dfe38e8eb35b746077b609e5672cb67fa0dc9926a90f0bdc16e57a2a",
+  "source_sha256": "65043a57455b28c5a35375598d9dffe411417ec3507e661fa5c7eda8bce05755"
+}

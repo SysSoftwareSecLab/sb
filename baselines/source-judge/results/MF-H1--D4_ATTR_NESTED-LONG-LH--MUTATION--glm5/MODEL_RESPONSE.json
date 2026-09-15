@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[28,29,50,51],\"reason\":\"Tool acquired at line 6 is only released for i!=1 (line 28); for i==1 tool_owned stays true and is never released, so terminal resources are not OFF/unowned. Also no explicit set_mode OFF for tool/buffer_lock.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 86,
+    "prompt_tokens": 6278,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6364
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

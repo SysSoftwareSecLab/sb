@@ -1,0 +1,36 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        1,
+        49,
+        50,
+        51
+      ],
+      "reason": "Source implements moves to left_home/right_home and releases parts at target_0/target_1, but source-only evidence cannot confirm actual terminal object placement, buffer emptiness, lock/event state, or deadline satisfaction in the finite execution."
+    }
+  ],
+  "object_id": "MF-H1--D4_ATTR_NESTED-SHORT-LH--REFERENCE",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6674,
+    "completion_tokens": 83,
+    "total_tokens": 6757,
+    "prompt_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "prompt_cache_hit_tokens": 4736,
+    "prompt_cache_miss_tokens": 1938
+  },
+  "raw_sha256": "ba590b9d4c3df0a67fd17d7efe8662222d21bec9ac7a65a243605e54e7718fd2",
+  "request_sha256": "47563c194c08426bbc9d6c129ffe130580c710a43b9e3366ded60d939156af90",
+  "source_sha256": "687476c6551543f340c595df5bfdb77b09d11d1259f45ecc69670a7fd2396dfc"
+}

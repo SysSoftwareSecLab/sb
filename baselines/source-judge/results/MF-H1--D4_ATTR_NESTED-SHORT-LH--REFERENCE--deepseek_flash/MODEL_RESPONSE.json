@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[1,49,50,51],\"reason\":\"Source implements moves to left_home/right_home and releases parts at target_0/target_1, but source-only evidence cannot confirm actual terminal object placement, buffer emptiness, lock/event state, or deadline satisfaction in the finite execution.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6674,
+    "completion_tokens": 83,
+    "total_tokens": 6757,
+    "prompt_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "prompt_cache_hit_tokens": 4736,
+    "prompt_cache_miss_tokens": 1938
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

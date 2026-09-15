@@ -1,0 +1,35 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        28,
+        29,
+        49,
+        50,
+        51
+      ],
+      "reason": "Tool is acquired (line 18) but only released for i!=1 (line 28-29); for i==1 the tool is never released, so terminal resources are not OFF/unowned. Also no explicit tool release on exception paths before line 27 finally."
+    }
+  ],
+  "object_id": "MF-H1--D4_ATTR_NESTED-SHORT-L0--MUTATION",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 87,
+    "prompt_tokens": 6251,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6338
+  },
+  "raw_sha256": "89efd07a3a6bc3ed9f63c2b8110744e430d8b9625fe41b83e3e1c12261a66d7f",
+  "request_sha256": "405b3cb879f0281b710914503c418dbc1be2337b315c7a1b050fd3c98af4feb5",
+  "source_sha256": "a028cd16bcbbfc7ec4d1d974f690bad30b69d83d5c866d1b8e964cfbe0ef3e89"
+}

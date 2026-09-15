@@ -1,0 +1,36 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        1,
+        46,
+        47,
+        48
+      ],
+      "reason": "Source implements producer/consumer with buffer, tool, events, and terminal moves to left_home/right_home, but source-only evidence cannot confirm the finite trajectory reaches all declared terminal goals (parts at target_0/target_1, buffer empty, lock free, events inactive) within deadline; no execution trace is supplied."
+    }
+  ],
+  "object_id": "MF-H1--D3_ATTR_FLAT-LONG-LH--REFERENCE",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6605,
+    "completion_tokens": 100,
+    "total_tokens": 6705,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "prompt_cache_hit_tokens": 640,
+    "prompt_cache_miss_tokens": 5965
+  },
+  "raw_sha256": "6453249f5eb98799b197713253a68b0ea12fed89c73f49b0ab866fb4292ee7d8",
+  "request_sha256": "f994f163deac819b123aadb7502248b0e9f595a6437ecca2d0fdee8643e389f3",
+  "source_sha256": "f3ec9a8d98f083e65b98d034d015bd49c46dad7c02de52b2e5c84851b47bae82"
+}

@@ -1,0 +1,36 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        1,
+        46,
+        47,
+        48
+      ],
+      "reason": "Source implements producer/consumer and final home moves, but terminal state (parts at targets, buffer empty, lock free, events inactive) depends on runtime scheduling and event versions; source-only evidence cannot confirm all terminal conditions and deadline."
+    }
+  ],
+  "object_id": "MF-H1--D3_ATTR_FLAT-SHORT-LH--REFERENCE",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6604,
+    "completion_tokens": 79,
+    "total_tokens": 6683,
+    "prompt_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "prompt_cache_hit_tokens": 4736,
+    "prompt_cache_miss_tokens": 1868
+  },
+  "raw_sha256": "1cad8e8e0b011b173c1e8a8a3e5a06a0ab7d61f24c928b914bd933b75efd2c3c",
+  "request_sha256": "4ea8380e6a7d681932cca667619fbf0669e392443cff7f76b5fd09a96617fcc8",
+  "source_sha256": "482aa60d6d42d932af3505a5c8fd4d0e2b73c61ac6a6dc046b578d65106004c9"
+}

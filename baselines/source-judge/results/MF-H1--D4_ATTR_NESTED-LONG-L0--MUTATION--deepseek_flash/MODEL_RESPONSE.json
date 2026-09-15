@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[1,49,50,51],\"reason\":\"Source shows producer/consumer gather and final moves to left_home/right_home, but the finite trajectory outcome (buffer empty, lock free, events inactive, deadline) cannot be determined from source alone; no execution evidence.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6654,
+    "completion_tokens": 79,
+    "total_tokens": 6733,
+    "prompt_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "prompt_cache_hit_tokens": 4736,
+    "prompt_cache_miss_tokens": 1918
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

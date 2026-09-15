@@ -1,0 +1,36 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        25,
+        26,
+        38,
+        39,
+        47,
+        48
+      ],
+      "reason": "Tool is never released for i==1 (line 25 skips release when i==1), so terminal state has LEFT owning tool, violating the required unowned/OFF terminal condition."
+    }
+  ],
+  "object_id": "MF-H1--D3_ATTR_FLAT-SHORT-LH--MUTATION",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 71,
+    "prompt_tokens": 6209,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 6280
+  },
+  "raw_sha256": "5594b808ce6ddb62b677d3559e49271b30a139a9f4180daabd693677c6903fec",
+  "request_sha256": "28c5805d1e7ab68fdf4ca43b6a54d29e94254850e24d4784428391186632f3f8",
+  "source_sha256": "65043a57455b28c5a35375598d9dffe411417ec3507e661fa5c7eda8bce05755"
+}

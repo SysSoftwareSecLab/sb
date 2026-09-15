@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[1,49,50,51],\"reason\":\"Source implements producer/consumer with buffer, lock, events, and terminal moves to left_home/right_home, but source-only evidence cannot confirm the full finite trajectory satisfies all terminal goals (parts at targets, buffer empty, lock free, events inactive) within the 50s deadline; no execution record is supplied.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6653,
+    "completion_tokens": 98,
+    "total_tokens": 6751,
+    "prompt_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "prompt_cache_hit_tokens": 4736,
+    "prompt_cache_miss_tokens": 1917
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

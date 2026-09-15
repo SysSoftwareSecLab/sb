@@ -1,0 +1,34 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        25,
+        26,
+        47,
+        48
+      ],
+      "reason": "Tool is acquired (line 6) but only released for i!=1 (line 25); for i==1 the tool is never released, so terminal state has LEFT owning tool, violating resources-OFF-and-unowned terminal goal."
+    }
+  ],
+  "object_id": "MF-H1--D3_ATTR_FLAT-LONG-LH--MUTATION",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 78,
+    "prompt_tokens": 6212,
+    "prompt_tokens_details": {
+      "cached_tokens": 4608
+    },
+    "total_tokens": 6290
+  },
+  "raw_sha256": "e496bf38a710770f7066aa26ae3dcc908522835eeb78b7f9927b9fb079b01dac",
+  "request_sha256": "15180d17888f0e983fa8f1c5cdee226efa4c93271032e4c2c386a222f3eaafd5",
+  "source_sha256": "76307a20ab2e90cfdb08e5b31cb64902bca238e3966dea6b6eb3fca67952d02a"
+}

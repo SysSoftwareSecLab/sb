@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[1,46,47,48],\"reason\":\"Source implements producer/consumer with terminal moves to left_home/right_home and releases parts at target_0/target_1, but source-only evidence cannot confirm the actual finite trajectory completes all goals (events cleared, resources OFF/unowned, buffer empty, deadline) without execution evidence.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6578,
+    "completion_tokens": 92,
+    "total_tokens": 6670,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6450
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

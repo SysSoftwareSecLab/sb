@@ -1,0 +1,39 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        25,
+        26,
+        38,
+        39,
+        46,
+        47,
+        48
+      ],
+      "reason": "The producer's finally block releases the LEFT tool only when i != 1 (line 25), so after the second iteration (i==1) the tool resource is never released; the task goal requires resources OFF and unowned at termination, and the code returns normally after gather without releasing tool, a source-localizable omission."
+    }
+  ],
+  "object_id": "MF-H1--D3_ATTR_FLAT-LONG-LH--MUTATION",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6610,
+    "completion_tokens": 105,
+    "total_tokens": 6715,
+    "prompt_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "prompt_cache_hit_tokens": 4736,
+    "prompt_cache_miss_tokens": 1874
+  },
+  "raw_sha256": "a8e0a5a9ba5d9d7bf720ee5f1942c63034883f9a1dca39dbca6bbaf9d41bb437",
+  "request_sha256": "e11c2ba05324fb66b1c49ef694e7040504207681c09682db96a78606c8e9853f",
+  "source_sha256": "76307a20ab2e90cfdb08e5b31cb64902bca238e3966dea6b6eb3fca67952d02a"
+}

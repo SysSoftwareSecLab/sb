@@ -1,0 +1,36 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        1,
+        49,
+        50,
+        51
+      ],
+      "reason": "Source implements producer/consumer and final home moves, but source-only evidence cannot confirm the finite trajectory reaches all terminal goals (parts at targets, buffer empty, lock free, events inactive) within deadline; no execution evidence."
+    }
+  ],
+  "object_id": "MF-H1--D4_ATTR_NESTED-LONG-LH--REFERENCE",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6675,
+    "completion_tokens": 77,
+    "total_tokens": 6752,
+    "prompt_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "prompt_cache_hit_tokens": 4736,
+    "prompt_cache_miss_tokens": 1939
+  },
+  "raw_sha256": "f0966ae01d54fffd4621a78fd05b7bd4743133a1c093ebf6382ee7420385153a",
+  "request_sha256": "41b55e9a26f7f070283b379f42a2a329a8d3a2614082c74273f5502b95a49a76",
+  "source_sha256": "221cf6f77b6b55175c021e5c422c3271dddd387f552d87875be9fcdc055812e3"
+}
