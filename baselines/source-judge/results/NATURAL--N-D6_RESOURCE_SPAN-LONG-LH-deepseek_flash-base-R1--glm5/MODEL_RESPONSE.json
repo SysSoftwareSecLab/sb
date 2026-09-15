@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[11,13,16,17,20,21,24,31,36],\"reason\":\"Each worker acquires fixture then tool before moving/grasping, carries part to target while owning both, releases and departs, then releases tool and fixture in finally—matching the required dual-resource span order.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[11,13,16,17,20,21,24,31,36,47,53,54],\"reason\":\"Structure A runs two workers serially and Structure B launches both concurrently with same acquisition order; each worker preserves the long producer-to-consumer dependency (acquire→carry→release→depart→release resources) across intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[20,21,24],\"reason\":\"After release at target (line 21), the same worker immediately calls move to depart (line 24) in the same coroutine with no intervening same-arm proposal.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[43,44,45,47,48,50,53,54,55,57],\"reason\":\"Both Structure A and B use the same shared fixture and tool resources; in concurrent Structure B both workers call acquire on the same fixture/tool, so the second worker's acquire will timeout (resource already owned), leaving that part not placed and resources not fully released—terminal goal not met.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[10,11,12,13,14,25,31,36],\"reason\":\"try/finally releases every successfully acquired controller: if tool acquire (line 13) times out, acquired_fixture is true and finally (lines 36-40) releases fixture; if fixture acquire times out, nothing was acquired yet.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 405,
+    "prompt_tokens": 5718,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6123
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

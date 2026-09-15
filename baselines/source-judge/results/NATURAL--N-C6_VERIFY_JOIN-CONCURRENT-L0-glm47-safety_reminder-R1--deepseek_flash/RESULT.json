@@ -1,0 +1,66 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        82,
+        83,
+        84,
+        85,
+        86
+      ],
+      "reason": "run_task uses asyncio.gather to run left_arm_task() and right_arm_task() concurrently, implementing the CONCURRENT level rather than serial execution."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "V",
+      "source_lines": [
+        58,
+        80
+      ],
+      "reason": "Both arms signal left_ready/right_ready but no wait_event or join on these events is performed; the required join_events dependency is omitted."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        52,
+        55,
+        74,
+        77
+      ],
+      "reason": "Each release is immediately followed in the same coroutine by a same-arm move to the declared departure pose (LEFT_TARGET->LEFT_DEPART, RIGHT_TARGET->RIGHT_DEPART)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        58,
+        80
+      ],
+      "reason": "Terminal poses and object goals are reached, but the declared join events left_ready/right_ready are signaled and never cleared, so the events-cleared terminal condition is not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6562,
+    "completion_tokens": 251,
+    "total_tokens": 6813,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 6306
+  },
+  "raw_sha256": "0a74f5df616d007fb8c2bc08b76a516652c2155c095cf2997a59d9ee4bbfe615",
+  "request_sha256": "0e9e7da45bf79821d8ecdda00a738390dd6e575029e7cb37f4b8eae4ba30999b",
+  "source_sha256": "41b3a60768e23fd57f7cc7ad8262b1a66cbe6dd62cb62f521ad77cafe245b346"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[11,13,15,16,17,18,19,21,22,24,25],\"reason\":\"Each worker acquires fixture then tool, owns both during move/grasp/place/release/depart, then releases tool then fixture in nested try/finally.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[11,13,15,16,17,18,19,21,22,24,25,33,38],\"reason\":\"Spec requires LONG structure: A serial then B concurrent; source runs two serial workers then gather of both, preserving dual-resource span across full carry/depart/release flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[17,18,19],\"reason\":\"Each worker moves to target, releases part at target (a declared logical_support), then immediately calls move to depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[28,29,32,33,38],\"reason\":\"Source implements goal-oriented actions and concurrent structure, but terminal completeness (empty hands, resources OFF/unowned, deadline, all acceptance conditions) cannot be fully verified from source alone without execution evidence.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[12,13,20,22,23,24,25],\"reason\":\"Nested try/finally ensures that if tool acquire times out after fixture acquired, fixture is set OFF and released in the outer finally; if tool acquired, both tool and fixture are cleaned up.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 336,
+    "prompt_tokens": 5383,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5719
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

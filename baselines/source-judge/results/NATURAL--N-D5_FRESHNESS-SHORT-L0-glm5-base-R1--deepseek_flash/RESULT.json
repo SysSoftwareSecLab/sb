@@ -1,0 +1,76 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        8,
+        9,
+        10,
+        11,
+        15,
+        16,
+        17,
+        18
+      ],
+      "reason": "The SPEC's focal dependency is a route observation on left_part occurring after an invalidating peer placement/release, but the code never calls inspect/refresh for fact_id 'route' and never consumes any observation; it only grasps left_part and performs moves/releases, so the required SHORT producer-to-consumer dependency structure is omitted."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        9
+      ],
+      "reason": "The development contract requires a current route observation for object left_part, but the code only stores the grasp Observation from robot.grasp and never obtains or consumes a route observation, so the named dependency is absent."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        18,
+        19
+      ],
+      "reason": "Each committed release is immediately followed in the same candidate coroutine by a same-arm separating move: LEFT release at left_target then move LEFT left_depart, and RIGHT release at right_target then move RIGHT right_depart, with no intervening same-arm call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "reason": "The code moves both parts to their targets and both arms to departure poses, but it omits the required route observation dependency and provides no execution evidence that the finite run completes within the 30 s deadline or that all applicable acceptance conditions are met."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5301,
+    "completion_tokens": 340,
+    "total_tokens": 5641,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5173
+  },
+  "raw_sha256": "13a966b00f7da4e7804100d87a3e2993f3fb8307827bd5d9f77ff52460e652d0",
+  "request_sha256": "8721fcb0751d065c4bf44dbad7c566f8ec0ea52d50dd84949bcbbf1a0d1eb99f",
+  "source_sha256": "8d4765430d7ad76f974944a9e427f99a01444e265172d82ba92e39c4e999dd40"
+}

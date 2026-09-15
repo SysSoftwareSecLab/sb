@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[60,63,65,77,80,86,91,95,96,99,104,108],\"reason\":\"Producer signals ready_0/ready_1 after departing buffer; waits and clears empty_0 before second entry; consumer waits ready receipts, clears ready only after carried move to target, then signals empty_0. ready_0 cleared by producer after consumer's carried move done.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[51,56,57,58,59,68,73,74,75,76,87,89,90,93,94,100,102,103,106,107],\"reason\":\"Both producer and consumer acquire buffer_lock before entering buffer poses, hold it through release and immediate departure move, then release_resource after departing buffer.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[60,86,91,77,99,104],\"reason\":\"Consumer waits ready_0/ready_1 receipts and supplies those exact active receipts on the carried move to target_0/target_1; receipts are cleared only after the corresponding carried move completes.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[63,65,68,77,80,99,104,108],\"reason\":\"LONG structure implemented: producer waits and clears empty_0 before entering buffer with part_1; consumer waits ready_1 for second pickup; ready_0 receipt dependency preserved across intervening empty_0 cycle; concurrent producer/consumer coroutines via gather.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[57,58,74,75,92,93,105,106],\"reason\":\"Every release (part_0/part_1 at buffer and target) is immediately followed by a same-arm same-coroutine separating move to home/wait before any other action.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[75,76,77,80,106,107,108],\"reason\":\"Producer ends at left_wait (line 75) not left_home; consumer ends at right_wait (line 106) not right_home; ready_1 is never cleared (consumer clears it at line 108 but producer never clears ready_1 receipt); ready_0 cleared by producer at line 80 but terminal events not all inactive. Arms not at declared home terminal poses.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 518,
+    "prompt_tokens": 7379,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7897
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

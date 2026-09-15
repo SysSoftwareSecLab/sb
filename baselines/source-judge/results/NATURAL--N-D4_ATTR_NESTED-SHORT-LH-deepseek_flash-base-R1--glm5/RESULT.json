@@ -1,0 +1,131 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        124,
+        133,
+        135,
+        125,
+        138
+      ],
+      "reason": "D4 gather of line_clear/receiver_ready at lines 113-116; SHORT tool acquire after empty wait/checks at lines 125 then 130-133; LH cross paths via buffer_0/buffer_1 and target_0/target_1."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        87,
+        100,
+        105,
+        109,
+        110,
+        130,
+        131,
+        135,
+        136
+      ],
+      "reason": "Producer signals ready after buffer release/departure; consumer waits ready before pickup, clears ready after carried move; empty_0 waited/cleared before second producer; second consumer signals empty_0."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        81,
+        83,
+        85,
+        58,
+        59,
+        61,
+        63
+      ],
+      "reason": "LEFT acquires buffer_lock before buffer release and releases it in finally; capacity-one buffer occupied under lock ownership during placement/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        100,
+        105,
+        109
+      ],
+      "reason": "Consumer waits ready_0/ready_1 receipt then supplies that exact active receipt on carried move to target at line 105; clears ready after carried move at line 109."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        113,
+        116,
+        124,
+        130,
+        133,
+        135
+      ],
+      "reason": "Implements D4 gather inside second-item branch (lines 113-116) and SHORT dependency: empty_0 wait/clear (130-131) plus checks (133) precede second producer (135), with tool acquired at 125."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        125,
+        127,
+        128,
+        130,
+        131,
+        133,
+        135,
+        136
+      ],
+      "reason": "SHORT structure: tool acquired after first episode and after second-item empty wait/checks; focal dependency from empty receipt/readiness checks to second transfer preserved."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        83,
+        86,
+        106,
+        107,
+        84,
+        85
+      ],
+      "reason": "Each release (left buffer at 83, right target at 106) is followed by immediate same-arm separating move (left to left_wait at 86, right to right_home at 107) in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        127,
+        128,
+        135,
+        136,
+        107,
+        138,
+        131,
+        109
+      ],
+      "reason": "Both parts moved to targets; arms return home; tool released in finally; empty_0 cleared after second consumer; ready events cleared after each consumer; no outstanding resource ownership on normal completion."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-SHORT-LH-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 564,
+    "prompt_tokens": 7851,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 8415
+  },
+  "raw_sha256": "bb390116f6ff4387bd9525415cf5db60b616993e3618d13967150063d86cd5eb",
+  "request_sha256": "a47f5c71a100ac32b732938e1f727900a8cec20252cf6a6e6bdda620beb47eb1",
+  "source_sha256": "b4029c7e1575e62d8765c15e9efb55f5919f6c7d394427ac8fa77c05086cfeb1"
+}

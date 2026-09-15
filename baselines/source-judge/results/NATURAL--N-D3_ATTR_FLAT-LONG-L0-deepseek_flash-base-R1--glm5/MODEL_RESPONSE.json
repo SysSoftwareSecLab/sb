@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[7,8,12,13,14,57,58,59,61,62,63,108,109,110,111,112],\"reason\":\"LONG attribute implemented: tool acquired before source pickup (line 13), held across second-item wait/checks (lines 57-71), released on every exit via finally (lines 108-114).\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[28,30,31,34,37,43,48,51,58,59,81,82,83,86,89,95,100,103],\"reason\":\"Producer places and departs before ready; consumer waits ready before pickup and clears after carried move; producer waits/clears empty_0 before second entry; required ready_1 and final empty_0 published.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[26,27,28,30,31,79,80,81,82,83],\"reason\":\"buffer_lock acquired before buffer entry and released after departure for both episodes; capacity-one buffer respected by serial episodes with empty_0 handshake between placements.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[34,37,43,48,86,89,95,100],\"reason\":\"ready receipts signaled, waited, and supplied on carried move to target for both part_0 and part_1; cleared after carried move completes.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[57,58,59,61,62,63,64,65,66,67,68,69,70,71],\"reason\":\"D3 serial second-item checks implemented: empty_0 waited and cleared, then line_clear and receiver_ready inspected serially with both Boolean fields validated before transfer.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[13,14,57,58,59,61,62,63,73,74,75,76,79,80,81,108,109,110,111,112],\"reason\":\"LONG focal dependency: tool acquired before source pickup, spans second-iteration empty receipt wait/clear, source/grasp, and buffer release; tool released only in finally on every exit.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[28,30,44,45,81,82,96,97],\"reason\":\"Every release (part_0 at buffer_0, part_0 at target_0, part_1 at buffer_1, part_1 at target_1) is immediately followed by same-arm separating move in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[23,28,43,44,76,81,95,96,106,97,108,112],\"reason\":\"part_0 delivered to target_0, part_1 to target_1; LEFT returns left_home, RIGHT returns right_home; tool released in finally; buffer_lock released after each episode; events cleared.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 654,
+    "prompt_tokens": 7662,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8316
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

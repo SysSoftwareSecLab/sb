@@ -1,0 +1,120 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "source_lines": [
+        49,
+        50,
+        52
+      ],
+      "reason": "Source performs the two second-item checks serially and acquires tool after them, matching SHORT structure, but the combined declared attributes cannot be fully confirmed from source alone without execution evidence."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        15,
+        28,
+        32,
+        38,
+        43,
+        46,
+        47,
+        55,
+        61
+      ],
+      "reason": "Producer signals ready_0/ready_1 after placing and departing; consumer waits ready receipt, clears after carried move, signals empty_0 after release/departure, and producer waits/clears empty_0 before second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        8,
+        18,
+        33,
+        39,
+        56,
+        62
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release it after departure; buffer_0/buffer_1 are same capacity-one buffer and lock is held during entry/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        32,
+        35,
+        55,
+        58
+      ],
+      "reason": "Consumer waits corresponding ready receipt and supplies that exact active receipt on carried move to target for both parts."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        49,
+        50,
+        52
+      ],
+      "reason": "Source shows serial checks and tool acquisition after them, but the held-out control-flow signature and dependency cannot be fully confirmed from source-only evidence."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        46,
+        47,
+        49,
+        50,
+        52
+      ],
+      "reason": "Tool acquire follows second-iteration empty receipt wait/clear and both readiness checks, preserving the focal dependency across intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        25,
+        26,
+        41,
+        42,
+        64,
+        65
+      ],
+      "reason": "Each release is followed by an immediate same-arm separating move in the same coroutine: buffer releases followed by left_home/left_wait, target releases followed by right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        67
+      ],
+      "reason": "Source reaches right_home and releases tool, but terminal state, empty hands, resource OFF/unowned, events cleared, and deadline satisfaction cannot be fully confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7282,
+    "completion_tokens": 511,
+    "total_tokens": 7793,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7154
+  },
+  "raw_sha256": "efa933c315fa1e20156b182ca87b64cf151de0646562e78ebf0bdcaaffb62a8b",
+  "request_sha256": "78a8832178a044816e41a9f725c7c48979cc48082863ca0bd89d25fd321d743e",
+  "source_sha256": "4ae243e9ea83c822386376f53e39867bc6cffe1cad5f6030fe75d53af3a702df"
+}

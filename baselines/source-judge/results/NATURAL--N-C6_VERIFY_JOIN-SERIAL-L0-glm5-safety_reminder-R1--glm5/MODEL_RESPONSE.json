@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[40,43,44],\"reason\":\"SPEC requires SERIAL level; run_task awaits _left_branch then _right_branch sequentially, matching stated structure.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"V\",\"source_lines\":[18,20,35,37,43,44],\"reason\":\"SPEC requires joining both readiness events before returning; code clears each event immediately after signaling within its branch, so no join of both events exists before run_task returns.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,32,33],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine: LEFT release to left_target then move to left_depart; RIGHT release to right_target then move to right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[18,20,35,37],\"reason\":\"Terminal goal requires events cleared; left_ready and right_ready are signaled then immediately cleared within branches, but the SPEC's join obligation requires both events to be joined before return, and clearing each independently defeats the join, leaving the terminal event state inconsistent with the declared join contract.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 252,
+    "prompt_tokens": 5558,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5810
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

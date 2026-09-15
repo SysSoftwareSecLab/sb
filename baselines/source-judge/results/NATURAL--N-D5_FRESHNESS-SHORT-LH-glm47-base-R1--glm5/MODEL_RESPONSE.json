@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[34,35,38,41,44,48,51,54,57,60],\"reason\":\"SPEC focal dependency requires route observation after invalidating peer placement; source inspects route at line 34 before right arm placement and uses it in grasp at line 35, violating the SHORT producer-consumer order.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[34,35],\"reason\":\"route observation is obtained at line 34 before right_part placement; SPEC requires the observation after invalidating peer release, so the consumed observation is not current/valid for the dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[38,41,44,54,57,60],\"reason\":\"Each release (lines 41,57) occurs at the matching target support pose (left_target/right_target) and is immediately followed by a same-arm move to departure (lines 44,60) in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[34,35,38,41,44,48,51,54,57,60],\"reason\":\"Although terminal poses and releases are present, the route observation is consumed before the invalidating peer placement required by SPEC, so the dependency/acceptance condition is not satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 286,
+    "prompt_tokens": 5839,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6125
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

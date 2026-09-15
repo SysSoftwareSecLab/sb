@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[7,8,9,10,11,13,14,15,16,17,18,20],\"reason\":\"SPEC requires route observation (fact_id=route, object_id=left_part) to occur after invalidating peer placement; source never inspects/refreshes route observation and has no event/receipt dependency structure, omitting the required SHORT producer-to-consumer dependency.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[8,15],\"reason\":\"Development contract requires route observation (fact_id=route, object_id=left_part); grasp calls at lines 8 and 15 pass no observation argument, and no inspect/refresh of route fact occurs anywhere, omitting the required current observation.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[9,10,11,16,17,18],\"reason\":\"Each release (lines 10,17) is at the declared support (left_target/right_target in logical_supports) and is immediately followed by same-arm same-coroutine separating move (lines 11,18) with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],\"reason\":\"Source moves both parts to targets and arms to departure, but never inspects/refreshes the required route observation, never clears required events, and omits the development-contract observation obligation, so terminal acceptance conditions are not fully met.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 354,
+    "prompt_tokens": 4964,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5318
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"V\",\"source_lines\":[23,26,31,37,39,43,51,54,57],\"reason\":\"Each worker acquires fixture+tool before pick, carries to target, releases part and departs while still owning both resources, then releases resources in finally. But required_order says release and depart, THEN release tool and fixture; code departs before releasing resources, and resource release is only in finally after departure, not the declared span order.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[23,26,31,33,37,39,43,54,57],\"reason\":\"SHORT dependency: dual resource scope begins after pickup; worker acquires fixture+tool, then picks, carries to target, releases part, departs, and releases resources, preserving ownership across the carried path.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[37,39,43],\"reason\":\"Each release is at target_pose (declared support in logical_supports) and is immediately followed by same-arm move to depart_pose in the same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[23,26,31,33,37,39,43,54,57,67,70,75],\"reason\":\"Terminal goals require parts at targets, empty arms at departures, resources OFF and unowned; workers depart at line 43 but resource release only occurs afterward in finally, and concurrent workers share fixture/tool with no coordination, so final state not ensured by source.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[23,26,45,51,54,56,57],\"reason\":\"try/finally releases every successfully acquired resource (tracked in acquired list) after TimeoutError, setting mode OFF before release_resource.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 397,
+    "prompt_tokens": 6095,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6492
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

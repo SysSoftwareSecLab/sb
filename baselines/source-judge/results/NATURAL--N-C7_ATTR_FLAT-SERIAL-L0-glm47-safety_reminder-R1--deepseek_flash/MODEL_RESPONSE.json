@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"U\",\"source_lines\":[45,96],\"reason\":\"Source implements serial alternating episodes (episode 0 fully completes before episode 1), matching SERIAL, but the combined-attribute obligation's exact definition is not resolvable from source alone; no joined coroutines are present, yet whether the declared combination is jointly implemented cannot be confirmed from source-only evidence.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[66,69,79,91,99,100,125,128,138],\"reason\":\"Producer signals ready_0/ready_1 before consumer waits; consumer clears ready_0/ready_1 after its carried move; producer waits and clears empty_0 before second buffer entry; ordering matches required protocol.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[53,57,63,112,116,122],\"reason\":\"Producer acquires buffer_lock before entering buffer and releases after departing; consumer pickup occurs after producer departure; capacity-one buffer respected with lock ownership during entry/departure.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[66,69,82,125,128,141],\"reason\":\"Consumer waits the corresponding ready receipt before pickup and supplies that exact active EventReceipt on the carried move to target (lines 82, 141).\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[45,96],\"reason\":\"SPEC declares CONCURRENCY=SERIAL and the source implements strictly serial alternating producer/consumer episodes, matching the declared concurrent level.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"U\",\"source_lines\":[99,100,103,104],\"reason\":\"Source performs wait/clear empty_0 then serial inspect of both readiness facts, but the exact held-out control-flow signature and its dependency cannot be confirmed from source-only evidence.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[57,60,85,88,116,119,144,147],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine (release at buffer_0 then move LEFT to left_wait; release at target_0 then move RIGHT to right_home; analogous for part_1).\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[88,147,150],\"reason\":\"Source moves arms to homes and releases tool, but final event inactivity, buffer emptiness, lock-free state, and deadline satisfaction cannot be fully confirmed from source-only evidence.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8891,
+    "completion_tokens": 558,
+    "total_tokens": 9449,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 8635
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

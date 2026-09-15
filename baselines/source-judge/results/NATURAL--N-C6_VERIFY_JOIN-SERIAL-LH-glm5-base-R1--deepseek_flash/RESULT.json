@@ -1,0 +1,68 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        53
+      ],
+      "reason": "The SPEC requires CONCURRENCY=SERIAL (experimental_assignment level SERIAL, required_order says implement SERIAL), but run_task uses asyncio.gather to run both workers concurrently, contradicting the declared serial structure."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        13,
+        16,
+        33,
+        36
+      ],
+      "reason": "Each worker signals its own ready event (left_ready at line 13, right_ready at line 33) and waits for the other's ready event (right_ready at line 16, left_ready at line 36), implementing the declared join_events dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        23,
+        40,
+        43
+      ],
+      "reason": "Each release at its declared support zone (left_target line 20, right_target line 40) is immediately followed in the same coroutine by a same-arm separating move (left_depart line 23, right_depart line 43)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        23,
+        39,
+        40,
+        43
+      ],
+      "reason": "Both parts are moved to and released at their targets, and both arms then move to their departure poses empty, matching the declared goal of both parts at target and both arms at departure and empty."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6089,
+    "completion_tokens": 307,
+    "total_tokens": 6396,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5961
+  },
+  "raw_sha256": "cc75705ceae8aaf309e08de56fb88e82d35ef37a67b6843a10711ce7186e8281",
+  "request_sha256": "bba88da711482c58c090860aca5273106bfffdd17648a359dfa2ca132c31cf37",
+  "source_sha256": "a1126f8e6e52201f013bf31d31e0ffb1a8e43aeb835310f9b5bb0036018bc5cd"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[11,12,14,24,32,40],\"reason\":\"run_task creates left_branch, right_branch, and consumer coroutines and awaits them together via asyncio.gather, implementing the SPEC's CONCURRENT joined-worker structure rather than a serial action sequence.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[11,12,34,35,37,38],\"reason\":\"Both branches signal left_ready/right_ready, and consumer waits for both events then clears each using the issued receipt version, matching the declared join_events contract.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[21,22,29,30],\"reason\":\"Each release is immediately followed in the same branch coroutine by a same-arm separating move to the declared departure pose (left_depart/right_depart), with no intervening same-arm call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[16,17,19,20,21,22,25,26,27,28,29,30],\"reason\":\"Source shows the intended terminal moves and releases, but no execution evidence confirms both parts at targets, arms empty at departure, events cleared, and deadline met; source-only evidence cannot determine the finite outcome.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5898,
+    "completion_tokens": 295,
+    "total_tokens": 6193,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5770
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

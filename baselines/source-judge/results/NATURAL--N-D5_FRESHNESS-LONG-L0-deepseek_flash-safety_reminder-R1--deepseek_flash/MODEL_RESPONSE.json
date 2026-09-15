@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[6,10,14,21],\"reason\":\"The LONG dependency requires the peer placement to invalidate the first route observation before refresh, but the code inspects route at line 6, uses it at line 10, and never refreshes it after the RIGHT release at line 14/21; the focal dependency is not preserved across the intervening control flow.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[6,10,14,21],\"reason\":\"The route observation is taken at line 6 and consumed at line 10, but the RIGHT arm's grasp/release of right_part (lines 14,21) invalidates the route fact per h_variant.invalidates=true; the observation is stale at consumption and no refresh is performed.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[21,22,25,26],\"reason\":\"Each release at lines 21-22 is immediately followed by a same-arm separating move to the declared depart pose (lines 25-26) in the same coroutine with no intervening same-arm call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[17,18,21,22,25,26],\"reason\":\"Both parts are moved to and released at their own targets (lines 17-22), and both arms end at their departure poses (lines 25-26) empty-handed, matching the declared goal.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5434,
+    "completion_tokens": 323,
+    "total_tokens": 5757,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5306
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

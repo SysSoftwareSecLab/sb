@@ -1,0 +1,126 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        30,
+        33,
+        34,
+        35,
+        38,
+        39,
+        40,
+        41,
+        42,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "reason": "Each worker deposits own part, clears own pad, signals own item-bound ready event, waits for peer ready, consumes peer item carrying the peer receipt, then clears both events with expected versions after the corresponding moves complete, matching the required reciprocal exchange order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        33,
+        34,
+        35,
+        38,
+        39,
+        40,
+        41,
+        48
+      ],
+      "reason": "The peer EventReceipt returned by wait_event is passed as receipt to the carried move to peer_pad, and its version is used for clear_event after that move completes."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        30,
+        33,
+        34,
+        35,
+        38,
+        51,
+        52,
+        53,
+        55,
+        56,
+        57,
+        58,
+        62
+      ],
+      "reason": "Two concurrent workers implement the LONG producer-to-consumer dependency: each signals its own ready event and the peer waits on that event before the carried move, preserving the focal right_ready -> LEFT carried move dependency across the intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        41,
+        42
+      ],
+      "reason": "After each release at the declared support (own_pad or own_target), the same worker coroutine immediately issues a same-arm move to the departure pose (own_pickup_wait or own_depart) with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        24,
+        25,
+        26,
+        27,
+        38,
+        39,
+        40,
+        41,
+        42,
+        45,
+        46,
+        47,
+        48,
+        49,
+        51,
+        52,
+        53,
+        55,
+        56,
+        57,
+        58,
+        62
+      ],
+      "reason": "The code moves left_part to right_target and right_part to left_target, ends each arm at its own departure pose, and clears both ready events, matching the declared terminal goal within the deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6677,
+    "completion_tokens": 454,
+    "total_tokens": 7131,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6549
+  },
+  "raw_sha256": "13c9ba98378b0268899afca358da1af7c1b073504d77a8dc31b2f5377b9b00a3",
+  "request_sha256": "79e30cea07421f9bedd3e5e22df48d654d87f7fc34e634665d52f30abd6b632f",
+  "source_sha256": "0a9f4fefe39a3a825f7840ed99a84392e82582223713ff78b5875abfcc41bf4a"
+}

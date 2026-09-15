@@ -1,0 +1,68 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        34,
+        35,
+        51
+      ],
+      "reason": "The SPEC's focal dependency is that the route observation is consumed after an invalidating peer placement (SHORT producer-to-consumer structure). In the source, the LEFT arm inspects 'route' at line 34 and immediately grasps at line 35, while the RIGHT arm's grasp/release at lines 51/57 occurs concurrently with no ordering ensuring the route observation is consumed after the invalidating peer placement; the required dependency structure is not implemented."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "U",
+      "source_lines": [
+        34,
+        35
+      ],
+      "reason": "The source inspects 'route' and passes it to grasp, but the public SPEC's h_variant.invalidates=true and invalidation_on_release are empty in the supplied world, so source-only evidence cannot determine whether the observation is current at consumption time; no version/active check is present."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        41,
+        44,
+        57,
+        60
+      ],
+      "reason": "Each release (lines 41, 57) is immediately followed by a same-arm separating move in the same coroutine (lines 44, 60) with no intervening same-arm call, satisfying the immediate same-coroutine departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        29,
+        38,
+        44,
+        48,
+        54,
+        60
+      ],
+      "reason": "The code moves both arms to their depart poses and releases both parts at their targets, but source-only evidence cannot confirm the finite execution reaches the declared terminal state (empty hands, resources OFF/unowned, events cleared, deadline) without an actual trajectory."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6263,
+    "completion_tokens": 364,
+    "total_tokens": 6627,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6135
+  },
+  "raw_sha256": "66871283d9533bf129ca020e3c08c344b6a757182c2efd16e043b6788b216d4d",
+  "request_sha256": "3e36cb4bd15b745574486ef2c396bc664c7d60c7a001f86e8d0753ce19ff39e8",
+  "source_sha256": "98de8641c20987226b2393787f16403349e079ac3a554d12db681ac7bae48efa"
+}

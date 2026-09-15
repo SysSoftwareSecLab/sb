@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[61,65,68,92,98,119,128,132,153],\"reason\":\"Producer signals ready_0/ready_1 after placing and departing; consumer waits ready, clears ready_0/ready_1 after carried move, signals empty_0; producer waits and clears empty_0 before second buffer entry, matching required order.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[40,58,71,89,101,113,135,147],\"reason\":\"Both arms acquire buffer_lock before buffer entry and release it after departing the buffer; buffer_0/buffer_1 share coordinates and are treated as one capacity-one buffer with lock ownership during entry/departure.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[98,116,132,150],\"reason\":\"Consumer waits the corresponding ready receipt and passes that exact active EventReceipt to the carried move to target_0/target_1.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[61,65,68,92,98,116,128,132,150],\"reason\":\"The second item is picked before waiting for empty_0: producer signals ready_1 and consumer waits ready_1/moves part_1 before producer waits empty_0 for the second buffer entry, preserving the LONG dependency structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[52,55,83,86,122,125,156,159],\"reason\":\"Each release is immediately followed in the same coroutine by a same-arm separating move: LEFT releases at buffer_0 then moves to left_wait, LEFT releases at buffer_1 then moves to left_home, RIGHT releases at target_0 then moves to right_home, RIGHT releases at target_1 then moves to right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[86,125,159],\"reason\":\"Program moves parts to target_0/target_1, returns arms to left_home/right_home, releases buffer_lock, and clears ready_0/ready_1 and empty_0, matching declared terminal goals within the public deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8790,
+    "completion_tokens": 494,
+    "total_tokens": 9284,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "prompt_cache_hit_tokens": 512,
+    "prompt_cache_miss_tokens": 8278
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[40,41,44,47,60,61,64,67,87,91,92],\"reason\":\"RIGHT release at line 47 precedes LEFT lane and route refresh at line 87; route observation for left_part is taken after the invalidating right release, matching SHORT dependency structure.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"C\",\"source_lines\":[87,91,92],\"reason\":\"route_obs obtained via robot.refresh(\\\"LEFT\\\",\\\"route\\\") after right release; asserts fact_id==route and version>=1, consistent with current valid observation contract.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,52,67,70],\"reason\":\"Each release (lines 47,67) is immediately followed by a same-arm same-coroutine move to departure (lines 52,70) at declared supports right_target/left_target.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[40,41,44,47,52,60,61,64,67,70,87,105],\"reason\":\"Both parts grasped and released at their targets, both arms moved to departure poses, no resources/events declared, route observation satisfied, and function returns normally.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 270,
+    "prompt_tokens": 6734,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7004
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

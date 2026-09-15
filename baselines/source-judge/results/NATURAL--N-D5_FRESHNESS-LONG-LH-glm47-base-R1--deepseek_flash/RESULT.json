@@ -1,0 +1,77 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        58,
+        60,
+        62,
+        64,
+        68,
+        70,
+        76,
+        99
+      ],
+      "reason": "The code implements the LONG producer-to-consumer dependency: RIGHT moves/grasps/moves/releases right_part (lines 58-64), then LEFT moves/grasps (68-70), refreshes the route fact (76) after the invalidating release, and only then moves to left_target (99), preserving the focal observation dependency across the intervening control flow."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "C",
+      "source_lines": [
+        76,
+        99
+      ],
+      "reason": "LEFT calls refresh(ARM_LEFT, FACT_ROUTE) after RIGHT's release invalidates the prior route observation, obtaining a current Observation before the dependent move; the development contract's route/left_part observation is refreshed on the reachable path."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        64,
+        68,
+        102,
+        105
+      ],
+      "reason": "Each release uses the held object at its declared support (right_part at right_target line 64, left_part at left_target line 102), and the same-arm separating move follows in the same coroutine: RIGHT release line 64 then RIGHT move line 109, LEFT release line 102 then LEFT move line 105."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        58,
+        60,
+        62,
+        64,
+        68,
+        70,
+        99,
+        102,
+        105,
+        109
+      ],
+      "reason": "The source sequence places right_part at right_target and left_part at left_target, then moves LEFT to left_depart and RIGHT to right_depart with both hands empty, matching the declared terminal goals within the 30s deadline (7 moves x 1s plus short actions)."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7695,
+    "completion_tokens": 379,
+    "total_tokens": 8074,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7567
+  },
+  "raw_sha256": "0a5fa16dfc15d67a5cb6da3a1cd72d95e195feec471db8a6c7092f3384a6f529",
+  "request_sha256": "593bca11851051083b2f63fef4ac73b030f43ffa68b6e0a847cccb0979758c5c",
+  "source_sha256": "98c556fda69b87cab4a82025a8a8ae909fd9ff59b1bce752e7247ae249a8dca3"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[44,45,48,52,60,64,67,71,74,79,81],\"reason\":\"selected_arm is read from the allocation observation and only selected_workflow (using that arm) issues move/grasp/release; unselected_workflow only awaits selected_task and makes no robot calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[33,34,37,44,48,53,64],\"reason\":\"Both LEFT and RIGHT independently inspect the allocation fact once via create_task/gather, and the selected arm's grasp passes its own observation (left_obs or right_obs) matching selected_arm.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[33,34,37,44,48,53,64],\"reason\":\"The peer allocation inspection (both arms' inspect tasks) intervenes before the selected arm consumes its own observation in grasp, implementing the LONG focal dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[71,74],\"reason\":\"After release at shared_target, the same selected_workflow coroutine immediately calls robot.move(arm, depart_pose) with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[60,64,67,71,74],\"reason\":\"Source shows the selected arm transports shared_part to shared_target and departs, but no execution evidence confirms terminal poses, empty hands, or deadline; source-only cannot confirm the finite outcome.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6812,
+    "completion_tokens": 349,
+    "total_tokens": 7161,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6684
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

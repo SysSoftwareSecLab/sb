@@ -1,0 +1,101 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        16,
+        17,
+        25,
+        26,
+        27,
+        28,
+        33,
+        36,
+        39,
+        42,
+        47
+      ],
+      "reason": "selected_arm is read from the controller-issued allocation observation and all move/grasp/release calls use only selected_arm; unselected arm makes no calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        11,
+        12,
+        16,
+        25,
+        26,
+        27,
+        28,
+        36
+      ],
+      "reason": "Both arms independently inspect allocation concurrently, and the selected arm's grasp carries its own current allocation observation (obs_left/obs_right) matching selected_arm."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        11,
+        12,
+        16,
+        25,
+        26,
+        27,
+        28,
+        36
+      ],
+      "reason": "The peer allocation inspection (both LEFT and RIGHT) intervenes before the selected observation is consumed in grasp, implementing the LONG dependency distance structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        42,
+        46,
+        47
+      ],
+      "reason": "Release at shared_target (a declared logical support) is immediately followed in the same coroutine by a same-arm move to the depart pose."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        33,
+        36,
+        39,
+        42,
+        47,
+        49,
+        50
+      ],
+      "reason": "Selected arm transports shared_part from shared_source to shared_target, releases there, and departs to left_depart/right_depart; unselected arm remains at home, satisfying the declared terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5988,
+    "completion_tokens": 350,
+    "total_tokens": 6338,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5860
+  },
+  "raw_sha256": "af0cb686a3fb032b6a629aff7d02ac63ff507999549492b92f6ed9a2d9a1af0a",
+  "request_sha256": "96c8d59a4eac47de668810e848d0dd5100aa9281a07368f277f0eed918ebc59b",
+  "source_sha256": "70bd720eb49dc9c487a3b9c5748626f680f4cc8dc8c93513dc071e1325b3dfdf"
+}

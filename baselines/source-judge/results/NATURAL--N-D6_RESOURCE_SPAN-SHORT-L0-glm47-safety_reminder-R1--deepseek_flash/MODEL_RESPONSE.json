@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[16,20,24,27,30,33,36,47,49,51,53],\"reason\":\"Each worker acquires fixture then tool before carrying the part to target, releases the part at target, departs, and only then releases tool and fixture in finally, matching the dual-resource span requirement.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"NA\",\"source_lines\":[55,57,69],\"reason\":\"Experimental assignment is DEPENDENCY_DISTANCE=SHORT with no LONG producer-to-consumer dependency declared; the code launches two independent concurrent workers, so the LONG dependency structure is not applicable.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[33,36],\"reason\":\"Each release at the target support is immediately followed in the same worker coroutine by a same-arm move to the depart pose, satisfying the immediate separating departure requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[81,82],\"reason\":\"Source shows both workers awaited and finally blocks releasing resources with OFF mode, but the actual finite trajectory terminal state (poses, empty hands, ownership, event clearing, deadline) cannot be confirmed from source alone.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[38,44,47,49,51,53],\"reason\":\"The obligation is triggered only by an actual tool acquisition timeout; source contains a try/finally cleanup path but no evidence that a tool acquire timeout actually occurred in the finite trajectory.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6483,
+    "completion_tokens": 339,
+    "total_tokens": 6822,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6355
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

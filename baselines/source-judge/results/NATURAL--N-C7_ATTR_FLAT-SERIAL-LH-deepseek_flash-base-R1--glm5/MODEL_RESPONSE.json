@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[74,76,77,80,81,82,84,85,86,88,89,91,92,93],\"reason\":\"Source implements SERIAL alternating episodes (await producer then await consumer per item), LH layout with crossing paths, and serial readiness inspection for item 1, matching the declared combined attributes.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[36,38,39,42,52,63,64,65,66,69,72,81,82,88,89],\"reason\":\"Producer places at buffer, departs before signaling ready; consumer waits ready, clears after carried move, releases on target, departs before signaling empty; producer waits/clears empty_0 before second part. All required event ordering present.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[35,36,38,39,61,63,65,66],\"reason\":\"Both participants acquire buffer_lock before buffer entry and release it after departure; capacity-one buffer accessed under lock for place and pickup.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"V\",\"source_lines\":[52,56,58,61,63],\"reason\":\"Consumer waits ready receipt but does not supply that exact active item receipt on the carried move to target; move at line 63 omits receipt=receipt, violating the required BUFFER_RECEIPT mechanism.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[74,76,77,88,89],\"reason\":\"Episodes are awaited serially (producer then consumer per item), implementing the SERIAL concurrency level rather than joined coroutines.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[80,81,82,84,85,86,88],\"reason\":\"For item 1, source waits and clears empty_0, then inspects both readiness facts serially (two separate await inspect calls), matching the C7 serial check holdout signature.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[36,38,64,65],\"reason\":\"Each release (LEFT at buffer, RIGHT at target) is immediately followed by a same-arm move in the same coroutine: LEFT moves to left_wait, RIGHT moves to right_wait.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[76,77,88,89,91,92,93],\"reason\":\"Source places part_0 at target_0 and part_1 at target_1 via consumer episodes, returns LEFT to left_home and RIGHT to right_home, clears ready events, and signals/clears empty_0; resources released.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 572,
+    "prompt_tokens": 7242,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7814
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

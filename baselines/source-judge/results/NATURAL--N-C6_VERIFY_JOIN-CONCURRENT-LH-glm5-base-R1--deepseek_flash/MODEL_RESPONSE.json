@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[4,12,20],\"reason\":\"run_task defines left_worker and right_worker as separate coroutines and awaits asyncio.gather(left_worker(), right_worker()), implementing the SPEC's CONCURRENT level rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[10,18,20],\"reason\":\"Both workers signal their declared join events (left_ready, right_ready) and run_task joins both worker coroutines via asyncio.gather, matching the development contract join_events.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[8,9,16,17],\"reason\":\"Each release is immediately followed in the same worker coroutine by a same-arm move to the departure pose (left_depart/right_depart) with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[5,6,7,8,9,13,14,15,16,17],\"reason\":\"Source shows moves to departure poses and releases at targets, but no execution evidence confirms terminal poses, empty hands, cleared events, or deadline satisfaction; source-only evidence cannot determine the finite outcome.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5419,
+    "completion_tokens": 277,
+    "total_tokens": 5696,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "prompt_cache_hit_tokens": 512,
+    "prompt_cache_miss_tokens": 4907
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

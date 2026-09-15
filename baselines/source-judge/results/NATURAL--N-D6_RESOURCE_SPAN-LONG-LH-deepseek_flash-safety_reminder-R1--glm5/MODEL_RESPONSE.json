@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[10,12,15,16,19,20,23,30,35],\"reason\":\"Each worker acquires fixture then tool, carries part to target while owning both, releases part, departs, then releases tool and fixture in try/finally.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[10,12,15,16,19,20,23,30,35],\"reason\":\"LONG variant dual-resource span is implemented: both resources held across source approach, pickup, placement, departure, then released in order.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,23],\"reason\":\"Each worker moves to target, releases the held part at the target support, then immediately calls move to depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[42,43,46,47,49],\"reason\":\"Required_order states A runs workers serially; code launches both workers concurrently via asyncio.create_task and gather, violating the declared serial execution structure.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[9,10,11,12,13,24,30,35],\"reason\":\"try/finally releases every successfully acquired resource: fixture_owned and tool_owned flags gate release_resource calls, so a tool acquisition timeout after fixture acquisition releases fixture.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 303,
+    "prompt_tokens": 5486,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5789
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

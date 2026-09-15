@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"V\",\"source_lines\":[64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93],\"reason\":\"SPEC requires item-1 to inspect both readiness facts (line_clear and receiver_ready) after clearing empty_0; source omits both inspect calls, violating the combined attribute.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[59,90,98,117,128,147,66,67,124],\"reason\":\"ready_0/ready_1 are signaled before tool release and cleared after carried move; empty_0 is signaled and cleared. But producer clears empty_0 before inspecting readiness facts required by SPEC, and the ready/empty ordering omits required inspect steps, breaking the protocol.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[46,49,50,53,56,101,104,105,108,111,77,80,81,84,87,131,134,135,138,141],\"reason\":\"Both participants acquire buffer_lock before buffer entry, hold it through grasp/release/departure, and release it after departing buffer; capacity-one buffer occupancy is protected by lock ownership throughout.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[59,98,114,117,90,128,144,147],\"reason\":\"Producer signals ready_0/ready_1 with item_id; consumer waits corresponding receipt and supplies that exact active EventReceipt on carried move to target, then clears after carried move completes.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[36,95,153,154],\"reason\":\"Producer and consumer are separate coroutines run concurrently via asyncio.gather, implementing the CONCURRENT structure rather than serial episodes.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"V\",\"source_lines\":[64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93],\"reason\":\"SPEC holdout requires inspecting both readiness facts for item 1; source omits all inspect calls, so the declared control-flow signature is not implemented.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[50,53,120,121,81,84,150,151],\"reason\":\"Each release (part_0 at buffer_0, part_0 at target_0, part_1 at buffer_1, part_1 at target_1) is followed by an immediate same-arm move to home in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,150,151],\"reason\":\"Terminal goal requires part_0 at target_0 and part_1 at target_1; source omits required inspect of readiness facts for item 1, so the declared acceptance conditions are not satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 737,
+    "prompt_tokens": 8043,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8780
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

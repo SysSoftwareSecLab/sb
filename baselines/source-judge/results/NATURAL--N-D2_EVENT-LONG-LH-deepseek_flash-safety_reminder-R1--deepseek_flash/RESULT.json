@@ -1,0 +1,112 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        17,
+        19,
+        21,
+        23,
+        33,
+        35,
+        37,
+        38,
+        40,
+        42,
+        44,
+        46,
+        65,
+        66,
+        68,
+        69
+      ],
+      "reason": "Each worker deposits its own part on its own pad, clears it with an immediate same-coroutine separating move, signals its item-bound ready event, then waits for the peer ready event before picking up the peer item; the carried move to own target uses the wait receipt and the event is cleared after that move completes."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        33,
+        40,
+        42
+      ],
+      "reason": "consume_peer stores the EventReceipt returned by wait_event(peer_ready,30), passes it as receipt= to the carried move to own_target, and clears peer_ready with expected_version=receipt.version after that move."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        23,
+        33,
+        40,
+        53,
+        56,
+        59,
+        62,
+        65,
+        66
+      ],
+      "reason": "The focal dependency right_ready -> LEFT carried move is implemented: worker_right signals right_ready after its deposit, and worker_left waits on right_ready and carries the returned receipt into its move to left_target, with the two workers gathered concurrently."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        21,
+        44,
+        46
+      ],
+      "reason": "Each release is immediately followed in the same coroutine by a same-arm separating move (release then move to left_clear/right_clear in deposit_own; release then move to left_depart/right_depart in consume_peer)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        17,
+        19,
+        21,
+        23,
+        33,
+        35,
+        37,
+        38,
+        40,
+        42,
+        44,
+        46,
+        65,
+        66,
+        68,
+        69
+      ],
+      "reason": "The program deposits each part on its own pad, exchanges parts so left_part ends at right_target and right_part at left_target, moves each arm to its own departure pose, and clears both ready events after the receipt-bound carried moves."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6844,
+    "completion_tokens": 468,
+    "total_tokens": 7312,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6716
+  },
+  "raw_sha256": "49d6192de6fe705b266a04211a734822a07248e301926355ab2e465ef6c9140d",
+  "request_sha256": "3ea6e6930c1eeb61fc6e291b09cf75976da55d44aac3dc6db245f785819bc84c",
+  "source_sha256": "7b693d66fc977c6710a572dae223263971eb186b4764d8bbb6deb79c326e5953"
+}

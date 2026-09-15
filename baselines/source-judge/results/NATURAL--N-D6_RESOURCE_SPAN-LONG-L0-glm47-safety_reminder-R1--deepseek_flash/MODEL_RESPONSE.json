@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[33,36,41,43,47,49,53,61,64,66,69],\"reason\":\"Worker acquires fixture then tool before source approach/grasp, holds both through target move/release and departure, then releases tool then fixture in finally, spanning the full carry sequence.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[33,36,41,43,47,49,53,61,64,66,69],\"reason\":\"The dual resource ownership acquired at lines 33/36 is preserved across the intervening approach, grasp, transport, release and departure calls and only released in finally, implementing the LONG dependency span.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,49,53],\"reason\":\"Each worker releases the held part at its target support zone (line 49) and immediately issues the same-arm separating move to depart (line 53) in the same coroutine with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[41,43,47,49,53,61,64,66,69,73,85,97],\"reason\":\"Both workers move parts to targets, release at supports, depart to declared goal poses, release tool then fixture with set_mode OFF, and gather awaits both tasks; source supports the declared terminal goal.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[33,36,58,61,66],\"reason\":\"No actual tool acquisition timeout occurs in the supplied finite source; the try/finally cleanup exists but the timeout-triggered cleanup condition is not triggered.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6758,
+    "completion_tokens": 373,
+    "total_tokens": 7131,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6630
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[10,12,15,16,19,20,23,25,27],\"reason\":\"Each worker acquires fixture then tool before moving/grasping, carries part to target while owning both, releases part and departs, then releases tool and fixture in correct order.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[10,12,15,16,19,20,23,25,27],\"reason\":\"SHORT dependency structure with dual resource scope beginning after pickup is implemented: both resources acquired before grasp, held through transport/release/departure, then released after.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,23],\"reason\":\"Each worker moves to target, releases part at target (a declared logical_support), then immediately calls move to depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[15,16,19,20,23,25,27,51,54,57],\"reason\":\"Both workers run concurrently moving parts to targets, releasing, departing, and releasing resources OFF; goals for LEFT/RIGHT arms and parts match spec.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[9,29,36,38,42,44],\"reason\":\"try/finally releases every successfully acquired resource (tool then fixture) if acquisition times out, using ownership flags set after each acquire.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 319,
+    "prompt_tokens": 5619,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5938
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

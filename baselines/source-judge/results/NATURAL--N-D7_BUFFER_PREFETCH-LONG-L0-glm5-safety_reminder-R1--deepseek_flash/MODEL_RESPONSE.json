@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[30,35,45,53,59,60],\"reason\":\"Producer signals ready after buffer departure (line 30); consumer waits ready before pickup (line 35), clears ready after carried move (line 45), signals empty_0 after target departure (line 53); producer waits and clears empty_0 before second buffer entry (lines 59-60). Matches required order.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[20,22,24,26,28,37,39,41,43,47],\"reason\":\"Both arms acquire buffer_lock before entering buffer and release after departure; capacity-one buffer respected since producer releases and departs before consumer pickup, and second producer episode waits for empty_0.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[35,41,43,45],\"reason\":\"Consumer waits ready receipt, grasps with observation=receipt, and supplies exact active receipt on carried move to target; clears ready with receipt.version after move completes.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[57,59,60,62,66,68],\"reason\":\"Second producer episode (part_1) is gated on empty_0 receipt from consumer's first episode, implementing the LONG dependency across intervening control flow; focal dependency preserved.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[24,26,49,51],\"reason\":\"Each release at declared support zone is immediately followed by same-arm separating move in same coroutine and virtual time (release buffer_0 then move left_wait; release target_0 then move right_wait).\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[73,75],\"reason\":\"Source shows final moves to left_home/right_home and event clears, but source-only evidence cannot confirm actual finite execution terminal state, event inactivity, lock free, or deadline compliance.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7264,
+    "completion_tokens": 442,
+    "total_tokens": 7706,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7136
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

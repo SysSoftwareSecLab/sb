@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[9,11,14,15,16,17,18,20,21,22,23],\"reason\":\"Worker acquires fixture then tool before source approach/pickup/placement/departure, and releases tool then fixture in finally, so the dual resource scope spans the required carry span.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[9,11,14,15,16,17,18,20,21,22,23],\"reason\":\"The focal dual-resource dependency is held across the long source-approach, pickup, placement, and departure sequence, matching the LONG dependency-distance assignment.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[17,18],\"reason\":\"Each release at the target support is immediately followed in the same worker coroutine by a same-arm move to the departure pose.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[27,28],\"reason\":\"run_task serially invokes both workers, which carry each part to its target, release, depart, and release both resources in finally, matching the declared terminal goal.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"U\",\"source_lines\":[6,7,8,9,10,11,12,19,20,21,22,23],\"reason\":\"The try/finally cleanup structure is present, but no actual acquisition timeout event is shown in the finite source-only evidence.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5527,
+    "completion_tokens": 330,
+    "total_tokens": 5857,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 5271
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,138 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        5,
+        18,
+        41,
+        73,
+        104
+      ],
+      "reason": "Source implements the declared SERIAL/L0 combined attributes: complete producer episode 0 then consumer episode 0, then producer episode 1 then consumer episode 1, with the required serial readiness inspections at lines 79-80, matching the stated structure rather than only terminal goals."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        36,
+        43,
+        61,
+        64,
+        75,
+        76,
+        99,
+        106,
+        124,
+        127
+      ],
+      "reason": "Producer signals ready_0/ready_1 before consumer waits them; consumer clears ready after the carried target move (lines 55-61, 118-124); producer waits and clears empty_0 before entering buffer with part_1 (lines 75-76); empty_0 is published after consumer release/departure (lines 64, 127)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        28,
+        29,
+        30,
+        33,
+        47,
+        48,
+        49,
+        52,
+        91,
+        92,
+        93,
+        96,
+        110,
+        111,
+        112,
+        115
+      ],
+      "reason": "Both buffer entries acquire buffer_lock before moving to the capacity-one buffer pose and release it after the immediate separating departure; producer releases part at buffer before consumer pickup, and consumer picks up after ready receipt, so occupancy is serialized."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        36,
+        43,
+        55,
+        99,
+        106,
+        118
+      ],
+      "reason": "Consumer waits the corresponding ready receipt before pickup and supplies that exact active EventReceipt on the carried move to target (ready0_recv at line 55, ready1_recv at line 118), matching the BUFFER_RECEIPT mechanism."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        5,
+        18,
+        41,
+        73,
+        104
+      ],
+      "reason": "The reachable program implements the SPEC's declared CONCURRENCY=SERIAL level: complete producer/consumer episodes alternate in one coroutine, not merely reproducing terminal goals or action multiset serially."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        75,
+        76,
+        79,
+        80
+      ],
+      "reason": "For item 1 the source waits and clears empty_0, then performs the two readiness inspections serially (line_clear then receiver_ready) as the declared held-out control-flow signature for C7 SERIAL."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        30,
+        32,
+        56,
+        58,
+        93,
+        95,
+        119,
+        121
+      ],
+      "reason": "Every release is at the declared support zone and is immediately followed by a same-arm separating move in the same coroutine: buffer releases followed by left_wait/right_wait, target releases followed by right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        127,
+        130,
+        131
+      ],
+      "reason": "The source does not clear empty_0 after the final signal at line 127, so the declared terminal condition 'events inactive' is not satisfied; final moves to homes are present but the event-clearing goal is omitted."
+    }
+  ],
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8555,
+    "completion_tokens": 680,
+    "total_tokens": 9235,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8427
+  },
+  "raw_sha256": "465e4ca26695c55451b064b465cba1130118819053cbddd58741ff8ec6042ccf",
+  "request_sha256": "9aa0ae4a801a0fd7b77c3979e4777f35f939f09ceb69baf33eb5985a1247adad",
+  "source_sha256": "abf1da706247962d0af768ffa8562bbeb0abfbff0ea3bb423435b53f66776024"
+}

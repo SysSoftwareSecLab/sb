@@ -1,0 +1,68 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "reason": "run_task explicitly implements the SPEC's declared SERIAL concurrency level by awaiting _left_branch then _right_branch sequentially, matching the experimental_assignment level SERIAL and required_order."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        18,
+        20,
+        35,
+        37
+      ],
+      "reason": "Both branches signal their declared join events left_ready and right_ready and clear them with the issued receipt version, satisfying the development_contract join_events requirement."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        15,
+        16,
+        32,
+        33
+      ],
+      "reason": "Each release is followed by a same-arm move in the same coroutine, but the SPEC requires the separating move to begin at the same virtual time as the release; the code awaits release then awaits move, and no same-virtual-time immediate departure is evidenced, so the required immediate same-time separation is omitted."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        43,
+        44
+      ],
+      "reason": "Source shows both branches executed and arms ending at depart poses empty, but no execution evidence confirms final object positions, event clearing, deadline compliance, or actual terminal state; source-only evidence cannot determine the finite outcome."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5953,
+    "completion_tokens": 286,
+    "total_tokens": 6239,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5825
+  },
+  "raw_sha256": "62acba1e35396ee4cea6872dba10c4069ef97e59830cb7a32f451f627847119a",
+  "request_sha256": "e167646e8f9449c2ead3ccb4d9cba7e670a524bed37f56e118d352ae3f8aad7e",
+  "source_sha256": "070caf3dd6b0cdeec9a6fa7a37000f20859cd1625b29438025d00fcc2d9f1e94"
+}

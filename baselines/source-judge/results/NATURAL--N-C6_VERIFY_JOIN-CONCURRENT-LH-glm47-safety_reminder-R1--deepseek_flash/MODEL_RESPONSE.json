@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[36,70,97,98],\"reason\":\"run_task defines left_worker and right_worker as separate coroutines and awaits asyncio.gather(left_worker(), right_worker()), implementing the SPEC's CONCURRENT level rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[47,51,79,82],\"reason\":\"Each worker signals its own ready event and waits for the other's ready event (LEFT waits RIGHT_READY, RIGHT waits LEFT_READY), implementing the declared join_events dependency before proceeding.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[55,58,62,85,88,91],\"reason\":\"Each release occurs at the declared target support zone and is immediately followed in the same worker coroutine by a same-arm move to the departure pose.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[58,62,66,68,88,91,94,95],\"reason\":\"Source shows releases at targets, departures, and event clears, but no execution evidence confirms actual committed completion, empty hands, cleared events, or deadline satisfaction.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6891,
+    "completion_tokens": 269,
+    "total_tokens": 7160,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6763
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

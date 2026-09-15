@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"U\",\"source_lines\":[90,91,95,96,101,102,103,104,105,112,117,122,134,145,153,158,161,162,163,164,165,168,170,171,173,175,176,178,179,181],\"reason\":\"Source implements LONG tool acquisition before source pickup and serial D3 checks, but the declared combined attributes (LONG dependency distance plus LH layout and D3 serial checks) cannot be fully confirmed from source alone without an actual finite trajectory; no execution evidence closes the joint attribute claim.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[96,98,122,134,153,158],\"reason\":\"Producer signals ready after departure (lines 117-122), consumer waits ready before pickup (134), clears ready after carried move (153), and producer waits/clears empty_0 before second entry (96-98); consumer publishes empty_0 after target release and departure (158).\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[112,113,114,115,117,118,119,142,143,144,145,146,148,149,150],\"reason\":\"Both producer and consumer acquire buffer_lock around buffer entry/departure and release it in finally blocks; capacity-one buffer use is serialized by the lock in the source structure.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[134,135,145,153],\"reason\":\"Consumer waits the corresponding ready receipt before pickup (134), stores it (135), and supplies that exact active receipt on the carried move to target (145) before clearing ready (153).\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"U\",\"source_lines\":[90,91,95,96,101,102,103,104,105,112,117,122,134,145,153,158,161,162,163,164,165,168,170,171,173,175,176,178,179,181],\"reason\":\"The source shows a LONG-style held tool across second-item wait/checks and serial D3 checks, but the held-out control-flow signature and its dependency cannot be confirmed as actually executed from source-only evidence.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[90,91,95,96,101,102,103,104,105,112,117,122,124,125],\"reason\":\"Tool is acquired before source pickup (91) and held across the second-item empty_0 wait/clear and serial line_clear/receiver_ready checks (95-105) until finally release (124-125), matching the LONG focal dependency structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[114,115,117,118,119,145,146,148,149,150],\"reason\":\"Each release at buffer or target is immediately followed by a same-arm move in the same coroutine: buffer release then move to left_wait/left_home (115-117), target release then move to right_home (146-148).\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[161,162,163,164,165,168,170,171,173,175,176,178,179,181],\"reason\":\"Source contains the intended episode sequence and concurrent gather, but terminal poses, empty hands, resources OFF/unowned, events cleared, and deadline satisfaction cannot be confirmed without an actual finite trajectory.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 9218,
+    "completion_tokens": 780,
+    "total_tokens": 9998,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9090
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

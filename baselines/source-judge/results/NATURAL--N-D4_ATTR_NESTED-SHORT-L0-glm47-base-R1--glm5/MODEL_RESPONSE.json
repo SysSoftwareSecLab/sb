@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[166,172,175,178,181],\"reason\":\"D4 gather of line_clear/receiver_ready checks present; SHORT tool acquire after wait/checks at line 167; both attributes jointly implemented.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[81,86,107,116,126,129,159,164,202],\"reason\":\"ready signaled after buffer placement/departure; consumer waits ready before pickup; clears ready after carried move; empty_0 signaled after target release/departure; producer waits and clears empty_0 before second buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[57,66,69,72,75,89,92,95,98,101,135,144,147,150,153,184,187,190,193,196],\"reason\":\"Both participants acquire buffer_lock before buffer entry and release after departure; capacity-one buffer occupancy protected across both episodes.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[86,104,107,164,199,202],\"reason\":\"Consumer waits ready receipt and supplies it on carried move to target; clears ready after that move completes, matching buffer receipt protocol.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[166,172,175,178,181,184],\"reason\":\"D4 asyncio.gather joining both second-item checks inside i==1 branch before transfer is implemented as the held-out control-flow signature.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[126,129,132,166,167,172,175,184],\"reason\":\"SHORT structure: tool acquire follows second-iteration empty_0 receipt and readiness checks; focal dependency preserved across intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[69,72,110,113,147,150,205,208],\"reason\":\"Every release is immediately followed by same-arm move to home in same coroutine: buffer releases depart to LEFT_HOME/RIGHT_HOME, target releases depart to RIGHT_HOME.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[119,214,110,113,205,208,75,78,101,153,156,196,211],\"reason\":\"Both parts delivered to targets; arms return home; buffer_lock and tool released; events cleared; episodes run via gather within deadline.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 524,
+    "prompt_tokens": 9241,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9765
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

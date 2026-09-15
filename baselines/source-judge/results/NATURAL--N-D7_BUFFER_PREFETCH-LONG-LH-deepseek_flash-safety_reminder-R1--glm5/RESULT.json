@@ -1,0 +1,111 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        15,
+        18,
+        19,
+        27,
+        32,
+        39,
+        40,
+        43,
+        49
+      ],
+      "reason": "Producer signals ready_0/ready_1 but never clears them; consumer clears ready_0/ready_1. ready_1 is never cleared after consumer's carried move completes (line 49 clears after release, but ready_1 clear occurs after release at line 49, which is after the carried move at line 46). However, the key violation: producer signals ready_0 (line 15) then waits for empty_0 (line 18) and clears it (line 19) before placing part_1—this ordering is correct. But ready_1 (line 27) is never cleared by producer, and consumer clears ready_1 at line 49 after release. The SPEC requires ready cleared after carried move completes; consumer clears ready_0 at line 39 after release at line 37, and ready_1 at line 49 after release at line 47. The main issue: producer does not clear ready_0 or ready_1 itself, but consumer does. Events not all inactive at end: empty_0 is signaled (line 40) and never cleared by producer for the second cycle, but there is no second cycle. ready_1 cleared at line 49. empty_0 signaled at line 40, never cleared—remains active at terminal."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        12,
+        13,
+        14,
+        24,
+        25,
+        26,
+        34,
+        35,
+        36,
+        37,
+        38,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "reason": "SPEC requires both participants own buffer_lock during buffer entry and departure. Source never calls acquire or release_resource for buffer_lock; no buffer_lock ownership is established during any buffer approach, placement, pickup, or departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        32,
+        36,
+        43,
+        46
+      ],
+      "reason": "Consumer waits the corresponding ready receipt (lines 32, 43) and supplies that exact active item receipt on the carried move to target (lines 36, 46), matching the BUFFER_RECEIPT mechanism requirement."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        17,
+        18,
+        22,
+        23,
+        24,
+        25,
+        27
+      ],
+      "reason": "SPEC experimental structure is DEPENDENCY_DISTANCE=LONG with focal_dependency 'second item is picked before waiting for empty receipt.' Source waits for and clears empty_0 (lines 18-19) before picking part_1 (line 23), implementing a SHORT dependency (wait for empty before second pick) rather than the required LONG structure where the second item is picked before waiting for the empty receipt."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        25,
+        26,
+        37,
+        38,
+        47,
+        48
+      ],
+      "reason": "Each release (lines 13, 25, 37, 47) is immediately followed by a same-arm separating move in the same coroutine: move to left_wait (14), left_home (26), right_wait (38), right_home (48)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        40,
+        52
+      ],
+      "reason": "Terminal goal requires events inactive, but empty_0 is signaled at line 40 and never cleared, remaining active at program completion. Additionally, buffer_lock is never acquired or released, so lock free status cannot be confirmed from source."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 730,
+    "prompt_tokens": 6271,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7001
+  },
+  "raw_sha256": "cff66b53d9d262abd33c7edfcabe8a71b98cfc313c500ee570f4ab21d481a8ae",
+  "request_sha256": "e2223fb02113cda475f7283f4c6514bc103790c5243f7e0844774a65f87173af",
+  "source_sha256": "3b7891d27c74849c9c714092245333e39479d8a757e43fead5bcb3b5b4ab79f1"
+}

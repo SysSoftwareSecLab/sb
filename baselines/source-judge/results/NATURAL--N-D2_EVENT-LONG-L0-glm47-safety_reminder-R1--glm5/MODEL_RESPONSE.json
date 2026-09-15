@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[38,41,43,46,48,51,55,60,65,66,69,72,75,78,81,83,86,88,91,93,96,100,105,110,111,114,117,120,123,126,129],\"reason\":\"Both arms deposit own item, clear pad, signal own ready, wait for peer ready, then consume peer item and clear peer event after carried move; concurrent gather implements reciprocal exchange.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[60,69,72,81,105,114,117,126],\"reason\":\"wait_event returns peer_ready_receipt; grasp uses it as observation; carried move passes receipt=peer_ready_receipt; clear_event uses expected_version=peer_ready_receipt.version after the carried move, for both arms.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[55,60,65,66,69,72,81,100,105,110,111,114,117,126],\"reason\":\"Focal dependency right_ready -> LEFT carried move is implemented: LEFT waits for RIGHT_READY, then grasps right_part and moves to left_target carrying peer_ready_receipt, clearing after. RIGHT mirrors for LEFT_READY.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[48,51,75,78,93,96,120,123],\"reason\":\"Each release (own item on own pad, peer item on own target) is immediately followed by a same-arm same-coroutine separating move to clear/depart pose.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[41,43,46,48,51,55,60,65,66,69,72,75,78,81,86,88,91,93,96,100,105,110,111,114,117,120,123,126,129],\"reason\":\"Source implements full exchange: left_part->right_target, right_part->left_target, arms at own depart, both ready events cleared, no resources, within deadline.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 456,
+    "prompt_tokens": 7521,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7977
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

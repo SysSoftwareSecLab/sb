@@ -1,0 +1,93 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        51,
+        63
+      ],
+      "reason": "ready_1 is never cleared after episode 2; required ready events must be cleared, and normal return with missing required clear is a violation."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        17,
+        22,
+        33,
+        38,
+        44,
+        50,
+        56,
+        62
+      ],
+      "reason": "Both participants acquire buffer_lock before buffer entry and release it after departure for each episode; ownership is held throughout buffer contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        43,
+        45,
+        55,
+        57,
+        32,
+        34
+      ],
+      "reason": "Consumer waits the corresponding ready receipt before pickup and supplies that exact active item receipt on the carried move to target; producer waits empty_0 receipt before entering buffer with second part."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        26,
+        28,
+        32
+      ],
+      "reason": "Producer picks part_1 (move to source_1 and grasp) before waiting for empty_0, implementing the LONG dependency structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        35,
+        36,
+        48,
+        49,
+        59,
+        60
+      ],
+      "reason": "Each release is followed by an immediate same-arm separating move in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        63
+      ],
+      "reason": "ready_1 event is not cleared; terminal goal requires all events inactive, and normal return with a missing required clear is a violation."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 323,
+    "prompt_tokens": 6593,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6916
+  },
+  "raw_sha256": "22d0047ed5b08e8f669cae7e8253f53e3a61244c5d69be1a19a02b020915cf14",
+  "request_sha256": "a8d48c197e5551b5ac3deb6085916c8f0a484fdbbf4c08df8db5ccadac60d3c6",
+  "source_sha256": "69f02684cef7b3cfbb86409e8dcded4aba1e824c60bbb26ab468a56bccd2116c"
+}

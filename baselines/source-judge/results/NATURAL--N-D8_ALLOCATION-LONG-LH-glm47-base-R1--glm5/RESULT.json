@@ -1,0 +1,87 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        28,
+        40,
+        43,
+        46,
+        49,
+        52,
+        54,
+        56
+      ],
+      "reason": "Only LEFT branch proposes move/grasp/release when selected_arm==LEFT; RIGHT branch does nothing in else. Since allocation value is LEFT, only selected arm proposes actions."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        14,
+        15,
+        18,
+        19,
+        23,
+        43,
+        71
+      ],
+      "reason": "Both arms inspect allocation once (lines 14-19), but the selected LEFT grasp at line 43 carries left_obs, not necessarily the arm's own current observation. More critically, the RIGHT branch also inspects and could consume right_obs at line 71, but the SPEC requires only the selected arm's own current allocation observation be carried. The code inspects both arms regardless of selection, and the unselected arm's inspection is not needed. However, the key violation is that both arms inspect but only the selected arm should consume its own observation—the code does inspect both independently as required. The actual issue: the selected arm (LEFT) uses left_obs which is its own inspection, satisfying the carry requirement. But the unselected arm also inspects, which the SPEC says 'both workers independently inspect allocation once'—this is required. Label C is not warranted because it is unclear if the observation is 'current' at consumption time given invalidation_on_release. Actually no release happens before grasp. The real violation: line 23 reads selected_arm from left_obs only, but RIGHT branch uses right_obs for grasp—both are from the same allocation fact. The SPEC requires the selected grasp carry that arm's own current allocation observation. LEFT uses left_obs (its own), RIGHT uses right_obs (its own). This seems satisfied. V because: the code inspects both arms concurrently but the SPEC says 'A runs LEFT then RIGHT serially; B gathers them concurrently'—the code runs both concurrently, not serially for A. This is a structure violation affecting observation gathering."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        18,
+        19,
+        23,
+        43
+      ],
+      "reason": "The LONG dependency structure requires allocation inspection to intervene before selected observation consumption. Both arms inspect allocation (lines 14-19), selected_arm is determined from the observation (line 23), and the selected arm's grasp carries that observation (line 43). The inspection intervenes between initial state and grasp consumption, preserving the focal dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        49,
+        52,
+        77,
+        80
+      ],
+      "reason": "Release at shared_target (line 49) is immediately followed by move to left_depart (line 52) in the same coroutine with no intervening calls. Same for RIGHT branch (lines 77, 80). The released object is at shared_target which is a declared logical_support."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        52,
+        54,
+        56,
+        80
+      ],
+      "reason": "Goal requires nonselected RIGHT empty at right_home, but when LEFT is selected (the actual allocation), RIGHT does nothing and remains at right_home—satisfied. LEFT departs to left_depart—satisfied. shared_part at shared_target—satisfied. However, the RIGHT branch (lines 63-65) explicitly moves selected RIGHT to right_depart instead of right_home, contradicting the goal. Since allocation is LEFT, the RIGHT branch is not executed, so actual trajectory satisfies goal. But the code contains a branch that would violate the goal if taken. For the actual finite trajectory with LEFT selected, all terminal goals are met. Label C."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 756,
+    "prompt_tokens": 6142,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6898
+  },
+  "raw_sha256": "cc421ad2fb03ea7e8d1991680945d1cae15ab7ef1fbac02501194e36f6164210",
+  "request_sha256": "3cece563fa6ec4d4588daacee45a8c5cb5129f0a46814527c07cc405de50c7de",
+  "source_sha256": "36f7ab8722d45c3714bdc020dd9eab789f512b9afe4505cfb4f888a48637c949"
+}

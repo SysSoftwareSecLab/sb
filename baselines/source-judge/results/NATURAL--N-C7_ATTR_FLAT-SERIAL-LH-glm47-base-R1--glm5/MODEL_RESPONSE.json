@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"V\",\"source_lines\":[98,99,100,102,103,104,106,107,109,110,112,113,114],\"reason\":\"C7 requires serial alternating episodes AND serial readiness checks; code serializes episodes but omits LEFT_WAIT pose and tool ownership for part_1, violating the combined attribute.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[63,64,66,67,70,71,73,76,82,83,85,88,89,94,96,107,109,110,113,114,116,119,125,126,128,131],\"reason\":\"Producer acquires tool before buffer lock for part_0; ready_0 cleared after move but before release/departure; empty_0 not published after part_1; ready_1 never cleared.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"V\",\"source_lines\":[63,64,66,67,70,71,107,109,110,113,114],\"reason\":\"Tool acquired before buffer_lock for part_0 violates ownership ordering; tool not owned during part_1 buffer entry/placement/departure.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[73,76,82,83,116,119,125,126],\"reason\":\"Consumer waits corresponding ready receipt, supplies exact active item receipt on carried move to target, and clears ready after carried move for both parts.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[56,91,93,118],\"reason\":\"SPEC requires SERIAL alternating episodes; code implements fully serial producer-then-consumer episodes with no joined coroutines.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"V\",\"source_lines\":[93,94,96,98,99,100,102,103,104,106,107,109,110,112,113,114,116,118,119,121,122,124,125,128,131],\"reason\":\"Holdout requires wait/clear empty_0 then inspect both readiness facts before source_1 pickup with LEFT owning tool; code omits LEFT_WAIT, tool ownership, and release for part_1.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[67,70,85,88,110,113,128,131],\"reason\":\"Each release is followed by immediate same-arm separating move in same coroutine: release part_0 at buffer_0→move LEFT_HOME; release part_0 at target_0→move RIGHT_HOME; similarly for part_1.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[63,107,116,126,128,131,134],\"reason\":\"Tool acquired for part_0 but released only at end (not on every exit); tool never acquired for part_1; ready_1 never cleared; empty_0 not republished after part_1; terminal state incomplete.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 632,
+    "prompt_tokens": 7891,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8523
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

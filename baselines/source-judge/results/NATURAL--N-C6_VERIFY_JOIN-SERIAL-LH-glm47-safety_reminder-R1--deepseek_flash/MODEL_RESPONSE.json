@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[68,69,70,71],\"reason\":\"SPEC experimental_assignment level is SERIAL; code awaits left_verifier() then right_verifier() sequentially, implementing serial composition rather than concurrent joined workers.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[7,8,13,43],\"reason\":\"Both join events left_ready and right_ready are signaled before branches, and each branch waits on its corresponding event with timeout_s=30, satisfying the declared join_events dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[35,38,62,65],\"reason\":\"Each release at the declared support zone (left_target/right_target) is immediately followed in the same coroutine by a same-arm separating move to left_depart/right_depart with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[70,71,74,75],\"reason\":\"Source shows both parts released at targets, arms moved to depart poses, and events cleared, but source-only evidence cannot confirm actual finite execution reaches all terminal states, empty hands, and deadline within the single trajectory.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6603,
+    "completion_tokens": 269,
+    "total_tokens": 6872,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6475
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

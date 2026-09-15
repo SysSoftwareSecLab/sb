@@ -1,0 +1,85 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        23,
+        26,
+        31,
+        33,
+        37,
+        39,
+        43,
+        54,
+        56,
+        57
+      ],
+      "reason": "Each worker acquires fixture then tool before carrying the part to target, releases the part, departs, and only then releases tool and fixture in the finally block, matching the dual-resource span."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        6,
+        9,
+        10,
+        67,
+        71
+      ],
+      "reason": "The assignment is DEPENDENCY_DISTANCE=SHORT; no LONG producer-to-consumer dependency structure is required or present."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        39,
+        43
+      ],
+      "reason": "After release at target_pose, the same worker coroutine immediately awaits move to depart_pose with no intervening same-arm call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        67,
+        71,
+        75
+      ],
+      "reason": "Source shows concurrent workers and intended goals, but no actual finite trajectory or terminal receipts are supplied to confirm both parts at targets, empty arms, resources OFF/unowned, and deadline."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        45,
+        51,
+        54,
+        56,
+        57
+      ],
+      "reason": "No actual tool acquisition timeout is observed in the supplied finite evidence; cleanup code exists but the timeout trigger did not occur."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6466,
+    "completion_tokens": 305,
+    "total_tokens": 6771,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6338
+  },
+  "raw_sha256": "a0886cfb4c2765a6a7c81416268534ed82f1c75b17fb4875269cd5aa5a019964",
+  "request_sha256": "0363d194eb47ae50b454d76cd27dc986265a927f243d912ca3184fd63d760a70",
+  "source_sha256": "40ec164eee2b7d6994026aa59bdbee71c0aa1dbf25e3957870875be3814ce7ee"
+}

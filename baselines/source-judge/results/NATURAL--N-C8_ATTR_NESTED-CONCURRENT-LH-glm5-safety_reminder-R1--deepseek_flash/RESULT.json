@@ -1,0 +1,126 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        5,
+        113,
+        120,
+        127
+      ],
+      "reason": "The reachable program implements the declared CONCURRENT LH combined attributes: LEFT serial alternating producer episodes (left_runner lines 113-118) and RIGHT consumer coroutines joined via asyncio.gather (lines 120-127), with capacity-one buffer and BUFFER_RECEIPT mechanism present."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        44,
+        50,
+        51,
+        74,
+        80,
+        89,
+        93,
+        99,
+        108
+      ],
+      "reason": "Producer signals ready_0/ready_1 after departing buffer (lines 44,74); consumer waits ready before pickup (80,99), clears ready after carried move (89,108), and publishes empty_0 after departing (93); producer waits and clears empty_0 before second buffer entry (50-51)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        37,
+        41,
+        67,
+        71,
+        81,
+        85,
+        100,
+        104
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release after departure (LEFT 37-41,67-71; RIGHT 81-85,100-104); capacity-one buffer with item-specific pickup contracts is respected."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        80,
+        87,
+        99,
+        106
+      ],
+      "reason": "Consumer waits ready receipt (80,99) and supplies that exact active EventReceipt on the carried move to target (87,106), matching the BUFFER_RECEIPT mechanism."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        113,
+        120,
+        127
+      ],
+      "reason": "asyncio.gather(left_runner(), right_runner()) at line 127 runs LEFT producer and RIGHT consumer coroutines concurrently, implementing the declared CONCURRENT level rather than a serial reproduction."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        50,
+        51,
+        54,
+        55,
+        58,
+        60
+      ],
+      "reason": "For item 1 the program waits and clears empty_0 (50-51) then joins both readiness fact checks (receiver_ready and line_clear) inside the loop branch (54-61), matching the declared held-out control-flow signature."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        39,
+        40,
+        69,
+        70,
+        90,
+        92,
+        109,
+        111
+      ],
+      "reason": "Each release is followed by an immediate same-arm separating move in the same coroutine: LEFT releases part_0 at buffer_0 then moves to left_wait (39-40), part_1 similarly (69-70); RIGHT releases at target_0 then moves to right_home (90-92), target_1 then right_home (109-111)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        118,
+        125,
+        127
+      ],
+      "reason": "Source shows LEFT returns to left_home (118) and RIGHT to right_home (125), but source-only evidence cannot confirm all terminal conditions (buffer empty, lock free, events inactive, deadline) for the actual finite trajectory."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-CONCURRENT-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8613,
+    "completion_tokens": 677,
+    "total_tokens": 9290,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8485
+  },
+  "raw_sha256": "58f69488fd5bc964be6698ec2e3f867d7760a9f48167d0b4939184ba38360560",
+  "request_sha256": "fcfe14c1b23c122571c9e9f26160bec7694f2611044b59548c9a237fd5e5068c",
+  "source_sha256": "6143782b1c4914ccbb706fa118c66992151c873b2a31557758ab65a765d915b3"
+}

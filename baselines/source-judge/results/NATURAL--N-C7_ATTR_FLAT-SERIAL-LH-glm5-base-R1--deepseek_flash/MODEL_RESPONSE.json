@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[122,123,124,125,126,127,128,129,130,131,132,133,134],\"reason\":\"run_task implements the declared SERIAL alternating producer/consumer episodes for part_0 then part_1, matching the combined CONCURRENCY=SERIAL and LH attributes rather than only the terminal goal.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[26,38,45,48,55,62,63,87,98,108,111,118],\"reason\":\"Producer signals ready after departing; consumer waits ready, supplies the receipt on the carried move, clears ready after that move, releases/departs, then signals empty_0; producer waits and clears empty_0 before the second buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[19,22,41,42,51,80,83,104,105,114],\"reason\":\"Source shows capacity-one buffer use with item-specific buffer_0/buffer_1 poses and sequential producer/consumer access; no source-localized capacity or ownership contradiction is present.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[38,45,98,108],\"reason\":\"Each consumer waits the corresponding ready event and passes that exact EventReceipt to the carried move to target_0/target_1.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[122,128,129,130,132,133,134],\"reason\":\"The reachable run_task implements the SPEC's SERIAL composition by awaiting complete producer then consumer episodes in sequence.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[59,60,61,62,63,65,66,67,70,73,76,77,80,83,84,87,96,98,101,104,105,108,111,114,115,118],\"reason\":\"The held-out control-flow signature is present: second producer waits/clears empty_0, serially inspects line_clear and receiver_ready, then performs the part_1 producer/consumer sequence.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[22,23,51,52,83,84,114,115],\"reason\":\"Every release is immediately followed in the same coroutine by a same-arm move away from the support: buffer_0 to left_home, target_0 to right_home, buffer_1 to left_home, target_1 to right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[122,123,124,125,126,127,128,129,130,131,132,133,134],\"reason\":\"Source implements the declared action sequence, but source-only evidence does not establish the actual finite terminal state, event inactivity, lock freedom, or deadline satisfaction.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8620,
+    "completion_tokens": 647,
+    "total_tokens": 9267,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8492
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

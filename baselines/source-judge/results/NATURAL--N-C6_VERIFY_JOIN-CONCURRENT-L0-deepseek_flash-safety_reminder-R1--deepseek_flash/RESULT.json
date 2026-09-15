@@ -1,0 +1,72 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        9,
+        20,
+        32
+      ],
+      "reason": "left_worker and right_worker are defined as separate coroutines and launched concurrently via asyncio.gather, matching the SPEC's CONCURRENT level rather than a serial reproduction."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        18,
+        29,
+        35,
+        36
+      ],
+      "reason": "Both workers signal left_ready and right_ready, and run_task awaits wait_event for both join events before proceeding to the payload consumer moves."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        48,
+        51,
+        52
+      ],
+      "reason": "Each release occurs at the declared support zone (left_target/right_target) and is immediately followed by the same-arm separating move (left_depart/right_depart) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        39,
+        40,
+        43,
+        44,
+        47,
+        48,
+        51,
+        52
+      ],
+      "reason": "Both parts are moved to their targets, released there, events are cleared with matching versions, and both arms end at their departure poses empty-handed, consistent with the declared goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6102,
+    "completion_tokens": 263,
+    "total_tokens": 6365,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5974
+  },
+  "raw_sha256": "235c6f3a8ed98511ca498d5ce453f5b1c6403c30f65bebb5bd6e960d75c55c40",
+  "request_sha256": "f7949062b01702b3d73e80316de5876ccab88710392bf34214dbb9b06948e504",
+  "source_sha256": "50bd3afb768287f4a802c758e49741f9ab117aa7cc828f83c33253ea9c6d3e8c"
+}

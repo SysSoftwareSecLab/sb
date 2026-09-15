@@ -1,0 +1,71 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        40,
+        41,
+        47
+      ],
+      "reason": "RIGHT releases right_part at right_target (invalidating peer placement) at lines 40-41 before LEFT refreshes route observation at line 47, implementing the SHORT focal dependency."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "C",
+      "source_lines": [
+        41,
+        47
+      ],
+      "reason": "route observation is refreshed after the invalidating peer release; development contract requires fact_id=route, object_id=left_part observed after invalidation, satisfied by refresh at line 47."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        41,
+        54,
+        51,
+        55
+      ],
+      "reason": "RIGHT releases right_part at right_target (line 41) then moves RIGHT to right_depart (line 55); LEFT releases left_part at left_target (line 51) then moves LEFT to left_depart (line 54), both immediate same-arm separating moves."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        32,
+        33,
+        36,
+        37,
+        40,
+        41,
+        47,
+        50,
+        51,
+        54,
+        55
+      ],
+      "reason": "Both parts grasped and released at their targets (left_target, right_target); both arms move to departure poses (left_depart, right_depart); no resources or events declared; deadline 30s with ~6 move actions at 1s each is feasible."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 291,
+    "prompt_tokens": 5770,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6061
+  },
+  "raw_sha256": "a9e3e510b89cab7318aad8a85eade834886febe9bee9162048586c1a119fae7e",
+  "request_sha256": "d03cedc377064020e6fb870fb31408373a8db619efadebc83f15d32341f8c99f",
+  "source_sha256": "273d18b20eeddc7a21fdc3a150b06cec7ed9cb108f814f0e92c9f245ed2797cb"
+}

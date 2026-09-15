@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"U\",\"source_lines\":[163,164,165,167,170,181,252],\"reason\":\"Source shows serial episodes for part_0 and a joined gather for part_1, but the declared combined attributes (SERIAL level plus joined checks) cannot be confirmed as jointly implemented from source alone; the joined_part_1 gather is present but the exact combined attribute semantics are not fully determinable.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"U\",\"source_lines\":[38,48,67,82,88,92,119,129,149,172,174,209,218,238],\"reason\":\"Source shows ready/empty signal, wait, and clear calls in plausible order, but whether all required publications and clears occur on the actual finite trajectory (including the joined path) cannot be confirmed from source alone.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"U\",\"source_lines\":[23,35,56,75,104,116,137,157,194,206,226,246],\"reason\":\"Source shows buffer_lock acquire/release around buffer entry and departure, but actual capacity-one occupancy and ownership during full contact cannot be verified from source-only evidence.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"U\",\"source_lines\":[64,146,235],\"reason\":\"Source supplies ready_receipts on carried moves to target, but whether the exact active item receipt is valid at execution time cannot be determined from source alone.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"U\",\"source_lines\":[163,164,165,167,170,181,252],\"reason\":\"Source shows serial episodes for part_0 and asyncio.gather for part_1, but the declared CONCURRENCY=SERIAL structure and its exact reachable concurrency level cannot be confirmed from source alone.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"U\",\"source_lines\":[170,177,178,181,183,216],\"reason\":\"Source shows a joined_part_1 with inspect calls and gather, but the declared held-out control-flow signature and its dependency cannot be confirmed as implemented from source alone.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"U\",\"source_lines\":[30,31,70,71,111,112,152,153,201,202,241,242],\"reason\":\"Source shows release followed by same-arm move to home in the same coroutine, but actual committed releases and immediate separating moves on the finite trajectory cannot be verified from source alone.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[164,165,252],\"reason\":\"Source shows run_task awaiting producer/consumer episodes, but all terminal poses, object goals, empty hands, resource OFF/unowned, events cleared, and deadline satisfaction cannot be confirmed from source alone.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 11161,
+    "completion_tokens": 609,
+    "total_tokens": 11770,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 11033
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

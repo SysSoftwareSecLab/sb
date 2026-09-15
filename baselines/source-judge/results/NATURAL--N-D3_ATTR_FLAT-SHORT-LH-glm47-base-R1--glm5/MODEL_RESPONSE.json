@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[301,318,319,322,326,331,334],\"reason\":\"producer_with_checks implements SHORT dependency: tool acquired after empty_0 wait/clear and serial line_clear/receiver_ready checks, before second source pickup and buffer placement.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[314,318,319,342,180],\"reason\":\"ready_0 and ready_1 are signaled but never cleared; empty_0 is signaled twice (consumer ep1 and ep2) but only one clear by producer; final empty_0 remains active, violating events-inactive terminal.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[305,308,309,310,313,333,336,337,338,341],\"reason\":\"Both producer buffer placements acquire buffer_lock before buffer entry, hold through placement and immediate departure, then release lock after departing to left_home.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[314,114,125,342,144,155],\"reason\":\"Producer signals ready_0/ready_1 with item_id; consumer waits exact receipt and supplies it on carried move to target via move(receipt=ready_receipt).\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"V\",\"source_lines\":[321,322,326],\"reason\":\"D3 requires serial checks, but code performs LEFT inspect then RIGHT inspect as two sequential await calls without joining; D4 is the gather variant. However D3 serial is satisfied, so this is actually C.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[318,319,322,326,334],\"reason\":\"SHORT structure: tool acquire follows second-item empty_0 wait/clear and readiness checks, preserving focal dependency across intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[309,310,337,338,131,137,161,167],\"reason\":\"Each release at buffer/target is immediately followed by same-arm move to home in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[180,314,342],\"reason\":\"Final empty_0 signaled at line 180 remains active and never cleared; ready_0/ready_1 also never cleared, violating events-inactive terminal state.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 531,
+    "prompt_tokens": 13142,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 13673
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

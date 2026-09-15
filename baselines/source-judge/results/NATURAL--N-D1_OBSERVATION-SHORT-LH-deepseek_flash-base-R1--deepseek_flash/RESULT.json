@@ -1,0 +1,90 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        38,
+        45,
+        51,
+        52,
+        54
+      ],
+      "reason": "The quality observation issued by RIGHT at line 38 is consumed by LEFT's grasp at line 45 and its value drives the branch at lines 51-54, preserving the focal producer-to-consumer dependency across the intervening control flow."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "C",
+      "source_lines": [
+        52,
+        54,
+        61,
+        62,
+        63,
+        66,
+        70,
+        73,
+        74
+      ],
+      "reason": "The code implements the accept_by_pass[0] branch: true path carries to left_target (lines 56-57); false path does rework, release, re-approach, second inspect, grasp, and final release (lines 61-74), within the two-pass limit."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        38,
+        45,
+        66,
+        70
+      ],
+      "reason": "The inspection-area observation is issued by RIGHT inspect at line 38 and consumed by LEFT grasp at line 45; the rework path issues a second current observation at line 66 and consumes it at line 70."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        25,
+        26,
+        32,
+        57,
+        62,
+        74
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: release at inspection (25) then move left_wait (26); release right_target (32) then later RIGHT move; release left_target (57) then move left_depart (79); release rework (62) then move rework_wait (63); release left_target (74) then move left_depart (79)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        56,
+        57,
+        73,
+        74,
+        79,
+        80
+      ],
+      "reason": "Both parts reach their targets (left_part to left_target via lines 56-57 or 73-74; right_part to right_target via line 32), both arms return empty to departures (lines 79-80), and acceptance is handled within two inspection passes."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-SHORT-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6902,
+    "completion_tokens": 456,
+    "total_tokens": 7358,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 6646
+  },
+  "raw_sha256": "dd732b804943fe00dcb6243066badca11d89c0955f703bc05485ca2ee7a5f43a",
+  "request_sha256": "74547009eab5c5aa926e888707c30f0dcba173d8fa7549a8a1f67fc9cff6747d",
+  "source_sha256": "f49211b7df743baaf59e3151e688f0aff7bfbee0fa2ab9e5ba0f3d3be1b54eb0"
+}

@@ -1,0 +1,81 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18
+      ],
+      "reason": "The experimental assignment requires the peer placement to invalidate the first route observation before refresh, but the code never refreshes the route observation; it only inspects route at line 18 after the RIGHT lane release, so the required LONG producer-to-consumer dependency is not implemented."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        5,
+        18
+      ],
+      "reason": "The development contract requires preserving the same closed-value route observation for left_part, but the code discards the grasp observation at line 5 and later calls inspect(\"LEFT\",\"route\") at line 18 instead of consuming the preserved observation; the required current observation dependency is omitted."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        14,
+        15
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same candidate coroutine: release LEFT left_part at left_target then move LEFT left_depart, and release RIGHT right_part at right_target then move RIGHT right_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18
+      ],
+      "reason": "The source shows both parts moved to their targets and arms sent to departure poses, but there is no execution evidence confirming empty hands, resource OFF/unowned, cleared events, or completion within the 30s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5363,
+    "completion_tokens": 343,
+    "total_tokens": 5706,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5235
+  },
+  "raw_sha256": "95c49beaa0eca3205dd2ba94d52fb3a18ce3200c2b729b953412e41519681f7f",
+  "request_sha256": "5a9c80af2ef7a33b09937ac69784a39f9f4220d572d732788abf79d6d51b8f44",
+  "source_sha256": "64e371391395016ead72573c690f49e2ea638eab868ca32c9e752dcf81befa0b"
+}

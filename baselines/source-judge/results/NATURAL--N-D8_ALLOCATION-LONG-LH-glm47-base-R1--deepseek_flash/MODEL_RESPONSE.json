@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[23,28,40,43,46,49,52,54,68,71,74,77,80],\"reason\":\"selected_arm is read from the allocation observation and only the selected branch issues move/grasp/release calls; the unselected arm makes no such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[9,11,14,15,18,19,23,43,71],\"reason\":\"Both arms independently inspect the allocation fact once (LEFT and RIGHT tasks), and the selected branch's grasp carries that arm's own observation (left_obs or right_obs).\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[14,15,18,19,23,43,71],\"reason\":\"The peer allocation inspection (both arms' inspect tasks) intervenes before the selected observation is consumed in the grasp, preserving the focal dependency across the intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[49,52,77,80],\"reason\":\"Each release at shared_target is immediately followed in the same branch/coroutine by a same-arm move to the depart pose (LEFT to left_depart, RIGHT to right_depart).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[23,28,54,80],\"reason\":\"The code selects the branch from left_obs.value['selected_arm'] and, if RIGHT is selected, departs RIGHT to right_depart, contradicting the declared goal that nonselected RIGHT remains at right_home; the terminal goal is not guaranteed for the RIGHT-selected case.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6541,
+    "completion_tokens": 379,
+    "total_tokens": 6920,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6413
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

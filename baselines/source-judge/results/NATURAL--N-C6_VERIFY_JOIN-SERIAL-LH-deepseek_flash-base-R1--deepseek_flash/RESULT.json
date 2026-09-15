@@ -1,0 +1,72 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        15,
+        26,
+        37
+      ],
+      "reason": "The two verifier branches are defined as separate coroutines and run concurrently via asyncio.gather, implementing the SPEC's concurrent verifier production rather than a serial reproduction."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        43,
+        44,
+        47,
+        48
+      ],
+      "reason": "The program signals left_ready and right_ready, waits on both events with wait_event, and clears each with the matching receipt version, matching the declared join_events contract."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        53,
+        54,
+        58,
+        59
+      ],
+      "reason": "After release at left_target/right_target, the next same-arm call is a move to left_depart/right_depart, but the SPEC's logical_supports and release semantics require the release support_zone to be a declared support; left_target/right_target are declared supports, yet the immediate separating move is present, so the source-localizable issue is that the release support_zone is not the object's declared support in the goal context? Actually left_target/right_target are in logical_supports, so this is not a violation; the immediate same-arm move follows release, satisfying SUPPORT_DEPARTURE."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        52,
+        53,
+        54,
+        57,
+        58,
+        59
+      ],
+      "reason": "The program moves both arms to their targets, releases both parts at their targets, and moves both arms to their departure poses, matching the declared goal of both parts at targets and both arms at departure and empty."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6294,
+    "completion_tokens": 362,
+    "total_tokens": 6656,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6166
+  },
+  "raw_sha256": "248659eaa09e981e87713d5bb8663d80cc1e0ea6ce3fd95fda7308fe12372f31",
+  "request_sha256": "2de6e94d9db5459fbe6c78c4ccf8a1a8e4beaf180669ae4ffe2d370d8b6864e1",
+  "source_sha256": "42e77bd0b194c96c6c569c0fcf64af008610a6e9f836d37e1e0034571ccf135e"
+}

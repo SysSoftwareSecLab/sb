@@ -1,0 +1,138 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        36,
+        42,
+        47,
+        50,
+        53,
+        57,
+        60,
+        63,
+        67,
+        71,
+        74,
+        77,
+        81,
+        87,
+        92,
+        95,
+        98,
+        102,
+        105,
+        108,
+        112,
+        116,
+        119,
+        122,
+        125,
+        126
+      ],
+      "reason": "Both arms deposit own part on own pad, immediately clear pad, signal own ready, wait for peer ready, then consume peer item and clear peer event after carried move; concurrent gather implements B structure."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        55,
+        69,
+        75,
+        100,
+        114,
+        120
+      ],
+      "reason": "LEFT carried move uses right_ready_receipt from wait_event; RIGHT carried move uses left_ready_receipt; clear_event uses matching receipt.version after the carried move."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        55,
+        59,
+        60,
+        63,
+        65,
+        69,
+        100,
+        104,
+        105,
+        108,
+        110,
+        114
+      ],
+      "reason": "SHORT focal dependency right_ready->LEFT carried move is implemented: LEFT waits RIGHT_READY, moves to LEFT_PICKUP_WAIT then RIGHT_PAD, grasps RIGHT_PART, and carries the exact wait receipt to LEFT_TARGET."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        43,
+        45,
+        48,
+        88,
+        90,
+        93,
+        69,
+        72,
+        78,
+        114,
+        117,
+        123
+      ],
+      "reason": "Each release (own part at pad, peer part at target) is immediately followed by a same-arm separating move in the same coroutine: LEFT_DEPART/RIGHT_DEPART after pad release and final depart after target release."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        38,
+        40,
+        43,
+        45,
+        48,
+        63,
+        65,
+        69,
+        72,
+        78,
+        83,
+        85,
+        88,
+        90,
+        93,
+        108,
+        110,
+        114,
+        117,
+        123,
+        75,
+        120,
+        125,
+        126
+      ],
+      "reason": "Source moves left_part to left_pad then LEFT grasps right_part to left_target, right_part to right_pad then RIGHT grasps left_part to right_target, both arms end at own depart empty-handed, and both ready events are cleared."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-SHORT-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 455,
+    "prompt_tokens": 7489,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 7944
+  },
+  "raw_sha256": "648d51ef630473bfcf535696a0bb5466173ecc205cd9982fd9e0e972a041cb35",
+  "request_sha256": "fe4301d9ab3ce203fb53bb74e4008552b95640241d95b802ac04c22e5f705147",
+  "source_sha256": "68cca9e2ef8471dae50cb6db32ccfa784262a8d2feb82be2a47e2cc067d4c54c"
+}

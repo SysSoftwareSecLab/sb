@@ -1,0 +1,103 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        17,
+        18,
+        19,
+        20,
+        22,
+        23,
+        24,
+        26,
+        28
+      ],
+      "reason": "Each worker acquires fixture then tool before carrying the part to target, releases part and departs while still owning both, then releases tool and fixture in the required order."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        15,
+        17,
+        19,
+        22,
+        23,
+        24,
+        26,
+        28
+      ],
+      "reason": "SHORT dependency structure implemented: pickup precedes dual acquisition, carried placement to target occurs while owning both resources, then departure and resource release follow the declared order."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        22,
+        23,
+        24
+      ],
+      "reason": "After release at target, the same worker immediately calls move to depart in the same coroutine with no intervening same-arm action."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        15,
+        17,
+        19,
+        22,
+        23,
+        24,
+        26,
+        28,
+        43,
+        44,
+        48,
+        52
+      ],
+      "reason": "Both workers run concurrently, each moves part to target, releases, departs, and releases resources; goals and terminal depart poses are addressed in source."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        12,
+        17,
+        18,
+        19,
+        20,
+        30,
+        31,
+        36,
+        38
+      ],
+      "reason": "try/finally releases every successfully acquired resource; acquired flags gate cleanup for both tool and fixture, satisfying the timeout cleanup requirement."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 326,
+    "prompt_tokens": 5541,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5867
+  },
+  "raw_sha256": "e0ffbe08edd4fe69bac859be6e72cf0b6e3d7699f36f09060b81035c9d2661f3",
+  "request_sha256": "89f5b2de3945a3cbdaa7efeb520d9850b6c3d5e837f3994a28f754b25704fe67",
+  "source_sha256": "94f36b9362719ac2355af0290049053fc1c7fd0dc2b0418bcfe57cf2710f9b17"
+}

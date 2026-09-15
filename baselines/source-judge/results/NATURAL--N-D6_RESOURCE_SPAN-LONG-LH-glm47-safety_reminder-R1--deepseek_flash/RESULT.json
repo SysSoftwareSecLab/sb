@@ -1,0 +1,91 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        37,
+        39,
+        47,
+        48,
+        51,
+        54,
+        57,
+        62,
+        63,
+        64
+      ],
+      "reason": "Worker acquires fixture then tool before the source approach/grasp, holds both through target move and release, then releases tool and fixture in finally after departure, spanning the required carried path."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        37,
+        39,
+        47,
+        48,
+        51,
+        54,
+        57,
+        62,
+        63,
+        64
+      ],
+      "reason": "The dual resource scope is established before the source approach and preserved across grasp, transport, release and departure, implementing the LONG dependency distance structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        54,
+        57
+      ],
+      "reason": "Each release at target_zone is immediately followed in the same worker coroutine by a same-arm move to the declared depart pose with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        67,
+        68,
+        69
+      ],
+      "reason": "Source implements both workers concurrently with target release and departure, but the finite execution outcome, resource OFF/unowned state, and deadline satisfaction cannot be confirmed from source alone."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        37,
+        39,
+        59,
+        62,
+        63,
+        64
+      ],
+      "reason": "No actual tool acquisition timeout is evidenced in the supplied finite scenario; the try/finally cleanup exists but the timeout trigger condition is not shown to occur."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-LONG-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6380,
+    "completion_tokens": 324,
+    "total_tokens": 6704,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6252
+  },
+  "raw_sha256": "51a9118aa1d1518cdf369742090d09dfefe9cb68d74b89cedd00ce4d362bc677",
+  "request_sha256": "4be8bc1854f8b2ae4aa7711009f7fbff69cd4f67b20ce4353d8c617fcd2e2507",
+  "source_sha256": "3807e74bcbde3933c1076032e995fcfff9506361d879aac84f8defd7d35600f3"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[6,7,8,42,43,44,45,47,48,49,54,55,56,57,58,59,60,61,62,63,64,70,71,72,73,74,75,76,77,78,79,80,81],\"reason\":\"Source implements SERIAL alternating episodes (LEFT producer then RIGHT consumer per item) with LH layout, serial readiness inspection for item 1, tool ownership spans, buffer_lock ownership, and empty_0 wait/clear before second part entry.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[24,31,34,35,36,37,38,39,40,44,45,63,70,74,75,76,77,78,79,80,81],\"reason\":\"ready_0/ready_1 signaled after buffer placement and departure; consumer waits ready receipt on carried move then clears; empty_0 published after consumer departure; producer waits/clears empty_0 before second part; clear uses receipt.version.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[18,21,22,23,25,31,32,33,34,36,37,38,39,54,59,60,61,64,70,72,73,74,76,77,78,79,80],\"reason\":\"buffer_lock acquired before buffer entry and departure for both episodes; tool owned by LEFT during source pickup through ready publication; capacity-one buffer respected via serial episodes and empty_0 synchronization.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[24,34,35,63,74,75],\"reason\":\"ready receipts issued by producer after buffer placement; consumer supplies exact active ready receipt on carried move to target; ready cleared after carried move completes using receipt.version.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[6,7,8,15,16,17,27,28,29,30,42,43,66,67,68,69],\"reason\":\"Program implements SERIAL level: A alternates complete producer/consumer episodes sequentially (episode 1 fully completes before episode 2 begins), matching SPEC's serial alternating structure rather than joined coroutines.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[6,7,8,42,43,44,45,47,48,49],\"reason\":\"C7 serial branch signature: for item 1, producer waits/clears empty_0 then inspects both readiness facts serially (line_clear then receiver_ready) before proceeding, matching the declared held-out control-flow dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[22,23,36,37,38,60,61,76,77],\"reason\":\"Each release (part_0 at buffer_0, part_0 at target_0, part_1 at buffer_1, part_1 at target_1) is immediately followed by same-arm separating move in same coroutine: LEFT moves to left_home/left_wait, RIGHT moves to right_home/right_wait.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[18,19,20,21,22,23,24,25,31,32,33,34,35,36,37,38,39,40,44,45,48,49,54,55,56,57,58,59,60,61,62,63,64,70,71,72,73,74,75,76,77,78,79,80,81],\"reason\":\"Both parts delivered to targets, arms return to homes, tool and buffer_lock released OFF, ready events cleared after use, empty_0 signaled; all within deadline given move durations.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 827,
+    "prompt_tokens": 7293,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8120
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

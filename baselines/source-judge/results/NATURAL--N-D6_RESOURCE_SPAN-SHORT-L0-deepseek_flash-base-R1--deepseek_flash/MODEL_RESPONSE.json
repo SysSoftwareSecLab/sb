@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[10,12,15,16,19,20,23,30,32,35,37],\"reason\":\"Worker acquires fixture then tool before moving/grasping/carrying to target, releases part and departs, then releases tool and fixture in finally; both resources are held across the target placement span as required.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"NA\",\"source_lines\":[43,46,49],\"reason\":\"Experimental assignment is DEPENDENCY_DISTANCE=SHORT with layout L0; no LONG producer-to-consumer dependency structure is declared or applicable.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,21,23],\"reason\":\"After release at target, holding is cleared and the same worker coroutine immediately calls move to depart; release uses the declared support target and is followed by same-arm separating move.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[15,16,19,20,23,30,32,35,37,44,47,49],\"reason\":\"Both workers move parts to targets, release, depart, and finally release tool and fixture; run_task gathers both, matching the declared terminal goal of parts at targets, arms at departures, resources released.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[10,12,24,30,32,35,37],\"reason\":\"No acquisition timeout is declared or observed in the finite source; the try/finally cleanup exists but the timeout-triggered cleanup condition is not applicable.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5838,
+    "completion_tokens": 357,
+    "total_tokens": 6195,
+    "prompt_tokens_details": {
+      "cached_tokens": 896
+    },
+    "prompt_cache_hit_tokens": 896,
+    "prompt_cache_miss_tokens": 4942
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

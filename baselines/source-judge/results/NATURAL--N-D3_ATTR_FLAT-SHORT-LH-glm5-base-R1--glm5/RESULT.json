@@ -1,0 +1,140 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        5,
+        8,
+        9,
+        39,
+        74,
+        78,
+        91
+      ],
+      "reason": "Source implements D3_ATTR_FLAT-SHORT-LH: D3 serial checks (lines 79-89), SHORT tool-after-wait/checks (lines 75-95), LH crossing layout via buffer_0/buffer_1 at same coordinates."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        31,
+        37,
+        49,
+        53,
+        56,
+        59,
+        75,
+        76,
+        104,
+        105
+      ],
+      "reason": "Producer places/departs before ready (lines 31-37); consumer waits ready before pickup (line 49), clears after carried move (line 59); empty_0 waited/cleared before second item (lines 75-76); final empty published/cleared (lines 104-105)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        31,
+        32,
+        33,
+        34,
+        52,
+        53,
+        56,
+        62,
+        63
+      ],
+      "reason": "Both LEFT and RIGHT acquire buffer_lock before buffer interaction and release after departure (lines 31-34, 52-63); capacity-one buffer at identical coordinates for buffer_0/buffer_1."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        37,
+        43,
+        49,
+        53,
+        56
+      ],
+      "reason": "Producer signals ready_event returning receipt (line 37); consumer waits that receipt (line 49) and supplies exact active receipt on carried move to target (lines 53, 56)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        5,
+        8,
+        9,
+        39,
+        74,
+        78,
+        79,
+        85,
+        91,
+        92
+      ],
+      "reason": "Implements SHORT holdout: tool acquired only after second-item empty wait (line 75) and serial D3 checks (lines 79-89), then produce with need_tool=True (lines 91-95)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        75,
+        76,
+        79,
+        85,
+        91,
+        92,
+        94
+      ],
+      "reason": "SHORT dependency structure: empty_0 receipt waited/cleared (lines 75-76), serial checks (lines 79-89), then tool acquired via produce need_tool=True (lines 91-95), preserving focal dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        32,
+        33,
+        62,
+        63
+      ],
+      "reason": "Each release at buffer (line 32) followed by immediate same-arm move to left_wait (line 33); each release at target (line 62) followed by immediate same-arm move to right_wait (line 63)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        66,
+        70,
+        92,
+        96,
+        101,
+        104,
+        105,
+        107,
+        108
+      ],
+      "reason": "Both items produced/consumed to targets (lines 66-72, 92-98); tool released (line 101); empty_0 published/cleared (lines 104-105); arms returned home (lines 107-108); buffer_lock released after each use."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 649,
+    "prompt_tokens": 7468,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8117
+  },
+  "raw_sha256": "c57d51ca656b580755dabd842a6f6bddb0e8ef7af1ae7da1008edd48e47f1281",
+  "request_sha256": "364ce80a963ae34144f7d513977720282f5ea654f05b5a5dace6ce8216538cf4",
+  "source_sha256": "a3e477c21f00dfe33fcf004c839af7c33c76314b5668a2336e693905f2679d3c"
+}

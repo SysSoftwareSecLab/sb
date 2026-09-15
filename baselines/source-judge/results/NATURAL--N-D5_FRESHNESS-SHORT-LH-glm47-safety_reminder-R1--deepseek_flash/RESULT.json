@@ -1,0 +1,76 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        40,
+        50,
+        94
+      ],
+      "reason": "The SPEC's focal dependency is a SHORT producer-to-consumer structure where the route observation is consumed after the invalidating peer release. The code inspects route at line 40 before the left release at line 50, then only attempts to consume obs_route at line 94 in a try/except that is expected to fail and is swallowed; no valid dependency-preserving consumption occurs, so the declared dependency is not implemented."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        40,
+        50,
+        94
+      ],
+      "reason": "The development contract requires the route observation to be current/valid when consumed after the invalidating peer placement. Here obs_route is obtained at line 40, invalidated by the left release at line 50, and then passed to grasp at line 94 where it is stale/invalid; the code itself expects failure, contradicting the required current-observation dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        50,
+        53,
+        69,
+        72
+      ],
+      "reason": "Each release (LEFT at line 50, RIGHT at line 69) is immediately followed in the same coroutine by a same-arm separating move to the declared depart pose (lines 53 and 72), with no intervening same-arm call, satisfying the immediate-departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        31,
+        34,
+        43,
+        46,
+        50,
+        53,
+        57,
+        60,
+        63,
+        66,
+        69,
+        72,
+        94
+      ],
+      "reason": "The source sequence moves both arms to home/source, grasps and releases each part at its target, and departs, but the final dummy grasp at line 94 may raise and is swallowed; source-only evidence cannot confirm the actual finite terminal state (both parts at targets, arms at depart and empty, resources/events cleared) without execution evidence."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7276,
+    "completion_tokens": 417,
+    "total_tokens": 7693,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7148
+  },
+  "raw_sha256": "73bdc28cf36b9ecb741dc8ede5a48a5a9506fe0379decee7fe0a09289f342b06",
+  "request_sha256": "bf6c4357ed6ca8000a3eb0af29f9c3005afe73650908fc955c5ab2dd3e387643",
+  "source_sha256": "05bb9f5c9b75d3a5876c90ac768db5b3b926720863e9bad6078658db000f7e07"
+}

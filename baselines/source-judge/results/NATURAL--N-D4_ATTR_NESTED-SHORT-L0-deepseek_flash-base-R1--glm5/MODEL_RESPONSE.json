@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[36,39,48,49],\"reason\":\"D4 gather of line_clear/receiver_ready checks plus SHORT tool-acquire-after-wait-and-checks are jointly implemented on the reachable path.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[25,30,31,66,74,89,91,95,110,112],\"reason\":\"Producer signals ready after buffer departure, consumer waits ready before pickup, clears ready after carried move, and signals empty_0; producer waits and clears empty_0 before second buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[17,19,21,23,58,60,62,64,77,78,80,81,98,99,101,102],\"reason\":\"Both participants acquire buffer_lock before buffer entry and release after departure; capacity-one buffer occupancy is protected by lock ownership during contact.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[74,83,95,104],\"reason\":\"Consumer waits the corresponding ready receipt and supplies that exact active item receipt on the carried move to target for both episodes.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[30,31,36,39,48,49],\"reason\":\"Declared holdout: after exact empty_0 receipt waited and cleared, D4 joins two checks with asyncio.gather, then acquires tool; this control-flow signature is present on the reachable path.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[30,31,36,39,48,49,53,54,56,58],\"reason\":\"SHORT focal dependency—tool acquire follows second-iteration empty receipt and readiness checks—is implemented with the dependency chain preserved across intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,21,60,62,85,87,106,108],\"reason\":\"Every release is followed by an immediate same-arm separating move in the same coroutine: LEFT moves to left_wait after buffer releases, RIGHT moves to right_home/right_wait after target/buffer releases.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[69,115],\"reason\":\"Producer releases tool at line 69 but never returns LEFT to left_home; after second episode LEFT remains at left_wait. Terminal pose goal for LEFT (left_home) is not satisfied.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 523,
+    "prompt_tokens": 7758,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8281
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

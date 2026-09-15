@@ -1,0 +1,117 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        38,
+        40,
+        43,
+        45,
+        48,
+        51,
+        55,
+        60,
+        63,
+        65,
+        69,
+        72,
+        75,
+        78,
+        83,
+        85,
+        88,
+        90,
+        93,
+        96,
+        100,
+        105,
+        108,
+        110,
+        114,
+        117,
+        120,
+        123
+      ],
+      "reason": "Each arm deposits its own part on its pad, immediately departs, signals its item-bound ready event, waits for peer ready, then consumes the peer item; ready events are cleared after the corresponding carried target move completes, matching the required reciprocal exchange order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        55,
+        69,
+        100,
+        114
+      ],
+      "reason": "The carried move to own target passes the exact EventReceipt returned by wait_event (right_ready_receipt for LEFT, left_ready_receipt for RIGHT), matching the active peer-item receipt requirement."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        51,
+        55,
+        69,
+        75,
+        96,
+        100,
+        114,
+        120
+      ],
+      "reason": "The SHORT producer-to-consumer dependency is implemented: each arm signals its own ready event, waits for the peer ready event, and carries the returned peer receipt through the intervening pickup/approach control flow into the target move before clearing that event."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        45,
+        48,
+        72,
+        78,
+        90,
+        93,
+        117,
+        123
+      ],
+      "reason": "Every release is immediately followed by a same-arm separating move in the same coroutine: LEFT releases at left_pad then moves to left_depart, releases at left_target then moves to left_depart; RIGHT releases at right_pad then moves to right_depart, releases at right_target then moves to right_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        69,
+        72,
+        75,
+        78,
+        114,
+        117,
+        120,
+        123,
+        126
+      ],
+      "reason": "The code places left_part at right_target and right_part at left_target, ends both arms at their departure poses with empty hands, clears both ready events after the corresponding target moves, and runs both arms concurrently within the declared deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-SHORT-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8054,
+    "completion_tokens": 475,
+    "total_tokens": 8529,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7926
+  },
+  "raw_sha256": "be3570c378622fd02832282db05788a76c57c9b99829ad9d18811e8b3b000fe9",
+  "request_sha256": "c817d70523cda557b1b09bbab47aa3a45ffb74c176520205f60e18143fa7a46d",
+  "source_sha256": "68cca9e2ef8471dae50cb6db32ccfa784262a8d2feb82be2a47e2cc067d4c54c"
+}

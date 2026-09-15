@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[21,25,26,27,32,48,52,53,54,58],\"reason\":\"The quality observation is issued by RIGHT inspect after LEFT releases onto inspection (lines 21-25), and the same issued observation is consumed by the later LEFT grasp at inspection (line 32 for pass0, line 58 for pass1), preserving the producer-to-consumer dependency across the intervening control flow.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[27,29,36,38,39,40,44,45,47,48,52,54,56,57,58,62,64,65],\"reason\":\"The code branches on accept_by_pass[0] (line 27): true goes to target (lines 29-35), false performs rework circuit (lines 36-49), then inspects pass1 (line 52) and branches on accept_by_pass[1] (line 54), with at most two inspection passes as required.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[21,25,26,27,48,52,53,54],\"reason\":\"LEFT releases onto inspection (line 21, line 48), RIGHT issues quality observations (line 25, line 52), and the accept_by_pass values are read from those issued observations (lines 26-27, 53-54) to drive the branch.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[21,22,40,41,48,49,34,35,60,61,67,68,74,75],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine: release at inspection (line 21) then move to left_wait (line 22); release at rework (line 40) then move to rework_wait (line 41); release at inspection (line 48) then move to left_wait (line 49); target releases followed by depart moves (lines 34-35, 60-61, 67-68, 74-75).\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[33,34,35,59,60,61,66,67,68,73,74,75],\"reason\":\"Both parts reach their targets (left_target lines 34/60/67, right_target line 74), both arms end at departures (left_depart lines 35/61/68, right_depart line 75), and the left part reaches acceptance within two inspection passes per the accept_by_pass branches.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6965,
+    "completion_tokens": 586,
+    "total_tokens": 7551,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6837
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

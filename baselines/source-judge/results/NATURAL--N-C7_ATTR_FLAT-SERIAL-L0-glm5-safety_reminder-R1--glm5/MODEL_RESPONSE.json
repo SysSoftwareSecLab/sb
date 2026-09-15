@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[86,87,51,52,53,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,72,73,74,75,76,77,78,79,80,81,82,83,84],\"reason\":\"Episode_0 and episode_1 are awaited serially (lines 86-87); each episode fully completes producer then consumer (lines 52-53, 55-84), matching the SERIAL attribute combination.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[67,68,69,72,77],\"reason\":\"Producer signals ready_1 (line 67), waits/clears it (lines 68-69), then consumer re-waits the same ready_1 (line 72) and clears again (line 77). The producer's clear at line 69 deactivates ready_1 before the consumer's wait at line 72, violating the required ready protocol.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[26,27,28,29,30,38,39,40,41,42,43,44,45,46,62,63,64,65,66,73,74,75,76,77,78,79,80,81],\"reason\":\"Both participants acquire buffer_lock before buffer entry and release after departure (lines 26-30, 38-46, 62-66, 73-81); capacity-one buffer occupancy is serialized via the lock.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[31,37,39,41,42,67,72,74,76,77],\"reason\":\"Producer signals ready and consumer waits the corresponding receipt, then supplies that exact active EventReceipt on carried move to target (lines 39,41,74,76) and clears after carried move completes (lines 42,77).\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[86,87,51,52,53,55],\"reason\":\"Program implements serial alternating episodes: episode_0 then episode_1 awaited sequentially (lines 86-87), each with complete producer then consumer (lines 52-53, 55+), matching SERIAL level.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[86,87,51,52,53,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,72,73,74,75,76,77,78,79,80,81,82,83,84],\"reason\":\"Implements serial alternating episodes with episode_0 (producer+consumer for part_0) then episode_1 (producer+consumer for part_1), matching the declared holdout control-flow signature.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[28,29,44,45,64,65,79,80],\"reason\":\"Every release is immediately followed by a same-arm separating move in the same coroutine: LEFT release at buffer_0 then move to left_home (lines 28-29), RIGHT release at target_0 then move to right_home (lines 44-45), similarly for buffer_1 (lines 64-65) and target_1 (lines 79-80).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[67,68,69,72,77,82,83,84],\"reason\":\"Terminal goal not met: ready_1 is cleared by producer (line 69) before consumer wait (line 72), breaking the event protocol; empty_0 is signaled/cleared for part_1 (lines 82-84) but the ready_1 protocol violation prevents full terminal satisfaction.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 840,
+    "prompt_tokens": 7151,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7991
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

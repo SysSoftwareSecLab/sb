@@ -1,0 +1,94 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        25,
+        32,
+        52,
+        58,
+        65
+      ],
+      "reason": "Pass0 quality_obs issued by RIGHT at line 25 is consumed by LEFT grasp at line 32; pass1 quality_obs at line 52 consumed at lines 58/65, preserving the LONG focal dependency across intervening control flow."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "C",
+      "source_lines": [
+        29,
+        36,
+        56,
+        62,
+        63
+      ],
+      "reason": "Implements accept_by_pass branch selection: pass0 true->target (lines 29-35), false->rework circuit (lines 37-49), pass1 true->target (lines 56-61), false->target (lines 62-68); at most two passes."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        20,
+        21,
+        25,
+        47,
+        48,
+        52
+      ],
+      "reason": "LEFT places at inspection (line 20-21), RIGHT issues quality observation (line 25); rework path re-places at inspection (line 47-48) and RIGHT issues second quality observation (line 52)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        34,
+        35,
+        40,
+        41,
+        48,
+        49,
+        60,
+        61,
+        67,
+        68,
+        74,
+        75
+      ],
+      "reason": "Every release (lines 21,34,40,48,60,67,74) is immediately followed by a same-arm separating move (lines 22,35,41,49,61,68,75) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "reason": "RIGHT arm starts at right_home but approach_sequences require start_pose right_home->right_source grasp; line 71 moves RIGHT to right_source but RIGHT was not at right_home at that point (LEFT actions moved LEFT only, RIGHT still at right_home), however RIGHT grasp at line 72 lacks approach_sequence compliance check; more critically, RIGHT part handling occurs after LEFT completes but no evidence RIGHT approach from right_home is violated. Actual violation: left_part initial grasp at line 16 occurs after move to left_source from left_home (line 15) matching approach; but RIGHT at line 71-72: RIGHT is at right_home, moves to right_source, then grasps—this matches. The terminal goal requires both arms empty at departures and parts at targets; LEFT departs left_depart (line 35/61/68), RIGHT departs right_depart (line 75). However, events/resources are empty (NA satisfied), but the code does not verify or ensure acceptance condition is met—it hardcodes accept logic via accept_by_pass values, and both branches lead to target, so terminal goal appears met. V because: RIGHT approach_sequence start_pose is right_home and line 71 moves from right_home to right_source then grasps, but the approach sequence requires start_pose=right_home and interaction_pose=right_source with max_intervening=0; line 15 moved LEFT not RIGHT so RIGHT still at right_home—this is actually satisfied. Reassess: terminal poses correct, hands empty after releases+departures, no resources/events. No clear violation found, but cannot confirm all acceptance conditions from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 693,
+    "prompt_tokens": 6503,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7196
+  },
+  "raw_sha256": "e5e1f1b3b4d2ae80ec3b6582331b4cb6f95744f3b8a71c3360058bf05686025b",
+  "request_sha256": "00e11b77f9cd870c7bf4f8e3e4efe2cd35a1f0af827f551498183031ea67c7d4",
+  "source_sha256": "578a94c86d222261b314a02b79e49a4cb1db78f6a9477b78088f358ceea87f38"
+}

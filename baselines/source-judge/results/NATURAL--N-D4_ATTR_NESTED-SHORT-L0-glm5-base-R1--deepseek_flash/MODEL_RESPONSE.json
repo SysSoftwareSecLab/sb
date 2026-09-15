@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[75,77,78,79,80,81,82,83,85],\"reason\":\"i==1 branch jointly implements the combined attributes: asyncio.gather of LEFT line_clear and RIGHT receiver_ready checks, boolean validation, then tool acquire before transfer.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[61,72,98,101,112,132,133],\"reason\":\"Producer signals ready_i after departing buffer; consumer waits ready receipt, uses it on carried move, clears after move, and producer waits/clears empty_0 before second buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[44,56,90,107],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry and release it in finally, respecting capacity-one buffer ownership during placement/pickup.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[72,98,101],\"reason\":\"Consumer waits ready_i receipt and supplies that exact active EventReceipt on the carried move to target, then clears with the receipt version.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[75,77,78,79,80,81,82,83,85,86,87],\"reason\":\"Held-out control-flow signature present: i==1 branch gathers the two second-item checks before transfer, while else branch acquires tool directly.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[75,77,78,79,80,81,82,83,85],\"reason\":\"SHORT dependency implemented: tool acquire follows the second-iteration empty receipt wait/clear and the gathered readiness checks before transfer.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[53,54,104,105],\"reason\":\"Each release at buffer/target is immediately followed by a same-arm move to home in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[119,120,123,124,125,126,129,136],\"reason\":\"Episodes place part_0 and part_1 at targets, return arms home, release locks/tools, and clear events within the declared deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8347,
+    "completion_tokens": 508,
+    "total_tokens": 8855,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8219
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

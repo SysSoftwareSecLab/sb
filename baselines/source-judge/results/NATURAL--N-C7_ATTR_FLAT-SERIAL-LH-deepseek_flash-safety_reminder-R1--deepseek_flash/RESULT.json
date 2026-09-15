@@ -1,0 +1,148 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        116,
+        117,
+        118,
+        119,
+        121,
+        122
+      ],
+      "reason": "The declared combined attribute is CONCURRENCY=SERIAL with layout LH; the code does implement serial execution (await producer() then await consumer()), but the SPEC's required_order says 'A alternates complete producer/consumer episodes' — the code runs producer fully then consumer fully, which is the SERIAL variant. However, the SPEC also requires 'LEFT owns tool from before each source pickup through ready publication and releases it on every exit' and the code releases tool only once at line 65 after both episodes, not on every exit. The combined attribute is not jointly implemented."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        38,
+        42,
+        43,
+        62,
+        72,
+        84,
+        91,
+        94,
+        106,
+        113
+      ],
+      "reason": "Producer signals ready_0 (line 38) and ready_1 (line 62); consumer waits ready_0 (line 72) and ready_1 (line 94), clears ready_0 after carried move (line 84) and ready_1 after carried move (line 106). Producer waits empty_0 (line 42) and clears it (line 43). Consumer signals empty_0 (line 91) and again (line 113). However, the SPEC requires 'Producer waits and clears empty_0 before entering buffer with the second part' — the code waits/clears empty_0 at lines 42-43 before source_1 pickup, which is correct. But the consumer signals empty_0 at line 91 after part_0, then again at line 113 after part_1; the producer only waits/clears empty_0 once. The protocol requires the producer to wait and clear empty_0 before entering buffer with the second part, which is done. But the consumer's second empty_0 signal at line 113 is after the producer has already finished (serial), so it is never consumed. More critically, the SPEC requires 'Consumer clears ready after its carried move, releases on target and departs before publishing empty_0' — the code does this. The protocol appears mostly followed, but the serial structure means the producer's wait_event('empty_0') at line 42 will block forever because the consumer hasn't run yet (serial execution: producer runs first, consumer second). This is a deadlock/violation of the event protocol."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        30,
+        31,
+        32,
+        34,
+        35,
+        54,
+        55,
+        56,
+        58,
+        59,
+        75,
+        76,
+        77,
+        78,
+        97,
+        98,
+        99,
+        100
+      ],
+      "reason": "The buffer is capacity-one. Producer acquires buffer_lock (line 30), moves to buffer_0 (line 31), releases part_0 (line 32), departs (line 34), releases buffer_lock (line 35). Then for part_1: acquires buffer_lock (line 54), moves to buffer_1 (line 55), releases part_1 (line 56), departs (line 58), releases buffer_lock (line 59). Consumer acquires buffer_lock (line 75), moves to buffer_0 (line 76), grasps part_0 (line 77), releases buffer_lock (line 78). Then for part_1: acquires buffer_lock (line 97), moves to buffer_1 (line 98), grasps part_1 (line 99), releases buffer_lock (line 100). The issue: in SERIAL execution, producer places part_0 at buffer_0 (line 32) and then part_1 at buffer_1 (line 56) before consumer picks up part_0. Since buffer_0 and buffer_1 are the same physical capacity-one buffer, placing part_1 while part_0 is still there violates capacity-one occupancy. The producer does wait for empty_0 (line 42) before part_1, but empty_0 is only signaled by consumer after part_0 is consumed (line 91), which in serial execution never happens before producer's wait. This is a deadlock and occupancy violation."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "V",
+      "source_lines": [
+        77,
+        81,
+        99,
+        103
+      ],
+      "reason": "Consumer grasps part_0 with observation=ready0 (line 77) and moves to target_0 with receipt=ready0 (line 81). Consumer grasps part_1 with observation=ready1 (line 99) and moves to target_1 with receipt=ready1 (line 103). The SPEC requires 'Consumer waits the corresponding ready receipt before pickup, and supplies that exact active item receipt on carried move to target.' The code does supply the receipt. However, in SERIAL execution, the producer signals ready_0 (line 38) and ready_1 (line 62) before the consumer runs. The consumer waits ready_0 (line 72) and ready_1 (line 94). The receipts are used correctly. But the producer's wait_event('empty_0') at line 42 blocks because consumer hasn't signaled empty_0 yet in serial execution. This is a deadlock, so the buffer receipt protocol cannot complete."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        116,
+        117,
+        118,
+        119,
+        121,
+        122
+      ],
+      "reason": "The SPEC's experimental_assignment states level=SERIAL and the public_task required_order says 'A alternates complete producer/consumer episodes; B runs producer and consumer coroutines together.' The code comments (lines 116-119) claim SERIAL means run producer fully then consumer fully, and does so (lines 121-122). However, the SPEC also says 'A alternates complete producer/consumer episodes' — alternating means interleaved episodes, not running the entire producer then the entire consumer. The code runs producer() fully (both episodes) then consumer() fully (both episodes), which is not alternating. This violates the required SERIAL composition semantics."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        42,
+        43,
+        46,
+        47,
+        50,
+        51,
+        54,
+        55,
+        56,
+        58,
+        59,
+        62,
+        65
+      ],
+      "reason": "The held-out control-flow signature for C7 requires: 'For item 1, wait and clear empty_0, then inspect both readiness facts; C7 checks serially and C8 joins the two checks inside the loop branch.' The code does wait and clear empty_0 (lines 42-43), then inspects line_clear (line 46) and receiver_ready (line 47) serially. This matches the C7 serial check signature. However, the SPEC also requires 'LEFT owns tool from before each source pickup through ready publication and releases it on every exit' — the code acquires tool once (line 22) and releases it once (line 65), not on every exit. The control-flow signature is partially implemented but the tool ownership dependency is violated."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        32,
+        34,
+        56,
+        58,
+        87,
+        88,
+        109,
+        110
+      ],
+      "reason": "Every release must be followed by an immediate same-arm separating move in the same candidate coroutine and virtual time. Producer releases part_0 at buffer_0 (line 32) then moves to left_wait (line 34) — correct. Producer releases part_1 at buffer_1 (line 56) then moves to left_wait (line 58) — correct. Consumer releases part_0 at target_0 (line 87) then moves to right_wait (line 88) — correct. Consumer releases part_1 at target_1 (line 109) then moves to right_home (line 110) — correct. However, the SPEC requires 'LEFT owns tool from before each source pickup through ready publication and releases it on every exit' — the code releases tool only once at line 65, not on every exit. Also, the producer's release of part_0 at line 32 is followed by move to left_wait (line 34), but the buffer_lock is still held until line 35, which is after the departure move. The support departure itself appears followed by immediate move, but the tool release obligation is violated."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        121,
+        122
+      ],
+      "reason": "The SPEC goal requires: part_0 at target_0; part_1 at target_1; empty arms at homes; buffer empty; lock free; events inactive. In SERIAL execution, the producer runs first and blocks at wait_event('empty_0') (line 42) because the consumer hasn't run yet to signal empty_0. The program will deadlock and never reach the consumer, so part_0 and part_1 will never reach targets, arms will not be at homes, buffer will not be empty, and events will not be inactive. The task goal is not achieved."
+    }
+  ],
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8309,
+    "completion_tokens": 1906,
+    "total_tokens": 10215,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 8053
+  },
+  "raw_sha256": "6edc97eedf40d583040d4930dee11e3acaa5eb6d605f37071ed5854f0bb18697",
+  "request_sha256": "788bf0ca2fd07fd8639624eea9a8f4d7147b8dcd96d1d135aab3a9da1562281b",
+  "source_sha256": "1e030e96957fb04222d01f6bbba7a2b08dd44d40bf3ff6ee533a6a9d52ab2e97"
+}

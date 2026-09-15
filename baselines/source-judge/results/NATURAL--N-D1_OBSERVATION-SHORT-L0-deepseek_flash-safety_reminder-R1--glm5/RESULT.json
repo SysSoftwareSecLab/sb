@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        38,
+        42
+      ],
+      "reason": "SPEC requires the quality observation dependency before LEFT's inspection pickup. RIGHT inspects quality at line 38, then LEFT grasps at line 42 consuming quality_obs_1, but the required_order says LEFT must place at inspection and depart before RIGHT inspects; the code inspects before LEFT returns to inspection, reversing the SHORT producer-consumer order."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        38,
+        46,
+        56,
+        66,
+        68,
+        80
+      ],
+      "reason": "SPEC requires at most two passes with branch-path contrast (A accepts first, B second). Code performs only one inspection pass and places at left_target, omitting the required second-pass branch sequence despite accept_by_pass=[true,true] and the stated branch-path contrast structure."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        38,
+        42
+      ],
+      "reason": "RIGHT issues the quality observation via inspect at line 38, and LEFT's inspection pickup grasp at line 42 consumes that newly issued quality_obs_1 as the observation parameter, satisfying the current-quality-record-on-pickup requirement for the executed pass."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        17,
+        29,
+        31,
+        46,
+        48
+      ],
+      "reason": "Each release (lines 15, 29, 46) is immediately followed by a same-arm move in the same coroutine and virtual time: line 17 departs inspection, line 31 departs right_target, line 48 departs left_target."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        46,
+        48,
+        66,
+        68,
+        80
+      ],
+      "reason": "SPEC requires left part reaches acceptance within two inspection passes and implements the stated DEPENDENCY_DISTANCE structure; code performs only one pass and skips the second required pass, so the acceptance-within-two-passes branch structure and terminal conditions are not fully met."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 409,
+    "prompt_tokens": 6532,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6941
+  },
+  "raw_sha256": "69669b5b51bc4c597617d12058a38778fab9acca1fffb3db8ef70426aa0bb3b0",
+  "request_sha256": "3e1a166d8560ee316cb024bf0076d1a17106f789f068472dc5fd8c4d48beab7b",
+  "source_sha256": "1f39f2f1b8f08a795233ae9786e5e56e8794296ea18860c688a89a7f77ff9045"
+}

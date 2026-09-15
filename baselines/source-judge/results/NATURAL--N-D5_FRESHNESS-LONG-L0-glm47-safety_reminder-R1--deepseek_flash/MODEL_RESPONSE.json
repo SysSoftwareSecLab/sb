@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[42,66,89,92],\"reason\":\"The code implements the LONG dependency: LEFT inspects route (v1) at line 42, RIGHT releases right_part at line 66 which invalidates the observation, and LEFT then waits for version 2 (line 89) and refreshes (line 92), preserving the focal value dependency across the intervening control flow.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"C\",\"source_lines\":[42,89,92],\"reason\":\"The route observation is refreshed after invalidation: LEFT waits for version 2 via wait_for_version (line 89) and calls refresh (line 92), consuming the current observation rather than the stale v1.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[66,69,70,76,79],\"reason\":\"Each release is followed by an immediate same-arm separating move in the same coroutine: RIGHT releases at line 66 then moves to right_depart at line 76; LEFT releases at line 70 then moves to left_depart at line 79.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[52,53,56,57,65,66,69,70,76,79,89,92],\"reason\":\"Both parts are grasped and released at their targets (left_part at left_target, right_part at right_target), both arms end at departure poses (left_depart, right_depart) and empty, with no resources or events to clear, satisfying the declared terminal goal.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6799,
+    "completion_tokens": 349,
+    "total_tokens": 7148,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6671
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

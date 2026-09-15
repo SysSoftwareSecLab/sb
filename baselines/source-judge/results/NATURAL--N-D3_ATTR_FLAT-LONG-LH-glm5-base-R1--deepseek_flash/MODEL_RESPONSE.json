@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[5,93,144,148],\"reason\":\"Source implements the declared combined attributes: LONG tool ownership (acquire at line 34 before source pickup, held across second-item wait/checks at 76-84), LH layout with two-item post-buffer crossing paths, and D3 serial second-item checks (lines 83-84).\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[59,69,76,79,105,131,137],\"reason\":\"Producer signals ready after departing buffer (59), consumer waits ready before pickup (105) and clears ready after carried move (131); producer waits/clears empty_0 before second buffer entry (76-79); consumer publishes empty_0 after release and departure (137).\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[46,56,113,126],\"reason\":\"Both producer and consumer acquire buffer_lock during buffer entry and release it in finally blocks; capacity-one buffer with item-specific pickup contracts is respected.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[105,118],\"reason\":\"Consumer waits corresponding ready receipt (105) and supplies that exact active item receipt on carried move to target (118).\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[76,83,84],\"reason\":\"Source implements the held-out control-flow signature: second-item wait/clear of empty_0 followed by serial inspect line_clear with LEFT then receiver_ready with RIGHT before transfer.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[34,76,83,84,89],\"reason\":\"Tool acquired before source pickup (34) and held across the second-item wait (76) and checks (83-84), released in finally (89), preserving the focal dependency across intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[49,51,52,53,54,119,121,122,123,124],\"reason\":\"Each release is followed by an immediate same-arm separating move in the same coroutine: producer releases at buffer then moves to left_home/left_wait (51-54); consumer releases at target then moves to right_home/right_wait (121-124).\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[148],\"reason\":\"Source structure targets part_0/part_1 at target_0/target_1 with arms at homes and events cleared, but source-only evidence cannot confirm the finite execution completes within deadline or that all terminal conditions are actually reached.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8655,
+    "completion_tokens": 585,
+    "total_tokens": 9240,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8527
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

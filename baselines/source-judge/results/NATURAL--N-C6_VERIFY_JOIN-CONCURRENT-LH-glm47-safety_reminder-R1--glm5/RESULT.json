@@ -1,0 +1,83 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        36,
+        70,
+        97,
+        98
+      ],
+      "reason": "left_worker and right_worker are defined as separate async coroutines and executed concurrently via asyncio.gather, implementing the CONCURRENT level rather than serial execution."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        47,
+        51,
+        79,
+        82,
+        66,
+        68,
+        94,
+        95
+      ],
+      "reason": "Each worker signals its own ready event, waits for the other's ready event before proceeding to target, and both events are cleared after moves complete, implementing the join_events dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        58,
+        62,
+        88,
+        91
+      ],
+      "reason": "Each release occurs at the corresponding target support zone (LEFT_TARGET, RIGHT_TARGET) and is immediately followed by a same-arm move to the depart pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        44,
+        76,
+        47,
+        79,
+        51,
+        82,
+        55,
+        85,
+        58,
+        88,
+        62,
+        91,
+        66,
+        68,
+        94,
+        95
+      ],
+      "reason": "Source implements all required steps toward the terminal goal (verify, join, transport, release, depart, clear events), but the right_verification fact value has verified_by RIGHT while the left worker inspects left_verification and right worker inspects right_verification; the observation_facts show right_verification value item_id is left_part verified_by RIGHT, which is inconsistent with right_part goals, creating a source-localizable contradiction in the verification acceptance condition."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-LH-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 322,
+    "prompt_tokens": 6447,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6769
+  },
+  "raw_sha256": "43e61e39fe6f889d013f27e8c796201cf9b5fe4da275ba93a561d28e39e74dfd",
+  "request_sha256": "d276a99c703519859f0db6fb4a166a0b17dd1b3d2388840be01fe4ebdb127b8b",
+  "source_sha256": "19bd7d0528e14332714b077ef4cd7b567da5f895933a30d48b27c81104f3f170"
+}

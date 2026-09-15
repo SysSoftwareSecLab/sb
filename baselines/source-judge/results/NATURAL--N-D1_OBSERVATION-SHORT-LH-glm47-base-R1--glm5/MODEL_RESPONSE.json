@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[92,97,99,107],\"reason\":\"Required SHORT dependency: use newly issued current quality record on LEFT inspection pickup. Code inspects quality before re-grasp and consumes it, but accept_by_pass is [true,true], so the rework branch (B on second pass) is never reached; the focal dependency before quality observation on the second-pass pickup path is not implemented.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"V\",\"source_lines\":[97,99,101,114],\"reason\":\"SPEC requires branch-path contrast: A accepts on first pass, B on second. With accept_by_pass=[true,true], code always accepts on pass 1 and breaks, never exercising the rework-then-second-pass branch.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[59,60,61,65,68,92,97,107],\"reason\":\"LEFT places at inspection, departs before RIGHT inspects quality, then inspects and consumes the current quality observation on LEFT inspection pickup, matching the required observation protocol.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[50,53,65,68,110,113,122,125,133,134],\"reason\":\"Each release is at a declared support zone and followed by an immediate same-arm move to a depart pose in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[38,39,43,44,49,50,53,59,61,65,68,92,101,114],\"reason\":\"Right part reaches target and both arms depart, but left_part never reaches left_target in the finite path because accept on pass 1 breaks before the required target placement sequence is executed; terminal goal not fully met.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 383,
+    "prompt_tokens": 7522,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7905
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

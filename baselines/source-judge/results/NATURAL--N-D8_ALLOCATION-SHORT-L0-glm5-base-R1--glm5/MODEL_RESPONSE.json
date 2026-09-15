@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[9,19,21,26,27,28,29,30,38,39],\"reason\":\"Both arms inspect allocation; only selected arm (LEFT per initial value) proceeds to move/grasp/release, unselected returns with no such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[9,27,38,39],\"reason\":\"Each arm independently inspects allocation once; selected arm consumes its own current alloc_obs immediately as grasp observation.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[9,26,27],\"reason\":\"SHORT dependency: selected arm moves to start then immediately calls grasp with the current allocation observation, no intervening calls.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[28,29,30],\"reason\":\"Release at shared_target (declared support) is immediately followed by same-arm move to depart_pose in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[38,39],\"reason\":\"run_task runs LEFT then RIGHT serially, contradicting SPEC requirement that B gathers them concurrently; also RIGHT depart_pose is right_home not right_depart.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 266,
+    "prompt_tokens": 5295,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5561
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

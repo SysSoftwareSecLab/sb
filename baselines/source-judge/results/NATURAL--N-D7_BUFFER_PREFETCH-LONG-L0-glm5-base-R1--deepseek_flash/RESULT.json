@@ -1,0 +1,113 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        21,
+        32,
+        37,
+        43,
+        51,
+        52,
+        55,
+        63
+      ],
+      "reason": "Producer signals ready_0/ready_1 after placing and departing; consumer waits ready receipt before pickup, clears ready after carried move, and signals empty_0; producer waits empty_0 before entering buffer with part_1."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        17,
+        22,
+        33,
+        38,
+        44,
+        50,
+        56,
+        62
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release after departure; capacity-one buffer is respected since part_1 waits for empty_0 before entering buffer_1."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        43,
+        45,
+        55,
+        57
+      ],
+      "reason": "Consumer waits ready_0/ready_1 and passes the exact active EventReceipt to the carried move into buffer_0/buffer_1."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        26,
+        27,
+        28,
+        29,
+        32,
+        34
+      ],
+      "reason": "Second item part_1 is picked at source_1 before waiting for empty_0, preserving the LONG dependency across intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        35,
+        36,
+        48,
+        49,
+        60,
+        61
+      ],
+      "reason": "Each release at a declared support is immediately followed by a same-arm move to home in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        19,
+        20,
+        35,
+        36,
+        47,
+        48,
+        49,
+        60,
+        61,
+        65
+      ],
+      "reason": "Source implements placing part_0/part_1 at targets, returning arms to homes, releasing buffer_lock, and clearing ready events; empty_0 remains signaled but the public goal requires events inactive, so this is not fully satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7049,
+    "completion_tokens": 423,
+    "total_tokens": 7472,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6921
+  },
+  "raw_sha256": "f0340af4b1c757b071027e321f0887466714c74552b2ac0741a1f7608df38ac2",
+  "request_sha256": "839f3954ab999ceb4a7e863d8c02c99b8b3f710255165785c5a2550e1df0639c",
+  "source_sha256": "69f02684cef7b3cfbb86409e8dcded4aba1e824c60bbb26ab468a56bccd2116c"
+}

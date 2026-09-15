@@ -1,0 +1,164 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        143,
+        147,
+        148,
+        175,
+        176
+      ],
+      "reason": "C8 nested attributes implemented: concurrent producer/consumer via asyncio.gather (line 176), joined dual readiness inspections inside the item-1 loop branch (lines 147-148), and nested buffer/crossing layout with buffer_0/buffer_1 at identical coordinates."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        60,
+        63,
+        67,
+        108,
+        124,
+        127,
+        130,
+        133,
+        136,
+        75,
+        76,
+        99,
+        141,
+        167,
+        170,
+        173
+      ],
+      "reason": "Producer places and departs before ready (lines 60-67, 92-99); consumer waits ready before pickup, carries with receipt, clears ready after move, releases on target, departs before empty_0 (lines 108-136); producer waits/clears empty_0 before second buffer entry (lines 75-76)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        56,
+        57,
+        60,
+        63,
+        64,
+        88,
+        89,
+        92,
+        95,
+        96,
+        111,
+        114,
+        117,
+        120,
+        121,
+        151,
+        154,
+        157,
+        160,
+        161
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer approach and release it after departing buffer in every episode, maintaining ownership during complete buffer contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        67,
+        108,
+        124,
+        99,
+        141,
+        164
+      ],
+      "reason": "Producer signals ready_0/ready_1 with item_id; consumer waits corresponding ready receipt and supplies that exact active item receipt on carried move to target (lines 124, 164)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        43,
+        104,
+        175,
+        176
+      ],
+      "reason": "Producer and consumer are separate coroutines run together via asyncio.gather, implementing the CONCURRENT level rather than serial episodes."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        143,
+        147,
+        148,
+        175,
+        176
+      ],
+      "reason": "Declared holdout control-flow signature implemented: joined dual readiness fact inspections inside the item-1 loop branch (lines 147-148) within concurrent producer/consumer coroutines (line 176), not merely same action names."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        60,
+        63,
+        92,
+        95,
+        130,
+        133,
+        170,
+        173
+      ],
+      "reason": "Every release is at its declared support (buffer_0/buffer_1/target_0/target_1) and immediately followed by a same-arm separating move in the same coroutine (lines 63, 95, 133, 173)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        60,
+        92,
+        130,
+        170,
+        63,
+        95,
+        133,
+        173,
+        70,
+        102,
+        64,
+        96,
+        121,
+        161,
+        127,
+        167,
+        76,
+        136,
+        99,
+        175,
+        176
+      ],
+      "reason": "Parts delivered to targets, arms return home, tool and buffer_lock released, ready/empty events cleared, concurrent structure implemented; source supports all terminal conditions."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-CONCURRENT-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 654,
+    "prompt_tokens": 8667,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9321
+  },
+  "raw_sha256": "4336bf24ca205e93a4f01627656127ea59a688e336013e1857aa4bd07ea5c636",
+  "request_sha256": "965c7990761a54d0f28508a43dbb1fa14e8bc00e9d77df21091e68e940349165",
+  "source_sha256": "8f4983ce611f4e175fe30585d50340cc30749fb2e87b08c1733cfa83c750b1f5"
+}

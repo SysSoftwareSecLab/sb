@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"U\",\"source_lines\":[143,211,214,238,243],\"reason\":\"The code attempts a LONG producer-to-consumer dependency between RIGHT's quality inspection and LEFT's consuming grasp via signal('inspected')/wait_event('inspected'), but the public SPEC defines no such event and the actual finite execution outcome (whether the handshake succeeds, times out, or the observation is current) cannot be determined from source alone.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"U\",\"source_lines\":[235,245,253,255,256,257,258,259,262],\"reason\":\"The rework branch sequence (move to rework, grasp, move to inspection, release, move to left_wait, signal ready) is present, but whether the finite trajectory actually executes the required branch sequence and stays within the two-pass limit depends on runtime accept_by_pass values and event timing not determinable from source alone.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"U\",\"source_lines\":[143,211,243],\"reason\":\"The code calls robot.inspect(ARM_LEFT, FACT_QUALITY) and robot.inspect(ARM_RIGHT, FACT_QUALITY), but whether these produce the required newly issued current quality observation at each inspection pass depends on runtime version/active state and event ordering not resolvable from source alone.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"U\",\"source_lines\":[226,229,250,251,258,259],\"reason\":\"Releases onto inspection and target are followed by same-arm moves in the same coroutine, but the actual finite trajectory's committed releases and immediate separating moves cannot be confirmed from source alone; the required same-virtual-time departure is not verifiable without execution evidence.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[265,266,267],\"reason\":\"The code gathers left and right coordinated tasks, but whether both parts reach their targets, arms end empty at departures, resources are OFF/unowned, events are cleared, and the deadline is met cannot be determined from source-only evidence.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 11418,
+    "completion_tokens": 451,
+    "total_tokens": 11869,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 11162
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

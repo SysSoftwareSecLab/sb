@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[39,53,57],\"reason\":\"LONG variant requires route observation before peer invalidation and refresh after; source grasps left_part at line 39 before right release at line 53, then refreshes route at line 57, but never inspects/observes route before the grasp, so the producer-to-consumer dependency structure is not implemented.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[39,57],\"reason\":\"The atomic route observation for left_part is only refreshed at line 57 after the LEFT grasp/release; there is no inspect/observation of route before its consumption by the LEFT grasp at line 39, so the consumed observation is not current/issued before use.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,48,60,53,61],\"reason\":\"LEFT releases left_part at left_target (line 48) then immediately moves to left_depart (line 60); RIGHT releases right_part at right_target (line 53) then immediately moves to right_depart (line 61), both in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[37,38,39,42,43,44,47,48,52,53,57,60,61],\"reason\":\"Source moves both parts to their targets, releases them, and moves both arms to departure poses; no resources or events declared in SPEC, so terminal goal is met.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 319,
+    "prompt_tokens": 5887,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6206
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

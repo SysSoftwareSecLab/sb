@@ -1,0 +1,97 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        23
+      ],
+      "reason": "Source acquires fixture then tool before moving/grasping, carries part to target while owning both, releases part and departs, then releases tool and fixture in correct order."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        23
+      ],
+      "reason": "SHORT dual-resource scope begins after pickup: both resources acquired before grasp, held through transport/release/departure, then released afterward, matching focal dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        17,
+        18,
+        19
+      ],
+      "reason": "Release at target_pose (declared support) is immediately followed by move to depart_pose in same coroutine with no intervening same-arm call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "reason": "Required_order states A runs workers serially and B concurrently; source runs two workers serially via await, but both use same fixture/tool resources—second worker cannot acquire already-released resources only if first completed; however goal requires both parts at targets and arms departed, which serial execution achieves. No concurrency required for A. But resources are shared and serial completion satisfies terminal goal. Actual violation: no evidence of resource mode OFF verification or event clearing, but resources are OFF initially and release_resource requires OFF. Terminal goal appears satisfied. Reclassify: U due to inability to confirm all terminal acceptance from source alone."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        12,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "reason": "try/finally releases every successfully acquired resource in reverse order; acquire uses explicit timeout_s=5, and finally cleanup handles acquisition timeout scenario."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 412,
+    "prompt_tokens": 5390,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5802
+  },
+  "raw_sha256": "73e213ba371ea6e76f3ccce8e344918d05ee809f8e4afe009e82f0f5fe752215",
+  "request_sha256": "d827336fc515534b88d27e7127d82e7a78d39ddb97e6d0a0209ae25e8355f89c",
+  "source_sha256": "3ca4b2dbfa47ccda34c01be900508f936db1dcb957ea0d7869eb293d518a4793"
+}

@@ -1,0 +1,100 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        8,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        21
+      ],
+      "reason": "Each worker acquires fixture then tool before pickup, carries part to target while owning both, releases part, departs, then releases tool and fixture in correct order."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        8,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        21
+      ],
+      "reason": "SHORT dependency structure implemented: dual resource span begins after acquisition and before pickup, maintained through carry to target, release, and departure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        17
+      ],
+      "reason": "Release at target (declared support) is immediately followed by move to depart in same coroutine with no intervening calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        21,
+        34,
+        35,
+        37
+      ],
+      "reason": "Both workers concurrently move part from source to target, release, depart; resources released; arms empty at departures matching goals."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "reason": "try/finally releases all successfully acquired resources in reverse order on acquisition timeout; finally block iterates acquired list."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 305,
+    "prompt_tokens": 5360,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5665
+  },
+  "raw_sha256": "7ecc6b7dba5c13bac3b54fddc616863874cf4468290ca8906efc7bf6a604375d",
+  "request_sha256": "0069f5dee728cc351937b98221d0f45a0c53699bf5195cc228ea383f9e6363a2",
+  "source_sha256": "8b12f50bb8ab79eadc914e416fdd35e989c9f92747f63be9459dbe374064dc68"
+}

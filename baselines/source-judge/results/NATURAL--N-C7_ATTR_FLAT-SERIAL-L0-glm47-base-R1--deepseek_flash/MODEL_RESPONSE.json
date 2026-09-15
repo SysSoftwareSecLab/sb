@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"U\",\"source_lines\":[59,91,126,166],\"reason\":\"The source implements serial alternating episodes, but the declared combined attributes for this CONCURRENCY/SERIAL variant cannot be fully verified from source-only evidence; no explicit concurrency structure is present to confirm the joint attribute set.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[86,95,115,124,130,131,161,168,188,197],\"reason\":\"Producer signals ready_0/ready_1 after buffer departure, consumer waits the corresponding ready before pickup, clears ready after the carried move, and producer waits/clears empty_0 before the second buffer entry; ordering matches the required protocol.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[71,74,77,80,83,98,101,103,106,109,146,149,152,155,158,171,174,176,179,182],\"reason\":\"Both arms acquire buffer_lock before buffer entry, hold it through placement/pickup and departure, and release after departing; capacity-one buffer use is serialized by the lock.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[86,112,161,185],\"reason\":\"Consumer supplies the exact active ready receipt (receipt_ready_0/receipt_ready_1) on the carried move to target, matching the BUFFER_RECEIPT mechanism.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[59,91,126,166],\"reason\":\"The SPEC declares CONCURRENCY=SERIAL and the source implements serial alternating producer/consumer episodes rather than joined coroutines, matching the declared concurrent level.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"U\",\"source_lines\":[126,130,131,134,135,138],\"reason\":\"The held-out control-flow signature for this variant is not fully specified in the supplied public input; source-only evidence cannot confirm the exact required signature.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[77,80,103,106,118,121,152,155,176,179,191,194],\"reason\":\"Each release at a declared support is immediately followed by a same-arm separating move in the same coroutine (buffer releases followed by moves to wait poses; target releases followed by moves to home).\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[118,121,191,194,197,201],\"reason\":\"Source reaches target placements and home moves, but the final event/resource state (empty_0 cleared, lock free, tool OFF) and deadline compliance are not fully closed by the visible source; terminal goal cannot be confirmed.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 9542,
+    "completion_tokens": 607,
+    "total_tokens": 10149,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9414
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,96 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        16,
+        20,
+        24,
+        27,
+        30,
+        33,
+        36,
+        47,
+        49,
+        51,
+        53
+      ],
+      "reason": "Each worker acquires fixture then tool before moving/grasping/carrying/releasing/departing, and releases tool then fixture in finally after departure."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        16,
+        20,
+        24,
+        27,
+        30,
+        33,
+        36,
+        47,
+        49,
+        51,
+        53,
+        57,
+        69
+      ],
+      "reason": "SHORT dependency structure: both resources owned across pickup through release/departure, with concurrent workers using same acquisition order."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        30,
+        33,
+        36
+      ],
+      "reason": "Each release is at target_pose (a declared logical_support) followed immediately by same-arm move to depart_pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        57,
+        69,
+        81,
+        82
+      ],
+      "reason": "Both workers launch concurrently and acquire shared fixture/tool with timeout; likely deadlock/timeout prevents guaranteed terminal completion, and no resource OFF/unowned cleanup is guaranteed on timeout for both arms."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        38,
+        40,
+        44,
+        47,
+        49,
+        51,
+        53
+      ],
+      "reason": "TimeoutError is caught and finally releases every successfully acquired resource in reverse order with mode OFF before release_resource."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 305,
+    "prompt_tokens": 6101,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6406
+  },
+  "raw_sha256": "63ced247f06e992050a7db99192a7e8c5498d7af27146ebf0f6fd421cfb996fe",
+  "request_sha256": "12af02c1895b3b810ca78105e7dcc228ebad245c1292e5b19abc526f92b67c4a",
+  "source_sha256": "039796aa6dce3f0c9b11a27d910fe74eb9cadf59f6818a9aca4378c019391775"
+}

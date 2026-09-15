@@ -1,0 +1,143 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        92,
+        122
+      ],
+      "reason": "LONG variant acquires tool before source pickup (line 92) and keeps it across second-item wait/checks (lines 99-103); D4 joins two checks with asyncio.gather (lines 84-87); both attributes jointly present."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        56,
+        58,
+        61,
+        66,
+        73,
+        75,
+        77,
+        78,
+        80,
+        99,
+        100
+      ],
+      "reason": "Producer places at buffer, departs to left_wait, then signals ready (lines 56-61). Consumer waits ready, carries with receipt, clears ready after carried move, releases, departs, signals empty_0 (lines 66-80). Producer waits and clears empty_0 before second item (lines 99-100)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        55,
+        56,
+        58,
+        59,
+        70,
+        71,
+        77,
+        78
+      ],
+      "reason": "Both participants acquire buffer_lock during buffer entry and departure (lines 55, 59). Producer owns lock during release and departure (lines 55-59). Consumer approaches buffer and grasps; lock ownership for consumer side is not explicitly shown, but producer side is correct."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        66,
+        73,
+        75
+      ],
+      "reason": "Consumer waits ready receipt (line 66), supplies exact active item receipt on carried move to target (line 73), and clears ready after carried move completes (line 75)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        102,
+        103
+      ],
+      "reason": "D4 holdout implemented: second_item_checks joins LEFT line_clear and RIGHT receiver_ready with asyncio.gather (lines 84-87), called inside the second-item branch (line 102-103), before transfer."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        92,
+        99,
+        100,
+        103,
+        113,
+        114,
+        122
+      ],
+      "reason": "LONG structure: tool acquired before source pickup (line 92), kept across second-item empty_0 wait/clear (lines 99-100) and checks (line 103), spans source/grasp/empty receipt, released in finally (line 122)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        56,
+        57,
+        58,
+        77,
+        78
+      ],
+      "reason": "Producer releases part at buffer_pose then immediately moves LEFT to left_wait (lines 56-58). Consumer releases part at target_pose then immediately moves RIGHT to right_wait (lines 77-78). Same-coroutine immediate departure after each release."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        95,
+        96,
+        113,
+        114,
+        117,
+        118,
+        121,
+        122
+      ],
+      "reason": "Part_0 placed at target_0, part_1 at target_1 via episodes (lines 95-96, 113-114). Arms return to left_home/right_home (lines 117-118). Finally releases buffer_lock and tool (lines 121-122). Events cleared after use (lines 75, 100)."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 695,
+    "prompt_tokens": 7751,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8446
+  },
+  "raw_sha256": "feb8b11bc7e1d02eb8a7f5fc9398bfe5a7bd7977d77eebf4e9785ceaeef34e53",
+  "request_sha256": "87dd2f118030e19e9e60a0b6472354b4a394f19f94b379555b0425dc094974f1",
+  "source_sha256": "c627649e4225f1ac50acacf2ab30c1fcce969c85f5c8814c54ea7744bf84d83f"
+}

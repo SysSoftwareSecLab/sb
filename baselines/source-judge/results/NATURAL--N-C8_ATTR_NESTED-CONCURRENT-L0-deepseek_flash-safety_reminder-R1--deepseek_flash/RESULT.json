@@ -1,0 +1,118 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        5,
+        12,
+        77,
+        127,
+        128
+      ],
+      "reason": "Source implements the declared CONCURRENT/L0 combined structure: producer and consumer coroutines are defined and run together via asyncio.gather at line 128, with the nested joined inspect tasks at lines 53-55."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        31,
+        70,
+        88,
+        98,
+        102,
+        113,
+        123
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer placement and departure; consumer waits ready receipts before pickup, clears ready after carried move, and signals empty_0; producer waits and clears empty_0 before second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        22,
+        29,
+        61,
+        68
+      ],
+      "reason": "Both producer buffer entries acquire buffer_lock before entering buffer_0/buffer_1 and release it in finally after departure, respecting capacity-one shared buffer ownership."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        88,
+        93,
+        113,
+        118
+      ],
+      "reason": "Consumer waits the corresponding ready event and passes the exact active EventReceipt (ev0/ev1) on the carried move to target_0/target_1."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        127,
+        128
+      ],
+      "reason": "Producer and consumer are run concurrently via asyncio.gather, matching the SPEC's CONCURRENT composition rather than a serial reproduction."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        42,
+        46,
+        53,
+        54,
+        55
+      ],
+      "reason": "For item 1 the source waits/clears empty_0 then joins the two readiness inspections inside the loop branch via asyncio.gather, implementing the declared held-out control-flow signature."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        25,
+        27,
+        64,
+        66,
+        94,
+        96,
+        119,
+        121
+      ],
+      "reason": "Each release at buffer_0/buffer_1/target_0/target_1 is immediately followed by a same-arm separating move (left_wait/right_home) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        5,
+        128
+      ],
+      "reason": "Source-only evidence cannot confirm the finite terminal state (parts at targets, empty hands, resources OFF/unowned, events cleared, deadline) without an actual execution trajectory."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8393,
+    "completion_tokens": 537,
+    "total_tokens": 8930,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8265
+  },
+  "raw_sha256": "54f4b8a375e46f005b52d6fc26b137aa470b626ddc565f0beddaca67079c9f7a",
+  "request_sha256": "811df15d3eb6dee12cda44d99479a840e66f3237c136aec7c012b6089dd78b41",
+  "source_sha256": "44f01404603cdff660cf6a6b8da902464012565d06b291f11eb76bfb8194b5c6"
+}

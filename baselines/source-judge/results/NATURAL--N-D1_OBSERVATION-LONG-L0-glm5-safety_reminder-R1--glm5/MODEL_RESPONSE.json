@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[21,25,31,36,39],\"reason\":\"RIGHT issues quality via inspect/refresh (q1/q2) and LEFT consumes the current observation at each pickup grasp (lines 25,31,39), preserving the LONG focal dependency across intervening control flow.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[23,29,36,38,42],\"reason\":\"accept_by_pass[0] selects target branch (lines 23-28); else branch routes through rework, refreshes quality (pass 2), then grasps from rework and places at target (lines 29-42), respecting at-most-two-passes.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[17,18,21,25,30,31,36,38,39],\"reason\":\"LEFT places at inspection, RIGHT inspects/refreshes quality, LEFT uses the newly issued current observation on inspection/rework pickup grasps (lines 21,25,31,36,39).\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[18,19,27,28,33,34,41,42,47,48],\"reason\":\"Each release (lines 18,27,33,41,47) is immediately followed by a same-arm separating move (lines 19,28,34,42,48) in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[23,28,44,48],\"reason\":\"With accept_by_pass[0]=true the first-pass branch is taken; RIGHT's right_part transport (lines 44-48) executes only after LEFT fully departs, but the SPEC requires concurrent LEFT/RIGHT implementation of the LONG dependency structure, and the source serializes all RIGHT actions after LEFT completion, omitting the required concurrent structure.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 405,
+    "prompt_tokens": 5949,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6354
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

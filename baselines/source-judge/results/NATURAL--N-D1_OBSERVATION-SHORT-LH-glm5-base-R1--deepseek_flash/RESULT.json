@@ -1,0 +1,102 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "reason": "The SPEC's focal dependency is the quality observation produced by RIGHT inspection being consumed before the quality-based branch; the source never calls inspect/refresh on quality, never reads accept_by_pass, and never implements the SHORT producer-to-consumer dependency, so the required dependency structure is omitted."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "reason": "The public parent contract requires up to two inspection passes with accept_by_pass[pass_index] selecting target or rework; the source performs a single fixed LEFT sequence with no quality observation, no branch on accept_by_pass, and no rework circuit, so the required branch sequence is omitted."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "reason": "The source moves LEFT to inspection and immediately grasps/releases without any inspect or refresh of the quality fact, so the required current quality observation at the inspection gate is omitted."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        16,
+        17
+      ],
+      "reason": "Each release (LEFT at left_target line 9, RIGHT at right_target line 16) is immediately followed in the same coroutine by a same-arm move to the departure pose (lines 10 and 17), satisfying the immediate separating departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "reason": "Although both parts reach their targets and arms end at departures, the declared acceptance condition 'left part reaches acceptance within two inspection passes' is not implemented: no quality observation or accept_by_pass branch exists, so the task goal is not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-SHORT-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5646,
+    "completion_tokens": 437,
+    "total_tokens": 6083,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5518
+  },
+  "raw_sha256": "ff5ede70649025daa54186ce83a922527378d7195de40b32a422238d40ce1387",
+  "request_sha256": "c582f77e7e1e7f4254d1ba773a5d828f00a8b54042a51cec9e81bcd1b1fc0830",
+  "source_sha256": "6d5427a05f9c885b541dc538f8539ff5a0149dc1db3dff346bea2d285ad909ab"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[7,8,9,10,11,15,16,17,18,19],\"reason\":\"SPEC requires SHORT route observation after invalidating peer placement; source never inspects/refreshes route observation and has no dependency structure.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[8,16],\"reason\":\"SPEC development_contract requires observation fact_id=route object_id=left_part; grasp calls omit observation entirely.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[10,11,18,19],\"reason\":\"Each release at declared support (left_target/right_target) is immediately followed by same-arm move to departure in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[1,4,7,8,9,10,11,15,16,17,18,19],\"reason\":\"Source moves parts to targets and arms to departure, but omits required route observation dependency and never clears/uses required observation; terminal goal not fully satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 231,
+    "prompt_tokens": 4982,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5213
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

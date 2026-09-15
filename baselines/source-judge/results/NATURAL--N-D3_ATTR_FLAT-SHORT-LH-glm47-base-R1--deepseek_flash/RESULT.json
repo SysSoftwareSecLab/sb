@@ -1,0 +1,135 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "source_lines": [
+        301,
+        344
+      ],
+      "reason": "The source defines producer_with_checks and consumer and gathers them, but the declared combined attributes (SHORT dependency distance plus LH layout/topology) cannot be confirmed from source-only evidence; the code does not clearly implement the required cross-path topology or joint attribute combination."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        73,
+        109,
+        134,
+        140,
+        180,
+        314,
+        342
+      ],
+      "reason": "Consumer signals empty_0 at line 180 after episode 2, but the producer_with_checks waits for empty_0 at line 318 before episode 2; with only one empty_0 signal from the consumer after both episodes, the required producer wait/clear before second buffer entry cannot be satisfied in the declared order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        50,
+        57,
+        60,
+        63,
+        70,
+        86,
+        93,
+        96,
+        99,
+        106,
+        117,
+        120,
+        122,
+        125,
+        128,
+        147,
+        150,
+        152,
+        155,
+        158
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering the shared capacity-one buffer and release it after departing, with item-specific buffer_0/buffer_1 placements and pickups."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        73,
+        114,
+        125,
+        144,
+        155,
+        314,
+        342
+      ],
+      "reason": "Producer signals ready_0/ready_1 with item ids, consumer waits the corresponding ready receipt and passes that exact receipt on the carried move to target_0/target_1."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        301,
+        344
+      ],
+      "reason": "The source uses producer_with_checks and consumer gathered together, but the declared held-out control-flow signature and dependency cannot be confirmed from source-only evidence."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "U",
+      "source_lines": [
+        318,
+        322,
+        326,
+        333,
+        334
+      ],
+      "reason": "The source shows tool acquire after empty_0 wait and checks in producer_with_checks, but the required SHORT/LONG producer-to-consumer dependency structure and preservation of the focal value/receipt/resource dependency across intervening control flow cannot be fully determined from source-only evidence."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        60,
+        63,
+        96,
+        99,
+        131,
+        137,
+        161,
+        167
+      ],
+      "reason": "Each release at a declared support is immediately followed by a same-arm move in the same coroutine: producer releases at buffer_0/buffer_1 then moves LEFT_HOME, consumer releases at target_0/target_1 then moves RIGHT_HOME."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        180,
+        318,
+        342
+      ],
+      "reason": "The consumer signals empty_0 only after episode 2 at line 180, while producer_with_checks waits for empty_0 at line 318 before episode 2; this ordering prevents the required second-item producer flow and leaves the declared terminal event/order conditions unsatisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 13699,
+    "completion_tokens": 660,
+    "total_tokens": 14359,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "prompt_cache_hit_tokens": 512,
+    "prompt_cache_miss_tokens": 13187
+  },
+  "raw_sha256": "11e10f8f400bbd6033b9694ad372173da579f39da19667ac5b93c586aae1111a",
+  "request_sha256": "037a580dbb1da47cb8dc4d9fde8c2a6eac85bbb7fb15d012631176c33c7e91b3",
+  "source_sha256": "074b75edae7ec500fd9538e78c8803b58606b0b433cdf85158cb46c1db25315b"
+}

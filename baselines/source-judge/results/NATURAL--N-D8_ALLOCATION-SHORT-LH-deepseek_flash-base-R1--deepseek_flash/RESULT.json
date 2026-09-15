@@ -1,0 +1,136 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        13,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        30,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "reason": "Code inspects allocation for both arms, selects the arm named by the controller-issued observation, and only the selected branch issues move/grasp/release calls for that arm; the unselected arm makes no move/grasp/release call."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        34,
+        42
+      ],
+      "reason": "Both LEFT and RIGHT independently inspect the allocation fact once, and the selected arm's grasp passes selected_obs, the current controller-issued allocation observation matching shared_part."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        34,
+        42
+      ],
+      "reason": "The selected observation is captured from the allocation inspect and consumed immediately by the selected arm's grasp with no intervening control flow, matching the SHORT dependency-distance structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        36,
+        37,
+        44,
+        45
+      ],
+      "reason": "Each release at shared_target is immediately followed by the same arm's move to its depart pose in the same branch/coroutine, with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        4,
+        6,
+        7,
+        26,
+        27,
+        28,
+        30,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "reason": "Source implements the selected LEFT transport to shared_target and departure, but the finite execution outcome, deadline, and nonselected RIGHT remaining at right_home cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-SHORT-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5864,
+    "completion_tokens": 439,
+    "total_tokens": 6303,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5736
+  },
+  "raw_sha256": "e2de484c1d2b01f9afd728a160928d252e1738ec71bb235cbc57ac61f9357ea5",
+  "request_sha256": "77a5ee56dadc14e01d4ced3fd774f378de89a0a12bcec1238fd2b3e24e302dfb",
+  "source_sha256": "a1470dd6df87b31d4d5d6a5f2dae90e3424c433b6b611f28d50d3cf949b44fd8"
+}

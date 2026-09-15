@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[40,50,94,97],\"reason\":\"SPEC requires route observation to occur after invalidating peer placement; code inspects route at line 40 before the invalidating release at line 50, then attempts a dummy grasp with the stale observation at line 94 and swallows the failure, so the focal dependency is not implemented on the reachable path.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[40,50,94,95,96,97],\"reason\":\"obs_route is obtained before the release that invalidates it; after invalidation the code passes the stale obs_route to grasp at line 94 and catches the resulting exception, violating the requirement that a supplied observation be current and valid.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[50,53,69,72],\"reason\":\"Each release uses the held object at its declared support zone (left_target/right_target) and is immediately followed by a same-arm separating move to left_depart/right_depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[31,34,43,46,50,53,57,60,63,66,69,72,99,104],\"reason\":\"Source moves both parts from source to target, releases them at their targets, and moves both arms to their departure poses empty; no resources or events are declared in the SPEC.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 312,
+    "prompt_tokens": 6808,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7120
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

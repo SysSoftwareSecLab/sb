@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[7,9,10,11,73,76,77,81,94,101,102],\"reason\":\"Source implements the declared combined attributes: SERIAL alternating episodes (item_0_episode then item_1_episode awaited sequentially) and the C8 nested joined readiness checks inside inspect_readiness (line_clear and receiver_ready combined in one if branch).\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[33,37,38,43,58,65,66,67,90,91],\"reason\":\"Producer signals ready after departing, consumer waits ready before pickup, clears ready after carried move, signals empty_0 after release/departure, and producer waits/clears empty_0 before second buffer entry; item_1 also waits/clears empty_0 before its episode.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[46,47,49,50,53,54,55],\"reason\":\"Consumer acquires buffer_lock before buffer entry and releases it in finally after the carried move; producer places at buffer_0/buffer_1 which are the same capacity-one buffer, and lock ownership spans buffer entry/departure.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[33,43,53,58],\"reason\":\"Consumer waits the corresponding ready receipt and supplies that exact active EventReceipt on the carried move to target (receipt=ready_receipt), then clears ready after the move.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[81,94,101,102],\"reason\":\"Each item episode uses asyncio.gather to run producer_episode and consumer_episode concurrently, and item_0_episode/item_1_episode are awaited in sequence, matching SERIAL alternating episodes with joined producer/consumer coroutines.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[72,73,74,75,76,77,78,92],\"reason\":\"inspect_readiness performs both LEFT line_clear and receiver_ready inspections and joins them in a single if branch, matching the declared held-out control-flow signature for C8.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[25,28,61,62],\"reason\":\"Each release at buffer_0/buffer_1 or target_0/target_1 is immediately followed by a same-arm move to left_wait/right_wait in the same coroutine, satisfying immediate separating departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[101,102,105,106,107],\"reason\":\"Source runs both item episodes and returns arms to left_home/right_home; parts are released at target_0/target_1, buffer_lock and tool are released, and events are cleared, matching the declared terminal goal within the deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7906,
+    "completion_tokens": 650,
+    "total_tokens": 8556,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7778
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

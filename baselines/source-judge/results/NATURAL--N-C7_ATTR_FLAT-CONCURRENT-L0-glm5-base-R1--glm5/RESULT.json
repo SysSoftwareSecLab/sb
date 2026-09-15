@@ -1,0 +1,162 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        94,
+        95,
+        96,
+        169,
+        170
+      ],
+      "reason": "SPEC requires C7 serial readiness checks and C8 joined checks inside the loop branch; source only does serial inspect calls (lines 95-96) and never joins the two checks inside a loop branch."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        38,
+        39,
+        47,
+        61,
+        64,
+        75,
+        76,
+        85,
+        92,
+        120,
+        121,
+        129,
+        146,
+        149
+      ],
+      "reason": "ready published after producer departs; consumer waits ready before pickup, supplies exact active receipt on carried move, clears ready after carried move; empty_0 published after consumer departs; producer waits/clears empty_0 before second part."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        19,
+        23,
+        27,
+        30,
+        31,
+        53,
+        57,
+        61,
+        67,
+        68,
+        98,
+        105,
+        109,
+        112,
+        113,
+        135,
+        139,
+        142,
+        146,
+        152,
+        153
+      ],
+      "reason": "Producer enters buffer_0/buffer_1 and departs without acquiring or owning buffer_lock; SPEC requires both participants own buffer_lock during buffer entry and departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        38,
+        39,
+        51,
+        61,
+        64,
+        120,
+        121,
+        133,
+        146,
+        149
+      ],
+      "reason": "Producer signals ready receipt after departing buffer; consumer waits for exact active ready receipt and supplies it on carried move to target, then clears after move completes, for both parts."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        163,
+        164,
+        165,
+        166,
+        168,
+        169,
+        170
+      ],
+      "reason": "Episode A serially awaits producer then consumer; Episode B uses asyncio.gather to run producer_part_1 and consumer_part_1 concurrently, matching the SPEC's concurrent structure."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        94,
+        95,
+        96
+      ],
+      "reason": "SPEC holdout requires C7 serial checks and C8 joined checks inside the loop branch; source performs serial inspect calls outside any loop branch and never joins the two checks inside a loop branch."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        30,
+        31,
+        67,
+        68,
+        112,
+        113,
+        152,
+        153
+      ],
+      "reason": "Each release is at its declared support (buffer_0, target_0, buffer_1, target_1) and immediately followed by a same-arm separating move to home in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        19,
+        23,
+        27,
+        30,
+        53,
+        57,
+        61,
+        98,
+        105,
+        109,
+        112,
+        135,
+        139,
+        142,
+        146
+      ],
+      "reason": "Producer enters buffer without owning buffer_lock, violating required buffer ownership; terminal goal requires lock free and correct protocol, undermined by missing buffer_lock acquisition during buffer operations."
+    }
+  ],
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-CONCURRENT-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 610,
+    "prompt_tokens": 8926,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9536
+  },
+  "raw_sha256": "17c2944f13f8f703efa58773202b9fe2439ad76c6301e5cc8973da8b0f50dd4b",
+  "request_sha256": "dab3d190c6d464ee5d8d6f44e453fa2f7408f89953d6a7d0b0ff9c9bd4b67dc2",
+  "source_sha256": "ebfe2c4f80028f9b24d19c06312a6d01aaca947347bf58b4cd24c05d1ddda549"
+}

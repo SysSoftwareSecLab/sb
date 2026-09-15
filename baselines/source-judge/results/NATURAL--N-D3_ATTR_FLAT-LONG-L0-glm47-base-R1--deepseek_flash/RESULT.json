@@ -1,0 +1,165 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        55,
+        62,
+        71,
+        83,
+        89,
+        94,
+        96,
+        116,
+        119,
+        122,
+        134,
+        137,
+        140,
+        145,
+        151,
+        154,
+        163,
+        166,
+        175
+      ],
+      "reason": "Source jointly implements LONG tool acquisition before source pickup (line 62) held across the second-item empty_0 wait/clear (94-96) and serial D3 checks (137-147), plus buffer_lock ownership during buffer entry/departure (71-83,122-134) and ready/empty event protocol (86,116,151,154,166)."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        86,
+        94,
+        96,
+        116,
+        151,
+        154,
+        166
+      ],
+      "reason": "Producer signals ready_evt after buffer departure (86); consumer waits ready (116), uses the exact receipt on carried move (151), clears ready only after that move (154), releases/departs, then signals empty_0 (166); producer waits and clears empty_0 before second buffer entry (94-96)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        71,
+        74,
+        75,
+        80,
+        83,
+        122,
+        127,
+        128,
+        131,
+        134
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release after departing; capacity-one buffer is used serially with producer departing before ready and consumer departing before releasing lock."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        116,
+        151,
+        154
+      ],
+      "reason": "Consumer waits ready receipt for the item (116) and supplies that exact active EventReceipt on the carried move to target (151), clearing only after the move completes (154)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        55,
+        62,
+        94,
+        96,
+        110,
+        116,
+        137,
+        140,
+        145,
+        151,
+        175
+      ],
+      "reason": "Reachable control flow implements the LONG dependency: tool acquired before source pickup and retained across the second-iteration empty_0 wait/clear and serial line_clear/receiver_ready checks before the carried target move."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        62,
+        89,
+        94,
+        96,
+        137,
+        140,
+        145,
+        151
+      ],
+      "reason": "LEFT acquires tool before source pickup (62) and keeps it across the second-item empty_0 wait/clear (94-96) and serial checks (137-147), matching the focal LONG tool-acquire-to-second-release dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        75,
+        80,
+        83,
+        128,
+        131,
+        134,
+        157,
+        160
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: producer releases at buffer then moves to depart_pose (75-80); consumer releases at buffer then moves to right_wait (128-131) and releases at target then moves to right_home (157-160)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        15,
+        21,
+        22,
+        55,
+        67,
+        75,
+        80,
+        89,
+        103,
+        127,
+        151,
+        157,
+        160,
+        163,
+        169,
+        175
+      ],
+      "reason": "Source moves part_0/part_1 from sources through buffer to target_0/target_1, returns LEFT/RIGHT to homes, releases tools, and uses asyncio.gather for concurrent producer/consumer; events are cleared and lock released, within the 50s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-LONG-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9236,
+    "completion_tokens": 760,
+    "total_tokens": 9996,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 8980
+  },
+  "raw_sha256": "88dab275b5d0e6ae2dc6217457b2e089613d422f7bd3b6cd842a905aaecb6042",
+  "request_sha256": "a545cc6606ff33b10f6351722d7dc3e294f6f74b87476692be2363cb0083cd30",
+  "source_sha256": "3d843a9637c79b2d22af8c4ac5364fc1da4d9d63e017bd94e860bd8e455a44fb"
+}

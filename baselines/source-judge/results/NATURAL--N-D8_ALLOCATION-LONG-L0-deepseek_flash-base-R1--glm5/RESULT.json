@@ -1,0 +1,87 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "reason": "Both candidates inspect allocation; only the arm matching selected_arm proceeds to approach/grasp/transport, the other returns without move/grasp/release."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        17
+      ],
+      "reason": "Both candidates inspect allocation once; selected arm consumes the same current allocation observation obs in its grasp call."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        17
+      ],
+      "reason": "Peer allocation inspection intervenes before selected observation consumption: obs is fetched before branch selection and consumed at grasp for the selected arm, preserving LONG dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        20
+      ],
+      "reason": "Release at shared_target is immediately followed by same-arm move to depart_pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        24,
+        25
+      ],
+      "reason": "Selected LEFT transports shared_part to shared_target and departs to left_depart, but RIGHT (nonselected) is not kept at right_home: RIGHT candidate returns without moving, yet run_task gathers LEFT and RIGHT concurrently rather than the required serial A structure, and RIGHT's terminal pose is not ensured by code."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 308,
+    "prompt_tokens": 5066,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5374
+  },
+  "raw_sha256": "f66aa9a27b5dece935772cab69ef17d6bfca34b94da0747b58d9bf56b1290bc1",
+  "request_sha256": "6ca8aa7dc1f2ef44ce92293941c1644f817ede063efb7a42fbf2d147f22a1161",
+  "source_sha256": "1f130a3c25808ad03bec6315a560e92bfd1b1335a9c209b17764a9a7d39ba019"
+}

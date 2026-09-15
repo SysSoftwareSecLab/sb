@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[9,11,14,15,16,17,18,19,21,23],\"reason\":\"Each worker acquires fixture then tool before moving/grasping/carrying/releasing/departing, then releases tool then fixture, matching the required dual-resource span order.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[9,11,14,15,16,17,18,19,21,23],\"reason\":\"SHORT dependency 'dual resource scope begins after pickup' is satisfied: both resources are acquired before pickup and held through carry/release/departure until after release.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[17,18,19],\"reason\":\"Each release occurs at the corresponding target support zone and is immediately followed by a same-arm move to depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[14,15,16,17,18,19,21,23,37,38,39],\"reason\":\"Both workers move parts to targets, release, depart, and release resources OFF; concurrent gather implements the goal for both arms.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[8,9,10,11,12,25,26,27,28,29,30,31,32,33,34,35],\"reason\":\"try/finally releases any successfully acquired tool/fixture if a later acquisition times out, with flags tracking ownership.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 330,
+    "prompt_tokens": 5334,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5664
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[25,30,33,38,41,44,47,51,53,57],\"reason\":\"Both arms inspect allocation; only the arm matching selected_arm proposes move/grasp/release/transport; the unselected arm passes with no such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[25,29,30,41],\"reason\":\"Each worker inspects allocation once before choosing; the selected arm consumes its own current allocation observation (alloc_obs) in the grasp call.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[25,29,30,33,38,41,62,63,64],\"reason\":\"LONG dependency: peer allocation inspection intervenes before selected observation consumption; both workers inspect concurrently via gather, then selected branch carries the observation into grasp.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[44,47,51],\"reason\":\"Release occurs at shared_target (a declared logical_support) and is immediately followed by a same-arm same-coroutine separating move to depart_pose.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[38,51,53,57,62,63,64],\"reason\":\"Selected LEFT departs to left_depart, but nonselected RIGHT remains at right_home via pass while both candidates run concurrently; RIGHT never moves to right_home as a terminal action, and the program lacks evidence of empty-hand/resource/event terminal closure required by TASK_GOAL.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 325,
+    "prompt_tokens": 5898,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6223
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

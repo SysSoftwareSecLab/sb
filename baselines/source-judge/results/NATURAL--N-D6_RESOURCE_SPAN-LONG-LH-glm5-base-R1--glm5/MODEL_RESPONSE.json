@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"V\",\"source_lines\":[36,40,42],\"reason\":\"Worker releases both resources only after departure; required order says release part then depart, then release tool/fixture, but code releases all resources after move(depart) in finally, and release_resource requires mode OFF which is never set.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[35,36,37,38,39,40,42],\"reason\":\"Both resources acquired before source move; ownership spans grasp, carry to target, release, and departure; resources released in finally after depart.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[38,39,40],\"reason\":\"release(arm, part, target) at declared support target followed immediately by same-arm move to depart in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[42,70,71,75,76],\"reason\":\"release_resource requires mode OFF and ownership, but set_mode is never called; resources may remain owned/non-OFF, so terminal state not satisfied.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[14,15,16,17,18,19,20,41,42,70,71,75,76],\"reason\":\"Acquisition timeout in _acquire_chain triggers reversed release of acquired resources; run_task exception handlers also release both arms' resources.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 306,
+    "prompt_tokens": 6021,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6327
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

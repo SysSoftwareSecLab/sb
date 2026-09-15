@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[6,7,8,9,10,11,12,13,14],\"reason\":\"Both candidates inspect allocation; only the arm matching alloc.value['selected_arm'] (LEFT per initial value) proposes move/grasp/release, while the unselected RIGHT branch only moves to right_home.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[6,7,9],\"reason\":\"Each candidate independently calls inspect(arm,'allocation') once, and the selected LEFT passes its own current allocation observation into grasp via observation=alloc.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[6,7,9,18,19,20],\"reason\":\"The peer allocation inspection (RIGHT's inspect) intervenes before the selected LEFT consumes its allocation observation in grasp, preserving the focal producer-to-consumer dependency across the concurrent gather.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[11,12],\"reason\":\"After release at shared_target, the same candidate coroutine immediately calls move(arm, depart_pose) as the next same-arm request in the same virtual time.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[18,19,20],\"reason\":\"Source implements the selected LEFT transport and RIGHT home branch, but no finite execution evidence confirms terminal poses, empty hands, event clearing, or deadline satisfaction.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5311,
+    "completion_tokens": 322,
+    "total_tokens": 5633,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5183
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

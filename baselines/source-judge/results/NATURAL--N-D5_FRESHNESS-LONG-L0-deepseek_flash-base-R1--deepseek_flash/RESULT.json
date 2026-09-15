@@ -1,0 +1,73 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        39,
+        44,
+        48,
+        53,
+        57
+      ],
+      "reason": "The program implements the LONG dependency: LEFT grasps left_part (line 39), RIGHT releases right_part at right_target (line 53) which invalidates the route observation, then LEFT refreshes route (line 57) before departure, preserving the producer-to-consumer dependency across the intervening peer release."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "C",
+      "source_lines": [
+        39,
+        53,
+        57
+      ],
+      "reason": "The route observation for left_part is refreshed after the peer release invalidates it (line 57), so the final consumed observation is the fresh version; the earlier grasp observation is superseded by the refresh."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        48,
+        53,
+        60,
+        61
+      ],
+      "reason": "Each release (lines 48, 53) is followed by a same-arm separating move in the same coroutine: LEFT release at left_target then LEFT move to left_depart (line 60), RIGHT release at right_target then RIGHT move to right_depart (line 61), with no intervening same-arm calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        37,
+        39,
+        44,
+        48,
+        53,
+        57,
+        60,
+        61
+      ],
+      "reason": "Both parts are placed at their targets (left_target, right_target), both arms end at departure poses (left_depart, right_depart) and empty after release, no resources or events are declared, and the sequence fits within the 30s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6242,
+    "completion_tokens": 346,
+    "total_tokens": 6588,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6114
+  },
+  "raw_sha256": "68dfc239afb9078e7ac6e2108489777fb5ba372acffb49798e50e9e5b8ba450a",
+  "request_sha256": "27b9c557d616fcf03e05a9a1f23496723b93fac6c0f6359aee246b8eb6e481fe",
+  "source_sha256": "ab41d8d060972de0f8968feef23e3efef655ee1f580ae7df44416ba5db5e2d0a"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"V\",\"source_lines\":[58,59],\"reason\":\"candidate_a and candidate_b are both executed serially, so the selected LEFT transport is proposed twice (lines 24-28 and 41-45), violating the one-selected-transport requirement.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[7,8,17,18,25,42],\"reason\":\"Both arms inspect allocation once (lines 7-8), each branch uses its own observation, and the selected LEFT grasp carries obs_left (lines 25,42).\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[7,8,17,18,25,42],\"reason\":\"The peer allocation inspection (obs_right at line 8) intervenes before the selected observation obs_left is consumed at grasp (lines 25,42), matching the LONG dependency structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[27,28,34,35,44,45,52,53],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same candidate coroutine (LEFT release line 27 then move line 28; RIGHT release line 34 then move line 35; likewise lines 44-45 and 52-53).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[58,59],\"reason\":\"Executing both candidate_a and candidate_b duplicates the selected LEFT transport, so the finite trajectory does not satisfy the declared single-transport goal structure.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6118,
+    "completion_tokens": 348,
+    "total_tokens": 6466,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5990
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

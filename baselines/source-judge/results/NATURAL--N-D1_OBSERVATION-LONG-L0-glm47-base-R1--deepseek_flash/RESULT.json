@@ -1,0 +1,108 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        69,
+        75,
+        104,
+        153
+      ],
+      "reason": "RIGHT inspect issues quality observations (lines 69,75) and LEFT grasp consumes the current observation across intervening control flow (lines 104,153), preserving the producer-to-consumer dependency."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "C",
+      "source_lines": [
+        115,
+        121,
+        124,
+        125,
+        128,
+        131,
+        134,
+        137,
+        141,
+        146,
+        149,
+        153,
+        164,
+        165,
+        166
+      ],
+      "reason": "Code implements accept_by_pass branch: if accept_1 true goes to target/release/depart; else rework circuit then second inspection pickup and final target placement, within two passes."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        69,
+        75,
+        90,
+        104,
+        141,
+        153
+      ],
+      "reason": "Inspection releases invalidate quality (line 90,141) and RIGHT inspect issues new quality observations (69,75) consumed by LEFT grasp at inspection (104,153)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        62,
+        65,
+        90,
+        95,
+        119,
+        120,
+        125,
+        128,
+        141,
+        146,
+        165,
+        166
+      ],
+      "reason": "Each release is followed by a same-arm move in the same coroutine: right release line 62 then move line 65; left releases at 90,119,125,141,165 each followed by a move."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        118,
+        119,
+        120,
+        164,
+        165,
+        166,
+        53,
+        56,
+        59,
+        62,
+        65
+      ],
+      "reason": "Both parts reach targets (left_target release line 119/165, right_target release line 62), arms end at departures (lines 120,166,65), and acceptance within two passes is implemented."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8802,
+    "completion_tokens": 400,
+    "total_tokens": 9202,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8674
+  },
+  "raw_sha256": "ddc3a46595dbe586bb64a4beaa8363b13ad5298ee5c3c41bda7291160d935b7a",
+  "request_sha256": "a257b08cc60d3a9aa69cbbf25db3f95b22fe1a16d9cb9482295af08ce6b193ea",
+  "source_sha256": "939ecf5d3218ff743c6680fcdfd8570342739fcd5a283939ed86cdad12326516"
+}

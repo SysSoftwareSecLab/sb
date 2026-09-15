@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[39,40,43,47,52,59],\"reason\":\"The route observation for left_part (line 59) is taken after the RIGHT arm releases right_part at right_target (line 47), matching the SHORT dependency structure where the invalidating peer placement precedes the focal observation.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"C\",\"source_lines\":[47,59],\"reason\":\"The route observation is inspected after the invalidating release of right_part, so the observation is taken after the version-bumping event and is current.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,52,73,76],\"reason\":\"Each release (lines 47, 73) is immediately followed by a same-arm separating move to the departure pose (lines 52, 76) in the same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[39,40,43,47,52,59,66,67,70,73,76],\"reason\":\"The sequence places right_part at right_target and left_part at left_target, then moves both arms to their departure poses (right_depart, left_depart) empty-handed, satisfying the declared terminal goal.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6614,
+    "completion_tokens": 286,
+    "total_tokens": 6900,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6486
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

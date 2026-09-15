@@ -1,0 +1,141 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        27,
+        31,
+        42,
+        43,
+        47,
+        48,
+        49,
+        53
+      ],
+      "reason": "D4 joins second-item checks with asyncio.gather (lines 31-34) inside i==1 branch; LONG acquires tool before source pickup (line 23 before 43) and keeps it across wait/checks (lines 42-43 after 27-40), releasing on all exits via finally (lines 50-53)."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        55,
+        61,
+        62,
+        86
+      ],
+      "reason": "Producer signals ready_0 (line 55) then immediately waits/clears empty_0 (lines 61-62) before consumer has picked up; ready must remain active until consumer's carried move completes, and empty_0 must be published only after consumer release+departure."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        43,
+        45,
+        47,
+        48,
+        51,
+        72,
+        74,
+        75,
+        78
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry/departure; LEFT owns tool during placement (lines 43-53); occupancy occurs only under lock ownership."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        55,
+        70,
+        75,
+        76,
+        80,
+        82
+      ],
+      "reason": "Producer signals ready receipt; consumer waits it (line 70), supplies exact active receipt on grasp (line 75) and carried move to target (line 76, 82), clears after carried move (line 80)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        27,
+        31,
+        32,
+        33,
+        34,
+        42,
+        43,
+        47,
+        48,
+        49,
+        53
+      ],
+      "reason": "Implements D4+LONG holdout: asyncio.gather of LEFT line_clear and RIGHT receiver_ready inside i==1 branch (lines 31-34); tool acquired before source pickup (line 23→43) and held across wait+checks, released on all exits (lines 50-53)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        23,
+        24,
+        27,
+        28,
+        31,
+        42,
+        43,
+        47,
+        48,
+        49,
+        53
+      ],
+      "reason": "Tool acquired before source pickup (line 23 before 43) and kept across second-item wait (lines 27-42) and checks (lines 31-40), spanning source, grasp, and empty receipt, released after buffer release+departure (lines 48-53)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        48,
+        49,
+        74,
+        75,
+        76,
+        82,
+        83,
+        84
+      ],
+      "reason": "Each release (lines 48, 83) is immediately followed by same-arm separating move in same coroutine: LEFT to left_wait (line 49), RIGHT to right_home (line 84)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        55,
+        61,
+        62,
+        86
+      ],
+      "reason": "Normal return path violates event protocol: producer clears empty_0 prematurely (lines 61-62) before consumer pickup, so events are not correctly inactive and terminal conditions not met."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-LONG-L0-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 668,
+    "prompt_tokens": 7294,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7962
+  },
+  "raw_sha256": "507ae132ebd30dcdf03458c5710791495d0d3c718ae92b1dc61b9755d9722e62",
+  "request_sha256": "19eac681c7894d61c90b000e195995e73f8cc72be10bc44c4a36e906391f8f17",
+  "source_sha256": "c18b4437187c55d927bcd87360855d2b66cf2df4a61cc8b909546661c935d410"
+}

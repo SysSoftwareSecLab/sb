@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[9,11,15,16,19,22,23,26,27,30,31],\"reason\":\"Each worker acquires fixture then tool, performs source approach/grasp, target move, release, departure, then releases tool and fixture, so the dual-resource scope spans the required operations.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[9,11,15,16,19,22,23,26,27,30,31],\"reason\":\"The focal dual-resource dependency is held across the long span from source approach through pickup, placement, and departure before release, matching the LONG dependency-distance structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[22,23],\"reason\":\"After release at target_pose, the same worker coroutine immediately calls move to depart_pose with no intervening same-arm request.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[55,56,57,58,59,60],\"reason\":\"The code targets both parts at targets, arms at departures, and controllers OFF/unowned, but source-only evidence cannot confirm actual completion, event clearing, or deadline satisfaction in the finite execution.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[9,11,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51],\"reason\":\"The try/finally cleanup exists, but the obligation is triggered only by an actual tool acquisition timeout, which is not shown to occur in the supplied finite scenario.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6090,
+    "completion_tokens": 373,
+    "total_tokens": 6463,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5962
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,95 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        13,
+        15,
+        17,
+        18,
+        21,
+        22,
+        25,
+        26,
+        28,
+        29,
+        32,
+        33,
+        36
+      ],
+      "reason": "Branch on selected_arm from allocation; only the selected arm issues move/grasp/release calls, unselected arm makes none."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        13,
+        18,
+        29
+      ],
+      "reason": "Both arms independently inspect allocation once (lines 10-11) before branch selection, and the selected arm's grasp consumes its own current allocation observation (left_alloc/right_alloc)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        13,
+        18,
+        29
+      ],
+      "reason": "Peer allocation inspection (both arms) intervenes before the selected arm's observation consumption in grasp, implementing the LONG dependency distance structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        22,
+        25,
+        33,
+        36
+      ],
+      "reason": "Each release at shared_target is immediately followed in the same branch/coroutine by a same-arm separating move (LEFT to left_depart, RIGHT to right_home) with no intervening calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        17,
+        21,
+        22,
+        25,
+        28,
+        32,
+        33,
+        36
+      ],
+      "reason": "Selected LEFT transports shared_part to shared_target and releases, then departs to left_depart empty; RIGHT remains at right_home empty; no resources/events to clear; within deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5750,
+    "completion_tokens": 346,
+    "total_tokens": 6096,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5622
+  },
+  "raw_sha256": "7381e60bf0c6f5355be2c0ed7726d767fba1bbddceeb11bced48089465ff9b74",
+  "request_sha256": "f37d6e45782e2fbfb34d5d165ea0b941cd9f9f1ccd989074786287d33bcf8da9",
+  "source_sha256": "63c75844815c75b47f130a36b22570a6c8288b6c8cd66a4e75a22c328564bcb5"
+}

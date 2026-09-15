@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[60,62,91,94,96,136,140,145],\"reason\":\"LONG attribute: LEFT acquires tool before source pickup (line 62) and keeps it across the empty_0 wait (lines 91-96) and second-item checks (lines 140,145). D3 serial checks: line 140 then line 145, no gather. Both attributes jointly present.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[86,94,96,116,151,154,166],\"reason\":\"Producer signals ready_0 (line 86) before waiting/clearing empty_0 (lines 94-96), but for part_1 producer never waits or clears empty_0 (lines 97-99 pass). SPEC requires producer waits and clears empty_0 before entering buffer with second part; this required empty_0 wait/clear for second iteration is omitted.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[71,74,75,80,83,122,127,128,131,134],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry (lines 71,122), hold it through placement/pickup and departure (lines 74-80,127-131), and release only after departing (lines 83,134). Capacity-one buffer occupancy with lock ownership maintained.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[116,151,154],\"reason\":\"Consumer waits the corresponding ready receipt (line 116) and supplies that exact active item receipt on the carried move to target (line 151, receipt=ready_receipt). Ready is cleared only after the carried move completes (line 154).\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[136,140,145],\"reason\":\"Declared holdout is ATTRIBUTE_COMBINATION (LONG + D3 serial checks). Source implements LONG tool span and serial D3 checks (lines 140 then 145, no asyncio.gather), matching the held-out control-flow signature.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[60,62,91,94,96,140,145],\"reason\":\"LONG structure: tool acquire (line 62) before source pickup spans the empty_0 wait/clear (lines 94-96) and second-item checks (lines 140,145), preserving the focal dependency across declared intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[75,80,128,131,157,160],\"reason\":\"Every release is at its declared support (buffer_0/buffer_1/target_0/target_1 in logical_supports) and followed by immediate same-arm separating move in same coroutine: lines 75→80, 128→131, 157→160.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[91,94,96,97,99,166],\"reason\":\"Producer never waits/clears empty_0 before second buffer entry (lines 97-99 pass), violating required_order. Also empty_0 is signaled by consumer after each item (line 166) but for second item there is no consumer of empty_0, leaving event protocol incomplete; required terminal event state not satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 704,
+    "prompt_tokens": 8723,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9427
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

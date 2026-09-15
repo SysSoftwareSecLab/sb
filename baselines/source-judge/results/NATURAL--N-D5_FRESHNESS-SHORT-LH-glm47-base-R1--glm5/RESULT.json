@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        34,
+        35,
+        38,
+        41,
+        44,
+        48,
+        51,
+        54,
+        57,
+        60
+      ],
+      "reason": "SPEC focal dependency requires route observation after invalidating peer placement; source inspects route at line 34 before right arm placement and uses it in grasp at line 35, violating the SHORT producer-consumer order."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        34,
+        35
+      ],
+      "reason": "route observation is obtained at line 34 before right_part placement; SPEC requires the observation after invalidating peer release, so the consumed observation is not current/valid for the dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        38,
+        41,
+        44,
+        54,
+        57,
+        60
+      ],
+      "reason": "Each release (lines 41,57) occurs at the matching target support pose (left_target/right_target) and is immediately followed by a same-arm move to departure (lines 44,60) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        34,
+        35,
+        38,
+        41,
+        44,
+        48,
+        51,
+        54,
+        57,
+        60
+      ],
+      "reason": "Although terminal poses and releases are present, the route observation is consumed before the invalidating peer placement required by SPEC, so the dependency/acceptance condition is not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 286,
+    "prompt_tokens": 5839,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6125
+  },
+  "raw_sha256": "1a8d86ec8b8fe6d118b95f7a18a14e282b826ddeb11a00de625b8c6d0e61ca2d",
+  "request_sha256": "5f240b4b2b82500030763097a54b4bcc8ceed377b5365ae83ac1cca638b121de",
+  "source_sha256": "98de8641c20987226b2393787f16403349e079ac3a554d12db681ac7bae48efa"
+}

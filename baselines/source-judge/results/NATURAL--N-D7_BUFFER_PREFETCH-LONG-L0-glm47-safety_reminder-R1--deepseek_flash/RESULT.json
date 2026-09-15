@@ -1,0 +1,111 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        59,
+        64,
+        85,
+        94,
+        107,
+        110,
+        134,
+        139,
+        160,
+        169
+      ],
+      "reason": "Producer signals ready_0/ready_1 after placing and departing; consumer waits ready, clears ready after carried move, signals empty_0; producer_part_1 waits and clears empty_0 before entering buffer. Order matches required protocol."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        38,
+        56,
+        67,
+        79,
+        113,
+        131,
+        142,
+        154
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release after departing; capacity-one buffer used with item-specific poses buffer_0/buffer_1 at identical coordinates, ownership held during contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        64,
+        82,
+        139,
+        157
+      ],
+      "reason": "Consumer waits corresponding ready receipt and supplies that exact active EventReceipt on the carried move to target_0/target_1."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        107,
+        110,
+        113,
+        116,
+        119,
+        122,
+        125,
+        128,
+        131,
+        134
+      ],
+      "reason": "Second item producer waits empty_0 receipt, clears it, then acquires lock and picks part_1 before proceeding; focal dependency (second item picked before waiting for empty receipt) is implemented as LONG structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        50,
+        53,
+        88,
+        91,
+        125,
+        128,
+        163,
+        166
+      ],
+      "reason": "Each release at declared support is immediately followed by same-arm separating move in same coroutine: release at buffer_0 then move LEFT_WAIT, release at target_0 then move RIGHT_HOME, etc."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        91,
+        128,
+        166,
+        169
+      ],
+      "reason": "Program moves parts to targets, returns arms to homes, releases lock, and signals empty_0; events cleared via clear_event calls; deadline 50s with durations well within."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9007,
+    "completion_tokens": 445,
+    "total_tokens": 9452,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8879
+  },
+  "raw_sha256": "b82e9e24586be5e5d3fc9160252932edce6e7c9befa42af05916f13ed61e00a5",
+  "request_sha256": "e86726a8fabdf6e0e74d8012ac6b14a76d23eb2799b7dd1c00cf52a1de3f6428",
+  "source_sha256": "c80c1df4ed26b0e06358f5b25c5ec6ce1603950f81a6e33876d26a5fc267a387"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[30,33,34,35,36,37,38,41,42,43,44,45],\"reason\":\"Only the selected arm proposes move/grasp/release/transport; the unselected branch is never entered.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[6,7,13,24,34,42],\"reason\":\"Both arms inspect allocation once; selected grasp consumes selected_obs, the arm's own current allocation observation.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[6,7,13,24,34,42],\"reason\":\"SHORT dependency: allocation observation inspected, selected, and consumed immediately at grasp with no intervening calls.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[36,37,44,45],\"reason\":\"Release at shared_target is immediately followed by same-arm move to depart pose in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[26,28,30,38],\"reason\":\"Source handles selected LEFT/RIGHT transport and departure, but RIGHT terminal pose for LEFT-selected case and full terminal/event/resource conditions are not all source-evident.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 266,
+    "prompt_tokens": 5482,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5748
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

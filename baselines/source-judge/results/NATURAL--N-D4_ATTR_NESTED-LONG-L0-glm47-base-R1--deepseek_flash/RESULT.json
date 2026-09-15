@@ -1,0 +1,114 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "source_lines": [
+        46,
+        50,
+        58,
+        94,
+        129,
+        145
+      ],
+      "reason": "Source implements LONG tool acquisition before source pickup and asyncio.gather for second-item checks, but the finite execution outcome and joint attribute satisfaction cannot be confirmed from source alone."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "U",
+      "source_lines": [
+        50,
+        51,
+        73,
+        91,
+        158,
+        167
+      ],
+      "reason": "Source shows ready/empty signal, wait, and clear ordering, but whether the finite run reaches all required publications and clears with correct versions is not determinable from source alone."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "U",
+      "source_lines": [
+        58,
+        70,
+        94,
+        107
+      ],
+      "reason": "Source acquires and releases buffer_lock around buffer entry/departure, but actual capacity-one occupancy and complete contact-period ownership cannot be confirmed without execution evidence."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "U",
+      "source_lines": [
+        91,
+        155,
+        158
+      ],
+      "reason": "Consumer waits ready receipt and passes it to the carried move, but whether the receipt is active and correctly consumed in the finite trajectory is not source-determinable."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        129,
+        141,
+        142,
+        145
+      ],
+      "reason": "Source contains the i==1 branch with asyncio.gather of LEFT line_clear and RIGHT receiver_ready inspections, but the held-out control-flow signature's actual reachable execution is not confirmed."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "U",
+      "source_lines": [
+        46,
+        50,
+        76
+      ],
+      "reason": "Source acquires tool before source pickup and holds it across the second-item empty wait, but the focal dependency spanning to second-iteration release cannot be confirmed from source alone."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "U",
+      "source_lines": [
+        62,
+        67,
+        161,
+        164
+      ],
+      "reason": "Source shows release followed by same-arm move to a departure pose, but actual committed releases and immediate same-coroutine separating moves in the finite trajectory are not confirmed."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        164,
+        167,
+        175
+      ],
+      "reason": "Source targets homes, target poses, and empty_0 signal, but full terminal state including empty hands, resources OFF/unowned, events cleared, and deadline cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-LONG-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9403,
+    "completion_tokens": 509,
+    "total_tokens": 9912,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9275
+  },
+  "raw_sha256": "2e9fbde8562dd2b4a7d1e68e3f00bb409e8cb52c403645fd3b53588be9352cfe",
+  "request_sha256": "38729a0f5830396cc95982c78c17cd8cd6f344ade59a3c6164f4a5b4a2e973a5",
+  "source_sha256": "81323e70a85940f951ef9322bdd6ee411a9fa95246885e5c4aa86dc4fead7996"
+}

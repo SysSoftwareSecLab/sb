@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[36,42,46,49,52,55,57,61],\"reason\":\"Selected branch only issues move/grasp/release for the arm matching allocation; unselected branch passes and makes no such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[30,33,36,46],\"reason\":\"Both workers inspect allocation once before branching; selected arm's grasp consumes the same step-1 observation via observation=obs.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[30,42,46],\"reason\":\"SHORT dependency satisfied: selected grasp immediately consumes the current allocation observation obtained in step 1 with no intervening calls between approach and grasp.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[49,52,55],\"reason\":\"Release at shared_target is immediately followed by same-arm move to depart_pose in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[42,55,74,75],\"reason\":\"Selected LEFT moves to shared_source without first being at left_home start_pose per approach_sequences; also serial LEFT then RIGHT execution omits required concurrent B-gather structure.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 263,
+    "prompt_tokens": 6038,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6301
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

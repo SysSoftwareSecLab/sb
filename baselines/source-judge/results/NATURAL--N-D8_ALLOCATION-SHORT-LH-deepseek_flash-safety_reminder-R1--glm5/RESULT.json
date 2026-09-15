@@ -1,0 +1,86 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        36,
+        46,
+        50,
+        53,
+        56,
+        59
+      ],
+      "reason": "All move/grasp/release/move calls use `selected`, derived from the allocation observation; the unselected arm makes no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        21,
+        22,
+        28,
+        50
+      ],
+      "reason": "Both arms inspect allocation once; selected arm's own current observation (selected_obs) is consumed at grasp."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        46,
+        50,
+        53,
+        56,
+        59
+      ],
+      "reason": "SHORT dependency: selected observation consumed immediately at grasp with no intervening calls between approach and grasp."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        56,
+        59
+      ],
+      "reason": "Release at shared_target is immediately followed by same-arm separating move to selected_depart in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        46,
+        50,
+        53,
+        56,
+        59,
+        62,
+        63,
+        64
+      ],
+      "reason": "Source moves shared_part to shared_target, releases it, departs selected LEFT to left_depart, and leaves RIGHT at right_home; no resources/events to clear."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-SHORT-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 267,
+    "prompt_tokens": 5844,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6111
+  },
+  "raw_sha256": "1e6f414feadd89a9fa56d79b1e8b20e53ed0d6647e893e31f80de9a145016a1c",
+  "request_sha256": "7b6108c5ed19a7d23d104bd0f4e7ad7c9f7bcd98e798f3c42ff8c9b600aeeaff",
+  "source_sha256": "531f607d6dc4122cbfa112bafbc9e41dc819fd40c946bda928fe1c9063402a79"
+}

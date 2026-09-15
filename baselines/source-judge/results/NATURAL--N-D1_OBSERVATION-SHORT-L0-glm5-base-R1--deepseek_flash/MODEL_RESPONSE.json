@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"NA\",\"source_lines\":[1,96,97,98,99],\"reason\":\"Experimental assignment level is SHORT (DEPENDENCY_DISTANCE=SHORT), so the LONG producer-to-consumer dependency structure is not applicable to this scenario.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[27,28,29,30,32,33,34,35,36,37,38,39,40,41,42,44,46,47,48,49,50,51,53,55,56,58,59,60,61,63,64,65,66],\"reason\":\"Code implements the accept_by_pass branch: if accepted, place at left_target; else route through rework, release, wait quality_refreshed, re-inspect, and place at left_target on second pass, matching the two-pass rework circuit.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[23,24,27,28,29,30,49,50,55,56,58,59,60,61],\"reason\":\"LEFT approaches inspection from left_wait, grasps, and consumes the current quality observation via inspect('LEFT','quality') using version-1 pass_index at each pass, matching the required inspection-area observation sequence.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[12,16,35,36,41,42,50,51,65,66],\"reason\":\"Each release is followed by an immediate same-arm move in the same coroutine: release at inspection then move left_wait; release at left_target then move left_depart; release at rework then move rework_wait; release at inspection then move left_wait; release at left_target then move left_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[96,97,98,99],\"reason\":\"Source shows concurrent pipelines and terminal moves to left_depart/right_depart with parts placed at targets, but the finite execution outcome, event clearing, and deadline satisfaction cannot be confirmed from source alone.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7323,
+    "completion_tokens": 470,
+    "total_tokens": 7793,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7195
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

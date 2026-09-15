@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[10,13,14,58,59,62,63,110,112],\"reason\":\"Source jointly implements LONG tool acquisition before source pickup, retention across the second-item empty_0 wait and serial line_clear/receiver_ready checks, and release in finally.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[34,37,48,51,58,59,86,89,100,103],\"reason\":\"Producer signals ready_0/ready_1, consumer waits the corresponding receipt, clears ready after the carried move, and producer waits/clears empty_0 before second buffer entry; final empty_0 is published.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[26,27,28,30,31,79,80,81,82,83],\"reason\":\"Both buffer entries acquire buffer_lock, place the item at the capacity-one buffer pose, depart, then release the lock; buffer_0 and buffer_1 share coordinates.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[37,43,89,95],\"reason\":\"Consumer waits ready_0/ready_1 and supplies the exact active EventReceipt on the carried move to target_0/target_1.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[10,13,14,58,59,62,63,110,112],\"reason\":\"Reachable code implements the declared LONG held-out signature: tool acquired before source pickup and held across the second-item wait/checks, with cleanup on exit.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[13,14,58,59,62,63,110,112],\"reason\":\"Tool acquire at line 13 precedes source pickup and remains held through the empty_0 wait, clear, and second-item checks until finally release.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[28,30,44,45,81,82,96,97],\"reason\":\"Each release at buffer_0/buffer_1/target_0/target_1 is immediately followed by a same-arm separating move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[21,43,44,45,95,96,97,103,106,110,112],\"reason\":\"Source moves parts to target_0/target_1, returns arms to homes, releases tool, and publishes final empty_0; lock is released and events cleared.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8182,
+    "completion_tokens": 574,
+    "total_tokens": 8756,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8054
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

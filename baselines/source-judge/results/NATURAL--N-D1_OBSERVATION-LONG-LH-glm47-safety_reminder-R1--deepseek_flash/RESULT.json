@@ -1,0 +1,89 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        87,
+        91,
+        96,
+        101,
+        106
+      ],
+      "reason": "The quality observation is produced by RIGHT's inspect (line 87), signaled via the inspection event (line 91), and consumed by LEFT's grasp with observation=obs_quality (line 96) after intervening control flow (LEFT approach at lines 81-82), preserving the LONG producer-to-consumer dependency across the declared intervening steps."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112
+      ],
+      "reason": "The public accept_by_pass branch requires rework then inspection again when false, but the else branch (lines 108-112) unconditionally sets target_pose = POSE_LEFT_TARGET, omitting the required rework circuit and second inspection pass."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        87,
+        96,
+        101
+      ],
+      "reason": "RIGHT inspects the quality fact at inspection (line 87) and LEFT consumes the newly issued current observation in its grasp (line 96), with the value read at line 101, matching the required current quality record consumption."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        61,
+        64,
+        74,
+        77,
+        116,
+        119
+      ],
+      "reason": "Each release (lines 61, 74, 116) is immediately followed by a same-arm move to a departure/target pose in the same coroutine (lines 64, 77, 119), satisfying the immediate separating departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        115,
+        116,
+        119,
+        121,
+        122,
+        123,
+        124,
+        125
+      ],
+      "reason": "The code moves LEFT to left_target and releases left_part (lines 115-116) and departs (line 119), but the comment at line 125 claims right_part is at right_target while the code never moves RIGHT to right_target; the terminal state for right_part is not established by the source."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8080,
+    "completion_tokens": 441,
+    "total_tokens": 8521,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7952
+  },
+  "raw_sha256": "e153318a537e5c41e09ce94a929f68302387823434e17984e221bb039ab9b1d5",
+  "request_sha256": "4637e97506ee428b7c3f249d507823bd208508ecebdc15eb759c1b16204869dd",
+  "source_sha256": "fa32aa4fd647355bdf3a379d0c6ce678d6bac3716f2e0957de2952443de14dac"
+}

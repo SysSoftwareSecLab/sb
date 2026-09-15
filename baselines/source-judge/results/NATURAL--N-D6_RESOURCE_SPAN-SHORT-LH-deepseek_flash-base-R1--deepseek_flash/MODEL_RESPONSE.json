@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[19,20,21,24,25,26,37,39,42,50,52,55],\"reason\":\"_acquire_pair acquires fixture then tool and _release_pair releases tool then fixture; _worker performs the carried move/release/depart while both are held, and both serial and concurrent paths wrap worker in try/finally releasing the pair, matching the dual-resource span contract.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[19,20,21,37,39,50,52,64,65],\"reason\":\"The SHORT dependency is implemented: the dual resource scope (fixture+tool) begins at acquisition before pickup and is held across the intervening move/grasp/carry/release/depart control flow, preserving the focal dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,39,52],\"reason\":\"Each release at target is immediately followed in the same _worker coroutine by a same-arm move to depart, with no intervening call, satisfying the immediate separating departure requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[63,67,68],\"reason\":\"Source implements both serial and concurrent structures and terminal moves, but source-only evidence cannot confirm actual terminal poses, empty hands, resources OFF/unowned, cleared events, or deadline compliance in the finite execution.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[20,21,37,50],\"reason\":\"Acquire calls use timeout_s=5.0 and no actual tool-acquisition timeout is evidenced in the supplied source, so the timeout-cleanup trigger is not shown to occur.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6352,
+    "completion_tokens": 383,
+    "total_tokens": 6735,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6224
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

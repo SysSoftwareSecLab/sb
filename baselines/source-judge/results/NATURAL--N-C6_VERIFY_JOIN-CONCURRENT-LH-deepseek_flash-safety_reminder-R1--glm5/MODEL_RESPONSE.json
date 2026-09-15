@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[29,30,32],\"reason\":\"left_branch and right_branch are created as concurrent asyncio tasks and gathered, implementing the CONCURRENT level structure rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[17,27,34,35,37,38],\"reason\":\"Both left_ready and right_ready events are signaled by the concurrent branches, then awaited and cleared after gather, implementing the join_events dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,25,26],\"reason\":\"Each release (lines 15,25) is immediately followed by a same-arm move to departure (lines 16,26) in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[13,14,23,24],\"reason\":\"The observation_facts specify cross-verification (left_part verified by RIGHT, right_part verified by LEFT), but the code never calls inspect/refresh to perform verification; also right_verification value references left_part, suggesting a required cross-check step is entirely omitted.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 241,
+    "prompt_tokens": 5428,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5669
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

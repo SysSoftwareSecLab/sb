@@ -1,0 +1,124 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        19,
+        23,
+        34,
+        40,
+        51,
+        53,
+        57,
+        68,
+        70
+      ],
+      "reason": "Producer signals ready_0/ready_1 but never clears empty_0 before entering buffer with part_1; consumer clears ready after carried move and publishes empty_0, but producer's wait_event on empty_0 does not clear it, violating the required clear-before-enter protocol."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        10,
+        13,
+        15,
+        17,
+        23,
+        25,
+        28,
+        30,
+        32,
+        42,
+        45,
+        47,
+        49,
+        59,
+        62,
+        64,
+        66
+      ],
+      "reason": "Spec requires both participants own buffer_lock during buffer entry and departure, but source never calls acquire/release_resource for buffer_lock anywhere."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        40,
+        45,
+        57,
+        62
+      ],
+      "reason": "Consumer waits for ready_0/ready_1 receipts before pickup and supplies those exact active receipts on carried moves to target_0/target_1."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        23,
+        25,
+        26,
+        28,
+        30
+      ],
+      "reason": "Spec focal dependency is 'second item is picked before waiting for empty receipt,' but source waits for empty_0 (line 23) before grasping part_1 (line 26), implementing the opposite order."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        17,
+        30,
+        32,
+        47,
+        49,
+        64,
+        66
+      ],
+      "reason": "Each release (part_0/part_1 at buffer and target) is immediately followed by a same-arm separating move in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        10,
+        13,
+        15,
+        17,
+        25,
+        28,
+        30,
+        32,
+        42,
+        45,
+        47,
+        49,
+        59,
+        62,
+        64,
+        66
+      ],
+      "reason": "Buffer is not guaranteed empty at end (no lock ownership/clear protocol), events ready_0/ready_1/empty_0 are not all cleared, and buffer_lock is never acquired or released, violating terminal state requirements."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 456,
+    "prompt_tokens": 6747,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7203
+  },
+  "raw_sha256": "8b820e9a6323a0caf8a08ea4fb1253c70e09f590dfcc68c4756c5227f563afeb",
+  "request_sha256": "ee82760c3af9cd526fbc26f7296d504bf0e2e412ac4c11d7d4762dd42c8495b4",
+  "source_sha256": "a647b642a3edbbecfe9a41464d95f9678988c1bce481681e2b94629281a87567"
+}

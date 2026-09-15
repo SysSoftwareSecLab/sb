@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[67,69,70,72,73,75,76],\"reason\":\"For item 1, source joins both readiness fact inspections (line_clear and receiver_ready) before proceeding with the producer episode, matching the C8 nested-attribute requirement.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[33,41,59,60,64,65,87,92,105,106],\"reason\":\"ready published after producer places/departs; consumer waits ready, clears after carried move; empty_0 published after consumer departs; producer waits and clears empty_0 before second part; all in correct order.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[26,27,29,30,45,46,48,49,81,82,83,84,95,96,97,98],\"reason\":\"Both participants acquire buffer_lock before buffer interaction and release it after immediate departure; capacity-one buffer occupancy is owned throughout each contact period.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[41,52,92,100],\"reason\":\"Consumer waits the corresponding ready receipt (r0/r1) and supplies that exact active receipt on the carried move to target for both items.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"V\",\"source_lines\":[5,13,16,38,62,91],\"reason\":\"SPEC requires SERIAL level with A alternating complete producer/consumer episodes and B running producer and consumer coroutines together; source is a single coroutine executing everything serially, not implementing the declared concurrent composition.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[67,69,70,72,73,75,76],\"reason\":\"For item 1, source implements the held-out control-flow signature: joining both readiness fact inspections inside the loop branch before proceeding with the second producer episode.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[27,29,30,46,48,49,55,56,82,83,84,96,97,98,102,103],\"reason\":\"Every release is at its declared support and immediately followed by a same-arm separating move in the same coroutine: buffer releases depart to left_wait/right_wait; target releases depart to right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[55,56,103,36,89,30,49,84,98,59,65,105,106],\"reason\":\"Both parts reach targets, arms return to homes, tool and buffer_lock released/off, ready and empty events cleared after use, within deadline; terminal goals satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 571,
+    "prompt_tokens": 7513,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8084
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

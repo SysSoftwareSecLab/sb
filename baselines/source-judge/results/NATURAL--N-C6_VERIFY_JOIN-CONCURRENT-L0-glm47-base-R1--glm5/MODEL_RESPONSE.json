@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[69,70,78,79],\"reason\":\"Two workers created as concurrent asyncio tasks; main waits for both readiness events, implementing CONCURRENT structure rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"V\",\"source_lines\":[78,79,86,87],\"reason\":\"wait_event calls are sequential, not joined: left_ready is awaited and cleared before right_ready is awaited, violating the atomic join requirement for both join_events.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[37,43,60,66],\"reason\":\"Each release places the held part at its declared support_zone (left_target/right_target) and is immediately followed by a same-arm separating move to departure in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[80,82,83],\"reason\":\"Timeout path awaits tasks and returns without clearing join_events, violating terminal requirement that events be cleared; also does not ensure terminal state on that path.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 221,
+    "prompt_tokens": 6269,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6490
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

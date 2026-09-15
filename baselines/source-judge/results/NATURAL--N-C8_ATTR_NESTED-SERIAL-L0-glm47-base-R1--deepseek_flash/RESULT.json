@@ -1,0 +1,125 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        122,
+        123,
+        124,
+        218,
+        219,
+        220
+      ],
+      "reason": "The declared combined attributes require CONCURRENCY=SERIAL with the C8 joined readiness checks inside the loop branch, but the code runs producer/consumer episodes strictly serially and never performs the required joined inspect of both readiness facts for item 1."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        195,
+        213
+      ],
+      "reason": "The final goal requires events inactive, but consumer_episode_1 signals empty_0 at line 213 and no later clear_event(empty_0) occurs, leaving empty_0 active at normal return."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        62,
+        74,
+        92,
+        102,
+        141,
+        153,
+        171,
+        181
+      ],
+      "reason": "Both arms acquire buffer_lock before entering the shared capacity-one buffer and release it after departing; buffer_0 and buffer_1 are treated as the same buffer with lock ownership held during entry/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        77,
+        87,
+        105,
+        156,
+        166,
+        184
+      ],
+      "reason": "Producer signals ready_0/ready_1 with the item, consumer waits the corresponding ready receipt, and supplies that exact active receipt on the carried move to target."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        122,
+        123,
+        124,
+        218,
+        219,
+        220
+      ],
+      "reason": "The SPEC requires CONCURRENCY=SERIAL with the C8 joined readiness checks inside the loop branch; the code merely runs complete producer then consumer episodes serially and omits the joined readiness inspection."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134
+      ],
+      "reason": "The held-out control-flow signature requires waiting and clearing empty_0 then inspecting both readiness facts inside the loop branch; the code waits/clears empty_0 but never performs the joined readiness inspections."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        68,
+        71,
+        111,
+        114,
+        147,
+        150,
+        190,
+        193
+      ],
+      "reason": "Every release is immediately followed by a same-arm separating move in the same coroutine: LEFT releases at buffer then moves to left_home, RIGHT releases at target then moves to right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        195,
+        213
+      ],
+      "reason": "Terminal goal requires events inactive, but empty_0 is signaled at line 213 and never cleared, so the event state is not satisfied at normal return."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-SERIAL-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9869,
+    "completion_tokens": 572,
+    "total_tokens": 10441,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9741
+  },
+  "raw_sha256": "1c05130e1edf704836a80a4d7c463ac90e2a7c5fe7a03ae387bba4ecfa8b3ecd",
+  "request_sha256": "71af6881fdc97760a2c36ef5df8120eef50a066cb1b51a8d379ebf3c584ea1a2",
+  "source_sha256": "32c8790470a648b63551fad56b565b287d010a761d3f8fdc684dd0516d836a24"
+}

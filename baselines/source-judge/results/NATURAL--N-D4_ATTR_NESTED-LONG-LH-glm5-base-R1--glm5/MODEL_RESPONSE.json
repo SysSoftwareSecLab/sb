@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"V\",\"source_lines\":[84,139,97,99,152,100,154],\"reason\":\"D4+LONG requires tool acquired before source pickup and held across empty wait+gather checks; first pipeline acquires tool at line 139 after source pickup (line 135), and second pipeline acquires at line 84 after source pickup (line 80), violating the LONG-before-pickup attribute combination.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[27,30,55,94,97,118,149,152,172],\"reason\":\"Producer signals ready before empty wait in both pipelines (lines 27/30, 94/97, 149/152); consumer signals empty before producer has cleared empty_0 (line 55 vs producer line 30, line 118 vs producer line 97), and consumer clears ready twice (lines 42,50; 105,113; 159,167), violating required ready/empty publication and clearance order.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"V\",\"source_lines\":[19,24,57,58,86,91,120,121,141,146,174,175],\"reason\":\"Consumer acquires buffer_lock after empty signal and release without holding it during buffer approach/grasp (lines 57-58, 120-121, 174-175); both participants must own buffer_lock during buffer entry and departure, but consumer enters buffer (lines 46,109,163) without owning the lock.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[41,47,104,110,158,164],\"reason\":\"Consumer waits ready receipt before pickup and supplies that exact receipt as observation on carried grasp-to-target move in both pipelines.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"V\",\"source_lines\":[84,139,135,80],\"reason\":\"Holdout requires LONG control flow with tool acquired before source pickup and kept across second-item wait/checks; source acquires tool after source pickup (line 84 after 80; line 139 after 135), failing the declared held-out control-flow signature.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[84,139,80,135],\"reason\":\"Focal dependency is tool acquire before source pickup spanning grasp and empty receipt; tool is acquired after source pickup and grasp in both iterations (line 84 after 80-81; line 139 after 135-136), breaking the LONG dependency structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[22,23,51,52,89,90,114,115,144,145,168,169],\"reason\":\"Every release is immediately followed by a same-arm separating move in the same coroutine (release then move to wait/home at lines 22-23, 51-52, 89-90, 114-115, 144-145, 168-169).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[55,118,172,30,97,152,42,50,105,113,159,167],\"reason\":\"Events are not properly cleared at termination: empty_0 is signaled by consumer (lines 55,118,172) but producer clears it mid-episode (lines 30,97,152) leaving it re-signaled and active; ready events are cleared twice and re-signaled, so events are not inactive at return. Also tool acquired but released only in producer, while consumer acquires buffer_lock redundantly.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 758,
+    "prompt_tokens": 8992,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 9750
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

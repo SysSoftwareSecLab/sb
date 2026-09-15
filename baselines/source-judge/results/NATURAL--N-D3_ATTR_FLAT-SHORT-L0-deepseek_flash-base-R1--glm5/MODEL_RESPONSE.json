@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[24,25,28,32,33,35],\"reason\":\"SHORT dependency implemented: empty_0 waited and cleared (lines 24-25), then tool acquired (line 28), then line_clear and receiver_ready inspected serially (lines 32-33), matching D3 serial check comment (line 35).\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[17,52,68,69,24,25,43,72,84,85],\"reason\":\"Producer signals ready after placing and departing (lines 17,43); consumer waits ready before pickup (lines 52,72), clears ready after carried move and before empty_0 (lines 68-69,84-85); producer waits and clears empty_0 before second buffer entry (lines 24-25).\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[55,56,59,74,75,78,28,46],\"reason\":\"Consumer owns buffer_lock during buffer entry and departure for both episodes (lines 55-59,74-78); LEFT owns tool during buffer placements (lines 28,46; placements at lines 14-15,40-41).\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[52,62,72,80],\"reason\":\"Consumer waits corresponding ready receipt before pickup (lines 52,72) and supplies that exact active item receipt on carried move to target (lines 62,80).\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[24,25,28,32,33,35],\"reason\":\"D3 serial two-check signature implemented: line_clear inspected with LEFT (line 32), receiver_ready inspected with RIGHT (line 33), performed serially not gathered, after empty wait/clear and tool acquire.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[24,25,28,32,33,38],\"reason\":\"SHORT focal dependency present: tool acquire follows second-iteration empty_0 receipt (line 24) and clearance (line 25) and readiness checks (lines 32-33), before second source pickup (line 38).\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,41,42,63,64,81,82],\"reason\":\"Each release (lines 15,41,63,81) is immediately followed by same-arm move to home in same coroutine (lines 16,42,64,82).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[38,40,56,75],\"reason\":\"Second-item approach sequence requires start_pose left_wait for LEFT source_1 grasp (spec approach_sequences), but code moves LEFT from left_home to source_1 (line 38) without visiting left_wait; similarly RIGHT approaches buffer_1 from right_home not right_wait (line 75). Terminal goal and event/lock cleanup otherwise present, but required approach poses are violated.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 645,
+    "prompt_tokens": 7160,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7805
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,77 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        7,
+        8,
+        9,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "reason": "SPEC requires SHORT producer-to-consumer dependency: route observation for left_part must occur after invalidating peer (RIGHT) placement/release. Code fully executes LEFT lane (move, grasp, move, release) at lines 8-12 before RIGHT lane begins at line 15, so LEFT grasp at line 9 cannot consume a post-invalidation route observation. No inspect/refresh of route fact appears anywhere; required dependency structure is omitted."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        9,
+        16
+      ],
+      "reason": "Development contract requires observation fact_id='route', object_id='left_part'. grasp calls at lines 9 and 16 pass no observation argument. The required current valid observation is not supplied to the grasp that needs it."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        17,
+        18,
+        19
+      ],
+      "reason": "Each release (lines 11, 18) places the held object at its declared support (left_target/right_target, both in logical_supports) and is immediately followed by a same-arm separating move to departure (lines 12, 19) with no intervening same-arm calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "reason": "Terminal goal requires both parts at targets, both arms at departure and empty. However LEFT lane executes before RIGHT placement, so left_part placement cannot satisfy the version-selected observation requirement. Additionally, approach_sequences require start_pose immediately followed by grasp: LEFT starts at left_home but line 8 moves to left_source (the interaction_pose) without first being at left_home via a move from home; RIGHT similarly. The required order structure is not implemented."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 401,
+    "prompt_tokens": 4956,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5357
+  },
+  "raw_sha256": "f10ed5adff6266b805d32369749ac2c821e2ae11efff55a549810776e1603002",
+  "request_sha256": "ad83215d19fefbdbb75694b2b388f5188ee7e9565bb50839de7272612a13ff66",
+  "source_sha256": "8d4765430d7ad76f974944a9e427f99a01444e265172d82ba92e39c4e999dd40"
+}

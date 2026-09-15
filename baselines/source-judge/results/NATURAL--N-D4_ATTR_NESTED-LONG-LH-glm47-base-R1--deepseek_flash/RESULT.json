@@ -1,0 +1,206 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        28,
+        29,
+        40,
+        55,
+        58,
+        63,
+        65,
+        68,
+        86,
+        98,
+        103,
+        104,
+        107,
+        108,
+        109,
+        113,
+        116,
+        123,
+        127,
+        134
+      ],
+      "reason": "Source jointly implements the declared combined attributes: LONG tool acquisition before source pickup (line 28), buffer_lock ownership during buffer entry/departure (lines 40,55,86,98), ready/empty event protocol (58,63,65,116,123), and D4 asyncio.gather of the two second-item checks (107-110)."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        58,
+        63,
+        65,
+        83,
+        113,
+        116,
+        123
+      ],
+      "reason": "Producer signals ready after departing buffer (52,58); consumer waits ready (83), uses receipt on carried move (113), clears ready after that move (116), then signals empty_0 (123); producer waits and clears empty_0 before second entry (63,65)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        40,
+        48,
+        49,
+        52,
+        55,
+        86,
+        91,
+        92,
+        95,
+        98
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release it after departing; buffer_0/buffer_1 are the same capacity-one buffer and each episode holds the lock across approach, grasp, release and departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        83,
+        113,
+        116
+      ],
+      "reason": "Consumer waits the corresponding ready receipt (83) and supplies that exact active receipt on the carried move to target (113), clearing it after the move completes (116)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        28,
+        29,
+        31,
+        61,
+        63,
+        65,
+        68,
+        101,
+        103,
+        104,
+        107,
+        108,
+        109,
+        110,
+        126,
+        127
+      ],
+      "reason": "Reachable control flow implements the held-out signature: LONG tool acquire before source pickup (28), held across the i==0 empty_0 wait/clear (61-65), and the i==1 branch joins the two checks with asyncio.gather (107-110) before transfer."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        28,
+        29,
+        31,
+        61,
+        63,
+        65,
+        68,
+        101,
+        103,
+        104,
+        107,
+        108,
+        109,
+        110,
+        113,
+        126,
+        127
+      ],
+      "reason": "LEFT acquires tool before source pickup (28) and keeps it across the second-item wait and checks; RIGHT acquires tool in the i==1 branch after wait/checks (103-104) and the focal tool dependency spans source, grasp and empty receipt as required by LONG."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        49,
+        52,
+        92,
+        95,
+        119,
+        120
+      ],
+      "reason": "Each release at a declared support (buffer_pose or target) is immediately followed by a same-arm separating move in the same coroutine: LEFT release at buffer_pose then move to start_pose (49,52); RIGHT release at buffer_pose then move to start_pose (92,95); RIGHT release at target then move to start_pose (119,120)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        28,
+        29,
+        40,
+        49,
+        52,
+        55,
+        58,
+        63,
+        65,
+        68,
+        83,
+        86,
+        92,
+        95,
+        98,
+        103,
+        104,
+        107,
+        108,
+        109,
+        110,
+        113,
+        116,
+        119,
+        120,
+        123,
+        127,
+        134
+      ],
+      "reason": "Source implements the declared terminal goals: parts moved to targets, arms return to homes, buffer emptied, lock released, events cleared, tools released, and both coroutines run concurrently within the 50s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-LONG-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8470,
+    "completion_tokens": 860,
+    "total_tokens": 9330,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8342
+  },
+  "raw_sha256": "d530a9606887d58815144ef21e711e7c9f35e18afca6699553e564e9977267dd",
+  "request_sha256": "8c7daf0c308ceb82ebf805b1a81efd98c3437bfaad350bed05789af1d6e26c0c",
+  "source_sha256": "f8985d5dabd231e81cf17a1b346de61f44d86fd8b0461bdb0e1ae29ce20b9756"
+}

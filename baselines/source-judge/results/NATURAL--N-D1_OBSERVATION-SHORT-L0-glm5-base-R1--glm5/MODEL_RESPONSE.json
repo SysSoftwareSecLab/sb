@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[7,8,11,12,16,20,23,24,27,28,29,30,72,75,76],\"reason\":\"LEFT places at inspection, departs to left_wait, then waits for RIGHT's quality_inspected signal before picking up and inspecting current quality record; RIGHT waits for left_at_inspection_departed before issuing inspection. SHORT producer-consumer dependency preserved.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[32,33,34,35,36,37,38,39,40,41,42,44,46,47,48,49,50,51,53,55,56,58,59,60,61,63,64,65,66],\"reason\":\"accept_by_pass[pass_index] selects left_target on first pass (A) or rework circuit then second inspection and left_target (B), within max two passes.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[23,24,27,28,29,30,55,56,58,59,60,61,75,85],\"reason\":\"Each inspection pass: LEFT moves to inspection from left_wait, immediately grasps left_part, then inspects current quality record using version-1 pass_index; RIGHT issues each inspection observation.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[12,16,35,36,41,42,50,51,65,66,92,93],\"reason\":\"Every release (left_part@inspection, left_target, rework; right_part@right_target) is immediately followed by a same-arm move in the same coroutine: left_wait/left_depart/rework_wait/inspection, right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[80,84,97,98,99],\"reason\":\"RIGHT unconditionally waits for left_at_rework_released and left_at_inspection_departed_second events, but the accept-on-first-pass branch (lines 32-36) never signals these, causing RIGHT to hang and fail terminal conditions when first-pass acceptance occurs.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 465,
+    "prompt_tokens": 6831,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7296
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

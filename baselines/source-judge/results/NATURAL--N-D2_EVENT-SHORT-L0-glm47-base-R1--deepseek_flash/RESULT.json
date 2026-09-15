@@ -1,0 +1,92 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        50,
+        53,
+        56,
+        59,
+        69,
+        84,
+        87,
+        90,
+        93,
+        103
+      ],
+      "reason": "Each arm deposits its own part on its pad, clears the pad (move to *_clear) before signaling its item-bound ready event, waits for peer ready, and clears the peer event after the carried move; matches required_order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        59,
+        66,
+        69,
+        93,
+        100,
+        103
+      ],
+      "reason": "The carried move to own target passes receipt=peer_receipt from wait_event, and clear_event uses expected_version=peer_receipt.version after that move."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        59,
+        63,
+        66,
+        93,
+        97,
+        100
+      ],
+      "reason": "The focal dependency right_ready -> LEFT carried move is preserved: LEFT waits for right_ready (line 59), grasps right_part, then moves to LEFT_TARGET carrying that receipt (line 66), with the receipt dependency maintained across intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        50,
+        53,
+        84,
+        87
+      ],
+      "reason": "Each release at its declared support (left_pad/right_pad) is immediately followed in the same coroutine by a same-arm separating move to *_clear."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        66,
+        72,
+        75,
+        100,
+        106,
+        109
+      ],
+      "reason": "Source implements left_part at right_target, right_part at left_target, empty arms at departure poses, and both ready events cleared; deadline 30s is consistent with the declared durations."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-SHORT-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7678,
+    "completion_tokens": 369,
+    "total_tokens": 8047,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7550
+  },
+  "raw_sha256": "e69d92ee622178b0ce7734fd551f250662bc5e3baf1a579455731230142645b7",
+  "request_sha256": "8177db70cf2f0ccecad426019d38699c0fcd2067170434bda28967a1c38bf833",
+  "source_sha256": "d24d9a0e62ec9f76911b80108047d4ef4b9ce34247984ef1a0f287786b2aeedf"
+}

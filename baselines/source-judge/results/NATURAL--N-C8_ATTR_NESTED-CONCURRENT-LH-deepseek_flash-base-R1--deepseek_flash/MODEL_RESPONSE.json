@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[19,37,119,120],\"reason\":\"Source implements the declared combined attributes: concurrent producer/consumer via asyncio.gather, nested C8 joined readiness checks inside the idx==1 loop branch, and the LH buffer-crossing structure.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[65,79,104,114,29,32],\"reason\":\"Producer signals ready after buffer departure, consumer waits ready before pickup, clears ready after carried move, signals empty_0 after target departure, and producer waits/clears empty_0 before second buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[53,56,59,62,86,89,92,95,98],\"reason\":\"Both arms acquire buffer_lock before buffer entry, release item and depart before releasing lock, matching capacity-one buffer ownership during contact.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[65,79,101,104],\"reason\":\"Consumer waits the ready receipt and supplies that exact active receipt on the carried move to target, then clears after the move completes.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[119,120],\"reason\":\"Producer and consumer coroutines are run together via asyncio.gather, implementing the CONCURRENT level rather than a serial reproduction.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[27,37,38,39,40],\"reason\":\"The held-out control-flow signature is present: idx==1 branch joins both readiness inspections concurrently with asyncio.gather inside the loop branch.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[56,59,108,111],\"reason\":\"Each release is followed immediately in the same coroutine by a same-arm separating move (LEFT to left_wait, RIGHT to right_home).\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[119,120],\"reason\":\"Source shows the intended terminal moves and event clears, but the finite execution outcome (deadline, final ownership/mode, event inactivity) cannot be confirmed from source alone.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8060,
+    "completion_tokens": 488,
+    "total_tokens": 8548,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7932
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,102 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        17,
+        18,
+        20,
+        22,
+        34,
+        36,
+        38,
+        39,
+        41,
+        43
+      ],
+      "reason": "Each arm deposits its own part, clears the pad with a separating move, signals its item-bound ready event, waits for the peer's ready event, then clears it after the carried move completes, matching the required reciprocal exchange order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        34,
+        41,
+        43
+      ],
+      "reason": "The wait_event receipt is stored and passed as receipt to the carried move, and clear_event uses expected_version=receipt.version, so the exact active peer-item receipt is consumed and cleared."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        49,
+        50,
+        51,
+        52,
+        53,
+        55,
+        56,
+        57,
+        58,
+        59,
+        61
+      ],
+      "reason": "The focal dependency right_ready -> LEFT carried move is implemented: left_worker waits for right_ready in consume_peer and then performs the LEFT carried move to left_target, with the receipt preserved across the intervening pickup-wait and peer-pad moves."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        17,
+        18,
+        20
+      ],
+      "reason": "After each release at the declared pad, the same coroutine immediately issues a same-arm separating move to left_clear/right_clear in the same virtual instant, satisfying the support-departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        15,
+        16,
+        17,
+        18,
+        20,
+        22,
+        34,
+        36,
+        38,
+        39,
+        41,
+        43,
+        61
+      ],
+      "reason": "The source implements the exchange and event clearing, but there is no explicit final move to left_depart/right_depart, so the declared terminal poses and full task goal cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6627,
+    "completion_tokens": 407,
+    "total_tokens": 7034,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6499
+  },
+  "raw_sha256": "81b10831b8dba377830813fc1b94c6cf155a58c04a91c7926a27b25fdc39b49f",
+  "request_sha256": "f2be2b30d7e92097d669cf76e533618d27c7ecf9963cac9163224d6afba606ab",
+  "source_sha256": "a2f0fd61e0607c319aee792b142ba965032749b9f8f0ee3a70a51a4edadf7363"
+}

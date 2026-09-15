@@ -1,0 +1,102 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        17,
+        18,
+        20,
+        22,
+        34,
+        36,
+        37,
+        38,
+        40,
+        42,
+        44,
+        50,
+        52,
+        55,
+        57
+      ],
+      "reason": "deposit_own deposits own part, clears pad, then signals own item-bound ready; consume_peer waits for peer ready before pickup, carries with exact peer receipt, releases at own target, clears after carried move; structure A matches SPEC required order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        34,
+        40,
+        44,
+        55,
+        57
+      ],
+      "reason": "wait_event returns peer receipt; carried move passes receipt=receipt to move; clear_event uses expected_version=receipt.version after the carried move completes, matching SPEC."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        50,
+        52,
+        55,
+        34,
+        40,
+        44
+      ],
+      "reason": "Structure A deposits both parts before consumes; LEFT consume waits for right_ready (LONG focal dependency right_ready -> LEFT carried move), carries with exact active receipt, and clears after the carried move, preserving the declared dependency across intervening deposit/consume flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        17,
+        18,
+        20,
+        37,
+        38,
+        40,
+        42,
+        64,
+        65
+      ],
+      "reason": "Each release is at a declared support zone (left_pad, right_pad, left_target, right_target) and is immediately followed by a same-arm move in the same coroutine: clear_pose after deposit, target after carried move, and final departure moves."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        50,
+        52,
+        55,
+        57,
+        64,
+        65,
+        44
+      ],
+      "reason": "left_part deposited then consumed to right_target by RIGHT; right_part deposited then consumed to left_target by LEFT; both ready events cleared; final moves to left_depart and right_depart with empty arms; no resources declared."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-LH-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 401,
+    "prompt_tokens": 6361,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6762
+  },
+  "raw_sha256": "92c50e4f8b5dcfc01201400978e1f405dd4d736086cdc532aca62d8af28d275c",
+  "request_sha256": "51da1ac40a87474e180dfe9c60050b913800a088cdd7d56a9e61e8e807e4f1f4",
+  "source_sha256": "656e51cb2eff25b315adacd6827f4c4daf39934cff72788d36df9596215f46d0"
+}

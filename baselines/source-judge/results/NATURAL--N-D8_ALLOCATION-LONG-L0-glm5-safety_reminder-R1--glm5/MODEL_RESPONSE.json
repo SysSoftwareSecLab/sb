@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[6,7,8,9,10,11,14],\"reason\":\"Both arms inspect allocation; only the arm matching selected_arm proposes approach/grasp/transport; the nonselected arm moves home and makes no shared_part calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[6,9,7,14],\"reason\":\"Both arms inspect allocation once; selected LEFT consumes its own current allocation observation (alloc) as grasp.observation; RIGHT does not grasp.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[6,7,9],\"reason\":\"Peer allocation inspection (line 6) intervenes before the selected arm's observation consumption at grasp (line 9), implementing the LONG producer-to-consumer dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[10,11,12],\"reason\":\"Release at shared_target is immediately followed by same-arm move to depart_pose in the same coroutine with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[8,9,10,11,12,14,19,20],\"reason\":\"Selected LEFT transports shared_part to shared_target then departs to left_depart; RIGHT moves to right_home; both start empty and RIGHT makes no grasp; deadline 30s with ~4 moves fits.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 297,
+    "prompt_tokens": 4959,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5256
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,154 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        59,
+        64,
+        66,
+        67,
+        69,
+        70,
+        73,
+        74,
+        77,
+        80,
+        83,
+        86,
+        89,
+        92,
+        96,
+        106,
+        111,
+        112,
+        114,
+        115,
+        117,
+        118,
+        121,
+        122,
+        125,
+        128,
+        131,
+        132,
+        135,
+        136,
+        139
+      ],
+      "reason": "SPEC requires for item 1: wait/clear empty_0, then inspect both readiness facts (receiver_ready and line_clear) with C8 joining the two checks inside the loop branch. Source waits/clears empty_0 (lines 64-67) but never calls inspect/refresh on receiver_ready or line_clear before producing part_1; no readiness-fact inspection exists anywhere."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        130,
+        131,
+        132,
+        135,
+        136,
+        139
+      ],
+      "reason": "SPEC requires consumer to clear ready after its carried move completes, release on target and depart before publishing empty_0. Source clears ready (line 131) before the carried move to target (line 132) completes, violating the required post-move clear ordering."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        80,
+        83,
+        86,
+        89,
+        118,
+        121,
+        122,
+        125,
+        128
+      ],
+      "reason": "Both participants acquire buffer_lock before buffer entry and release it after departure (lines 80/89 producer, 118/128 consumer), maintaining ownership during contact and release at the buffer."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        92,
+        93,
+        112,
+        131,
+        132
+      ],
+      "reason": "Producer signals ready and stores receipt; consumer waits the corresponding ready receipt (line 112) and supplies that exact active item receipt on the carried move to target (line 132)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        49,
+        99,
+        143
+      ],
+      "reason": "Producer and consumer are separate coroutines run concurrently via asyncio.gather (line 143), implementing the CONCURRENT structure rather than serial episodes."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        59,
+        64,
+        66,
+        67,
+        69,
+        73,
+        74,
+        77,
+        80,
+        83,
+        86,
+        89,
+        92,
+        96
+      ],
+      "reason": "SPEC holdout requires for item 1: wait/clear empty_0, then inspect both readiness facts with C8 joining the two checks inside the loop branch. Source omits all readiness-fact inspection (no inspect/refresh calls on receiver_ready or line_clear), so the declared held-out control-flow signature is not implemented."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        83,
+        86,
+        135,
+        136
+      ],
+      "reason": "Each release at buffer (line 83) and target (line 135) is immediately followed by a same-arm separating move (lines 86 and 136) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        57,
+        104,
+        143
+      ],
+      "reason": "Terminal goal requires part_0 at target_0, part_1 at target_1, empty arms at homes, buffer empty, lock free, events inactive, within deadline. Source omits required readiness-fact inspection for part_1 (violating acceptance conditions), and clears ready before carried move completion (line 131), undermining event-inactive terminal condition correctness."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-CONCURRENT-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 704,
+    "prompt_tokens": 7957,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8661
+  },
+  "raw_sha256": "d6cb05227e96a49b3d49fe98669673d2d30b72fe12d8ce107cccb17ab1e137ce",
+  "request_sha256": "130634429fc179b823c715f6a2355fc98024129d78096e9631d2418572d2b612",
+  "source_sha256": "0ca521abfc5caeda016dc23c55b781285c8eda4b9394bc53da22d7a6b59ea881"
+}

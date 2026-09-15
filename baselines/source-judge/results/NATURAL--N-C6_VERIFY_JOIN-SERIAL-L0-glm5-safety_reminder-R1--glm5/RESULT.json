@@ -1,0 +1,68 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        40,
+        43,
+        44
+      ],
+      "reason": "SPEC requires SERIAL level; run_task awaits _left_branch then _right_branch sequentially, matching stated structure."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "V",
+      "source_lines": [
+        18,
+        20,
+        35,
+        37,
+        43,
+        44
+      ],
+      "reason": "SPEC requires joining both readiness events before returning; code clears each event immediately after signaling within its branch, so no join of both events exists before run_task returns."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        32,
+        33
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: LEFT release to left_target then move to left_depart; RIGHT release to right_target then move to right_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        18,
+        20,
+        35,
+        37
+      ],
+      "reason": "Terminal goal requires events cleared; left_ready and right_ready are signaled then immediately cleared within branches, but the SPEC's join obligation requires both events to be joined before return, and clearing each independently defeats the join, leaving the terminal event state inconsistent with the declared join contract."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-L0-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 252,
+    "prompt_tokens": 5558,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5810
+  },
+  "raw_sha256": "a60546797749b903d365e684992e1cb9be5cf7bd2236562e8f73b99645e4038b",
+  "request_sha256": "11791c794f1071cd293858e6d862e2be849044b1c3072b52e46efaa1bad110ab",
+  "source_sha256": "070caf3dd6b0cdeec9a6fa7a37000f20859cd1625b29438025d00fcc2d9f1e94"
+}

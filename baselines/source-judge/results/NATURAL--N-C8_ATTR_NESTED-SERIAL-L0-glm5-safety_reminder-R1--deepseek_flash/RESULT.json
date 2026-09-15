@@ -1,0 +1,145 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "source_lines": [
+        163,
+        164,
+        165,
+        167,
+        170,
+        181,
+        252
+      ],
+      "reason": "Source shows serial episodes for part_0 and a joined gather for part_1, but the declared combined attributes (SERIAL level plus joined checks) cannot be confirmed as jointly implemented from source alone; the joined_part_1 gather is present but the exact combined attribute semantics are not fully determinable."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "U",
+      "source_lines": [
+        38,
+        48,
+        67,
+        82,
+        88,
+        92,
+        119,
+        129,
+        149,
+        172,
+        174,
+        209,
+        218,
+        238
+      ],
+      "reason": "Source shows ready/empty signal, wait, and clear calls in plausible order, but whether all required publications and clears occur on the actual finite trajectory (including the joined path) cannot be confirmed from source alone."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "U",
+      "source_lines": [
+        23,
+        35,
+        56,
+        75,
+        104,
+        116,
+        137,
+        157,
+        194,
+        206,
+        226,
+        246
+      ],
+      "reason": "Source shows buffer_lock acquire/release around buffer entry and departure, but actual capacity-one occupancy and ownership during full contact cannot be verified from source-only evidence."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "U",
+      "source_lines": [
+        64,
+        146,
+        235
+      ],
+      "reason": "Source supplies ready_receipts on carried moves to target, but whether the exact active item receipt is valid at execution time cannot be determined from source alone."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "U",
+      "source_lines": [
+        163,
+        164,
+        165,
+        167,
+        170,
+        181,
+        252
+      ],
+      "reason": "Source shows serial episodes for part_0 and asyncio.gather for part_1, but the declared CONCURRENCY=SERIAL structure and its exact reachable concurrency level cannot be confirmed from source alone."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        170,
+        177,
+        178,
+        181,
+        183,
+        216
+      ],
+      "reason": "Source shows a joined_part_1 with inspect calls and gather, but the declared held-out control-flow signature and its dependency cannot be confirmed as implemented from source alone."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "U",
+      "source_lines": [
+        30,
+        31,
+        70,
+        71,
+        111,
+        112,
+        152,
+        153,
+        201,
+        202,
+        241,
+        242
+      ],
+      "reason": "Source shows release followed by same-arm move to home in the same coroutine, but actual committed releases and immediate separating moves on the finite trajectory cannot be verified from source alone."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        164,
+        165,
+        252
+      ],
+      "reason": "Source shows run_task awaiting producer/consumer episodes, but all terminal poses, object goals, empty hands, resource OFF/unowned, events cleared, and deadline satisfaction cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-SERIAL-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 11161,
+    "completion_tokens": 609,
+    "total_tokens": 11770,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 11033
+  },
+  "raw_sha256": "441e9f31c72582e24a5bb92bcc1f86cd268ab0d48e6810a7279da1993a03d993",
+  "request_sha256": "47d43926e4d220f8f60ecae18ab27d66d8252480bd30347b988ead86376e9f37",
+  "source_sha256": "e6ef7d6e91df474279b58a78e021ea5cc63023d41af79821f5f93b74814ff0d4"
+}

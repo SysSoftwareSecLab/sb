@@ -1,0 +1,122 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        33,
+        39,
+        41,
+        50,
+        86,
+        97,
+        99,
+        105,
+        116
+      ],
+      "reason": "Producer signals ready_0/ready_1 after placing at buffer and departing; consumer waits ready receipt, clears ready after carried move to target, signals empty_0; producer waits and clears empty_0 before entering buffer with part_1, matching required order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        26,
+        31,
+        32,
+        36,
+        44,
+        48,
+        49,
+        53,
+        57,
+        58,
+        64,
+        71,
+        72,
+        78,
+        88,
+        90,
+        96,
+        107,
+        109,
+        115
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release after departure; buffer_0/buffer_1 treated as same capacity-one buffer with item-specific pickup, no simultaneous occupancy."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        33,
+        50,
+        86,
+        93,
+        105,
+        112
+      ],
+      "reason": "Consumer waits corresponding ready receipt and supplies that exact active EventReceipt on carried move to target (receipt=r0/r1), matching BUFFER_RECEIPT contract."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        39,
+        41,
+        44,
+        45,
+        46,
+        99,
+        100
+      ],
+      "reason": "Second item source pickup (LEFT source_1 grasp) follows the empty_0 receipt wait and clear, preserving the focal dependency across intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        32,
+        35,
+        49,
+        52,
+        62,
+        63,
+        76,
+        77,
+        94,
+        95,
+        113,
+        114
+      ],
+      "reason": "Every release is followed by an immediate same-arm separating move in the same coroutine (e.g., release part_0 buffer_0 then move left_wait; release target_0 then move left_home/right_wait)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        126
+      ],
+      "reason": "Source implements the required sequence and terminal poses, but source-only evidence cannot confirm actual finite execution reaches all goals, empty hands, lock free, events inactive within deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-SHORT-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8460,
+    "completion_tokens": 469,
+    "total_tokens": 8929,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8332
+  },
+  "raw_sha256": "be4127d1d467be325cf20dd5406d0e4ef942c261485f790bfe3ea02263984b60",
+  "request_sha256": "f291d1cb6a10fe9729899b3b6f4fae36bed4434f14e3d326411b6162c26f0a93",
+  "source_sha256": "b285230d7d025fa63371ecfadb0899d297370c47fc01eb42676d7053ce52f2c1"
+}

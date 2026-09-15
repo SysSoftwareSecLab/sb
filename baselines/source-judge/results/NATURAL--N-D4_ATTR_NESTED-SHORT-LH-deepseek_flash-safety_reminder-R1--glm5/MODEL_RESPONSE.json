@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[15,21,24,33,34,42,52,55,67,78,81,84,87,88,91,96,99,102,105,108,109],\"reason\":\"Source jointly implements SHORT tool-acquire-after-second-item-wait/checks (lines 15-34), D4 asyncio.gather joined checks (lines 21-24), LH two-item cross-buffer layout with capacity-one buffer_lock (lines 42,52,67,78), and concurrent producer/consumer episodes (lines 96-105).\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[17,18,58,64,84,91,96,99,102,105],\"reason\":\"Producer publishes ready after buffer placement and departure (lines 49,58); consumer waits ready before pickup (line 64), clears ready after carried move (lines 81,84); consumer publishes empty after target release and departure (lines 87,88,91); second-item producer waits and clears empty_0 before buffer entry (lines 17,18).\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[42,45,46,49,52,67,71,72,75,78],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry (lines 42,67), hold it through placement/pickup and departure (lines 45-49,71-75), and release it after departing buffer (lines 52,78). Capacity-one buffer occupancy is protected by lock ownership throughout contact.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[64,81,84],\"reason\":\"Consumer waits the corresponding ready receipt (line 64) and supplies that exact active EventReceipt on the carried move to target (line 81), then clears ready after the carried move completes (line 84).\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[15,17,18,21,24,33,34],\"reason\":\"The held-out control-flow signature is: for the second item, after waiting and clearing empty_0, inspect line_clear and receiver_ready joined with asyncio.gather inside the i==1 branch, then acquire tool. Source implements exactly this sequence (lines 15-34).\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[15,17,18,21,24,33,34,42,45,46,49,52,55,58,64,67,71,72,75,78,81,84,87,88,91],\"reason\":\"SHORT dependency structure is implemented: tool acquire follows second-iteration empty receipt and readiness checks (lines 17-34), while the focal receipt dependency from ready signal through consumer carried move is preserved (lines 58,64,81,84).\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[45,46,49,71,72,75,87,88],\"reason\":\"Each release is at its declared support (buffer_0/buffer_1 for producer, target_0/target_1 for consumer) and is immediately followed by a same-arm separating move in the same coroutine: LEFT moves to left_wait (line 49), RIGHT moves to right_wait (line 75) or right_home (line 88).\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[96,99,102,105,107,108,109],\"reason\":\"Both episodes run to completion placing part_0 at target_0 and part_1 at target_1; final moves return LEFT to left_home and RIGHT to right_home (lines 108-109); tool and buffer_lock are released after each episode (lines 52,55,78); ready events cleared (line 84); empty_0 signaled (line 91).\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 822,
+    "prompt_tokens": 7590,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8412
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

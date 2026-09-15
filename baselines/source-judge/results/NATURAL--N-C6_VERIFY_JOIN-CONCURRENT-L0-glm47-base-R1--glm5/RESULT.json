@@ -1,0 +1,66 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        69,
+        70,
+        78,
+        79
+      ],
+      "reason": "Two workers created as concurrent asyncio tasks; main waits for both readiness events, implementing CONCURRENT structure rather than serial execution."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "V",
+      "source_lines": [
+        78,
+        79,
+        86,
+        87
+      ],
+      "reason": "wait_event calls are sequential, not joined: left_ready is awaited and cleared before right_ready is awaited, violating the atomic join requirement for both join_events."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        37,
+        43,
+        60,
+        66
+      ],
+      "reason": "Each release places the held part at its declared support_zone (left_target/right_target) and is immediately followed by a same-arm separating move to departure in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        80,
+        82,
+        83
+      ],
+      "reason": "Timeout path awaits tasks and returns without clearing join_events, violating terminal requirement that events be cleared; also does not ensure terminal state on that path."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 221,
+    "prompt_tokens": 6269,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6490
+  },
+  "raw_sha256": "014892ba3acdb49da9f8947b8331282dfc01bf5ff4a1e8ec321b00d421d94f68",
+  "request_sha256": "1f3dca00d7cd34f3c0a8aeff72f8204d211a7dc63753cd8f0c27eda584fd3b10",
+  "source_sha256": "021e095d35f8006b46be17787de770af247b218d6c295ebcebfbdbd8e3e22551"
+}

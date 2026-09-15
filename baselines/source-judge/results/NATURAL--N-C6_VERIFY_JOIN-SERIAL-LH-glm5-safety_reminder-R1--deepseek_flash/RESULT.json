@@ -1,0 +1,70 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        45,
+        46,
+        47,
+        48
+      ],
+      "reason": "run_task awaits _left_branch then _right_branch serially, matching the SPEC's declared CONCURRENCY=SERIAL level rather than concurrent worker coroutines."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        24,
+        42,
+        51,
+        52,
+        55,
+        56
+      ],
+      "reason": "Both branches signal left_ready/right_ready, and run_task waits for both events and clears them using the issued receipt versions, implementing the declared join."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        21,
+        22,
+        38,
+        39,
+        40
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move (left_target->left_depart, right_target->right_depart) in the same coroutine with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        34
+      ],
+      "reason": "The RIGHT branch checks decoded item_id against 'left_part' instead of 'right_part', contradicting the declared right_part goal/observation and preventing the required right_part verification."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6285,
+    "completion_tokens": 255,
+    "total_tokens": 6540,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6157
+  },
+  "raw_sha256": "b6df0422a8070e4a5ae6b517d78aeb4fdc7f0558a4c9b2dea8406e5f8bfd2321",
+  "request_sha256": "e02d31258959348776006d169682eb5e7ac4d59ce5f621c057376ba320b7ff72",
+  "source_sha256": "49d161456f9d6788676816b5003efe4e377a0ca41fd42456ff4ffcc70f0b0a65"
+}

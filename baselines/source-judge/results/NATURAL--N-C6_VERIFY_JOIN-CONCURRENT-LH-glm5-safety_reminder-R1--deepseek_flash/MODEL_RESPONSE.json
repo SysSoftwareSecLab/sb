@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[25,26,27],\"reason\":\"run_task creates two asyncio tasks for _left_branch and _right_branch and awaits asyncio.gather, implementing the SPEC's CONCURRENT level with joined worker coroutines rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[12,21,27],\"reason\":\"Both branches signal their respective ready events (left_ready at line 12, right_ready at line 21) before run_task joins both worker tasks via asyncio.gather at line 27, matching the declared join_events.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[10,11,19,20],\"reason\":\"Each release (lines 10,19) is immediately followed in the same coroutine by a same-arm separating move to the depart pose (lines 11,20), satisfying the immediate same-coroutine departure requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[7,8,9,10,11,16,17,18,19,20],\"reason\":\"The code moves both parts to their targets and arms to departure poses, but the finite trajectory outcome (successful completion, empty hands, deadline) cannot be confirmed from source alone; no resource/event clearing obligations apply since resources are empty and events are program-signaled.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5550,
+    "completion_tokens": 312,
+    "total_tokens": 5862,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5422
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,188 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        65,
+        68,
+        79,
+        80,
+        81,
+        85,
+        100,
+        102,
+        104,
+        105,
+        151,
+        153,
+        156,
+        176,
+        178,
+        179,
+        181,
+        183,
+        185
+      ],
+      "reason": "Source implements the declared LONG dependency (tool acquired before source pickup at line 68 and held across the part_1 empty wait/clear at lines 79-82) together with the D3 serial second-item checks (lines 153-158) and the A-then-B episode structure (lines 183-185), jointly satisfying the combined attributes."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        79,
+        80,
+        81,
+        82,
+        95,
+        96,
+        102,
+        117,
+        118,
+        130,
+        131,
+        132
+      ],
+      "reason": "Producer signals ready after buffer placement/departure (lines 88-96); consumer waits ready before pickup (line 102), clears ready after the carried target move (line 117), and part_0 consumer signals empty_0 after release/departure (lines 123-132); producer part_1 waits and clears empty_0 before buffer entry (lines 79-82)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry and release it in finally after the immediate separating move (lines 85-92, 121-127), so the capacity-one buffer is owned during each entry/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        95,
+        96,
+        102,
+        110,
+        113,
+        114,
+        117
+      ],
+      "reason": "Producer publishes ready receipt with item_id (line 95); consumer waits that receipt (line 102), uses it as observation for grasp (line 110) and as receipt on carried moves to target (lines 113-114), then clears with its version (line 117)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        160,
+        162,
+        163,
+        165,
+        167,
+        168,
+        170,
+        176,
+        178,
+        179,
+        181,
+        183,
+        185
+      ],
+      "reason": "Source implements the held-out control-flow signature: episode_a alternates producer then consumer (lines 160-163), episode_b runs them concurrently via create_task/gather (lines 165-170), and main runs episode_a for part_0 then second_item_branch with serial checks and episode_b for part_1 (lines 176-185)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        68,
+        79,
+        80,
+        81,
+        82,
+        97,
+        98,
+        104,
+        105,
+        133,
+        134,
+        135
+      ],
+      "reason": "Producer acquires tool before source pickup (line 68) and holds it across the part_1 empty wait/clear (lines 79-82) until finally release (lines 97-98); consumer part_1 acquires tool after the wait/checks (lines 104-105) and releases in finally (lines 133-135), preserving the focal LONG dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        88,
+        89,
+        90,
+        124,
+        125
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: producer releases at BUFFER then moves to LEFT_WAIT (lines 88-90); consumer releases at TARGET then moves to RIGHT_WAIT (lines 124-125)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        181,
+        183,
+        185,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207
+      ],
+      "reason": "Source-only evidence cannot confirm the finite terminal state (parts at targets, arms at homes, buffer empty, lock free, events inactive) or deadline compliance; the code contains the intended sequence but no execution outcome is observable."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-LONG-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9681,
+    "completion_tokens": 885,
+    "total_tokens": 10566,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9553
+  },
+  "raw_sha256": "e5b73561ae6d5220e5af47621abc774883da8b34abbfd41743ec7711c17388c9",
+  "request_sha256": "62be3700fa3573f63170a3879796e72c5fb81181d018b4cb1ce3914d0b5fe41e",
+  "source_sha256": "4a98e0241f2063b017f5bf65be9d36443d1e991fcdabdbc39a625af34f5a89a8"
+}

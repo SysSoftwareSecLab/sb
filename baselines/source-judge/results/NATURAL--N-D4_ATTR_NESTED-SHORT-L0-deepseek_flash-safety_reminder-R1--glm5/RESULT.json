@@ -1,0 +1,188 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        29,
+        30,
+        32,
+        35,
+        36,
+        37,
+        38,
+        42,
+        44,
+        51,
+        52,
+        53,
+        55,
+        56,
+        58,
+        60,
+        108
+      ],
+      "reason": "SHORT dependency (tool acquire after empty_0 wait+clear and after line_clear/receiver_ready checks) is implemented; D4 gather joins the two checks; tool owned during buffer_1 placement and released on normal exit."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        20,
+        22,
+        25,
+        29,
+        30,
+        51,
+        53,
+        55,
+        56,
+        60,
+        65,
+        71,
+        73,
+        74,
+        76,
+        77,
+        79,
+        81,
+        83,
+        87,
+        93,
+        95,
+        96,
+        98,
+        99,
+        101,
+        103,
+        105
+      ],
+      "reason": "Producer publishes ready after placing/departing; consumer waits ready receipt, supplies it on carried move, clears after move, releases on target, departs, then publishes empty_0; producer waits and clears empty_0 before second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        17,
+        19,
+        23,
+        51,
+        52,
+        53,
+        55,
+        56,
+        67,
+        70,
+        71,
+        73,
+        74,
+        89,
+        92,
+        93,
+        95,
+        96
+      ],
+      "reason": "Both participants acquire buffer_lock before buffer entry and release it after departure; capacity-one buffer occupancy is serialized by the lock for each placement and pickup."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        65,
+        76,
+        87,
+        98
+      ],
+      "reason": "Consumer waits the corresponding ready receipt and supplies that exact active item receipt on the carried move to target for both episodes."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        29,
+        30,
+        32,
+        35,
+        36,
+        37,
+        38,
+        42,
+        44,
+        51,
+        52,
+        53,
+        55,
+        56,
+        58,
+        60
+      ],
+      "reason": "D4 holdout signature implemented: inside the second-item branch, the two checks are joined with asyncio.gather before transfer, after empty_0 wait/clear and tool acquire."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        29,
+        30,
+        32,
+        35,
+        36,
+        37,
+        38,
+        42,
+        44,
+        51,
+        52,
+        53,
+        55,
+        56,
+        58,
+        60
+      ],
+      "reason": "SHORT focal dependency preserved: tool acquire follows the second-iteration empty_0 receipt wait/clear and the readiness checks, with tool held across buffer_1 placement and released on normal exit."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        22,
+        53,
+        55,
+        77,
+        79,
+        99,
+        101
+      ],
+      "reason": "Each release (part_0/part_1 at buffer and target) is immediately followed by a same-arm separating move in the same coroutine before any other action."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        105,
+        108
+      ],
+      "reason": "Consumer publishes empty_0 a second time (line 105) but never clears it; ready_1 is cleared (line 103) yet empty_0 remains active at normal return, violating the terminal events-cleared requirement."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 659,
+    "prompt_tokens": 7664,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8323
+  },
+  "raw_sha256": "a618fa5e730baae53cd21afe812e3b5f1cef76e188916c195b680eb7f554291e",
+  "request_sha256": "60e57e9462bf71e00cf8b32cdfa4f23b9eccbcd2a8f9b60dfb38da86d4a46c1a",
+  "source_sha256": "d79d9f11d37b1cf61270ae4761b71d432ad19eb3bc5b18724222c41ee62cd755"
+}

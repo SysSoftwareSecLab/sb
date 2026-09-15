@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[14,15,17,19,21,23,33,35,37,38,40,42,44,46,53,57,59,63,65,66,68,69],\"reason\":\"Variant B workers each deposit own part, clear pad, publish item-bound ready, wait for peer ready, then consume peer item; clear after carried move; matches required order.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[33,40,42],\"reason\":\"wait_event returns receipt; move to own target passes receipt=receipt; clear_event uses expected_version=receipt.version after that move completes.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[33,35,37,38,40,42,53,57,59,63,65,66],\"reason\":\"LONG structure implemented: each worker deposits then waits for peer ready before consuming; focal right_ready->LEFT carried move preserves receipt across intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[17,19,21,37,38,40,44,46],\"reason\":\"Each release occurs at the declared support (own pad/own target) and is immediately followed by a same-arm separating move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[14,21,35,46,53,57,59,63,68,69],\"reason\":\"Terminal poses are left_clear/right_clear, not declared goals left_depart/right_depart; source omits final moves to departure poses, so terminal goal not satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 352,
+    "prompt_tokens": 6426,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6778
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

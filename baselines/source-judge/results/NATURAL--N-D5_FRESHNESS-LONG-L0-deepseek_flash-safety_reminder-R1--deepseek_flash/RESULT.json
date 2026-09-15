@@ -1,0 +1,71 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        6,
+        10,
+        14,
+        21
+      ],
+      "reason": "The LONG dependency requires the peer placement to invalidate the first route observation before refresh, but the code inspects route at line 6, uses it at line 10, and never refreshes it after the RIGHT release at line 14/21; the focal dependency is not preserved across the intervening control flow."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        6,
+        10,
+        14,
+        21
+      ],
+      "reason": "The route observation is taken at line 6 and consumed at line 10, but the RIGHT arm's grasp/release of right_part (lines 14,21) invalidates the route fact per h_variant.invalidates=true; the observation is stale at consumption and no refresh is performed."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        25,
+        26
+      ],
+      "reason": "Each release at lines 21-22 is immediately followed by a same-arm separating move to the declared depart pose (lines 25-26) in the same coroutine with no intervening same-arm call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        17,
+        18,
+        21,
+        22,
+        25,
+        26
+      ],
+      "reason": "Both parts are moved to and released at their own targets (lines 17-22), and both arms end at their departure poses (lines 25-26) empty-handed, matching the declared goal."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5434,
+    "completion_tokens": 323,
+    "total_tokens": 5757,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5306
+  },
+  "raw_sha256": "7d60790f2c7a5389ae4c27a4aa2a96a96085c2dc79e33ef7ba75f6bf004ce3d1",
+  "request_sha256": "9b7eca51b11935ac946ceb55a45018d9462eb3808a3b52d0ba5b5105d7a61f6c",
+  "source_sha256": "1cfaa8360ed30ddfa85c2cd4274448827fe34eec82eda2271ac6225ee7d48659"
+}

@@ -1,0 +1,96 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        11,
+        13,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        24,
+        25
+      ],
+      "reason": "Each worker acquires fixture then tool before the carry (lines 11,13), performs move/grasp/move/release/depart while owning both (15-19), and releases tool then fixture in finally blocks (21-25), matching the required dual-resource span."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        11,
+        13,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        24,
+        25
+      ],
+      "reason": "The focal dual-resource dependency spans source approach, pickup, placement and departure: fixture and tool are held across move(source), grasp, move(target), release, and move(depart), then released in reverse order."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19
+      ],
+      "reason": "After release at target (line 18), the same worker coroutine immediately calls move(arm, depart) at line 19 with no intervening same-arm request, satisfying the immediate same-coroutine separating departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        28,
+        29,
+        31,
+        33,
+        34,
+        36
+      ],
+      "reason": "Source shows serial then concurrent workers targeting depart poses, but no execution evidence confirms both parts at targets, empty arms, resources OFF/unowned, events cleared, or deadline compliance."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        11,
+        13,
+        21,
+        22,
+        24,
+        25
+      ],
+      "reason": "No actual tool acquisition timeout is shown or inferable from source; the try/finally cleanup exists but the timeout-triggered cleanup condition is not triggered in the supplied finite evidence."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-LONG-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5753,
+    "completion_tokens": 391,
+    "total_tokens": 6144,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5625
+  },
+  "raw_sha256": "a3f8690203b65111464c985d07e00fdeca743ccb6772ab4fc74ebefb0dfb9fa6",
+  "request_sha256": "5cfafc6bd02e718755e5edb70508192c92aea7859fd5bff1354d075593272338",
+  "source_sha256": "d8123a25e924dea0a8941d99d8dd8add812264b796e48a66ee6616aad87bf1d5"
+}

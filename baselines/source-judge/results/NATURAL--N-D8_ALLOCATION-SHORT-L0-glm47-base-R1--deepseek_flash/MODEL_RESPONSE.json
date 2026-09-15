@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[26,27,33,35,41,50,53,56,59,62],\"reason\":\"selected_arm is read from the allocation observation and only the selected worker_arm issues move/grasp/release/transport calls; the unselected arm makes no such call.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[10,12,16,17,18,21,22,36,42,53],\"reason\":\"Both LEFT and RIGHT independently inspect the allocation fact once via worker_inspect, and the selected arm's grasp passes its own worker_obs observation.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[26,27,33,36,42,53],\"reason\":\"The selected observation is consumed immediately: selected_arm is derived from the allocation observation and the same worker_obs is passed directly to the grasp with no intervening control flow, matching the SHORT dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[59,62],\"reason\":\"After release at shared_target, the same worker_arm immediately moves to depart_pose in the same coroutine with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[50,53,56,59,62],\"reason\":\"Source implements the selected transport to shared_target and departure, but source-only evidence cannot confirm actual terminal poses, empty hands, event clearing, or deadline satisfaction in the finite execution.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6134,
+    "completion_tokens": 338,
+    "total_tokens": 6472,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6006
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

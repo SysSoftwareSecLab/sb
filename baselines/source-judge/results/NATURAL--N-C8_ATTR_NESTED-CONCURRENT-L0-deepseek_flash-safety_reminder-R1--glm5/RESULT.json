@@ -1,0 +1,149 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        53,
+        54,
+        55,
+        127,
+        128
+      ],
+      "reason": "C8 requires joined inspection of both readiness facts inside the loop branch for item 1; lines 53-55 create and gather both inspect tasks together within the producer's item-1 branch, and lines 127-128 run producer/consumer concurrently."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        31,
+        33,
+        70,
+        72,
+        88,
+        98,
+        100,
+        102,
+        104,
+        42,
+        48,
+        50,
+        123,
+        125
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer placement and departure; consumer waits the corresponding ready receipt, clears ready after carried move, then signals empty_0; producer waits and clears empty_0 before second buffer entry. All required event ordering present."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        22,
+        24,
+        25,
+        27,
+        29,
+        61,
+        63,
+        64,
+        66,
+        68,
+        90,
+        91,
+        93,
+        94,
+        96,
+        115,
+        116,
+        118,
+        119,
+        121
+      ],
+      "reason": "Both participants acquire buffer_lock before buffer entry and release it after departure (lines 22-29, 61-68); consumer owns lock during pickup and carried move to target (lines 90-96, 115-121). Capacity-one buffer occupancy with ownership maintained."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        88,
+        93,
+        113,
+        118,
+        98,
+        123
+      ],
+      "reason": "Consumer waits the corresponding ready event receipt (ev0/ev1) and supplies that exact active item receipt on the carried move to target (lines 93, 118); clears ready after carried move completes (lines 98, 123)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        127,
+        128,
+        12,
+        77
+      ],
+      "reason": "Producer and consumer are separate coroutines run together via asyncio.gather, implementing the CONCURRENT level rather than serial alternating episodes."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        42,
+        46,
+        53,
+        54,
+        55
+      ],
+      "reason": "C8 holdout requires waiting/clearing empty_0 then joining both readiness-fact inspections inside the loop branch; lines 42-50 wait and clear empty_0, then lines 53-55 join both inspect calls via gather within the same item-1 branch."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        25,
+        27,
+        29,
+        64,
+        66,
+        68,
+        94,
+        96,
+        119,
+        121
+      ],
+      "reason": "Every release is at its declared support (buffer_0, buffer_1, target_0, target_1) and immediately followed by a same-arm separating move in the same coroutine (lines 27, 66, 96, 121)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        128,
+        73,
+        75,
+        96,
+        121,
+        125
+      ],
+      "reason": "Source shows terminal goals, tool release, and event clearing, but cannot confirm from source alone that the finite execution completes all terminal conditions (empty buffer, all events inactive, deadline) without runtime trajectory evidence."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 664,
+    "prompt_tokens": 7875,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8539
+  },
+  "raw_sha256": "70cfb907ddb4378c55c0ad11e7e514202f0b8e5cfd2be6d927a9b01e975f8f89",
+  "request_sha256": "5fc765205a982f40e3ae99c0bbb5d18e9e3d9e8fc03ab7f559b30628c9ba1304",
+  "source_sha256": "44f01404603cdff660cf6a6b8da902464012565d06b291f11eb76bfb8194b5c6"
+}

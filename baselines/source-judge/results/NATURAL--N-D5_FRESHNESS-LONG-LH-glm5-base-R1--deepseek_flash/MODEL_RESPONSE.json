@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[12,15,18,21,24,27,30,32,43,57],\"reason\":\"The SPEC requires a LONG producer-to-consumer dependency where peer placement invalidates the first route observation before refresh (h_variant.invalidates=true, focal_dependency). The source never calls inspect/refresh on fact_id 'route', never consumes the observation, and has no cross-arm dependency: the two arms run fully independent _handle_arm coroutines with no shared observation or invalidation handling. The required dependency structure is omitted.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[5,12,15,18,21,24,27,30,32,43,57],\"reason\":\"The development contract requires consuming the current 'route' observation for left_part (fact_id 'route', object_id 'left_part') with freshness after peer placement invalidation. The source contains no inspect/refresh call and no observation consumption at all, so the required current observation dependency is omitted.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[24,27],\"reason\":\"Each committed release at line 24 is immediately followed by the same-arm separating move to depart_pose at line 27 in the same candidate coroutine with no intervening call, matching the required immediate departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[30,32,43,57],\"reason\":\"The source moves both parts to their targets and arms to depart poses, but the SPEC's LONG dependency requires the route observation/invalidation structure which is absent, and no execution evidence confirms terminal state, empty hands, or deadline. Source-only evidence cannot determine full task goal satisfaction.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6072,
+    "completion_tokens": 379,
+    "total_tokens": 6451,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5944
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

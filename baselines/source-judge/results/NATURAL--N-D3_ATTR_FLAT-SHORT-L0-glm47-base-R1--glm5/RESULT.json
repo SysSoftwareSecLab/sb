@@ -1,0 +1,139 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        163,
+        164,
+        197,
+        200,
+        203,
+        207,
+        208
+      ],
+      "reason": "SHORT requires tool acquire after second-item empty wait and checks; for item1 tool is acquired at line 208 after checks (203), but for item0 tool is acquired inside producer_episode (line 74) without any empty wait/checks, and consumer_episode never acquires tool yet releases it (line 139), mixing structures rather than jointly implementing the declared SHORT attribute across both iterations."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        132,
+        233,
+        135,
+        236
+      ],
+      "reason": "ready_0 is cleared at line 132 after the consumer's carried move (123) completes, and empty_0 is signaled at 135; for item1, ready_1 cleared at 233 after move 224 and empty_0 signaled at 236. However, the producer for item1 waits for empty_0 (line 62) but empty_0 was already signaled by item0's consumer (line 135) and never cleared by the producer—line 63 clears it, but the item0 consumer signaled empty_0 at line 135 without anyone clearing it first, and the producer clears it at line 63, which is after it was signaled by the previous consumer, satisfying the wait. The protocol appears satisfied."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        66,
+        74,
+        75,
+        76,
+        79,
+        82,
+        110,
+        113,
+        114,
+        117,
+        120,
+        211,
+        214,
+        215,
+        218,
+        221
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering buffer poses and release it after departing to home; LEFT owns tool during buffer placement (line 74-76); occupancy ownership during buffer contact is maintained."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        107,
+        123,
+        200,
+        224
+      ],
+      "reason": "Consumer waits for ready receipt (line 107/200) and supplies that exact receipt on carried move to target (line 123/224), matching the required active item receipt dependency."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        163,
+        164,
+        166,
+        167,
+        197,
+        200,
+        203,
+        207,
+        208
+      ],
+      "reason": "The holdout requires SHORT structure where tool acquire follows second-iteration empty receipt and readiness checks. For item1 this is satisfied (checks at 203, tool at 208), but item0 uses a different control-flow signature (tool acquired inside producer_episode at line 74 without checks), and the consumer_episode for item0 releases tool it never acquired (line 139), indicating the held-out control-flow dependency is not consistently implemented."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        197,
+        200,
+        203,
+        207,
+        208,
+        224
+      ],
+      "reason": "SHORT dependency structure is implemented: for the second item, the empty_0 wait is handled by the producer (line 62 in producer_episode), ready_1 is waited (line 200), checks performed (line 203), and only then tool is acquired (line 208) and the receipt is used on the carried move (line 224). The focal dependency (tool acquire follows second-iteration empty receipt and readiness checks) is preserved across the intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        76,
+        79,
+        126,
+        129,
+        227,
+        230
+      ],
+      "reason": "Each release (line 76 buffer, 126 target_0, 227 target_1) is immediately followed by a same-arm separating move to home (lines 79, 129, 230) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        139,
+        239,
+        163,
+        164,
+        166,
+        167,
+        197,
+        241
+      ],
+      "reason": "consumer_episode releases TOOL at line 139 in its finally block but never acquires TOOL for item0 (the consumer path for item0 at lines 109-135 has no tool acquire), causing a release_resource on an unowned resource. Additionally, prod_1 is awaited at line 241 but the consumer for item1 is inlined (lines 207-239) rather than a task, and the producer may still hold buffer_lock when the inlined consumer tries to acquire it, creating a potential deadlock or incomplete terminal state."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 924,
+    "prompt_tokens": 10203,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 11127
+  },
+  "raw_sha256": "713ada1208b966ceb17e00fd0af37241eb10e4b46dcd9d88ff88795da60f0baa",
+  "request_sha256": "cb7f8a07f10ed6114a6cafb2bded6f045bb856a506c2dede917a8238a35c590a",
+  "source_sha256": "94b050db6f66b1333c7eaf536abe3d667082259c21e2d9f533b48683b1fd11a4"
+}

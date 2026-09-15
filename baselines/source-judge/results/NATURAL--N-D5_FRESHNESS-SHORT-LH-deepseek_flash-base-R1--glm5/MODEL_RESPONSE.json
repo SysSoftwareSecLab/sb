@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[39,40,43,47,52,59,66,67],\"reason\":\"RIGHT completes invalidating peer placement (move/grasp/move/release right_part) at line 47 before LEFT route observation is taken at line 59; then LEFT proceeds to grasp/transport left_part. SHORT producer-to-consumer dependency preserved.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"C\",\"source_lines\":[47,59,66,67],\"reason\":\"route observation for left_part is inspected at line 59 after the invalidating right_part release at line 47, and is consumed by the matching LEFT grasp at line 67 with no intervening invalidating action.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,52,73,76],\"reason\":\"RIGHT release at right_target (line 47) is immediately followed by same-arm move to right_depart (line 52); LEFT release at left_target (line 73) is immediately followed by same-arm move to left_depart (line 76).\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[39,40,43,47,52,59,66,67,70,73,76],\"reason\":\"right_part released at right_target, left_part released at left_target, RIGHT ends at right_depart, LEFT ends at left_depart; no resources/events declared in SPEC, hands empty after releases.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 306,
+    "prompt_tokens": 6245,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6551
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

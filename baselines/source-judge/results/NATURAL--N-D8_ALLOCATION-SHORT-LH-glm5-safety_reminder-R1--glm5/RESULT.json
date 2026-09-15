@@ -1,0 +1,78 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        6,
+        8,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17
+      ],
+      "reason": "Both workers inspect allocation; only the arm matching selected_arm proceeds to move/grasp/release; the unselected arm returns at line 12 without any move/grasp/release."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        15
+      ],
+      "reason": "Each worker inspects allocation once (line 6); the selected arm passes its current allocation observation into grasp (line 15, observation=allocation_obs)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        15
+      ],
+      "reason": "SHORT dependency: the selected arm's current allocation observation is consumed immediately in the grasp call with no intervening robot call between inspect and grasp on the selected branch."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        16,
+        17,
+        18
+      ],
+      "reason": "Release at shared_target (line 17) is immediately followed by same-arm move to left_depart in the same coroutine (line 18), satisfying immediate departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        22,
+        23
+      ],
+      "reason": "run_task awaits LEFT then RIGHT serially, but the SPEC requires B to gather them concurrently; also RIGHT is never selected so shared_part reaches shared_target only via LEFT, but RIGHT never returns to right_home via an explicit move and the concurrency structure is not implemented."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-SHORT-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 314,
+    "prompt_tokens": 4975,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5289
+  },
+  "raw_sha256": "92d9cfbd11760df24976c3a548202985e37f041118d54d6c4c22c9c4ad8ed0ca",
+  "request_sha256": "8a1df07e379ddd37ccf6d41b92c1a03f72e04b1d04b4c969f996550ada401869",
+  "source_sha256": "63e5f600f4752dd84fbd7d1b37a9e15509c128237b72fa80fac32f9104b6160f"
+}

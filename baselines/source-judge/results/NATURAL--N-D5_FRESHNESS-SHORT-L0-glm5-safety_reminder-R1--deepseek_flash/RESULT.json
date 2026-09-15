@@ -1,0 +1,87 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        21,
+        22
+      ],
+      "reason": "The experimental assignment level is SHORT (DEPENDENCY_DISTANCE=SHORT), so the LONG producer-to-consumer dependency structure is not applicable to this scenario."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        21,
+        22
+      ],
+      "reason": "The development contract requires a current observation of fact_id 'route' for object 'left_part' (focal dependency: route observation after invalidating peer placement), but the source never calls inspect/refresh nor consumes any Observation; the required observation is omitted."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        17,
+        18
+      ],
+      "reason": "Each release (lines 9 and 17) is immediately followed in the same candidate coroutine by a same-arm separating move (lines 10 and 18) with no intervening call, satisfying the support-departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        21,
+        22
+      ],
+      "reason": "The program moves both parts to their targets and arms to departure, but it omits the required current 'route' observation consumption mandated by the development contract, so the declared acceptance condition is not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5334,
+    "completion_tokens": 321,
+    "total_tokens": 5655,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5206
+  },
+  "raw_sha256": "af40ba9579c49e3759bf3124f771ea6c034cd8d6e156fa2fb113c172a57b44be",
+  "request_sha256": "38d21c0f8dff5305fdf29129dd5fed9fd198e9a9d0aba361532c6cbdd8c34a9d",
+  "source_sha256": "c1b92106bc5b337742bcef579a5f046f60cdb095ace5376738d93e6909c51094"
+}

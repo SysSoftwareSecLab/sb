@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[58,60,62,64,68,70,76,99],\"reason\":\"RIGHT completes full place (move-source, grasp, move-target, release) before LEFT grasps; LEFT then calls refresh(FACT_ROUTE) after invalidation and before its target move, satisfying the LONG producer-consumer dependency.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"C\",\"source_lines\":[64,76,99],\"reason\":\"LEFT refreshes route after RIGHT's release invalidates the prior observation, obtaining a current version before using it for the target move.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[64,99,102,105,109],\"reason\":\"Each release (RIGHT at right_target, LEFT at left_target) is immediately followed by a same-arm separating move in the same coroutine: LEFT to left_depart, RIGHT to right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[58,60,62,64,68,70,99,102,105,109],\"reason\":\"Source moves right_part to right_target and releases, left_part to left_target and releases, then LEFT to left_depart and RIGHT to right_depart, achieving all terminal poses and empty hands.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 274,
+    "prompt_tokens": 7238,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7512
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

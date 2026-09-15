@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[166,168,173,177,178],\"reason\":\"Second-item checks done serially (inspect LEFT line_clear then inspect RIGHT receiver_ready) before carried move to target_1, matching D3 SHORT attribute combination.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[61,64,73,77,80,98,101,110,115,133,136,145,149,178,181],\"reason\":\"Producer places and departs before ready; consumer waits ready before pickup, clears after carried move; producer waits/clears empty_0 before second buffer entry; ready_1 signaled and cleared after target move.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[46,58,61,64,70,83,95,98,101,107,118,121,124,127,130,152,155,158,161,164],\"reason\":\"Both participants acquire buffer_lock before buffer entry and release after departure; capacity-one buffer occupancy with lock ownership maintained during contact.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[73,115,133,136,110,149,178,181],\"reason\":\"Consumer waits ready_0/ready_1 receipts and supplies them on carried moves to target_0/target_1; clears ready after carried move completes.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[166,168,173,177,178],\"reason\":\"Implements D3 serial control-flow signature: two second-item checks executed sequentially (not gathered) before transfer, matching holdout attribute.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[77,80,83,86,168,173,178],\"reason\":\"SHORT structure: tool acquired after empty_0 wait/clear and after readiness checks for second item (lines 83,86 after 77,80; checks at 168,173 before tool already acquired), preserving focal dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[61,64,98,101,139,142,184,187],\"reason\":\"Every release (part_0 at buffer_0, part_1 at buffer_1, part_0 at target_0, part_1 at target_1) is immediately followed by same-arm move to home in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[52,55,58,61,89,92,95,98,121,124,133,139,155,158,178,184,64,101,127,142,161,187,70,107,130,164,190],\"reason\":\"Both parts moved from sources to targets via buffer; arms return to homes; buffer_lock and tool released; events cleared; producer/consumer run concurrently via asyncio.gather.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 617,
+    "prompt_tokens": 9062,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9679
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

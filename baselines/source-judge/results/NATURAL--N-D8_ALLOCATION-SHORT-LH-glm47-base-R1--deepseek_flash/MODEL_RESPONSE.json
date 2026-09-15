@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[35,39,41,44,47,50,53,56,57,59,60,62],\"reason\":\"Each worker inspects allocation and only the arm whose name equals selected_arm proposes move/grasp/release; the other branch is pass, so with selected_arm LEFT only LEFT proposes transport calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[35,38,39,41,47,65,66,67],\"reason\":\"Both LEFT and RIGHT workers each call inspect(allocation) once, and the selected arm passes its own obs into grasp via observation=obs.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[35,38,39,41,44,47],\"reason\":\"The selected observation is consumed immediately: inspect result obs is decoded and passed directly to the selected arm's grasp with no intervening control flow, matching the SHORT focal dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[53,56,57,58,59],\"reason\":\"After release at shared_target, the same selected-arm branch immediately calls move to left_depart or right_depart in the same worker coroutine with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[35,44,47,50,53,57,59,65,66,67],\"reason\":\"Source implements selected LEFT transport to shared_target and departure, but source-only evidence cannot confirm actual committed terminal poses, empty hands, and deadline satisfaction in the finite execution.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6252,
+    "completion_tokens": 358,
+    "total_tokens": 6610,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 6252
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

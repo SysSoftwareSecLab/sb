@@ -1,0 +1,77 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        31,
+        34,
+        35,
+        39,
+        40,
+        43
+      ],
+      "reason": "The source implements the LONG dependency: LEFT inspects route (line 31), then RIGHT approaches/grasps right_part (34-35) and releases it at right_target (39-40), which per h_variant.invalidates=true invalidates the route observation, and only afterward LEFT refreshes route (line 43), preserving the focal value dependency across the intervening peer placement."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "C",
+      "source_lines": [
+        31,
+        43
+      ],
+      "reason": "The first route observation is obtained via inspect (line 31) and the post-invalidation value is obtained via refresh (line 43) after RIGHT's release of right_part, matching the development contract observation fact_id=route/object_id=left_part and the required refresh after invalidation."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        40,
+        46,
+        47,
+        50,
+        51
+      ],
+      "reason": "Each release uses the held object at its declared support (RIGHT releases right_part at right_target line 40; LEFT releases left_part at left_target line 47), and each is followed by a same-arm separating move in the same coroutine (LEFT moves to left_depart line 50; RIGHT moves to right_depart line 51)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        34,
+        35,
+        39,
+        40,
+        43,
+        46,
+        47,
+        50,
+        51
+      ],
+      "reason": "The source reaches both declared goals: left_part released at left_target (line 47) and right_part at right_target (line 40), both arms end empty at their departure poses (lines 50-51), no resources/events are declared, and the action sequence is within the 30s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6094,
+    "completion_tokens": 403,
+    "total_tokens": 6497,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5966
+  },
+  "raw_sha256": "8dc29e9b146b2c2e4b38c8ba7b56f975b2f28c62f62a6f0122884ade89c1842c",
+  "request_sha256": "b3477acae27f069a7b9f25aa6b8c9dc06db8ced92e1c58f556196461269fae21",
+  "source_sha256": "37577ca58df854a0a9112fad388ef3dd1270c9624dec53ea008643f547468066"
+}

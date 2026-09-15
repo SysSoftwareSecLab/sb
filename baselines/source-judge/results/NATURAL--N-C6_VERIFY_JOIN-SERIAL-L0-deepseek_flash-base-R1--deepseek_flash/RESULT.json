@@ -1,0 +1,93 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        30,
+        31,
+        32,
+        38,
+        39,
+        40,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47
+      ],
+      "reason": "The SPEC declares CONCURRENCY=SERIAL and the code implements the two verifier branches serially in one coroutine, then joins on both ready events before the single payload consumer, matching the declared serial composition."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        21,
+        28,
+        31,
+        32,
+        35,
+        36
+      ],
+      "reason": "Both left_ready and right_ready are signaled, then awaited via wait_event before the consumer, and cleared with the versions from the returned receipts, matching the declared join_events contract."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        41,
+        42,
+        46,
+        47
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: release LEFT left_part at left_target then move LEFT left_depart; release RIGHT right_part at right_target then move RIGHT right_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        40,
+        41,
+        42,
+        45,
+        46,
+        47
+      ],
+      "reason": "Both parts are moved to and released at their targets, both arms end at departure poses empty-handed, and the events are cleared; no resources are declared so resource OFF/unowned is trivially satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6043,
+    "completion_tokens": 331,
+    "total_tokens": 6374,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5915
+  },
+  "raw_sha256": "7c91ab1267032e874f176fe15331679fa00ee490b6ad141d90e6d9bf4363c72d",
+  "request_sha256": "f74d710834bf0717ea0d41ef91703690251866929dce303c77c525eb3da84047",
+  "source_sha256": "a5e897f75c604993de9a4c9bb2c27ffba2423ff2acc113774357bb4f3b0ec6f7"
+}

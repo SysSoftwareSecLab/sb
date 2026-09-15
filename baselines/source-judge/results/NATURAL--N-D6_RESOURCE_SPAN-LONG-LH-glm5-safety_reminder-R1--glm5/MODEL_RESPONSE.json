@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[8,10,13,14,15,16,17,19,20,22,23,25,26,28,32],\"reason\":\"Each worker acquires fixture then tool, carries part through source→grasp→target→release→depart while owning both, then releases tool then fixture in try/finally; matches required LONG dual-resource span.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[8,10,13,14,15,16,17,19,20,22,23],\"reason\":\"Both resources are acquired before approach and held across pickup, placement, and departure, then released in order after depart; the focal dual-resource dependency spans the full carried path as specified.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,17],\"reason\":\"Each worker moves to target, releases part at target (a declared logical_support), then immediately calls move to depart in the same coroutine with no intervening same-arm action.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[8,10,53],\"reason\":\"Both workers acquire the same shared fixture and tool resources with no mutual exclusion or serialization between concurrent workers; asyncio.gather launches both simultaneously, so the second acquire will fail or the resource ownership requirement cannot be satisfied, preventing both workers from completing the full goal.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[7,8,10,25,26,28,32],\"reason\":\"try/finally tracks acquired resources in a list; if acquire times out, the finally block iterates reversed acquired resources, sets each OFF, and releases each, matching the required cleanup for acquisition timeout.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 376,
+    "prompt_tokens": 5591,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5967
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

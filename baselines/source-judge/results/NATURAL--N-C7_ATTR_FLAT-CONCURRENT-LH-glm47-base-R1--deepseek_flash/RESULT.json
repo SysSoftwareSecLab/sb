@@ -1,0 +1,147 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        97,
+        98,
+        99,
+        101,
+        102,
+        104,
+        106,
+        107,
+        109,
+        110,
+        111,
+        114,
+        115,
+        117,
+        118
+      ],
+      "reason": "Source implements the declared CONCURRENT/LH combined attributes: producer and consumer coroutines are created together for each part (lines 98-99, 106-107), the second episode waits/clears empty_0 and inspects both readiness facts (lines 110-115), and both episodes are joined (lines 101-102, 117-118)."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        61,
+        67,
+        83,
+        86,
+        95,
+        110,
+        111
+      ],
+      "reason": "Producer signals ready after buffer departure and tool release (lines 52-61); consumer waits the ready receipt (line 67), uses it on the carried move (line 83), clears ready only after that move (line 86), and signals empty_0 after target release/departure (lines 89-95); producer waits and clears empty_0 before the second buffer entry (lines 110-111)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        43,
+        46,
+        49,
+        52,
+        55,
+        70,
+        73,
+        74,
+        77,
+        80
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering the capacity-one buffer, release at the buffer pose, immediately depart, and release the lock after departure (lines 43-55, 70-80), matching the shared buffer ownership contract."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        61,
+        67,
+        83,
+        86
+      ],
+      "reason": "Consumer waits for the item-specific ready receipt (line 67) and supplies that exact active receipt on the carried move to target (line 83), then clears it after the move (line 86)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        98,
+        99,
+        101,
+        102,
+        106,
+        107,
+        117,
+        118
+      ],
+      "reason": "For each part the producer and consumer are launched as concurrent asyncio tasks and joined, implementing the CONCURRENT composition rather than a serial action multiset."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        104,
+        106,
+        107,
+        109,
+        110,
+        111,
+        114,
+        115,
+        117,
+        118
+      ],
+      "reason": "The second episode's held-out control flow is present: producer/consumer tasks are created, then empty_0 is waited and cleared, both readiness facts are inspected, and only then are the tasks awaited."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        49,
+        52,
+        74,
+        77,
+        89,
+        92
+      ],
+      "reason": "Each release at a declared support is immediately followed in the same coroutine by a same-arm separating move: buffer release then move to wait pose (lines 49-52, 74-77), and target release then move to RIGHT_HOME (lines 89-92)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        92,
+        95,
+        101,
+        102,
+        117,
+        118
+      ],
+      "reason": "Source shows target releases, home departures, and empty_0 signaling, but the finite execution outcome (buffer empty, lock free, events inactive, deadline) cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-CONCURRENT-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8095,
+    "completion_tokens": 719,
+    "total_tokens": 8814,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7967
+  },
+  "raw_sha256": "eecb9070d6c97adcffd1a61f514e9d76291e818048b272d363ae4d7ce6938c9c",
+  "request_sha256": "6743aee063158f8c4116277a52d592e2d22edee2bf6950534f9c6749374ccce9",
+  "source_sha256": "4c7da4c83fe137732d116a4c6f14bd09772db3017bf2d07b01b346b3cffa00cd"
+}

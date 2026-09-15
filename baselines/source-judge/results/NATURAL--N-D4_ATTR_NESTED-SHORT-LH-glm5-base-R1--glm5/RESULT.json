@@ -1,0 +1,132 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        21,
+        32,
+        38,
+        45
+      ],
+      "reason": "D4 gather checks and SHORT tool acquire-after-checks with finally release are both implemented."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        19,
+        59
+      ],
+      "reason": "Producer waits empty_0 but never clears it; SPEC requires producer to clear empty_0 before second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        13,
+        14,
+        16,
+        38,
+        39,
+        40,
+        41,
+        43,
+        51,
+        52,
+        53,
+        57,
+        63,
+        64,
+        65,
+        69
+      ],
+      "reason": "Both participants acquire buffer_lock before buffer entry and release after departure for both items."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        50,
+        52,
+        62,
+        64
+      ],
+      "reason": "Consumer waits ready receipt then supplies it on carried move to target for both items."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        32
+      ],
+      "reason": "D4 gather-joined second-item checks before tool acquire and second transfer match the declared holdout signature."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        19,
+        21,
+        22,
+        25,
+        28,
+        32
+      ],
+      "reason": "SHORT dependency: tool acquire follows empty_0 wait and second-item readiness checks, implemented as specified."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        40,
+        41,
+        55,
+        56,
+        67,
+        68
+      ],
+      "reason": "Each release at buffer/target is immediately followed by same-arm move to home in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        19,
+        72
+      ],
+      "reason": "Producer never clears empty_0 and program awaits gather without ensuring all events inactive; terminal goal not fully satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-SHORT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 403,
+    "prompt_tokens": 6945,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7348
+  },
+  "raw_sha256": "9ff249e26a21ed2e334b35594ff3110be732546f0aa5fb6086dfaf612d53c995",
+  "request_sha256": "f9006377cb9da593e1d53d27abfda3665dfb581712557ee7f52f7635da86f252",
+  "source_sha256": "27d94b84029dbabd17ce80bd2580c9a1ce204742081e1329ecdc205377895890"
+}

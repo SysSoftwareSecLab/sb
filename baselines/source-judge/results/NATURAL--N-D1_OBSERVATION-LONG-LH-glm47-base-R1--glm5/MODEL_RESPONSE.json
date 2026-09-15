@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[137,143,152],\"reason\":\"Line 137 calls inspect without awaiting/capturing, then line 143 re-inspects to obtain obs_pass2; the LONG focal dependency from the first second-pass quality observation to its consuming grasp is broken by the discarded unawaited inspect and re-issuance.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"V\",\"source_lines\":[85,87,104,137,143],\"reason\":\"accept_by_pass[0] is true per public spec, so the rework branch should not execute; additionally the else branch issues two inspect calls (line 137 unawaited, line 143 awaited) for one pass, violating the at-most-two-passes and single-observation-per-pass structure.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"V\",\"source_lines\":[137,143,152],\"reason\":\"Second inspection pass issues inspect twice (line 137 unawaited/discarded, line 143 recaptured), violating the requirement that each pass use the newly issued current quality record on LEFT inspection pickup; the consumed obs_pass2 may not correspond to the actual current observation.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[60,64,100,103,114,117,131,134,156,159,165,168],\"reason\":\"Every release is immediately followed by a same-arm separating move in the same coroutine: release at inspection→left_depart (lines 60-64, 131-134), at left_target→left_depart (100-103, 156-159), at rework→left_depart (114-117), at right_target→right_depart (165-168).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[85,87,137,143],\"reason\":\"accept_by_pass[0]=true means LEFT should go directly to target on pass 1, but the code's runtime branch depends on obs_pass1.value which may differ; more critically, the else path issues a duplicate unawaited inspect (line 137) and re-inspects (line 143), violating the two-pass limit and observation contract, preventing reliable terminal goal achievement.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 468,
+    "prompt_tokens": 8431,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8899
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

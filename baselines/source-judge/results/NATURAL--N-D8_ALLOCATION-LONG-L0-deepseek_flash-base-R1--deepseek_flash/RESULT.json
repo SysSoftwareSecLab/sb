@@ -1,0 +1,106 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "reason": "Each candidate inspects allocation and returns early unless selected_arm equals its arm; only LEFT matches the initial allocation value, so only LEFT proposes move/grasp/release while RIGHT makes no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        5,
+        6,
+        10,
+        11,
+        12,
+        13,
+        17,
+        24,
+        25,
+        26
+      ],
+      "reason": "Both LEFT and RIGHT candidates independently call _inspect_allocation once, and the selected LEFT passes its own current obs to grasp via observation=obs."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        24,
+        25,
+        26
+      ],
+      "reason": "The peer allocation inspection occurs before the selected arm consumes its own observation for grasp, preserving the focal dependency across the intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20
+      ],
+      "reason": "After release at shared_target, the same candidate coroutine immediately calls move(arm, depart_pose) as the next same-arm request."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        24,
+        25,
+        26
+      ],
+      "reason": "Selected LEFT moves shared_part from shared_source to shared_target, releases there, and departs to left_depart; RIGHT remains at right_home empty, matching the declared terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5431,
+    "completion_tokens": 360,
+    "total_tokens": 5791,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5303
+  },
+  "raw_sha256": "4e90d6a457297b56af976fe37080775b0ef27ed8cf365c519e9878714ea8c96c",
+  "request_sha256": "9d459f990fc27faf1d3e5d43e39c267450692e7a59aee5be6817b8f86d653377",
+  "source_sha256": "1f130a3c25808ad03bec6315a560e92bfd1b1335a9c209b17764a9a7d39ba019"
+}

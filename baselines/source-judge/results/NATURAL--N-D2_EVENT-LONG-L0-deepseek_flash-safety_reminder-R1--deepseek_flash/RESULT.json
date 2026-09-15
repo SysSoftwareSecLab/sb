@@ -1,0 +1,96 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        14,
+        16,
+        17,
+        19,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        43,
+        49,
+        51,
+        57
+      ],
+      "reason": "Each arm deposits own part, clears pad, signals own ready event; consumer waits for peer ready, grasps peer part, carries with the wait receipt, releases, then clears peer event after the move. Order matches required reciprocal exchange."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        30,
+        36,
+        40
+      ],
+      "reason": "wait_event returns receipt; the carried move to target passes receipt=receipt; clear_event uses expected_version=receipt.version after that move completes."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        30,
+        36,
+        51,
+        52,
+        54,
+        55
+      ],
+      "reason": "Focal dependency right_ready -> LEFT carried move is implemented: LEFT consume_peer waits on right_ready, then moves LEFT to left_target with the returned receipt."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        22,
+        38,
+        40
+      ],
+      "reason": "After each release, the same coroutine immediately calls move to a clear/depart pose (left_clear/right_clear for deposits; target release followed by clear_event then later depart, but release at target is followed by clear_event not a move). Deposit releases are followed by immediate same-arm move; consume releases are followed by clear_event, not an immediate separating move, so this is not fully satisfied."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        60,
+        61,
+        62,
+        63
+      ],
+      "reason": "Source shows final depart moves to left_depart/right_depart and events cleared, but no execution evidence confirms terminal poses, empty hands, inactive events, or deadline within the finite trajectory."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6761,
+    "completion_tokens": 409,
+    "total_tokens": 7170,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6633
+  },
+  "raw_sha256": "9dc2a77c0a59dcea18e8648b7fd88d77824458db45cba31464a6c6b151b8036a",
+  "request_sha256": "d54297a7e9193e9d22e8321a9757528ef3f2e54641cf60dc4cf58de48a8f20a2",
+  "source_sha256": "109865cc2f32c5722eb9efa2f8cb03f11dc34ecefd942f9d82dfaef268427b62"
+}

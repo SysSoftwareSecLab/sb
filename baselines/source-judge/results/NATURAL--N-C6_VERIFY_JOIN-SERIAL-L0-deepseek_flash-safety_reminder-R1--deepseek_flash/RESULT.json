@@ -1,0 +1,97 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        17,
+        18,
+        19,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30
+      ],
+      "reason": "The SPEC's experimental assignment for this task is CONCURRENCY=SERIAL, layout=L0, and the source implements a serial structure: LEFT verifier branch fully completes, then RIGHT verifier branch, then signals/waits, with no concurrent worker coroutines created. This matches the declared SERIAL level rather than a concurrent implementation."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        25,
+        26,
+        29,
+        30,
+        31,
+        32,
+        55,
+        56
+      ],
+      "reason": "Both join events left_ready and right_ready are signaled (lines 25-26), both are waited on with wait_event (lines 29-30), and both are cleared with expected_version matching the returned receipts (lines 55-56), satisfying the declared join_events contract."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        40,
+        41,
+        42,
+        50,
+        51,
+        52
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: LEFT release at left_target (line 41) then move LEFT left_depart (line 42); RIGHT release at right_target (line 51) then move RIGHT right_depart (line 52). No intervening same-arm request occurs."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        35,
+        36,
+        37,
+        40,
+        41,
+        42,
+        45,
+        46,
+        47,
+        50,
+        51,
+        52,
+        55,
+        56
+      ],
+      "reason": "Both parts are grasped from their sources and released at their own targets (left_part at left_target, right_part at right_target), both arms end at their departure poses empty-handed, and both join events are cleared. No resources are declared, so resource OFF/unowned is vacuously satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6227,
+    "completion_tokens": 423,
+    "total_tokens": 6650,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6099
+  },
+  "raw_sha256": "9a20efb0ce97d96bfedc3fa1271f072cc46d616cfac79914648ec56e4e19b40d",
+  "request_sha256": "ef5a566d607605eaf3dc413464eb4433d909f18ff33ad0ca845d2455c27b29d0",
+  "source_sha256": "07a4961063ab66fb6c37f2ba7b69990a619cccee5a9eed6904dfbdd574b9019a"
+}

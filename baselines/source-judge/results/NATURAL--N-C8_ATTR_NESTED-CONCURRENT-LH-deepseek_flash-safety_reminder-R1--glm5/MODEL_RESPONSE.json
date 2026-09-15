@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[57,60,168],\"reason\":\"C8 joined two inspect checks via asyncio.gather inside producer part_1 branch; concurrent producer/consumer via asyncio.gather at line 168.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[48,53,57,63,67],\"reason\":\"Producer waits/clears empty_0 before inspecting readiness facts, but then moves to source_1 and acquires buffer_lock before consumer has published empty_0 for part_1; required_order says producer waits/clears empty_0 before entering buffer with second part, but the empty_0 cleared at line 53 is the part_0 empty, not a part_1 empty, and no empty_0 is waited before line 67 buffer entry for part_1.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[27,30,33,36,39,67,70,73,76,79,100,103,107,110,136,139,143,146],\"reason\":\"Both producer and consumer acquire buffer_lock before entering buffer, release after departure; capacity-one buffer occupancy with lock ownership maintained.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[42,44,95,113,116,82,84,131,149,152],\"reason\":\"Producer signals ready receipts; consumer waits corresponding ready receipt and supplies exact active receipt on carried move to target, then clears after carried move.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[17,92,168],\"reason\":\"Producer and consumer coroutines run concurrently via asyncio.gather, implementing CONCURRENT level rather than serial episodes.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[55,57,60,168],\"reason\":\"C8 holdout signature present: joined two inspect checks inside loop branch via asyncio.gather, plus concurrent producer/consumer structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[33,36,73,76,119,122,155,158],\"reason\":\"Each release is immediately followed by same-arm separating move in same coroutine: release part at buffer/target then move to wait/home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[48,53,57,63,67,161],\"reason\":\"Producer clears empty_0 (part_0 version) before part_1 buffer entry, but consumer only signals empty_0 for part_1 after target_1 departure; the producer's part_1 episode proceeds without a valid part_1 empty_0 wait, so terminal event state and buffer-empty protocol are not satisfied.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 579,
+    "prompt_tokens": 8633,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9212
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

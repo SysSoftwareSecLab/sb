@@ -1,0 +1,107 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        30,
+        47,
+        61,
+        68,
+        86,
+        98
+      ],
+      "reason": "Producer waits/clears empty_0 before second entry (lines 10-12, 98), signals ready after buffer departure (lines 27-30), consumer waits ready (line 47), clears ready after carried move (line 61), and signals empty_0 after target departure (lines 64-68); matches required ready/empty ordering."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        20,
+        23,
+        24,
+        27,
+        36,
+        50,
+        53,
+        55,
+        58,
+        64,
+        65,
+        71
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry (lines 20,50), release it after departing (lines 36,71), and buffer_0/buffer_1 are the same capacity-one buffer with item-specific pickup contracts; source shows lock ownership spanning buffer entry/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        30,
+        47,
+        58,
+        61
+      ],
+      "reason": "Producer signals ready_0/ready_1 (line 30), consumer waits the corresponding ready receipt (line 47) and supplies that exact receipt on the carried move to target (line 58), then clears with receipt.version (line 61)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        78,
+        89,
+        90,
+        98,
+        115
+      ],
+      "reason": "Experimental assignment is DEPENDENCY_DISTANCE=SHORT, not LONG; the source implements the SHORT second-item source pickup following empty receipt (lines 89-98), so the LONG-range obligation is not applicable."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        24,
+        27,
+        64,
+        65
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: LEFT release at buffer_0 then move left_wait (lines 24,27); RIGHT release at target_0 then move right_wait (lines 64,65)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        33,
+        74,
+        128,
+        129,
+        130,
+        131
+      ],
+      "reason": "Source shows producer/consumer coroutines gathered and moves toward left_home/right_home, but no execution evidence confirms final poses, empty hands, lock free, events inactive, or deadline within the finite run."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-SHORT-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8019,
+    "completion_tokens": 531,
+    "total_tokens": 8550,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7891
+  },
+  "raw_sha256": "8d6bb5f6721eb3d7097c323de564797f34dda9f3c01d119ca0aae344b3cd986d",
+  "request_sha256": "1b07dc8b0226a6781a20e2a2f9b5f39c907bcd8cf344c3b2ba8bf5a37515ea0e",
+  "source_sha256": "1ca3399e74005725bce1640bcd016df01ca232c29725c2e701ef11da070db3b3"
+}

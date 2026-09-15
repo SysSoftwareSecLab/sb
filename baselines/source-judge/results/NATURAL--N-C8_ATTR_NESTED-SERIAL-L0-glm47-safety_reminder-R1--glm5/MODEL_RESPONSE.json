@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"V\",\"source_lines\":[121,122,125,128],\"reason\":\"SPEC requires C7 serially checks the two facts and C8 joins them inside the loop branch; source inspects both facts serially before producer_episode and lacks any joined/loop-branch structure.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[43,70,74,95,104,117,118],\"reason\":\"Producer signals ready after buffer departure; consumer waits ready before pickup, clears after carried move; empty_0 published after target departure; producer waits/clears empty_0 before second part.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[52,55,58,61,64,77,80,83,86,89],\"reason\":\"Both participants acquire buffer_lock before buffer entry and release after departure; capacity-one buffer occupancy is serialized by lock ownership throughout contact.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[74,80,92,95],\"reason\":\"Consumer waits the corresponding ready receipt and supplies that exact active EventReceipt on carried move to target; clear uses expected_version from the same receipt.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[108,110,113,115,117,125,128],\"reason\":\"SPEC declares SERIAL alternating episodes; source implements serial producer then consumer for part_0, then empty wait, then serial producer then consumer for part_1.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"V\",\"source_lines\":[108,113,115,125,128],\"reason\":\"SPEC holdout requires C7 serially alternates complete episodes and C8 runs producer/consumer coroutines together; source only serially awaits episodes with no coroutine join structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[58,61,98,101],\"reason\":\"Each release at buffer/target is immediately followed by a same-arm separating move in the same coroutine: release at buffer_0 then move LEFT_HOME, release at target_0 then move RIGHT_HOME, similarly for part_1.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[110,113,125,128,121,122],\"reason\":\"Terminal goals may be met, but required_order item 7 mandates inspecting both readiness facts for item 1 inside the C8 joined loop branch; source inspects serially outside any loop branch, violating the stated structure.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 529,
+    "prompt_tokens": 7727,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8256
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

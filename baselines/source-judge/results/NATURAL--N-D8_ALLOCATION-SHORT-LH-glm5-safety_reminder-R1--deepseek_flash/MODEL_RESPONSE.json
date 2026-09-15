@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[6,8,11,12,14,15,16,17,22,23],\"reason\":\"Both workers inspect allocation; each returns unless its arm equals selected_arm, so only LEFT (selected) proposes move/grasp/release while RIGHT makes no such call.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[6,7,8,15,22,23],\"reason\":\"Both LEFT and RIGHT workers each perform one inspect of 'allocation' before branching, and the selected LEFT grasp passes its own current allocation_obs.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[6,7,8,15],\"reason\":\"The assignment specifies DEPENDENCY_DISTANCE=SHORT with the selected observation consumed immediately; the code inspects, branches, then moves before grasping with the observation, inserting a move between inspection and consumption.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[17,18],\"reason\":\"The committed release at shared_target is immediately followed in the same worker coroutine by a same-arm move to left_depart with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[17,18,22,23],\"reason\":\"Source shows LEFT releases at shared_target and departs, but no evidence confirms shared_part actually reaches shared_target or that RIGHT remains empty at right_home in the finite execution.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5329,
+    "completion_tokens": 329,
+    "total_tokens": 5658,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5201
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[82,83,84],\"reason\":\"The SPEC axis is CONCURRENCY=SERIAL/L0; the code executes run_left_sequence() then run_right_sequence() serially with awaits, matching the declared serial structure.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[32,33,58,80],\"reason\":\"Both declared join events left_ready and right_ready are signaled by robot.signal after each arm's sequence, satisfying the development contract's join_events.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[52,55,74,77],\"reason\":\"Each release at its declared support (left_target/right_target) is immediately followed in the same coroutine by a same-arm move to the departure pose, with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[39,42,46,49,52,55,58,62,65,68,71,74,77,80],\"reason\":\"The code moves both arms to departure poses and releases both parts at their targets, but it never clears the signaled events (left_ready/right_ready) and no execution evidence confirms final event state, so the full terminal goal including events cleared cannot be confirmed from source alone.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6732,
+    "completion_tokens": 294,
+    "total_tokens": 7026,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6604
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

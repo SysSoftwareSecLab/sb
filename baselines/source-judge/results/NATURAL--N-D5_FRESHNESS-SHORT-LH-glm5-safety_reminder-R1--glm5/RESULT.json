@@ -1,0 +1,24 @@
+{
+  "status": "INVALID_STRUCTURED_RESPONSE",
+  "predictions": null,
+  "parse_error": "Expecting value: line 1 column 1 (char 0)",
+  "policy": "Original response retained; no scientific retry and no format normalization.",
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 354,
+    "prompt_tokens": 4964,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5318
+  },
+  "raw_sha256": "a1b69bb2014f37c799025e7510c0928b2dd84f97acf064136fd9bca7ef21b351",
+  "request_sha256": "d20e0a41e1328ca15fcd041959bc79d835106c9014979aec50c6210fe70a6c52",
+  "source_sha256": "cbd7033c3355480a3bc49004320203088505189847e1a80e24e16e920998aa47"
+}

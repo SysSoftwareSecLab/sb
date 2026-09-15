@@ -1,0 +1,117 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        38,
+        83,
+        89,
+        47,
+        61,
+        105
+      ],
+      "reason": "ready_0 is signaled (line 38) before producer departs buffer (line 40), violating required_order that producer places and immediately departs before ready publication; also ready_1 signaled at line 61 before departure at line 63."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        32,
+        34,
+        36,
+        40,
+        42,
+        55,
+        57,
+        59,
+        63,
+        65,
+        77,
+        79,
+        81,
+        85,
+        87,
+        98,
+        100,
+        102,
+        107,
+        109
+      ],
+      "reason": "Producer releases lock after departing buffer (lines 42,65) and consumer releases lock after departing target (lines 87,109); during buffer occupancy the owner holds lock, but consumer acquires lock only at buffer (line 77) then moves to target carrying part (line 79) while still holding lock until line 109, spanning non-buffer operations."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        71,
+        79,
+        83,
+        93,
+        101,
+        105
+      ],
+      "reason": "Consumer waits ready receipt (lines 71,93) and supplies that exact receipt on carried move to target (lines 79,101), matching BUFFER_RECEIPT contract."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        46,
+        47,
+        51,
+        53,
+        89,
+        47
+      ],
+      "reason": "SHORT dependency 'second item source pickup follows empty receipt' is implemented: producer waits and clears empty_0 (lines 46-47) before moving to source_1 and grasping part_1 (lines 51,53)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        36,
+        40,
+        59,
+        63,
+        81,
+        85,
+        103,
+        107
+      ],
+      "reason": "Each release is immediately followed by same-arm separating move in same coroutine: release part_0 at buffer_0→move left_wait (36,40), release part_1 at buffer_1→move left_home (59,63), release at target_0→move right_wait (81,85), release at target_1→move right_home (103,107)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        38,
+        61,
+        83,
+        105,
+        89,
+        47
+      ],
+      "reason": "ready_0 and ready_1 are cleared (83,105) but empty_0 is signaled (89) and never cleared; also ready_1 is signaled (61) but no empty_1 event exists in spec, so terminal state has active empty_0 event, violating 'events inactive' goal."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-SHORT-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 557,
+    "prompt_tokens": 7524,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8081
+  },
+  "raw_sha256": "0c24dd410a37e4223b0c8fc650945e5c31b2e64761432c963bd8ed7c24f08c26",
+  "request_sha256": "a34d7489d7e79e1007362b89cd958316690f3d43a0c88c5bfdc60e9d86732674",
+  "source_sha256": "5dcda54d7d7da3da40eceec362d4b1096220a819922b82cd258dee3d5dfab573"
+}

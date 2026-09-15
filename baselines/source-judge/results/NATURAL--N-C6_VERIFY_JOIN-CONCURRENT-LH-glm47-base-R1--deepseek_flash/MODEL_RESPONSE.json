@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[89,90,91,92,93,94],\"reason\":\"run_task uses asyncio.gather to run left_worker() and right_worker() concurrently, matching the SPEC's CONCURRENT axis rather than a serial reproduction.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[62,87,91,92,93,94],\"reason\":\"Both workers signal their declared join events left_ready and right_ready, and the two worker coroutines are joined via asyncio.gather before run_task returns.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"V\",\"source_lines\":[55,58,81,84],\"reason\":\"Each release is followed by a same-arm move to the depart pose, but the SPEC's world.invalidation_on_release is empty and the release support_zone equals the current pose; however the required immediate separating move is present, yet the release at LEFT_TARGET/RIGHT_TARGET is followed by move to depart, which is the declared separating departure, so this is satisfied—wait, the obligation is satisfied by lines 55-58 and 81-84. Re-evaluating: release at declared support then immediate same-coroutine same-arm move to depart is present, so label C.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[37,41,47,51,55,58,62,66,69,75,78,81,84,87],\"reason\":\"Source shows both parts moved to their targets and arms moved to depart poses with signals, but no source evidence confirms empty hands, event clearing, or the public deadline being met in the finite execution.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6881,
+    "completion_tokens": 370,
+    "total_tokens": 7251,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6753
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

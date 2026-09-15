@@ -1,0 +1,145 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        38,
+        40,
+        42,
+        43,
+        46,
+        48,
+        52,
+        56,
+        58,
+        59
+      ],
+      "reason": "D3 serial checks (lines 42-43) and SHORT tool acquire after second-item wait+checks (lines 40-52), with tool release on all exits via finally (lines 57-59)."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        40,
+        55,
+        56,
+        88,
+        97
+      ],
+      "reason": "Producer for i==1 waits empty_0 twice (line 40 and line 55) and clears it at line 56, but consumer clears ready_i at line 88 before empty_0 is published at line 97; required order says consumer clears ready after carried move, releases, departs, then publishes empty_0, which is followed, but producer's first wait at line 40 occurs before the second wait+clear at lines 55-56, creating a double-wait that does not match the single exact empty_0 receipt wait-then-clear protocol."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        24,
+        26,
+        28,
+        30,
+        31,
+        83,
+        86,
+        90,
+        91,
+        93,
+        94
+      ],
+      "reason": "Both participants acquire buffer_lock during buffer entry and departure (lines 24,83), but buffer_0 and buffer_1 are the same capacity-one buffer; participant_a and participant_b run concurrently (line 119), and both can attempt buffer_lock ownership and buffer placement simultaneously without ensuring capacity-one occupancy."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        75,
+        86,
+        88
+      ],
+      "reason": "Consumer waits ready receipt (line 75) and supplies exact active item receipt on carried move to target (line 86), then clears ready after carried move (line 88)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        38,
+        40,
+        42,
+        43,
+        46,
+        48,
+        52,
+        55,
+        56
+      ],
+      "reason": "Implements SHORT holdout: second-iteration empty_0 wait (line 40), serial checks (lines 42-43), then tool acquire (line 52), with exact receipt version clear (lines 55-56)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        38,
+        40,
+        42,
+        43,
+        52,
+        55,
+        56
+      ],
+      "reason": "SHORT dependency structure: tool acquire follows second-iteration empty receipt wait (line 40) and readiness checks (lines 42-43), with focal empty_0 receipt version preserved across control flow (lines 55-56)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        26,
+        28,
+        30,
+        31,
+        90,
+        91,
+        93,
+        94
+      ],
+      "reason": "Each release (lines 26,90) is followed by immediate same-arm separating move (lines 28,91) in same coroutine, with resource cleanup in finally (lines 30-31,93-94)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        119,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        113,
+        114,
+        115,
+        116,
+        117
+      ],
+      "reason": "participant_a and participant_b both execute producer/consumer episodes for the same items concurrently (line 119); both attempt to produce part_0 and part_1, causing duplicate production and buffer contention, preventing terminal state with parts at targets, empty buffer, and cleared events."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 724,
+    "prompt_tokens": 7718,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8442
+  },
+  "raw_sha256": "c146d95f5f1314a92f1c4f684c428a83d99265422c9a4a8be344386ef8d78e9a",
+  "request_sha256": "5f080bb149b572277f3fa4c48e1a4ffbc01b8a82efccfe2908aeb8e33b37e1c9",
+  "source_sha256": "b33fc85d0564c81f7a2247edb2bce3af803cfbda371b6226feb037f1998231cd"
+}

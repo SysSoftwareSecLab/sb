@@ -1,0 +1,84 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        13,
+        15,
+        19,
+        21,
+        23,
+        37,
+        38,
+        46,
+        47
+      ],
+      "reason": "Only LEFT (selected arm) proposes move/grasp/release/transport; RIGHT only inspects via _unselected_branch with no move/grasp/release calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        11,
+        15,
+        16
+      ],
+      "reason": "Selected grasp at line 15-16 consumes a freshly inspected allocation observation, not the controller-issued current allocation observation from line 11 (alloc_obs_id is unused, discarded at line 25)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        11,
+        15,
+        16,
+        25
+      ],
+      "reason": "SHORT dependency requires selected observation consumed immediately; instead a new inspect is embedded in grasp and the line 11 observation is discarded unused at line 25."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        21,
+        23
+      ],
+      "reason": "Release at shared_target (line 21) is immediately followed by same-arm move to depart_pose (line 23) in the same coroutine with no intervening same-arm call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        21,
+        23,
+        37,
+        38,
+        46,
+        47,
+        51,
+        52
+      ],
+      "reason": "LEFT departs to left_depart and shared_part released at shared_target, but RIGHT remains at right_home only if already there; RIGHT never moves to right_home goal, and terminal resource/event state cannot be confirmed from source."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-SHORT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 325,
+    "prompt_tokens": 5512,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5837
+  },
+  "raw_sha256": "9f8a679211fc247da6511be8c7b41c6b1c1cd2e6499895a2ce78c9e2c83a614e",
+  "request_sha256": "70b8d99d24fcfae67a85853a01e8ddf4c3d365bd9a5b5dce2b4e01ea7091cf38",
+  "source_sha256": "508ed5ed86db1792ebbda04e56103d544c6a1203066ccfba5613070aefc2399a"
+}

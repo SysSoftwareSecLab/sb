@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"V\",\"source_lines\":[46,53,6,26],\"reason\":\"SPEC declares CONCURRENCY=SERIAL, but source uses asyncio.gather to run two worker coroutines concurrently, implementing a concurrent rather than serial structure.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[13,16,33,36,53],\"reason\":\"Both workers signal their ready event (left_ready/right_ready) after inspection and wait_event on the peer's event before transporting, implementing the join via declared events.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,23,39,40,43],\"reason\":\"Each release occurs at the declared support (left_target/right_target) with the held part, immediately followed by a same-arm separating move to departure in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[53,8,9,28,29],\"reason\":\"Goals require both parts at target, arms at departure and empty, but concurrent asyncio.gather violates the SERIAL structure; also right_verification value says verified_by LEFT while code inspects with RIGHT, and events are never cleared.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 257,
+    "prompt_tokens": 5689,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5946
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

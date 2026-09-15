@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[11,12,26,27,29,30,37,38,39,40],\"reason\":\"Both workers inspect allocation and only call _selected_transport when the observed selected_arm matches their arm; _selected_transport re-checks selected_arm before any move/grasp/release, so only the selected arm proposes shared_source approach, grasp, transport, release and departure.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[10,14,25,28,34,35,36],\"reason\":\"Worker A inspects LEFT then RIGHT once each; worker B creates and gathers one inspect per arm. The selected transport passes its own current allocation_obs into grasp, satisfying the required current observation consumption.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[10,11,14],\"reason\":\"The selected arm's own allocation observation is inspected and immediately consumed by the same _selected_transport coroutine, with the selected_arm check and grasp observation dependency preserved across the short control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[16,17],\"reason\":\"After release at shared_target, the same _selected_transport coroutine immediately calls robot.move(arm, depart_pose) as the next same-arm request, providing the required separating departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[43,44],\"reason\":\"Source implements the concurrent worker structure and selected transport, but the finite execution outcome, terminal poses, empty hands, event clearing and deadline satisfaction cannot be confirmed from source text alone.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5866,
+    "completion_tokens": 363,
+    "total_tokens": 6229,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5738
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

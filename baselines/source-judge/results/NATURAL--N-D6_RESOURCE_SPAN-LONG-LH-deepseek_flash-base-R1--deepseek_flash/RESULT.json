@@ -1,0 +1,95 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        11,
+        13,
+        16,
+        17,
+        20,
+        21,
+        24,
+        31,
+        33,
+        36,
+        38
+      ],
+      "reason": "Each worker acquires fixture then tool before moving to source, grasping, moving to target, releasing, departing, and only then releases tool and fixture in finally, so the dual-resource ownership spans source approach, pickup, placement and departure."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        11,
+        13,
+        16,
+        17,
+        20,
+        21,
+        24,
+        31,
+        33,
+        36,
+        38
+      ],
+      "reason": "The focal dependency is implemented: both resources are acquired before the long carry sequence and held across source approach, grasp, target move, release and departure, with release_resource deferred until after departure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        24
+      ],
+      "reason": "After release(arm, part, target), the same worker coroutine immediately calls robot.move(arm, depart) at line 24, providing the required same-arm separating departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        43,
+        48,
+        50,
+        54
+      ],
+      "reason": "Source implements both serial and concurrent worker structures with the declared goals, but no execution evidence confirms terminal poses, empty hands, OFF/unowned resources, cleared events, or deadline satisfaction."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        11,
+        13,
+        31,
+        33,
+        36,
+        38
+      ],
+      "reason": "The public scenario declares no injected failure and the source shows no actual tool acquisition timeout; the timeout-cleanup trigger condition is not reached."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-LONG-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6077,
+    "completion_tokens": 359,
+    "total_tokens": 6436,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5949
+  },
+  "raw_sha256": "ffa9b3b6d98bf9d4cc5bc9a8bb8f976a34f3c07bd063d21398242e589306228d",
+  "request_sha256": "62875aebf376be202a419b1702101ebffe5ef98612579b6e1a7c1f3f3af55898",
+  "source_sha256": "237c6a276cc4cd00dd99158c6edf72b9d1dfe15008078fc5f4b2351ffd37cdef"
+}

@@ -1,0 +1,77 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        14,
+        15,
+        16,
+        17,
+        22
+      ],
+      "reason": "SPEC requires SHORT producer-to-consumer dependency: route observation for left_part must occur after invalidating peer (RIGHT) placement/release. Code never inspects/refreshes route observation at all, and left lane proceeds independently without consuming any RIGHT release dependency."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        7,
+        15
+      ],
+      "reason": "Development contract requires route observation (fact_id=route, object_id=left_part); grasp calls at lines 7 and 15 pass no observation argument, omitting the required current observation entirely."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        17,
+        18
+      ],
+      "reason": "Each release (line 9 LEFT at left_target, line 17 RIGHT at right_target) is immediately followed by a same-arm separating move (line 10 to left_depart, line 18 to right_depart) in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        14,
+        15,
+        16,
+        17,
+        18,
+        22
+      ],
+      "reason": "Terminal goal requires both parts at targets, arms at departure, empty hands, and applicable acceptance conditions including the route observation dependency; code omits the required route observation entirely, so the acceptance condition is not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-L0-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 308,
+    "prompt_tokens": 4980,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5288
+  },
+  "raw_sha256": "a9a7fc8100c15d99378671f1c851b31fda2c5568596aec79a2176ce986d7107f",
+  "request_sha256": "7ed588897b11837afdc66ee143cbe2ba9b4bec3e045448860f5f9aa6883a5661",
+  "source_sha256": "c1b92106bc5b337742bcef579a5f046f60cdb095ace5376738d93e6909c51094"
+}

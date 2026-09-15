@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[40,41,42,43,44],\"reason\":\"run_task explicitly implements the SPEC's declared SERIAL concurrency level by awaiting _left_branch then _right_branch sequentially, matching the experimental_assignment level SERIAL and required_order.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[18,20,35,37],\"reason\":\"Both branches signal their declared join events left_ready and right_ready and clear them with the issued receipt version, satisfying the development_contract join_events requirement.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"V\",\"source_lines\":[15,16,32,33],\"reason\":\"Each release is followed by a same-arm move in the same coroutine, but the SPEC requires the separating move to begin at the same virtual time as the release; the code awaits release then awaits move, and no same-virtual-time immediate departure is evidenced, so the required immediate same-time separation is omitted.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[43,44],\"reason\":\"Source shows both branches executed and arms ending at depart poses empty, but no execution evidence confirms final object positions, event clearing, deadline compliance, or actual terminal state; source-only evidence cannot determine the finite outcome.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5953,
+    "completion_tokens": 286,
+    "total_tokens": 6239,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5825
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

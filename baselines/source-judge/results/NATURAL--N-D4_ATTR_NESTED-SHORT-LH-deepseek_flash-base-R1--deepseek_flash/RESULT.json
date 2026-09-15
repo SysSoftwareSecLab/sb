@@ -1,0 +1,154 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "source_lines": [
+        112,
+        113,
+        114,
+        115,
+        116,
+        124,
+        125,
+        126,
+        127,
+        128,
+        133,
+        135,
+        136
+      ],
+      "reason": "Source uses asyncio.gather for the two second-item checks and acquires tool before producer_episode in run_short, but the declared combined attributes (SHORT dependency distance, LH layout, nested control flow) cannot be fully confirmed from source-only evidence without the actual finite trajectory."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "U",
+      "source_lines": [
+        87,
+        97,
+        98,
+        100,
+        109,
+        110,
+        130,
+        131
+      ],
+      "reason": "Producer signals ready after buffer release and departure; consumer waits ready, clears ready after carried move, signals empty_0; producer waits/clears empty_0 before second item. Order appears consistent but finite execution outcome and exact receipt versions cannot be confirmed from source alone."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "U",
+      "source_lines": [
+        81,
+        82,
+        83,
+        84,
+        85,
+        103,
+        104,
+        105,
+        106
+      ],
+      "reason": "Producer acquires buffer_lock before release into buffer and releases lock after; consumer does not acquire buffer_lock during pickup. Capacity-one buffer with item-specific poses is declared, but actual ownership during full contact interval cannot be confirmed from source-only evidence."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "U",
+      "source_lines": [
+        100,
+        105,
+        109
+      ],
+      "reason": "Consumer waits ready_receipt and passes it to move to target, then clears ready after move. Whether the receipt is active and matches the held item at execution time cannot be confirmed from source alone."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        112,
+        113,
+        114,
+        115,
+        116,
+        124,
+        125,
+        126,
+        127,
+        128,
+        133,
+        135,
+        136
+      ],
+      "reason": "Source implements a nested structure with asyncio.gather for second-item checks and tool acquisition before producer_episode, but the declared held-out control-flow signature and its dependency cannot be fully verified from source-only evidence."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "U",
+      "source_lines": [
+        124,
+        125,
+        126,
+        127,
+        128,
+        130,
+        131,
+        133,
+        135,
+        136
+      ],
+      "reason": "SHORT variant requires tool acquire after second-item wait and checks; source acquires tool before producer_episode and before the empty_0 wait/checks, which appears inconsistent with SHORT dependency distance, but the finite execution outcome cannot be confirmed from source alone."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "U",
+      "source_lines": [
+        83,
+        84,
+        85,
+        86,
+        106,
+        107
+      ],
+      "reason": "Producer releases at buffer_pose then moves to left_wait in same coroutine; consumer releases at target_pose then moves to right_home. Immediate same-arm separating move appears present, but actual committed release and departure timing cannot be confirmed from source-only evidence."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        124,
+        125,
+        126,
+        127,
+        128,
+        133,
+        135,
+        136,
+        137,
+        138,
+        140
+      ],
+      "reason": "Source attempts both items through producer/consumer episodes and releases tool in finally, but terminal poses, empty hands, resources OFF, events cleared, and deadline satisfaction cannot be confirmed from source-only evidence without the actual finite trajectory."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-SHORT-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8352,
+    "completion_tokens": 704,
+    "total_tokens": 9056,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8224
+  },
+  "raw_sha256": "11755ed846144ca5925c0314f216a1adffc655533cfb5feab0463e6225b231a5",
+  "request_sha256": "da11220c239b9977b4b7e28b8426469a9ca60b50fa4b1da02dcfb63f09cb2366",
+  "source_sha256": "b4029c7e1575e62d8765c15e9efb55f5919f6c7d394427ac8fa77c05086cfeb1"
+}

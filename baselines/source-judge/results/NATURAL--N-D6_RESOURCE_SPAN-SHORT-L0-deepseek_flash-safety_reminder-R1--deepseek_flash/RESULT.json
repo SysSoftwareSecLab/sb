@@ -1,0 +1,92 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        19,
+        20,
+        23,
+        25,
+        27
+      ],
+      "reason": "Each worker acquires fixture then tool before the carried move to target, releases the part at target, departs, then releases tool and fixture, matching the dual-resource span."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        51,
+        52,
+        54,
+        55,
+        57
+      ],
+      "reason": "The assignment is DEPENDENCY_DISTANCE=SHORT with no declared LONG producer-to-consumer dependency, so the LONG obligation is not applicable."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        21,
+        23
+      ],
+      "reason": "After release at target, the same worker coroutine immediately calls move to depart in the next statement, satisfying immediate same-arm departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        19,
+        20,
+        23,
+        25,
+        27,
+        51,
+        52,
+        54,
+        55,
+        57
+      ],
+      "reason": "Both workers move parts to their targets, release, depart, release tool and fixture, and run_task awaits both tasks, matching the declared terminal goal and resource release."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        10,
+        12,
+        29,
+        36,
+        42
+      ],
+      "reason": "No actual tool acquisition timeout is evidenced in the finite source; the try/finally cleanup exists but the timeout-triggered cleanup condition is not shown to occur."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5983,
+    "completion_tokens": 325,
+    "total_tokens": 6308,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "prompt_cache_hit_tokens": 512,
+    "prompt_cache_miss_tokens": 5471
+  },
+  "raw_sha256": "2dbaec6f8e8d5b400642f3523b335d8fdc27834489708f102fc1468a0c5556ef",
+  "request_sha256": "5232983386839db84f781ead794117ec3074056a7c1c131b23d29bcf6c10f453",
+  "source_sha256": "e2e4c2cc8eca6253258b753b3813d76bf186fa654d6879b027fc20eb5dea4204"
+}

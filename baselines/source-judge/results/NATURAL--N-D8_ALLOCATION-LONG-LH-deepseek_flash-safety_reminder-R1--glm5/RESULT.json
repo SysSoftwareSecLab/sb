@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "reason": "Both arms inspect allocation; only the selected arm (LEFT per initial value) proceeds to move/grasp/release at shared_source, shared_target, and depart; RIGHT returns without proposing any move/grasp/release."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        17
+      ],
+      "reason": "Both arms inspect allocation once (line 10); selected arm consumes its own current controller-issued allocation observation by passing obs into grasp (line 17)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "reason": "Peer allocation inspection intervenes before selected observation consumption: inspect occurs first, then branch selection, then approach and grasp with that observation, matching LONG dependency structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        20
+      ],
+      "reason": "Release at shared_target (declared logical support) is immediately followed by same-arm move to depart in the same candidate coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        24,
+        25,
+        26
+      ],
+      "reason": "Selected LEFT transports shared_part to shared_target and departs to left_depart; RIGHT remains at right_home; both candidates run concurrently via gather; no resources/events to clear."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 315,
+    "prompt_tokens": 5087,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5402
+  },
+  "raw_sha256": "36fc0afe52452e4c828f59fd9e93d5def90f0213d0767cac9a7b4b63f3b16da3",
+  "request_sha256": "f6d88b98e957117b8ccd013eeeed3b077db4b849e4f0d4e46956ad93e076c631",
+  "source_sha256": "081e4bb17c463bd178f8b9b978dd5f7fb886d75d1ccbae12c76b86a35d881e7a"
+}

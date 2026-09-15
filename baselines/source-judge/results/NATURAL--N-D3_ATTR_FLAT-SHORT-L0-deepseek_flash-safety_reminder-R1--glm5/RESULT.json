@@ -1,0 +1,151 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        44,
+        45,
+        48,
+        52,
+        53,
+        58,
+        61,
+        64,
+        65
+      ],
+      "reason": "SHORT variant implemented: empty_0 waited and cleared (lines 44-45), then tool acquired (line 48), then serial line_clear/receiver_ready inspections with Boolean checks (lines 52-61), before second source pickup (lines 64-65). D3 serial checks match."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        34,
+        36,
+        38,
+        40,
+        88,
+        101,
+        103,
+        107,
+        109,
+        71,
+        73,
+        75,
+        77,
+        113,
+        126,
+        128,
+        132,
+        134
+      ],
+      "reason": "Producer publishes ready after buffer release and departure (lines 34-40, 71-77); consumer waits ready before pickup, clears ready after carried move and release (lines 88,101,103,107, 113,126,128,132); producer waits/clears empty_0 before second buffer entry (lines 44-45)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        32,
+        34,
+        36,
+        38,
+        69,
+        71,
+        73,
+        75,
+        93,
+        95,
+        97,
+        99,
+        118,
+        120,
+        122,
+        124
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer interaction and release it after departure for every buffer placement and pickup (lines 32-38, 69-75, 93-99, 118-124)."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        88,
+        95,
+        101,
+        113,
+        120,
+        126
+      ],
+      "reason": "Consumer waits ready receipts (lines 88, 113) and supplies them as receipt on carried moves to target (lines 101, 126), matching the exact active item receipt requirement."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        52,
+        53,
+        58,
+        61
+      ],
+      "reason": "D3 serial second-item checks implemented: line_clear inspected with LEFT then receiver_ready with RIGHT (lines 52-53), both Boolean fields checked (lines 58-61), no asyncio.gather for checks."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        44,
+        45,
+        48,
+        52,
+        53,
+        58,
+        61,
+        64,
+        65
+      ],
+      "reason": "SHORT focal dependency present: tool acquire (line 48) follows empty_0 wait/clear (lines 44-45) and precedes second-item readiness checks (lines 52-61) and source pickup (lines 64-65)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        34,
+        36,
+        71,
+        73,
+        103,
+        105,
+        128,
+        130
+      ],
+      "reason": "Every release (lines 34,71,103,128) is immediately followed by a same-arm separating move in the same coroutine (lines 36,73,105,130)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        80,
+        139
+      ],
+      "reason": "Tool is released only on normal producer exit (line 80); no try/finally or cancellation cleanup guarantees tool release on failure/cancellation. Also no final verification that all events are inactive and buffer empty at task end."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 672,
+    "prompt_tokens": 8156,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8828
+  },
+  "raw_sha256": "18f34c943002927e60e17010a6aa46e7935e81e296e52bd13b154b8f4a506959",
+  "request_sha256": "6ff433cc304c71fd036bbef2302340f84c609f6d3b5eb7618978c854e04294f8",
+  "source_sha256": "f955167b96394d13724180343148eecc418c83154b42f4acf8ab91206e820183"
+}

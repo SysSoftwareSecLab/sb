@@ -1,0 +1,144 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        35,
+        43,
+        65,
+        71,
+        94
+      ],
+      "reason": "LONG variant requires tool acquired before source pickup and kept across the second-item wait/checks, but producer acquires tool after grasping part_0 (line 43) and releases it at line 94 before the consumer's second-item checks; the declared combined LONG attributes are not jointly implemented."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        61,
+        65,
+        68,
+        91,
+        99,
+        119,
+        128,
+        132,
+        152
+      ],
+      "reason": "Producer signals ready_0 before consumer waits, but consumer clears ready_0 at line 119 before its carried move to target_0 completes (line 116 is awaited, so ordering is move then clear—actually clear after move); however producer waits empty_0 at line 65 and clears at line 68 before entering buffer with part_1, and consumer signals empty_0 at line 128 after releasing part_0 and departing; ready_1 is signaled at line 91 and cleared at line 152 after move to target_1. The required order is present, but the second-item checks (line_clear/receiver_ready) required before transfer are omitted, so the event protocol's required second-item gating is violated."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        46,
+        49,
+        52,
+        55,
+        58,
+        76,
+        79,
+        82,
+        85,
+        88,
+        102,
+        105,
+        107,
+        110,
+        113,
+        135,
+        138,
+        140,
+        143,
+        146
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering buffer poses and release it after departing; buffer_0 and buffer_1 are the same capacity-one buffer and are used serially with lock ownership during entry/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        99,
+        116,
+        132,
+        149
+      ],
+      "reason": "Consumer waits ready_0/ready_1 receipts and supplies the exact active EventReceipt on the carried move to target_0/target_1 via receipt=ready_0_receipt/ready_1_receipt."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        35,
+        43,
+        65,
+        71,
+        94
+      ],
+      "reason": "The held-out LONG control-flow signature requires tool acquisition before source pickup and retention across the second-item wait and checks; source acquires tool after grasping part_0 and releases it before the second-item wait/checks, so the declared held-out signature is not implemented."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        43,
+        65,
+        71,
+        94
+      ],
+      "reason": "The focal dependency 'tool acquire -> second-iteration release spans source, grasp and empty receipt' is not preserved: tool is acquired at line 43 after the first grasp and released at line 94 before the second-item wait/checks, so it does not span the second-iteration source/grasp/empty receipt."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        52,
+        55,
+        82,
+        85,
+        122,
+        125,
+        155,
+        158
+      ],
+      "reason": "Each release is followed immediately by a same-arm move in the same coroutine: release part_0 at buffer_0 then move LEFT_HOME; release part_1 at buffer_1 then move LEFT_HOME; release part_0 at target_0 then move RIGHT_HOME; release part_1 at target_1 then move RIGHT_HOME."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        65,
+        68,
+        71,
+        73,
+        94,
+        128,
+        132,
+        152
+      ],
+      "reason": "The required second-item checks (inspect line_clear with LEFT and receiver_ready with RIGHT, both permitting transfer) are omitted before entering buffer with part_1, and tool is released before the second-item wait/checks, so the declared acceptance conditions and LONG structure are not met."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-LONG-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8835,
+    "completion_tokens": 839,
+    "total_tokens": 9674,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8707
+  },
+  "raw_sha256": "0f67b855829ee8c6f2f8ceb3e7744e5486180978196dc0d3a8862f444e4046ec",
+  "request_sha256": "1c092c8d334ea70faaa6c7fb02d88ec0eda68682df4f1da47373b29b0fb07b06",
+  "source_sha256": "d38006d79ec5350b40fe7caa724ca9086aa4a076acd7a531bd33599d94d6bd91"
+}

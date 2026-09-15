@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[29,30,32],\"reason\":\"The source creates left_branch and right_branch as asyncio tasks and awaits asyncio.gather, implementing the SPEC's CONCURRENT level with joined worker coroutines rather than serial reproduction.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[17,27,32,34,35],\"reason\":\"Both branches signal left_ready/right_ready, and run_task joins the branches via gather before awaiting both wait_event calls, matching the declared join_events.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"V\",\"source_lines\":[15,16,25,26],\"reason\":\"Each release is followed by a same-coroutine move to the depart pose, but the SPEC requires the immediate separating move to start at the same virtual time as the release; the source awaits release then awaits move sequentially, so the departure is not at the same virtual time.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[34,35,37,38],\"reason\":\"The source reaches depart poses and clears events, but the SPEC's terminal goal also requires both parts at their own targets and empty hands; the source provides no explicit evidence of final object placement or empty-hand state, and the release/departure timing issue leaves the finite outcome undetermined.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5852,
+    "completion_tokens": 300,
+    "total_tokens": 6152,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 5596
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

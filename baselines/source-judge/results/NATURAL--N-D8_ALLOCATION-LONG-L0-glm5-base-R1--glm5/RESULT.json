@@ -1,0 +1,137 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "V",
+      "source_lines": [
+        14,
+        15,
+        16,
+        17,
+        30,
+        31,
+        32,
+        33,
+        43,
+        44,
+        47,
+        50,
+        51
+      ],
+      "reason": "Allocation selects LEFT, but both _worker_a and _worker_b independently branch on selected==LEFT and call _transport(LEFT,...), so two concurrent LEFT approaches/grasps/transports of shared_part are proposed by unselected worker B."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        8,
+        9,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        24,
+        25,
+        27,
+        28,
+        30,
+        31,
+        32,
+        33,
+        44
+      ],
+      "reason": "Each worker inspects allocation once (LEFT and RIGHT), and the selected arm's grasp consumes its own current allocation observation passed as observation=observation to robot.grasp."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12,
+        14,
+        15,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        27,
+        28,
+        30,
+        31,
+        36,
+        37,
+        42,
+        43,
+        44,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        63
+      ],
+      "reason": "Peer allocation inspection intervenes before selected observation consumption: both workers inspect allocation, then branch on selected_arm, then pass that same observation into grasp; A serial and B concurrent structure is implemented via asyncio.gather."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        49,
+        50,
+        51
+      ],
+      "reason": "_transport releases shared_part at shared_target (a declared logical_support) and immediately calls move(arm, depart) in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        14,
+        15,
+        30,
+        31,
+        43,
+        44,
+        47,
+        50,
+        51,
+        63
+      ],
+      "reason": "Both workers transport the same selected LEFT shared_part to shared_target, causing duplicate grasp/transport proposals; nonselected RIGHT remains home but the selected LEFT path is duplicated, violating the single selected transport and terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 448,
+    "prompt_tokens": 5778,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6226
+  },
+  "raw_sha256": "9078113b35505b46bdde559539458cb798a5e6fa61a45ff9c35e236b5186d88a",
+  "request_sha256": "61a9f1e975da9f6bbc3a3235bb9713b5b2b9cc7ab127b5eb4d7fb997c8da6ea4",
+  "source_sha256": "57dbd4ec3d6780330d5a537ab69e87e0cceab7b19fbdf697f69ead7f21253dbe"
+}

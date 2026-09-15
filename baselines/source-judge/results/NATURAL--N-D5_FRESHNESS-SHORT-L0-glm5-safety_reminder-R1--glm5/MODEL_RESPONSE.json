@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[6,7,8,9,14,15,16,17,22],\"reason\":\"SPEC requires SHORT producer-to-consumer dependency: route observation for left_part must occur after invalidating peer (RIGHT) placement/release. Code never inspects/refreshes route observation at all, and left lane proceeds independently without consuming any RIGHT release dependency.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[7,15],\"reason\":\"Development contract requires route observation (fact_id=route, object_id=left_part); grasp calls at lines 7 and 15 pass no observation argument, omitting the required current observation entirely.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[9,10,17,18],\"reason\":\"Each release (line 9 LEFT at left_target, line 17 RIGHT at right_target) is immediately followed by a same-arm separating move (line 10 to left_depart, line 18 to right_depart) in the same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[6,7,8,9,10,14,15,16,17,18,22],\"reason\":\"Terminal goal requires both parts at targets, arms at departure, empty hands, and applicable acceptance conditions including the route observation dependency; code omits the required route observation entirely, so the acceptance condition is not satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 308,
+    "prompt_tokens": 4980,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5288
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[12,20,21,24,27,31,38,48,61],\"reason\":\"The code derives the selected arm from the controller-issued allocation observation, requires both observations to agree, and branches so only the selected arm issues move/grasp/release calls in both candidate_a and candidate_b; the unselected worker returns without robot calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[7,8,20,21,34,41,51,68],\"reason\":\"Both LEFT and RIGHT independently inspect the allocation fact once (lines 7-8), the selected arm's own observation is validated via selected_arm and passed to its grasp (obs_left for LEFT, obs_right for RIGHT), and the observations must agree before any transport.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[7,8,20,21,27,34,41,51,68],\"reason\":\"The experimental assignment is DEPENDENCY_DISTANCE=SHORT with focal dependency 'selected observation is consumed immediately'; the selected arm's own allocation observation is consumed directly by its grasp in the same candidate branch with no intervening control flow, matching the SHORT structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[36,37,43,44,53,54,70,71],\"reason\":\"Each release at shared_target is immediately followed in the same candidate coroutine by a same-arm separating move (LEFT release then move left_depart; RIGHT release then move right_home) with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[31,33,34,35,36,37,38,40,41,42,43,44,48,50,51,52,53,54,61,67,68,69,70,71],\"reason\":\"The selected arm transports shared_part to shared_target and releases it, then departs (LEFT to left_depart, RIGHT to right_home); the unselected arm stays at home, matching the declared terminal poses and object goal within the deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6496,
+    "completion_tokens": 473,
+    "total_tokens": 6969,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6368
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[9,11,14,15,16,17,18,19,21,23],\"reason\":\"Each worker acquires fixture then tool before the carry (lines 9-11), performs the target move/grasp/release/depart while owning both (lines 14-19), then releases tool and fixture after departure (lines 21-23), matching the required dual-resource span.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"NA\",\"source_lines\":[37,38,39],\"reason\":\"The experimental assignment is DEPENDENCY_DISTANCE=SHORT with no LONG producer-to-consumer dependency structure declared, so the LONG_RANGE_DEPENDENCY obligation is not applicable.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[18,19],\"reason\":\"After release at target (line 18), the same worker coroutine immediately calls move to the depart pose (line 19) with no intervening same-arm call, satisfying the immediate same-coroutine separating departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[14,15,16,17,18,19,21,23],\"reason\":\"Source shows moves to target/depart and resource releases, but the finite trajectory's actual committed terminal poses, empty hands, OFF/unowned resource states, and deadline compliance cannot be confirmed from source alone.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[9,11,25,26,27,28,29,30,31,32,33,34,35],\"reason\":\"The try/finally cleanup exists, but no actual tool acquisition timeout is shown to have occurred in the finite trajectory, so the timeout-cleanup trigger is not applicable.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5692,
+    "completion_tokens": 391,
+    "total_tokens": 6083,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5564
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

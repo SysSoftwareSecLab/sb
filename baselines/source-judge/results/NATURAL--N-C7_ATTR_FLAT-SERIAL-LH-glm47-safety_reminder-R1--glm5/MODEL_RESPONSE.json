@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"V\",\"source_lines\":[186,188,189,192,193,194,195],\"reason\":\"SPEC requires C7 checks serially; source inspects both facts serially but then asserts both item_ids==PART_1, contradicting line_clear initial value item_id=part_1 and receiver_ready initial value item_id=part_1 is not a combined attribute check matching the holdout signature.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[78,88,106,115,126,127,146,156,174,183],\"reason\":\"Producer publishes ready after buffer placement/departure; consumer waits ready before pickup, clears ready after carried move, publishes empty_0; next producer waits/clears empty_0 before buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[62,65,69,72,75,81,90,93,97,100,130,133,137,140,143,149,158,161,165,168],\"reason\":\"Both participants acquire buffer_lock before buffer entry and release after departure; capacity-one buffer occupancy protected by lock ownership during contact.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[78,88,103,106,146,156,171,174],\"reason\":\"Consumer waits the corresponding ready receipt and supplies that exact active item receipt on carried move to target; ready cleared after carried move completes.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[117,118,119,185,198,199],\"reason\":\"SPEC requires SERIAL alternating episodes; source runs producer_part_0 then consumer_part_0, then producer_part_1 then consumer_part_1 serially.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"V\",\"source_lines\":[186,188,189,192,193,194,195],\"reason\":\"SPEC states C7 checks serially and C8 joins the two checks inside the loop branch; source performs serial checks but lacks the loop branch structure and does not implement the held-out control-flow signature.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[72,75,109,112,140,143,177,180],\"reason\":\"Each release at buffer/target is immediately followed by a same-arm separating move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[183,185,186,188,189,192,193,194,195,198,199],\"reason\":\"Final consumer_part_1 signals EMPTY_0 (line 183) without waiting/clearing it, and source does not ensure all events inactive at exit; also control-flow holdout violation undermines terminal acceptance.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 591,
+    "prompt_tokens": 8945,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9536
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

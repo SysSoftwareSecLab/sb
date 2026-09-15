@@ -1,0 +1,109 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        23,
+        34,
+        40,
+        51,
+        53,
+        57,
+        68,
+        70
+      ],
+      "reason": "Producer signals ready_0 (line 19) and ready_1 (line 34) but never clears them; consumer clears ready_0 (line 51) and ready_1 (line 68), yet the producer's second episode waits empty_0 (line 23) which consumer signals at line 53 and again at line 70, and the required order says producer waits and clears empty_0 before entering buffer with the second part — producer never clears empty_0, so the required ready/empty publication-and-clear sequence is incomplete."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        10,
+        13,
+        15,
+        28,
+        30,
+        42,
+        59
+      ],
+      "reason": "Both arms enter the same physical capacity-one buffer (buffer_0 and buffer_1 at identical coordinates) without ever acquiring buffer_lock; the required order states both participants own buffer_lock during buffer entry and departure, but no acquire/release_resource calls appear."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "V",
+      "source_lines": [
+        45,
+        62
+      ],
+      "reason": "Consumer supplies ready0/ready1 receipts on carried moves to target (lines 45, 62), but the required order also requires the consumer to wait the corresponding ready receipt before pickup and supply that exact active item receipt; producer signals ready_0/ready_1 after release/departure (lines 19, 34), yet the consumer's pickup at buffer_0/buffer_1 (lines 42-43, 59-60) is not gated by an active receipt in the required buffer-receipt mechanism, and the producer never clears empty_0 as required."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        23,
+        26,
+        28,
+        30,
+        40,
+        43,
+        45,
+        57,
+        60,
+        62
+      ],
+      "reason": "The experimental assignment requires the second item to be picked before waiting for empty receipt (focal dependency: second item picked before waiting for empty receipt), but producer waits empty_0 at line 23 before moving to source_1 and grasping part_1 (lines 25-26), so the LONG dependency structure is not implemented as declared."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        17,
+        30,
+        32,
+        47,
+        49,
+        64,
+        66
+      ],
+      "reason": "Each release (lines 15, 30, 47, 64) is immediately followed by a same-arm separating move in the same coroutine (lines 17, 32, 49, 66) at the declared support zone, satisfying the immediate same-arm departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        19,
+        23,
+        34,
+        51,
+        53,
+        68,
+        70
+      ],
+      "reason": "Terminal goal requires events inactive, but ready_0 and ready_1 are signaled (lines 19, 34) and only ready_0/ready_1 are cleared by consumer (lines 51, 68); empty_0 is signaled (lines 53, 70) and never cleared, and producer never clears empty_0, so events are not all inactive at completion."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7184,
+    "completion_tokens": 701,
+    "total_tokens": 7885,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7056
+  },
+  "raw_sha256": "e257e2be821439f414ac070428423cdf68033c90cba38dcc8b2d72cff1cb96d9",
+  "request_sha256": "6027ad228faf80a3ba49990311d6e2102772ca037cbae32b6fa6ae4c361cde6f",
+  "source_sha256": "a647b642a3edbbecfe9a41464d95f9678988c1bce481681e2b94629281a87567"
+}

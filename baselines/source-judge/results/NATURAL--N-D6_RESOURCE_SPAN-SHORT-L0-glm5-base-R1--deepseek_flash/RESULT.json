@@ -1,0 +1,91 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        23
+      ],
+      "reason": "Worker acquires fixture then tool before carrying the part to target, releases/departs, then releases tool and fixture, matching the required dual-resource span."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        33,
+        34,
+        38
+      ],
+      "reason": "Experimental assignment is DEPENDENCY_DISTANCE=SHORT with no LONG producer-to-consumer dependency declared; run_task runs two serial workers."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19
+      ],
+      "reason": "Each release at target_pose is immediately followed by a same-arm move to depart_pose in the same coroutine and virtual time."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        23,
+        34,
+        38
+      ],
+      "reason": "Both workers move parts to targets, release at supports, depart to depart poses, and release both resources; resources start OFF and no profile is enabled."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        10,
+        12,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "reason": "No actual tool acquisition timeout occurs in the supplied finite scenario; try/finally cleanup is present but the timeout trigger is not exercised."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5743,
+    "completion_tokens": 309,
+    "total_tokens": 6052,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5615
+  },
+  "raw_sha256": "f067fdb5d5969834c265c89e92bb3e12aae949e4522b49bd3cea90d4df4c0967",
+  "request_sha256": "7ab714ada5e468bbd04f368919a163a76e01672ae50bdc00ca260b21308cc060",
+  "source_sha256": "3ca4b2dbfa47ccda34c01be900508f936db1dcb957ea0d7869eb293d518a4793"
+}

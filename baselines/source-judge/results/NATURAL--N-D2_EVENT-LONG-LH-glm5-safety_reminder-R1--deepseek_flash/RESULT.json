@@ -1,0 +1,90 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        13,
+        15,
+        22,
+        35,
+        37,
+        44
+      ],
+      "reason": "Each worker signals its own ready event after depositing/clearing its pad, waits for the peer ready event before consuming, and clears the peer event after the carried move completes, matching the required publish/wait/clear order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        15,
+        18,
+        20,
+        22,
+        37,
+        40,
+        42,
+        44
+      ],
+      "reason": "The exact EventReceipt returned by wait_event is passed to grasp and to the carried move to the target, and clear_event uses that receipt's version after the move."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        13,
+        15,
+        20,
+        35,
+        37,
+        42
+      ],
+      "reason": "The focal dependency right_ready -> LEFT carried move is preserved: LEFT waits for right_ready and carries that exact receipt through the intervening move/grasp to the left_target move."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        23,
+        24,
+        33,
+        34,
+        45,
+        46
+      ],
+      "reason": "Each release at the declared support zone is immediately followed by a same-arm separating move in the same coroutine (left_pad->left_pickup_wait, left_target->left_depart, right_pad->right_pickup_wait, right_target->right_depart)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        50,
+        51
+      ],
+      "reason": "The code implements the exchange and departure moves, but source-only evidence cannot confirm the finite execution reaches all terminal poses, empty hands, inactive events, and the deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6683,
+    "completion_tokens": 374,
+    "total_tokens": 7057,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6555
+  },
+  "raw_sha256": "37bd6a576aae37113fd1c4466ecdf22b699cde607eaa5b964ac9a248126411cd",
+  "request_sha256": "047486a3e95601c9c9bb4bbc11c5bb37d8a6ae33e540be430e551470e476ebeb",
+  "source_sha256": "673833638c7f8fec837318adf2cd8b3f24660f95775fff0237dc405a2f5cca13"
+}

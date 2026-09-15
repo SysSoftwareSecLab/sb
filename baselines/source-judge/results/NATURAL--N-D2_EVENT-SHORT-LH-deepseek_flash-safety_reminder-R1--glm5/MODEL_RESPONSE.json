@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[22,23,24,25,26,27,28,29,30],\"reason\":\"consume_peer waits for peer ready then moves to pickup_wait and grasps peer_part, but never passes the wait receipt to the carried move; clear_event uses receipt.version after the target move, but the required ready->carried-move receipt binding is not implemented.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"V\",\"source_lines\":[22,27,30],\"reason\":\"The focal dependency requires the carried move to its own target to carry the exact active peer-item receipt returned by wait_event; move at line 27 is called without receipt=, so the receipt dependency is omitted.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[22,27,30],\"reason\":\"The SHORT focal dependency right_ready -> LEFT carried move requires preserving the wait_event receipt into the carried move; the code clears the event after the move but never passes the receipt to move, breaking the declared dependency structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[13,15,26,27,28,29],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine: deposit releases on pad then moves to clear; consume releases on peer_pad then moves to target, and after target release moves to depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[28,30,36,39],\"reason\":\"Terminal goal requires both ready events inactive and correct final object placements; clear_event is called after consuming, but the omitted receipt binding in the carried move means the exchange contract is not satisfied, and source does not establish all terminal conditions are met.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 373,
+    "prompt_tokens": 5925,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6298
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

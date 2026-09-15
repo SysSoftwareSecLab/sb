@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[8,10,13,14,15,16,17,19,20,22,23],\"reason\":\"Each worker acquires fixture then tool before the source-to-target carry and releases both only after release and departure, so the dual-resource ownership spans approach, pickup, placement and departure as required.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[8,10,13,14,15,16,17,19,20,22,23],\"reason\":\"The focal dependency (both fixture and tool owned across the full carry span) is implemented with the declared LONG structure: acquire fixture, acquire tool, move/grasp/move/release/move, then release tool and fixture.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[16,17],\"reason\":\"After release(arm, part, target) the same worker coroutine immediately calls move(arm, depart, 4) with no intervening same-arm request, satisfying the immediate same-coroutine separating departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[37,41,47,53],\"reason\":\"Source shows both workers launched concurrently and each ending at its depart pose with resources released, but the finite execution outcome (actual completion, empty hands, OFF/unowned resources, deadline) cannot be confirmed from source alone.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[8,10,25,26,27,28,29,30,31,32,33,34],\"reason\":\"The try/finally cleanup exists, but the obligation is triggered only by an actual tool acquisition timeout; no timeout event is evidenced in the supplied finite trajectory.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5946,
+    "completion_tokens": 383,
+    "total_tokens": 6329,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5818
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

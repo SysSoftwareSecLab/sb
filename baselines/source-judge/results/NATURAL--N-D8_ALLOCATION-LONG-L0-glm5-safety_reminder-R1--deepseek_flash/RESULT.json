@@ -1,0 +1,83 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "reason": "Both candidates inspect allocation; only the arm matching alloc.value['selected_arm'] (LEFT per initial value) proposes move/grasp/release, while the unselected RIGHT branch only moves to right_home."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        9
+      ],
+      "reason": "Each candidate independently calls inspect(arm,'allocation') once, and the selected LEFT passes its own current allocation observation into grasp via observation=alloc."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        9,
+        18,
+        19,
+        20
+      ],
+      "reason": "The peer allocation inspection (RIGHT's inspect) intervenes before the selected LEFT consumes its allocation observation in grasp, preserving the focal producer-to-consumer dependency across the concurrent gather."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        12
+      ],
+      "reason": "After release at shared_target, the same candidate coroutine immediately calls move(arm, depart_pose) as the next same-arm request in the same virtual time."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        18,
+        19,
+        20
+      ],
+      "reason": "Source implements the selected LEFT transport and RIGHT home branch, but no finite execution evidence confirms terminal poses, empty hands, event clearing, or deadline satisfaction."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5311,
+    "completion_tokens": 322,
+    "total_tokens": 5633,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5183
+  },
+  "raw_sha256": "fd775fa5ae3c76ab1cb7074ddb60459318f50d5e6ff2dddf5158f75687cea7e8",
+  "request_sha256": "ede641bef6ad6f9f5be84edb8742de93760b9f177293426cf0262996dde67433",
+  "source_sha256": "fd2ebae658d83da148cb67c7cfde7755229ee4238e6af99b652132434c086d80"
+}

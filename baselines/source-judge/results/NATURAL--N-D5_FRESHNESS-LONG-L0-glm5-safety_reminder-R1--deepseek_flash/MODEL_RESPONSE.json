@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[30,31],\"reason\":\"The SPEC's focal dependency is that peer placement invalidates the first route observation before refresh, but world.invalidation_on_release is empty and the code performs inspect then refresh with no intervening peer release/invalidation, so the declared LONG dependency is not implemented.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[30,31],\"reason\":\"The development contract requires the first route observation to be invalidated by peer placement before refresh; the code refreshes the same closed-value fact without any intervening release/invalidation, so the refreshed observation is not the required post-invalidation current observation.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,23,24],\"reason\":\"Each release is immediately followed by a same-arm move to the departure pose in the same candidate coroutine: LEFT release at left_target then move to left_depart, RIGHT release at right_target then move to right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[12,13,14,15,16,20,21,22,23,24],\"reason\":\"The source shows moves, grasps, releases and departures consistent with the terminal goal, but no execution evidence confirms committed success, empty hands, or deadline compliance in the finite trajectory.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5623,
+    "completion_tokens": 301,
+    "total_tokens": 5924,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5495
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

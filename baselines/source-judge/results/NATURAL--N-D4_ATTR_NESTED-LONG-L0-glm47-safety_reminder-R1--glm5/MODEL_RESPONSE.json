@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[42,43,70,73,76,78,81,84,86,89,92,95,98,166,169,172,173,176,182,185],\"reason\":\"LONG variant acquires tool before source pickup (line 43) and keeps it across empty_0 wait (line 70) and second-item checks (lines 166-169); D4 joins checks with asyncio.gather (line 169); both attributes present.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[47,49,52,55,57,60,63,66,70,73,103,106,109,111,114,117,120,123,126,129,132,136,139,142,144,147,150,176,179,182,185],\"reason\":\"Producer places at buffer, departs, then signals ready; consumer waits ready, picks, clears after carried move, releases on target, departs, then signals empty_0; producer waits/clears empty_0 before second part. Order matches SPEC.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[52,55,57,60,63,81,84,86,89,92,106,109,111,114,117,139,142,144,147,150],\"reason\":\"Both producer and consumer acquire buffer_lock before entering buffer, hold it through placement/pickup and immediate departure, then release it after departing. Capacity-one buffer occupancy protected by lock ownership throughout.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[66,103,120,123,95,136,176,179],\"reason\":\"Producer signals ready_0/ready_1 (lines 66,95); consumer waits exact receipts (lines 103,136) and supplies them on carried move to target (lines 120,176); clears after move completes (lines 123,179). Matches BUFFER_RECEIPT mechanism.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[152,153,154,166,167,169,170,171,172,173],\"reason\":\"D4 holdout signature: asyncio.gather joining LEFT inspect(line_clear) and RIGHT inspect(receiver_ready) inside second-item branch before transfer to target, implemented at lines 166-169 with verification at 172-173.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[42,43,47,49,70,73,76,78,81,84,86,89,92,95,98],\"reason\":\"LONG structure: tool acquired before source pickup (line 43), held across empty_0 wait/clear (lines 70-73) and second source pickup through buffer release (lines 76-86), released only after second ready signal (line 98). Dependency spans source, grasp, empty receipt.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[57,60,86,89,126,129,182,185],\"reason\":\"Every release (part_0 at buffer_0, part_1 at buffer_1, part_0 at target_0, part_1 at target_1) is immediately followed by same-arm move to home in same coroutine, with no intervening same-arm action.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[60,89,114,129,147,185,98,63,92,117,150,123,179,73,95,132,188],\"reason\":\"Producer releases tool (line 98) but never returns LEFT to left_wait or left_home after second episode departure (line 89 goes to LEFT_HOME which is left_home, but approach_sequence for part_1 requires start_pose left_wait—LEFT never moves to left_wait before source_1 approach at line 76, violating required approach start). Also ready_1 signaled (line 95) but no empty_1 event exists; consumer does not signal any empty after second episode. Terminal event clearing incomplete.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 873,
+    "prompt_tokens": 8870,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9743
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

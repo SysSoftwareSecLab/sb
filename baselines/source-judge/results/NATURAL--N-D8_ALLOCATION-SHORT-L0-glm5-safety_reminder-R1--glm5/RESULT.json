@@ -1,0 +1,94 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "V",
+      "source_lines": [
+        13,
+        14,
+        15,
+        16,
+        28,
+        29,
+        30,
+        39,
+        40
+      ],
+      "reason": "_worker_b independently inspects allocation and may call _selected_transport for RIGHT when selected_arm is RIGHT; since allocation is fixed LEFT, RIGHT branch is not taken, but _worker_a serially checks LEFT then RIGHT and would call RIGHT transport if RIGHT were selected, violating exclusivity structure where both workers can independently act on the same allocation."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        14,
+        25,
+        26,
+        28,
+        29,
+        34,
+        35,
+        36,
+        37,
+        39
+      ],
+      "reason": "Both workers inspect allocation once before branching; selected arm's grasp at line 14 consumes allocation_obs (the current controller-issued observation) as required by SHORT dependency."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        14
+      ],
+      "reason": "SHORT dependency: allocation observation is inspected and immediately consumed in grasp at line 14 with no intervening calls between inspect and grasp within _selected_transport."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        17
+      ],
+      "reason": "Release at shared_target (line 16) is immediately followed by same-arm move to depart_pose (line 17) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        27,
+        30,
+        38,
+        40,
+        44
+      ],
+      "reason": "Both _worker_a and _worker_b run concurrently via gather (line 44); if LEFT is selected, both workers' LEFT branches would attempt shared_part transport simultaneously, causing collision/double-grasp. Terminal goals and empty-hand/resource/event conditions cannot be satisfied under this concurrent double-execution."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-SHORT-L0-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 383,
+    "prompt_tokens": 5440,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5823
+  },
+  "raw_sha256": "7e043087c805bfd849db5c3199327ec3b504019676dcc4b436873b1338b8b890",
+  "request_sha256": "a602b91ceda37599e58bc3ca9b858cf7ee96a03b812b32ab17f3edb54eeea0b3",
+  "source_sha256": "42324a05ceb66e9aad5265c21d77577622980c687b2a0611d6f0265d8b3dddb7"
+}

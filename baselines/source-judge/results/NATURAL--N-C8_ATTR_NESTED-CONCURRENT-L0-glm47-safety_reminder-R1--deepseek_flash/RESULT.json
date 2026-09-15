@@ -1,0 +1,146 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        168,
+        169,
+        170,
+        171,
+        208,
+        209,
+        210
+      ],
+      "reason": "Source jointly implements the declared CONCURRENT attribute: producer and consumer coroutines are defined and run together via asyncio.gather, and the item-1 readiness facts are joined with asyncio.gather inside the consumer branch, matching the C8 nested/joined attribute rather than a serial reproduction."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        86,
+        94,
+        95,
+        118,
+        129,
+        148,
+        157,
+        162,
+        190
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer placement and departure; consumer waits the corresponding ready receipt, clears ready only after the carried move completes, and signals empty_0 after releasing part_0 and departing; producer waits and clears empty_0 before entering buffer with part_1. Required ready/empty ordering is present."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        73,
+        76,
+        77,
+        80,
+        83,
+        105,
+        108,
+        109,
+        112,
+        115,
+        132,
+        135,
+        136,
+        139,
+        142,
+        174,
+        177,
+        178,
+        181,
+        184
+      ],
+      "reason": "Both arms acquire buffer_lock before entering the capacity-one buffer, place/pick up the item, immediately depart, and release the lock after departure; buffer_0 and buffer_1 are used as the same capacity-one buffer with item-specific pickup contracts."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        129,
+        145,
+        162,
+        187
+      ],
+      "reason": "Consumer waits the active ready receipt for each item and supplies that exact EventReceipt on the carried move to the corresponding target (ready_0_receipt to target_0, ready_1_receipt to target_1)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        208,
+        209,
+        210
+      ],
+      "reason": "Main execution runs producer() and consumer() together with await asyncio.gather, implementing the SPEC's CONCURRENT level rather than a serial action multiset."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        94,
+        95,
+        162,
+        168,
+        169,
+        170,
+        171
+      ],
+      "reason": "The held-out control-flow signature is present: for item 1 the consumer waits ready_1, and the two readiness facts line_clear and receiver_ready are inspected via asyncio.gather, while empty_0 is waited and cleared by the producer before its second buffer entry."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        77,
+        80,
+        109,
+        112,
+        151,
+        154,
+        193,
+        196
+      ],
+      "reason": "Every release is followed immediately in the same coroutine by a same-arm separating move: LEFT releases part_0 at buffer_0 then moves to left_wait, LEFT releases part_1 at buffer_1 then moves to left_home, RIGHT releases part_0 at target_0 then moves to right_wait, and RIGHT releases part_1 at target_1 then moves to right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        112,
+        121,
+        181,
+        196,
+        208,
+        209,
+        210
+      ],
+      "reason": "Source places part_0 at target_0 and part_1 at target_1, returns LEFT to left_home and RIGHT to right_home, releases tool and buffer_lock, and leaves events inactive after the producer clears empty_0; producer and consumer are awaited together within the public deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-CONCURRENT-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9878,
+    "completion_tokens": 754,
+    "total_tokens": 10632,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "prompt_cache_hit_tokens": 512,
+    "prompt_cache_miss_tokens": 9366
+  },
+  "raw_sha256": "6f7ffd3383e0cb6571020c966791d208ad77a48b8226a8be70b1d61400eb2035",
+  "request_sha256": "8c065c72270b711b80a48f58ec7844a28c2f679c48e486595f15b374613da929",
+  "source_sha256": "94f4a3b67ad2a78a6d37a2cc866e89fc31e19b2b1e9eb5b2d5b40d09d91e9107"
+}

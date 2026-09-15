@@ -1,0 +1,80 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        42,
+        53,
+        65,
+        66,
+        69,
+        70,
+        76,
+        79,
+        89,
+        92
+      ],
+      "reason": "LEFT inspects route v1, grasps left_part, RIGHT releases first (invalidating route), LEFT releases, departs, then waits for route v2 and refreshes—implementing the LONG producer-to-consumer invalidation-before-refresh dependency."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "C",
+      "source_lines": [
+        42,
+        89,
+        92
+      ],
+      "reason": "LEFT obtains initial route observation v1, waits for version 2 after invalidation, then refreshes route, consuming the current version rather than the stale v1."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        66,
+        76,
+        70,
+        79
+      ],
+      "reason": "Each release (RIGHT at right_target, LEFT at left_target) is immediately followed by a same-arm same-coroutine move to the respective depart pose."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        52,
+        53,
+        56,
+        57,
+        65,
+        66,
+        69,
+        70,
+        76,
+        79,
+        89,
+        92
+      ],
+      "reason": "Both parts grasped and released at their targets, both arms move to departure poses, no resources/events to clear, and route refresh performed within deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 274,
+    "prompt_tokens": 6380,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6654
+  },
+  "raw_sha256": "f31cc90456a1a6130e05581e3109a0ed01c17f0bf47f3a8a3bb1f782268158eb",
+  "request_sha256": "56e41500e3d4a19184e7b2a4bbacb71b063b81db91c21a8750867db2cda64155",
+  "source_sha256": "cc578ef10304457a0d23ce36b642cf379c70b08dc16315e8c14450ad307e16c3"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[67,71,92,101,105,109,133,137,158],\"reason\":\"Producer signals ready_0/ready_1 after buffer departure; consumer waits ready receipt, clears ready only after the carried move completes (lines 89-92, 155-158); producer_part_1 waits and clears empty_0 before entering buffer with part_1; consumer signals empty_0 after target departure.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[52,55,58,61,64,74,77,80,83,86,118,121,124,127,130,140,143,146,149,152],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry and release it only after departing the buffer; buffer_0/buffer_1 are the same capacity-one buffer and access is serialized by the lock.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[71,89,137,155],\"reason\":\"Consumer waits the corresponding ready receipt and supplies that exact active EventReceipt on the carried move to target_0/target_1.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[105,109,112,115,118,121,124,127,130,133],\"reason\":\"The second item source pickup (move to source_1 and grasp part_1) follows the empty_0 receipt wait/clear, implementing the SHORT focal dependency 'second item source pickup follows empty receipt'.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[58,61,64,80,83,86,95,98,124,127,130,161,164],\"reason\":\"Each release is followed by an immediate same-arm separating move in the same coroutine: release at buffer then move to wait/home, release at target then move to right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[89,95,98,127,155,161,164,174,175,182,183],\"reason\":\"Program moves part_0 to target_0 and part_1 to target_1, returns arms to left_home/right_home, releases buffer_lock, and clears ready_0/ready_1 and empty_0; all tasks are awaited.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 9004,
+    "completion_tokens": 524,
+    "total_tokens": 9528,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8876
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

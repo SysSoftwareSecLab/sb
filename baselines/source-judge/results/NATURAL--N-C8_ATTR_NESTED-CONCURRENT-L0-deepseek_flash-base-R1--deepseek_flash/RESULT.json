@@ -1,0 +1,149 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        9,
+        10,
+        62,
+        153,
+        155
+      ],
+      "reason": "Source implements the declared combined attributes: capacity-one shared buffer with buffer_lock serialization, joined producer/consumer coroutines via asyncio.gather, and joined readiness inspections via asyncio.gather."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        48,
+        53,
+        54,
+        92,
+        103,
+        121,
+        128,
+        131,
+        145,
+        150
+      ],
+      "reason": "Producer signals ready_0/ready_1 after departing buffer, consumer waits corresponding ready receipts, clears ready after carried move, signals empty_0 after release/departure, and producer waits/clears empty_0 before second entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        19,
+        36,
+        39,
+        40,
+        45,
+        81,
+        84,
+        85,
+        89,
+        106,
+        110,
+        111,
+        115,
+        133,
+        137,
+        138,
+        141
+      ],
+      "reason": "Capacity-one buffer tracked by buffer_occupied; both arms acquire buffer_lock around buffer entry/departure and set occupancy on release/grasp, consistent with single-item ownership."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        103,
+        118,
+        131,
+        143
+      ],
+      "reason": "Consumer waits ready_0/ready_1 receipts and supplies the exact active item receipt on carried moves to target_0/target_1."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        153,
+        155
+      ],
+      "reason": "Variant CONCURRENT is implemented by running producer() and consumer() together with await asyncio.gather, not serially."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        53,
+        54,
+        62,
+        63,
+        64,
+        65,
+        69,
+        70,
+        72,
+        73
+      ],
+      "reason": "Held-out control flow present: wait/clear empty_0 then joined inspection of line_clear and receiver_ready inside the loop branch before part_1 handling."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        39,
+        43,
+        84,
+        87,
+        124,
+        125,
+        147,
+        148
+      ],
+      "reason": "Each release at declared support is followed by same-coroutine same-arm separating move: release part_0 at buffer_0 then move left_wait; release part_1 at buffer_1 then move left_wait; release at target_0/target_1 then move right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        124,
+        125,
+        147,
+        148,
+        95,
+        115,
+        141,
+        121,
+        145,
+        128,
+        150
+      ],
+      "reason": "Source places part_0 at target_0 and part_1 at target_1, returns arms to homes, releases tool and buffer_lock, and clears/signals events consistent with declared goal and deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-CONCURRENT-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8936,
+    "completion_tokens": 618,
+    "total_tokens": 9554,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8808
+  },
+  "raw_sha256": "7fba1d449070d9d4b5b81799abb8c0139d769f097270a704d4ff2cbf72895335",
+  "request_sha256": "9dce97abcee3835de2a05f1bae6b39379b749fd34bd4f7d1dca77b864be8b610",
+  "source_sha256": "74193f629b54a96756de848dcd16c53f82274aa8d64377a50439724f3d8fc187"
+}

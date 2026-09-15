@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"V\",\"source_lines\":[102,103,104],\"reason\":\"SPEC requires C7 to inspect both readiness facts serially; source inspects line_clear then receiver_ready without branching/loop structure, but holdout is ATTRIBUTE_COMBINATION and source only does serial checks without implementing the declared combined attribute structure.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[79,82],\"reason\":\"SPEC requires ready cleared after the carried move to target completes; source clears ready_0 at line 79 before the carried move to target_0 at line 82.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"V\",\"source_lines\":[60,63,76,122],\"reason\":\"SPEC requires both participants own buffer_lock during buffer entry and departure; producer releases buffer_lock at line 63 after departing to left_wait (line 60), and consumer departs buffer at line 76 without owning buffer_lock.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"V\",\"source_lines\":[79,82],\"reason\":\"Consumer clears ready_0 (line 79) before using that receipt on the carried move to target_0 (line 82); clearing deactivates the event, so the receipt is no longer active when supplied.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[45,96,98,128],\"reason\":\"Source implements serial alternating episodes (episode 0 then episode 1) matching the SERIAL concurrency level; producer and consumer actions are not joined coroutines but alternate sequentially as required.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"V\",\"source_lines\":[102,103,104],\"reason\":\"SPEC holdout is ATTRIBUTE_COMBINATION requiring serial inspection of both readiness facts within a loop branch for item 1; source performs two bare sequential inspect calls with no loop/branch structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[57,60,85,88,116,119,144,147],\"reason\":\"Each release (lines 57,85,116,144) is immediately followed by a same-arm separating move (lines 60,88,119,147) in the same coroutine with no intervening same-arm action.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[79,82,138,141],\"reason\":\"ready events are cleared before the carried move uses them, violating receipt validity; this prevents valid completion of the target transport and terminal state.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 519,
+    "prompt_tokens": 8352,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8871
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

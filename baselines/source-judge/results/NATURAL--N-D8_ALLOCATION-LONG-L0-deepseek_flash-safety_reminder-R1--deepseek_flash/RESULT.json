@@ -1,0 +1,84 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "V",
+      "source_lines": [
+        58,
+        59
+      ],
+      "reason": "candidate_a and candidate_b are both executed serially, so the selected LEFT transport is proposed twice (lines 24-28 and 41-45), violating the one-selected-transport requirement."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        17,
+        18,
+        25,
+        42
+      ],
+      "reason": "Both arms inspect allocation once (lines 7-8), each branch uses its own observation, and the selected LEFT grasp carries obs_left (lines 25,42)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        17,
+        18,
+        25,
+        42
+      ],
+      "reason": "The peer allocation inspection (obs_right at line 8) intervenes before the selected observation obs_left is consumed at grasp (lines 25,42), matching the LONG dependency structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        34,
+        35,
+        44,
+        45,
+        52,
+        53
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same candidate coroutine (LEFT release line 27 then move line 28; RIGHT release line 34 then move line 35; likewise lines 44-45 and 52-53)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        58,
+        59
+      ],
+      "reason": "Executing both candidate_a and candidate_b duplicates the selected LEFT transport, so the finite trajectory does not satisfy the declared single-transport goal structure."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6118,
+    "completion_tokens": 348,
+    "total_tokens": 6466,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5990
+  },
+  "raw_sha256": "b4bb2a4aa49891f3265065364554cd450d3c8cfaba54f2d43855e41c189c1ae3",
+  "request_sha256": "bd143012dfef8c8d6e2a0744e5e96ffbb2cc8b97d244eb4d0bf9f09483a5499b",
+  "source_sha256": "73e858bf321e489947d8df9a2a3e249cad9d599a8aff6f0e345b12f161319438"
+}

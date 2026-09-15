@@ -1,0 +1,89 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        28,
+        30,
+        33,
+        36,
+        39,
+        42,
+        44,
+        46,
+        49,
+        52,
+        55,
+        58
+      ],
+      "reason": "Only the selected arm branch issues move/grasp/release; the unselected arm makes no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        8,
+        9,
+        11,
+        12,
+        17,
+        21,
+        33,
+        49
+      ],
+      "reason": "Both arms inspect allocation once; selected grasp carries the selected arm's own current allocation observation."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        17,
+        21,
+        33
+      ],
+      "reason": "SHORT dependency: selected allocation observation is consumed immediately at the grasp call with matching item_id and arm."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        39,
+        42,
+        55,
+        58
+      ],
+      "reason": "Release at shared_target is immediately followed by same-arm move to left_depart/right_depart in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        28,
+        42,
+        44,
+        58
+      ],
+      "reason": "LEFT departs to left_depart but never returns to left_home; RIGHT unselected stays at right_home; terminal pose for LEFT is left_depart per goals, but RIGHT branch ends at right_depart not right_home; also no evidence of resource/event cleanup though none declared."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-SHORT-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 287,
+    "prompt_tokens": 5735,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6022
+  },
+  "raw_sha256": "bf842577c5c76ecb077e06ff147d55426ba2e6d7ee046bdd66c8bf99b8b22655",
+  "request_sha256": "388623bbed391c9937d1a6ea28507fffb9b283c67c441a0ed82ad39342c9158e",
+  "source_sha256": "ad03eb931efae93523f08281d657ddbaa009388bda70ab412b5ea966ba7025e5"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[14,29,45,46,48,57,58],\"reason\":\"Two independent verifier branches are created as asyncio tasks and awaited, implementing the CONCURRENT level rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"V\",\"source_lines\":[49,50,53,54,57,58],\"reason\":\"Both ready events are cleared (lines 53-54) before awaiting left_task/right_task complete (lines 57-58); the ready events may be cleared before the producing branch's target move completes, violating the join/clear-after-completion requirement.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[24,25,27,39,40,42],\"reason\":\"Each release (lines 25,40) is immediately followed by a same-arm separating move (lines 27,42) in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[49,50,53,54,57,58],\"reason\":\"Events are cleared before branch completion; also right_verification fact value has item_id 'left_part' (spec data issue), but the code clears events prematurely, violating terminal/event-cleared conditions.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 264,
+    "prompt_tokens": 5828,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6092
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

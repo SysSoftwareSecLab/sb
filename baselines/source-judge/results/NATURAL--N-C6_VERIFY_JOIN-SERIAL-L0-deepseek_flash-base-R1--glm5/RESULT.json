@@ -1,0 +1,82 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        16,
+        23,
+        30,
+        38,
+        44
+      ],
+      "reason": "SPEC requires SERIAL level; code executes LEFT branch, then RIGHT branch, then joins on both ready events, then single payload consumer—matching the stated SERIAL structure."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        21,
+        28,
+        31,
+        32,
+        35,
+        36
+      ],
+      "reason": "Both left_ready and right_ready are signaled, then awaited via wait_event, then cleared with expected_version from the returned receipts, matching the join contract."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        40,
+        41,
+        42,
+        45,
+        46,
+        47
+      ],
+      "reason": "Each release (left at left_target, right at right_target) is immediately followed by a same-arm move to departure pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        17,
+        18,
+        19,
+        20,
+        24,
+        25,
+        26,
+        27,
+        40,
+        41,
+        42,
+        45,
+        46,
+        47
+      ],
+      "reason": "Both parts grasped, inspected, transported to targets, released, and both arms depart; events joined and cleared; no resources declared; deadline 30s with move durations well within."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 263,
+    "prompt_tokens": 5623,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5886
+  },
+  "raw_sha256": "4dcfc1e232e375bb2d8eab16c4f55f5c075961665e71ea501af909ef313aaeab",
+  "request_sha256": "93b3045656310ca46bffe9023132dba6df9f9056168b7e7e4dcb42896fd40df8",
+  "source_sha256": "a5e897f75c604993de9a4c9bb2c27ffba2423ff2acc113774357bb4f3b0ec6f7"
+}

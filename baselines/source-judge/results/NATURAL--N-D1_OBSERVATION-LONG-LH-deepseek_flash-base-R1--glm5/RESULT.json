@@ -1,0 +1,96 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        25,
+        29,
+        37,
+        41
+      ],
+      "reason": "RIGHT inspects quality (lines 25,37) producing current observation; LEFT grasp at pickup consumes that exact quality_obs (lines 29,41), implementing LONG producer-to-consumer dependency across intervening control flow."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        10,
+        11,
+        13,
+        25,
+        28,
+        29,
+        32,
+        33,
+        37,
+        40,
+        41,
+        44,
+        45
+      ],
+      "reason": "Spec requires accept_by_pass to select target vs rework: pass1=true should go to left_target, but code routes to rework (lines 32-33); pass2=true should also go to left_target and code does (lines 44-45), but pass1 branch contradicts published accept_by_pass[0]=true."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        13,
+        25,
+        28,
+        29,
+        37,
+        40,
+        41
+      ],
+      "reason": "LEFT places at inspection and departs (lines 10-13), RIGHT inspects quality (lines 25,37), LEFT approaches inspection/rework and grasps with newly issued current quality_obs (lines 28-29,40-41), satisfying the inspection-rework observation protocol."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        13,
+        21,
+        22,
+        33,
+        34,
+        45,
+        46
+      ],
+      "reason": "Every release (lines 11,21,33,45) is immediately followed by a same-arm separating move (lines 13,22,34,46) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        32,
+        33,
+        44,
+        45
+      ],
+      "reason": "Code routes left_part through rework on pass1 despite accept_by_pass[0]=true requiring direct acceptance to left_target on first pass; this violates the acceptance condition and terminal goal of reaching acceptance within two passes per published branch logic."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-LH-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 421,
+    "prompt_tokens": 5849,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6270
+  },
+  "raw_sha256": "955d14d4bb60ef65344decc6261c7b29031d3ef581c46494799a190e01929b63",
+  "request_sha256": "889beead482683e12fdf4cf3dcef3696a4d05c8153390a5c78a070d7c9bb5637",
+  "source_sha256": "5e4f394dfe250a93c2aecefce682c590477838ce1748e2e2a434d904a469283c"
+}

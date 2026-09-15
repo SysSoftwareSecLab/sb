@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[42,46,47,50,53,58,62,63,66,69,74,77,80,81,84,87,90,93,98,101,104,105,108,111,114,117],\"reason\":\"Required order A says deposit LEFT then RIGHT, then consume LEFT then RIGHT; code deposits LEFT then RIGHT but then consumes RIGHT (Phase 3) before LEFT (Phase 4), contradicting the stated consume order.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[53,69,74,84,90,98,108,114],\"reason\":\"Each carried move to target carries the exact active peer-item receipt from wait_event (lines 84,108), and clear_event uses that receipt.version after the move (lines 90,114).\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[53,69,74,84,90,98,108,114],\"reason\":\"LONG dependency right_ready->LEFT carried move is implemented: RIGHT signals right_ready (line 69), LEFT waits for it (line 74), carries peer_right_receipt on the LEFT target move (line 84), then clears after (line 90); symmetric LEFT->RIGHT path also present.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,50,63,66,87,93,111,117],\"reason\":\"Each release is at the named support (left_pad/right_pad/left_target/right_target) and is immediately followed by a same-arm separating move in the same coroutine (lines 50,66,93,117).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[42,46,47,50,53,58,62,63,66,69,74,77,80,81,84,87,90,93,98,101,104,105,108,111,114,117],\"reason\":\"Terminal goals place left_part at right_target and right_part at left_target, but code releases right_part at left_target and left_part at right_target (lines 87,111), swapping the declared object-goal mapping; also consume order violates required_order A.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 477,
+    "prompt_tokens": 7410,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7887
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

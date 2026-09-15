@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[75,85,96,111,143,152],\"reason\":\"The quality observation issued by RIGHT's inspect (obs_pass1 at line 75) is consumed by LEFT's grasp at line 96 (and obs_pass2 at line 143 consumed at line 152), preserving the producer-to-consumer dependency across the intervening control flow (decision branch, rework loop), matching the LONG focal dependency between quality observation and consuming grasp.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[85,87,104,107,110,113,114,117,122,126,127,130,131,134,137,143,148,151,152,155,156,159],\"reason\":\"The code implements the accept_by_pass branch: if accept_first true goes to target (lines 87-103), else performs rework circuit (lines 104-159) with a second inspection pass, respecting the at-most-two-passes limit and the branch-path contrast.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[75,85,96,111,143,152],\"reason\":\"The quality observation issued by RIGHT's inspect is consumed on LEFT's inspection pickup via grasp(observation=obs_pass1) at line 96 and grasp(observation=obs_pass2) at line 152, satisfying the requirement to use the newly issued current quality record on LEFT inspection pickup.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[60,64,100,103,114,117,131,134,156,159,165,168],\"reason\":\"Each release is followed by an immediate same-arm separating move in the same candidate coroutine: release at line 60 followed by move to left_depart at line 64; release at line 100 followed by move at line 103; release at line 114 followed by move at line 117; release at line 131 followed by move at line 134; release at line 156 followed by move at line 159; release at line 165 followed by move at line 168.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[99,100,103,155,156,159,164,165,168],\"reason\":\"The code reaches both parts at targets (left_part released at left_target line 100/156, right_part released at right_target line 165), both arms empty at departures (LEFT at left_depart line 103/159, RIGHT at right_depart line 168), and left part reaches acceptance within two inspection passes, satisfying the declared terminal goals.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8981,
+    "completion_tokens": 576,
+    "total_tokens": 9557,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8853
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

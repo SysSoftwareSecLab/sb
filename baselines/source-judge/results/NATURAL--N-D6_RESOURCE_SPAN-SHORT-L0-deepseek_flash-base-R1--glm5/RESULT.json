@@ -1,0 +1,96 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        15,
+        16,
+        19,
+        20,
+        23,
+        30,
+        35
+      ],
+      "reason": "Each worker acquires fixture then tool before moving/grasping, carries part to target while owning both, releases part and departs, then releases tool and fixture in try/finally."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        12,
+        15,
+        16,
+        19,
+        20,
+        23,
+        30,
+        35
+      ],
+      "reason": "SHORT dual-resource scope begins after pickup: both resources acquired before grasp, held through carry/release/depart, then released after; dependency preserved across intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        23
+      ],
+      "reason": "Each worker moves to target, releases part at target (declared support), then immediately calls move to depart in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        42,
+        43,
+        44,
+        46,
+        47,
+        49,
+        15,
+        16,
+        19,
+        20,
+        23,
+        30,
+        35
+      ],
+      "reason": "Both workers launched concurrently; each carries part to target, releases, departs to own departure, releases resources in finally; goals and terminal conditions satisfied."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        9,
+        24,
+        30,
+        35
+      ],
+      "reason": "try/finally releases every successfully acquired resource (tool then fixture) on acquisition timeout; flags track ownership."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 313,
+    "prompt_tokens": 5482,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5795
+  },
+  "raw_sha256": "251db423db49665746909f162652b4b420ec5aa2f5a93d217e9b1a053d222b7a",
+  "request_sha256": "04137fdbae0e86139b781ea30fb52b6272691f17e089f488f18933ee9a0b9e67",
+  "source_sha256": "5f451a7e89ad2fc12771a834416d61e11595395d27992e05b779d243f8681ce9"
+}

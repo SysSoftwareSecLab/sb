@@ -1,0 +1,98 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        30,
+        61,
+        68,
+        86,
+        98
+      ],
+      "reason": "Producer signals ready_0/ready_1 after departing buffer (lines 27,30); consumer waits ready before pickup (line 47), clears ready after carried move (line 61), publishes empty_0 after target departure (line 68). But producer episode 2 clears empty_0 with expected_version=1 (line 12,98) while consumer episode 1 signals empty_0 at version 1 (initial 0 -> first signal version 1), so the clear matches. However, consumer episode 2 also signals empty_0 again (line 68) producing version 2, but no producer episode 3 exists to clear it, leaving empty_0 active at terminal state. Required order says events must be inactive."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        20,
+        23,
+        24,
+        27,
+        36,
+        50,
+        53,
+        55,
+        65,
+        71
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry (lines 20,50), hold it through place/pickup and departure, and release only after moving away from buffer (lines 27->36, 65->71). Capacity-one buffer occupancy is serialized via the lock."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        30,
+        47,
+        58,
+        61
+      ],
+      "reason": "Producer signals ready receipt after placing and departing (line 30); consumer waits that exact ready receipt (line 47) and supplies it on the carried move to target (line 58), then clears it after the carried move completes (line 61)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        47,
+        58,
+        68,
+        86,
+        98
+      ],
+      "reason": "SHORT dependency: second item source pickup follows empty receipt. Producer episode 2 waits and clears empty_0 (lines 11,12,98) before approaching source_1 (line 15). Consumer episode 1 publishes empty_0 after consuming part_0 (line 68). The dependency chain is implemented across concurrent coroutines."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        24,
+        27,
+        64,
+        65
+      ],
+      "reason": "Producer releases part at buffer_pose then immediately moves LEFT to left_wait in same coroutine (lines 24,27). Consumer releases part at target_pose then immediately moves RIGHT to wait_pose (lines 64,65). Both releases followed by immediate separating departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        68,
+        128,
+        131
+      ],
+      "reason": "Terminal goal requires events inactive. Consumer episode 2 signals empty_0 (line 68, version 2) but no subsequent clear occurs, leaving empty_0 active at task completion. Also buffer_0 and buffer_1 share identical coordinates (capacity-one buffer); after both episodes, buffer should be empty, which is satisfied, but the uncleared empty_0 event violates the terminal condition."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-SHORT-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 633,
+    "prompt_tokens": 7553,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8186
+  },
+  "raw_sha256": "7af4a4e66ac6315254952b9fdbde078f600ae98f93234739e847e4080c7cea29",
+  "request_sha256": "7049fead59ac84f24313cb90c28d6992e3a70f53a38840e769f3605ed5b64de9",
+  "source_sha256": "1ca3399e74005725bce1640bcd016df01ca232c29725c2e701ef11da070db3b3"
+}

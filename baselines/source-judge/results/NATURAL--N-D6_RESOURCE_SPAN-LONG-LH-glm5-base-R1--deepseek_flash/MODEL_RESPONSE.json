@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[35,36,37,38,39,40,42],\"reason\":\"Worker acquires fixture then tool via _acquire_chain, then performs source move, grasp, target move, release, and depart while holding both resources, releasing them only in finally after departure.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[35,36,37,38,39,40,42],\"reason\":\"The dual resource ownership spans the full source-approach, pickup, placement, and departure sequence, preserving the focal dependency across the long control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[39,40],\"reason\":\"Each worker releases the part at its target support and immediately issues the same-arm departure move as the next call in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"reason\":\"Source implements both workers to targets and departures with resource release, but no execution evidence confirms terminal poses, empty hands, OFF/unowned controllers, or deadline compliance.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"reason\":\"No actual tool acquisition timeout occurs in the supplied finite scenario; the timeout cleanup condition is not triggered.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6395,
+    "completion_tokens": 278,
+    "total_tokens": 6673,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6267
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

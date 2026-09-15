@@ -1,0 +1,85 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        20,
+        24,
+        35,
+        39,
+        42,
+        51,
+        53,
+        54
+      ],
+      "reason": "Each worker acquires fixture then tool before carrying the part to target (lines 20-24, 35), releases the part at target (39), departs (42), then releases tool and fixture in finally with OFF mode (51-54), matching the required dual-resource span."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        6,
+        10,
+        79,
+        82
+      ],
+      "reason": "The task is DEPENDENCY_DISTANCE=SHORT/L0; no LONG producer-to-consumer dependency structure is declared or required, so this obligation is not applicable."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        39,
+        42
+      ],
+      "reason": "Each release at target_pose (a declared logical_support) is immediately followed in the same worker coroutine by a same-arm move to depart_pose (lines 39-42), satisfying the support-departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        39,
+        42,
+        51,
+        53,
+        54,
+        82
+      ],
+      "reason": "Source implements moves to targets/departures and OFF-mode resource release, but no execution evidence confirms both parts at targets, empty arms, controllers OFF/unowned, and deadline compliance; finite outcome cannot be determined from source alone."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        20,
+        24,
+        48,
+        51,
+        54
+      ],
+      "reason": "Cleanup is implemented in finally, but the obligation is triggered only by an actual tool acquisition timeout; no such timeout is evidenced in the supplied finite scenario."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6723,
+    "completion_tokens": 370,
+    "total_tokens": 7093,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6595
+  },
+  "raw_sha256": "0ed99b2c2fdd29bf4028dbdf907fda7c2697c0d5be4946ed1a97d8f0b34562db",
+  "request_sha256": "67a63dd9e2b559a2fdb5e1b9adf277e418d08d91effe82f0eeb93d3516b00184",
+  "source_sha256": "162fb061a79ecbb1eac5864b089514ac72a07111b27d07c7e62b2ed07d1af7b6"
+}

@@ -1,0 +1,112 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        16,
+        18,
+        19,
+        21,
+        23,
+        24,
+        25,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        37,
+        39,
+        41,
+        42,
+        44,
+        46,
+        47,
+        48
+      ],
+      "reason": "Both workers deposit own part on own pad, clear, signal own item-bound ready, wait for peer ready before consuming, and clear the peer event after the carried move; matches required order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        14,
+        18,
+        37,
+        41
+      ],
+      "reason": "Each consumer waits for peer ready and passes the returned EventReceipt to the carried move to its own target (LEFT uses right_ready_receipt for move to right_pad; RIGHT uses left_ready_receipt for move to left_pad)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        12,
+        14,
+        18,
+        35,
+        37,
+        41
+      ],
+      "reason": "The focal dependency right_ready -> LEFT carried move is present: LEFT signals left_ready, waits for right_ready, and uses right_ready_receipt on the carried move to right_pad; SHORT structure with peer-ready wait before consumption is implemented."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        24,
+        25,
+        33,
+        34,
+        47,
+        48
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same worker coroutine: LEFT release on left_pad then move left_clear, LEFT release on right_target then move left_depart; RIGHT release on right_pad then move right_clear, RIGHT release on left_target then move right_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        21,
+        24,
+        25,
+        44,
+        47,
+        48
+      ],
+      "reason": "Source implements left_part at right_target, right_part at left_target, empty arms at own departure, and clears both ready events after carried moves; deadline 30s is respected by the short action sequence."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-SHORT-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6690,
+    "completion_tokens": 459,
+    "total_tokens": 7149,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6562
+  },
+  "raw_sha256": "ae66a0146583228024deb543b8454b91e2deb1d2ecdf546eca2dcc6dad0ca271",
+  "request_sha256": "de43d48242d8cb1e2dd52732f4af56c0f0f1a5fd7058dfa1d55bb17f6c58ae18",
+  "source_sha256": "aba6119c90f0f5a5bb24461c368485dd117e8fbac3fd09d9da9966c76b7b568d"
+}

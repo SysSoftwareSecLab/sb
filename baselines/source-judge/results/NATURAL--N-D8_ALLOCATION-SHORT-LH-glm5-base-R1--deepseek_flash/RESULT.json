@@ -1,0 +1,83 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        34,
+        35,
+        37,
+        38,
+        42,
+        43,
+        46,
+        47
+      ],
+      "reason": "Both workers inspect allocation for LEFT and RIGHT; only the selected LEFT arm (per allocation value selected_arm=LEFT) proposes move/grasp/release via _selected_transport, while RIGHT only calls _inspect_allocation and never move/grasp/release."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        11,
+        15,
+        16
+      ],
+      "reason": "_selected_transport obtains alloc_obs_id from _inspect_allocation but then calls robot.grasp with observation=await robot.inspect(arm,\"allocation\") instead of consuming the previously issued current observation; the required selected-arm current allocation observation is not the one carried into grasp."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        11,
+        15,
+        16,
+        25
+      ],
+      "reason": "The focal dependency 'selected observation is consumed immediately' is broken: the allocation observation id from _inspect_allocation is stored and only discarded at line 25, while grasp uses a fresh inspect result, so the selected observation is not consumed immediately."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        21,
+        23
+      ],
+      "reason": "After release at shared_target, the same candidate coroutine _selected_transport immediately issues a same-arm move to depart_pose (left_depart) at line 23."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        37,
+        38,
+        46,
+        47,
+        51,
+        52
+      ],
+      "reason": "Source shows LEFT transport to shared_target and RIGHT remaining at home, but no execution evidence confirms terminal poses, empty hands, event clearing, or deadline; finite outcome cannot be determined from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-SHORT-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5914,
+    "completion_tokens": 392,
+    "total_tokens": 6306,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5786
+  },
+  "raw_sha256": "6bd581d0dafb8429016740fa0860a8a41d97c15d48b624dea3a85f813b9f2008",
+  "request_sha256": "36f04846e7742e46675bb792b43ec41859c6f8f91fba9ba4f4b9b29904459936",
+  "source_sha256": "508ed5ed86db1792ebbda04e56103d544c6a1203066ccfba5613070aefc2399a"
+}

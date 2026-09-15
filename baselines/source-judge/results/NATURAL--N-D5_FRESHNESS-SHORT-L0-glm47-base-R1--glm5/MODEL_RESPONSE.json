@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[35,47,54,71],\"reason\":\"SPEC requires route observation to occur after invalidating peer placement (right_part release at right_target). Code inspects route at line 35 before any peer invalidation, and consumes it at grasp line 47, violating the declared SHORT producer-to-consumer dependency ordering.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[35,47,54],\"reason\":\"SPEC focal dependency requires route observation after invalidating peer placement; code inspects route before right_part release, so the consumed observation is not current relative to the required post-invalidation state.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[54,58,71,74],\"reason\":\"Each release uses the held object at a declared support zone (left_target, right_target) and is immediately followed by a same-arm separating move to the departure pose in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[39,47,50,54,58,62,65,68,71,74,77,78],\"reason\":\"Source moves both parts to their targets, releases them, and departs both arms to left_depart/right_depart with empty hands; no resources or events declared, so terminal goal is satisfied.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 287,
+    "prompt_tokens": 6366,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6653
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

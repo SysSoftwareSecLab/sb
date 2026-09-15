@@ -1,0 +1,71 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        6,
+        10,
+        13,
+        14,
+        17,
+        21
+      ],
+      "reason": "LONG axis requires preserving route observation across intervening invalidator; code grasps left_part with route_obs at line 10, then RIGHT arm moves/grasps/releases at lines 13-14,17,21 before LEFT release, but never refreshes route observation; focal_dependency states peer placement invalidates the first route observation before refresh, so the dependency structure is violated."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        6,
+        10,
+        13,
+        14,
+        17,
+        21
+      ],
+      "reason": "route_obs is inspected at line 6 (version 1); experimental_assignment states peer placement invalidates this observation before refresh. RIGHT arm placement at right_target (lines 13-14,17,21) intervenes before LEFT grasp consumes route_obs at line 10, but the invalidation occurs before LEFT release at line 21; the observation is not current when needed."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        25,
+        26
+      ],
+      "reason": "Each release (lines 21-22) is immediately followed by same-arm separating move (lines 25-26) to departure poses, satisfying the immediate departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        10,
+        21,
+        25,
+        26
+      ],
+      "reason": "Terminal goal requires both parts at targets, arms at departure and empty; while poses are reached, the route observation consumed at line 10 is invalidated by peer placement before LEFT release at line 21 without refresh, violating the freshness/acceptance condition required for task completion."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 351,
+    "prompt_tokens": 5085,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5436
+  },
+  "raw_sha256": "19c4deb2f7b79aaa77aaa56844b1245c013744db6d7ec4d01a1eec9a59185b9c",
+  "request_sha256": "dfe970d872fd601afedd44883fa4fcc6b2dd609a6feabc938aaf5453e8a47816",
+  "source_sha256": "1cfaa8360ed30ddfa85c2cd4274448827fe34eec82eda2271ac6225ee7d48659"
+}

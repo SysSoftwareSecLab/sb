@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[44,45,46,47,48,49,53],\"reason\":\"Consumer clears ready_0 (line 45) before releasing buffer_lock (line 47) and before releasing part on target (line 49); SPEC requires release on target and depart before clearing ready, and ready cleared only after carried move completes—here clear precedes release/departure.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[19,20,22,24,26,28,37,39,41,43,47],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry, hold it through placement/pickup and carried departure, and release after departing buffer; occupancy ownership during buffer contact is satisfied.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[30,35,41,43,45],\"reason\":\"Producer signals ready with item_id; consumer waits the corresponding ready receipt, grasps with that receipt as observation, supplies the exact active receipt on carried move to target, and clears with expected_version.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[57,59,60,62,66,68],\"reason\":\"SPEC focal dependency for LONG is 'second item is picked before waiting for empty receipt'; code waits/clears empty_0 (lines 59-60) before producing part_1 (line 62), so second item is not picked before empty wait—contradicts stated structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[24,26,49,51],\"reason\":\"Each release (line 24 buffer, line 49 target) is immediately followed by a same-arm separating move (lines 26 and 51) in the same coroutine with no intervening same-arm action.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[45,46,47,48,49,53,68],\"reason\":\"ready_1 is never cleared (only ready_0 and empty_0 are cleared); terminal goal requires all events inactive. Additionally, consumer clears ready before release/departure, violating required order, undermining terminal state validity.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 471,
+    "prompt_tokens": 6823,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7294
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

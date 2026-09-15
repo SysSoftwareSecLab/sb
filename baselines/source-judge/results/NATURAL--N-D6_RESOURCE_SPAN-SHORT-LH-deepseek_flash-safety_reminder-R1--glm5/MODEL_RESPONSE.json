@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[8,10,13,14,15,16,17,19,20,21],\"reason\":\"Each worker acquires fixture then tool before carrying part to target, releases part and departs while owning both, then releases tool and fixture in reverse order in finally.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[8,10,13,14,15,16,17,19,20,21],\"reason\":\"SHORT dependency (dual resource scope begins after pickup) is implemented: both resources acquired before move/grasp, held through carry/release/depart, then released after.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,17],\"reason\":\"Each worker moves to target, releases part at target (a logical_support), then immediately moves arm to depart in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[26,27,28,29,30,31],\"reason\":\"Required order states A runs workers serially and B concurrently; code uses asyncio.gather launching both concurrently, but there is no variant indicator this is B, and required_order explicitly distinguishes serial vs concurrent structures.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[7,8,9,10,11,18,19,20,21,22,23],\"reason\":\"try/finally releases every successfully acquired resource in reverse order; if tool acquire times out, fixture (already in acquired list) is released in finally.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 334,
+    "prompt_tokens": 5236,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5570
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

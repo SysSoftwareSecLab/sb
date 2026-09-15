@@ -1,0 +1,103 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "V",
+      "source_lines": [
+        14,
+        15,
+        16,
+        17,
+        30,
+        31,
+        32,
+        33
+      ],
+      "reason": "Both workers independently read the same allocation fact and each may propose transport; with selected_arm=LEFT, worker A and worker B both branch on LEFT and both call _transport for LEFT, so the unselected/duplicate arm proposals are not excluded by the code."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        8,
+        9,
+        11,
+        12,
+        15,
+        17,
+        22,
+        23,
+        24,
+        25,
+        27,
+        28,
+        31,
+        33
+      ],
+      "reason": "Both workers inspect allocation, but the selected branch uses left_alloc.value for selection and passes left_alloc or right_alloc as observation; the RIGHT branch passes right_alloc while item/selection came from left_alloc, and both workers can consume the same observation, so the required current original observation consumption is not correctly localized."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        8,
+        9,
+        22,
+        23,
+        24,
+        25,
+        27,
+        28,
+        31,
+        33
+      ],
+      "reason": "The LONG focal dependency requires peer allocation inspection to intervene before selected observation consumption; here each worker selects from left_alloc and may immediately consume it, and worker B's concurrent right inspection does not preserve a peer-inspection-before-consumption dependency for the selected branch."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "U",
+      "source_lines": [
+        50,
+        51
+      ],
+      "reason": "_transport calls release then immediately move to depart in the same coroutine, but the finite trajectory is not supplied and duplicate concurrent workers may cause rejected or interleaved proposals, so source-only evidence cannot determine the actual committed release/departure outcome."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        14,
+        15,
+        16,
+        17,
+        30,
+        31,
+        32,
+        33,
+        63
+      ],
+      "reason": "The code can run both workers concurrently and both may transport the shared part, and the nonselected RIGHT arm is not kept at home if selected_arm is RIGHT; the declared terminal goal of one selected transport with the other arm at home is not enforced."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6175,
+    "completion_tokens": 466,
+    "total_tokens": 6641,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6047
+  },
+  "raw_sha256": "8d4a672212a4d10843ae6591a8ad66796b5e0654c4452273efc8dfe8d07385bc",
+  "request_sha256": "abb1463153b44ee346007342d3aff3b420ea74a764c8b1c3cd4cf33c000a8c77",
+  "source_sha256": "57dbd4ec3d6780330d5a537ab69e87e0cceab7b19fbdf697f69ead7f21253dbe"
+}

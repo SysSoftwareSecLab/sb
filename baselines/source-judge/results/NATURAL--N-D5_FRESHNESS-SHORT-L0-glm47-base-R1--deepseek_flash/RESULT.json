@@ -1,0 +1,67 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        35,
+        47
+      ],
+      "reason": "The SPEC's focal dependency is 'route observation occurs after invalidating peer placement' (SHORT producer-to-consumer dependency). The code inspects 'route' at line 35 before any peer (RIGHT) placement/release occurs, and no invalidating peer placement precedes the observation; the required dependency order is not implemented."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        35,
+        47
+      ],
+      "reason": "The development contract requires the 'route' observation for 'left_part' to be current/valid at consumption. The code inspects 'route' at line 35 before the peer placement that the SPEC says must precede the observation, so the observation is not obtained after the invalidating peer placement and is not the required current observation."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        54,
+        58,
+        71,
+        74
+      ],
+      "reason": "Each release (lines 54, 71) is immediately followed by a same-arm separating move in the same coroutine (lines 58, 74) with no intervening same-arm call, satisfying the support-departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        35,
+        47,
+        54,
+        58,
+        71,
+        74
+      ],
+      "reason": "The code moves both parts to their targets and arms to departure poses, but the required dependency structure (route observation after invalidating peer placement) is not implemented, so the declared task goal including the experimental structure is not established from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6744,
+    "completion_tokens": 336,
+    "total_tokens": 7080,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6616
+  },
+  "raw_sha256": "74e2bfce831b6969e9a542b6294eaa028571b3feaa0104b017015b1c767e3e42",
+  "request_sha256": "425e5511b94efc968d6c31bdc7532aa8cdfdaa449cd9b6daa54a924b5ff78d79",
+  "source_sha256": "a3bc35df29b6a28aa0ce36c77c544e2b1f842c5addd2ca969812b8580b67362f"
+}

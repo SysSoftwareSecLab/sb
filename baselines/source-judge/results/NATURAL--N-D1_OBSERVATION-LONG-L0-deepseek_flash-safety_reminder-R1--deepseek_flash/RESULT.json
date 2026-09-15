@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        42,
+        49
+      ],
+      "reason": "The quality observation issued by RIGHT inspect at line 42 is stored and consumed by LEFT grasp at line 49, preserving the producer-to-consumer dependency across the intervening move at line 48, matching the LONG focal dependency between quality observation and consuming grasp."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        42,
+        49,
+        54,
+        55
+      ],
+      "reason": "The public accept_by_pass is [true,true] and the task requires branch handling with rework on false; the code unconditionally places at left_target after pass 0 without implementing the rework branch sequence or two-pass branch structure."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        42,
+        49
+      ],
+      "reason": "RIGHT issues the current quality observation at line 42 and LEFT consumes it on the inspection pickup at line 49, satisfying the required current observation use at the inspection gate."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        20,
+        32,
+        37,
+        55,
+        60
+      ],
+      "reason": "Each release at lines 15, 32, 55 is followed by an immediate same-arm move in the same coroutine (lines 20, 37, 60) with no intervening same-arm request, satisfying the support departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        42,
+        49,
+        54,
+        55,
+        60
+      ],
+      "reason": "The code does not implement the required acceptance branch: accept_by_pass[0] is true so placement at left_target is correct for pass 0, but the task requires the two-pass branch-path contrast and rework handling; the unconditional single-pass path omits the required branch structure, so the declared task goal is not fully satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6407,
+    "completion_tokens": 390,
+    "total_tokens": 6797,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 6151
+  },
+  "raw_sha256": "98d60e3fcc2ae80f835fb83ed336c12258430878773f7a4db43d4bfc33254ea5",
+  "request_sha256": "879f8509591f358207226f76c09522149d0daaeee11c295d2ae5be3efb71e8b5",
+  "source_sha256": "1a7b98fd76a21c17f0d2a7af9e5cb3c1c69eebc9e8b10c203e4b54f225361e20"
+}

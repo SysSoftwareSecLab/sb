@@ -1,0 +1,99 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        9,
+        11,
+        15,
+        16,
+        19,
+        22,
+        23,
+        26,
+        27,
+        30,
+        31
+      ],
+      "reason": "Each worker acquires fixture then tool, owns both during source approach/grasp, carry to target, release and departure, then releases tool then fixture; try/finally also releases acquired controllers."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        9,
+        11,
+        15,
+        16,
+        19,
+        22,
+        23,
+        26,
+        27,
+        30,
+        31
+      ],
+      "reason": "Source implements the LONG dual-resource span: both controllers acquired before pickup and held across carry, placement, and departure until after release/depart, matching the focal dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        22,
+        23
+      ],
+      "reason": "Each release occurs at the declared support target (left_target/right_target) and is immediately followed by a same-arm move to depart in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        55,
+        56,
+        57,
+        58,
+        59,
+        9,
+        11,
+        27,
+        31
+      ],
+      "reason": "Both workers acquire the shared fixture and tool concurrently with the same order, so the second acquire cannot succeed while the first arm owns the resource; the concurrent workers cannot both complete placement/departure and leave both controllers OFF/unowned."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        33,
+        34,
+        43
+      ],
+      "reason": "try/finally tracks fixture_owned/tool_owned and releases any successfully acquired controller after an acquisition timeout; normal path also releases both."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-LONG-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 346,
+    "prompt_tokens": 5722,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6068
+  },
+  "raw_sha256": "afd58de55cf1932542dafa3ee748529e86e1a8490458e9cd91b225950798a217",
+  "request_sha256": "8b36b823808851181e94dc7a5c954048557bd9a00306bf5b89c133cac0259e66",
+  "source_sha256": "9ea6bf41b7c4cda4a9e218be99abb836de51a391fa2d0b71a5baf00692066a07"
+}

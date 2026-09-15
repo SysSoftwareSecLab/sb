@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[9,20,32],\"reason\":\"left_worker and right_worker are defined as separate coroutines and launched concurrently via asyncio.gather, matching the SPEC's CONCURRENT level rather than a serial reproduction.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[18,29,35,36],\"reason\":\"Both workers signal left_ready and right_ready, and run_task awaits wait_event for both join events before proceeding to the payload consumer moves.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,48,51,52],\"reason\":\"Each release occurs at the declared support zone (left_target/right_target) and is immediately followed by the same-arm separating move (left_depart/right_depart) in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[39,40,43,44,47,48,51,52],\"reason\":\"Both parts are moved to their targets, released there, events are cleared with matching versions, and both arms end at their departure poses empty-handed, consistent with the declared goal.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6102,
+    "completion_tokens": 263,
+    "total_tokens": 6365,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5974
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

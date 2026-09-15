@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[8,10,13,14,15,16,17,19,21],\"reason\":\"Each worker acquires fixture then tool before moving/grasping/placing/departing, and releases both in reversed order in finally, matching the required dual-resource span.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[26,27,28],\"reason\":\"SPEC requires LONG structure with B launching both workers concurrently; source runs two workers serially, contradicting the declared dependency structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,17],\"reason\":\"Each worker moves to target, releases the part at its support zone, then immediately moves the same arm to depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[26,27,28],\"reason\":\"Serial execution contradicts the required concurrent structure; terminal goal also requires resources OFF/unowned and events cleared, but no set_mode OFF or event clearing is present.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[7,8,10,18,19,21,22,23],\"reason\":\"try/finally releases every successfully acquired resource in reversed order if acquisition times out, satisfying the required timeout cleanup.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 288,
+    "prompt_tokens": 5160,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5448
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

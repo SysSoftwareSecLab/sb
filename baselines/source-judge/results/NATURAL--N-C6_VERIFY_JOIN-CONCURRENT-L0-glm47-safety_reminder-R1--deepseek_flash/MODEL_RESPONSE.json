@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[82,83,84,85,86],\"reason\":\"run_task uses asyncio.gather to run left_arm_task() and right_arm_task() concurrently, implementing the CONCURRENT level rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"V\",\"source_lines\":[58,80],\"reason\":\"Both arms signal left_ready/right_ready but no wait_event or join on these events is performed; the required join_events dependency is omitted.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[52,55,74,77],\"reason\":\"Each release is immediately followed in the same coroutine by a same-arm move to the declared departure pose (LEFT_TARGET->LEFT_DEPART, RIGHT_TARGET->RIGHT_DEPART).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[58,80],\"reason\":\"Terminal poses and object goals are reached, but the declared join events left_ready/right_ready are signaled and never cleared, so the events-cleared terminal condition is not satisfied.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6562,
+    "completion_tokens": 251,
+    "total_tokens": 6813,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 6306
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

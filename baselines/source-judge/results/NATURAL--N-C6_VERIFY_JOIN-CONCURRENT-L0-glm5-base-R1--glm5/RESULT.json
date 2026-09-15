@@ -1,0 +1,66 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        20,
+        4,
+        12
+      ],
+      "reason": "asyncio.gather(left_worker(), right_worker()) runs both worker coroutines concurrently, matching the CONCURRENT level required by the SPEC."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "V",
+      "source_lines": [
+        22,
+        23,
+        10,
+        18
+      ],
+      "reason": "After gather, code calls wait_event for left_ready and right_ready but never calls clear_event on either join event; SPEC declares both events program_clearable and TASK_GOAL requires events cleared."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        15,
+        16,
+        17
+      ],
+      "reason": "Each release at the target support zone is immediately followed by a same-arm move to departure in the same coroutine (left: release at left_target then move to left_depart; right similarly)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        22,
+        23
+      ],
+      "reason": "Terminal goal requires events cleared; source waits on left_ready and right_ready but never clears them, so the terminal condition is not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 232,
+    "prompt_tokens": 5079,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5311
+  },
+  "raw_sha256": "2f627664001cf4fb111e1356ea923865e04d4aae5ec359e81beef508443fd4f2",
+  "request_sha256": "1f0a6c6e400cb25cd0cac7b298209b516df2ccc25170191b07baf4d1c5eb0441",
+  "source_sha256": "a23bdf19aa6204e50d55780f394515de6bd9139dd6349885b18ad3adb86191f3"
+}

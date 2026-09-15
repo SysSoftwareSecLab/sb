@@ -1,0 +1,139 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        35,
+        96,
+        160,
+        161
+      ],
+      "reason": "SPEC requires D3 serial second-item checks (inspect line_clear with LEFT and receiver_ready with RIGHT) after empty_0 wait/clear before second buffer entry; source omits both inspect calls entirely."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        64,
+        65,
+        68,
+        70,
+        71,
+        73,
+        76,
+        79,
+        82,
+        91
+      ],
+      "reason": "Producer waits/clears empty_0 then proceeds to source_1 grasp and buffer_1 placement without required inspect(line_clear) and inspect(receiver_ready) checks; also ready_1 signaled without those checks. Missing required ready/empty protocol steps."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        46,
+        49,
+        52,
+        55,
+        58,
+        76,
+        79,
+        82,
+        85,
+        88,
+        102,
+        105,
+        107,
+        110,
+        113,
+        135,
+        138,
+        140,
+        143,
+        146
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry, hold it through placement/pickup and immediate departure, then release after departing; ownership maintained during complete buffer contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        99,
+        116,
+        119,
+        132,
+        149,
+        152
+      ],
+      "reason": "Consumer waits ready_0/ready_1 receipts, supplies exact receipts on carried moves to target_0/target_1, and clears ready after carried move completes."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        35,
+        96,
+        160,
+        161
+      ],
+      "reason": "Source runs producer and consumer concurrently via asyncio.gather (B pattern), but without the required second-item inspect calls the held-out control-flow signature cannot be confirmed fully implemented."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        43,
+        65,
+        68,
+        94
+      ],
+      "reason": "LONG variant: tool acquired before source pickup (line 43), kept across empty_0 wait (line 65) and clear (line 68), released after second iteration (line 94). Focal dependency spans source, grasp, and empty receipt as specified."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        52,
+        55,
+        82,
+        85,
+        122,
+        125,
+        155,
+        158
+      ],
+      "reason": "Every release (part_0 at buffer_0, part_1 at buffer_1, part_0 at target_0, part_1 at target_1) is immediately followed by same-arm move to home in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        35,
+        96,
+        160,
+        161
+      ],
+      "reason": "Missing required inspect(line_clear) and inspect(receiver_ready) checks for second item means SPEC required order not fully implemented; terminal goal cannot be confirmed satisfied. Also LEFT ends at left_home but tool release only after episode 2; RIGHT never departs to right_wait between episodes as approach_sequences require left_wait/right_wait starts."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-LONG-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 620,
+    "prompt_tokens": 8323,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8943
+  },
+  "raw_sha256": "3371e2658a723201179b91777941b9dff167239af3eec376b254874a1b2e4b87",
+  "request_sha256": "9fd309ee452294b333d4d083bc2ac9d14b6cda1d901dd1f33ba184776b71647b",
+  "source_sha256": "d38006d79ec5350b40fe7caa724ca9086aa4a076acd7a531bd33599d94d6bd91"
+}

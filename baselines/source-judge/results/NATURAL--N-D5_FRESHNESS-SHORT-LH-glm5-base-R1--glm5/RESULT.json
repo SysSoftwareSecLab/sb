@@ -1,0 +1,81 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        20,
+        21,
+        22,
+        23,
+        24,
+        27
+      ],
+      "reason": "LEFT grasp/move/release/depart completes before RIGHT invalidating placement; route inspect at line 27 occurs after RIGHT release at line 23, implementing SHORT dependency preserving focal route observation after peer invalidation."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "U",
+      "source_lines": [
+        14,
+        27
+      ],
+      "reason": "route inspect is called after RIGHT release, but source provides no evidence that the observation is current/valid at inspect time; invalidation_on_release is empty in SPEC, so version validity cannot be determined from source alone."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        17,
+        22,
+        23,
+        24
+      ],
+      "reason": "Each release (lines 16,23) is at the declared support target and immediately followed by same-arm move to depart (lines 17,24) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        20,
+        21,
+        22,
+        23,
+        24,
+        27
+      ],
+      "reason": "Both parts grasped from source and released at targets; both arms move to depart and are empty after release; no resources/events to clear; deadline 30s with move durations well within."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 291,
+    "prompt_tokens": 5177,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5468
+  },
+  "raw_sha256": "f1c64ae46f57c117199ccd77bbd1d11b050ea72f105e7b60ffea90f89e6a9643",
+  "request_sha256": "1fd92339ed197bb850b6aaf0095b372dfd9a5518358a708e4a2f3af2653af4f3",
+  "source_sha256": "11ccba761de6627fbd425b0ad47e167202508fb9f488d6a038721765b9c1287b"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[69,70,78,79,90],\"reason\":\"Two worker coroutines are launched with asyncio.create_task and run concurrently; main awaits both readiness events and then gathers both tasks, implementing the CONCURRENT level rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[40,63,78,79,86,87],\"reason\":\"Workers signal left_ready and right_ready, main waits on both events via wait_event, and clears each with the corresponding receipt version, matching the declared join_events contract.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[37,43,60,66],\"reason\":\"Each release occurs at the declared support (left_target/right_target) and is immediately followed in the same worker coroutine by a same-arm move to the departure pose.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[34,37,43,57,60,66,86,87,90],\"reason\":\"Both parts are moved to their own targets and released, both arms end at their departure poses empty-handed, events are cleared, and the 25s wait timeout is within the 30s deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6698,
+    "completion_tokens": 279,
+    "total_tokens": 6977,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6570
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

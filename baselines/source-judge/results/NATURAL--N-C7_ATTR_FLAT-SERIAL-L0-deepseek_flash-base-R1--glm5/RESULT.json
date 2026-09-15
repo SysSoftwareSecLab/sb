@@ -1,0 +1,160 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        18,
+        41,
+        66,
+        73,
+        104,
+        129
+      ],
+      "reason": "Source implements SERIAL alternating producer/consumer episodes (ep0 producer then consumer, ep1 producer then consumer) with L0 layout, matching the CONCURRENCY=SERIAL attribute combination."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        36,
+        43,
+        61,
+        64,
+        75,
+        76,
+        99,
+        106,
+        124,
+        127
+      ],
+      "reason": "ready_0/ready_1 signaled before consumer wait; cleared after carried move; empty_0 signaled after consumer release/departure and waited/cleared by producer before second entry; all required events published."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        28,
+        29,
+        30,
+        32,
+        33,
+        47,
+        48,
+        49,
+        51,
+        52,
+        91,
+        92,
+        93,
+        95,
+        96,
+        110,
+        111,
+        112,
+        114,
+        115
+      ],
+      "reason": "Both participants acquire buffer_lock before buffer entry and release it after immediate departure; capacity-one buffer ownership maintained during all buffer contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        43,
+        55,
+        106,
+        118
+      ],
+      "reason": "Consumer waits corresponding ready receipt before pickup and supplies that exact active receipt on carried move to target for both episodes."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        18,
+        41,
+        73,
+        104,
+        129
+      ],
+      "reason": "Source implements serial alternating complete producer/consumer episodes rather than joined producer/consumer coroutines, matching the SERIAL concurrency level."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        75,
+        76,
+        79,
+        80
+      ],
+      "reason": "For item 1, producer waits and clears empty_0 then inspects both readiness facts (line_clear, receiver_ready) serially one after the other, matching the declared holdout control-flow signature."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        30,
+        32,
+        56,
+        58,
+        93,
+        95,
+        119,
+        121
+      ],
+      "reason": "Every release (part_0 at buffer_0, part_0 at target_0, part_1 at buffer_1, part_1 at target_1) is followed by immediate same-arm separating move in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        130,
+        131,
+        25,
+        30,
+        55,
+        56,
+        88,
+        93,
+        118,
+        119,
+        33,
+        39,
+        52,
+        96,
+        102,
+        115,
+        61,
+        76,
+        124,
+        127
+      ],
+      "reason": "Final moves to left_home/right_home with empty hands; parts delivered to targets; resources released; events cleared; serial structure implemented within deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 572,
+    "prompt_tokens": 8054,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8626
+  },
+  "raw_sha256": "2e2fae79e202a96136da1592d3bb6aef7eb579737d559a95fbbc59049588ebd0",
+  "request_sha256": "7e121a7b7c91c3c286584aaa94d4632ee7a4358db607887e07b1e53d67950712",
+  "source_sha256": "abf1da706247962d0af768ffa8562bbeb0abfbff0ea3bb423435b53f66776024"
+}

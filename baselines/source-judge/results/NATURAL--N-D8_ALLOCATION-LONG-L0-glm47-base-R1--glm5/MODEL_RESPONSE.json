@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[16,17,25,33,36,39,42,47],\"reason\":\"Only the selected_arm (derived from allocation observation) issues move/grasp/release; unselected_arm is computed but never used in any action call.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[7,8,11,12,16,25,26,27,28,36],\"reason\":\"Both arms inspect allocation once concurrently; selected arm's own current allocation observation (obs_left or obs_right) is carried into grasp.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[7,8,11,12,16,25,26,27,28,33,36],\"reason\":\"Peer allocation inspections intervene before selected observation consumption: both inspections are awaited, selected_arm is derived from them, and the matching observation is carried to grasp after the intervening approach move.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[39,42,47],\"reason\":\"Release at shared_target (declared support) is immediately followed by same-arm move to depart_pose in the same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[33,36,39,42,46,47,49,50],\"reason\":\"Source moves shared_part to shared_target via selected LEFT, releases there, departs to left_depart; unselected RIGHT remains at right_home with no actions; no resources/events declared in SPEC.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 333,
+    "prompt_tokens": 5601,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5934
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

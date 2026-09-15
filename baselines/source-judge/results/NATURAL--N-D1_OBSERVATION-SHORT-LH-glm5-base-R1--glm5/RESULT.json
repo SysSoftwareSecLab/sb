@@ -1,0 +1,93 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "reason": "SPEC requires RIGHT to issue each inspection quality observation and LEFT to consume the newly issued current quality record on inspection pickup; code calls robot.grasp(\"LEFT\",...) at inspection with no observation parameter and never calls inspect/refresh by RIGHT, so the SHORT producer-to-consumer dependency is omitted."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "reason": "SPEC requires accept_by_pass branch selection with rework-then-inspection on non-acceptance and at most two passes; code unconditionally moves left_part from inspection to left_target without any branch on quality observation, omitting the required rework branch sequence."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "reason": "Inspection zone is entered and a release/grasp occurs there, but no inspect/refresh quality observation is issued or consumed for the inspection pickup, violating the required rework observation protocol."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        8,
+        9,
+        10,
+        15,
+        16,
+        17
+      ],
+      "reason": "Both releases are followed by same-arm separating moves in the same coroutine, satisfying the departure condition for each committed release."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "reason": "Terminal poses and object placements may be reached, but the SPEC requires left_part acceptance within two inspection passes with RIGHT-issued quality observations and branch selection; code omits inspect/refresh calls, quality branching, and rework circuit, so the acceptance condition and full task goal are not implemented."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-SHORT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 389,
+    "prompt_tokens": 5265,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5654
+  },
+  "raw_sha256": "4b5ec298178e6c1931faf3102d8ae80364b97ef9fe5d08a9778522c62721c62b",
+  "request_sha256": "9afac85b67b83173a470ed36f6785d1a8aefb0e767875d38b58f79533f10b765",
+  "source_sha256": "6d5427a05f9c885b541dc538f8539ff5a0149dc1db3dff346bea2d285ad909ab"
+}

@@ -1,0 +1,77 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        87,
+        91,
+        96
+      ],
+      "reason": "RIGHT inspects quality (line 87) and signals inspection event (line 91), but LEFT's grasp at line 96 consumes obs_quality (the Observation) rather than the EventReceipt from the signal; the LONG dependency is between the quality observation and its consuming grasp, and the focal receipt/dependency structure is not correctly implemented."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        106,
+        112
+      ],
+      "reason": "The else branch sets target_pose=POSE_LEFT_TARGET instead of routing to rework as required by the public SPEC when accept_by_pass is false; the rework branch is not implemented."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        81,
+        82,
+        87,
+        96
+      ],
+      "reason": "LEFT approaches inspection from left_wait (line 81-82) and grasps using obs_quality (line 96), but the approach sequence requires start_pose=left_wait with immediate grasp as the next call; RIGHT's inspect (line 87) and signal (line 91) are intervening calls between the approach move and the grasp, violating the max_intervening_logical_time_s=0.0 constraint."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        61,
+        64,
+        74,
+        77,
+        116,
+        119
+      ],
+      "reason": "Each release (lines 61, 74, 116) is immediately followed by a same-arm move to a departure pose (lines 64, 77, 119) in the same coroutine, satisfying the immediate departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        77,
+        115,
+        116,
+        119
+      ],
+      "reason": "right_part is released at inspection (line 74) and never moved to right_target; the code comment at line 125 incorrectly claims right_part is at right_target. Also, the inspection event is signaled (line 91) but never cleared, and the LONG dependency receipt is not consumed by the correct move, violating terminal state requirements."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-LH-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 431,
+    "prompt_tokens": 7586,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 8017
+  },
+  "raw_sha256": "6904608e243c040b4b9c402b863e44755bfe31797e716764d391194532c1239c",
+  "request_sha256": "1fc7e38ceb756271f5ef8100e5d0c907e0f06d4ccce576ad68f255c7350a440c",
+  "source_sha256": "fa32aa4fd647355bdf3a379d0c6ce678d6bac3716f2e0957de2952443de14dac"
+}

@@ -1,0 +1,112 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        22,
+        23,
+        27,
+        32,
+        36,
+        41
+      ],
+      "reason": "Both arms signal own item-bound ready events, wait for peer ready, and clear the peer event with the waited receipt version after the carried move; matches reciprocal exchange order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        27,
+        32,
+        36,
+        41
+      ],
+      "reason": "wait_event returns peer EventReceipt and clear_event uses expected_version=that receipt.version for the corresponding event, preserving receipt-version dependency."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "reason": "The focal dependency right_ready -> LEFT carried move is implemented: LEFT waits right_ready, then moves to right_pad, grasps right_part, moves to left_target, and clears right_ready using the waited receipt version."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        18,
+        19
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: LEFT release then move left_clear; RIGHT release then move right_clear."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        22,
+        23,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "reason": "Source implements deposit/clear, reciprocal exchange to targets, empty-arm departures, and clears both ready events; public deadline 30s is compatible with declared durations."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6340,
+    "completion_tokens": 382,
+    "total_tokens": 6722,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6212
+  },
+  "raw_sha256": "f16483fecd0683e6ef52db1f24538f74f688d41bb643519c9dc29527dfff491f",
+  "request_sha256": "3345ea0b4e47f7877a4e2335abff41452b331531ded7bab96fa4cd38633b2655",
+  "source_sha256": "93f704e3390d12562b7fda3795da038db48ef0b83c3a6d9a47e4da7a82fa0ef9"
+}

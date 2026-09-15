@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"V\",\"source_lines\":[30,31,32,33,34],\"reason\":\"selected_arm is LEFT, but else branch lets RIGHT propose transport; RIGHT is unselected yet may move/grasp/release.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"V\",\"source_lines\":[27,28,30,32,33,34],\"reason\":\"Both arms inspect once, but selected LEFT consumes left_obs while RIGHT branch would consume right_obs; selected-arm current allocation observation not guaranteed for RIGHT branch.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[27,28,30,31,32,33,34],\"reason\":\"Both inspections intervene before branch selection and selected transport; LONG dependency structure with intervening peer inspection is implemented.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[12,13,14],\"reason\":\"release at shared_target is immediately followed by same-arm move to left_depart/right_home in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[30,31,32,33,34],\"reason\":\"Allocation selects LEFT, so RIGHT must remain at right_home; else branch transports with RIGHT, violating nonselected RIGHT terminal condition.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 264,
+    "prompt_tokens": 5219,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5483
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

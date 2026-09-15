@@ -1,0 +1,138 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        41,
+        45,
+        48,
+        63,
+        71,
+        85,
+        93,
+        100,
+        114
+      ],
+      "reason": "Producer signals ready_0/ready_1, consumer waits ready receipts and clears them after the carried move; producer waits and clears empty_0 before second buffer entry; consumer signals empty_0 after departing target_0. Order matches the required ready/empty protocol."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        31,
+        34,
+        36,
+        38,
+        66,
+        79,
+        82,
+        88,
+        90,
+        96,
+        108,
+        111,
+        117,
+        119,
+        122
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release it after departing; capacity-one buffer is used by one item at a time with lock ownership during entry/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        71,
+        82,
+        100,
+        111
+      ],
+      "reason": "Consumer waits the corresponding ready receipt and passes that exact active EventReceipt to the carried move to target_0/target_1."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        45,
+        51,
+        53,
+        56,
+        58,
+        60,
+        63,
+        66,
+        71,
+        74,
+        76,
+        79,
+        82,
+        85,
+        88,
+        90,
+        93,
+        96,
+        100,
+        103,
+        105,
+        108,
+        111,
+        114,
+        117,
+        119,
+        122
+      ],
+      "reason": "Producer picks part_1 before waiting for empty_0 receipt (lines 51-53 before line 45? Actually line 45 wait occurs before source_1 move; focal dependency is second item picked before waiting for empty receipt, but source shows wait_event(empty_0) at line 45 before source_1 grasp at line 53, so the stated LONG dependency is not implemented as described."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        36,
+        38,
+        58,
+        60,
+        88,
+        90,
+        117,
+        119
+      ],
+      "reason": "Each release at the declared support is immediately followed by a same-arm separating move in the same coroutine: release buffer_0 then move left_wait; release buffer_1 then move left_home; release target_0 then move right_wait; release target_1 then move right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        60,
+        63,
+        66,
+        90,
+        93,
+        96,
+        119,
+        122
+      ],
+      "reason": "Program moves parts to targets, returns arms to homes, releases buffer_lock, and signals/clears events; terminal poses and resource release are present, though event clear for empty_0 is done by producer and ready events by consumer."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8316,
+    "completion_tokens": 574,
+    "total_tokens": 8890,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8188
+  },
+  "raw_sha256": "05db0c508c5060e01fda2274801c684a177f3cecd73e785e9dd002ff5128eb78",
+  "request_sha256": "75f6443ded26b7140628b1fab9a8019dc15632ab4bec3f4d73a18060a3cd16f3",
+  "source_sha256": "f2b7c2c7d316d9ae7e7bee2cbc5fb0af176ea4aecf00cf470d8d456101535c1c"
+}

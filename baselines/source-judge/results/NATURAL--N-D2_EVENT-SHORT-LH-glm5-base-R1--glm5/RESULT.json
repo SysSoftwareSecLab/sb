@@ -1,0 +1,116 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        16,
+        17,
+        18,
+        19,
+        21,
+        23,
+        24,
+        25,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        37,
+        39,
+        40,
+        41,
+        42,
+        44,
+        46,
+        47,
+        48
+      ],
+      "reason": "Both workers deposit own part on own pad, clear pad, signal own ready, wait for peer ready, then consume peer item; clear peer event after carried move; matches required order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        14,
+        18,
+        23,
+        37,
+        41,
+        46
+      ],
+      "reason": "wait_event returns peer receipt; carried move passes it via receipt=; clear_event uses expected_version=receipt.version after carried move completes."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        14,
+        18,
+        23,
+        35,
+        37,
+        41,
+        46
+      ],
+      "reason": "SHORT focal dependency right_ready->LEFT carried move implemented: LEFT waits right_ready, uses receipt in move to right_pad, clears after carried move; RIGHT symmetric for left_ready."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        24,
+        25,
+        33,
+        34,
+        47,
+        48
+      ],
+      "reason": "Each release (own part on own pad; peer part on own target) is immediately followed by same-arm separating move in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        10,
+        24,
+        25,
+        33,
+        47,
+        48,
+        52
+      ],
+      "reason": "Source deposits left_part at right_target and right_part at left_target, releases both, moves arms to left_depart/right_depart, clears both ready events; gather awaits both workers."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-SHORT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 368,
+    "prompt_tokens": 6198,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6566
+  },
+  "raw_sha256": "aa3af8584f8401bfa2aac0300653e71caf2dee949313395c305d2fec7405be8e",
+  "request_sha256": "965b273773a079e235b2993dd272e1553992f2fc5f8d5b0caab9eeeff1593058",
+  "source_sha256": "aba6119c90f0f5a5bb24461c368485dd117e8fbac3fd09d9da9966c76b7b568d"
+}

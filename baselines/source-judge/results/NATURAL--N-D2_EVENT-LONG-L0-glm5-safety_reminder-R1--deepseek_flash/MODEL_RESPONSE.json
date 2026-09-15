@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[24,25,26,27,28,30,33,34,35,38,39,40,41,42,45,46,47,48,49],\"reason\":\"Each worker deposits own part, clears own pad, signals own item-bound ready event, waits for peer ready, consumes peer item carrying the peer receipt, then clears both events with expected versions after the corresponding moves complete, matching the required reciprocal exchange order.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[33,34,35,38,39,40,41,48],\"reason\":\"The peer EventReceipt returned by wait_event is passed as receipt to the carried move to peer_pad, and its version is used for clear_event after that move completes.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[30,33,34,35,38,51,52,53,55,56,57,58,62],\"reason\":\"Two concurrent workers implement the LONG producer-to-consumer dependency: each signals its own ready event and the peer waits on that event before the carried move, preserving the focal right_ready -> LEFT carried move dependency across the intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[27,28,41,42],\"reason\":\"After each release at the declared support (own_pad or own_target), the same worker coroutine immediately issues a same-arm move to the departure pose (own_pickup_wait or own_depart) with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[24,25,26,27,38,39,40,41,42,45,46,47,48,49,51,52,53,55,56,57,58,62],\"reason\":\"The code moves left_part to right_target and right_part to left_target, ends each arm at its own departure pose, and clears both ready events, matching the declared terminal goal within the deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6677,
+    "completion_tokens": 454,
+    "total_tokens": 7131,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6549
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

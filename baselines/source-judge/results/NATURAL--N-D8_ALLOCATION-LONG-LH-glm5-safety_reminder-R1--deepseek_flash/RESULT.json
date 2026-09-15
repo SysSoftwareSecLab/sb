@@ -1,0 +1,84 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "reason": "run_task inspects both arms, reads selected_arm from left_obs, and only the selected arm (LEFT if selected==LEFT else RIGHT) calls _selected_transport, which is the only path proposing move/grasp/release; the unselected arm makes no move/grasp/release call."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        30,
+        32,
+        34
+      ],
+      "reason": "Both arms independently inspect allocation once (lines 27-28), and the selected transport consumes the selected arm's own current observation: LEFT uses left_obs, RIGHT uses right_obs, matching the required current controller-issued allocation observation."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        30,
+        32,
+        34
+      ],
+      "reason": "The peer allocation inspection (right_obs at line 28) intervenes between the selected arm's inspection (left_obs line 27) and the selected observation consumption (line 32), preserving the focal LONG dependency across the intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        13,
+        14
+      ],
+      "reason": "After release at shared_target, the same candidate coroutine immediately calls robot.move to a separating pose (left_depart for LEFT, right_home for RIGHT) with no intervening same-arm request."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        32,
+        34
+      ],
+      "reason": "Selected LEFT transports shared_part to shared_target, releases, and departs to left_depart; nonselected RIGHT remains at right_home empty; both terminal poses and object goal are reached within the 30s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5611,
+    "completion_tokens": 399,
+    "total_tokens": 6010,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5483
+  },
+  "raw_sha256": "14933a2a24824931e5f30e73910c5a16e82574da141dcf38bbc4193795e95f34",
+  "request_sha256": "9781232ba373c7f3ff7a3b4ce1be9ae336f447538b932cdfe0691abd980af80c",
+  "source_sha256": "190c1fe5d89426510ad4ef078a578bc21050709cdab9632da7feb9249d124ae5"
+}

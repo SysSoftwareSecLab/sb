@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[24,27,30,40,41,45,47,51,53,56,58],\"reason\":\"Each worker acquires fixture then tool before approach/grasp/transport/release/depart, and releases resources in finally after departure; both resources owned throughout carry span.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[24,27,30,40,41,45,47,51,53,56,58],\"reason\":\"LONG dependency structure: dual resources acquired before source approach and held through pickup, placement, release, and departure, then released in finally; concurrent workers via gather.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[45,47,51],\"reason\":\"Release at target_pose (declared support) is immediately followed by same-arm move to depart_pose in same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[53,56,58,59,60],\"reason\":\"Terminal goal requires resources OFF and unowned, but release_resource only releases ownership; no set_mode(arm,res,'OFF') call ensures controllers are OFF before release. Resources may not be OFF at release_resource per API semantics.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[26,27,30,32,34,35,36],\"reason\":\"Acquisition timeout in try block releases every successfully acquired resource (owned_resources) before re-raising, implementing required try/finally cleanup for timeout.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 335,
+    "prompt_tokens": 5880,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6215
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

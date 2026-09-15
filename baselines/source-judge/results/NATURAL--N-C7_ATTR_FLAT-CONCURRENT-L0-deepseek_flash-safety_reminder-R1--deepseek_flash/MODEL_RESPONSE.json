@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[112,113],\"reason\":\"The source implements the declared CONCURRENT attribute by running producer() and consumer() together via asyncio.gather, matching the SPEC's CONCURRENT structure rather than a serial reproduction.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[28,39,43,58,69,82,88,96,106],\"reason\":\"Producer signals ready_0/ready_1 after buffer placement and departure; consumer waits ready, clears ready after the carried move, signals empty_0 after release/departure; producer waits and clears empty_0 before the second buffer entry, matching the required order.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[21,26,53,57,75,78,101,104],\"reason\":\"Both arms acquire buffer_lock before buffer entry and release it after departure; capacity-one buffer is respected with item-specific pickup contracts and lock ownership during entry/departure.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[80,105],\"reason\":\"Consumer supplies the exact active ready receipt (receipt0/receipt1) on the carried move to target_0/target_1, satisfying the BUFFER_RECEIPT mechanism.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[112,113],\"reason\":\"The reachable program implements the SPEC's concurrent level by gathering producer and consumer coroutines, not merely reproducing the terminal goal serially.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[36,37,38,39,40,41,42,43,44,47,48],\"reason\":\"For item 1, the producer waits and clears empty_0, then inspects both readiness facts (line_clear and receiver_ready) inside the loop branch, matching the declared held-out control-flow signature.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[23,25,55,56,86,87,109,110],\"reason\":\"Each release is followed by an immediate same-arm separating move in the same candidate coroutine: release part_0 at buffer_0 then move LEFT to left_wait; release part_1 at buffer_1 then move LEFT to left_wait; release part_0 at target_0 then move RIGHT to right_wait; release part_1 at target_1 then move RIGHT to right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[110,113],\"reason\":\"The program places part_0 at target_0 and part_1 at target_1, returns arms to left_home/right_home, releases buffer_lock and tool, clears ready events, and signals empty_0; the concurrent structure completes within the declared deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8221,
+    "completion_tokens": 625,
+    "total_tokens": 8846,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8093
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

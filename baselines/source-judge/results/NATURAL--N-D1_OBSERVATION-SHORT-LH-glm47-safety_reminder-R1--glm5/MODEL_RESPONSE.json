@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[58,63,64,73,99,103,107],\"reason\":\"RIGHT inspects quality and issues Observation; LEFT consumes that exact observation as grasp dependency on both first and second pass, preserving producer-to-consumer chain.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[67,81,99,103,110,111,114],\"reason\":\"Implements both branches: accept-on-first to target, reject-on-first to rework then re-inspect and second-pass pickup to target, within two inspection passes.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[46,58,73,90,99,107],\"reason\":\"Inspection-zone release triggers quality version increment; RIGHT issues quality observation; LEFT consumes current observation at each inspection pickup.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[46,50,77,80,90,93,111,114,119,122],\"reason\":\"Every release is at a declared support zone and immediately followed by a same-arm separating move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[70,84,106],\"reason\":\"Approach sequence for inspection pickup requires start_pose left_wait, but Branch A moves LEFT to left_wait from left_depart (not from a prior left_wait start) and Branch B rework pickup moves to rework_wait while already at rework_wait; approach start-pose and immediate-grasp constraints may be violated, leaving terminal goal unsupported.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 333,
+    "prompt_tokens": 7482,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7815
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

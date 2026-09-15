@@ -1,0 +1,167 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        6,
+        17,
+        18,
+        74,
+        80,
+        81,
+        82,
+        146,
+        149
+      ],
+      "reason": "LONG tool-before-source-pickup held across second-item wait/checks and D3 serial inspect checks are jointly implemented in source."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        33,
+        35,
+        40,
+        49,
+        61,
+        67,
+        70,
+        75,
+        76,
+        103,
+        105,
+        110,
+        119,
+        131,
+        137,
+        140
+      ],
+      "reason": "ready/empty signal, wait, clear ordering and required publications match SPEC for both items."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        29,
+        32,
+        33,
+        35,
+        37,
+        52,
+        55,
+        56,
+        58,
+        99,
+        102,
+        103,
+        105,
+        107,
+        122,
+        125,
+        126,
+        128
+      ],
+      "reason": "buffer_lock owned during each buffer entry, placement/pickup, and departure for both items."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        40,
+        49,
+        61,
+        67,
+        110,
+        119,
+        131,
+        137
+      ],
+      "reason": "Consumer waits ready receipt and supplies exact active item receipt on carried move to target for both items."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        80,
+        81,
+        82,
+        87,
+        89
+      ],
+      "reason": "D3 serial second-item checks (line_clear then receiver_ready) implemented as specified holdout signature."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        17,
+        18,
+        74,
+        75,
+        81,
+        82,
+        96,
+        103,
+        146,
+        149
+      ],
+      "reason": "Tool acquired before source pickup and held across second-item wait/checks through second release, released on exit."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        33,
+        35,
+        62,
+        64,
+        103,
+        105,
+        132,
+        134
+      ],
+      "reason": "Each release at buffer/target is immediately followed by same-arm separating move in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        26,
+        33,
+        56,
+        61,
+        62,
+        96,
+        103,
+        126,
+        131,
+        132,
+        140,
+        143,
+        144,
+        149
+      ],
+      "reason": "Both parts delivered to targets, arms returned home, tool released, events cleared/inactive per source."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-LONG-LH-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 479,
+    "prompt_tokens": 8538,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9017
+  },
+  "raw_sha256": "e40faef90cd5d0cc4af207d23b355cc609ba05ac5e6f460ef80d4b48561f01fb",
+  "request_sha256": "f0b44be798f28fdfbb63d4f4973dccabbcc6e0305e287676b89a9de6c002e919",
+  "source_sha256": "7d3272397b2f076c347fcce8697c6f43040c3f78f3101466856c0e19d927522a"
+}

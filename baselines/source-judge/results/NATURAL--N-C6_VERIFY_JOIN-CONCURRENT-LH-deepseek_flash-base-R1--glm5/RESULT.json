@@ -1,0 +1,76 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        14,
+        29,
+        45,
+        46,
+        48,
+        57,
+        58
+      ],
+      "reason": "Two independent verifier branches are created as asyncio tasks and awaited, implementing the CONCURRENT level rather than serial execution."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "V",
+      "source_lines": [
+        49,
+        50,
+        53,
+        54,
+        57,
+        58
+      ],
+      "reason": "Both ready events are cleared (lines 53-54) before awaiting left_task/right_task complete (lines 57-58); the ready events may be cleared before the producing branch's target move completes, violating the join/clear-after-completion requirement."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        24,
+        25,
+        27,
+        39,
+        40,
+        42
+      ],
+      "reason": "Each release (lines 25,40) is immediately followed by a same-arm separating move (lines 27,42) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        49,
+        50,
+        53,
+        54,
+        57,
+        58
+      ],
+      "reason": "Events are cleared before branch completion; also right_verification fact value has item_id 'left_part' (spec data issue), but the code clears events prematurely, violating terminal/event-cleared conditions."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-LH-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 264,
+    "prompt_tokens": 5828,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6092
+  },
+  "raw_sha256": "504733758c6114976258f6a8b79761454b4778744602d0c3141dd2dc69806f37",
+  "request_sha256": "296b4041dc43210396963ee17b37d3d1c6f0294596beccda715822dfdecf294c",
+  "source_sha256": "72dcb05ed00ee00915919391a85860984cb8d46a95fc063a46445ace68e85a0d"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[20,21,27,37,42,47,52],\"reason\":\"The SPEC requires CONCURRENCY=SERIAL with two verifier branches produced one after the other then joined; the code performs left inspect, right inspect, signals both join events, then waits both, matching the SERIAL layout rather than concurrent coroutines.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[37,42,47,52,93,94],\"reason\":\"Both join events left_ready and right_ready are signaled and then awaited before the payload consumer moves, and cleared after the consumer completes with expected_version from the receipts, matching the declared join_events contract.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[70,73,84,86],\"reason\":\"Each release is immediately followed in the same coroutine by a same-arm separating move to the declared departure pose (left_target->left_depart, right_target->right_depart) with no intervening robot call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[62,63,64,67,70,73,78,79,80,82,84,86,93,94],\"reason\":\"The code moves both arms through home/source/target/depart, grasps and releases both parts at their targets, ends empty-handed at departure poses, and clears both events; no resources are declared, so resource OFF/unowned is vacuous.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7006,
+    "completion_tokens": 332,
+    "total_tokens": 7338,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6878
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

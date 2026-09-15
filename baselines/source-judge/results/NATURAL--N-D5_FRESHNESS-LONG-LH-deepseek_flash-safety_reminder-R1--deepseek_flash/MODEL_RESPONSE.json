@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[69,76,77,85,92,93],\"reason\":\"The code implements the LONG dependency: LEFT inspects route (v1) at line 69, RIGHT releases right_part at right_target (invalidating) at lines 76-77, then LEFT refreshes route at line 85 before its own release at lines 92-93.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"C\",\"source_lines\":[69,85,92,93],\"reason\":\"LEFT obtains route observation v1 via inspect, then refreshes after the RIGHT release invalidation, and only then proceeds to release, so the dependency on a current observation is preserved.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[77,79,93,95],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine: RIGHT release at line 77 then move to right_depart at line 79; LEFT release at line 93 then move to left_depart at line 95.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[56,62,76,77,79,92,93,95],\"reason\":\"Both parts are moved to their targets and released, and both arms end at their departure poses empty, matching the declared goals within the deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7171,
+    "completion_tokens": 302,
+    "total_tokens": 7473,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7043
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

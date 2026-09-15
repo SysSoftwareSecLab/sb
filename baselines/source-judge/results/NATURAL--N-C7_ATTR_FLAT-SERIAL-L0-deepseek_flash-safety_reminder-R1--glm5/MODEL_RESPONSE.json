@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[83,87,88,89,91,92,93,94,96,97,98,100,101],\"reason\":\"Implements SERIAL alternating episodes plus required item-1 empty_0 wait/clear and serial line_clear/receiver_ready inspections, matching the C7_ATTR_FLAT-SERIAL-L0 attribute combination.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[43,52,72,81,93,94],\"reason\":\"Producer signals ready after buffer placement/departure; consumer waits ready before pickup, clears ready after carried move, publishes empty_0 after target release/departure; second producer waits/clears empty_0 before entering buffer.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[28,31,34,37,55,60,63,66],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry, hold it through release and immediate departure, then release it after departure, respecting capacity-one ownership.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[52,69,72],\"reason\":\"Consumer waits the corresponding ready receipt and supplies that exact active EventReceipt on the carried move to target before clearing it.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[83,88,89,100,101],\"reason\":\"SPEC requires SERIAL alternating complete producer/consumer episodes; code awaits producer_episode then consumer_episode for each part rather than joining coroutines.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[92,93,94,96,97,98],\"reason\":\"Implements declared item-1 holdout: wait/clear empty_0, then inspect line_clear and receiver_ready serially before the second producer episode.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[31,34,75,78,31,34],\"reason\":\"Each release at buffer/target is immediately followed by a same-arm separating move in the same coroutine before any other action.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[20,88,100],\"reason\":\"For part_1, approach_sequence requires start_pose left_wait before moving to source_1, but producer_episode always moves LEFT from left_home to source_pose, omitting the required left_wait start for part_1.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 507,
+    "prompt_tokens": 7255,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7762
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

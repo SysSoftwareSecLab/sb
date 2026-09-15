@@ -1,0 +1,104 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        17,
+        18,
+        20,
+        22,
+        34,
+        36,
+        37,
+        38,
+        40,
+        42,
+        44,
+        50,
+        51,
+        52,
+        53,
+        55,
+        56,
+        57,
+        58
+      ],
+      "reason": "Each arm deposits own part on own pad, clears pad, signals item-bound ready; consumer waits for peer ready before pickup, carries with receipt, releases, then clears event after carried move. Order matches required_order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        34,
+        40,
+        44
+      ],
+      "reason": "wait_event returns receipt; carried move to target passes receipt=receipt; clear_event uses expected_version=receipt.version after the carried move completes."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        34,
+        40,
+        44,
+        55,
+        56
+      ],
+      "reason": "Focal dependency right_ready -> LEFT carried move is present: LEFT consume_peer waits right_ready (line 34), uses that receipt in LEFT carried move to left_target (line 40), and clears right_ready after (line 44)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        20,
+        42,
+        64,
+        65
+      ],
+      "reason": "Each release is followed immediately in the same coroutine by a same-arm move: release at pad then move to clear_pose (lines 18-20); release at target then clear_event (line 42) with final depart moves (lines 64-65). No intervening same-arm proposal."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        50,
+        51,
+        52,
+        53,
+        55,
+        56,
+        57,
+        58,
+        64,
+        65
+      ],
+      "reason": "Terminal goals: left_part at right_target (LEFT consumes right_part to left_target, RIGHT consumes left_part to right_target), right_part at left_target, arms end at left_depart/right_depart, and both ready events cleared via clear_event."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6778,
+    "completion_tokens": 431,
+    "total_tokens": 7209,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6650
+  },
+  "raw_sha256": "08a248e4a0c2ed14aeabf5f2c0770910c64b52f24564183d67b1330f518707cb",
+  "request_sha256": "b66ca34b23e12029352a469591645c1d5705ced58dca39884414074bf5ea5117",
+  "source_sha256": "656e51cb2eff25b315adacd6827f4c4daf39934cff72788d36df9596215f46d0"
+}

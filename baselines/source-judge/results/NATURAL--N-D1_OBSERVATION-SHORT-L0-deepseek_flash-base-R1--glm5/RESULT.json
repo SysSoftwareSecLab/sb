@@ -1,0 +1,85 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        28,
+        32
+      ],
+      "reason": "RIGHT inspects quality at line 28, then LEFT grasps left_part at inspection with observation=quality_obs at line 32, preserving the SHORT producer-to-consumer dependency before final placement."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        10,
+        11,
+        14,
+        28,
+        31,
+        32,
+        35,
+        36,
+        39
+      ],
+      "reason": "SPEC requires accept_by_pass branch: pass 1 accepts (target) or rework then inspection again. Source places left_part at inspection, departs, inspects quality (pass 1 = accept), then picks up from inspection and goes directly to left_target. It omits the rework branch entirely; no conditional on accept_by_pass[0] and no rework circuit path is implemented."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        14,
+        28,
+        31,
+        32
+      ],
+      "reason": "LEFT places at inspection and departs (line 10-11,14), RIGHT issues quality observation (line 28), LEFT approaches inspection from left_wait and grasps with the newly issued current quality_obs (lines 31-32). The rework-area observation sequence is not triggered because pass 1 accepts, so the inspection-area observation sequence is complete."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        14,
+        22,
+        25,
+        36,
+        39
+      ],
+      "reason": "Each release (lines 11,22,36) is immediately followed by a same-arm separating move in the same coroutine: LEFT to left_wait (14), RIGHT to right_depart (25), LEFT to left_depart (39)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        35,
+        36,
+        39,
+        25
+      ],
+      "reason": "Terminal goals require both parts at targets and both arms empty at departures. LEFT reaches left_depart (39) and RIGHT reaches right_depart (25), and both releases occur. However, the SPEC requires left_part acceptance within two inspection passes via accept_by_pass branching; the source implements no branch logic and omits the rework path, so the acceptance condition is not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-SHORT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 457,
+    "prompt_tokens": 5624,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6081
+  },
+  "raw_sha256": "a95ec74fbee9c3b2aa651c48ebe76ea325f05ec83c540fa7b71babf259f9db03",
+  "request_sha256": "5efea545d6becb3e12e374e3f7ef644ef622d5ac23d2382b06bf3d66aea9adec",
+  "source_sha256": "2d3d79f63cec01557cc7589822e7adfcaed701b518b979915158e0a5071f98f1"
+}

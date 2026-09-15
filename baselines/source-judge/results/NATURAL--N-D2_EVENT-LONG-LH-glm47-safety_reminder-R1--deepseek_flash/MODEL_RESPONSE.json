@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"C\",\"source_lines\":[58,61,74,87,90,103],\"reason\":\"Each arm signals its own ready event after depositing/clearing, waits for the peer ready event, and clears the peer event after the carried move; the reciprocal produce/wait/clear order matches the SPEC.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[61,68,74,90,97,103],\"reason\":\"The EventReceipt returned by wait_event is passed as receipt to the carried move to the target, and clear_event uses that same receipt's version, matching the required receipt dependency.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[61,68,90,97],\"reason\":\"The focal dependency right_ready -> LEFT carried move is implemented: LEFT waits for RIGHT_READY and passes that receipt to its move to left_target, preserving the dependency across the intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[52,55,81,84],\"reason\":\"Each release at the declared pad is immediately followed in the same coroutine by a same-arm move to the clear pose, satisfying the support departure requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[49,52,55,58,61,64,68,70,73,74,78,81,84,87,90,93,97,99,102,103],\"reason\":\"The code deposits each part on its own pad, exchanges parts to the opposite targets, ends at left_depart/right_depart with empty hands, and clears both ready events, matching the declared terminal goals.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7623,
+    "completion_tokens": 376,
+    "total_tokens": 7999,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7495
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

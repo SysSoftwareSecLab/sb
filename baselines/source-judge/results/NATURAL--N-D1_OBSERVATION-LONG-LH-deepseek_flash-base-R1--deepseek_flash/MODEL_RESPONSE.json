@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[25,29,37,41],\"reason\":\"The quality observation issued by RIGHT inspect at line 25 is consumed by LEFT grasp at line 29 after intervening LEFT move/release/move control flow, and the second quality observation at line 37 is consumed by LEFT grasp at line 41, preserving the LONG producer-to-consumer dependency across intervening control flow.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[25,29,32,33,37,41,44,45],\"reason\":\"The code implements the two-pass accept_by_pass branch: pass 1 quality_obs is consumed, LEFT carries to rework and releases, then pass 2 quality_obs is consumed and LEFT carries to left_target and releases, within the max_passes=2 limit.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[25,29,37,41],\"reason\":\"The inspection area is entered and quality observations are issued by RIGHT inspect at lines 25 and 37, and each newly issued current quality record is consumed by the corresponding LEFT grasp at lines 29 and 41.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[11,13,21,22,33,34,45,46],\"reason\":\"Each release is followed immediately by a same-arm separating move in the same candidate coroutine: release LEFT at inspection line 11 then move LEFT left_wait line 13; release RIGHT at right_target line 21 then move RIGHT right_depart line 22; release LEFT at rework line 33 then move LEFT rework_wait line 34; release LEFT at left_target line 45 then move LEFT left_depart line 46.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[6,7,10,11,13,16,17,20,21,22,25,29,32,33,34,37,41,44,45,46],\"reason\":\"The source shows the intended terminal moves and releases, but source-only evidence cannot confirm actual execution completion, empty hands, event clearing, or deadline satisfaction for the finite trajectory.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6262,
+    "completion_tokens": 478,
+    "total_tokens": 6740,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6134
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

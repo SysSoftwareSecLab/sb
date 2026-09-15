@@ -1,0 +1,150 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        46,
+        47,
+        48,
+        112,
+        113
+      ],
+      "reason": "CONCURRENT structure via asyncio.gather(producer(), consumer()) and item-1 readiness facts inspected together (line_clear, receiver_ready) inside the loop branch before second pickup."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        28,
+        30,
+        82,
+        84,
+        88,
+        90,
+        43,
+        44,
+        58,
+        60,
+        106,
+        108
+      ],
+      "reason": "ready_0/ready_1 signaled after buffer placement+departure, cleared after carried move; empty_0 published after target release+departure and waited/cleared by producer before second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        23,
+        25,
+        26,
+        53,
+        54,
+        55,
+        56,
+        57,
+        75,
+        76,
+        77,
+        78,
+        101,
+        102,
+        103,
+        104
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering buffer poses, hold it through release, and release it after departing to left_wait/right_wait; capacity-one buffer occupancy owned throughout contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        28,
+        30,
+        80,
+        82,
+        58,
+        60,
+        105,
+        106
+      ],
+      "reason": "Producer signals ready receipts and stores them; consumer waits the corresponding ready receipt and supplies that exact active item receipt on carried move to target for both parts."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        112,
+        113,
+        12,
+        63
+      ],
+      "reason": "Producer and consumer coroutines are defined separately and run together via asyncio.gather, implementing the CONCURRENT structure rather than serial episodes."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        46,
+        47,
+        48
+      ],
+      "reason": "Producer waits and clears empty_0 inside the loop branch, then inspects both readiness facts (line_clear, receiver_ready) before second pickup, matching the declared held-out control-flow signature."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        23,
+        25,
+        55,
+        56,
+        86,
+        87,
+        109,
+        110
+      ],
+      "reason": "Each release at buffer/target is immediately followed by a same-arm separating move (to left_wait/right_wait/right_home) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        110,
+        113,
+        32,
+        61
+      ],
+      "reason": "LEFT ends at left_wait (line 56/25), not left_home; RIGHT ends at right_home for episode 2 but LEFT never returns to left_home, violating declared terminal pose goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 557,
+    "prompt_tokens": 7677,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8234
+  },
+  "raw_sha256": "a562b4a7c4c80675895fee4e5c1e0215096dd487503dbffa38050ac3b7654768",
+  "request_sha256": "9d8672e8faa74a68dc90888e8591dc9b166c7482105acdc8a5fb3351c37ae5e1",
+  "source_sha256": "575cf5fdeb722db3ad030a25b7832c08470427a36f95bed7b5a794baca9c9a42"
+}

@@ -1,0 +1,24 @@
+{
+  "status": "INVALID_STRUCTURED_RESPONSE",
+  "predictions": null,
+  "parse_error": "Expecting value: line 1 column 1 (char 0)",
+  "policy": "Original response retained; no scientific retry and no format normalization.",
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 371,
+    "prompt_tokens": 6776,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7147
+  },
+  "raw_sha256": "f96d1870a836b1b43d0e5648afc0c5f4880e0e67083343f12e89dc5e996be8c0",
+  "request_sha256": "f4f90748908c448a8760c74b78b89c81749ca78efc1a3bf0036f896e0ab149b1",
+  "source_sha256": "0dcb2d07313eb768c38bdbed0670cf2c05c070b37ec021dc79b2e1450ee2bd04"
+}

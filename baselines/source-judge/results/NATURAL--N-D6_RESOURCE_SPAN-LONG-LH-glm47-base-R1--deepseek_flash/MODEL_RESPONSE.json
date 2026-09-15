@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[39,42,47,51,54,58,62,70,73,74],\"reason\":\"Each worker acquires fixture then tool (lines 39-43), performs source approach, grasp, target move, release, and departure while both resources are held, then releases tool and fixture in finally (lines 70-74), matching the required dual-resource span.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[39,42,47,51,54,58,62,70,73,74],\"reason\":\"The focal dependency is implemented: both fixture and tool are acquired before the source approach and held through grasp, target placement, release, and departure, then released afterward, preserving the dual-resource dependency across the long intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[58,62],\"reason\":\"After release at POSES[arm]['target'] (line 58), the same worker coroutine immediately calls robot.move to the depart pose (line 62) with no intervening same-arm request.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[82,83,84,86,90],\"reason\":\"The code aims for both parts at targets, empty arms at departures, and resources OFF/unowned, but the top-level except swallows exceptions (lines 86-90) and source-only evidence cannot confirm the finite run reaches all terminal goals, events cleared, and deadline.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[39,42,68,70,74],\"reason\":\"The cleanup is present in finally, but the obligation is triggered only by an actual tool acquisition timeout; no finite execution evidence shows such a timeout occurred.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6739,
+    "completion_tokens": 394,
+    "total_tokens": 7133,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6611
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

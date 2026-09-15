@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"V\",\"source_lines\":[45,46,47,48],\"reason\":\"SPEC declares CONCURRENCY=SERIAL; source comment says SERIAL and awaits branches sequentially, matching the declared level.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[24,42,50,51,52,55,56],\"reason\":\"Both branches signal left_ready/right_ready; run_task waits both events then clears with receipt versions, matching join_events contract.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[20,22,38,40],\"reason\":\"Each release uses the held object at its declared support zone and is immediately followed by a same-arm separating move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[34,30,38],\"reason\":\"Right branch grasp observation validates item_id=='left_part' instead of 'right_part', contradicting the right_part goal; terminal goal cannot be satisfied.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 216,
+    "prompt_tokens": 5853,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6069
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

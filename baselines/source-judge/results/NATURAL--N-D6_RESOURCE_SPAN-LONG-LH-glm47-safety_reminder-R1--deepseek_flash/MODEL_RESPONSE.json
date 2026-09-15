@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[37,39,47,48,51,54,57,62,63,64],\"reason\":\"Worker acquires fixture then tool before the source approach/grasp, holds both through target move and release, then releases tool and fixture in finally after departure, spanning the required carried path.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[37,39,47,48,51,54,57,62,63,64],\"reason\":\"The dual resource scope is established before the source approach and preserved across grasp, transport, release and departure, implementing the LONG dependency distance structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[54,57],\"reason\":\"Each release at target_zone is immediately followed in the same worker coroutine by a same-arm move to the declared depart pose with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[67,68,69],\"reason\":\"Source implements both workers concurrently with target release and departure, but the finite execution outcome, resource OFF/unowned state, and deadline satisfaction cannot be confirmed from source alone.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[37,39,59,62,63,64],\"reason\":\"No actual tool acquisition timeout is evidenced in the supplied finite scenario; the try/finally cleanup exists but the timeout trigger condition is not shown to occur.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6380,
+    "completion_tokens": 324,
+    "total_tokens": 6704,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6252
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

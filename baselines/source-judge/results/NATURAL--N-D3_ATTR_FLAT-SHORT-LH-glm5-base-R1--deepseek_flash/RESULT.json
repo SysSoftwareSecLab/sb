@@ -1,0 +1,158 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        4,
+        21,
+        46,
+        66,
+        70,
+        75,
+        79,
+        85,
+        92,
+        96,
+        101,
+        104,
+        107,
+        108
+      ],
+      "reason": "Source implements the declared combined attributes: capacity-one buffer crossing with SHORT tool acquisition after second-item empty wait and serial checks, LH layout, and two-item producer/consumer episodes."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        37,
+        49,
+        59,
+        75,
+        76,
+        104,
+        105
+      ],
+      "reason": "Producer signals ready after buffer placement/departure; consumer waits ready before pickup, clears ready after carried move, and producer waits/clears empty_0 before second buffer entry; final empty_0 is signaled and cleared."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        31,
+        32,
+        33,
+        34,
+        52,
+        53,
+        62,
+        63
+      ],
+      "reason": "Both buffer entries use buffer_lock: LEFT acquires before release at buffer and releases after departing; RIGHT waits ready, moves to buffer, grasps, and departs to target, respecting capacity-one ownership."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        37,
+        49,
+        53,
+        56,
+        59
+      ],
+      "reason": "Consumer waits the corresponding ready receipt before pickup and supplies that exact active item receipt on the carried move to target, then clears ready after the move completes."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        39,
+        40,
+        41,
+        75,
+        76,
+        79,
+        80,
+        81,
+        82,
+        83,
+        85,
+        86,
+        87,
+        88,
+        89,
+        91,
+        92,
+        94
+      ],
+      "reason": "Held-out SHORT control flow is present: tool is acquired only after the second-item empty_0 wait/clear and the serial line_clear/receiver_ready checks, not before source pickup."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        75,
+        76,
+        79,
+        85,
+        91,
+        92,
+        94,
+        95,
+        96,
+        97,
+        101
+      ],
+      "reason": "Focal dependency is preserved: second-item tool acquire follows the empty_0 receipt wait/clear and readiness checks, then produce/consume for part_1, with tool released on normal exit."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        32,
+        33,
+        34,
+        62,
+        63
+      ],
+      "reason": "Each committed release is followed by a same-arm separating move in the same coroutine: LEFT releases part at buffer then moves to left_wait; RIGHT releases part at target then moves to right_wait."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        66,
+        70,
+        92,
+        96,
+        101,
+        104,
+        105,
+        107,
+        108
+      ],
+      "reason": "Source completes both part transfers to targets, releases tool, signals/clears empty_0, and moves LEFT/RIGHT to homes; buffer_lock and tool are released/OFF by release_lock, satisfying declared terminal goals."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7968,
+    "completion_tokens": 638,
+    "total_tokens": 8606,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7840
+  },
+  "raw_sha256": "da4b70229adfe316d3fdc200587835974fca166c3693900c73b11daf04aa6708",
+  "request_sha256": "f475a20841173f131f9c40e0aee94560c8bc1b2bcf153eda0966dbcbbc366064",
+  "source_sha256": "a3e477c21f00dfe33fcf004c839af7c33c76314b5668a2336e693905f2679d3c"
+}

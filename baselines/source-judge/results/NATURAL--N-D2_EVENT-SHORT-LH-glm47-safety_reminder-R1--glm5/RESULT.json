@@ -1,0 +1,123 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        35,
+        37,
+        39,
+        41,
+        43,
+        46,
+        49,
+        53,
+        55,
+        57,
+        59,
+        61,
+        63,
+        66,
+        71,
+        73,
+        75,
+        77,
+        79,
+        82,
+        85,
+        89,
+        91,
+        93,
+        95,
+        97,
+        99,
+        102
+      ],
+      "reason": "Both workers deposit own item, move to pad, release, depart to pickup_wait, signal own ready, wait peer ready, consume peer item, clear peer event after carried move, then clear own event—matching reciprocal exchange required_order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        49,
+        57,
+        61,
+        85,
+        93,
+        97
+      ],
+      "reason": "wait_event returns peer_ready_receipt; carried move to own target passes that exact receipt; clear_event for peer event uses expected_version=peer_ready_receipt.version after the carried move, for both arms."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        46,
+        49,
+        57,
+        82,
+        85,
+        93
+      ],
+      "reason": "SHORT focal dependency right_ready->LEFT carried move implemented: LEFT waits RIGHT_READY receipt and uses it in carried move to left_target; symmetric for RIGHT. gather provides concurrent workers per required_order B."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        39,
+        41,
+        43,
+        75,
+        77,
+        79,
+        53,
+        55,
+        57,
+        59,
+        63,
+        89,
+        91,
+        93,
+        95,
+        99
+      ],
+      "reason": "Each release is at the declared support pad/target and immediately followed by same-arm separating move in same coroutine: deposit release->pickup_wait, consume release->depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        57,
+        59,
+        63,
+        93,
+        95,
+        99,
+        66,
+        102,
+        105
+      ],
+      "reason": "Source implements left_part->left_target consumed by RIGHT, right_part->right_target consumed by LEFT, arms depart to own departure poses, and clears both ready events; gather awaits both workers."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-SHORT-LH-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 416,
+    "prompt_tokens": 7016,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7432
+  },
+  "raw_sha256": "23652a8642f0ab94236cc461bcdf6b08cb582840a155bb42e7880395d0ac8af8",
+  "request_sha256": "fb9b30d6162873fc152d7b55c8a14db18eb9c53ea4cb5ffd9c50121399692a56",
+  "source_sha256": "7a53d30bceda4f1843a4dc920440196ca48cb0bf3e540700657a6b09e6f672dd"
+}

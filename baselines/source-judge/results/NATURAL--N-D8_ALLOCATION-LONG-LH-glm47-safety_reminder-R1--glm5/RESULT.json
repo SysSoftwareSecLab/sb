@@ -1,0 +1,91 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        25,
+        30,
+        33,
+        38,
+        41,
+        44,
+        47,
+        51,
+        53,
+        57
+      ],
+      "reason": "Both arms inspect allocation; only the arm matching selected_arm proposes move/grasp/release/transport; the unselected arm passes with no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        25,
+        29,
+        30,
+        41
+      ],
+      "reason": "Each worker inspects allocation once before choosing; the selected arm consumes its own current allocation observation (alloc_obs) in the grasp call."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        25,
+        29,
+        30,
+        33,
+        38,
+        41,
+        62,
+        63,
+        64
+      ],
+      "reason": "LONG dependency: peer allocation inspection intervenes before selected observation consumption; both workers inspect concurrently via gather, then selected branch carries the observation into grasp."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        44,
+        47,
+        51
+      ],
+      "reason": "Release occurs at shared_target (a declared logical_support) and is immediately followed by a same-arm same-coroutine separating move to depart_pose."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        38,
+        51,
+        53,
+        57,
+        62,
+        63,
+        64
+      ],
+      "reason": "Selected LEFT departs to left_depart, but nonselected RIGHT remains at right_home via pass while both candidates run concurrently; RIGHT never moves to right_home as a terminal action, and the program lacks evidence of empty-hand/resource/event terminal closure required by TASK_GOAL."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-LH-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 325,
+    "prompt_tokens": 5898,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6223
+  },
+  "raw_sha256": "642fc75bafd398ce1ef154dff0a5b82c49a0a914f10fded026144873b1768b86",
+  "request_sha256": "16e3b8e01b1e79f4f2d8f7ad0da7b3c3f4b09a3aed74f3cb126cb464b821e8fa",
+  "source_sha256": "f9fbf884863dfd81a3d04786fa958adde320433a999e36b03a61428dee195e14"
+}

@@ -1,0 +1,68 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        23,
+        24
+      ],
+      "reason": "SPEC requires SERIAL structure; source uses asyncio.gather to run both branches concurrently, contradicting the required serial implementation."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        11,
+        20,
+        25,
+        26,
+        27,
+        28
+      ],
+      "reason": "Both branches signal left_ready/right_ready, run_task waits on both events, then clears them with expected_version=1, matching the join contract."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        8,
+        9,
+        10,
+        17,
+        18,
+        19
+      ],
+      "reason": "Each release is immediately followed by a same-arm move to departure in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        24,
+        25,
+        26
+      ],
+      "reason": "asyncio.gather violates the SERIAL structure required by the SPEC; additionally, wait_event calls after gather are redundant since signals already fired, and the serial structure obligation is not met."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 212,
+    "prompt_tokens": 5185,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5397
+  },
+  "raw_sha256": "9506ea72886789ecbd72dcb5556a16d344f92888950be788bb35082307b31f8b",
+  "request_sha256": "2e6503b33797362f61128d6f21fbf4af175904b6eab26a269b215f0a4725b604",
+  "source_sha256": "eab1503cc1463c2ad56fb0cf277f1cf6582663113f18e7f8e982d9d8a7ac68fb"
+}

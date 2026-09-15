@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[21,82,129],\"reason\":\"Producer and consumer coroutines run concurrently via asyncio.gather, matching the CONCURRENT axis and L0 layout; both arms' episodes are implemented together rather than serially.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[43,85,97,104,48,50,71,109,120],\"reason\":\"Producer signals ready_0/ready_1 after buffer placement; consumer waits corresponding ready receipt before pickup, clears it after carried move; consumer publishes empty_0 after target release/departure; producer waits and clears empty_0 before second buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[33,40,61,68,90,91,113,114],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry/departure and release it in finally blocks; capacity-one buffer occupancy is serialized through the lock for both placement and pickup.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[43,85,94,97,71,109,117,120],\"reason\":\"Consumer waits the exact ready receipt for each part and supplies it as receipt on the carried move to target; ready is cleared only after that carried move completes.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[21,82,129],\"reason\":\"asyncio.gather(producer(), consumer()) runs both coroutines together, implementing the SPEC's CONCURRENT level rather than a serial action multiset.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[52,53,54,56,57,58],\"reason\":\"For item 1, producer waits and clears empty_0 then inspects line_clear and receiver_ready serially before approaching source_1 and grasping part_1, matching the declared C7 serial-check holdout signature.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[36,38,64,66,100,101,123,124],\"reason\":\"Each release (part_0/part_1 at buffer and target) is immediately followed by a same-arm separating move in the same coroutine: LEFT moves to left_wait, RIGHT moves to right_wait/right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[75,124,77,40,68,97,120,50,105],\"reason\":\"Source returns LEFT to left_home and RIGHT to right_home; tool released in finally; buffer_lock released after each buffer episode; ready and empty events cleared; parts delivered to target_0/target_1; concurrent structure implemented.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 569,
+    "prompt_tokens": 7867,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8436
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

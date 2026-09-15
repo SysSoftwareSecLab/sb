@@ -1,0 +1,125 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        6,
+        24,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "reason": "SPEC requires LONG dependency between quality observation and its consuming grasp: RIGHT must inspect quality, LEFT must use that current quality record on inspection pickup. Source runs both arms concurrently via asyncio.gather with no wait_event/signal/clear_event synchronization; RIGHT never calls inspect, LEFT never consumes a quality observation before grasping left_part at inspection. The required producer-consumer dependency structure is absent."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        24
+      ],
+      "reason": "SPEC requires branch-path contrast: A accepts on first pass, B on second; accept_by_pass selects target or rework-then-inspect-again, at most two passes. Source implements no inspect/refresh calls, no accept_by_pass branching, no rework circuit, no second pass. LEFT simply places left_part at inspection and departs; RIGHT handles only right_part. Required rework branch sequence is entirely omitted."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        24
+      ],
+      "reason": "SPEC requires inspection-zone approach/place/observation/pickup with RIGHT issuing quality observation and LEFT consuming current quality record on inspection pickup. Source enters inspection (LEFT moves to inspection, releases left_part there) but never calls inspect or refresh to issue or consume a quality observation. Required observation sequence is omitted."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        13,
+        20,
+        21,
+        22
+      ],
+      "reason": "Each release is followed by an immediate same-arm separating move in the same coroutine: LEFT releases left_part at inspection then immediately moves to left_depart (lines 12-13); RIGHT releases right_part at right_target then immediately moves to right_depart (lines 21-22). Both releases use declared support zones in logical_supports."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        18,
+        19,
+        20,
+        21,
+        22,
+        24
+      ],
+      "reason": "SPEC requires left_part at left_target (accepted), both arms empty at departures, left part reaches acceptance within two inspection passes, events cleared, resources OFF/unowned. Source places left_part at inspection (not left_target), never inspects/accepts/transports left_part to left_target, never calls inspect/refresh for quality. LEFT departs empty but left_part is left at inspection, not at its goal. Terminal state for left_part is wrong."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 605,
+    "prompt_tokens": 5358,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5963
+  },
+  "raw_sha256": "8b1bec04cd67b643a7298060454dac156d8635c9e4c6d3b61f794937995dddf3",
+  "request_sha256": "72f8ebe9f387395fc73843cc282de6179d995e2838abfa5c7796d56f3c02efef",
+  "source_sha256": "346ded7dfd5309769cf10d34d458b0cc64277452f4f07dc56ea578a5e0699aaa"
+}

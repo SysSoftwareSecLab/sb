@@ -1,0 +1,211 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        67,
+        68,
+        69,
+        72,
+        73,
+        75,
+        76,
+        79,
+        80,
+        81,
+        84,
+        86,
+        87,
+        90,
+        91,
+        94,
+        95,
+        100,
+        103,
+        104,
+        107,
+        108,
+        111,
+        113,
+        114,
+        117,
+        118,
+        119,
+        120,
+        123,
+        125,
+        126,
+        129,
+        130,
+        133,
+        136
+      ],
+      "reason": "The declared combined attributes require CONCURRENCY=SERIAL with the C8 joined readiness checks inside the loop branch; the source runs strictly sequential episodes and performs the two inspects as plain sequential awaits (lines 103-104), not joined inside a loop branch, so the declared combination is not implemented."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        80,
+        81,
+        84,
+        95,
+        100,
+        118,
+        119,
+        123
+      ],
+      "reason": "ready_0 is signaled at line 80 before the consumer's carried move to target_0 (line 90) and is cleared at line 84 before that move completes, violating the required order that ready be cleared only after the corresponding receipt-bearing target move actually completes; empty_0 is signaled at line 95 and cleared at line 100 before the producer's second buffer entry, which is consistent, but the ready_0 ordering is a source-localized violation."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        72,
+        73,
+        75,
+        76,
+        79,
+        81,
+        86,
+        87,
+        90,
+        91,
+        94,
+        111,
+        113,
+        114,
+        117,
+        119,
+        125,
+        126,
+        129,
+        130,
+        133
+      ],
+      "reason": "Both buffer entries acquire buffer_lock before entering the capacity-one buffer and release it after departing (lines 72-81 and 111-119), and the consumer picks up and departs before the producer re-enters, so capacity and ownership during contact are respected in the source."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "V",
+      "source_lines": [
+        80,
+        84,
+        90,
+        118,
+        123,
+        129
+      ],
+      "reason": "The consumer clears ready_0 at line 84 before using ready_0_receipt on the carried move at line 90, and clears ready_1 at line 123 before the receipt-bearing move at line 129, so the receipt is not active when supplied as required."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        67,
+        68,
+        69,
+        72,
+        73,
+        75,
+        76,
+        79,
+        80,
+        81,
+        84,
+        86,
+        87,
+        90,
+        91,
+        94,
+        95,
+        100,
+        103,
+        104,
+        107,
+        108,
+        111,
+        113,
+        114,
+        117,
+        118,
+        119,
+        120,
+        123,
+        125,
+        126,
+        129,
+        130,
+        133,
+        136
+      ],
+      "reason": "The SPEC requires CONCURRENCY=SERIAL for this variant, but the source implements a single strictly sequential producer-then-consumer episode sequence with no concurrent producer/consumer coroutines; the declared serial composition is not implemented."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        100,
+        103,
+        104,
+        107,
+        108
+      ],
+      "reason": "The held-out control-flow signature requires the two readiness checks to be joined inside the loop branch for item 1; the source performs them as two sequential awaits (lines 103-104) with no loop branch, so the declared signature is absent."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        76,
+        79,
+        91,
+        94,
+        114,
+        117,
+        130,
+        133
+      ],
+      "reason": "Each release at lines 76, 91, 114, and 130 is immediately followed in the same coroutine by a same-arm separating move (lines 79, 94, 117, 133) at the declared support poses, satisfying the source-local departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        80,
+        84,
+        90,
+        95,
+        100,
+        118,
+        123,
+        129,
+        133,
+        136
+      ],
+      "reason": "The source returns with ready_0 cleared before its receipt-bearing move and with the required ready/empty event protocol violated; additionally the declared CONCURRENCY=SERIAL structure is not implemented, so the full public terminal goal and acceptance conditions are not met."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-SERIAL-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8461,
+    "completion_tokens": 897,
+    "total_tokens": 9358,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8333
+  },
+  "raw_sha256": "a4fca7a879f5871e5f6af316c24e9da0f52eb1609325932e95e38e6149507869",
+  "request_sha256": "5618c3be7be8d1887e423cc2c31f9ecd0c6b46ed3f3300d8604f593dd164c2cc",
+  "source_sha256": "4bc9fb45e462ca970039336374ae6b6b77965204f07d33a4751012f2a64b0bf4"
+}

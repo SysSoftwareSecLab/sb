@@ -1,0 +1,92 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        21,
+        24,
+        25,
+        26,
+        37,
+        39,
+        42,
+        50,
+        52,
+        55
+      ],
+      "reason": "_acquire_pair acquires fixture then tool and _release_pair releases tool then fixture; _worker performs the carried move/release/depart while both are held, and both serial and concurrent paths wrap worker in try/finally releasing the pair, matching the dual-resource span contract."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        21,
+        37,
+        39,
+        50,
+        52,
+        64,
+        65
+      ],
+      "reason": "The SHORT dependency is implemented: the dual resource scope (fixture+tool) begins at acquisition before pickup and is held across the intervening move/grasp/carry/release/depart control flow, preserving the focal dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        39,
+        52
+      ],
+      "reason": "Each release at target is immediately followed in the same _worker coroutine by a same-arm move to depart, with no intervening call, satisfying the immediate separating departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        63,
+        67,
+        68
+      ],
+      "reason": "Source implements both serial and concurrent structures and terminal moves, but source-only evidence cannot confirm actual terminal poses, empty hands, resources OFF/unowned, cleared events, or deadline compliance in the finite execution."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        20,
+        21,
+        37,
+        50
+      ],
+      "reason": "Acquire calls use timeout_s=5.0 and no actual tool-acquisition timeout is evidenced in the supplied source, so the timeout-cleanup trigger is not shown to occur."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6352,
+    "completion_tokens": 383,
+    "total_tokens": 6735,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6224
+  },
+  "raw_sha256": "7ae815b567a79f5eca45f72527f29a0b0916cfc6cffe2affa41ea89b3f10aa6c",
+  "request_sha256": "2b8022de95a209e8c60c1a9ca9fca51bea2d0afb3c033c3cdec742eea7f52850",
+  "source_sha256": "9824998ad66d4781715b233fccbfe2cc10ae707442c9e6fbd757f23252e1b33d"
+}

@@ -1,0 +1,73 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        82,
+        83,
+        84,
+        85,
+        35,
+        60
+      ],
+      "reason": "asyncio.gather runs left_arm_task and right_arm_task concurrently, matching the CONCURRENT level requirement."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "V",
+      "source_lines": [
+        58,
+        80,
+        82,
+        83,
+        84,
+        85
+      ],
+      "reason": "Both ready events are signaled but never joined via wait_event or cleared; the development contract requires joining join_events left_ready and right_ready."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        52,
+        55,
+        74,
+        77
+      ],
+      "reason": "Each release is immediately followed by a same-arm move to the departure pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        58,
+        80,
+        82,
+        83,
+        84,
+        85
+      ],
+      "reason": "Terminal goal requires events cleared; code signals left_ready/right_ready but never clears them, and never joins them before return."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 208,
+    "prompt_tokens": 6144,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 6352
+  },
+  "raw_sha256": "25b44c382c4080c25c60b748566278c7fcb08027badbd62ad4c65edcd275c6b2",
+  "request_sha256": "2011d26ba59c07ddfcd3f0e4d49f05a65636208e4c44cc3d558ed37e694d4db0",
+  "source_sha256": "41b3a60768e23fd57f7cc7ad8262b1a66cbe6dd62cb62f521ad77cafe245b346"
+}

@@ -1,0 +1,108 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        9,
+        11,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        23
+      ],
+      "reason": "Each worker acquires fixture then tool before moving/grasping/carrying/releasing/departing, then releases tool then fixture, matching the required dual-resource span order."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        9,
+        11,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        23
+      ],
+      "reason": "SHORT dependency 'dual resource scope begins after pickup' is satisfied: both resources are acquired before pickup and held through carry/release/departure until after release."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        17,
+        18,
+        19
+      ],
+      "reason": "Each release occurs at the corresponding target support zone and is immediately followed by a same-arm move to depart in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        23,
+        37,
+        38,
+        39
+      ],
+      "reason": "Both workers move parts to targets, release, depart, and release resources OFF; concurrent gather implements the goal for both arms."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "reason": "try/finally releases any successfully acquired tool/fixture if a later acquisition times out, with flags tracking ownership."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-L0-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 330,
+    "prompt_tokens": 5334,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5664
+  },
+  "raw_sha256": "3e1987876929aa5f35cbcf26bd00c0b0376756180f6151ea4fc395f913ff9128",
+  "request_sha256": "12ad31a25ae279bd0c621ae850d5a9730683f603d098aa594327bced43937942",
+  "source_sha256": "fabe5936dfc8921fedeaba2ebfa298b9b85bde8b23ee007e96f704095da8f7bf"
+}

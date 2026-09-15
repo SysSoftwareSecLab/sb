@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[13,15,22,25,35,37,44,47],\"reason\":\"ready events are signaled before own deposit/clear is complete: left_ready signaled at line 13 after release but before clearing left_ready (line 25), and right_ready at line 35 before clearing right_ready (line 47); SPEC requires deposit/clear then publish ready.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[15,18,20,22,37,40,42,44],\"reason\":\"wait_event receipt is passed to grasp observation and carried move receipt, then cleared after the carried move completes, matching the receipt dependency for both arms.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[15,18,20,22,37,40,42,44],\"reason\":\"focal right_ready->LEFT carried move dependency preserved: LEFT waits right_ready (line 15), carries right_ready_receipt in move to left_target (line 20), clears after (line 22).\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[11,12,23,24,33,34,45,46],\"reason\":\"each release is immediately followed by a same-arm separating move in the same coroutine: release left_part->move left_pickup_wait (lines 11-12), release right_part->move right_pickup_wait (33-34), release right_part->move left_depart (23-24), release left_part->move right_depart (45-46).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[13,25,35,47],\"reason\":\"ready events are not properly cleared relative to SPEC order: left_ready is signaled before its own clear completes and right_ready similarly; also left_ready clear at line 25 occurs after right_ready clear, but the SPEC requires each arm clear its own pad before publishing ready, which is violated.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 420,
+    "prompt_tokens": 6187,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6607
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

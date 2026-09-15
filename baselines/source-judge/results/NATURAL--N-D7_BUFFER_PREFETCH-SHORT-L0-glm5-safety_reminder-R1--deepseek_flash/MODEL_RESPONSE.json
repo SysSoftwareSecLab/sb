@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[30,33,34,47,52,61,64,65,68,69,79,82,83],\"reason\":\"Producer signals ready_0/ready_1 after placing and departing; consumer waits ready before pickup, clears ready after carried move/release/departure, signals empty_0 after departure, and producer waits/clears empty_0 before second buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[23,29,38,46,53,57,70,75],\"reason\":\"Both arms acquire buffer_lock before buffer entry and release it after departing; capacity-one buffer is used with item-specific buffer_0/buffer_1 poses and no overlapping occupancy.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[52,54,69,71],\"reason\":\"Consumer waits for ready_0/ready_1 and passes the exact returned EventReceipt r0/r1 to the carried move into buffer_0/buffer_1.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[33,34,64,65,68],\"reason\":\"SHORT dependency is implemented: producer waits empty_cleared before second buffer entry, consumer signals empty_0 after first departure, and consumer waits second_episode_started before second pickup.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[27,28,44,45,59,60,77,78],\"reason\":\"Each release at a declared support is immediately followed by a same-arm move in the same coroutine: buffer_0->left_home, buffer_1->left_home, target_0->right_home, target_1->right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[90],\"reason\":\"Source implements the required action sequence and terminal poses, but source-only evidence cannot confirm the finite execution actually reaches all goals, clears all events, frees resources, and meets the 50s deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7493,
+    "completion_tokens": 458,
+    "total_tokens": 7951,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7365
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

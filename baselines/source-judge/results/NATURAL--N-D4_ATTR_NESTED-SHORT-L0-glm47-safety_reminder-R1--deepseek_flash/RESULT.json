@@ -1,0 +1,182 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177
+      ],
+      "reason": "Second-item branch waits/clears empty_0 (115-116), then acquires tool (164-165) and joins line_clear/receiver_ready inspections with asyncio.gather (168-171), matching SHORT tool-after-wait-and-checks plus D4 joined checks."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        78,
+        82,
+        97,
+        109,
+        115,
+        116,
+        140,
+        144,
+        183,
+        192
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer placement and departure; consumer waits ready, clears ready after carried move, and signals empty_0; producer waits and clears empty_0 before second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        49,
+        65,
+        68,
+        75,
+        85,
+        88,
+        91,
+        94,
+        106,
+        119,
+        131,
+        134,
+        137,
+        147,
+        150,
+        153,
+        156,
+        159
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release after departure; capacity-one buffer_0/buffer_1 share coordinates and are used sequentially with lock ownership."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        78,
+        82,
+        94,
+        140,
+        144,
+        180
+      ],
+      "reason": "Consumer waits ready_0/ready_1 receipts and supplies the exact active receipt on carried moves to target_0/target_1."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        114,
+        115,
+        116,
+        119,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177
+      ],
+      "reason": "Reachable second-item branch implements the held-out signature: wait/clear empty_0, then tool acquire, then joined line_clear/receiver_ready checks before transfer."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        115,
+        116,
+        164,
+        165,
+        168,
+        169,
+        170,
+        171,
+        180
+      ],
+      "reason": "SHORT dependency is present: tool acquire follows the second-iteration empty_0 receipt wait/clear and readiness checks, with the receipt dependency preserved to the carried move."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        65,
+        68,
+        91,
+        94,
+        100,
+        103,
+        131,
+        134,
+        153,
+        156,
+        186,
+        189
+      ],
+      "reason": "Each release is followed by an immediate same-arm move in the same coroutine: LEFT buffer_0->left_home, RIGHT buffer_0->target_0, LEFT buffer_1->left_wait, RIGHT buffer_1->right_wait, RIGHT target_1->right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        68,
+        103,
+        134,
+        156,
+        189,
+        192,
+        194,
+        195
+      ],
+      "reason": "Source reaches homes, places parts at targets, releases buffer_lock, signals empty_0, and calls release_tool_safely; no source-localized contradiction to declared terminal goals."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-SHORT-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9554,
+    "completion_tokens": 698,
+    "total_tokens": 10252,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9426
+  },
+  "raw_sha256": "4a898ed7f1b799f17ed5e9af00e3286a08ec7ba18829904f397bc006bdfc1fbf",
+  "request_sha256": "c7b92793f59a8ac106584e484ef00e3944a465499b3347ec7c94bc4f090b0cca",
+  "source_sha256": "dde3239ba06ad8b83255e1968664bcc7253fd4b56f74f3d94cd611aec1decb8d"
+}

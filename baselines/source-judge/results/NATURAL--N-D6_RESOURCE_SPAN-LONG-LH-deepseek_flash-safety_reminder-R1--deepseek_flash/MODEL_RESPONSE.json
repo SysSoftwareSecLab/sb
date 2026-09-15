@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[10,12,15,16,19,20,23,30,32,35,37],\"reason\":\"Each worker acquires fixture then tool before moving to source, grasping, moving to target, releasing, and departing, then releases tool and fixture in finally, so the dual-resource ownership spans source approach, pickup, placement and departure as required.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[10,12,15,16,19,20,23,30,32,35,37],\"reason\":\"The focal dual-resource dependency is held across the long intervening control flow (source move, grasp, target move, release, depart) before tool and fixture are released, implementing the LONG dependency distance.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,23],\"reason\":\"After release at target, the same worker coroutine immediately calls move to depart, satisfying the required immediate same-arm separating departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[42,43,46,49],\"reason\":\"Source shows both workers launched concurrently and gathered, but no execution evidence confirms terminal poses, empty hands, OFF/unowned controllers, cleared events, or deadline compliance.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[10,12,24,30,35],\"reason\":\"The try/finally cleanup is present, but no actual tool acquisition timeout is shown to have occurred in the finite trajectory, so this obligation is not triggered.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5841,
+    "completion_tokens": 348,
+    "total_tokens": 6189,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 5841
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

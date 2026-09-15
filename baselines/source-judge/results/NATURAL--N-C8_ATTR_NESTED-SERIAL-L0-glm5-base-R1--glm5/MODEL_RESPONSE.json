@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[80,88,94,101,102],\"reason\":\"Item 0 uses asyncio.gather to run producer and consumer coroutines together; item 1 waits/clears empty_0 then joins both readiness checks inside inspect_readiness before gathered producer/consumer, matching the combined SERIAL+joined-check attributes.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[33,43,58,65,90,91],\"reason\":\"Producer signals ready after departure; consumer waits ready before pickup, clears ready after carried move, publishes empty_0 after target release/departure; producer waits and clears empty_0 before second part entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[17,30,46,55],\"reason\":\"LEFT owns tool during source pickup through ready publication and releases on every exit via try/finally; RIGHT acquires buffer_lock during buffer entry and departure via try/finally, satisfying capacity-one ownership.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[33,43,53,58],\"reason\":\"Consumer waits the corresponding ready receipt and supplies that exact active item receipt on carried move to target (receipt=ready_receipt), then clears ready after the carried move completes.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[81,94,101,102],\"reason\":\"Producer and consumer coroutines run together via asyncio.gather for each item, implementing the SERIAL-level concurrent structure rather than a purely serial action multiset.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[88,90,91,92,94],\"reason\":\"Item 1 waits and clears empty_0, then inspect_readiness joins both readiness checks (line_clear and receiver_ready) inside the loop branch before proceeding to the gathered episode, matching the C8 held-out control-flow signature.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[25,28,61,62],\"reason\":\"Each release (LEFT at buffer, RIGHT at target) is immediately followed by a same-arm separating move in the same coroutine (LEFT to left_wait, RIGHT to right_wait).\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[101,102,104,105,107],\"reason\":\"Both item episodes complete serially then arms return to left_home/right_home; parts delivered to target_0/target_1; resources released in finally blocks; events cleared after use.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 528,
+    "prompt_tokens": 7433,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7961
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

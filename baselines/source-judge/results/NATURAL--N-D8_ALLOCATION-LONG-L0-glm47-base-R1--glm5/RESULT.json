@@ -1,0 +1,24 @@
+{
+  "status": "INVALID_STRUCTURED_RESPONSE",
+  "predictions": null,
+  "parse_error": "Expecting value: line 1 column 1 (char 0)",
+  "policy": "Original response retained; no scientific retry and no format normalization.",
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 333,
+    "prompt_tokens": 5601,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5934
+  },
+  "raw_sha256": "be9f096c7b16827f90810edb4ac555b03bb1cc4052961a5bdea86df785815c55",
+  "request_sha256": "4e67312ad5872ed7781095e87f9cf651e7646e285c6b349bd352e784b96d6f94",
+  "source_sha256": "70bd720eb49dc9c487a3b9c5748626f680f4cc8dc8c93513dc071e1325b3dfdf"
+}

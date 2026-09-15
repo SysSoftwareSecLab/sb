@@ -1,0 +1,144 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        31,
+        32,
+        35,
+        36,
+        37,
+        38,
+        42,
+        44
+      ],
+      "reason": "Source jointly implements SHORT tool acquisition after the second-item empty_0 wait/clear (lines 29-32) and the D4 asyncio.gather join of line_clear/receiver_ready checks (lines 35-38) with both Boolean validations before transfer."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        25,
+        29,
+        30,
+        60,
+        65,
+        81,
+        83,
+        87,
+        103,
+        105
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer placement and departure; consumer waits ready receipts, clears ready only after carried move completes, and signals empty_0; producer waits and clears empty_0 before second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        17,
+        20,
+        23,
+        51,
+        53,
+        56,
+        67,
+        71,
+        74,
+        89,
+        93,
+        96
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release after departing; capacity-one buffer used with item-specific buffer_0/buffer_1 poses and lock ownership spans each entry/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        65,
+        76,
+        87,
+        98
+      ],
+      "reason": "Consumer waits ready_0/ready_1 and supplies the exact active EventReceipt on the carried move to target_0/target_1."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        29,
+        30,
+        31,
+        32,
+        35,
+        36,
+        37,
+        38,
+        42,
+        44
+      ],
+      "reason": "Reachable control flow places tool acquire after the second-iteration empty_0 wait/clear and joins the two second-item checks via asyncio.gather inside the i==1 branch before transfer."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        29,
+        30,
+        32,
+        35,
+        36,
+        37,
+        38,
+        42,
+        44
+      ],
+      "reason": "SHORT dependency structure is present: tool acquire follows the second-iteration empty_0 receipt wait/clear and the joined line_clear/receiver_ready checks, preserving the focal dependency across intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        22,
+        53,
+        55,
+        77,
+        79,
+        99,
+        101
+      ],
+      "reason": "Each release at a declared support is immediately followed by a same-arm separating move in the same coroutine: buffer releases followed by left_home/right_home moves, target releases followed by right_home moves."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        107,
+        108
+      ],
+      "reason": "Source implements the concurrent producer/consumer structure and declared goals, but source-only evidence cannot confirm the actual finite trajectory reaches all terminal poses, empty hands, resources OFF/unowned, events cleared, and deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8192,
+    "completion_tokens": 631,
+    "total_tokens": 8823,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8064
+  },
+  "raw_sha256": "a79b27b7764508dc619c20a64eaa798129f9863c3dffa41d8c6ed9bf69ca9aed",
+  "request_sha256": "e1fdadf64904f7b7dc8502eb9ea7d58a5697176b262b9bd358128246d5af7807",
+  "source_sha256": "d79d9f11d37b1cf61270ae4761b71d432ad19eb3bc5b18724222c41ee62cd755"
+}

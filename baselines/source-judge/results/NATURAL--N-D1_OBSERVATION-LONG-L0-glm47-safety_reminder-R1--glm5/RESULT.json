@@ -1,0 +1,99 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        143,
+        243,
+        211,
+        214
+      ],
+      "reason": "LEFT consumes quality via inspect(ARM_LEFT) at lines 143/243, but RIGHT is the required producer; RIGHT's inspect at 211 is on ARM_RIGHT and signal at 214 is not awaited, breaking the LONG focal dependency between quality observation and consuming grasp."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259
+      ],
+      "reason": "Rework branch moves LEFT to POSE_REWORK from POSE_LEFT_WAIT, but approach_sequences require start_pose=rework_wait for rework grasp; code lacks rework_wait transition before rework grasp, violating the declared approach sequence."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        143,
+        243,
+        211
+      ],
+      "reason": "LEFT calls inspect(ARM_LEFT, quality) to consume the observation, but SPEC requires RIGHT issues each inspection observation; LEFT is not the designated producer, and RIGHT's inspect at 211 does not guarantee LEFT consumes the newly issued current record."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        226,
+        229,
+        250,
+        251,
+        258,
+        259,
+        178,
+        181
+      ],
+      "reason": "Each release is immediately followed by a same-arm move in the same coroutine: release at inspection→move to left_wait (229), release at left_target→move to left_depart (251), release at inspection after rework→move to left_wait (259), release at right_target→move to right_depart (181)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        264,
+        265,
+        266,
+        267,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204
+      ],
+      "reason": "RIGHT's coordinated loop blindly signals twice without verifying LEFT's state; after LEFT accepts on pass 0 and breaks, RIGHT still waits for ready_for_inspection and inspects again, risking incomplete terminal state. Also signal at 214/232 is not awaited but more critically the coordination protocol does not ensure both arms reach departures with empty hands and cleared events."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 481,
+    "prompt_tokens": 10782,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 11263
+  },
+  "raw_sha256": "22faad1a4baa786ed50821d1726ba73a10f3dad93281b3029d0e0c3859c58047",
+  "request_sha256": "43ab84549b24eae827b0880029a4e0ef076105ee9d6fbd22c945b44f24d4f3a2",
+  "source_sha256": "0daa7d77ca5bc46ff4cc0fe79f94a063849b1abb26f2b93cbd4614b122d8f0df"
+}

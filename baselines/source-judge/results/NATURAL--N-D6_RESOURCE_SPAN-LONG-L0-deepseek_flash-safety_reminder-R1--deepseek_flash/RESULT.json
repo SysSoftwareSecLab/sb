@@ -1,0 +1,89 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        8,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        20,
+        21
+      ],
+      "reason": "Worker acquires fixture then tool before source approach/pickup, carries to target while owning both, releases part, departs, then finally releases tool and fixture in reverse order, spanning the full source-to-departure span."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        8,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        20,
+        21
+      ],
+      "reason": "The dual resource ownership (fixture+tool) is held across the long dependency span from source approach through pickup, placement and departure, matching the LONG focal dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        16,
+        17
+      ],
+      "reason": "Each release at target is immediately followed by a same-arm move to the declared departure pose in the same coroutine and virtual time."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        27,
+        28
+      ],
+      "reason": "Source shows serial workers reaching departures and releasing resources, but no execution evidence confirms terminal poses, empty hands, OFF/unowned controllers, cleared events, or deadline within the finite run."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        8,
+        10,
+        19,
+        20,
+        21
+      ],
+      "reason": "No actual tool acquisition timeout is triggered in the supplied finite scenario; try/finally cleanup exists but the timeout condition is not exercised."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5501,
+    "completion_tokens": 329,
+    "total_tokens": 5830,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5373
+  },
+  "raw_sha256": "dbae579bb817eac4897c7d1b36ee18857671dbef3ec6078b553aa11fd10dd079",
+  "request_sha256": "10a1495193851daf2b91b06343651d25a1e6cef779de1c333f51c38410977079",
+  "source_sha256": "919ffcdbf54047955af83657e94760cdbe3a1ae432aa39b3ab25f08eaa75a53f"
+}

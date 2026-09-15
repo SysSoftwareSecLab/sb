@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[13,14,15,16,17,20,21,22,23,24,27],\"reason\":\"The SHORT/LH structure is implemented serially: LEFT carries left_part to left_target and departs (lines 13-17), then RIGHT carries right_part to right_target and departs (lines 20-24), and the focal route observation for left_part is inspected only after the right arm's invalidating peer placement (line 27), preserving the declared dependency.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"C\",\"source_lines\":[27],\"reason\":\"The route observation for left_part is taken via inspect after the right arm's release/placement, matching the development contract's fact_id route and object_id left_part and the focal dependency that the observation occurs after the invalidating peer placement.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[16,17,23,24],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same candidate coroutine: LEFT release at left_target then move to left_depart (lines 16-17), RIGHT release at right_target then move to right_depart (lines 23-24), with no intervening same-arm proposal.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[13,14,15,16,17,20,21,22,23,24,27],\"reason\":\"The source reaches both targets and departure poses and releases both parts, but the finite trajectory's terminal state (empty hands, resources OFF/unowned, events cleared, deadline) is not fully closed by source-only evidence, so the full TASK_GOAL cannot be confirmed.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5534,
+    "completion_tokens": 377,
+    "total_tokens": 5911,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5406
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

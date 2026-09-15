@@ -1,0 +1,100 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        55,
+        89,
+        99,
+        117,
+        118
+      ],
+      "reason": "Producer signals ready after releasing lock and departing (line 55), but SPEC requires ready publication immediately after buffer departure while still within the buffer-contact episode. Consumer clears ready (line 89) after the carried move completes (line 86) which is correct. However, the producer for part_0 signals ready_0 at line 55 but the consumer for part_0 is created at line 108 and waits for ready_0 at line 67; since prod0 is awaited first (line 109), the ready_0 signal at line 55 occurs before consumer starts, which is acceptable for event ordering. The empty_0 protocol: consumer signals empty_0 at line 99 after departing target, and main waits/clears empty_0 at lines 117-118 before starting part_1 producer, matching SPEC. The ready_1 event is signaled at line 55 for part_1 and cleared at line 89 in consumer part_1. Overall event protocol appears followed but ready is signaled after lock release rather than immediately after departure—SPEC says 'immediately departs before ready publication' which is satisfied since departure (line 49) precedes signal (line 55). Label C."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        32,
+        42,
+        45,
+        49,
+        52,
+        70,
+        76,
+        77,
+        80,
+        83
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering buffer poses and release it after departing buffer. Producer: acquire (32), move to buffer (42), release at buffer (45), depart to LEFT_WAIT (49), release lock (52). Consumer: acquire (70), move to buffer (76), grasp (77), depart to RIGHT_WAIT (80), release lock (83). Lock ownership spans entire buffer contact period for both participants."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        67,
+        86,
+        89
+      ],
+      "reason": "Consumer waits for ready_event receipt (line 67), uses that exact receipt on the carried move to target (line 86, receipt=ready_receipt), and clears ready after the carried move completes (line 89). This matches the BUFFER_RECEIPT mechanism and SPEC requirement that the consumer supplies the exact active item receipt on the carried move to target."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        97,
+        99,
+        117,
+        118,
+        120
+      ],
+      "reason": "The focal dependency is 'second item source pickup follows empty receipt' (SHORT, L0). Consumer for part_0 signals empty_0 (line 99) after departing target. Main waits for empty_0 receipt (line 117), clears it (line 118), then starts producer for part_1 (line 120). The second part's source pickup (line 38 in producer part_1) thus follows the empty receipt, implementing the declared SHORT dependency structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        45,
+        49,
+        92,
+        95
+      ],
+      "reason": "Producer releases part at buffer_pose (line 45) then immediately moves to LEFT_WAIT (line 49) in the same coroutine. Consumer releases part at target (line 92) then immediately moves to RIGHT_HOME (line 95). Both releases are followed by immediate same-arm separating moves in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        107,
+        108,
+        109,
+        110,
+        120,
+        121,
+        122,
+        123
+      ],
+      "reason": "The SPEC states 'B runs producer and consumer coroutines together' (required_order item 6), but the code creates both tasks then awaits producer fully before awaiting consumer (lines 109-110, 122-123), executing them serially rather than concurrently. This violates the COMPOSITION_CONCURRENCY/TASK_GOAL requirement to implement the stated concurrent structure, not merely the terminal goal serially. Additionally, buffer_0 and buffer_1 are the same capacity-one buffer at identical coordinates; running producer and consumer for the same part truly concurrently would risk collision, but the SPEC explicitly requires concurrent execution, and the serial await pattern does not implement B's concurrent level."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-SHORT-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 877,
+    "prompt_tokens": 7617,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8494
+  },
+  "raw_sha256": "a985a9d857ec78561e3fb5593c791177183cdc3a1e68b52546a537285d1c9c24",
+  "request_sha256": "dbe3dc06672190bbf3f00e23a6952d21c7ea13bd911f56aefb01ab48c49fc35b",
+  "source_sha256": "88fa457e8372fce11ba3e0ee5a74c50aa7f90edcebbfa70a8e72630fd711357d"
+}

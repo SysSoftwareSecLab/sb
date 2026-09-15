@@ -1,0 +1,92 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        1,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "reason": "The supplied SPEC declares DEPENDENCY_DISTANCE=SHORT with layout L0 and no LONG producer-to-consumer structure; the code implements only the two independent lanes, so the LONG-range dependency obligation is not applicable."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "reason": "The development contract requires the route observation for left_part, but run_task never calls inspect/refresh for fact_id 'route' and never consumes a current Observation before grasping left_part; the required current observation is omitted."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        18,
+        19
+      ],
+      "reason": "Each release is immediately followed by a same-arm move in the same coroutine: release LEFT left_part at left_target then move LEFT left_depart, and release RIGHT right_part at right_target then move RIGHT right_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        4,
+        7,
+        8,
+        9,
+        10,
+        11,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "reason": "The code moves both arms to their departure poses and releases both parts at their targets, but source-only evidence cannot confirm actual committed terminal state, empty hands, or deadline satisfaction in the finite execution."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5335,
+    "completion_tokens": 334,
+    "total_tokens": 5669,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5207
+  },
+  "raw_sha256": "2876c555f8a07eb7535266ae34ce94cdca759869036b4e57ab69ade309cea2c4",
+  "request_sha256": "f19dda32e27a3dd7c3499b2588f23e2047d518aa87c836fca01d6b14c3709ea1",
+  "source_sha256": "e28c96aa4216362e87e0b7a8d176882962428b2b8bb09f484b44caf2244edb3e"
+}

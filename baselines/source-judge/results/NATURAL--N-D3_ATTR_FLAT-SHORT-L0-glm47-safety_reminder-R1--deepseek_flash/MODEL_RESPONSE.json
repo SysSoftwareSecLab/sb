@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"U\",\"source_lines\":[34,37,62,74,82,87,158],\"reason\":\"Source implements SHORT tool acquisition after empty_0 wait and serial checks, but the combined declared attributes' full finite outcome cannot be confirmed from source alone.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[58,62,65,108,113,125,134,138,150],\"reason\":\"Producer signals ready_0/ready_1 after buffer placement and departure; consumer waits ready, clears after carried move, signals empty_0; producer waits and clears empty_0 before second buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"U\",\"source_lines\":[46,49,52,96,99,102,116,119,128,131,141,144,153,156],\"reason\":\"Buffer entry/departure operations exist but source shows no buffer_lock acquire/release around buffer occupancy, so ownership during contact cannot be confirmed.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[113,122,138,147],\"reason\":\"Consumer waits the corresponding ready receipt and supplies that exact active EventReceipt on the carried move to target for both items.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"U\",\"source_lines\":[62,74,82,87],\"reason\":\"Source shows the SHORT control-flow signature of wait/checks before tool acquire, but the held-out dependency's finite execution outcome is not fully determinable from source alone.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[62,65,74,82,87],\"reason\":\"SHORT variant: tool acquire at line 87 follows the second-iteration empty_0 wait/clear and line_clear/receiver_ready checks, preserving the focal dependency across intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[49,52,99,102,128,131,153,156],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine: buffer releases to left_wait/left_home, target releases to right_wait/right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[102,156,158],\"reason\":\"Source moves arms to homes and targets parts, but buffer empty, lock free, events inactive, and deadline completion cannot be confirmed from source-only evidence.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 9021,
+    "completion_tokens": 542,
+    "total_tokens": 9563,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8893
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

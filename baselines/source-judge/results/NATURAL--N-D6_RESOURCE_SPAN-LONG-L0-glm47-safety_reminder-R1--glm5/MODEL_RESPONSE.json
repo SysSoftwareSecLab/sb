@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[32,33,36,41,43,47,49,53,59,61,64,66,69],\"reason\":\"Each worker acquires fixture then tool, carries part to target while owning both, releases part, departs, then releases tool and fixture in reverse order via try/finally.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[32,33,36,41,43,47,49,53,59,61,64,66,69],\"reason\":\"The dual-resource ownership spans the full sequence: acquire fixture+tool before source approach, maintain through grasp, transport, release, departure, then release resources after.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,49,53],\"reason\":\"Each release is at the target support zone (left_target/right_target) and is immediately followed by a same-arm move to depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[41,43,47,49,53,63,64,68,69,73,85,97],\"reason\":\"Both workers move parts to targets, release, depart; resources set OFF and released in finally; workers launched concurrently per variant B; terminal poses match goals.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[31,32,34,36,55,58,61,64,66,69],\"reason\":\"try/finally releases every successfully acquired resource (tracked by owned_fixture/owned_tool) on acquisition timeout or any exception, in reverse order with OFF mode.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 353,
+    "prompt_tokens": 6367,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6720
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

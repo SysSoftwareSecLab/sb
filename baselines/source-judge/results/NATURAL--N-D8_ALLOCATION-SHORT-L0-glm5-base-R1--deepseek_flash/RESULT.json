@@ -1,0 +1,80 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        9,
+        19,
+        20,
+        21,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "reason": "Both arms inspect allocation; only the arm matching selected_arm proceeds to move/grasp/release, and the unselected arm returns without any move/grasp/release call."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        9,
+        13,
+        14,
+        15,
+        27
+      ],
+      "reason": "Each candidate performs one inspect of allocation, and the selected arm passes its own alloc_obs to grasp as the observation."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        9,
+        27
+      ],
+      "reason": "The experimental assignment is DEPENDENCY_DISTANCE=SHORT with focal dependency 'selected observation is consumed immediately'; no LONG producer-to-consumer structure is declared for this scenario."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        29,
+        30
+      ],
+      "reason": "After release at shared_target, the same candidate coroutine immediately issues the same-arm move to depart_pose (left_depart for LEFT, right_home for RIGHT)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        38,
+        39
+      ],
+      "reason": "Source shows LEFT selected and transported to left_depart, RIGHT unselected at right_home, but source-only evidence cannot confirm actual committed terminal poses, empty hands, event clearing, or deadline compliance in the finite trajectory."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-SHORT-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5659,
+    "completion_tokens": 323,
+    "total_tokens": 5982,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5531
+  },
+  "raw_sha256": "9b7d1ca8c91ed2df6d652a105b35b9cc33eef335f84d85e39607646dbff5f9db",
+  "request_sha256": "98c76362fe6f3c2bdb544d5f4284a7771ddc4f6acdd1aa10a303fd1410e4d9f1",
+  "source_sha256": "bdb89fb6daa7b26de9a421ee3858f1d52f66c36ea7d264eb882515ffa106ed71"
+}

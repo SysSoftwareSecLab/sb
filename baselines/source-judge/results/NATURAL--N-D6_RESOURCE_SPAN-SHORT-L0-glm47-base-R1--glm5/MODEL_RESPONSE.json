@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[20,24,28,32,35,39,42,51,53,54],\"reason\":\"Each worker acquires fixture then tool before moving/grasping/carrying/releasing/departing, then releases both in finally; both resources owned throughout the carry span.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[20,24,28,32,35,39,42],\"reason\":\"SHORT dependency structure: acquire fixture+tool, then move to source, grasp, carry to target, release, depart, then release tool+fixture in finally; the intervening carry span preserves ownership of both resources.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[35,39,42],\"reason\":\"Each worker moves to target_pose, releases part at target_pose (a declared logical_support), then immediately moves to depart_pose in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[39,42,51,54,82,85,86,90],\"reason\":\"Source attempts both parts at targets, arms at departures, and resource cleanup in finally; but concurrent workers sharing fixture/tool may contend, and asyncio.gather re-raises on first failure, leaving final state undetermined from source alone.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[20,24,44,48,51,53,54,55,57],\"reason\":\"try/finally releases every successfully acquired resource (tracked in acquired_resources) by setting mode OFF then release_resource, covering acquisition TimeoutError.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 350,
+    "prompt_tokens": 6350,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6700
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

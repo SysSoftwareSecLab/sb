@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[21,26,27,37,39,53,62,71,85,106,112],\"reason\":\"LONG dependency (tool acquired before source pickup at line 21, kept across second-item wait/checks at lines 26-39, released on all exits at lines 44/71) combined with D4 asyncio.gather join of line_clear and receiver_ready (lines 37-39) and buffer receipt protocol.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[26,27,65,82,98,112],\"reason\":\"Producer waits/clears empty_0 before second buffer entry (lines 26-27); ready signaled after placement/departure (line 65); consumer waits ready before pickup (line 82), clears ready after carried move (lines 98-99); empty_0 published after consumer departs (line 112).\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[53,57,58,59,62,85,89,90,94,106],\"reason\":\"Both participants acquire buffer_lock before buffer entry (lines 53,85), hold it through place/grasp/departure, and release on departure (lines 62,106). Capacity-one buffer protected by lock ownership throughout occupancy.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[65,82,95,98],\"reason\":\"Producer signals ready receipt (line 65); consumer waits that exact receipt (line 82) and supplies it on carried move to target (line 95); ready cleared after carried move using waited receipt version (lines 98-99).\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[23,29,31,34,37,38,39],\"reason\":\"D4 holdout signature implemented: inside i==1 branch, two checks (line_clear via LEFT, receiver_ready via RIGHT) are joined with asyncio.gather (lines 37-39) before transfer, matching the declared control-flow structure rather than serial D3.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[21,48,49,50,26,27,37,39,53,57,58,71],\"reason\":\"LONG structure: tool acquired at line 21 before source pickup (lines 48-50), kept across second-item empty_0 wait/checks (lines 26-39), spans source pickup, grasp, and buffer placement; released on every normal exit (line 71). Focal dependency preserved across declared intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[58,59,102,103,50,48,90,94],\"reason\":\"Each release (LEFT part at buffer line 58, RIGHT part at target line 102) is immediately followed by same-arm separating move in same coroutine (lines 59,103). Grasp approaches follow required start_pose and immediate grasp pattern (lines 48-50, 88-90).\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[118,119,120,121,122,124],\"reason\":\"Runner_b serially awaits producer then consumer per iteration (lines 119-122), which may not implement B's 'runs producer and consumer coroutines together' concurrency requirement. Terminal goal completeness depends on execution outcome not determinable from source alone.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 724,
+    "prompt_tokens": 7660,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8384
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,24 @@
+{
+  "status": "INVALID_STRUCTURED_RESPONSE",
+  "predictions": null,
+  "parse_error": "Expecting value: line 1 column 1 (char 0)",
+  "policy": "Original response retained; no scientific retry and no format normalization.",
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 518,
+    "prompt_tokens": 7379,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7897
+  },
+  "raw_sha256": "5e4219f6d8b982de6c1f5ccf6362b4e6b7add329889ba5c3f3f1c1e271b877f3",
+  "request_sha256": "185cc6f68dd2fffcda464376b7cfac923d83cae925d99187f3be15f4e63cb656",
+  "source_sha256": "9b4ad82064407c4ff86d71987f9746ac1010fea8e2c72490ae43799b3af9bdec"
+}

@@ -1,0 +1,141 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        95,
+        99,
+        102,
+        105,
+        110,
+        111,
+        112,
+        120,
+        123,
+        126
+      ],
+      "reason": "run_task creates producer and consumer coroutines as asyncio tasks and gathers them concurrently for both episodes, jointly implementing the CONCURRENT attribute with the nested part_1 pre/check structure."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        33,
+        37,
+        38,
+        48,
+        59,
+        69,
+        72,
+        116,
+        117
+      ],
+      "reason": "Producer signals ready after placing and departing, consumer waits ready and supplies the receipt on the carried move, clears ready after that move, signals empty_0, and producer waits/clears empty_0 before the second part; order matches the required protocol."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        25,
+        26,
+        29,
+        51,
+        52,
+        55,
+        56,
+        62,
+        63,
+        66
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry, set it OFF, release the part and immediately depart, then release the lock on exit, respecting capacity-one ownership during contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        33,
+        34,
+        48,
+        59,
+        69
+      ],
+      "reason": "Producer signals ready_0/ready_1 and consumer waits the corresponding ready receipt and passes that exact active receipt to the carried move to target before clearing it."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        99,
+        102,
+        105,
+        120,
+        123,
+        126
+      ],
+      "reason": "Producer and consumer episodes are created as concurrent asyncio tasks and awaited together via asyncio.gather, implementing the CONCURRENT composition rather than a serial action multiset."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        110,
+        111,
+        112,
+        116,
+        117,
+        118,
+        120,
+        123,
+        126
+      ],
+      "reason": "The held-out control flow is present: part_1 pre-moves are gathered, then empty_0 is waited/cleared, then _consumer_part1_checks inspects both readiness facts before the joined part_1 producer/consumer episodes."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        25,
+        26,
+        62,
+        63
+      ],
+      "reason": "Each release at buffer_0/target_0/target_1 is immediately followed in the same coroutine by a same-arm move to left_home/right_home with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        95,
+        105,
+        112,
+        118,
+        126
+      ],
+      "reason": "Source shows the intended terminal moves and event clears, but no actual finite execution evidence confirms all terminal poses, empty hands, lock free, events inactive, and deadline satisfaction."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-CONCURRENT-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8409,
+    "completion_tokens": 601,
+    "total_tokens": 9010,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8281
+  },
+  "raw_sha256": "0fc17733b0c5ef4bd4bb20ac533cd1cc956fd23fa4e0f100dbe583e46ac5fdb0",
+  "request_sha256": "17aee838ab0727c066011257d07da86989b613987fbd0e0ae02549de126ff5de",
+  "source_sha256": "03fa47295c97a5e41b5924e9a973fd2260599263fe6120a7ed4c07f65d32a114"
+}

@@ -1,0 +1,78 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        38,
+        55,
+        56,
+        59,
+        62,
+        63
+      ],
+      "reason": "Only the selected arm is used for move/grasp/release; the unselected arm makes no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        38,
+        44,
+        56
+      ],
+      "reason": "Both arms inspect allocation once; the selected arm's own current observation is carried into grasp."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        55,
+        56
+      ],
+      "reason": "Move to start_pose is immediately followed by grasp in the same coroutine with no intervening robot call, implementing the SHORT dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        62,
+        63
+      ],
+      "reason": "Release at shared_target is immediately followed by same-arm move to goal_pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        55,
+        56,
+        59,
+        62,
+        63
+      ],
+      "reason": "Selected LEFT transports shared_part to shared_target, releases, departs to left_depart; RIGHT remains at right_home with no calls."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-SHORT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 241,
+    "prompt_tokens": 5728,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5969
+  },
+  "raw_sha256": "1d39058531d82bf7304c512685d153c1c434b0c81a278c316593c768517a8509",
+  "request_sha256": "2d410c019067963a11a3cb7b2ff02eecba322545f9368982c5c771dfeec62df5",
+  "source_sha256": "e638040528dd2de8f0c80d76e69930aba1de71621018be4b41d36855188e73bf"
+}

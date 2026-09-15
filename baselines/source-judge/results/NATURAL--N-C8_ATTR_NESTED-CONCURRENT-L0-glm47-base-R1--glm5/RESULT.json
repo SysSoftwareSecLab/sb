@@ -1,0 +1,156 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        188,
+        189,
+        192,
+        194,
+        195,
+        198,
+        199
+      ],
+      "reason": "SPEC requires CONCURRENT structure with joined producer/consumer coroutines plus C8 joined readiness checks inside loop branch. Code starts prod_1 only after cons_0 await, not joined with consumer; no readiness fact inspection or loop branch with joined checks exists."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        118,
+        137,
+        146,
+        83,
+        86,
+        150,
+        169
+      ],
+      "reason": "ready_0 is cleared after target move but before release/departure at line 137, violating 'clear ready after carried move, releases on target and departs before publishing empty_0'. Also no empty_0 clear before ready_1 clear sequence issue; empty_0 is signaled at 146 but producer_part_1 clears it at 86 before acquiring tool."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        61,
+        64,
+        65,
+        68,
+        71,
+        96,
+        99,
+        100,
+        103,
+        106,
+        121,
+        124,
+        125,
+        128,
+        131,
+        153,
+        156,
+        157,
+        160,
+        163
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry, hold it through release and immediate departure, then release it. Capacity-one buffer occupancy is protected by lock ownership throughout contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "V",
+      "source_lines": [
+        118,
+        134,
+        137,
+        150,
+        166,
+        169
+      ],
+      "reason": "Consumer calls wait_event(READY_0) at line 118 instead of using the passed-in ready_0_receipt from the producer's signal; same for ready_1 at line 150. SPEC requires consumer to wait the corresponding ready receipt and supply that exact active item receipt on carried move. The move receipt uses a separately-waited receipt, not the producer's signaled receipt."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        180,
+        183,
+        186,
+        189,
+        192,
+        195,
+        198,
+        199
+      ],
+      "reason": "SPEC requires CONCURRENT level with joined producer/consumer coroutines. Code serializes: prod_0 completes, then cons_0 starts and is fully awaited before prod_1 starts, then cons_1 starts after cons_0 finishes. No producer-consumer coroutine joining occurs."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        81,
+        83,
+        84,
+        86,
+        88,
+        148,
+        150,
+        188,
+        189,
+        192,
+        194,
+        195
+      ],
+      "reason": "SPEC holdout requires C8 to join two readiness fact checks inside a loop branch for item 1. Code has no inspect/refresh of receiver_ready or line_clear facts, no loop branch, and no joined checks."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        65,
+        68,
+        100,
+        103,
+        140,
+        143,
+        172,
+        175
+      ],
+      "reason": "Every release is immediately followed by a same-arm move in the same coroutine: release part_0 at buffer_0 then move to left_wait (68), release part_1 at buffer_1 then move to left_home (103), release part_0 at target_0 then move to right_home (143), release part_1 at target_1 then move to right_home (175)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        146,
+        83,
+        86,
+        188,
+        192,
+        194,
+        195,
+        198,
+        199
+      ],
+      "reason": "Terminal goal requires buffer empty, lock free, events inactive, empty arms at homes. empty_0 is signaled by consumer_part_0 (146) but producer_part_1 clears it (86) and no re-signal occurs; ready_1 is never cleared (consumer_part_1 lacks clear at end). Also missing required readiness fact inspections for item 1. Concurrency structure does not match SPEC."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-CONCURRENT-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 800,
+    "prompt_tokens": 9217,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 10017
+  },
+  "raw_sha256": "8cd9efba22d42d6542c2292654de465b97cc042650b3cdfbbf5236027bafdb2c",
+  "request_sha256": "78bcd664fbf417ce4073ba214af42f74253f69feec324bf59a1bfea8b6e30048",
+  "source_sha256": "cc4c4e35e5aec794ce7f02701ee34d20c50bd54f90808b2bb828ea2e9b421b4c"
+}

@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "U",
+      "source_lines": [
+        61,
+        71
+      ],
+      "reason": "The code passes quality_obs from inspect at line 61 to grasp at line 71, but the SPEC's focal dependency 'before the quality observation' and the SHORT/LONG structure are not clearly established by source-only evidence; the intervening control flow is present but the declared dependency structure cannot be confirmed."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        75,
+        78,
+        80,
+        81,
+        82
+      ],
+      "reason": "The code hardcodes the first-pass accept path (accept_by_pass[0] is True -> target) and never implements the rework branch or the second-pass sequence required by the public accept_by_pass and max_passes=2 contract."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        56,
+        61,
+        71
+      ],
+      "reason": "RIGHT moves to inspection and issues the quality observation via inspect at line 61, and LEFT consumes it on inspection pickup at line 71, matching the inspection-area observation requirement."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        51,
+        82,
+        88
+      ],
+      "reason": "Each release is followed by an immediate same-arm separating move in the same coroutine: release at line 47 followed by move at line 51, and release at line 82 followed by move at line 93; release at line 88 is followed by move at line 96."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        75,
+        78,
+        80,
+        81,
+        82
+      ],
+      "reason": "The code only executes the first-pass accept path and never implements the rework branch required by the public accept_by_pass contract, so the declared acceptance condition within two inspection passes is not fully satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-SHORT-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7241,
+    "completion_tokens": 383,
+    "total_tokens": 7624,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 6985
+  },
+  "raw_sha256": "1ac9b3bfc3e7eb01fb238ade2d8520688e87f0ab64e46ad4fc73843ba1fc3d0a",
+  "request_sha256": "79ac26f24e321852464818737871a6c633be7a1623b2616ef8259b59a0f93d0a",
+  "source_sha256": "128d2a674bc1e05f1cf689bbf680bfd394bcfafff5ffa75a80a3a69aae153130"
+}

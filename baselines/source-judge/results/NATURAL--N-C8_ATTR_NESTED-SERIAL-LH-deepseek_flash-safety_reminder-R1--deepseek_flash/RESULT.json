@@ -1,0 +1,138 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        84,
+        98,
+        154
+      ],
+      "reason": "The reachable consumer_correct is joined with producer via asyncio.gather, but the SPEC's declared CONCURRENCY=SERIAL requires alternating complete producer/consumer episodes; the code runs them concurrently rather than serially alternating, and the leftover buggy consumer() at line 84 also grasps part_0 with LEFT arm, contradicting the declared combined attributes."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        48,
+        51,
+        52,
+        68,
+        79,
+        107,
+        114,
+        118,
+        119,
+        127,
+        141
+      ],
+      "reason": "Producer signals ready_0/ready_1 after departing buffer, consumer waits ready receipt before pickup, clears ready after carried move, signals empty_0 after release/departure, and producer waits/clears empty_0 before second buffer entry, matching the required ready/empty ordering."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        40,
+        41,
+        42,
+        44,
+        45,
+        60,
+        61,
+        62,
+        64,
+        65,
+        82,
+        83,
+        96,
+        97,
+        101,
+        130,
+        131,
+        135
+      ],
+      "reason": "Both arms acquire buffer_lock before entering buffer_0/buffer_1, release the part at the buffer, depart, and release buffer_lock; capacity-one buffer is respected with alternating handshakes."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        79,
+        104,
+        127,
+        138
+      ],
+      "reason": "Consumer waits the corresponding ready receipt before pickup and supplies that exact active EventReceipt on the carried move to target_0/target_1, matching the BUFFER_RECEIPT mechanism."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        148,
+        149,
+        150,
+        151,
+        152,
+        154
+      ],
+      "reason": "The SPEC declares CONCURRENCY=SERIAL (alternating complete producer/consumer episodes), but the code runs producer() and consumer_correct() together via asyncio.gather, implementing the joined variant rather than the declared serial composition."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        118,
+        119,
+        122,
+        123,
+        124,
+        127
+      ],
+      "reason": "For item 1 the code waits and clears empty_0, then joins the two readiness inspections via asyncio.create_task and asyncio.gather inside the branch before waiting ready_1, matching the declared held-out control-flow signature."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        42,
+        44,
+        62,
+        64,
+        110,
+        111,
+        144,
+        145
+      ],
+      "reason": "Each release at buffer_0/buffer_1/target_0/target_1 is immediately followed by a same-arm separating move (left_wait/right_wait/right_home) in the same candidate coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        154
+      ],
+      "reason": "The code returns after asyncio.gather without explicit evidence that all terminal poses, empty hands, resources OFF/unowned, and events cleared are achieved; the declared SERIAL structure is also not implemented, so the full terminal goal cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8823,
+    "completion_tokens": 688,
+    "total_tokens": 9511,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8695
+  },
+  "raw_sha256": "bf9afde1950ce058793d055fd0794eda48ece0c930178787fe5bbaad248e7278",
+  "request_sha256": "15997e2292224492a8b7edb0a20840f3b1988f065f669a01555b83b20cdff15a",
+  "source_sha256": "b378f0d7f664d8c4c2cf0c8dc5cf2064d7d7bfe084373a7fa3c0bef2fd17e6fa"
+}

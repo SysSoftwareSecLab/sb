@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[28,63,65,103,107,110],\"reason\":\"LONG variant acquires tool before source pickup (line 28) and keeps it across empty_0 wait/clear (lines 63-65) and second-item checks (lines 103-110); D4 joins checks with asyncio.gather (lines 107-110).\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[49,55,58,83,113,116,123,63,65],\"reason\":\"Producer places at buffer, departs, releases lock, then signals ready (lines 47-58); consumer waits ready receipt (line 83), clears after carried move (lines 113-116), publishes empty_0 after release/departure (lines 119-123); producer waits and clears empty_0 before second entry (lines 63-65).\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[40,44,48,49,52,55,86,91,95,98],\"reason\":\"Both participants acquire buffer_lock before buffer entry (lines 40, 86), own it during placement/pickup and departure, and release after departing buffer (lines 55, 98); buffer_0/buffer_1 share identical coordinates per SPEC.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[83,113,116],\"reason\":\"Consumer waits corresponding ready receipt (line 83) and supplies that exact active EventReceipt on carried move to target (line 113); clears after carried move completes (line 116).\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[107,110,28,63,65,103],\"reason\":\"D4 holdout implemented: second-item checks joined with asyncio.gather inside i==1 branch (lines 107-110); LONG dependency: tool acquired before source pickup (line 28), kept across empty_0 wait/clear (lines 63-65) and checks (line 103).\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[28,63,65,103,107,110,127],\"reason\":\"LONG focal dependency satisfied: tool acquired before source pickup (line 28), spans source grasp (line 45), empty_0 receipt wait/clear (lines 63-65), second-item checks (lines 103-110), and release on exit (lines 127, 71).\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[48,49,52,91,95,119,120],\"reason\":\"Every release is followed by immediate same-arm separating move in same coroutine: buffer release→move to start_pose (lines 49-52), buffer grasp→depart (lines 91-95), target release→depart (lines 119-120).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[68,71,127,130],\"reason\":\"Terminal goal not fully satisfied: producer releases tool after second item (line 68) but never returns LEFT to left_home; consumer releases tool (line 127) but RIGHT ends at right_home only for i==0 path; for i==1 RIGHT departs to right_wait (line 120) not right_home; events ready_1 may remain active since consumer clears after move but producer does not ensure all events cleared.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 722,
+    "prompt_tokens": 7956,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8678
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

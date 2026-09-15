@@ -1,0 +1,88 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        42,
+        43,
+        44,
+        45
+      ],
+      "reason": "SPEC requires LEFT places at inspection and departs before RIGHT inspects quality. Code creates both tasks concurrently (lines 42-43) and awaits left_task then right_task (44-45), but right_sequence starts right_arm immediately; no event/synchronization enforces RIGHT inspect waits for LEFT departure. The comment at line 11 states the order but code does not implement it."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "reason": "SPEC requires accept_by_pass to select target if true, otherwise rework then inspection again, with branch-path contrast (A accepts first pass, B second). Code hardcodes two inspect/refresh calls with comments asserting both passes accept (lines 33,35), omitting the required rework branch for a non-accepting pass. No conditional branching on accept_by_pass is implemented."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        20,
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "reason": "SPEC requires using newly issued current quality record on LEFT inspection pickup at each pass. LEFT re-grasps left_part at line 20 without consuming any quality observation; RIGHT inspect/refresh (lines 34,36) do not feed observations back to LEFT grasp. The required observation consumption on LEFT pickup is omitted."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        22,
+        23,
+        29,
+        30
+      ],
+      "reason": "Each release is followed immediately by a same-arm move in the same coroutine: release left_part@inspection -> move left_wait (18-19), release left_part@left_target -> move left_depart (22-23), release right_part@right_target -> move right_depart (29-30). All releases use declared support zones."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        42,
+        43,
+        44,
+        45,
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "reason": "Terminal goals (left_part@left_target, right_part@right_target, arms at departures) are present in code, but acceptance within two inspection passes is not correctly implemented: no rework branch for non-accepting pass, no current-observation consumption on LEFT pickup, and no synchronization enforcing LEFT departs before RIGHT inspects. Missing required acceptance conditions and order."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-SHORT-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 508,
+    "prompt_tokens": 5784,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6292
+  },
+  "raw_sha256": "4609fb688bb8a95fb6e88b961eafdc27609fbfe4af00f82d377081c7cd92cb84",
+  "request_sha256": "ca2735ce4e3d214573d4c890e27217cc264ebd184e335dd6c24ad8b4cca3b9eb",
+  "source_sha256": "3b50c7c46d39113bab1ffe6b57330edf7b7a48e706374d27965b58ea2b58a586"
+}

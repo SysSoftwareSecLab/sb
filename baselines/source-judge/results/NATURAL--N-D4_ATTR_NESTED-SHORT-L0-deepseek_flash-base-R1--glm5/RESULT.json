@@ -1,0 +1,24 @@
+{
+  "status": "INVALID_STRUCTURED_RESPONSE",
+  "predictions": null,
+  "parse_error": "Expecting value: line 1 column 1 (char 0)",
+  "policy": "Original response retained; no scientific retry and no format normalization.",
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-SHORT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 523,
+    "prompt_tokens": 7758,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8281
+  },
+  "raw_sha256": "a97ea6850475f44b12ca797d935d32381d2033c5f688843053e028ea02dfeb51",
+  "request_sha256": "248bb741471a92e47b725170a6bd4ef27cc3a515a458df6ed70766175e1e9b77",
+  "source_sha256": "e3afab093f58ad35119e89684d9a918265bcda47c65b47e9c77f952c6daf00f7"
+}

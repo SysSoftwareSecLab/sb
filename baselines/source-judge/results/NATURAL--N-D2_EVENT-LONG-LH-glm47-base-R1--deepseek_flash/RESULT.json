@@ -1,0 +1,83 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "U",
+      "source_lines": [
+        33,
+        36,
+        48,
+        59
+      ],
+      "reason": "The source signals left_ready, waits right_ready, clears right_ready after the carried move, and clears left_ready at the end, but the required_order also demands each arm deposit its own part on its own pad and immediately clear the pad before publishing its own ready event; no pad-clear operation is present, and the finite outcome of the peer/event ordering cannot be confirmed from source alone."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        36,
+        41,
+        48
+      ],
+      "reason": "The wait_event returns right_ready_receipt, the carried move to right_pad passes receipt=right_ready_receipt, and clear_event uses expected_version=right_ready_receipt.version, matching the required peer-item receipt dependency."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        36,
+        41,
+        48
+      ],
+      "reason": "The focal dependency right_ready -> LEFT carried move is implemented: the LEFT arm waits for right_ready, carries that exact receipt on the move to right_pad, and clears right_ready with the receipt version after the move."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        30,
+        31,
+        52,
+        55
+      ],
+      "reason": "Each release is followed immediately by a same-arm move in the same coroutine: release left_part at left_pad then move to left_pad, and release right_part at left_target then move to left_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        25,
+        30,
+        41,
+        44,
+        48,
+        51,
+        52,
+        55,
+        59
+      ],
+      "reason": "The source moves left_part to left_pad and right_part to left_target, but the declared goal requires left_part at right_target and right_part at left_target; the source does not move left_part to right_target, and the finite terminal outcome cannot be confirmed."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6691,
+    "completion_tokens": 428,
+    "total_tokens": 7119,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6563
+  },
+  "raw_sha256": "0cab7dd6898063df7201efb5bf6b2e7e3bd291399b9e66bd224a76ac3cf82a1b",
+  "request_sha256": "55f83d30964c3d4f90957b995e65870b913197a64f40628c1aed85f46724b885",
+  "source_sha256": "fc4bba13a31064a72d12d5e81f1b9e38b0356b51113641d7b4c85d1434e04be8"
+}

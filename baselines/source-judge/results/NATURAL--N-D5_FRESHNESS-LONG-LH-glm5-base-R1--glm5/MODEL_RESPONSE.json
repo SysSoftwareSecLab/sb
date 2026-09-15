@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[15,18,21,24,27,30,57],\"reason\":\"SPEC requires LONG DEPENDENCY_DISTANCE: peer placement invalidates first route observation before refresh. Code never inspects/refreshes route observation, and concurrent arms have no producer-consumer dependency; only terminal goal reproduced.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[15,18,21,24],\"reason\":\"SPEC requires route observation (fact_id=route, object_id=left_part) with current-valid consumption; code calls grasp/move/release without any inspect/refresh of route observation.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[24,27],\"reason\":\"Each release at target_pose (declared support) is immediately followed by same-arm move to depart_pose in same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[12,15,18,21,24,27,57],\"reason\":\"Code moves parts to targets and arms to depart, but never inspects/refreshes required route observation; missing required observation dependency means terminal acceptance not satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 251,
+    "prompt_tokens": 5711,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5962
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

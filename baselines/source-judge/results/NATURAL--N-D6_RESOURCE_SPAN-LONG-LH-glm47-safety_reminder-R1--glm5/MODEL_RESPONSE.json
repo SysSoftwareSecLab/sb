@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[37,39,43,47,48,51,54,57,62,63,64],\"reason\":\"Each worker acquires fixture then tool before moving/grasping/transporting/releasing/departing, and releases both in finally after departure, matching the required dual-resource span across approach, pickup, placement, and departure.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[37,39,43,47,48,51,54,57,62,63,64,67,68,69],\"reason\":\"The LONG dependency structure is implemented: both resources are held continuously across source approach, grasp, transport to target, release, and departure, with cleanup in finally; both workers run concurrently with the same acquisition order.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[51,54,57],\"reason\":\"Each release occurs at the target support zone (left_target/right_target) while holding the corresponding part, immediately followed by a same-arm move to depart in the same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[43,47,48,51,54,57,62,63,64,67,68,69],\"reason\":\"Source implements both workers moving parts to targets, departing to left_depart/right_depart, and releasing both resources with mode OFF in finally; concurrent launch matches the scenario B goal.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"C\",\"source_lines\":[35,36,37,38,39,40,59,62,63,64],\"reason\":\"try/finally tracks acquired resources and releases each with set_mode OFF then release_resource, so a tool acquisition timeout after fixture acquisition would release the already-acquired fixture.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 388,
+    "prompt_tokens": 5974,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6362
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

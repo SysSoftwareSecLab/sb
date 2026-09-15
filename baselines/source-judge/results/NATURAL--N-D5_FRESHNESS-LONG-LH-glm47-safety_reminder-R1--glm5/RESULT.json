@@ -1,0 +1,71 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        34,
+        36,
+        52,
+        55,
+        58
+      ],
+      "reason": "SPEC requires LONG dependency: peer (RIGHT) placement invalidates first route observation before refresh, then LEFT consumes refreshed observation at grasp. Code grasps LEFT with observation=None before RIGHT placement, no inspect/refresh of route, so dependency structure is omitted."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        36,
+        34
+      ],
+      "reason": "Development contract requires current route observation for left_part grasp; code passes observation=None, not a current valid issued observation."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        42,
+        45,
+        58,
+        61
+      ],
+      "reason": "Each release (left at left_target, right at right_target) is immediately followed by same-arm move to depart pose in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        36,
+        31,
+        39,
+        42,
+        45,
+        49,
+        55,
+        58,
+        61
+      ],
+      "reason": "Terminal goals and departures are present, but LEFT grasp uses observation=None violating required route observation dependency; required-order structure not implemented, so full task goal not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-LH-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 246,
+    "prompt_tokens": 5788,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6034
+  },
+  "raw_sha256": "c1d8348c3b1b04db8406debdc53419c31eb6cbec79cd0489fb51452e3a2e49e3",
+  "request_sha256": "b225d7d3260d8f33dbb7f4ce91b4b76d00b38178afb1362610d3b623ec0d0cb5",
+  "source_sha256": "e802a32f8b87c23424cc1dfef84a4796a13ea6380a73ce0476208b0f385642c1"
+}

@@ -1,0 +1,106 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        13,
+        15,
+        17,
+        18,
+        21,
+        22,
+        25,
+        26,
+        28,
+        29,
+        32,
+        33,
+        36
+      ],
+      "reason": "Both arms inspect allocation; branch selects one arm; only selected arm calls move/grasp/release; unselected arm makes no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        13,
+        15,
+        18,
+        29
+      ],
+      "reason": "Both LEFT and RIGHT independently inspect allocation once; selected grasp consumes that arm's own current allocation observation (line 18 uses left_alloc, line 29 uses right_alloc)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        13,
+        15,
+        18,
+        21,
+        22,
+        25
+      ],
+      "reason": "LONG structure: allocation inspection precedes selected transport; selected LEFT grasp carries its own allocation observation across intervening branch to grasp; transport/release/depart follow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        21,
+        22,
+        25,
+        32,
+        33,
+        36
+      ],
+      "reason": "Release at shared_target (declared support) is immediately followed by same-arm move to left_depart (line 25) or right_home (line 36) in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        13,
+        15,
+        17,
+        18,
+        21,
+        22,
+        25,
+        26,
+        28,
+        29,
+        32,
+        33,
+        36
+      ],
+      "reason": "LEFT branch satisfies shared_part→shared_target and LEFT→left_depart, but RIGHT branch (else) departs to right_home while selected_arm would be RIGHT, leaving shared_part at shared_target but LEFT at left_home not left_depart; also RIGHT branch does not place LEFT at left_depart. More critically, with initial selected_arm=LEFT, the RIGHT branch is unreachable so RIGHT stays at right_home correctly, but the code's else-branch goal mismatch for LEFT (left_home vs left_depart) is a source-localizable omission for the RIGHT-selected path."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 427,
+    "prompt_tokens": 5364,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5791
+  },
+  "raw_sha256": "f24da3a4e830f8aa6b33014477f1a12d4f5f6ed8e089932facea2d237ca7d78e",
+  "request_sha256": "65e38ebf5df70bcdc6b2b7911e2c6d53a9369a5e9ae6a57c447cde63feec49f2",
+  "source_sha256": "63c75844815c75b47f130a36b22570a6c8288b6c8cd66a4e75a22c328564bcb5"
+}

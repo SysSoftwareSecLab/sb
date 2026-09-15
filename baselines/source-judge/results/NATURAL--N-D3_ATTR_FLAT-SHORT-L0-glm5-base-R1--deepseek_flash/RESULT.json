@@ -1,0 +1,150 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        38,
+        40,
+        42,
+        43,
+        52,
+        53,
+        57,
+        58,
+        59
+      ],
+      "reason": "The i==1 branch performs the second-item empty_0 wait, serial line_clear/receiver_ready checks, then acquires tool and releases it in finally, jointly implementing the declared SHORT attribute combination."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        33,
+        34,
+        35,
+        75,
+        86,
+        88,
+        96,
+        97
+      ],
+      "reason": "Producer publishes ready_i after departing buffer; consumer waits ready_i, uses the exact receipt on carried move, clears ready after that move, releases/departs, then signals empty_0; producer waits/clears empty_0 before second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        23,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        31,
+        82,
+        83,
+        84,
+        86,
+        90,
+        91,
+        92,
+        93,
+        94
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock around buffer placement/pickup and departure, and release it in finally; buffer_0/buffer_1 share coordinates as one capacity-one buffer."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        75,
+        86,
+        88
+      ],
+      "reason": "Consumer waits ready_i and passes that exact active EventReceipt to the carried move to target, then clears ready with the same receipt version."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        38,
+        40,
+        42,
+        43,
+        52,
+        53,
+        57,
+        58,
+        59
+      ],
+      "reason": "The held-out i==1 control flow is present: wait empty_0, perform the two checks serially, then acquire tool with finally release, matching the declared SHORT signature."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        38,
+        40,
+        42,
+        43,
+        52,
+        53,
+        57,
+        58,
+        59
+      ],
+      "reason": "For the second item the tool acquire depends on the second-iteration empty_0 wait and readiness checks, preserving the focal dependency across the intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        26,
+        28,
+        90,
+        91
+      ],
+      "reason": "Each release is immediately followed in the same coroutine by a same-arm move away from the support zone (producer release then move to start; consumer release then move to start)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        103,
+        105,
+        107,
+        109,
+        113,
+        114,
+        115,
+        116,
+        117,
+        119
+      ],
+      "reason": "Source shows intended producer/consumer episodes and gather, but no execution evidence confirms final poses, empty hands, resources OFF/unowned, events cleared, or deadline satisfaction."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8230,
+    "completion_tokens": 600,
+    "total_tokens": 8830,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8102
+  },
+  "raw_sha256": "37a10cecc28648739fae5eeb552b19e0f95f3ac3a73af6f5bb519330ccb9bf59",
+  "request_sha256": "9145f9557a55faf497adfc50fe93939c2b8543df839ac68d97377453b10ab2ef",
+  "source_sha256": "b33fc85d0564c81f7a2247edb2bce3af803cfbda371b6226feb037f1998231cd"
+}

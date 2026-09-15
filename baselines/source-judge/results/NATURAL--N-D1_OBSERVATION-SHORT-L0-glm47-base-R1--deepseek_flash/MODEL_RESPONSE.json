@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"U\",\"source_lines\":[61,71],\"reason\":\"The code passes quality_obs from inspect at line 61 to grasp at line 71, but the SPEC's focal dependency 'before the quality observation' and the SHORT/LONG structure are not clearly established by source-only evidence; the intervening control flow is present but the declared dependency structure cannot be confirmed.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"V\",\"source_lines\":[75,78,80,81,82],\"reason\":\"The code hardcodes the first-pass accept path (accept_by_pass[0] is True -> target) and never implements the rework branch or the second-pass sequence required by the public accept_by_pass and max_passes=2 contract.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[56,61,71],\"reason\":\"RIGHT moves to inspection and issues the quality observation via inspect at line 61, and LEFT consumes it on inspection pickup at line 71, matching the inspection-area observation requirement.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,51,82,88],\"reason\":\"Each release is followed by an immediate same-arm separating move in the same coroutine: release at line 47 followed by move at line 51, and release at line 82 followed by move at line 93; release at line 88 is followed by move at line 96.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[75,78,80,81,82],\"reason\":\"The code only executes the first-pass accept path and never implements the rework branch required by the public accept_by_pass contract, so the declared acceptance condition within two inspection passes is not fully satisfied.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7241,
+    "completion_tokens": 383,
+    "total_tokens": 7624,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 6985
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

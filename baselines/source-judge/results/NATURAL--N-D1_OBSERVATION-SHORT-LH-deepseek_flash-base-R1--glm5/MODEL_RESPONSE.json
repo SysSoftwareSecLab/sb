@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[24,25,26,38,44,45],\"reason\":\"LEFT places at inspection and departs to left_wait before RIGHT inspects quality (line 38); LEFT then approaches inspection from left_wait and grasps using the current quality observation (line 45), matching the SHORT producer-to-consumer dependency.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[51,52,54,56,57,58,61,62,63,66,69,70,73,74],\"reason\":\"accept_by_pass[0] selects target if true (lines 54-57), else rework-release-departure, second inspection, re-grasp with new observation, then target release (lines 58-74); at most two passes implemented.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[24,25,26,38,44,45,66,69,70],\"reason\":\"Inspection-zone placement, immediate departure, RIGHT-issued quality observation, and LEFT pickup using the current quality observation are present for both the first and (branch) second pass.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[25,26,31,32,57,62,63,72,73,74],\"reason\":\"Each release (inspection, right_target, left_target, rework) is immediately followed by a same-arm move in the same coroutine: LEFT to left_wait (26), RIGHT to right_depart (80), LEFT to left_target/left_depart, LEFT to rework_wait (63).\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[8,9,10,15,16,17,24,25,31,32,38,44,45,54,56,57,79,80],\"reason\":\"Both parts grasped from sources; right_part released at right_target; left_part placed at inspection, inspected, accepted on first pass (accept_by_pass[0]=true), released at left_target; both arms return to left_depart/right_depart empty. No resources/events in SPEC.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 452,
+    "prompt_tokens": 6477,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6929
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

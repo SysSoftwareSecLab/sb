@@ -1,0 +1,85 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        39,
+        44,
+        60,
+        65
+      ],
+      "reason": "RIGHT inspects quality producing quality_obs_1/quality_obs_2, and LEFT's later grasp at inspection consumes each freshly issued observation, implementing the LONG producer-to-consumer dependency across intervening moves."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        50,
+        51,
+        71,
+        72
+      ],
+      "reason": "accept_by_pass is [true,true]; SPEC says A accepts on first pass, B on second as a branch-path contrast, but code places at left_target on both passes and never implements a rework branch, omitting the required branch sequence."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        18,
+        39,
+        43,
+        44,
+        60,
+        64,
+        65
+      ],
+      "reason": "Inspection-area release increments quality, RIGHT issues quality observations, and LEFT consumes the current quality observation on each inspection pickup."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        31,
+        32,
+        51,
+        52,
+        72,
+        73
+      ],
+      "reason": "Each release is at a declared support zone and immediately followed by a same-arm separating move in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        50,
+        51,
+        71,
+        72
+      ],
+      "reason": "Both parts reach targets and arms depart, but the acceptance branch-path contrast (A first pass, B second) is not implemented; code accepts identically both passes, so applicable acceptance conditions are not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 321,
+    "prompt_tokens": 6332,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6653
+  },
+  "raw_sha256": "257da2435fe9729fafb596747bf033fd49c01da6fbb160a9b767c08a01aca3ab",
+  "request_sha256": "a0af858ff55e400716298c632bba243607fefe70088b8229fe2c224af72a5a9e",
+  "source_sha256": "1c0306e94f0ab9a1a0688856fd12fbe8ef6349dc437ab2b4b6abb225d5a98ee0"
+}

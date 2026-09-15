@@ -1,0 +1,68 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        35,
+        64,
+        89,
+        91,
+        94
+      ],
+      "reason": "left_worker and right_worker run concurrently via asyncio.gather, implementing the CONCURRENT level rather than a serial sequence."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "V",
+      "source_lines": [
+        62,
+        87,
+        91,
+        94
+      ],
+      "reason": "SPEC requires join_events left_ready and right_ready to be joined before one payload consumer; code signals both events only after payload consumption (release/move to target) completes, and never waits/clears them, omitting the required join-before-consumer structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        55,
+        58,
+        81,
+        84
+      ],
+      "reason": "Each release (left at left_target, right at right_target) is immediately followed by a same-arm move to depart in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        62,
+        87,
+        91,
+        94
+      ],
+      "reason": "Terminal goal requires events cleared and acceptance conditions met; code signals left_ready/right_ready but never clears them, and omits the required join/verification acceptance before payload consumption."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 244,
+    "prompt_tokens": 6442,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6686
+  },
+  "raw_sha256": "457ef9cddc6ba2b4c0aaa1b2e661deec0918753c223aee6baed7cd32ac4aac1c",
+  "request_sha256": "3a4d881f09bf79dbbea7cbcd4059649c0930a4da48162825c3e39a64dbf96a0c",
+  "source_sha256": "17562a5e9f27cde63f331f1ab31c4374ba996eceec710805afb1b232b88845de"
+}

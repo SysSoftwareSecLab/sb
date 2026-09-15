@@ -1,0 +1,127 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        67,
+        68,
+        85,
+        86
+      ],
+      "reason": "The declared combined attributes require the CONCURRENCY=SERIAL structure with the C8 joined inspection inside the item-1 branch; the code runs episodes serially but the joined inspect at lines 79-82 is outside the loop branch and the producer/consumer are not run together as the variant requires, so the joint attribute is not implemented."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        22,
+        23,
+        33,
+        41,
+        55,
+        62,
+        75,
+        76
+      ],
+      "reason": "Producer waits/clears empty_0 before second buffer entry, signals ready after buffer departure; consumer waits ready, clears it after the carried move, releases and departs before signaling empty_0, matching the required order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "reason": "Both arms acquire buffer_lock before entering the capacity-one buffer and release it after departing; producer releases part at buffer_0/buffer_1 and consumer grasps from the same physical buffer pose, so ownership during contact is held."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        41,
+        52,
+        55
+      ],
+      "reason": "Consumer waits the corresponding ready receipt and supplies that exact active EventReceipt on the carried move to target, then clears ready with the receipt version after the move completes."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        67,
+        68,
+        85,
+        86
+      ],
+      "reason": "The SPEC requires CONCURRENCY=SERIAL with the C8 joined inspection inside the loop branch; the code runs producer/consumer serially but the joined inspect is placed outside the branch, so the declared concurrent composition is not implemented."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        73,
+        74,
+        75,
+        76,
+        79,
+        80,
+        81,
+        82
+      ],
+      "reason": "The held-out control-flow signature requires the two readiness inspections joined inside the item-1 loop branch; the code performs the joined inspect at top level after the empty_0 wait/clear, not inside the branch, so the signature is not implemented."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        28,
+        29,
+        58,
+        59
+      ],
+      "reason": "Each release is followed immediately by a same-arm separating move in the same coroutine: LEFT releases part at buffer then moves to left_wait, RIGHT releases part at target then moves to right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        67,
+        68,
+        85,
+        86
+      ],
+      "reason": "Both parts are produced and consumed to target_0/target_1, arms return to left_home/right_home, buffer_lock and tool are released, and ready_0/empty_0 are cleared, matching the declared terminal goal within the deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7465,
+    "completion_tokens": 641,
+    "total_tokens": 8106,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7337
+  },
+  "raw_sha256": "f137178a4549e2ebc2043bcc00bbf12dce46b4e56588a43415b2008124ef863f",
+  "request_sha256": "def17a3b15ad9abc97b7d05aa85cc5ec35f662abe797c71a56815f2d5266c6b7",
+  "source_sha256": "06cb7a48756f9daacd616b29796bc1c078f75a384dea9b094340f301d9bfa1aa"
+}

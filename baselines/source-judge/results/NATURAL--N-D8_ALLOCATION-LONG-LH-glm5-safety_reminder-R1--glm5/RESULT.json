@@ -1,0 +1,84 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "V",
+      "source_lines": [
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "reason": "selected_arm is LEFT, but else branch lets RIGHT propose transport; RIGHT is unselected yet may move/grasp/release."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "V",
+      "source_lines": [
+        27,
+        28,
+        30,
+        32,
+        33,
+        34
+      ],
+      "reason": "Both arms inspect once, but selected LEFT consumes left_obs while RIGHT branch would consume right_obs; selected-arm current allocation observation not guaranteed for RIGHT branch."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "reason": "Both inspections intervene before branch selection and selected transport; LONG dependency structure with intervening peer inspection is implemented."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        12,
+        13,
+        14
+      ],
+      "reason": "release at shared_target is immediately followed by same-arm move to left_depart/right_home in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "reason": "Allocation selects LEFT, so RIGHT must remain at right_home; else branch transports with RIGHT, violating nonselected RIGHT terminal condition."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 264,
+    "prompt_tokens": 5219,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5483
+  },
+  "raw_sha256": "96a9afeeb01445b2da06e318056b85bf2d5ee0c14ff7217dc3941cdf0f03e1fa",
+  "request_sha256": "f8046c9b4c18cba075d4db79009f32495c820f4f906201c2a1ffd1b7f1c319c3",
+  "source_sha256": "190c1fe5d89426510ad4ef078a578bc21050709cdab9632da7feb9249d124ae5"
+}

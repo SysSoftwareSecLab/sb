@@ -1,0 +1,92 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "V",
+      "source_lines": [
+        23,
+        30,
+        40,
+        48,
+        58,
+        59
+      ],
+      "reason": "Candidate A executes LEFT branch then RIGHT branch serially; if allocation selects LEFT, candidate A still runs RIGHT branch if right_sel==RIGHT, but allocation value is fixed LEFT, so RIGHT branch is skipped. However candidate B then runs both branches concurrently; RIGHT branch condition right_sel==RIGHT is false, so only LEFT runs. The selected LEFT arm proposes approach/grasp/transport in both A and B, satisfying exclusivity for LEFT. But candidate A runs LEFT transport, then candidate B runs LEFT transport again after release—re-approaching shared_part after it was already released at shared_target, violating allocation exclusivity for the already-transported object."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        17,
+        18,
+        25,
+        32,
+        42,
+        50
+      ],
+      "reason": "Both workers independently inspect allocation once (lines 7-8); selected arm's grasp consumes that arm's own current allocation observation (obs_left for LEFT grasp, obs_right for RIGHT grasp)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        17,
+        18,
+        23,
+        25,
+        40,
+        42
+      ],
+      "reason": "Both inspections occur before branch selection and observation consumption; the LONG dependency structure (peer allocation inspection intervenes before selected observation consumption) is implemented in both candidates A and B."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        34,
+        35,
+        44,
+        45,
+        52,
+        53
+      ],
+      "reason": "Each release at shared_target is immediately followed by a same-arm separating move (LEFT to left_depart, RIGHT to right_home) in the same candidate coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        58,
+        59,
+        23,
+        40
+      ],
+      "reason": "Candidate A transports shared_part to shared_target and LEFT departs to left_depart; then candidate B re-executes LEFT branch, attempting to move LEFT from left_depart back to shared_source and re-grasp shared_part, violating terminal state and allocation exclusivity. The double execution prevents achieving the declared terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 456,
+    "prompt_tokens": 5712,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6168
+  },
+  "raw_sha256": "3ede537d8519a7ff7f1ee347a020a5acaa871f0c163033d0848ecc6906580a8c",
+  "request_sha256": "e8500b6064407fb7853cc919cc32763b4e03b553fe66e67e20f8f8c766d7ffa0",
+  "source_sha256": "73e858bf321e489947d8df9a2a3e249cad9d599a8aff6f0e345b12f161319438"
+}

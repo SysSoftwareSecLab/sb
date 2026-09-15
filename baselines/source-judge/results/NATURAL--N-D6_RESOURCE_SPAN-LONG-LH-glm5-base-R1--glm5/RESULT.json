@@ -1,0 +1,89 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "V",
+      "source_lines": [
+        36,
+        40,
+        42
+      ],
+      "reason": "Worker releases both resources only after departure; required order says release part then depart, then release tool/fixture, but code releases all resources after move(depart) in finally, and release_resource requires mode OFF which is never set."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42
+      ],
+      "reason": "Both resources acquired before source move; ownership spans grasp, carry to target, release, and departure; resources released in finally after depart."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        38,
+        39,
+        40
+      ],
+      "reason": "release(arm, part, target) at declared support target followed immediately by same-arm move to depart in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        42,
+        70,
+        71,
+        75,
+        76
+      ],
+      "reason": "release_resource requires mode OFF and ownership, but set_mode is never called; resources may remain owned/non-OFF, so terminal state not satisfied."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        41,
+        42,
+        70,
+        71,
+        75,
+        76
+      ],
+      "reason": "Acquisition timeout in _acquire_chain triggers reversed release of acquired resources; run_task exception handlers also release both arms' resources."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-LONG-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 306,
+    "prompt_tokens": 6021,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6327
+  },
+  "raw_sha256": "f5e93621d5fb5c0432e1e6f00d1d679864175b39bbbc2e4ac63fd18fd0c2ec0b",
+  "request_sha256": "e259100a87aa98f84245786c93d0585d6025afb9d5d7a7c2d0523fa517f6fb37",
+  "source_sha256": "203b34bc09d5b36308bd5eb7b9182671117a137191f568d4d8d942cbd9895d22"
+}

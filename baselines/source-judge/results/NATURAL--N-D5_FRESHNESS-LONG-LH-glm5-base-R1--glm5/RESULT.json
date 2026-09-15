@@ -1,0 +1,71 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        15,
+        18,
+        21,
+        24,
+        27,
+        30,
+        57
+      ],
+      "reason": "SPEC requires LONG DEPENDENCY_DISTANCE: peer placement invalidates first route observation before refresh. Code never inspects/refreshes route observation, and concurrent arms have no producer-consumer dependency; only terminal goal reproduced."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        15,
+        18,
+        21,
+        24
+      ],
+      "reason": "SPEC requires route observation (fact_id=route, object_id=left_part) with current-valid consumption; code calls grasp/move/release without any inspect/refresh of route observation."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        24,
+        27
+      ],
+      "reason": "Each release at target_pose (declared support) is immediately followed by same-arm move to depart_pose in same coroutine with no intervening calls."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        12,
+        15,
+        18,
+        21,
+        24,
+        27,
+        57
+      ],
+      "reason": "Code moves parts to targets and arms to depart, but never inspects/refreshes required route observation; missing required observation dependency means terminal acceptance not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 251,
+    "prompt_tokens": 5711,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5962
+  },
+  "raw_sha256": "b83910d49ab6e38f50df7e71d889645b360046b5306607490a66db2bc84ab167",
+  "request_sha256": "f093f5f8fa9762697a0906c5c5298a82d795c2d5a175979047aae004b93744bb",
+  "source_sha256": "1b4e22465c757addcb446c6f929d373c2fc257635c3dbe11a1046ee7951c21f2"
+}

@@ -1,0 +1,67 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        24,
+        25,
+        26
+      ],
+      "reason": "run_task creates two asyncio tasks for _left_lane and _right_lane and awaits asyncio.gather, implementing the SPEC's CONCURRENT level with joined worker coroutines rather than serial execution."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        27,
+        28
+      ],
+      "reason": "After gathering both worker coroutines, run_task awaits wait_event for both declared join events left_ready and right_ready, matching the development contract join_events."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        9,
+        10,
+        18,
+        19
+      ],
+      "reason": "Each lane releases the held part at its target and then moves to the depart pose, but the release is followed by a move to a departure pose rather than an immediate same-arm separating move from the support; the required immediate separating departure after release is not implemented as specified."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "reason": "The code waits for and clears the ready events, but the public terminal goal requires both parts at their own targets, both arms at departure and empty, resources OFF/unowned, and events cleared; the source does not establish the required event clearing with correct versions nor all terminal conditions, and the release/departure sequence is not the specified immediate separating departure."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5633,
+    "completion_tokens": 313,
+    "total_tokens": 5946,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 5377
+  },
+  "raw_sha256": "cedff7e6b479e5ea7fd902f5d7462516100c51b0fd06d08bdad3874f3ef35ac8",
+  "request_sha256": "6854e9029373c69bdb0ba413d9affd15501bca894cb347e5a0474bc601fc7f0d",
+  "source_sha256": "bbfbf1d911b091efcb7c26f0cf2f71923a6ba2aa69cdcb57887f692f79b06d9a"
+}

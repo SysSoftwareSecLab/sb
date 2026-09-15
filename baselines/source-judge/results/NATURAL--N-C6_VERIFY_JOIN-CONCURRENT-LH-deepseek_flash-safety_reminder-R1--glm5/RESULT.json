@@ -1,0 +1,68 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        29,
+        30,
+        32
+      ],
+      "reason": "left_branch and right_branch are created as concurrent asyncio tasks and gathered, implementing the CONCURRENT level structure rather than serial execution."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        17,
+        27,
+        34,
+        35,
+        37,
+        38
+      ],
+      "reason": "Both left_ready and right_ready events are signaled by the concurrent branches, then awaited and cleared after gather, implementing the join_events dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        25,
+        26
+      ],
+      "reason": "Each release (lines 15,25) is immediately followed by a same-arm move to departure (lines 16,26) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        13,
+        14,
+        23,
+        24
+      ],
+      "reason": "The observation_facts specify cross-verification (left_part verified by RIGHT, right_part verified by LEFT), but the code never calls inspect/refresh to perform verification; also right_verification value references left_part, suggesting a required cross-check step is entirely omitted."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 241,
+    "prompt_tokens": 5428,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5669
+  },
+  "raw_sha256": "3cc89fd148afcb6e116546df27d0d263c2a4705a5c6a0dd0ead7f5b9cc8061ad",
+  "request_sha256": "5ee00e3e66d65457ba2cb2383155a19ccbf0a8e09dd103b61c87fec4bb48d87e",
+  "source_sha256": "2e27a74cd9ad19c9c02f20580fb39b6bad3494a3a65b79f12fede4f25d898278"
+}

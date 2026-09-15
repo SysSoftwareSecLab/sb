@@ -1,0 +1,92 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        39,
+        44,
+        60,
+        65
+      ],
+      "reason": "The quality observation issued by RIGHT inspect is carried across intervening control flow (move to inspection) and consumed by the LEFT grasp via observation=quality_obs_1/quality_obs_2, preserving the producer-to-consumer dependency."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        39,
+        44,
+        50,
+        51,
+        60,
+        65,
+        71,
+        72
+      ],
+      "reason": "accept_by_pass is [true,true], so pass 1 acceptance should place at left_target and the task should end; the code instead performs a second inspection pass and second placement, omitting the required branch contrast where B accepts on the second pass only after rework."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        39,
+        44,
+        60,
+        65
+      ],
+      "reason": "RIGHT issues quality observations at inspection and LEFT consumes the newly issued current observation on its inspection pickup for each pass."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        31,
+        32,
+        51,
+        52,
+        72,
+        73
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: release at inspection then move to left_wait, release at right_target then move to right_depart, and releases at left_target followed by move to left_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        39,
+        44,
+        50,
+        51,
+        60,
+        65,
+        71,
+        72
+      ],
+      "reason": "The public accept_by_pass[0] is true, so the required branch is a single pass placing left_part at left_target; the code performs an extra second inspection pass and second placement, contradicting the declared acceptance branch and terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6745,
+    "completion_tokens": 392,
+    "total_tokens": 7137,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6617
+  },
+  "raw_sha256": "4f55bf9bb281345d6d2f6e048d8ed407ebf42bf2a04fe0a0e7f133c54068bbed",
+  "request_sha256": "96ede8d065aa7932d0a2e8865204fa496c54ae3520ee473a4b0736df3686e469",
+  "source_sha256": "1c0306e94f0ab9a1a0688856fd12fbe8ef6349dc437ab2b4b6abb225d5a98ee0"
+}

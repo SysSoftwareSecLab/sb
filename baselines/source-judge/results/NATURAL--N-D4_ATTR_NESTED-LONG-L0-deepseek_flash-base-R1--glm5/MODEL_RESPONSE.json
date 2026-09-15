@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[11,46,49,59,60,61,62,64,67,70,73,74,75,78,81,84,85,87,89,91],\"reason\":\"LONG tool acquired before source pickup and kept across second-item wait/checks; D4 gather joins both second-item checks; both attributes present in reachable flow.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[19,21,24,27,30,31,32,35,38,41,42,46,49,62,64,67,70,73,74,75,78,81],\"reason\":\"Producer departs before ready; consumer waits ready receipt before carried move; ready cleared after move/release/departure; empty_0 published and waited/cleared before second buffer entry; ready_1 cleared after consumer episode.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"U\",\"source_lines\":[11,16,18,28,30,59,61,71,73],\"reason\":\"Source shows buffer placements and carried moves but does not show explicit buffer_lock acquire/release; capacity-one ownership cannot be fully confirmed from source alone.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[24,27,30,67,70,73],\"reason\":\"Consumer waits corresponding ready receipt (r0/r1) and supplies it on carried move to target via move receipt parameter.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[46,49,53,55,59,60,61,62,64,67,70,73,74,75,78,81],\"reason\":\"D4 asyncio.gather joins line_clear and receiver_ready checks inside second-item branch before transfer; both Boolean fields validated before proceeding.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[11,41,42,46,49,59,60,61,62,64,67,70,73,74,75,78,81,87,89,91],\"reason\":\"Tool acquired before source pickup and held across second-item empty_0 wait/clear, gather checks, source grasp, buffer placement, ready publication, consumer carried move, and release on exit.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,21,31,32,62,64,74,75],\"reason\":\"Each release (part_0 at buffer_0, part_0 at target_0, part_1 at buffer_1, part_1 at target_1) is immediately followed by same-arm move in same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[84,85,87,89,91],\"reason\":\"Terminal poses and tool release present, but buffer_lock ownership/release and event terminal states (ready_1 active, empty_0 re-published) cannot be fully confirmed as satisfied from source alone.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 631,
+    "prompt_tokens": 7268,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7899
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

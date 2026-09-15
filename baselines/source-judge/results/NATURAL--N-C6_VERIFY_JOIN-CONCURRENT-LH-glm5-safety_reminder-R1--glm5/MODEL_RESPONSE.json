@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[24,25,26,27],\"reason\":\"run_task creates two independent worker coroutines via asyncio.create_task and awaits them with asyncio.gather, implementing the SPEC's CONCURRENT level with two joined verifier branches rather than a serial action multiset.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"V\",\"source_lines\":[12,21,27],\"reason\":\"SPEC requires join_events left_ready and right_ready to be consumed/cleared after both branches complete; source only signals them but never calls wait_event or clear_event, and run_task returns after gather without joining or clearing the events.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[9,10,11,18,19,20],\"reason\":\"Each release (line 10 LEFT, line 19 RIGHT) is immediately followed by a same-arm separating move in the same coroutine (line 11 move LEFT to left_depart, line 20 move RIGHT to right_depart), satisfying the immediate departure requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[24,25,26,27],\"reason\":\"Terminal goals require parts at targets, arms at departure and empty, resources OFF/unowned, and events cleared; source never clears left_ready/right_ready events and never verifies terminal empty-hand/resource state, so the full terminal condition is not satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 291,
+    "prompt_tokens": 5167,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5458
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

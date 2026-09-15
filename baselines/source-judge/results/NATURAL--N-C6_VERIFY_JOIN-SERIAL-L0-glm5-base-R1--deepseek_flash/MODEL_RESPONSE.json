@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"V\",\"source_lines\":[24],\"reason\":\"SPEC requires CONCURRENCY=SERIAL (experimental_assignment level SERIAL, required_order 'implement the stated structure'), but run_task uses asyncio.gather to run both branches concurrently, contradicting the declared serial structure.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[24,25,26],\"reason\":\"Both worker coroutines signal left_ready/right_ready and run_task joins on both events via wait_event after gather, matching the declared join_events.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[9,10,18,19],\"reason\":\"Each release is immediately followed in the same coroutine by a same-arm separating move (left_target->left_depart, right_target->right_depart) with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[24,25,26,27,28],\"reason\":\"Source shows moves to depart poses and event clears, but no execution evidence confirms terminal poses, empty hands, cleared events, or deadline; source-only cannot determine finite outcome.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5566,
+    "completion_tokens": 259,
+    "total_tokens": 5825,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5438
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

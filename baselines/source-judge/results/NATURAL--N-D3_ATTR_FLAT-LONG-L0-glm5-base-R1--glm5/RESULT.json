@@ -1,0 +1,183 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        68,
+        73,
+        80,
+        81,
+        85,
+        88,
+        90,
+        95,
+        104,
+        105,
+        108,
+        109,
+        110,
+        113,
+        114,
+        117,
+        121,
+        124,
+        125,
+        131,
+        151,
+        152,
+        153,
+        156,
+        176,
+        178,
+        179,
+        185
+      ],
+      "reason": "LONG variant: producer acquires tool before source pickup (line 68) and keeps it across empty wait/clear (lines 80-81) and checks (via second_item_branch before episode_b part_1); consumer for part_1 acquires tool only after wait/checks (lines 104-105). D3 serial checks (lines 153,156). Combined attributes jointly present."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        88,
+        90,
+        95,
+        102,
+        113,
+        114,
+        117,
+        124,
+        125,
+        131,
+        80,
+        81,
+        178,
+        179
+      ],
+      "reason": "Producer places at buffer and departs (line 90) before ready signal (line 95); consumer waits ready (line 102), supplies receipt on carried move (lines 113-114), clears ready after carried move (line 117), releases on target and departs (lines 124-125) before publishing empty_0 (line 131); producer waits and clears empty_0 before second buffer entry (lines 80-81, 178-179)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        85,
+        87,
+        88,
+        90,
+        92,
+        121,
+        123,
+        124,
+        125,
+        127
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before entering buffer (lines 85,121), place/release under lock, and depart (lines 90,125) before releasing lock (lines 92,127). Capacity-one buffer protected by lock ownership throughout contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        95,
+        96,
+        102,
+        110,
+        113,
+        114,
+        117
+      ],
+      "reason": "Producer signals ready with item_id (line 95); consumer waits that receipt (line 102), supplies exact active item receipt on grasp observation (line 110) and carried moves to target (lines 113-114), then clears ready by expected_version (line 117)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        160,
+        162,
+        163,
+        181,
+        183,
+        165,
+        167,
+        168,
+        170,
+        176,
+        178,
+        179,
+        185,
+        151,
+        153,
+        156
+      ],
+      "reason": "D3 holdout: episode_a alternates complete producer/consumer episodes serially (lines 162-163); episode_b runs producer and consumer coroutines together via create_task/gather (lines 167-170); second-item checks performed serially (lines 153,156) before transfer (line 179). Control-flow signature matches D3 serial-check + A-serial/B-concurrent structure."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        68,
+        73,
+        76,
+        80,
+        81,
+        85,
+        88,
+        90,
+        95,
+        98,
+        104,
+        105,
+        178,
+        179
+      ],
+      "reason": "LONG focal dependency: tool acquired before source pickup (line 68) and kept across grasp (line 73), travel (line 76), empty wait/clear (lines 80-81), buffer entry/placement/departure (lines 85-90), ready publication (line 95), released only in finally (line 98). Span covers source, grasp, and empty receipt as declared."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        88,
+        90,
+        92,
+        124,
+        125,
+        127
+      ],
+      "reason": "Each release (buffer line 88, target line 124) is immediately followed by same-arm separating move (lines 90,125) in same coroutine before lock release (lines 92,127). Departure is immediate and within same virtual time block."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        181,
+        183,
+        185,
+        187,
+        188,
+        189,
+        196,
+        198,
+        203
+      ],
+      "reason": "Source implements both item transfers, terminal home returns are not explicit after releases (arms depart to wait poses lines 90,125, not homes). Finally block releases resources (lines 196-207) but does not move arms to home. Terminal pose/hand-empty/event-cleared state cannot be fully confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-LONG-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 914,
+    "prompt_tokens": 9130,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 10044
+  },
+  "raw_sha256": "7f1e826e43ec31e30855f0f670247fecb027544f624b86a409fb9bb190b56f83",
+  "request_sha256": "b26de84d1424b3ca9b4662e040a593113dd4944525859d39a3ba7f420b03c34d",
+  "source_sha256": "4a98e0241f2063b017f5bf65be9d36443d1e991fcdabdbc39a625af34f5a89a8"
+}

@@ -1,0 +1,77 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        30,
+        33,
+        38,
+        45,
+        46
+      ],
+      "reason": "Each worker signals own ready before waiting for peer ready; SPEC requires deposit/clear pad before publishing ready, but clear_event of own ready occurs after consuming peer item, not before publishing."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        33,
+        38,
+        48
+      ],
+      "reason": "wait_event returns peer_receipt; carried move to own target passes receipt=peer_receipt; clear uses peer_receipt.version."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        30,
+        33,
+        38
+      ],
+      "reason": "Producer signals item-bound ready; consumer waits for peer ready then carries exact active peer-item receipt across intervening control flow, matching LONG dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        27,
+        28,
+        41,
+        42
+      ],
+      "reason": "Each release is followed immediately by same-arm move in same coroutine: release own part then move to pickup_wait; release peer part then move to depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        45,
+        46,
+        47,
+        48
+      ],
+      "reason": "Events are cleared only within each worker after consuming peer item; if one worker completes before the other signals, clear_event on not-yet-signaled peer event may fail, leaving terminal events active and goal unsatisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-L0-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 289,
+    "prompt_tokens": 6257,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6546
+  },
+  "raw_sha256": "1b9adf170ace77ce49100fd26a44dede54c770302794ba31bc481f781e356da6",
+  "request_sha256": "515fb7f7bc23c790d59af7d00548b718447618d11ffa65a01893630d67847b1c",
+  "source_sha256": "0a9f4fefe39a3a825f7840ed99a84392e82582223713ff78b5875abfcc41bf4a"
+}

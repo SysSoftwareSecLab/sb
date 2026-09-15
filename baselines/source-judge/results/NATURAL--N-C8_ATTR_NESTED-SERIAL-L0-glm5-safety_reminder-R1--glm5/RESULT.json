@@ -1,0 +1,177 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        176,
+        177,
+        178,
+        181
+      ],
+      "reason": "joined_part_1 waits/clears empty_0 then inspects both line_clear and receiver_ready before gathering producer and consumer coroutines, jointly implementing the combined attributes."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        30,
+        38,
+        48,
+        67,
+        82,
+        88,
+        92,
+        119,
+        129,
+        149,
+        172,
+        174,
+        209,
+        218,
+        238
+      ],
+      "reason": "ready published after buffer departure; consumer waits ready before pickup, clears after carried move; empty_0 published after target departure; producer waits/clears empty_0 before second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        23,
+        30,
+        35,
+        56,
+        70,
+        75,
+        104,
+        111,
+        116,
+        194,
+        201,
+        206,
+        226,
+        241,
+        246
+      ],
+      "reason": "Both participants acquire buffer_lock before buffer entry and release it after departure; capacity-one buffer occupancy is protected by lock ownership during contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        38,
+        39,
+        48,
+        49,
+        64,
+        67,
+        119,
+        120,
+        129,
+        130,
+        146,
+        149,
+        209,
+        210,
+        218,
+        219,
+        235,
+        238
+      ],
+      "reason": "Producer signals ready receipt; consumer waits the corresponding ready receipt and supplies that exact active item receipt on carried move to target."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        163,
+        164,
+        165,
+        167,
+        170,
+        181,
+        252
+      ],
+      "reason": "Episode A serially awaits producer then consumer; Episode B uses asyncio.gather to run producer_part_1_inner and consumer_part_1_inner together, implementing the stated concurrent structure."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        170,
+        171,
+        172,
+        173,
+        174,
+        176,
+        177,
+        178,
+        181
+      ],
+      "reason": "joined_part_1 implements the held-out control-flow signature: wait/clear empty_0, then inspect both readiness facts, then gather producer and consumer, matching C8 nested joined checks."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        30,
+        31,
+        70,
+        71,
+        111,
+        112,
+        201,
+        202,
+        241,
+        242
+      ],
+      "reason": "Each release at buffer/target is immediately followed by a same-arm separating move to home in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        164,
+        165,
+        252,
+        31,
+        71,
+        112,
+        202,
+        242,
+        35,
+        75,
+        116,
+        157,
+        206,
+        246,
+        43,
+        79,
+        124,
+        161,
+        214,
+        250
+      ],
+      "reason": "Source covers both parts placed at targets, arms returned to homes, buffer_lock and tool released OFF/unowned, and events cleared; terminal goal structure present."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-SERIAL-L0-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 601,
+    "prompt_tokens": 10560,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 11161
+  },
+  "raw_sha256": "89348faf3b4ddb7a46cfd6e7f99d0ea011e9fc76c0ac8ed4bf490e106ce70ee1",
+  "request_sha256": "7cc4300be6ccbc1f8aa2b74435222c53895137fada34d8b64fc271f3792c8958",
+  "source_sha256": "e6ef7d6e91df474279b58a78e021ea5cc63023d41af79821f5f93b74814ff0d4"
+}

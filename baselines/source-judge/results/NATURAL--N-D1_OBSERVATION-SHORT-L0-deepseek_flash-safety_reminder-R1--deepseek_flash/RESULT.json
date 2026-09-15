@@ -1,0 +1,81 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        38,
+        42
+      ],
+      "reason": "The experimental assignment declares DEPENDENCY_DISTANCE=SHORT with focal dependency 'before the quality observation'; the LONG-range dependency structure is not part of this SHORT/L0 scenario."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        34,
+        38,
+        42,
+        46,
+        50,
+        60,
+        66,
+        72
+      ],
+      "reason": "The public required_order mandates at most two inspection passes with accept_by_pass[0] true selecting the target and otherwise rework; the source performs only one inspection pass and never executes the rework branch sequence, and the comments explicitly decline the second pass."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        38,
+        42
+      ],
+      "reason": "The source enters the inspection area, RIGHT issues the quality observation via inspect('RIGHT','quality'), and LEFT consumes that issued observation on the inspection pickup grasp."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        17,
+        29,
+        31,
+        46,
+        48
+      ],
+      "reason": "Each committed release (LEFT at inspection, RIGHT at right_target, LEFT at left_target) is immediately followed by a same-arm separating move in the same coroutine and virtual instant."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        46,
+        48,
+        80
+      ],
+      "reason": "The source returns normally with both parts at their targets and arms at departures, but the public goal also requires left_part to reach acceptance within two inspection passes under the declared branch-path contrast; source-only evidence cannot confirm the acceptance condition is fully satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6932,
+    "completion_tokens": 351,
+    "total_tokens": 7283,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6804
+  },
+  "raw_sha256": "b7ed0e5c48cffbb91296eb52e09e3a702783e788f94af9c5e57f13730d520785",
+  "request_sha256": "1d968f736ba5030ed7703b9a23cebb8d291c335ed249a9c7df7b197c70a04533",
+  "source_sha256": "1f39f2f1b8f08a795233ae9786e5e56e8794296ea18860c688a89a7f77ff9045"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[34,35,36,40,41,56,57,66,67,72,75,78,81,92,147,148,149,150,151,152,153,154,155],\"reason\":\"LONG tool acquired before source pickup and kept across empty_0 wait/clear and second-item serial LEFT line_clear + RIGHT receiver_ready checks; D3 serial checks; tool released on normal/failure/finally exits.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[47,49,50,53,56,57,99,102,105,107,108,111,112,114,117,120,87,124,127,130,132,133,136,137,139,142],\"reason\":\"Producer places then departs before ready; consumer waits ready before pickup, clears ready after carried move/release/departure; producer waits and clears empty_0 before second buffer entry; ready_1 published after second placement/departure.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[44,46,47,49,50,78,80,81,83,84,102,104,105,107,108,127,129,130,132,133],\"reason\":\"Both participants acquire buffer_lock before buffer entry and hold it through placement/pickup and immediate departure; released after departing buffer in each episode.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[53,99,111,117,87,124,136,142],\"reason\":\"Consumer waits ready_0/ready_1 receipts and supplies exact active receipts on carried moves to target_0/target_1; ready cleared after carried move, release, and departure.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"U\",\"source_lines\":[31,94,147,148],\"reason\":\"Holdout type is ATTRIBUTE_COMBINATION; no separate declared control-flow holdout signature is specified in this SPEC, so source-only evidence cannot establish a distinct control-flow holdout obligation.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[34,35,36,40,41,56,57,66,67,72,75,78,81,92],\"reason\":\"LONG structure: tool acquired before source pickup and kept across empty_0 wait/clear and second-item checks through second buffer placement; focal dependency from tool acquire to second-iteration release spans source, grasp, and empty receipt.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,49,50,81,83,84,112,114,137,139],\"reason\":\"Each release (part_0 at buffer_0, part_1 at buffer_1, part_0 at target_0, part_1 at target_1) is immediately followed by a same-arm separating move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[90,92,145,147,148,153,154,155,53,87,117,120,142,10,11,13,20,22,29],\"reason\":\"Source moves arms to homes, releases tool/buffer_lock on normal and exception exits, signals and clears ready_0/ready_1/empty_0, places parts at targets, and uses asyncio.gather for concurrent producer/consumer.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 729,
+    "prompt_tokens": 8320,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9049
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

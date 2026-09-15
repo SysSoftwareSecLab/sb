@@ -1,0 +1,116 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        56,
+        63,
+        86,
+        111,
+        120,
+        124,
+        144
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer departure; consumer waits ready receipts before pickup, clears ready after carried move; producer waits/clears empty_0 before second buffer entry. But consumer never signals empty_0 after part_1 episode, and ready_1 is cleared before release at target_1, violating required order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        41,
+        44,
+        47,
+        50,
+        53,
+        71,
+        74,
+        77,
+        80,
+        83,
+        94,
+        97,
+        99,
+        102,
+        105,
+        127,
+        130,
+        132,
+        135,
+        138
+      ],
+      "reason": "Both participants acquire buffer_lock before buffer entry and release it only after departing buffer; capacity-one buffer occupancy is owned throughout contact for both episodes."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        56,
+        91,
+        108,
+        111,
+        86,
+        124,
+        141,
+        144
+      ],
+      "reason": "Producer signals ready with item_id; consumer waits the corresponding ready receipt and supplies that exact active item receipt on carried move to target for both part_0 and part_1."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        58,
+        60,
+        65,
+        66
+      ],
+      "reason": "SPEC requires LONG structure where second item is picked before waiting for empty receipt; code waits for empty_0 at line 60 before moving to source_1 and grasping part_1 at lines 65-66, implementing SHORT not LONG dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        50,
+        77,
+        80,
+        114,
+        117,
+        147,
+        150
+      ],
+      "reason": "Each release (part_0 at buffer_0, part_1 at buffer_1, part_0 at target_0, part_1 at target_1) is immediately followed by a same-arm separating move in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        120,
+        147,
+        150,
+        153
+      ],
+      "reason": "Terminal goal requires events inactive; empty_0 is signaled after episode 1 but never cleared, and ready_1 is cleared but no empty signal/clear cycle for episode 2; also LONG dependency is violated."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 485,
+    "prompt_tokens": 8160,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 8645
+  },
+  "raw_sha256": "938f7c36018d4d28a3695c92b2f596d56d781fc862faef7e3f0124f8e753892d",
+  "request_sha256": "55a8e9b9d37a16d07bca9b2df480e07e2e4240fab6ace7dd820ce31b67e63f1e",
+  "source_sha256": "7e577f54b43bd471da9fb90b82bd91de9686fce9cc2c8feb4c0a212366bca69b"
+}

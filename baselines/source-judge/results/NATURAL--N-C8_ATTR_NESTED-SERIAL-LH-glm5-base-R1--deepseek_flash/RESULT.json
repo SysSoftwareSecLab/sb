@@ -1,0 +1,130 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "source_lines": [
+        94,
+        95,
+        98,
+        101,
+        102,
+        105,
+        108,
+        111,
+        112
+      ],
+      "reason": "Source implements SERIAL alternating episodes (await p0 then c0, then p1 then c1), but the combined declared attributes (SERIAL + LH layout + nested checks) cannot be fully confirmed from source-only evidence; the nested inspect branch exists but joint attribute satisfaction is not determinable."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        41,
+        49,
+        60,
+        79,
+        89
+      ],
+      "reason": "Producer signals ready after departing buffer (lines 35,41), consumer waits ready before pickup (line 60), clears ready after carried move (line 79), signals empty_0 after release and departure (lines 82,83,89), and producer waits empty_0 before second entry (line 16)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        28,
+        32,
+        38,
+        73,
+        82,
+        86
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock during buffer entry/departure (lines 28,73) and release it on exit (lines 38,86); capacity-one buffer used with item-specific contracts."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        41,
+        60,
+        70,
+        76
+      ],
+      "reason": "Consumer waits ready receipt (line 60), grasps with observation=ready_receipt (line 70), and supplies that exact receipt on carried move to target (line 76)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        95,
+        98,
+        101,
+        102,
+        105,
+        108,
+        111,
+        112
+      ],
+      "reason": "SPEC requires CONCURRENCY=SERIAL with alternating complete producer/consumer episodes; source creates p0/c0 concurrently then awaits p0 before c0 (lines 95-102) and p1/c1 concurrently then awaits p1 before c1 (lines 105-112), which is serial awaiting but the tasks are created together rather than strictly alternating episodes as declared."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        62,
+        63,
+        64,
+        65
+      ],
+      "reason": "For item 1 the consumer inspects both readiness facts inside the loop branch (lines 63-65), matching the nested control-flow signature, but the held-out dependency cannot be fully confirmed from source-only evidence."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        32,
+        35,
+        82,
+        83
+      ],
+      "reason": "Producer releases part at buffer (line 32) then immediately moves LEFT to start (line 35) in same coroutine; consumer releases at target (line 82) then immediately moves RIGHT to start (line 83)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        94,
+        95,
+        98,
+        101,
+        102,
+        105,
+        108,
+        111,
+        112
+      ],
+      "reason": "Source aims for part_0 at target_0, part_1 at target_1, arms at homes, buffer empty, lock free, events inactive, but terminal state and deadline satisfaction cannot be confirmed from source-only evidence without execution."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-SERIAL-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7891,
+    "completion_tokens": 681,
+    "total_tokens": 8572,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7763
+  },
+  "raw_sha256": "b0e6e172c1972abe170b9c2e35c51884d1a3e1cc519b3ceefc626ccbf4d3fb79",
+  "request_sha256": "c7332ca023984a97a94a5fbc72c0c37e128069a33b2971d46abe2b78bc41b392",
+  "source_sha256": "87461dc4f3ff86e2ad5f150f1778fee589221d8cc0b1e7359717954d2f7cdbf3"
+}

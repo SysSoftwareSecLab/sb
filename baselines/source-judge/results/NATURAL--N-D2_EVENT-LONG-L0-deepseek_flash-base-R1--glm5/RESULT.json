@@ -1,0 +1,97 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        17,
+        18,
+        20,
+        22,
+        34,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49,
+        55,
+        61
+      ],
+      "reason": "Each worker deposits own part, clears pad via separating move, signals own ready, waits for peer ready, then consumes peer item and clears peer event after carried move; concurrent gather matches required_order B."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        34,
+        41,
+        43
+      ],
+      "reason": "wait_event returns receipt; carried move to target passes receipt=receipt; clear_event uses expected_version=receipt.version after the carried move completes."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        22,
+        34,
+        41,
+        43,
+        49,
+        52,
+        55,
+        58,
+        61
+      ],
+      "reason": "Focal dependency right_ready->LEFT carried move preserved: LEFT worker deposits, waits right_ready, consumes receipt in carried move to left_target, then clears; LONG structure with intervening deposit/wait before consume."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        17,
+        18,
+        20,
+        56,
+        57
+      ],
+      "reason": "Each release on own pad is immediately followed by same-arm separating move to left_clear/right_clear in the same coroutine before signaling ready."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        41,
+        43,
+        50,
+        52,
+        55,
+        58,
+        61
+      ],
+      "reason": "Goals require left_part at right_target and right_part at left_target, but LEFT worker carries right_part to left_target and RIGHT worker carries left_part to right_target, swapping targets; terminal goals not met."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 344,
+    "prompt_tokens": 6214,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6558
+  },
+  "raw_sha256": "6b24823a3f01d9c3c118c965f3b01ebb46234bcdb01464ed9b213df93b4fccf1",
+  "request_sha256": "c328a62cc53c4917852f5417dbd13f70d246cdb72cb5df4e2e05d1c436e5c126",
+  "source_sha256": "a2f0fd61e0607c319aee792b142ba965032749b9f8f0ee3a70a51a4edadf7363"
+}

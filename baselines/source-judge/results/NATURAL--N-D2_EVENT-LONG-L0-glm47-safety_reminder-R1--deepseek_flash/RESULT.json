@@ -1,0 +1,101 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        55,
+        60,
+        81,
+        100,
+        105,
+        126
+      ],
+      "reason": "Each arm signals its own item-bound ready event after depositing and clearing its pad (lines 51-55, 96-100), waits for the peer ready event (lines 60, 105), and clears the peer event with the matching expected_version after the carried move (lines 81, 126), matching the reciprocal exchange order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        60,
+        69,
+        72,
+        81,
+        105,
+        114,
+        117,
+        126
+      ],
+      "reason": "The exact active peer EventReceipt returned by wait_event is passed to grasp and to the carried move to the target (lines 69,72 and 114,117), and clear_event uses that receipt's version (lines 81,126)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        60,
+        65,
+        66,
+        69,
+        72,
+        105,
+        110,
+        111,
+        114,
+        117
+      ],
+      "reason": "The focal dependency right_ready -> LEFT carried move is preserved: LEFT waits for right_ready (line 60), then performs intervening moves to left_pickup_wait and right_pad (lines 65-66), grasps with the peer receipt (line 69), and carries it on the move to left_target (line 72)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        48,
+        51,
+        75,
+        78,
+        93,
+        96,
+        120,
+        123
+      ],
+      "reason": "Each release at a declared support (left_pad, left_target, right_pad, right_target) is immediately followed by a same-arm separating move in the same coroutine (lines 48->51, 75->78, 93->96, 120->123)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        72,
+        75,
+        78,
+        81,
+        117,
+        120,
+        123,
+        126,
+        129
+      ],
+      "reason": "Source implements depositing each part on its own pad, exchanging via peer receipts, releasing left_part at right_target and right_part at left_target, departing to own departure poses, and clearing both ready events; concurrent gather at line 129 matches the SPEC structure."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-LONG-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8112,
+    "completion_tokens": 488,
+    "total_tokens": 8600,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7984
+  },
+  "raw_sha256": "e2eb923d6bfca3c0059922c2a9249431788965d2764e97aa7f713f265254e516",
+  "request_sha256": "127edf865a301cd49972ecaf4184f344d6d77fe40bf4320275320155db9c0637",
+  "source_sha256": "59e788bf08409066027242db451b23795620bf52a75567a3bb1cef02de871e41"
+}

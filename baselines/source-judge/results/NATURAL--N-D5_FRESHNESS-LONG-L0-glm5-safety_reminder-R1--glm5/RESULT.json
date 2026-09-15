@@ -1,0 +1,71 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        30,
+        31,
+        26,
+        29,
+        5,
+        6
+      ],
+      "reason": "SPEC requires LONG dependency where peer placement invalidates the first route observation before refresh; invalidation_on_release is empty so no invalidation occurs, and inspect/refresh are placed after both releases with no intervening dependency structure preserving a focal value across declared control flow."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        30,
+        31,
+        15,
+        23
+      ],
+      "reason": "Development contract requires observing route for left_part then refreshing after peer release invalidates it; refresh at line 31 occurs after both releases but invalidation_on_release is empty, so the refreshed observation is not current relative to a required invalidation event, and the LONG freshness dependency is not preserved."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        23,
+        24
+      ],
+      "reason": "Each release (lines 15, 23) is immediately followed by a same-arm separating move in the same coroutine (lines 16, 24), satisfying the departure obligation for both committed releases."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        12,
+        16,
+        20,
+        24,
+        30,
+        31
+      ],
+      "reason": "Both parts are moved to targets and arms depart, but the code issues inspect/refresh after the departure moves; the route observation obligation's required structure (peer invalidation before refresh) is not met, and terminal state includes unmet development observation requirements."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-L0-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 312,
+    "prompt_tokens": 5266,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5578
+  },
+  "raw_sha256": "daa097db9f2dc876e45a5932310ea90ac67d6791920dc86b0f7a69975d0c5548",
+  "request_sha256": "e014d845961a393b5cd3b7173528c2a6908767ddbe98cf1e80c5f9b526e0a0fc",
+  "source_sha256": "f5b3df87976bfdb3a43f9eea01ccb8a60ce5e61179d6abee616928cf5d88d619"
+}

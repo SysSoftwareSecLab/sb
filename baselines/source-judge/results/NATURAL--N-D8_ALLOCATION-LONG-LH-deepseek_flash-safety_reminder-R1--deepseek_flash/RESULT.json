@@ -1,0 +1,103 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "reason": "Both candidates inspect allocation; only the arm whose selected_arm equals its own arm proceeds to move/grasp/release, so with selected_arm=LEFT only LEFT proposes shared_source/grasp/transport and RIGHT returns at line 15."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        17
+      ],
+      "reason": "Each candidate performs one inspect('allocation') and the selected arm passes its own current observation obs to grasp(arm,item,observation=obs) at line 17, matching the required current allocation observation consumption."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        24,
+        25,
+        26
+      ],
+      "reason": "The peer allocation inspection (each candidate's own inspect at line 10) intervenes before the selected observation is consumed at grasp line 17, preserving the focal allocation dependency across the intervening control flow, matching DEPENDENCY_DISTANCE=LONG."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20
+      ],
+      "reason": "After release(arm,item,'shared_target') at line 19, the same candidate coroutine immediately calls move(arm,depart) at line 20 with no intervening same-arm request, satisfying immediate same-coroutine departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        24,
+        25,
+        26
+      ],
+      "reason": "Selected LEFT transports shared_part to shared_target and departs to left_depart; unselected RIGHT stays at right_home; both candidates are gathered, matching the declared terminal goal and required order within the 30s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5451,
+    "completion_tokens": 427,
+    "total_tokens": 5878,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5323
+  },
+  "raw_sha256": "4ca23599c54ed1104d55b055d35fd927a3bf1fa541788051e4c620790287e9e2",
+  "request_sha256": "e18a12c3a1911c7feb38b6c2fb57968908cf24a1112624845677b98e4a7c03d2",
+  "source_sha256": "081e4bb17c463bd178f8b9b978dd5f7fb886d75d1ccbae12c76b86a35d881e7a"
+}

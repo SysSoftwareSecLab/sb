@@ -1,0 +1,125 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        30,
+        88,
+        136
+      ],
+      "reason": "SPEC requires SERIAL alternating episodes (A), but source uses asyncio.gather(producer(), consumer()) running joined producer/consumer coroutines (B), not the declared SERIAL attribute combination."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        49,
+        56,
+        57,
+        80,
+        91,
+        102,
+        109,
+        113,
+        124,
+        131
+      ],
+      "reason": "ready_0/ready_1 signaled after producer places/departs; consumer waits ready before pickup, clears after carried move; empty_0 signaled after consumer releases/departs; producer waits and clears empty_0 before second part."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        41,
+        42,
+        43,
+        45,
+        46,
+        72,
+        73,
+        74,
+        76,
+        77
+      ],
+      "reason": "buffer_lock acquired before buffer entry, held through release and immediate departure to left_wait, then released; capacity-one buffer occupancy protected."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        91,
+        99,
+        102,
+        113,
+        121,
+        124
+      ],
+      "reason": "Consumer waits corresponding ready receipt before pickup and supplies that exact active item receipt on carried move to target; clears ready after carried move."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        30,
+        88,
+        136
+      ],
+      "reason": "SPEC requires SERIAL level (alternating complete episodes), but source implements concurrent joined producer/consumer coroutines via asyncio.gather, contradicting the declared structure."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        30,
+        88,
+        136
+      ],
+      "reason": "Holdout requires SERIAL alternating control-flow signature; source implements concurrent coroutine gather instead, failing the declared held-out control-flow structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        43,
+        45,
+        74,
+        76,
+        105,
+        106,
+        127,
+        128
+      ],
+      "reason": "Each release (LEFT part_0 at buffer_0, LEFT part_1 at buffer_1, RIGHT part_0 at target_0, RIGHT part_1 at target_1) is followed by immediate same-arm separating move in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        136,
+        30,
+        88
+      ],
+      "reason": "Terminal goals appear addressed (parts at targets, arms at homes, events cleared, resources released), but concurrent execution contradicts SERIAL structure and finite outcome of interleaved buffer access cannot be determined from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 518,
+    "prompt_tokens": 7817,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8335
+  },
+  "raw_sha256": "697817ef52ba0c058f8b25c55140e78a4918c5bb71499653c77998c75ff12f29",
+  "request_sha256": "d502c8bad68dd24b9e1b15a7a07260c32b04a882eafd64098240231557136e56",
+  "source_sha256": "350ea4c2562c59fe359109af1ab35c1f1ec4d40c43958e8b8823f7ea4f991779"
+}

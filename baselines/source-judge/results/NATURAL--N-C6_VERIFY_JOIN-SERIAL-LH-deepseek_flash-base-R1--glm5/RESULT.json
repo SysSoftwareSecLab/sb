@@ -1,0 +1,75 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        37,
+        5,
+        15,
+        26
+      ],
+      "reason": "SPEC requires SERIAL level, but asyncio.gather(left_branch(), right_branch()) runs both verifier branches concurrently rather than serially."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        37,
+        43,
+        44,
+        47,
+        48
+      ],
+      "reason": "Both join events are signaled, awaited after gather, and cleared with matching expected_version receipts."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        52,
+        53,
+        54,
+        57,
+        58,
+        59
+      ],
+      "reason": "Each release is at the declared support zone (left_target/right_target) and immediately followed by same-arm move to departure in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        37,
+        52,
+        53,
+        54,
+        57,
+        58,
+        59
+      ],
+      "reason": "Terminal goals and departure are present, but the SERIAL composition structure is violated by concurrent gather, so the required_order is not met."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-LH-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 218,
+    "prompt_tokens": 5879,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6097
+  },
+  "raw_sha256": "cf2eab2d08f73e8f28ccf95170882e25d2f5055efe02ce597d913fdaaf4126a4",
+  "request_sha256": "379734d4cfb4659b4640fd8c588203f8ffb661b5cafad77313768ae6c66f4e0d",
+  "source_sha256": "42e77bd0b194c96c6c569c0fcf64af008610a6e9f836d37e1e0034571ccf135e"
+}

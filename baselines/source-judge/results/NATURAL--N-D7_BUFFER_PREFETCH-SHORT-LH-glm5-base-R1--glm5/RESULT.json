@@ -1,0 +1,123 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        33,
+        36,
+        50,
+        53,
+        97,
+        99,
+        101,
+        116,
+        118
+      ],
+      "reason": "ready_0 is signaled at line 33 before LEFT departs buffer at line 35-36, violating required order that producer departs before ready publication; also LEFT consumer clears ready_0 at line 66 after RIGHT already cleared it at line 97, and LEFT clears ready_1 at line 80 after RIGHT cleared at line 116."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        26,
+        31,
+        36,
+        44,
+        48,
+        53,
+        57,
+        64,
+        71,
+        78,
+        88,
+        96,
+        107,
+        115
+      ],
+      "reason": "Both arms acquire buffer_lock before entering buffer poses and release it after departing; ownership is held throughout buffer contact for all episodes."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        86,
+        93,
+        97,
+        105,
+        112,
+        116
+      ],
+      "reason": "RIGHT consumer waits ready_0/ready_1 receipts before pickup and supplies those exact receipts on carried moves to target_0/target_1; ready is cleared after the carried move completes."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        39,
+        41,
+        44,
+        48,
+        99,
+        101
+      ],
+      "reason": "Producer waits and clears empty_0 (signaled by consumer after first item carried to target) before entering buffer with second part; SHORT dependency structure with focal empty_0 receipt is preserved across intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        32,
+        35,
+        49,
+        52,
+        62,
+        63,
+        76,
+        77,
+        94,
+        95,
+        113,
+        114
+      ],
+      "reason": "Every release at a named support is immediately followed by a same-arm separating move in the same coroutine: LEFT moves to left_wait after buffer releases and to left_home after target releases; RIGHT moves to right_wait/right_home after releases."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        33,
+        35,
+        36,
+        50,
+        52,
+        53,
+        56,
+        70,
+        101,
+        118,
+        126
+      ],
+      "reason": "ready_0/ready_1 signaled before producer departure violates required order; LEFT arm consumer episodes wait on part0_at_target/part1_at_target set by RIGHT, but LEFT then re-consumes parts already placed at targets by RIGHT, causing double-handling and leaving buffer/terminal state inconsistent with goals."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-SHORT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 509,
+    "prompt_tokens": 7887,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8396
+  },
+  "raw_sha256": "10ce616e7b69de6058642a011ee428146d4559869c5e4539f733a0475ffc1257",
+  "request_sha256": "5a46b099da567d5a59ef9c27e24a1a190f2fea6b6c7e4937e29af615466d4f8f",
+  "source_sha256": "b285230d7d025fa63371ecfadb0899d297370c47fc01eb42676d7053ce52f2c1"
+}

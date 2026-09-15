@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[19,20,21,24,25,26,29,31,32,33,34,35,36,37,38,39,40,41,42,45,47,48,49,50,51,52,53,54,55,57,58,59,60],\"reason\":\"Both serial and concurrent workers acquire fixture then tool before carrying, release after worker, and release tool then fixture in finally; matches required dual-resource span order.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[6,7,8,9,11,12,14,15,16,19,20,21,24,25,26,29,30,31,32,33,34,35,36,37,38,39,40,41,42,45,46,47,48,49,50,51,52,53,54,55,57,58,59,60,63,64,65,66,67,68],\"reason\":\"Implements SHORT dependency: acquire both resources, carry part to target while owning both, release and depart, then release resources; serial A and concurrent B both present.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[8,9,12,14,15,16],\"reason\":\"Worker releases at target support zone then immediately calls move to depart in same coroutine with no intervening same-arm action.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[63,67,68,19,20,21,24,25,26,29,31,32,33,34,35,36,37,38,39,40,41,42,45,47,48,49,50,51,52,53,54,55,57,58,59,60],\"reason\":\"Resources are acquired and released but set_mode is never called to turn controllers OFF; initial OFF state is insufficient since acquire changes ownership and release_resource requires OFF mode, yet no explicit OFF transition is coded after acquisition.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[19,20,21,35,36,37,38,39,40,41,42,47,48,49,50,51,52,53,54,55],\"reason\":\"No actual tool acquisition timeout is evidenced in the source; try/finally cleanup is present but no timeout event is triggered in the finite trajectory.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 538,
+    "prompt_tokens": 5987,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6525
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

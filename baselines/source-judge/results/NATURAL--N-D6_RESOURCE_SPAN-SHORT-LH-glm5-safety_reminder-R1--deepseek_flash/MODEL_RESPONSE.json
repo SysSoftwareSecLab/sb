@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[8,10,13,14,15,16,17,19,21],\"reason\":\"Both fixture and tool are acquired before the carry (lines 8-10), the part is moved/grasped/moved/released/departed while both are owned (lines 13-17), and resources are released only after departure (lines 19,21), matching the required dual-resource span.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"NA\",\"source_lines\":[34,35,36,37,38],\"reason\":\"The experimental assignment is DEPENDENCY_DISTANCE=SHORT, so the LONG producer-to-consumer dependency structure is not applicable to this scenario.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[16,17],\"reason\":\"The release at line 16 uses the held part at its declared target support, and the same candidate coroutine immediately issues the same-arm separating move to depart at line 17.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[31,34,35,36,37,38],\"reason\":\"The source implements the concurrent workers and terminal moves, but source-only evidence cannot confirm the finite execution reaches both parts at targets, empty arms at departures, and both controllers OFF/unowned within the deadline.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[8,10,23,24,25,26,27,28],\"reason\":\"No actual tool acquisition timeout is shown in the supplied finite source; the try/finally cleanup exists but the timeout-triggered condition is not established as occurring.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5712,
+    "completion_tokens": 367,
+    "total_tokens": 6079,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5584
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

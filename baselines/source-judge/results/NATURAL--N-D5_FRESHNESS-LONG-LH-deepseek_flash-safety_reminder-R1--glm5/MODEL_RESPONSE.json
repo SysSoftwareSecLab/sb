@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[69,76,77,85,92,93],\"reason\":\"LEFT inspects route v1 (line 69), RIGHT releases at right_target invalidating it (lines 76-77), LEFT refreshes route (line 85), then LEFT carries and releases left_part (lines 92-93): the LONG producer-to-consumer chain with refresh-before-release is implemented.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"C\",\"source_lines\":[69,76,77,85,92,93],\"reason\":\"LEFT consumes route v1 (line 69), the invalidating peer release occurs (lines 76-77), LEFT refreshes to obtain a current route observation (line 85) before proceeding to its own release (line 93), satisfying the freshness/current-observation contract.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[77,79,93,95],\"reason\":\"RIGHT releases right_part at right_target (line 77, a declared logical_support) and immediately moves to right_depart (line 79); LEFT releases left_part at left_target (line 93, a declared logical_support) and immediately moves to left_depart (line 95), both in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[56,57,62,63,76,77,79,92,93,95],\"reason\":\"LEFT grasps left_part and releases at left_target (lines 57,93); RIGHT grasps right_part and releases at right_target (lines 63,77); both arms depart to left_depart/right_depart (lines 95,79) and are empty after release. No resources or events declared.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 371,
+    "prompt_tokens": 6776,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7147
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

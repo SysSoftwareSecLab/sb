@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[10,12,13,14,15,16,17,18,19,20],\"reason\":\"Both candidates inspect allocation; only the arm matching selected_arm proceeds to approach/grasp/transport, the other returns without move/grasp/release.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[10,11,12,17],\"reason\":\"Both candidates inspect allocation once; selected arm consumes the same current allocation observation obs in its grasp call.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[10,11,12,17],\"reason\":\"Peer allocation inspection intervenes before selected observation consumption: obs is fetched before branch selection and consumed at grasp for the selected arm, preserving LONG dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[18,19,20],\"reason\":\"Release at shared_target is immediately followed by same-arm move to depart_pose in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[15,16,17,18,19,20,24,25],\"reason\":\"Selected LEFT transports shared_part to shared_target and departs to left_depart, but RIGHT (nonselected) is not kept at right_home: RIGHT candidate returns without moving, yet run_task gathers LEFT and RIGHT concurrently rather than the required serial A structure, and RIGHT's terminal pose is not ensured by code.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 308,
+    "prompt_tokens": 5066,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5374
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

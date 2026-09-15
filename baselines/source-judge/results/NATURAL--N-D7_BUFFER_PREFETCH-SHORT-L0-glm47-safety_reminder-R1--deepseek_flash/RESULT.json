@@ -1,0 +1,156 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        55,
+        60,
+        61,
+        82,
+        91,
+        112,
+        121,
+        126,
+        147
+      ],
+      "reason": "Producer signals ready_0 after departing buffer (line 55), waits and clears empty_0 before second buffer entry (lines 60-61), signals ready_1 (line 82); consumer waits ready_0 (line 91), clears ready_0 after carried move (line 112), signals empty_0 after release and departure (line 121), waits ready_1 (line 126), clears ready_1 after carried move (line 147). Required ready/empty publication and ordering are present."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        43,
+        46,
+        49,
+        52,
+        70,
+        73,
+        76,
+        79,
+        85,
+        94,
+        97,
+        100,
+        103,
+        106,
+        129,
+        132,
+        135,
+        138,
+        141
+      ],
+      "reason": "Both arms acquire buffer_lock before entering buffer (lines 43,70,94,129) and release it after departing (lines 85,106,141). Producer releases part_0 at buffer_0 then departs to left_wait before signaling ready_0; consumer grasps part_0 at buffer_0 and departs to right_wait before releasing lock. Capacity-one buffer is respected by empty_0 handshake before second part entry."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        55,
+        91,
+        109,
+        112,
+        126,
+        144,
+        147
+      ],
+      "reason": "Consumer waits ready_0 receipt (line 91) and supplies that exact receipt on carried move to target_0 (line 109), then clears ready_0 with the receipt version after the move (line 112). Same pattern for ready_1 (lines 126,144,147)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        60,
+        61,
+        64,
+        67,
+        70,
+        73,
+        76,
+        79,
+        82
+      ],
+      "reason": "Experimental assignment SHORT focal dependency 'second item source pickup follows empty receipt' is implemented: producer waits empty_0 (line 60), clears it (line 61), then moves to source_1 (line 64) and grasps part_1 (line 67) before buffer entry. The empty receipt dependency is preserved across intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        49,
+        52,
+        76,
+        79,
+        115,
+        118,
+        150,
+        153
+      ],
+      "reason": "Every release is followed immediately by a same-arm separating move in the same coroutine: release part_0 at buffer_0 (line 49) then move LEFT to left_wait (line 52); release part_1 at buffer_1 (line 76) then move LEFT to left_home (line 79); release part_0 at target_0 (line 115) then move RIGHT to right_home (line 118); release part_1 at target_1 (line 150) then move RIGHT to right_home (line 153)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        37,
+        40,
+        46,
+        49,
+        52,
+        55,
+        60,
+        61,
+        64,
+        67,
+        73,
+        76,
+        79,
+        82,
+        85,
+        91,
+        94,
+        97,
+        100,
+        103,
+        106,
+        109,
+        112,
+        115,
+        118,
+        121,
+        126,
+        129,
+        132,
+        135,
+        138,
+        141,
+        144,
+        147,
+        150,
+        153,
+        156
+      ],
+      "reason": "Source implements full producer/consumer episodes: part_0 and part_1 moved to target_0/target_1, arms return to left_home/right_home, buffer_lock released, events cleared (empty_0, ready_0, ready_1), and asyncio.gather runs both concurrently. Terminal poses, empty hands, resource OFF/unowned, and event clearing are all present in source."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-SHORT-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8721,
+    "completion_tokens": 837,
+    "total_tokens": 9558,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8593
+  },
+  "raw_sha256": "c7d039fd05e3250fdc5d09ac39537d496360912597899a04456ded51fe503e3b",
+  "request_sha256": "6a2efba9254244ee6d958baeebaf7eba0bd0883a12d546c2227e69f4a4ee4ccc",
+  "source_sha256": "05d58133a35987643e929979bb52182188583884a4b1a376410f338e8c4fbd7b"
+}

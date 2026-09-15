@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[21,22,23,25,31,36,39],\"reason\":\"The quality observation q1 is produced by RIGHT inspect at line 21 and consumed by LEFT grasp at line 25/31; in the rework branch q2 from refresh at line 36 is consumed by grasp at line 39, preserving the producer-to-consumer dependency across the intervening control flow.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[23,24,25,26,27,28,29,30,31,32,33,34,36,38,39,40,41,42],\"reason\":\"accept_by_pass[0] true path goes inspection->left_target; false path goes inspection->rework->rework_wait, refresh, then rework->left_target, implementing the two-pass branch with at most two inspection passes.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[21,22,23,25,31,36,39],\"reason\":\"RIGHT inspect quality issues q1 used on the inspection pickup, and refresh issues q2 used on the rework pickup, matching the required current quality observation at each pass.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[18,19,27,28,33,34,41,42,47,48],\"reason\":\"Each release is immediately followed by a same-arm move in the same coroutine: release at inspection then move left_wait, release at left_target then left_depart, release at rework then rework_wait, release at left_target then left_depart, release at right_target then right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[15,16,17,18,19,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,39,40,41,42,44,45,46,47,48],\"reason\":\"The code routes left_part to left_target via acceptance within two passes and right_part to right_target, ending both arms at left_depart/right_depart empty-handed with no resources or events declared.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6365,
+    "completion_tokens": 495,
+    "total_tokens": 6860,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6237
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

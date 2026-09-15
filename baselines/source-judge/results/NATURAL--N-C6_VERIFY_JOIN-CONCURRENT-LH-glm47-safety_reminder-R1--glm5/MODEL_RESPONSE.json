@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[36,70,97,98],\"reason\":\"left_worker and right_worker are defined as separate async coroutines and executed concurrently via asyncio.gather, implementing the CONCURRENT level rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[47,51,79,82,66,68,94,95],\"reason\":\"Each worker signals its own ready event, waits for the other's ready event before proceeding to target, and both events are cleared after moves complete, implementing the join_events dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[58,62,88,91],\"reason\":\"Each release occurs at the corresponding target support zone (LEFT_TARGET, RIGHT_TARGET) and is immediately followed by a same-arm move to the depart pose in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[44,76,47,79,51,82,55,85,58,88,62,91,66,68,94,95],\"reason\":\"Source implements all required steps toward the terminal goal (verify, join, transport, release, depart, clear events), but the right_verification fact value has verified_by RIGHT while the left worker inspects left_verification and right worker inspects right_verification; the observation_facts show right_verification value item_id is left_part verified_by RIGHT, which is inconsistent with right_part goals, creating a source-localizable contradiction in the verification acceptance condition.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 322,
+    "prompt_tokens": 6447,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6769
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

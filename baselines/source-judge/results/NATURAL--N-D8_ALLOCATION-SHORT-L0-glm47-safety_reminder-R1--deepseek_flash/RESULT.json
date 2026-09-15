@@ -1,0 +1,92 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ALLOCATION_EXCLUSIVITY",
+      "label": "C",
+      "source_lines": [
+        17,
+        21,
+        28,
+        44
+      ],
+      "reason": "selected_arm is read from the controller-issued allocation observation; only the branch matching selected_arm issues move/grasp/release calls, and the unselected arm makes no such calls."
+    },
+    {
+      "id": "ALLOCATION_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        8,
+        9,
+        11,
+        12,
+        17,
+        21,
+        33,
+        49
+      ],
+      "reason": "Both arms independently inspect the allocation fact once (lines 8-12), and the selected grasp passes selected_obs, the observation corresponding to the selected arm."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        17,
+        21,
+        33,
+        49
+      ],
+      "reason": "The assignment declares DEPENDENCY_DISTANCE=SHORT with focal dependency 'selected observation is consumed immediately'; the selected observation is consumed directly by the grasp with no intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        39,
+        42,
+        55,
+        58
+      ],
+      "reason": "Each release at shared_target is immediately followed in the same branch/coroutine by a same-arm move to the declared depart pose (LEFT to left_depart, RIGHT to right_depart)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        28,
+        30,
+        33,
+        36,
+        39,
+        42,
+        44,
+        46,
+        49,
+        52,
+        55,
+        58
+      ],
+      "reason": "For the LEFT-selected allocation, LEFT moves to shared_source, grasps shared_part, transports to shared_target, releases, and departs to left_depart while RIGHT remains at right_home; this matches the declared goal and terminal poses."
+    }
+  ],
+  "object_id": "NATURAL--N-D8_ALLOCATION-SHORT-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6125,
+    "completion_tokens": 368,
+    "total_tokens": 6493,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5997
+  },
+  "raw_sha256": "3542b4d2fc17068e1e047ca63733fac7f63934438c1498339d639d468ff74bde",
+  "request_sha256": "ac7a4abfd87032edd66109b57b61dc5d3eeaeff71cb88e15371c7d743d2df35b",
+  "source_sha256": "ad03eb931efae93523f08281d657ddbaa009388bda70ab412b5ea966ba7025e5"
+}

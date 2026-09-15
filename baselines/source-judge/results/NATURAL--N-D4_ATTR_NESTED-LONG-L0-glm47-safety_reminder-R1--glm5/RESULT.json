@@ -1,0 +1,24 @@
+{
+  "status": "INVALID_STRUCTURED_RESPONSE",
+  "predictions": null,
+  "parse_error": "Expecting value: line 1 column 1 (char 0)",
+  "policy": "Original response retained; no scientific retry and no format normalization.",
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-LONG-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 873,
+    "prompt_tokens": 8870,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9743
+  },
+  "raw_sha256": "f74c36f9f5eda8d8ca515cb9bf88c495eba8ef7fd2fdd19121cf10dfe56828bf",
+  "request_sha256": "27516217104abc7fd231774a72ea1f104c9cf10a3418bf1ec69a389cdb96f6bd",
+  "source_sha256": "1df0aa15a22c9f279a73d72b2055f8bcbc360b70021a1cdcacb9411c2520b7c2"
+}

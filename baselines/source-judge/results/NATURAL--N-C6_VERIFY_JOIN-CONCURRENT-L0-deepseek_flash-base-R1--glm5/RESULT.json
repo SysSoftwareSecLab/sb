@@ -1,0 +1,72 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        14,
+        24,
+        32,
+        40
+      ],
+      "reason": "asyncio.gather runs left_branch, right_branch, and consumer concurrently, matching the CONCURRENT level requirement."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "V",
+      "source_lines": [
+        14,
+        24,
+        32,
+        34,
+        35,
+        37,
+        38,
+        40
+      ],
+      "reason": "Neither left_branch nor right_branch ever calls robot.signal on left_ready/right_ready, so consumer's wait_event will time out; the join events are never signaled."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        21,
+        22,
+        28,
+        29,
+        30
+      ],
+      "reason": "Each release is immediately followed by a same-arm move to departure in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        34,
+        35,
+        40
+      ],
+      "reason": "Consumer waits for left_ready/right_ready events that branches never signal, causing TimeoutError before task completion; terminal goals are not reached."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 212,
+    "prompt_tokens": 5493,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5705
+  },
+  "raw_sha256": "d61dbbe923eeafe5d5bd3ebf099f9ebe82276c1e1c222326c9998d0abea63d18",
+  "request_sha256": "0e9babc306e31fc64ed3210840f8603ec854914a088a1628a2a522370872893d",
+  "source_sha256": "31e2a3dfd4ffbc11883eb0c17efa4ed02d92dda757f223a77cca80bb5a8f7607"
+}

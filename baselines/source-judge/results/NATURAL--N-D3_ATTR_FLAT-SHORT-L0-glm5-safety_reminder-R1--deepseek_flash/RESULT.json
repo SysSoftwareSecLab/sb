@@ -1,0 +1,135 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "source_lines": [
+        86,
+        90,
+        91,
+        110,
+        115,
+        119,
+        123,
+        126
+      ],
+      "reason": "Source implements serial second-item checks (inspect LEFT line_clear, refresh RIGHT receiver_ready) and SHORT tool acquisition inside producer_episode, but the finite trajectory outcome and joint attribute satisfaction cannot be confirmed from source alone."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "U",
+      "source_lines": [
+        50,
+        60,
+        70,
+        81,
+        87,
+        88
+      ],
+      "reason": "Source shows signal(ready_i) after buffer departure, wait_event(ready_i) before pickup, clear_event(ready_i) after carried move, signal(empty_0) after target release, and wait/clear empty_0 before second buffer entry; actual ordering and completion depend on the finite execution."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "U",
+      "source_lines": [
+        41,
+        44,
+        47,
+        48,
+        72,
+        75,
+        78,
+        79
+      ],
+      "reason": "Both arms acquire buffer_lock around buffer entry/departure and release it in finally, but actual capacity-one occupancy and lock ownership over the finite trajectory cannot be confirmed from source alone."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "U",
+      "source_lines": [
+        60,
+        66,
+        70
+      ],
+      "reason": "Consumer waits ready_i, passes ready_receipt to move to buffer, and clears ready_i after the carried move; whether the receipt is active and correctly consumed in the finite run is not determinable from source alone."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        86,
+        90,
+        91,
+        96,
+        103,
+        110,
+        115,
+        119,
+        123,
+        126
+      ],
+      "reason": "Source contains the second-entry wait/clear, serial inspect/refresh checks, and producer_episode(1) call, but the held-out control-flow signature's actual reachable execution cannot be confirmed from source alone."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "U",
+      "source_lines": [
+        34,
+        41,
+        86,
+        87,
+        90,
+        91,
+        110
+      ],
+      "reason": "Source shows SHORT structure where LEFT tool acquire occurs inside producer_episode after second-item wait/checks, but the focal dependency across the finite trajectory is not fully determinable from source alone."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "U",
+      "source_lines": [
+        44,
+        45,
+        75,
+        76
+      ],
+      "reason": "Each release is followed by a same-arm move in the same coroutine (LEFT release then move to LEFT_WAIT; RIGHT release then move to RIGHT_HOME), but actual committed releases and immediate departure in the finite trajectory cannot be confirmed from source alone."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        115,
+        118,
+        119,
+        121,
+        124,
+        126,
+        128,
+        130
+      ],
+      "reason": "Source attempts both parts to targets, empty arms at homes, buffer empty, lock free, and events inactive, but the finite execution outcome and deadline satisfaction cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8319,
+    "completion_tokens": 636,
+    "total_tokens": 8955,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8191
+  },
+  "raw_sha256": "0a67d6d81b0e9af55710d71c8e59d625c7599822d4e87c2a6c69493d1185da47",
+  "request_sha256": "ea736efacf4c301792b4bc7e776c3c82aa60d2c714a8e34cced245e70cf86c9b",
+  "source_sha256": "8f7f52fab4385014f9d27308b70f6d9709634ce3f8ad950b3c109d772dd0d9e2"
+}

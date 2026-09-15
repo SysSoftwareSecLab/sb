@@ -1,0 +1,164 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        172,
+        174,
+        179,
+        184,
+        187
+      ],
+      "reason": "D3 requires serial second-item checks; source does inspect line_clear then receiver_ready serially (lines 174-181), but clears ready_1 (line 187) after the carried move completes (line 184), satisfying that attribute. However, the focal dependency (tool acquire -> second-iteration release spans source, grasp and empty receipt) is violated: tool is released at line 77 after item 0, before the empty_0 wait/receipt for item 1, breaking the LONG span across the empty receipt."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        70,
+        71,
+        74,
+        125,
+        126,
+        136,
+        137,
+        140,
+        143,
+        152,
+        105,
+        106,
+        109,
+        158,
+        159,
+        169,
+        170,
+        184,
+        187,
+        198
+      ],
+      "reason": "For item 0, producer releases buffer_lock (line 71) and departs (line 68) before signaling ready_0 (line 74) — correct. Consumer clears ready_0 after carried move (line 143) and signals empty_0 after release+depart (line 152) — correct. For item 1, producer waits/clears empty_0 (lines 81-84) before re-entering buffer — correct. Consumer clears ready_1 after carried move (line 187) — correct. But producer releases tool (line 77) after item 0 before empty_0 is processed, and the required_order states 'Consumer clears ready after its carried move, releases on target and departs before publishing empty_0' — for item 1 the consumer signals empty_0 (line 198) which is the completion signal, but the protocol requires events inactive at terminal; empty_0 is signaled but never cleared by producer after item 1, leaving it active."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        59,
+        60,
+        63,
+        65,
+        68,
+        71,
+        94,
+        95,
+        98,
+        100,
+        103,
+        106,
+        125,
+        126,
+        129,
+        131,
+        134,
+        137,
+        158,
+        159,
+        162,
+        164,
+        167,
+        170
+      ],
+      "reason": "Both participants acquire buffer_lock before buffer entry and release it after departure (lines 59-71, 94-106, 125-137, 158-170). Capacity-one buffer is respected: producer departs and releases lock before consumer acquires it. Ownership is maintained during all buffer contact periods."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        123,
+        140,
+        156,
+        184
+      ],
+      "reason": "Consumer waits ready_0/ready_1 receipts (lines 123, 156) and supplies those exact active receipts on carried moves to target (lines 140, 184), matching the BUFFER_RECEIPT mechanism."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        172,
+        174,
+        179
+      ],
+      "reason": "Source implements serial inspect checks (lines 174, 179) matching D3, but the holdout type is ATTRIBUTE_COMBINATION and the exact held-out control-flow signature definition is not fully determinable from source alone without the complete T4_LABEL_GUIDE definition for this specific obligation."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        77,
+        81,
+        87,
+        92
+      ],
+      "reason": "LONG variant requires tool acquired before source pickup to span across the empty_0 wait/receipt and second-iteration release. Source releases tool at line 77 after item 0, then re-acquires at line 87 after waiting/clearing empty_0 (line 81-84). The tool does not span the empty receipt; it is released before the empty_0 wait and re-acquired after, violating the LONG dependency structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        63,
+        65,
+        68,
+        98,
+        100,
+        103,
+        129,
+        131,
+        134,
+        162,
+        164,
+        167,
+        140,
+        146,
+        149,
+        184,
+        190,
+        193
+      ],
+      "reason": "Every release (lines 65, 100, 146, 190) is immediately followed by a same-arm separating move in the same coroutine (lines 68, 103, 149, 193). Buffer releases also depart before lock release. All departures use move to home poses."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        198,
+        204,
+        77,
+        111,
+        116,
+        200,
+        201
+      ],
+      "reason": "Terminal goal requires events inactive, but empty_0 is signaled at line 198 (item 1 completion) and never cleared afterward — producer's coroutine ends at line 109 without a second empty_0 wait/clear cycle. Also, tool release on exit (lines 113-116) may double-release tool already released at line 77 for item 0 path, and buffer is not confirmed empty at terminal since item 1's empty_0 signal leaves the event active."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-LONG-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 1038,
+    "prompt_tokens": 9079,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 10117
+  },
+  "raw_sha256": "45cad5a32285386f3d2107a4dab002dc997934b99d94f5e0b4cd77debab06da6",
+  "request_sha256": "75d5b749c2d6ab91f4e50539d83cb2080e17bbdb1d51e53dbf31ea13420a0ba8",
+  "source_sha256": "5b8036d21355a471b241aed53f36217b393b1a2b5ba87bbdebbb381f6fee112a"
+}

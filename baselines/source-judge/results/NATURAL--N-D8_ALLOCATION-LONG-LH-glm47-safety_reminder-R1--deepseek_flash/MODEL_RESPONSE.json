@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[25,30,33,38,41,44,47,51,53,57],\"reason\":\"Each worker inspects allocation, decodes selected_arm, and only the arm equal to selected_arm (LEFT per initial allocation) proposes move/grasp/release; RIGHT branch is pass with no robot calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[25,29,30,33,41],\"reason\":\"Both workers independently call inspect(arm, ALLOCATION_FACT_ID) once before branching, and the selected branch passes that same alloc_obs into grasp, satisfying the required current allocation observation consumption.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[25,29,30,33,41,62,63,64],\"reason\":\"The peer allocation inspection occurs in each concurrent worker before the selected arm's observation is consumed by grasp, preserving the LONG producer-to-consumer dependency across the intervening branch/control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,51],\"reason\":\"The selected branch releases shared_part at shared_target (a declared logical support) and immediately, in the same candidate coroutine, calls move to the depart pose with no intervening same-arm request.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[38,41,44,47,51,53,57,62,63,64],\"reason\":\"Selected LEFT moves shared_part to shared_target, releases, and departs to left_depart empty; nonselected RIGHT remains at right_home empty; no resources/events are declared, and the concurrent gather structure matches the SPEC.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6302,
+    "completion_tokens": 380,
+    "total_tokens": 6682,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6174
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

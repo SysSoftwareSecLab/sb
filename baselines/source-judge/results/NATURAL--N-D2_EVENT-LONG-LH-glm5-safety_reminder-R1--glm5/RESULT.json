@@ -1,0 +1,24 @@
+{
+  "status": "INVALID_STRUCTURED_RESPONSE",
+  "predictions": null,
+  "parse_error": "Expecting value: line 1 column 1 (char 0)",
+  "policy": "Original response retained; no scientific retry and no format normalization.",
+  "object_id": "NATURAL--N-D2_EVENT-LONG-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 420,
+    "prompt_tokens": 6187,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6607
+  },
+  "raw_sha256": "aadf721088a9540acc6ea181c92ec5a1454bb32a8cf694f833b16a83243bf94d",
+  "request_sha256": "afc3c935da9e1c86286621878f19a25f12f2f6847578ba2a48a7c75ce48b24a5",
+  "source_sha256": "673833638c7f8fec837318adf2cd8b3f24660f95775fff0237dc405a2f5cca13"
+}

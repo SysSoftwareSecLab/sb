@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[60,63,65,77,80,86,95,96,99,108],\"reason\":\"Producer signals ready_0 after buffer departure (lines 57-60), consumer waits ready_0 (86), clears ready_0 only after its carried move completes (91,95), signals empty_0 (96); producer waits empty_0 (63), clears it before second buffer entry (65); ready_1 signaled after departure (74-77), consumer waits (99), clears after carried move (104,108). Required ready/empty publication and clear-after-move ordering present.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[51,57,59,68,74,76,87,90,94,100,103,107],\"reason\":\"Both arms acquire BUFFER_LOCK before buffer entry and release after departing (LEFT 51-59, 68-76; RIGHT 87-94, 100-107). Capacity-one buffer used serially: part_0 placed and removed before part_1 placed, with lock ownership spanning each entry/departure.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[60,86,91,99,104],\"reason\":\"Consumer waits the corresponding ready receipt (86,99) and supplies that exact active item receipt on the carried move to target (91 receipt=ready0_receipt, 104 receipt=ready1_receipt), matching the BUFFER_RECEIPT mechanism.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[63,68,73,86,91,99,104],\"reason\":\"LONG structure implemented: producer places part_0, departs, publishes ready_0; consumer waits ready_0 and carries to target_0 with that receipt; producer waits/clears empty_0 before entering buffer with part_1; consumer waits ready_1 and carries with ready_1 receipt. Focal dependency (second item picked before waiting for empty receipt) preserved across intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[57,58,74,75,92,93,105,106],\"reason\":\"Each release (57,74,92,105) is immediately followed by a same-arm separating move in the same coroutine at the next call: 57->58, 74->75, 92->93, 105->106, with no intervening same-arm proposal.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[45,58,75,93,106,108],\"reason\":\"Producer and consumer run concurrently via gather (45); part_0 released at target_0 (92), part_1 at target_1 (105); arms return to left_home/right_home (58,75,93,106); lock released (59,76,94,107); ready_0/ready_1 cleared (95,108); empty_0 cleared by producer (65); deadline 50s with move timeout 4s and short durations appears satisfiable.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7968,
+    "completion_tokens": 681,
+    "total_tokens": 8649,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7840
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

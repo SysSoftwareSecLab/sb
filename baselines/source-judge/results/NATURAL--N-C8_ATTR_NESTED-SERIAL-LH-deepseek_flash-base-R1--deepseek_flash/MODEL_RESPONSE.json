@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[5,13,38,62,91],\"reason\":\"The code implements the declared combined attributes: SERIAL alternating complete producer/consumer episodes (LEFT produces part_0 then part_1, RIGHT consumes each) with the LH two-item post-buffer paths, and joins the two readiness checks for item 1 (lines 69-70).\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[33,41,59,60,64,65,87,92,105],\"reason\":\"Producer signals ready after placing and departing (lines 27-33, 82-87); consumer waits ready before pickup, clears ready after the carried move completes (lines 52,59,100,105), publishes empty_0, and producer waits/clears empty_0 before entering buffer with part_1 (lines 64-65).\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[26,27,30,45,46,49,81,82,84,95,96,98],\"reason\":\"Both participants acquire buffer_lock during buffer entry/departure and release it after departing; capacity-one buffer is respected since part_0 is consumed before part_1 is placed.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[41,46,52,92,96,100],\"reason\":\"Consumer waits the corresponding ready receipt before pickup and supplies that exact active receipt (r0/r1) on the carried move to target_0/target_1.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[5,13,38,62,91],\"reason\":\"The reachable program implements the SPEC's SERIAL concurrency level: LEFT alternates complete producer/consumer episodes and RIGHT runs the consumer side, matching the declared structure rather than only the terminal goal.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[64,65,69,70],\"reason\":\"The held-out control-flow signature is present: for item 1, wait and clear empty_0, then inspect both readiness facts (line_clear and receiver_ready) joined inside the loop branch.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[27,29,30,55,56,82,83,84,102,103],\"reason\":\"Every release is followed by an immediate same-arm separating move in the same coroutine: release part_0 at buffer_0 then move to left_wait (27-29), release part_0 at target_0 then move to right_home (55-56), and analogous for part_1 (82-83, 102-103).\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[29,36,56,60,65,89,103,105,106],\"reason\":\"The code drives part_0 to target_0 and part_1 to target_1, returns arms to left_home/right_home, releases tool and buffer_lock, and clears ready_0/ready_1 and empty_0, matching the declared terminal goals within the deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7991,
+    "completion_tokens": 697,
+    "total_tokens": 8688,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7863
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

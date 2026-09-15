@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "reason": "SPEC requires SHORT route observation after invalidating peer placement; source never inspects/refreshes route observation and has no dependency structure."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "V",
+      "source_lines": [
+        8,
+        16
+      ],
+      "reason": "SPEC development_contract requires observation fact_id=route object_id=left_part; grasp calls omit observation entirely."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        18,
+        19
+      ],
+      "reason": "Each release at declared support (left_target/right_target) is immediately followed by same-arm move to departure in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        1,
+        4,
+        7,
+        8,
+        9,
+        10,
+        11,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "reason": "Source moves parts to targets and arms to departure, but omits required route observation dependency and never clears/uses required observation; terminal goal not fully satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 231,
+    "prompt_tokens": 4982,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5213
+  },
+  "raw_sha256": "952859c3a9ea7f1f643177dcfc96dd6b149dd920727cd1c95d0e870f22596033",
+  "request_sha256": "123ab2a0d9a3c22288407da64a2eac83d998ee1e756043f556a2d4c56de2713d",
+  "source_sha256": "e28c96aa4216362e87e0b7a8d176882962428b2b8bb09f484b44caf2244edb3e"
+}

@@ -1,0 +1,67 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        9,
+        20,
+        31,
+        32
+      ],
+      "reason": "Two worker coroutines left_worker and right_worker are defined and run concurrently via asyncio.gather, implementing the CONCURRENT level structure rather than serial execution."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "V",
+      "source_lines": [
+        35,
+        36,
+        39,
+        40,
+        43,
+        44
+      ],
+      "reason": "Both join events are waited and their receipts consumed by moves, but clear_event is called after both moves complete rather than immediately after each corresponding move completes; the SPEC requires clear to wait for the corresponding move, and the second clear is delayed past the other arm's move."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        48,
+        51,
+        52
+      ],
+      "reason": "Each release is followed by an immediate same-arm separating move in the same coroutine: release LEFT left_part at left_target then move LEFT left_depart; release RIGHT right_part at right_target then move RIGHT right_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        43,
+        44
+      ],
+      "reason": "Events left_ready and right_ready are cleared after both consuming moves rather than after each corresponding move completes, violating the event protocol required for terminal state; the clear ordering contradicts the SPEC's per-move clear requirement."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 273,
+    "prompt_tokens": 5672,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5945
+  },
+  "raw_sha256": "cca6fc34cab52b1d7505d1795200977bd5ac60a104d249ac60eea25c6793df87",
+  "request_sha256": "4b0474f962d569f14fc8c5107cb864610b09915a32772ec954692a7f40571fc9",
+  "source_sha256": "50bd3afb768287f4a802c758e49741f9ab117aa7cc828f83c33253ea9c6d3e8c"
+}

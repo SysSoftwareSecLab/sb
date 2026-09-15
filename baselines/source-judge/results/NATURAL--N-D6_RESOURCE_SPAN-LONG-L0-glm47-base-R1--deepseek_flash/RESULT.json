@@ -1,0 +1,97 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        27,
+        30,
+        40,
+        41,
+        45,
+        47,
+        51,
+        56,
+        58
+      ],
+      "reason": "Worker acquires fixture then tool before source approach/grasp, holds both through target move and release, and releases resources in finally after departure, so the dual-resource scope spans approach, pickup, placement and departure."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        27,
+        30,
+        40,
+        41,
+        45,
+        47,
+        51,
+        56,
+        58
+      ],
+      "reason": "The focal dual-resource dependency is established by acquiring fixture and tool before the source approach and maintained across grasp, target move, release and departure until finally cleanup, matching the LONG dependency-distance structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        45,
+        47,
+        51
+      ],
+      "reason": "Each worker releases the held part at its target support and immediately issues the same-arm departure move to depart_pose in the same coroutine with no intervening call."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        12,
+        13,
+        14,
+        40,
+        41,
+        45,
+        47,
+        51,
+        56,
+        58,
+        63
+      ],
+      "reason": "Source implements both parts to targets, departures, and resource release, but no execution evidence confirms actual terminal poses, empty hands, OFF/unowned controllers, cleared events, or deadline completion."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "reason": "The source contains a TimeoutError cleanup path for acquisition, but the finite execution did not actually trigger a tool acquisition timeout, so this obligation is not applicable."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-LONG-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6268,
+    "completion_tokens": 362,
+    "total_tokens": 6630,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6140
+  },
+  "raw_sha256": "89a9d78668cf323ae5a3545fd67d8f1465f00149cfde4fd13565c97288069528",
+  "request_sha256": "e329f8c2d232b647b4f32ab25cacdad6ea6645ce20bcadb48ea7c0a25bd3df12",
+  "source_sha256": "2e1663c93a5995604e33968b0e0344747cf241534fd72aeb021f912001a4f377"
+}

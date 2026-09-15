@@ -1,0 +1,137 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "source_lines": [
+        27,
+        31,
+        42,
+        43,
+        90,
+        94
+      ],
+      "reason": "Source shows the i==1 gather of line_clear/receiver_ready and a tool_owner event, but the supplied public SPEC does not define the exact combined attributes required by T4_LABEL_GUIDE, so joint implementation cannot be confirmed from source alone."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "U",
+      "source_lines": [
+        55,
+        61,
+        62,
+        70,
+        80,
+        86
+      ],
+      "reason": "Producer signals ready and waits/clears empty_0; consumer waits ready, clears ready after carried move, and signals empty_0. However the finite execution order and whether all required ready/empty publications occur before normal return cannot be determined from source alone."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "U",
+      "source_lines": [
+        45,
+        47,
+        48,
+        51,
+        72,
+        74,
+        75,
+        78
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock around buffer entry/departure, but actual capacity-one occupancy and complete contact ownership over the finite trajectory are not determinable from source-only evidence."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "U",
+      "source_lines": [
+        55,
+        70,
+        75,
+        76,
+        80,
+        82
+      ],
+      "reason": "Consumer waits ready_0/ready_1 and passes the receipt to grasp and carried move, but whether the exact active item receipt is supplied on the actual carried move to target cannot be confirmed without execution evidence."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        27,
+        31,
+        42,
+        43,
+        90,
+        94
+      ],
+      "reason": "The source contains an i==1 branch with asyncio.gather and a tool_owner event, but the exact held-out control-flow signature and dependency required by T4_LABEL_GUIDE are not fully specified in the supplied public input."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "U",
+      "source_lines": [
+        42,
+        43,
+        45,
+        47,
+        48,
+        53,
+        55,
+        61,
+        62,
+        70,
+        75,
+        76,
+        80,
+        82
+      ],
+      "reason": "The source shows tool_owner.wait before acquire and tool release in finally, but whether the focal tool acquire-to-second-iteration-release dependency spans source, grasp and empty receipt as required cannot be confirmed from source alone."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "U",
+      "source_lines": [
+        48,
+        49,
+        83,
+        84
+      ],
+      "reason": "Producer releases part at buf then moves to left_wait; consumer releases part at tgt then moves to right_home. Whether every committed release is followed by an immediate same-arm separating move in the same coroutine and virtual time cannot be determined from source-only evidence."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        56,
+        84,
+        86,
+        90,
+        94,
+        99
+      ],
+      "reason": "Source shows moves to left_home/right_home and empty_0 signal, but final object positions, buffer empty, lock free, event inactive status, and deadline satisfaction cannot be confirmed without execution evidence."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-LONG-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7820,
+    "completion_tokens": 654,
+    "total_tokens": 8474,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7692
+  },
+  "raw_sha256": "b793b8ed37a30f08ff22cb55bbaa9e7cdb4368c3013bccb2a55dbeb7b6fc994f",
+  "request_sha256": "0b0510b16202d02b51b75015d13decd2e980b1e9f4dfd754655f2042c0af231f",
+  "source_sha256": "c18b4437187c55d927bcd87360855d2b66cf2df4a61cc8b909546661c935d410"
+}

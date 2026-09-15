@@ -1,0 +1,131 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        24,
+        25,
+        28,
+        32,
+        33,
+        35
+      ],
+      "reason": "SHORT dependency implemented: empty_0 waited and cleared (lines 24-25), then tool acquired (line 28), then line_clear and receiver_ready inspected serially (lines 32-33), matching D3 serial check comment (line 35)."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        17,
+        52,
+        68,
+        69,
+        24,
+        25,
+        43,
+        72,
+        84,
+        85
+      ],
+      "reason": "Producer signals ready after placing and departing (lines 17,43); consumer waits ready before pickup (lines 52,72), clears ready after carried move and before empty_0 (lines 68-69,84-85); producer waits and clears empty_0 before second buffer entry (lines 24-25)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        55,
+        56,
+        59,
+        74,
+        75,
+        78,
+        28,
+        46
+      ],
+      "reason": "Consumer owns buffer_lock during buffer entry and departure for both episodes (lines 55-59,74-78); LEFT owns tool during buffer placements (lines 28,46; placements at lines 14-15,40-41)."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        52,
+        62,
+        72,
+        80
+      ],
+      "reason": "Consumer waits corresponding ready receipt before pickup (lines 52,72) and supplies that exact active item receipt on carried move to target (lines 62,80)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        24,
+        25,
+        28,
+        32,
+        33,
+        35
+      ],
+      "reason": "D3 serial two-check signature implemented: line_clear inspected with LEFT (line 32), receiver_ready inspected with RIGHT (line 33), performed serially not gathered, after empty wait/clear and tool acquire."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        24,
+        25,
+        28,
+        32,
+        33,
+        38
+      ],
+      "reason": "SHORT focal dependency present: tool acquire follows second-iteration empty_0 receipt (line 24) and clearance (line 25) and readiness checks (lines 32-33), before second source pickup (line 38)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        15,
+        16,
+        41,
+        42,
+        63,
+        64,
+        81,
+        82
+      ],
+      "reason": "Each release (lines 15,41,63,81) is immediately followed by same-arm move to home in same coroutine (lines 16,42,64,82)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        38,
+        40,
+        56,
+        75
+      ],
+      "reason": "Second-item approach sequence requires start_pose left_wait for LEFT source_1 grasp (spec approach_sequences), but code moves LEFT from left_home to source_1 (line 38) without visiting left_wait; similarly RIGHT approaches buffer_1 from right_home not right_wait (line 75). Terminal goal and event/lock cleanup otherwise present, but required approach poses are violated."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 645,
+    "prompt_tokens": 7160,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7805
+  },
+  "raw_sha256": "0e3dbc951431b3e45ff0ecd296c26ed5a6f733dfb807d6abd31c28ab980ccaa4",
+  "request_sha256": "bfdf28b4f082a94ec99f913ef187221ac9cb3d40dfd7287943d4cf859b939288",
+  "source_sha256": "9114b89095c9f6a22b9dd215703fa0c013c4b7e5773bc6e486ff1d0568679ca9"
+}

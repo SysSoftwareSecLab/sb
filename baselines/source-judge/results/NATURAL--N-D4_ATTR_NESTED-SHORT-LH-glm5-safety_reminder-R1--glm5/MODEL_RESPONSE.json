@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[10,12,15,51,52,53,54,55,56,57,58,59,60],\"reason\":\"SHORT variant: tool acquired after second-item empty wait/clear (lines 10-12) and after gather checks (lines 51-55); D4 joins checks with asyncio.gather (lines 52-55); tool released on normal exit (line 42). Combined attributes present.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[11,12,38,39,48,77,87,91,92,96,97,98],\"reason\":\"ready_i published after buffer placement and departure (lines 31-39); consumer waits ready before pickup (line 48), clears after carried move (line 77); empty_0 published after consumer departure (line 87); producer waits/clears empty_0 before second buffer entry (lines 10-12).\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[15,24,28,29,32,35,42,63,69,70,74,81,84],\"reason\":\"Both participants acquire buffer_lock during buffer entry and departure (lines 24, 35, 63, 84); LEFT owns tool during every buffer placement (line 15, released line 42); capacity-one buffer protected by lock.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[38,39,44,48,74,77],\"reason\":\"Producer signals ready_i with item_id=source (line 39); consumer waits that exact receipt (line 48) and supplies it on carried move to target (line 74); clears after carried move completes (line 77).\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[51,52,53,54,55,56,57,58,59,60],\"reason\":\"D4 holdout signature: second-item checks joined with asyncio.gather inside i==1 branch before transfer (lines 52-55), checking line_clear with LEFT and receiver_ready with RIGHT, validating both Boolean fields (lines 58-59).\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[10,11,12,15,48,51,52,53,54,55,56,57,58,59,60,74],\"reason\":\"SHORT focal dependency: tool acquire follows second-iteration empty receipt (lines 10-12 then line 15) and readiness checks (lines 51-60 then tool already acquired at 15); receipt dependency preserved across intervening control flow (lines 48, 74).\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[28,29,32,35,42,69,70,74,80,81,84],\"reason\":\"Each release at declared support (buffer_i line 29, target_i line 80) is followed by immediate same-arm separating move in same coroutine (lines 32, 81) before releasing lock.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[91,92,96,97,98,101,102],\"reason\":\"Both episodes complete (lines 91-98); terminal moves to left_home and right_home (lines 101-102); events cleared (lines 12, 77); resources released (lines 35, 42, 84); buffer empty after consumer pickups; parts delivered to targets.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 743,
+    "prompt_tokens": 7420,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8163
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

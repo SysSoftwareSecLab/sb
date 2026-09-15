@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[69,75,104,153],\"reason\":\"RIGHT inspect issues quality observations (lines 69,75) and LEFT grasp consumes the current observation across intervening control flow (lines 104,153), preserving the producer-to-consumer dependency.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[115,121,124,125,128,131,134,137,141,146,149,153,164,165,166],\"reason\":\"Code implements accept_by_pass branch: if accept_1 true goes to target/release/depart; else rework circuit then second inspection pickup and final target placement, within two passes.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[69,75,90,104,141,153],\"reason\":\"Inspection releases invalidate quality (line 90,141) and RIGHT inspect issues new quality observations (69,75) consumed by LEFT grasp at inspection (104,153).\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[62,65,90,95,119,120,125,128,141,146,165,166],\"reason\":\"Each release is followed by a same-arm move in the same coroutine: right release line 62 then move line 65; left releases at 90,119,125,141,165 each followed by a move.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[118,119,120,164,165,166,53,56,59,62,65],\"reason\":\"Both parts reach targets (left_target release line 119/165, right_target release line 62), arms end at departures (lines 120,166,65), and acceptance within two passes is implemented.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8802,
+    "completion_tokens": 400,
+    "total_tokens": 9202,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8674
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

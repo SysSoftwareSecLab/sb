@@ -1,0 +1,117 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        84,
+        88,
+        89,
+        100,
+        101
+      ],
+      "reason": "The reachable program implements the declared SERIAL layout L0 by alternating complete producer_episode and consumer_episode calls for part_0 then part_1, matching the combined attributes of serial alternating episodes."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        43,
+        52,
+        72,
+        81,
+        93,
+        94
+      ],
+      "reason": "Producer signals ready after release and departure; consumer waits ready, clears it after the carried move using receipt.version, and signals empty_0 after release/departure; producer waits and clears empty_0 before the second buffer entry."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        28,
+        37,
+        55,
+        66
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry and release it after departing, respecting the capacity-one buffer ownership contract."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        52,
+        69
+      ],
+      "reason": "Consumer waits the corresponding ready event receipt and supplies that exact active EventReceipt on the carried move to target."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        84,
+        88,
+        89,
+        100,
+        101
+      ],
+      "reason": "The program implements the SPEC's declared CONCURRENCY=SERIAL level via sequential awaited producer/consumer episodes rather than concurrent coroutines."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        92,
+        93,
+        94,
+        97,
+        98,
+        100
+      ],
+      "reason": "For item 1 the program waits and clears empty_0, then serially inspects line_clear and receiver_ready before the second producer episode, matching the declared held-out serial control-flow signature."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        31,
+        34,
+        63,
+        75,
+        78
+      ],
+      "reason": "Each release is immediately followed in the same coroutine by a same-arm separating move: producer releases at buffer then moves to left_wait; consumer releases at target then moves to right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        81,
+        89,
+        101
+      ],
+      "reason": "The program never clears ready_1 after the part_1 carried move and never clears empty_0 after the second episode, so events are not all inactive at return; also empty_0 is signaled only for part_0, leaving required event clearing incomplete."
+    }
+  ],
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7737,
+    "completion_tokens": 532,
+    "total_tokens": 8269,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7609
+  },
+  "raw_sha256": "078c4676a8ec0b5794a99a8dfb172a93ed8014ddb536e0801d71071d539d6df9",
+  "request_sha256": "8ce5032bb535a42ec743a6f3048c8458cf37c32890706663c55479bf5c73cdf1",
+  "source_sha256": "242a40c2f28f67d458cf73c48e28e39a4251d521be8cfae0558fc9971419f163"
+}

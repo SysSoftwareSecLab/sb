@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"DUAL_RESOURCE_SPAN\",\"label\":\"C\",\"source_lines\":[8,10,13,14,15,16,17,19,20,21],\"reason\":\"Worker acquires fixture then tool before carrying the part to target, releases part, departs, then finally releases tool and fixture in reversed order, matching the required dual-resource span.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"NA\",\"source_lines\":[27,28,29,30,31],\"reason\":\"Experimental assignment is DEPENDENCY_DISTANCE=SHORT, so the LONG producer-to-consumer dependency structure is not applicable.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[16,17],\"reason\":\"Each release at target is immediately followed by a same-arm move to the depart pose in the same worker coroutine with no intervening call.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[13,14,15,16,17,19,20,21,27,28,29,30,31],\"reason\":\"Both workers move parts to targets, release, depart, and finally release both resources; run_task gathers both workers, yielding both parts at targets, empty arms at departures, and resources released.\"},{\"id\":\"TIMEOUT_CLEANUP\",\"label\":\"NA\",\"source_lines\":[8,10,18,19,20,21,22,23],\"reason\":\"No actual tool acquisition timeout occurs in the finite trajectory; the try/finally cleanup exists but the timeout trigger condition is not met.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5584,
+    "completion_tokens": 334,
+    "total_tokens": 5918,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 5584
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

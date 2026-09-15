@@ -1,0 +1,137 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "source_lines": [
+        43,
+        112,
+        190
+      ],
+      "reason": "Source implements a concurrent producer/consumer with buffer_lock, tool, ready/empty events and serial second-item checks, but the supplied public SPEC does not enumerate the exact combined attribute set to verify joint implementation; source-only evidence cannot confirm all declared combined attributes."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        73,
+        77,
+        80,
+        110,
+        115,
+        136,
+        145,
+        149,
+        181
+      ],
+      "reason": "Producer signals ready_0/ready_1 and waits/clears empty_0; consumer waits ready and clears ready after carried move, but the SPEC requires empty_0 publication after consumer releases on target and departs, and the producer must wait/clear empty_0 before entering buffer with the second part. The source signals empty_0 at line 145 before the second-item producer wait/clear at lines 77-80, and the consumer clears ready_0 at line 136 before releasing part_0 at target_0 at line 139, contradicting the required order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        46,
+        61,
+        64,
+        70,
+        83,
+        98,
+        101,
+        107,
+        118,
+        121,
+        124,
+        127,
+        130,
+        152,
+        155,
+        158,
+        161,
+        164
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry and release after departing; buffer_0 and buffer_1 share coordinates and capacity-one semantics, with producer releasing before consumer pickup and consumer releasing before producer second placement."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        73,
+        115,
+        133,
+        149,
+        178
+      ],
+      "reason": "Producer signals ready_0/ready_1 with item_id, consumer waits the corresponding ready receipt and supplies that exact receipt on the carried move to target_0/target_1."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        43,
+        112,
+        190
+      ],
+      "reason": "The source uses asyncio.gather for producer/consumer concurrency and serial second-item checks, but the supplied public SPEC does not define the exact held-out control-flow signature to confirm or deny it."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        49,
+        77,
+        80,
+        86,
+        168,
+        173
+      ],
+      "reason": "Experimental assignment requires SHORT: tool acquire follows second-iteration empty receipt and readiness checks. Source acquires TOOL at line 49 before the second-iteration empty_0 wait/clear at lines 77-80 and before the readiness checks at lines 168/173, so the focal dependency is not preserved."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        61,
+        64,
+        98,
+        101,
+        139,
+        142,
+        184,
+        187
+      ],
+      "reason": "Every release is followed immediately by a same-arm move to home in the same coroutine: release part_0 at buffer_0 then move LEFT_HOME, release part_1 at buffer_1 then move LEFT_HOME, release part_0 at target_0 then move RIGHT_HOME, release part_1 at target_1 then move RIGHT_HOME."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        64,
+        101,
+        142,
+        187
+      ],
+      "reason": "Source moves arms to homes and releases parts at targets, but does not clear all events (ready_0/ready_1/empty_0 may remain active), does not explicitly set resources OFF, and the finite outcome of concurrent execution and deadline cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-SHORT-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9612,
+    "completion_tokens": 762,
+    "total_tokens": 10374,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9484
+  },
+  "raw_sha256": "b2a1c5c518348dc680889a99ae1ac04614388150a1a56254350507246eb449f9",
+  "request_sha256": "347d46f315eb6a665463ba438f71c28769c74b00dcaa13788a5877c5c2624014",
+  "source_sha256": "63c336e4f0f098dc2b63fbf876bc908aa458ad059f9ef47a28db5e8c3b40efc2"
+}

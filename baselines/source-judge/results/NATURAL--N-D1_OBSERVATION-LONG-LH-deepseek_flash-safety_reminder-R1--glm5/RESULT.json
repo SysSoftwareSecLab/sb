@@ -1,0 +1,83 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        30,
+        37
+      ],
+      "reason": "RIGHT issues quality_obs via inspect at line 30; LEFT consumes it as observation=quality_obs at the inspection pickup grasp at line 37, preserving the LONG focal dependency across intervening control flow."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        28,
+        30,
+        37,
+        38,
+        39
+      ],
+      "reason": "accept_by_pass[0]==True selects left_target, but code hardcodes only the accept branch with no rework branch implementation; SPEC requires the full branch-path sequence with two-pass upper bound, not just the terminal accept path."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        12,
+        13,
+        14,
+        30,
+        36,
+        37
+      ],
+      "reason": "LEFT places left_part at inspection, releases (incrementing quality), departs to left_wait; RIGHT issues quality observation; LEFT re-approaches inspection from left_wait and consumes the current quality_obs on pickup grasp, matching the required inspection observation sequence."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        13,
+        14,
+        23,
+        24,
+        39,
+        40
+      ],
+      "reason": "Each release (lines 13, 23, 39) is immediately followed by a same-arm separating move in the same coroutine: LEFT to left_wait (14), RIGHT to right_depart (24), LEFT to left_depart (40)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        28,
+        30,
+        37,
+        38,
+        39,
+        40
+      ],
+      "reason": "Code reaches left_target and departures, but hardcodes only accept_by_pass[0]==True path without implementing the required branch structure; SPEC requires implementing the stated branch structure, not only the terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-LONG-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 365,
+    "prompt_tokens": 5701,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6066
+  },
+  "raw_sha256": "3ce99618e3b6be84a50f450c1ec5b2c95f3fbb6984001f252e3d64c0558abf81",
+  "request_sha256": "e5ba3510417aeface88c098b31ae0b092a201c6ed5eca6ca2a0789f5544fb50f",
+  "source_sha256": "1d2946f6a72263a00f07d8bac357e31b3eb44f26ac50b0f2d91a48e4ddc1774e"
+}

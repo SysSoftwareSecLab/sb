@@ -1,0 +1,78 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        20,
+        21,
+        22,
+        23,
+        28,
+        32
+      ],
+      "reason": "RIGHT releases right_part at line 23 before LEFT inspects route at line 28, and the fresh route_obs is consumed by LEFT grasp at line 32, implementing the SHORT producer-to-consumer dependency (peer release invalidates route, then LEFT obtains and uses the fresh observation)."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "C",
+      "source_lines": [
+        28,
+        32
+      ],
+      "reason": "LEFT inspects fact_id 'route' after RIGHT's invalidating release at line 23, obtaining the current version, and passes that issued Observation to grasp at line 32, matching the development contract's fact_id/object_id and freshness requirement."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "V",
+      "source_lines": [
+        23,
+        36,
+        43,
+        44,
+        45
+      ],
+      "reason": "Both releases at lines 23 and 36 are not followed by an immediate same-arm separating move in the same candidate coroutine and virtual time; the next same-arm moves are deferred to the asyncio.gather at lines 43-45, violating the immediate departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        20,
+        21,
+        22,
+        23,
+        28,
+        31,
+        32,
+        35,
+        36,
+        43,
+        44,
+        45
+      ],
+      "reason": "Source shows both parts moved to targets and arms moving to departure poses, but the finite execution outcome (completion, empty hands, deadline) cannot be confirmed from source alone; no resources/events to clear, but terminal state evidence is not closed."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-SHORT-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5956,
+    "completion_tokens": 348,
+    "total_tokens": 6304,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5828
+  },
+  "raw_sha256": "6a5c5bd49cc08400fd8167e4d1487743a44069f95fb4b83d1042e209fc32938a",
+  "request_sha256": "5cd7b2b3e37bc9198afe5b92f9e4515a3686889db028898f0586b71955bed8bb",
+  "source_sha256": "f123ddb8a6ee522617e579475b0ed2967cc6b5146d30076d44422566d60e65cc"
+}

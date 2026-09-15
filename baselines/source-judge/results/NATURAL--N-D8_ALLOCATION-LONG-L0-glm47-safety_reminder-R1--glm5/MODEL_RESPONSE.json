@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[60,64,67,71,74,79,81],\"reason\":\"Only selected_workflow makes move/grasp/release calls; unselected_workflow only awaits selected_task with no move/grasp/release calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[33,34,37,48,64],\"reason\":\"Both LEFT and RIGHT independently inspect allocation once via asyncio.gather; selected grasp at line 64 carries selected_obs, the selected arm's own current allocation observation.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[33,34,37,44,48,64],\"reason\":\"Peer allocation inspection by both arms intervenes before selected observation consumption at grasp; LONG dependency structure with focal value preserved across intervening gather and branch logic.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[71,74],\"reason\":\"Release at shared_target (declared logical_support) is immediately followed by same-arm move to depart_pose in the same selected_workflow coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[60,64,67,71,74,94],\"reason\":\"Source shows selected transport to shared_target and departure, but terminal state of both arms empty, resources OFF/unowned, events cleared, and deadline cannot be confirmed from source alone without execution evidence.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 304,
+    "prompt_tokens": 6371,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6675
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

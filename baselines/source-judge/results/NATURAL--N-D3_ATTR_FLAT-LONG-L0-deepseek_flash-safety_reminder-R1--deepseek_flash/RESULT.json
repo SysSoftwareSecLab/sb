@@ -1,0 +1,130 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "U",
+      "source_lines": [
+        5,
+        31,
+        94,
+        147
+      ],
+      "reason": "Source implements LONG tool acquisition and concurrent producer/consumer, but the exact combined attribute set required by T4_LABEL_GUIDE/SPEC is not fully specified in the supplied public text, so joint satisfaction cannot be confirmed from source alone."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        53,
+        56,
+        57,
+        87,
+        99,
+        117,
+        120,
+        124,
+        142
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer departure, consumer waits ready receipts, clears ready after carried move/release/departure, signals empty_0, and producer waits/clears empty_0 before second buffer entry, matching the required order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        44,
+        45,
+        78,
+        79,
+        102,
+        103,
+        127,
+        128
+      ],
+      "reason": "buffer_lock ownership is tracked in a single shared variable across both coroutines; producer and consumer can both set buffer_lock_held and release each other's lock, so capacity-one buffer ownership is not correctly enforced."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        99,
+        111,
+        124,
+        136
+      ],
+      "reason": "Consumer waits ready_0/ready_1 and supplies the exact corresponding EventReceipt on the carried move to target_0/target_1."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "U",
+      "source_lines": [
+        5,
+        31,
+        94,
+        147
+      ],
+      "reason": "The held-out control-flow signature is not described in the supplied public text beyond the LONG variant, so source-only evidence cannot determine whether the exact signature is implemented."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        35,
+        36,
+        56,
+        57,
+        66,
+        67,
+        92
+      ],
+      "reason": "LEFT acquires tool before source_0 pickup and holds it across the empty_0 wait, second-item checks, second placement, and releases only at the end, matching the LONG dependency structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        49,
+        81,
+        83,
+        112,
+        114,
+        137,
+        139
+      ],
+      "reason": "Each release at buffer_0/buffer_1/target_0/target_1 is immediately followed by a same-arm move to a separating wait pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        90,
+        145,
+        153,
+        154,
+        155
+      ],
+      "reason": "Source returns arms to homes and releases resources, but event clearing and final buffer/lock state depend on runtime scheduling and event versions; source-only evidence cannot confirm all terminal conditions including deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-D3_ATTR_FLAT-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8833,
+    "completion_tokens": 583,
+    "total_tokens": 9416,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8705
+  },
+  "raw_sha256": "c52801e29482ca689955d13d97f1899d5431ba42d92a5c3fbf4bd2d2134d83a8",
+  "request_sha256": "6c73c63577ce47c2a2b172388f06b7b3f5e9ed32b9dbd8364a2869a7acdbc71b",
+  "source_sha256": "e9b3c0076f728e4ecb10e7d6a72aa581e3cbd0a0cc7aed7411202fe0b78b1880"
+}

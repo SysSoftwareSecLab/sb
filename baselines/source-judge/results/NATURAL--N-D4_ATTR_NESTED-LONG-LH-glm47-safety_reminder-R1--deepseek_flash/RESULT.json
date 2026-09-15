@@ -1,0 +1,160 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        49,
+        52,
+        80,
+        83,
+        86,
+        110,
+        166,
+        173,
+        179,
+        205
+      ],
+      "reason": "Source implements the LONG dependency-distance combination: tool acquired before source pickup (line 52), held across the second-item empty_0 wait/clear (lines 80-83) and the joined second-item inspections (lines 176-179), released only at line 110; producer and consumer run concurrently via asyncio.gather (line 205)."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        76,
+        80,
+        83,
+        107,
+        115,
+        136,
+        145,
+        149,
+        194
+      ],
+      "reason": "Producer signals ready_0/ready_1 after placing and departing (lines 76,107); consumer waits ready receipt before pickup (115,149), clears ready only after the carried move to target (133-136,191-194), and signals empty_0 after releasing and departing (139-145); producer waits and clears empty_0 before second buffer entry (80-86)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        61,
+        64,
+        67,
+        70,
+        73,
+        86,
+        95,
+        98,
+        101,
+        104,
+        118,
+        121,
+        124,
+        127,
+        130,
+        152,
+        155,
+        158,
+        161,
+        164
+      ],
+      "reason": "Both arms acquire buffer_lock before entering the capacity-one buffer and release it after departing (LEFT 61-73, 86-104; RIGHT 118-130, 152-164), so buffer entry/departure is lock-owned and occupancy is serialized."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        76,
+        115,
+        133,
+        136,
+        149,
+        191,
+        194
+      ],
+      "reason": "Consumer waits the corresponding ready receipt (115,149) and supplies that exact active EventReceipt on the carried move to target (133,191) before clearing ready (136,194)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        166,
+        176,
+        177,
+        179,
+        184,
+        188,
+        205
+      ],
+      "reason": "Source implements the held-out D4 control-flow signature: second-item inspections joined with asyncio.gather inside the i==1 branch before transfer (lines 176-179), with verification (184-188) and concurrent producer/consumer (205)."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        52,
+        80,
+        83,
+        86,
+        110,
+        173
+      ],
+      "reason": "LONG variant: LEFT acquires tool before source pickup (52) and keeps it across the second-item empty_0 wait/clear (80-83) and buffer entry (86) until release at line 110; RIGHT acquires tool after the second-item wait/checks (173), preserving the focal tool dependency across intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        67,
+        70,
+        98,
+        101,
+        139,
+        142,
+        197,
+        200
+      ],
+      "reason": "Every release is followed immediately by a same-arm move in the same coroutine: LEFT releases part_0 at buffer_0 then moves to left_home (67-70), part_1 at buffer_1 then left_home (98-101); RIGHT releases part_0 at target_0 then right_home (139-142), part_1 at target_1 then right_home (197-200)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        70,
+        101,
+        110,
+        133,
+        139,
+        142,
+        145,
+        191,
+        197,
+        200,
+        203,
+        205
+      ],
+      "reason": "Source moves parts to target_0/target_1 (133,139,191,197), returns arms to homes (70,101,142,200), releases tool (110,203), signals empty_0 (145), and clears ready events (136,194); deadline 50s is respected by the declared durations and timeouts."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-LONG-LH-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9854,
+    "completion_tokens": 847,
+    "total_tokens": 10701,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9726
+  },
+  "raw_sha256": "75b6bedc6ed08d20dbceb42325a510272056ad9f22422eee76e15633175c68fb",
+  "request_sha256": "e6ca3eb63fe8859f7343ebaecb646ca3e970cbff7019784d0ef8b30a3cea1476",
+  "source_sha256": "19e3c3042be4af948ddba1044a2c6170144086b942c5f9fe5fb305647f7d2729"
+}

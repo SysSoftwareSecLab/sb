@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[24,25,26],\"reason\":\"run_task creates two independent worker tasks via asyncio.create_task and gathers them concurrently, matching the CONCURRENT structure requirement.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[11,20,26,27,28,30,31],\"reason\":\"Both lanes signal left_ready/right_ready after completion; run_task gathers both tasks then awaits both join events before clearing them with expected_version=1.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[8,9,10,17,18,19],\"reason\":\"Each release at the target support zone is immediately followed by a same-arm same-coroutine move to departure pose in the same virtual time.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[6,7,8,9,10,11,15,16,17,18,19,20,27,28,30,31],\"reason\":\"Both parts grasped at source and released at target, both arms move to departure, events joined and cleared; terminal goal satisfied per source.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 244,
+    "prompt_tokens": 5243,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5487
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

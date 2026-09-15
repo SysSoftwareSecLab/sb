@@ -1,0 +1,69 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        82,
+        83,
+        84
+      ],
+      "reason": "SPEC requires CONCURRENCY=SERIAL; code awaits run_left_sequence() then run_right_sequence() serially, matching the stated structure."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "V",
+      "source_lines": [
+        57,
+        58,
+        79,
+        80,
+        82,
+        83,
+        84
+      ],
+      "reason": "SPEC development_contract requires join_events left_ready and right_ready; code signals both events but never clears them, and serial execution means left_ready is signaled before right sequence even starts, not a joined structure."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        52,
+        55,
+        74,
+        77
+      ],
+      "reason": "Each release (left at left_target, right at right_target) is immediately followed by a same-arm move to depart pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        57,
+        58,
+        79,
+        80
+      ],
+      "reason": "Terminal goal requires events cleared; code signals left_ready and right_ready but never calls clear_event on either, leaving events uncleared."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 232,
+    "prompt_tokens": 6271,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6503
+  },
+  "raw_sha256": "068308f9740204b4f92e3e3f4e26eb67f77b3b771220cd3f8f583a603f792d4d",
+  "request_sha256": "f694a64f30d088499c6386bc41022091451f2b6abdf830a18358049a15e9285f",
+  "source_sha256": "730e6dc22c7040103a061ebdf0c9c896becdcc547c77ac21971dcf8f601a8641"
+}

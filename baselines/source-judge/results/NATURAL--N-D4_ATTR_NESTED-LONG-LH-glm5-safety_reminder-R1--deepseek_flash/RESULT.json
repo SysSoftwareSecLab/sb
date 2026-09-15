@@ -1,0 +1,154 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        97,
+        98,
+        99,
+        146,
+        147,
+        155,
+        163,
+        164,
+        216,
+        217,
+        218
+      ],
+      "reason": "Source jointly implements LONG tool acquisition before source pickup (lines 98-99) kept across the second-item wait/checks (lines 212-218), and SHORT RIGHT tool acquisition after the i==1 gather checks (lines 147-164), matching the declared combined attributes."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        116,
+        117,
+        122,
+        144,
+        183,
+        192,
+        193,
+        212,
+        213
+      ],
+      "reason": "Producer departs before signaling ready (116-122); consumer waits ready before pickup (144), clears ready after carried move (183), releases/departs then signals empty_0 (186-193); producer waits and clears empty_0 before second buffer entry (212-213)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        109,
+        110,
+        111,
+        114,
+        116,
+        117,
+        119,
+        169,
+        170,
+        171,
+        176,
+        177,
+        186,
+        187,
+        189
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release it in finally after departure; capacity-one buffer accessed with lock ownership during placement/pickup."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        144,
+        177,
+        180,
+        183
+      ],
+      "reason": "Consumer waits ready receipt (144), supplies it as observation on grasp (177) and as receipt on carried move to target (180), then clears ready with the matching version (183)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        147,
+        148,
+        149,
+        150,
+        152,
+        153,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161
+      ],
+      "reason": "i==1 branch joins line_clear (LEFT inspect) and receiver_ready (RIGHT refresh) via asyncio.gather before transfer, matching the declared held-out control-flow signature."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        98,
+        99,
+        212,
+        213,
+        216,
+        217,
+        218,
+        219,
+        220
+      ],
+      "reason": "LEFT tool acquired before source pickup (98-99) and held across the empty_0 wait/clear (212-213) and second-item checks before release, preserving the focal LONG dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        116,
+        117,
+        186,
+        187
+      ],
+      "reason": "Each release is immediately followed by a same-coroutine same-arm separating move: LEFT release at buf then move to start (116-117); RIGHT release at tgt then move to start (186-187)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        116,
+        186,
+        223,
+        224,
+        226,
+        227,
+        231,
+        232
+      ],
+      "reason": "Parts released at target_0/target_1, arms moved to homes (223-224), tools released (226-227), locks released via cleanup (231-232); events cleared (183,213)."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-LONG-LH-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 10390,
+    "completion_tokens": 658,
+    "total_tokens": 11048,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 10262
+  },
+  "raw_sha256": "4079c1d0288e6b5bf04d98e350435a7f132735026da19038ffdce08bab8206b2",
+  "request_sha256": "63f4391d9fd421a726d52dd6c0d0ef489b52222144014b3bb6738417097740f4",
+  "source_sha256": "f89048f920669f50506de68836f5eabcab047446de672eb3e38a0bd980ff1b2b"
+}

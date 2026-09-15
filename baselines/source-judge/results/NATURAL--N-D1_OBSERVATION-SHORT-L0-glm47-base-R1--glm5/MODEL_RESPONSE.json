@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[46,47,51,56,61,66,70,71],\"reason\":\"LEFT places at inspection (46-47), departs to left_depart (51) before RIGHT moves to inspection (56) and issues quality observation (61); LEFT then uses the newly issued quality_obs on inspection pickup grasp (71), satisfying the SHORT producer-consumer dependency.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"V\",\"source_lines\":[75,78,80,81,82],\"reason\":\"SPEC requires accept_by_pass[pass_index] to select target if true, otherwise rework then inspection again, with at most two passes and A accepts on first/B on second. Source hardcodes pass index 0 accept path to target without any conditional branching or rework circuit, omitting the required branch-path contrast.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[46,47,51,56,61,66,70,71],\"reason\":\"Inspection area placement (46-47), departure (51), RIGHT quality observation (61), LEFT approach from left_wait (66-70), and grasp consuming current quality_obs (71) are all present and ordered per SPEC.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[47,51,82,93,88,96],\"reason\":\"Each release (47, 82, 88) is followed by an immediate same-arm move in the same coroutine: LEFT depart after inspection release (51), LEFT depart after target release (93), RIGHT depart after target release (96).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[80,81,82,93,96],\"reason\":\"Terminal goals require left_part at left_target and right_part at right_target with arms at departures; however the code omits the required two-pass acceptance branch logic (accept_by_pass contrast A first/B second), so the applicable acceptance condition is not implemented.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 419,
+    "prompt_tokens": 6768,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7187
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

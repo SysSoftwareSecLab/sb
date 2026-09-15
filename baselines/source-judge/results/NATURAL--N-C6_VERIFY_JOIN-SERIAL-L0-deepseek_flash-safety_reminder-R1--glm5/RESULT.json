@@ -1,0 +1,107 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        17,
+        18,
+        19,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        56
+      ],
+      "reason": "SPEC requires SERIAL/L0 with no concurrent worker coroutines; run_task is a single sequential coroutine producing both verifier observations, joining via events, then consuming payload, matching the stated structure."
+    },
+    {
+      "id": "EVENT_JOIN",
+      "label": "C",
+      "source_lines": [
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        31,
+        32,
+        54,
+        55,
+        56
+      ],
+      "reason": "Both join events left_ready and right_ready are signaled after both verifications, awaited, asserted, and cleared after consumption, matching the development_contract join_events and event protocol."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        40,
+        41,
+        42,
+        50,
+        51,
+        52
+      ],
+      "reason": "Each release (LEFT at left_target line 41, RIGHT at right_target line 51) is immediately followed by a same-arm separating move (LEFT to left_depart line 42, RIGHT to right_depart line 52) in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        19,
+        20,
+        21,
+        47
+      ],
+      "reason": "right_verification observation value has item_id=left_part (line 21), but RIGHT grasp uses right_part (line 47); the observation item_id mismatch means the grasp observation does not match the consumed object, violating the grasp observation contract and preventing valid terminal goal completion."
+    }
+  ],
+  "object_id": "NATURAL--N-C6_VERIFY_JOIN-SERIAL-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 360,
+    "prompt_tokens": 5810,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6170
+  },
+  "raw_sha256": "1724266fc5fb0895c7bb992a98efbb34bbcb42372b47a464fc2f9f3917adfb79",
+  "request_sha256": "6a69d4286770fa6d27255370a1cf9bdc20199586056c2d58dbfd967b7c037467",
+  "source_sha256": "07a4961063ab66fb6c37f2ba7b69990a619cccee5a9eed6904dfbdd574b9019a"
+}

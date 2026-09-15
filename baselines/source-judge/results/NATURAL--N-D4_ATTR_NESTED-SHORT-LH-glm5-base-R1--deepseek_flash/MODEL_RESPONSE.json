@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[22,23,24,25,26,27,28,29,32],\"reason\":\"Source jointly implements the declared combined attributes: SHORT tool acquisition after the second-item wait/checks (line 32), gather-joined checks (lines 22-25), and the LH two-item buffer crossing structure.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[15,19,42,50,58,59,62,70],\"reason\":\"Producer signals ready_0/ready_1 after buffer placement and departure; consumer waits ready receipt, clears ready after carried move, signals empty_0; producer waits empty_0 before second buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[11,12,13,16,38,39,40,43,51,52,53,54,55,57,63,64,65,66,67,69],\"reason\":\"Both arms acquire buffer_lock around buffer entry/departure; capacity-one buffer used sequentially with item-specific poses buffer_0/buffer_1 at identical coordinates.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[50,52,62,64],\"reason\":\"Consumer waits ready_0/ready_1 and supplies the exact active EventReceipt on the carried move to buffer_0/buffer_1.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[22,23,24,25,26,27,28,29,32],\"reason\":\"Reachable path implements the held-out control-flow signature: asyncio.gather of the two second-item inspections before tool acquire and second transfer.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[19,22,23,24,25,26,27,28,29,32],\"reason\":\"SHORT dependency preserved: tool acquire at line 32 follows the second-iteration empty_0 wait (line 19) and the gathered readiness checks (lines 22-29).\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[13,14,40,41,55,56,67,68],\"reason\":\"Each release is followed immediately by a same-arm separating move in the same coroutine: release buffer_0->left_home, release buffer_1->left_home, release target_0->right_home, release target_1->right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[14,41,56,68,58,59,70],\"reason\":\"Source drives parts to target_0/target_1, arms to left_home/right_home, releases buffer_lock, and clears ready events; empty_0 signaled and no residual ownership indicated.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7458,
+    "completion_tokens": 625,
+    "total_tokens": 8083,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7330
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

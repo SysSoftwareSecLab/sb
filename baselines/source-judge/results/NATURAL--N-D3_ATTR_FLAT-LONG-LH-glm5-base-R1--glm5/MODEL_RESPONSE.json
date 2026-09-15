@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[6,11,12,13,33,34,76,81,84,86,89,148],\"reason\":\"Source jointly implements D3 (serial inspect LEFT line_clear then RIGHT receiver_ready at lines 83-84), LONG (tool acquired before source pickup at line 34, kept across empty_0 wait/checks at lines 76-84, released in finally at 89), and LH concurrent producer/consumer via gather at line 148.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[49,51,54,59,65,69,76,79,105,118,128,131,134,137],\"reason\":\"Producer places at buffer, departs (lines 49-54), then signals ready (line 59). Consumer waits ready (line 105), supplies receipt on carried move (line 118), clears ready after move (lines 128-131), releases on target and departs before signaling empty_0 (lines 134-137). Producer waits and clears empty_0 before second buffer entry (lines 76-79).\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[46,48,49,55,56,113,115,116,125,126],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry (lines 46, 113), hold it through move/release/departure (lines 48-54, 115-124), and release it in finally after departure (lines 55-56, 125-126). Capacity-one buffer protected by lock on both sides.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[59,105,118,128,131],\"reason\":\"Producer signals ready_event obtaining receipt r (line 59). Consumer waits corresponding ready receipt rr (line 105) and supplies that exact active receipt on carried move to target (line 118). Ready is cleared with expected_version=rr.version after the carried move (line 131).\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[81,83,84,148],\"reason\":\"D3 serial second-item checks implemented: inspect line_clear with LEFT then inspect receiver_ready with RIGHT called serially (lines 83-84) without asyncio.gather, matching the D3 holdout signature. Producer and consumer run concurrently via gather (line 148).\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[33,34,42,43,46,48,49,65,76,79,83,84,86,89],\"reason\":\"LONG dependency: tool acquired before source pickup (line 34) and kept across source grasp (line 43), buffer placement (lines 48-49), second-item empty_0 wait and clear (lines 76-79), and serial checks (lines 83-84), released only in finally (line 89). Focal tool->second-iteration release spans source, grasp, and empty receipt.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[49,51,52,53,54,119,121,122,123,124,136,142],\"reason\":\"Each release (buffer at line 49, target at line 119) is followed by immediate same-arm separating move in same coroutine: LEFT moves to left_home/left_wait (lines 51-54), RIGHT moves to right_home/right_wait (lines 121-124). Departures occur within buffer_lock finally block and after target release respectively.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[148,94,95,145,146],\"reason\":\"Source implements producer/consumer episodes for both items via gather (line 148) with terminal moves to left_home/right_home (lines 65, 136, 142). However, source-only analysis cannot confirm all terminal conditions (empty buffer, lock free, events inactive, deadline) are met in the actual finite execution without observing the trajectory.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 854,
+    "prompt_tokens": 8160,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 9014
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

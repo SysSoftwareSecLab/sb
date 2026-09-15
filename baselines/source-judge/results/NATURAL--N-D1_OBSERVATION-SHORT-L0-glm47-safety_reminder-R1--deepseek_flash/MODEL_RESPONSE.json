@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[63,68,102,105],\"reason\":\"The experimental assignment requires SHORT dependency distance (focal dependency before the quality observation), but the code waits for inspection_done and then inspects using the receipt item_id, creating a long-range producer-to-consumer dependency across the RIGHT inspection event rather than a short dependency.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[74,76,83,87,89,91,94,96,99,102,105,109,111,112,113,114,115],\"reason\":\"The code implements the accept_by_pass branch: if accept[0] true it moves to target and places; otherwise it goes to rework_wait, rework, grasps, moves to inspection, releases, departs, waits for second inspection, reads accept_by_pass[1], and places if true, respecting the two-pass limit.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[52,55,68,94,96,105],\"reason\":\"The code approaches inspection, releases left_part at inspection (incrementing quality version), and retrieves the newly issued quality observation via inspect using the receipt item_id for each pass.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[40,42,55,58,81,82,96,99,114,115],\"reason\":\"Every release is followed immediately by a same-arm move to a departure pose in the same coroutine: release at right_target then move right_depart; release at inspection then move left_depart; release at left_target then move left_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[129,130],\"reason\":\"The code awaits both tasks and reaches terminal poses with empty hands, but source-only evidence cannot confirm all acceptance conditions, event clearing, resource state, and deadline compliance for the finite execution.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7971,
+    "completion_tokens": 430,
+    "total_tokens": 8401,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7843
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

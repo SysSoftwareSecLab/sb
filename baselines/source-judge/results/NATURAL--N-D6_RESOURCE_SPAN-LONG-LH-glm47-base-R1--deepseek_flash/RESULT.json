@@ -1,0 +1,92 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        39,
+        42,
+        47,
+        51,
+        54,
+        58,
+        62,
+        70,
+        73,
+        74
+      ],
+      "reason": "Each worker acquires fixture then tool (lines 39-43), performs source approach, grasp, target move, release, and departure while both resources are held, then releases tool and fixture in finally (lines 70-74), matching the required dual-resource span."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        39,
+        42,
+        47,
+        51,
+        54,
+        58,
+        62,
+        70,
+        73,
+        74
+      ],
+      "reason": "The focal dependency is implemented: both fixture and tool are acquired before the source approach and held through grasp, target placement, release, and departure, then released afterward, preserving the dual-resource dependency across the long intervening control flow."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        58,
+        62
+      ],
+      "reason": "After release at POSES[arm]['target'] (line 58), the same worker coroutine immediately calls robot.move to the depart pose (line 62) with no intervening same-arm request."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        82,
+        83,
+        84,
+        86,
+        90
+      ],
+      "reason": "The code aims for both parts at targets, empty arms at departures, and resources OFF/unowned, but the top-level except swallows exceptions (lines 86-90) and source-only evidence cannot confirm the finite run reaches all terminal goals, events cleared, and deadline."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        39,
+        42,
+        68,
+        70,
+        74
+      ],
+      "reason": "The cleanup is present in finally, but the obligation is triggered only by an actual tool acquisition timeout; no finite execution evidence shows such a timeout occurred."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-LONG-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6739,
+    "completion_tokens": 394,
+    "total_tokens": 7133,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6611
+  },
+  "raw_sha256": "06580476988a4b155ff7e7f9145a2523a91a14f8e46852bfd73a6992f93f9efe",
+  "request_sha256": "5b3a5d80fb4d30d7f1daeea8fa0a3211e44e8737125e4fca8f582ce071eaa6ed",
+  "source_sha256": "83cf82f26858561ebef9a2a26da26ffe05add861aa53f73d1f1f17028bfc39ea"
+}

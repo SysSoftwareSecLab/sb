@@ -1,0 +1,144 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        20,
+        26,
+        28,
+        29,
+        36,
+        37,
+        38,
+        39,
+        55,
+        62,
+        76
+      ],
+      "reason": "Source jointly implements LONG tool acquisition before source pickup (line 20) held across the second-item empty_0 wait/checks (lines 26-46) and buffer_lock usage (55-62), plus D4 gather of the two second-item checks (36-39), matching the declared combined attributes."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        65,
+        68,
+        90,
+        113,
+        115,
+        119,
+        120
+      ],
+      "reason": "Producer signals ready after buffer departure (65) and waits for ready_cleared (68); consumer waits ready (90), clears ready after carried move/release/departure (113), sets ready_cleared (115), and publishes empty_0 after first item (119-120); producer waits/clears empty_0 before second buffer entry (28-33)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        55,
+        57,
+        58,
+        60,
+        62,
+        94,
+        98,
+        99,
+        100,
+        102,
+        104
+      ],
+      "reason": "Both arms acquire buffer_lock before buffer entry and release it in finally after departing buffer (55-62, 94-104), respecting capacity-one buffer with item-specific poses buffer_0/buffer_1 at identical coordinates."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        90,
+        91,
+        107
+      ],
+      "reason": "Consumer waits the corresponding ready receipt (90), stores it (91), and supplies that exact active receipt on the carried move to target (107)."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        26,
+        36,
+        37,
+        38,
+        39,
+        43,
+        45
+      ],
+      "reason": "The held-out control-flow signature is present: inside the i==1 branch, after empty_0 wait/clear, the two second-item checks are joined with asyncio.gather (36-39) and both Boolean fields are validated (43-46) before transfer."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        20,
+        26,
+        28,
+        29,
+        36,
+        37,
+        38,
+        39,
+        55,
+        57,
+        58,
+        76
+      ],
+      "reason": "Tool is acquired before source pickup (20) and held across the second-iteration empty_0 wait (28-29), the gathered checks (36-39), and the second buffer release (55-58), then released in finally (76), implementing the LONG focal dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        58,
+        60,
+        108,
+        110
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: LEFT release at buffer_pose then move to left_wait (58-60); RIGHT release at target then move to right_wait (108-110)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        72,
+        76,
+        104,
+        108,
+        110,
+        113,
+        123,
+        128
+      ],
+      "reason": "Source moves both parts to targets, returns arms to homes (72,123), releases resources (76,104), clears ready events (113), and awaits both coroutines (128); empty_0 is cleared by producer (31) and no residual ownership remains."
+    }
+  ],
+  "object_id": "NATURAL--N-D4_ATTR_NESTED-LONG-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8336,
+    "completion_tokens": 722,
+    "total_tokens": 9058,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8208
+  },
+  "raw_sha256": "ed46265dfd4acc10bb284a8e98d936dba94863b8bdf72e2350493b2efcb9fd27",
+  "request_sha256": "d9f6f1c89f3edc7a60ac520b962584f05eb1616c03ad0b6559c2374cfe473e22",
+  "source_sha256": "c1e0db246f3f4bab33101f6d0c4ff89931f4c42520d6f08f59a01aa5ea759956"
+}

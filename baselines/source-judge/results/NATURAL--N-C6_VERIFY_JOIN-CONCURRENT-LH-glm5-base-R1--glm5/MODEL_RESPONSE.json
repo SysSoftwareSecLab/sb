@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[3,4,12,20],\"reason\":\"run_task defines two worker coroutines and awaits asyncio.gather(left_worker(), right_worker()), implementing CONCURRENT joined worker branches rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"V\",\"source_lines\":[10,18,20],\"reason\":\"SPEC requires join_events left_ready and right_ready to be joined/cleared after production; code signals them but never waits_event or clears them before returning from gather.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[7,8,9,15,16,17],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine: LEFT release at left_target then move to left_depart; RIGHT release at right_target then move to right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[5,6,7,8,9,10,13,14,15,16,17,18,20],\"reason\":\"Code omits required verification (inspect/refresh of left_verification/right_verification) and never clears join_events; terminal goal and event-clearance obligations are not fully met.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 261,
+    "prompt_tokens": 5045,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5306
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

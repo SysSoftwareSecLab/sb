@@ -1,0 +1,181 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "V",
+      "source_lines": [
+        51,
+        52,
+        53,
+        86,
+        87
+      ],
+      "reason": "The declared combined attribute for this SERIAL/L0 variant is serial alternating producer/consumer episodes; the code does implement episode_0 then episode_1 serially, but episode_1 inlines the producer and consumer rather than using the required producer/consumer episode structure, and the required item-1 empty_0 wait/clear before buffer entry is missing, so the joint declared attributes are not implemented."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        31,
+        32,
+        33,
+        47,
+        48,
+        49,
+        67,
+        68,
+        69,
+        82,
+        83,
+        84
+      ],
+      "reason": "For item 1 the producer signals ready_1 and clears it before the consumer's carried move completes, and the required wait/clear of empty_0 before entering buffer with part_1 is omitted; ready_1 is cleared at line 69 before the consumer move at line 74, violating the required order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "V",
+      "source_lines": [
+        26,
+        27,
+        28,
+        30,
+        38,
+        39,
+        40,
+        41,
+        46,
+        62,
+        63,
+        64,
+        66,
+        73,
+        74,
+        75,
+        76,
+        81
+      ],
+      "reason": "The capacity-one buffer is used by both episodes, but episode_1's producer places part_1 at buffer_1 without first waiting/clearing empty_0, so the required empty-buffer precondition and ownership protocol for the second part are not satisfied."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "V",
+      "source_lines": [
+        37,
+        39,
+        41,
+        42,
+        72,
+        74,
+        76,
+        77
+      ],
+      "reason": "The consumer must supply the exact active ready receipt on the carried move to target; for item 1 the producer clears ready_1 at line 69 before the consumer's carried move at line 74, so the receipt used is not the required active receipt."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        51,
+        52,
+        53,
+        86,
+        87
+      ],
+      "reason": "The SPEC requires CONCURRENCY=SERIAL with alternating complete producer/consumer episodes; episode_1 inlines both roles in one coroutine and omits the required empty_0 wait/clear before the second buffer entry, so the declared concurrent structure is not implemented."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "V",
+      "source_lines": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84
+      ],
+      "reason": "The held-out control-flow signature requires the item-1 branch to wait and clear empty_0 before inspecting both readiness facts and entering the buffer; the code never waits/clears empty_0 before buffer_1 entry and does not perform the required inspect sequence in the loop branch."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        28,
+        29,
+        30,
+        44,
+        45,
+        46,
+        64,
+        65,
+        66,
+        79,
+        80,
+        81
+      ],
+      "reason": "Each committed release is followed immediately in the same coroutine by a same-arm separating move: release at buffer_0/buffer_1 is followed by move to left_home/left_wait, and release at target_0/target_1 is followed by move to right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        31,
+        32,
+        33,
+        47,
+        48,
+        49,
+        67,
+        68,
+        69,
+        82,
+        83,
+        84
+      ],
+      "reason": "The terminal goal requires events inactive and the required empty_0 protocol; the code clears ready_1 before the consumer's carried move and never waits/clears empty_0 before the second buffer entry, so the declared event and buffer acceptance conditions are not met."
+    }
+  ],
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-SERIAL-L0-glm5-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 7706,
+    "completion_tokens": 837,
+    "total_tokens": 8543,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7578
+  },
+  "raw_sha256": "09b85b4f89f6bdaacf31710a040d486e37fef1f7eb9dc2bb4c89045bf1d20609",
+  "request_sha256": "df2c2d05c1b00aca77b46eb0e2d32e31ca12ebd55070e47c62cf4fe1956b1aff",
+  "source_sha256": "d15d029064a6f75602fe01d6ea54bf443dfdbdeba335404a9c1afda2fd0d981c"
+}

@@ -1,0 +1,84 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        16,
+        20,
+        24,
+        27,
+        30,
+        33,
+        36,
+        47,
+        49,
+        51,
+        53
+      ],
+      "reason": "Each worker acquires fixture then tool before carrying the part to target, releases the part at target, departs, and only then releases tool and fixture in finally, matching the dual-resource span requirement."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        55,
+        57,
+        69
+      ],
+      "reason": "Experimental assignment is DEPENDENCY_DISTANCE=SHORT with no LONG producer-to-consumer dependency declared; the code launches two independent concurrent workers, so the LONG dependency structure is not applicable."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        33,
+        36
+      ],
+      "reason": "Each release at the target support is immediately followed in the same worker coroutine by a same-arm move to the depart pose, satisfying the immediate separating departure requirement."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        81,
+        82
+      ],
+      "reason": "Source shows both workers awaited and finally blocks releasing resources with OFF mode, but the actual finite trajectory terminal state (poses, empty hands, ownership, event clearing, deadline) cannot be confirmed from source alone."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "NA",
+      "source_lines": [
+        38,
+        44,
+        47,
+        49,
+        51,
+        53
+      ],
+      "reason": "The obligation is triggered only by an actual tool acquisition timeout; source contains a try/finally cleanup path but no evidence that a tool acquire timeout actually occurred in the finite trajectory."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-SHORT-L0-glm47-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6483,
+    "completion_tokens": 339,
+    "total_tokens": 6822,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6355
+  },
+  "raw_sha256": "87dc4144ebed2d2481e8ff9e85b18bdaffee0731d4d1d107da1933e324075bf1",
+  "request_sha256": "bdb5e92a67adbbbe0700ce8bd07d7918072948cd608aa751df4d6c7b81d6d33a",
+  "source_sha256": "039796aa6dce3f0c9b11a27d910fe74eb9cadf59f6818a9aca4378c019391775"
+}

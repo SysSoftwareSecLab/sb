@@ -1,0 +1,105 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        35,
+        52,
+        56,
+        72,
+        76,
+        80,
+        82,
+        96,
+        100,
+        116,
+        120,
+        124
+      ],
+      "reason": "Each worker deposits own item, clears pad, signals own item-bound ready event, waits for peer ready, consumes peer item, carries with peer receipt, clears peer event after carried move, deposits peer item, and departs; matches required_order."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        52,
+        56,
+        68,
+        72,
+        96,
+        100,
+        112,
+        116
+      ],
+      "reason": "left_worker signals LEFT_READY, waits RIGHT_READY, passes right_receipt to LEFT carried move, then clears RIGHT_READY after move; right_worker symmetric with LEFT_READY/left_receipt. Focal dependency right_ready->LEFT carried move present."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        52,
+        56,
+        68,
+        96,
+        100,
+        112
+      ],
+      "reason": "SHORT dependency right_ready->LEFT carried move implemented: right_worker signals RIGHT_READY (line 96), left_worker waits for it (line 56), uses right_receipt in LEFT carried move to left_target (line 68). Symmetric LEFT_READY->RIGHT carried move also present."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        44,
+        46,
+        76,
+        80,
+        91,
+        93,
+        120,
+        124
+      ],
+      "reason": "Every release (own item at pad lines 44/91, peer item at target lines 76/120) is immediately followed by same-arm move to depart pose in same coroutine (lines 46/80/93/124)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        38,
+        44,
+        46,
+        68,
+        76,
+        80,
+        85,
+        91,
+        93,
+        112,
+        120,
+        124,
+        127
+      ],
+      "reason": "Source implements full exchange: both arms deposit own part on own pad, clear pad, exchange peer items to targets (left_part->right_target, right_part->left_target), release, and depart to own departure poses; events cleared; workers gathered."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-SHORT-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 432,
+    "prompt_tokens": 7472,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7904
+  },
+  "raw_sha256": "ad89510d208bfca788efc377b614b63d6c3e89850f46dd407861c6c905dbc460",
+  "request_sha256": "664201a537d036661c6589054e9c7dfb817a404193d080aeb0092dc754de70ba",
+  "source_sha256": "7eb12809af35f9af9312a4d274e0793909a9ba8ae4a0e0dc660733218169183b"
+}

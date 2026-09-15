@@ -1,0 +1,76 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "NA",
+      "source_lines": [
+        28,
+        32
+      ],
+      "reason": "Experimental assignment level is SHORT, so the LONG producer-to-consumer dependency structure is not applicable; the code implements a short dependency (quality_obs used at line 32 shortly after issuance at line 28)."
+    },
+    {
+      "id": "REWORK_BRANCH",
+      "label": "V",
+      "source_lines": [
+        28,
+        32,
+        36
+      ],
+      "reason": "Public accept_by_pass is [true,true] and max_passes=2; the code never inspects the quality value nor implements the rework branch (no move to rework/rework_wait, no second inspection pass), so the required branch sequence is omitted."
+    },
+    {
+      "id": "REWORK_OBSERVATION",
+      "label": "C",
+      "source_lines": [
+        28,
+        32
+      ],
+      "reason": "The code enters the inspection area, RIGHT issues the quality observation at line 28, and LEFT consumes the newly issued current quality record on inspection pickup at line 32."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        14,
+        22,
+        25,
+        36,
+        39
+      ],
+      "reason": "Each release (lines 11,22,36) is immediately followed by a same-arm separating move in the same coroutine and virtual time (lines 14,25,39)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        28,
+        32,
+        36
+      ],
+      "reason": "The code returns after LEFT reaches left_depart without implementing the required acceptance/rework branch: accept_by_pass[0]=true should select left_target, but the code never evaluates the quality value and omits the required second-pass/rework handling, so the declared acceptance condition is not satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-D1_OBSERVATION-SHORT-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6021,
+    "completion_tokens": 365,
+    "total_tokens": 6386,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5893
+  },
+  "raw_sha256": "e112753b634b8911a3203ff1eed727c38ce64f0d4ea95a4357fb629b352433cb",
+  "request_sha256": "c860ef531057a9f066ceaa77814fc2f240ea9b318bf3ac45f1039d51e893337e",
+  "source_sha256": "2d3d79f63cec01557cc7589822e7adfcaed701b518b979915158e0a5071f98f1"
+}

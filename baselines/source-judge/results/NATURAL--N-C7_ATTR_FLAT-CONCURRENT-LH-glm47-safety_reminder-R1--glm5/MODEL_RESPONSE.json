@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"V\",\"source_lines\":[125,199,127,130,164,165],\"reason\":\"Required order says for item 1: wait/clear empty_0 then inspect both readiness facts (line_clear and receiver_ready); source never calls inspect/refresh on either fact, omitting the required combined attribute.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[192,196,201,242],\"reason\":\"Final empty_0 signaled at line 196 is never cleared; source comments acknowledge this (lines 201-242) and leave it active, violating events-inactive and the clear requirement.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[74,75,78,81,82,99,100,103,106,107,145,146,149,152,153,170,171,174,177,178],\"reason\":\"Both participants acquire buffer_lock before buffer entry and release it after departure in each episode; occupancy ownership is maintained during contact.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[85,96,110,113,156,167,181,184],\"reason\":\"Producer signals ready with item_id; consumer waits the corresponding ready receipt and supplies that exact active receipt on the carried move to target for both episodes.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[124,125,127,198,199],\"reason\":\"Episodes run via asyncio.gather of producer and consumer coroutines together, implementing the CONCURRENT structure rather than serial alternation.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"V\",\"source_lines\":[127,130,131,132,133,134,135,136,137,138,139,140,141,142],\"reason\":\"Required holdout for item 1 is wait/clear empty_0 then inspect both readiness facts before entering buffer; source omits both inspect calls, so the declared control-flow signature is absent.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[78,81,116,119,149,152,187,190],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine at buffer and target for both parts.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[196,201,242,91,162,119,190],\"reason\":\"Final empty_0 remains active (never cleared), violating events-inactive; also LEFT does not return to left_home before episode 1 producer starts (approach sequence for part_1 requires start_pose left_wait, but LEFT is at left_home after episode 0).\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 567,
+    "prompt_tokens": 10389,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 10956
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

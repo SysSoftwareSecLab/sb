@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[18,22,23,33,39,44,47,51,57],\"reason\":\"Producer signals ready_0/ready_1 after placing and departing; consumer waits ready, clears ready after carried move, signals empty_0 after release/departure; producer waits and clears empty_0 before second buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[12,19,26,34,40,48,52,60],\"reason\":\"Both arms acquire buffer_lock before buffer entry and release it after departing; capacity-one buffer used sequentially with empty_0 handshake before second placement.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[39,41,43,51,54,56],\"reason\":\"Consumer waits ready receipt and passes the exact active receipt r0/r1 on carried moves to buffer and target.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[22,23,26,28,29,30,31,33],\"reason\":\"Producer picks part_1 at source_1 before waiting for empty_0 receipt, implementing the LONG dependency distance structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[16,17,31,32,45,46,58,59],\"reason\":\"Each release at declared support is immediately followed by same-arm move to home in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[62],\"reason\":\"Source implements the required sequence but no execution evidence confirms terminal poses, empty hands, lock free, events inactive, or deadline satisfaction.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6865,
+    "completion_tokens": 374,
+    "total_tokens": 7239,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6737
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

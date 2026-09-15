@@ -1,0 +1,115 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        25,
+        28,
+        29,
+        40,
+        44,
+        53,
+        54,
+        57,
+        66
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer release; waits/clears empty_0 before second part. Consumer waits ready, clears ready after carried move, signals empty_0 after target release+departure."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        18,
+        21,
+        22,
+        24,
+        32,
+        36,
+        37,
+        39,
+        45,
+        47,
+        48,
+        58,
+        60,
+        61
+      ],
+      "reason": "Both producer and consumer acquire buffer_lock before buffer entry/placement/pickup and release it after departure; capacity-one buffer protected throughout occupancy."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        44,
+        49,
+        57,
+        62
+      ],
+      "reason": "Consumer waits ready_0/ready_1 receipts and supplies them as receipt= on the corresponding carried move to target_0/target_1."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        28,
+        33,
+        34,
+        35,
+        36
+      ],
+      "reason": "Producer waits empty_0 receipt before second-part source pickup (left_wait→source_1→grasp part_1), implementing the SHORT focal dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        22,
+        23,
+        37,
+        38,
+        50,
+        51,
+        63,
+        64
+      ],
+      "reason": "Each release at buffer/target is immediately followed by same-arm move to home in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        22,
+        23,
+        37,
+        38,
+        50,
+        51,
+        63,
+        64,
+        66,
+        68
+      ],
+      "reason": "Parts placed at target_0/target_1; arms return to left_home/right_home; lock released; events cleared; concurrent gather completes both episodes."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-SHORT-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 390,
+    "prompt_tokens": 6576,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6966
+  },
+  "raw_sha256": "49682b7677bdb56a55b2cef8b64b9ce5367d37488cc6e23b8726ed885d43e165",
+  "request_sha256": "4f6ba3cc2b04fe1f094b1273ef162454baab344308cf2864f1a076fdea8166dc",
+  "source_sha256": "907165cd5753875a34df5c92051c611a6cd3bdac57e9b1db947ba192cddf7620"
+}

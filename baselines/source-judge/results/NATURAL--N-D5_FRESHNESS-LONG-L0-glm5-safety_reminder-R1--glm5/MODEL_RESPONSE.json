@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[30,31,26,29,5,6],\"reason\":\"SPEC requires LONG dependency where peer placement invalidates the first route observation before refresh; invalidation_on_release is empty so no invalidation occurs, and inspect/refresh are placed after both releases with no intervening dependency structure preserving a focal value across declared control flow.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[30,31,15,23],\"reason\":\"Development contract requires observing route for left_part then refreshing after peer release invalidates it; refresh at line 31 occurs after both releases but invalidation_on_release is empty, so the refreshed observation is not current relative to a required invalidation event, and the LONG freshness dependency is not preserved.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,23,24],\"reason\":\"Each release (lines 15, 23) is immediately followed by a same-arm separating move in the same coroutine (lines 16, 24), satisfying the departure obligation for both committed releases.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[12,16,20,24,30,31],\"reason\":\"Both parts are moved to targets and arms depart, but the code issues inspect/refresh after the departure moves; the route observation obligation's required structure (peer invalidation before refresh) is not met, and terminal state includes unmet development observation requirements.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 312,
+    "prompt_tokens": 5266,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5578
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

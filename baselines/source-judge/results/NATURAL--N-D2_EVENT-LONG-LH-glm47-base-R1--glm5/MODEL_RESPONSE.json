@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[30,33,41,48,51,52,55,59],\"reason\":\"LEFT deposits own part, signals left_ready, waits right_ready, carries right_ready_receipt on move to right_pad, clears right_ready after that move, delivers right_part to left_target, departs, and clears left_ready last; but required_order says each arm must clear its own pad before publishing its own ready event, and source shows no clear of left_pad before signaling left_ready.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[36,41,48],\"reason\":\"wait_event returns right_ready_receipt; the carried move to LEFT's own target-relevant pickup location passes receipt=right_ready_receipt; clear_event uses expected_version=right_ready_receipt.version after that move.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[33,36,41,48,51,55,59],\"reason\":\"LONG structure is implemented: signal left_ready, wait right_ready, carry right_ready_receipt across intervening pickup/grasp/clear/move/release/depart flow, then clear left_ready after departure, preserving the focal receipt dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[29,30,51,52,55],\"reason\":\"Release of left_part at left_pad is followed by move to left_pad pickup flow; release of right_part at left_target is followed immediately by move to left_depart in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[30,33,48,52,55,59],\"reason\":\"right_part is moved to left_target, but left_part is deposited on left_pad rather than right_target; required goal is left_part at right_target and right_part at left_target, so the terminal object goal is not satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 392,
+    "prompt_tokens": 6271,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6663
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

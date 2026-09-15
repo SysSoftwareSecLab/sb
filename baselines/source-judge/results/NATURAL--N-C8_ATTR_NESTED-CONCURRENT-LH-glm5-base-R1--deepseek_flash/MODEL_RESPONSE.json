@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[57,58,59,99,100,101,102],\"reason\":\"Source implements the declared CONCURRENT+LH combination: joined producer/consumer coroutines via asyncio.gather for both episodes, and the item-1 branch joins the two readiness inspections (line_clear, receiver_ready) inside the producer_part_1 loop branch.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[29,35,45,50,56,61,75,81,92],\"reason\":\"Producer signals ready after departing buffer; consumer waits ready receipt, clears ready after carried move completes, signals empty_0 after departing; producer waits and clears empty_0 before entering buffer with second part. Order matches required protocol.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[19,26,38,47,64,72,83,94],\"reason\":\"Both arms acquire buffer_lock before buffer entry and release part at buffer/target; capacity-one buffer respected with item-specific pickup contracts and lock ownership during entry/departure.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[35,43,81,90],\"reason\":\"Consumer waits the corresponding ready receipt and supplies that exact active item receipt on the carried move to target for both items.\"},{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[99,100,101,102],\"reason\":\"Reachable program uses asyncio.gather to run producer and consumer coroutines together for each episode, implementing the SPEC's CONCURRENT level rather than serial reproduction.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[56,57,58,59,61],\"reason\":\"Item-1 producer waits/clears empty_0 then joins both readiness inspections inside the loop branch, matching the declared held-out control-flow signature.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[26,27,47,48,72,73,94,95],\"reason\":\"Every release is immediately followed by a same-arm separating move in the same coroutine (buffer_0->left_home, target_0->right_home, buffer_1->left_home, target_1->right_home).\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[100,102],\"reason\":\"Source shows intended terminal moves to homes and target releases, but no execution evidence confirms final poses, empty hands, resource OFF/unowned, events cleared, or deadline satisfaction in the finite trajectory.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8179,
+    "completion_tokens": 570,
+    "total_tokens": 8749,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8051
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

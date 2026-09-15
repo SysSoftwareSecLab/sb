@@ -1,0 +1,174 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        43,
+        104,
+        175,
+        176
+      ],
+      "reason": "The source implements the declared CONCURRENT attribute by defining producer and consumer coroutines and running them together via asyncio.gather, matching the CONCURRENT/LH experimental assignment rather than a serial action multiset."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        67,
+        75,
+        76,
+        99,
+        108,
+        127,
+        136,
+        141,
+        167
+      ],
+      "reason": "Producer signals ready_0/ready_1 after buffer departure, consumer waits ready_0/ready_1 before pickup, clears ready after carried move, signals empty_0 after target release/departure, and producer waits/clears empty_0 before second buffer entry, matching the required ready/empty ordering."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        56,
+        57,
+        60,
+        63,
+        64,
+        88,
+        89,
+        92,
+        95,
+        96,
+        111,
+        114,
+        117,
+        120,
+        121,
+        151,
+        154,
+        157,
+        160,
+        161
+      ],
+      "reason": "Both arms acquire buffer_lock before entering the shared capacity-one buffer pose, hold it through grasp/release, and release it only after departing to wait/home poses, so ownership spans the complete buffer contact."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        67,
+        108,
+        124,
+        141,
+        164
+      ],
+      "reason": "Consumer waits the corresponding ready receipt and supplies that exact active EventReceipt on the carried move to target_0/target_1, matching the BUFFER_RECEIPT mechanism."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        43,
+        104,
+        175,
+        176
+      ],
+      "reason": "The reachable program defines producer and consumer coroutines and executes them concurrently with asyncio.gather, implementing the SPEC's CONCURRENT composition rather than a serial reproduction."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        141,
+        147,
+        148,
+        151,
+        154,
+        157,
+        160,
+        161,
+        164,
+        167,
+        170,
+        173
+      ],
+      "reason": "For item 1 the consumer waits ready_1, then inspects both readiness facts inside the loop branch before acquiring buffer_lock and proceeding, matching the declared held-out control-flow signature."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        60,
+        63,
+        92,
+        95,
+        130,
+        133,
+        170,
+        173
+      ],
+      "reason": "Each release is immediately followed in the same coroutine by a same-arm separating move: LEFT releases at buffer_0/buffer_1 then moves to LEFT_WAIT/LEFT_HOME, and RIGHT releases at target_0/target_1 then moves to RIGHT_HOME."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        47,
+        50,
+        53,
+        57,
+        60,
+        63,
+        70,
+        79,
+        82,
+        85,
+        89,
+        92,
+        95,
+        102,
+        111,
+        114,
+        117,
+        120,
+        124,
+        127,
+        130,
+        133,
+        136,
+        151,
+        154,
+        157,
+        160,
+        164,
+        167,
+        170,
+        173
+      ],
+      "reason": "The source places part_0 at target_0 and part_1 at target_1, returns both arms to homes, releases tool and buffer_lock, and clears ready_0/ready_1 while signaling empty_0, matching the declared terminal goal and event state."
+    }
+  ],
+  "object_id": "NATURAL--N-C8_ATTR_NESTED-CONCURRENT-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9202,
+    "completion_tokens": 720,
+    "total_tokens": 9922,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9074
+  },
+  "raw_sha256": "da5f4148967c3c1a79350fdab3d36081688924018a23e6ab34d4ec72b495fe76",
+  "request_sha256": "8b1dbed60facbce601a21a04d1f23a85d5a33e508168b2843faf0d4021290cb0",
+  "source_sha256": "8f4983ce611f4e175fe30585d50340cc30749fb2e87b08c1733cfa83c750b1f5"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[18,32,46,48,56],\"reason\":\"LEFT branch fully completes before RIGHT starts (lines 18-31 before 32-44), implementing SERIAL structure; join and departure use asyncio.gather for the concurrent join/departure phase.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"V\",\"source_lines\":[30,44,49,52],\"reason\":\"Both left_ready and right_ready are signaled before the join wait (lines 30,44), so the join at lines 49-52 waits on already-active events rather than synchronizing two concurrent producer branches; the join dependency is not meaningfully present on a serial path.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"V\",\"source_lines\":[28,30,34,42,44,56],\"reason\":\"After LEFT release at left_target (line 28), the next same-arm LEFT action is not an immediate move; instead robot.signal (line 30) and then RIGHT branch actions intervene before LEFT departure at line 57. Same pattern for RIGHT: release (line 42) then signal (line 44) before departure at line 58.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[49,52,56,59],\"reason\":\"Events left_ready and right_ready are signaled (lines 30,44) but never cleared via clear_event, violating the terminal condition that events must be cleared. Also, hands are not confirmed empty after departure moves.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 318,
+    "prompt_tokens": 5878,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6196
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

@@ -1,0 +1,127 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        56,
+        60,
+        63,
+        86,
+        91,
+        111,
+        120,
+        124,
+        144
+      ],
+      "reason": "Producer signals ready_0/ready_1 after placing and departing; consumer waits ready, clears ready after carried move, signals empty_0; producer waits and clears empty_0 before second buffer entry, matching required order."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        41,
+        44,
+        47,
+        50,
+        53,
+        71,
+        74,
+        77,
+        80,
+        83,
+        94,
+        97,
+        99,
+        102,
+        105,
+        127,
+        130,
+        132,
+        135,
+        138
+      ],
+      "reason": "Both arms acquire buffer_lock before entering buffer_0/buffer_1 and release after departing; capacity-one buffer used with lock ownership during entry/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        91,
+        108,
+        124,
+        141
+      ],
+      "reason": "Consumer waits ready_0/ready_1 receipts and passes the exact active receipt on carried move to target_0/target_1."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        60,
+        66,
+        68,
+        71,
+        74,
+        77,
+        86,
+        91,
+        108,
+        124,
+        141
+      ],
+      "reason": "Producer picks part_1 before waiting for empty_0 receipt, and consumer's carried moves depend on ready receipts across intervening control flow, implementing LONG dependency distance."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        50,
+        77,
+        80,
+        99,
+        102,
+        114,
+        117,
+        132,
+        135,
+        147,
+        150
+      ],
+      "reason": "Each release at a declared support is immediately followed by a same-arm move in the same coroutine (buffer releases followed by left_wait/left_home; target releases followed by right_home)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        80,
+        117,
+        120,
+        150
+      ],
+      "reason": "Source implements placing part_0/part_1 at targets, returning arms to homes, releasing buffer_lock, and signaling empty_0; events cleared via clear_event calls, consistent with declared terminal goal."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-LONG-L0-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8695,
+    "completion_tokens": 466,
+    "total_tokens": 9161,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "prompt_cache_hit_tokens": 384,
+    "prompt_cache_miss_tokens": 8311
+  },
+  "raw_sha256": "9f539356c734c08b160cee2c5738561db4d1423f3108dc310b612895b54bf566",
+  "request_sha256": "229db977824d679880cd9e3e753ee8652af92fe454f09cd969b6140f3ad83cb9",
+  "source_sha256": "7e577f54b43bd471da9fb90b82bd91de9686fce9cc2c8feb4c0a212366bca69b"
+}

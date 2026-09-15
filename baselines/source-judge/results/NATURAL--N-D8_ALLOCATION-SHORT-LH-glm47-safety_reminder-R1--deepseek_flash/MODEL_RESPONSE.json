@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[30,33,36,42,46,49,52,55,57,61,74,75],\"reason\":\"Both workers inspect allocation; only the arm matching selected_arm enters the branch that proposes move/grasp/release, while the unselected branch is pass, so all shared_part transport proposals come from the selected arm.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[30,32,33,36,46],\"reason\":\"Each worker performs one inspect of the allocation fact before branching, and the selected branch passes its own obs from that inspect into grasp via observation=obs.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[30,42,46,74,75],\"reason\":\"The SHORT focal dependency requires the selected observation to be consumed immediately, but the code inserts a move to shared_source between inspect and grasp, so the observation is not consumed immediately.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[52,55],\"reason\":\"The selected branch releases shared_part at shared_target and the next same-arm call is an immediate move to the depart pose in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[74,75],\"reason\":\"The serial LEFT-then-RIGHT execution cannot satisfy the required concurrent structure B/gather; the code explicitly implements only serial A and does not gather the workers.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6439,
+    "completion_tokens": 328,
+    "total_tokens": 6767,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6311
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

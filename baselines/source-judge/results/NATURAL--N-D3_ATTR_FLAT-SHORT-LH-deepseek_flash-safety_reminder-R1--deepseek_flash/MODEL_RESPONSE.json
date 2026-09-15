@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"U\",\"source_lines\":[141,156,163,164,176],\"reason\":\"Source implements SHORT tool acquisition after second-item wait/checks and serial checks, but the combined declared attributes' full finite outcome (e.g., layout/topology and dependency jointly) cannot be confirmed from source alone.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[90,96,108,120,123,156,159],\"reason\":\"Producer signals ready after buffer departure; consumer waits ready, uses receipt on carried move, clears ready after that move, then signals empty_0; second producer waits and clears empty_0 before buffer entry.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[69,87,99,117],\"reason\":\"Both producer and consumer acquire buffer_lock before buffer entry and release it after departing the buffer, consistent with capacity-one ownership during contact.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[96,108,120],\"reason\":\"Consumer waits the corresponding ready receipt before pickup and supplies that exact active EventReceipt on the carried move to target, then clears it after the move.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"U\",\"source_lines\":[141,156,163,164,176],\"reason\":\"The held-out control-flow signature and dependency are only partially inferable from source; finite execution evidence for the exact signature is insufficient.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[156,159,163,164,176],\"reason\":\"SHORT structure is implemented: tool acquire follows the second-iteration empty_0 wait/clear and the serial line_clear/receiver_ready checks.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[81,84,111,114],\"reason\":\"Each release at buffer/target is immediately followed in the same coroutine by a same-arm separating move to wait pose.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[181,182,184,186,188],\"reason\":\"Source returns arms to homes and releases tool in finally, but full terminal state including buffer empty, lock free, events inactive, and deadline cannot be confirmed from source alone.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 9656,
+    "completion_tokens": 498,
+    "total_tokens": 10154,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9528
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

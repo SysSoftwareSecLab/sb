@@ -1,0 +1,108 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        36,
+        95,
+        98
+      ],
+      "reason": "Producer waits empty_0 at line 36 but never clears empty_0 with expected_version; consumer signals empty_0 at line 98, yet required order says producer waits and clears empty_0 before entering buffer with second part. The clear is omitted."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        17,
+        20,
+        23,
+        26,
+        29,
+        50,
+        53,
+        56,
+        59,
+        62,
+        73,
+        76,
+        77,
+        80,
+        83,
+        105,
+        108,
+        109,
+        112,
+        115
+      ],
+      "reason": "Both arms acquire buffer_lock before entering buffer_0/buffer_1, release at buffer, depart, then release_resource; capacity-one buffer accessed under lock ownership."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        70,
+        86,
+        102,
+        118
+      ],
+      "reason": "Consumer waits ready_0/ready_1 and supplies the exact active receipts on carried moves to target_0/target_1."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        36,
+        46,
+        47
+      ],
+      "reason": "Experimental assignment requires SHORT dependency: second item source pickup follows empty receipt. Producer waits empty_0 at line 36 but never clears it, and the required empty receipt dependency is not preserved before source_1 pickup."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        23,
+        26,
+        56,
+        59,
+        89,
+        92,
+        121,
+        124
+      ],
+      "reason": "Each release at a declared support is immediately followed by a same-arm separating move in the same coroutine: buffer_0->left_wait, buffer_1->left_wait, target_0->right_home, target_1->right_home."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        36,
+        95,
+        98
+      ],
+      "reason": "Terminal goal requires events inactive; producer never clears empty_0, and consumer signals empty_0 at line 98 without a corresponding clear, so events are not cleared."
+    }
+  ],
+  "object_id": "NATURAL--N-D7_BUFFER_PREFETCH-SHORT-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8179,
+    "completion_tokens": 452,
+    "total_tokens": 8631,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8051
+  },
+  "raw_sha256": "5c6ae6a43b1980fad57b34e1189fb4d535cb62b5ed92b6b65ee88ab29d91b60f",
+  "request_sha256": "fe55f985e7dca554fb1614b1a733df0e33ec2ee9bfdb67334dac934bcbbdc713",
+  "source_sha256": "a3d283983bc7e4b84b271cee32701d2498286ad56c676b051dc88539fb2ba604"
+}

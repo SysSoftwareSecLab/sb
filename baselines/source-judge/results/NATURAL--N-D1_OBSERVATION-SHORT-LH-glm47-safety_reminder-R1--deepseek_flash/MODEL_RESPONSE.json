@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"U\",\"source_lines\":[33,35,38,39,43,46,50,54,58,73,86,99,107],\"reason\":\"The code implements a SHORT dependency: RIGHT inspects quality (line 58) and LEFT immediately consumes quality_obs at grasp (line 73/86) with no intervening control flow, matching the SHORT level. However, the experimental_assignment focal_dependency is 'before the quality observation' and holdout LAYOUT_TOPOLOGY; source-only evidence cannot confirm the reachable trajectory preserves the declared focal dependency across the actual finite run, so U.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"C\",\"source_lines\":[63,64,67,81,84,86,89,90,99,103,106,107,110,111],\"reason\":\"The code branches on accept_by_pass[0] (line 64): if accepted, LEFT goes to target (lines 70-80); else it reworks (lines 84-93), re-inspects (line 99), checks accept_by_pass[1] (line 103), and places at target (lines 106-111). This implements the two-pass branch structure with max_passes=2 as required.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"C\",\"source_lines\":[58,73,86,99,107],\"reason\":\"RIGHT issues quality observations via inspect (lines 58, 99), and LEFT consumes the newly issued current observation at each inspection pickup (lines 73, 86, 107), matching the REWORK_CURRENT mechanism and 'use the newly issued current quality record' requirement.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[46,50,77,80,90,93,111,114,119,122],\"reason\":\"Each release (lines 46, 77, 90, 111, 119) is followed by a same-arm move in the same coroutine: release at inspection (46) then move to left_depart (50); release at target (77) then move (80); release at rework (90) then move (93); release at target (111) then move (114); release right_part (119) then move (122). All releases use declared logical_supports and are followed by immediate separating moves.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[33,35,38,39,43,46,50,54,58,67,73,77,80,84,86,90,93,99,107,111,114,118,119,122],\"reason\":\"The code moves both arms to depart poses (lines 80/114, 122) and places parts at targets (lines 77/111, 119), but source-only evidence cannot confirm the actual finite execution reaches all terminal conditions (empty hands, deadline 30s, acceptance within two passes) without a trajectory; the branch on accept_by_pass[0] is data-dependent and the actual observed value is not guaranteed from source alone.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8009,
+    "completion_tokens": 671,
+    "total_tokens": 8680,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7881
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

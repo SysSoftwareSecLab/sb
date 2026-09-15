@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[20,4,12],\"reason\":\"asyncio.gather(left_worker(), right_worker()) runs both worker coroutines concurrently, matching the CONCURRENT level required by the SPEC.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"V\",\"source_lines\":[22,23,10,18],\"reason\":\"After gather, code calls wait_event for left_ready and right_ready but never calls clear_event on either join event; SPEC declares both events program_clearable and TASK_GOAL requires events cleared.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[7,8,9,15,16,17],\"reason\":\"Each release at the target support zone is immediately followed by a same-arm move to departure in the same coroutine (left: release at left_target then move to left_depart; right similarly).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[22,23],\"reason\":\"Terminal goal requires events cleared; source waits on left_ready and right_ready but never clears them, so the terminal condition is not satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 232,
+    "prompt_tokens": 5079,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5311
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

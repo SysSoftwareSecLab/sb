@@ -1,0 +1,97 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        16,
+        22,
+        30,
+        33,
+        34,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "reason": "Each arm signals its own item-bound ready event after depositing/clearing (lines 16,33-34); each consumer waits for the peer ready event before picking up the peer item (lines 22,36-41); and each clears the peer event after the carried move to target using the returned receipt version (lines 27-30)."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        22,
+        24,
+        27,
+        30
+      ],
+      "reason": "The wait_event receipt is captured (line 22) and the peer-item carried move to target (line 27) is followed by clear_event using receipt.version (line 30), matching the required active peer-item receipt dependency."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        22,
+        24,
+        27,
+        30,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "reason": "The focal dependency right_ready -> LEFT carried move is implemented: LEFT waits on right_ready (line 36-37), grasps right_part (line 24), and performs the carried move to right_target (line 27) before clearing right_ready with the receipt version (line 30)."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        13,
+        15,
+        26,
+        29
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: release at pad then move to clear (lines 13-15), and release at peer_pad then move to target (lines 26-27) and release at target then move to depart (lines 28-29)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        33,
+        34,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "reason": "The code deposits left_part on left_pad and right_part on right_pad, then LEFT consumes right_part to right_target and RIGHT consumes left_part to left_target, ending at left_depart/right_depart with both ready events cleared, matching the declared goals and required order."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-SHORT-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 6335,
+    "completion_tokens": 481,
+    "total_tokens": 6816,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 6207
+  },
+  "raw_sha256": "00e5b34ffa6a4c61eadb4fee5a22754a666ba65ca193eb1d92d868530c590a2e",
+  "request_sha256": "3a15b1bbf2bde5931c9f775469de85b939c1bdefab1d0896bbbdba8be41f6dad",
+  "source_sha256": "d2eef790355a3b171f169aa7efaffa2e6425656b925f0c0a34222e5dd74521ed"
+}

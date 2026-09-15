@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"U\",\"source_lines\":[7,8,12,13,25],\"reason\":\"The source comments mention inspection and release invalidating quality, but the code never calls inspect/refresh or consumes a quality observation; the declared SHORT producer-to-consumer dependency (RIGHT issues quality observation before LEFT inspection pickup) is not implemented in the reachable code, and no actual trajectory evidence is available to determine the finite outcome.\"},{\"id\":\"REWORK_BRANCH\",\"label\":\"V\",\"source_lines\":[7,8,12,13,14],\"reason\":\"The public task requires accept_by_pass branching with up to two inspection passes and rework routing, but the code unconditionally releases left_part at inspection and departs, omitting the required rework branch sequence.\"},{\"id\":\"REWORK_OBSERVATION\",\"label\":\"V\",\"source_lines\":[12,13],\"reason\":\"The code enters the inspection pose and releases left_part there but never calls inspect or refresh to obtain the current quality observation, omitting the required inspection observation.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[13,14,22,23],\"reason\":\"Each release (left_part@inspection, right_part@right_target) is immediately followed by a same-arm move to the declared departure pose in the same coroutine, matching the support-departure requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[13,14,22,23],\"reason\":\"The code releases left_part at inspection and moves to left_depart, never placing left_part at its goal left_target, and never performs the required inspection/acceptance sequence, so the declared terminal goal is not satisfied.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5734,
+    "completion_tokens": 369,
+    "total_tokens": 6103,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5606
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

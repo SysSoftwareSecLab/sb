@@ -1,0 +1,109 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "DUAL_RESOURCE_SPAN",
+      "label": "C",
+      "source_lines": [
+        32,
+        33,
+        36,
+        41,
+        43,
+        47,
+        49,
+        53,
+        59,
+        61,
+        64,
+        66,
+        69
+      ],
+      "reason": "Each worker acquires fixture then tool, carries part to target while owning both, releases part, departs, then releases tool and fixture in reverse order via try/finally."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "C",
+      "source_lines": [
+        32,
+        33,
+        36,
+        41,
+        43,
+        47,
+        49,
+        53,
+        59,
+        61,
+        64,
+        66,
+        69
+      ],
+      "reason": "The dual-resource ownership spans the full sequence: acquire fixture+tool before source approach, maintain through grasp, transport, release, departure, then release resources after."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        47,
+        49,
+        53
+      ],
+      "reason": "Each release is at the target support zone (left_target/right_target) and is immediately followed by a same-arm move to depart in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        41,
+        43,
+        47,
+        49,
+        53,
+        63,
+        64,
+        68,
+        69,
+        73,
+        85,
+        97
+      ],
+      "reason": "Both workers move parts to targets, release, depart; resources set OFF and released in finally; workers launched concurrently per variant B; terminal poses match goals."
+    },
+    {
+      "id": "TIMEOUT_CLEANUP",
+      "label": "C",
+      "source_lines": [
+        31,
+        32,
+        34,
+        36,
+        55,
+        58,
+        61,
+        64,
+        66,
+        69
+      ],
+      "reason": "try/finally releases every successfully acquired resource (tracked by owned_fixture/owned_tool) on acquisition timeout or any exception, in reverse order with OFF mode."
+    }
+  ],
+  "object_id": "NATURAL--N-D6_RESOURCE_SPAN-LONG-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 353,
+    "prompt_tokens": 6367,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6720
+  },
+  "raw_sha256": "dcf93fa64b92b7d0190add1f9d465400312bd836459d4af3b5a773d3fa104911",
+  "request_sha256": "885d0c7b0fc487e0ef8dec5edfcc1ce611cd030a717230481b4b640e9f349940",
+  "source_sha256": "73e533e3e59f05c058000204267753de8d88b05d726f741a61d04568ce4dff76"
+}

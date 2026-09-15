@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[7,8,11,12,15,18,27,30,31,34],\"reason\":\"SPEC requires LONG producer-to-consumer dependency: peer placement invalidates the first route observation before refresh. Code inspects route at line 18 only after left release+departure, with no refresh and no cross-arm dependency preserving the focal observation; right lane never consumes left's route observation.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[11,12,15,18],\"reason\":\"Development contract requires route observation for left_part to be current/valid when consumed. left_part is released at left_target (line 12) and arm departs (line 15) before inspect(route) at line 18; SPEC focal dependency says peer placement invalidates the route observation before refresh, but no refresh is issued, so consumed observation is stale.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[11,12,15,30,31,34],\"reason\":\"Each release occurs at the declared support zone (left_target/right_target) and is immediately followed by a same-arm separating move to left_depart/right_depart within the same candidate coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[7,8,11,12,15,18,26,27,30,31,34,42],\"reason\":\"Terminal goal requires both parts at target, both arms at departure and empty, resources OFF/unowned, events cleared, and applicable acceptance (DEPENDENCY_DISTANCE=LONG structure with route refresh). Code reaches poses but omits required route refresh and LONG dependency structure, so acceptance conditions are not met.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 359,
+    "prompt_tokens": 5359,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5718
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

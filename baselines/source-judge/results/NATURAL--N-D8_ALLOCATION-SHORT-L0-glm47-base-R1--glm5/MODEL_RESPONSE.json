@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[33,35,50,53,56,59,62],\"reason\":\"Only worker_arm (selected via allocation) issues move/grasp/release; unselected arm issues no such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"V\",\"source_lines\":[16,18,21,22,26,27,36,42,53],\"reason\":\"Both arms inspect allocation, but selected LEFT consumes left_obs while RIGHT's own current allocation observation is never consumed by the selected grasp; grasp uses worker_obs which for LEFT is left_obs, but RIGHT branch uses right_obs only when RIGHT is selected—however the allocation value is always LEFT so RIGHT's observation is never consumed, and the code reads alloc_data from left_obs only, not from the selected arm's own observation in the RIGHT branch.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[12,26,27,36,42,50,53],\"reason\":\"SHORT dependency: selected arm inspects allocation, then immediately consumes that same observation in grasp with no intervening calls between approach and grasp.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[56,59,62],\"reason\":\"Release at shared_target is immediately followed by move to depart_pose in same coroutine with no intervening calls.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[50,56,59,62],\"reason\":\"LEFT departs to left_depart but never returns to left_depart after release; shared_part reaches shared_target, but RIGHT stays at right_home and LEFT ends at left_depart—however LEFT moves from left_home to shared_source to shared_target to left_depart, satisfying terminal poses; but RIGHT never moves and remains at right_home. Terminal goal appears met for the initial allocation value LEFT.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 388,
+    "prompt_tokens": 5747,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 6135
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

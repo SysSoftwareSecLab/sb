@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"V\",\"source_lines\":[36,98,127],\"reason\":\"Producer waits empty_0 at line 36 but never clears it; SPEC requires producer waits and clears empty_0 before second buffer entry. Also ready_1 never cleared.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[17,20,23,26,29,50,53,56,59,62,73,76,77,80,83,105,108,109,112,115],\"reason\":\"Both arms acquire buffer_lock before buffer entry, hold through release and immediate departure, then release_resource after departing; capacity-one buffer occupancy protected.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[70,86,102,118],\"reason\":\"Consumer waits ready_0/ready_1 receipts and supplies those exact active receipts on carried moves to target_0/target_1 per SPEC.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[36,98],\"reason\":\"Focal dependency is 'second item source pickup follows empty receipt'; producer waits empty_0 but never clears it, breaking the required dependency structure.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[23,26,56,59,89,92,121,124],\"reason\":\"Each release (part_0/part_1 at buffer and target) is immediately followed by same-arm move in same coroutine: release→move(left_wait/right_wait/right_home).\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[36,98,127],\"reason\":\"Terminal goal requires events inactive; empty_0 is signaled but never cleared, and ready_1 is never cleared, so events remain active at normal return.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 376,
+    "prompt_tokens": 7707,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 8083
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

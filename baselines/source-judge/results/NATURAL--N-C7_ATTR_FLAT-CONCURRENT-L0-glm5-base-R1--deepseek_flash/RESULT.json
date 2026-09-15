@@ -1,0 +1,154 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        163,
+        164,
+        165,
+        166,
+        168,
+        169,
+        170
+      ],
+      "reason": "Source implements the declared combined attributes: serial alternating producer/consumer episode for part_0 (lines 164-166) and joined producer/consumer coroutines via asyncio.gather for part_1 (line 170), matching the CONCURRENT L0 structure."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        38,
+        39,
+        47,
+        48,
+        64,
+        75,
+        76,
+        85,
+        86,
+        92,
+        120,
+        121,
+        129,
+        130,
+        149
+      ],
+      "reason": "Producer signals ready_0/ready_1 after departing buffer (lines 38-39, 120-121); consumer waits ready before pickup (47-48, 129-130), clears ready after carried move (64, 149), and publishes empty_0 after departing (75-76); producer waits and clears empty_0 before second buffer entry (85-86, 92)."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        53,
+        54,
+        57,
+        58,
+        61,
+        67,
+        68,
+        71,
+        72,
+        135,
+        136,
+        142,
+        143,
+        146,
+        152,
+        153,
+        156,
+        157
+      ],
+      "reason": "Both consumers acquire buffer_lock before buffer entry (53, 135), release it after departing (71-72, 156-157); capacity-one buffer used with item-specific pickup contracts and lock held during entry/departure."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        51,
+        61,
+        64,
+        133,
+        146,
+        149
+      ],
+      "reason": "Consumer supplies the exact active ready receipt on carried move to target (line 61 with ready_receipt, line 146 with ready_receipt) and clears ready only after that move completes (64, 149)."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        163,
+        164,
+        165,
+        166,
+        168,
+        169,
+        170
+      ],
+      "reason": "Episode A is serial alternating producer/consumer (164-166); Episode B runs producer_part_1 and consumer_part_1 concurrently via asyncio.gather (line 170), implementing the SPEC's CONCURRENT level."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        163,
+        164,
+        165,
+        166,
+        168,
+        169,
+        170
+      ],
+      "reason": "Reachable control flow implements the declared held-out signature: serial alternating complete episodes for part_0 and joined producer/consumer coroutines for part_1, not merely the same action names."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        30,
+        31,
+        67,
+        68,
+        112,
+        113,
+        152,
+        153
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: release at buffer_0 then move left_home (30-31), release at target_0 then move right_home (67-68), release at buffer_1 then move left_home (112-113), release at target_1 then move right_home (152-153)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        164,
+        166,
+        170,
+        172,
+        173
+      ],
+      "reason": "Source implements the required action sequence and terminal moves, but source-only evidence cannot confirm the finite execution reaches all declared terminal poses, empty hands, resources OFF/unowned, events inactive, and the deadline; no actual trajectory is available."
+    }
+  ],
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-CONCURRENT-L0-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 9470,
+    "completion_tokens": 749,
+    "total_tokens": 10219,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 9342
+  },
+  "raw_sha256": "389374962760c987823c406932111d5f825bcfde9ca5bffcbb436c5257b0b3ac",
+  "request_sha256": "7c660a46d4f852cc6005ca641bdf4dc56a65a7a3c612c796af943f53ecca79b5",
+  "source_sha256": "ebfe2c4f80028f9b24d19c06312a6d01aaca947347bf58b4cd24c05d1ddda549"
+}

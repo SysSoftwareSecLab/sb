@@ -1,0 +1,67 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        43,
+        46,
+        52,
+        68
+      ],
+      "reason": "LEFT inspects route at line 43 and consumes it at grasp line 46, but then releases left_part at line 52 before RIGHT releases right_part at line 68. The SPEC's focal dependency is that RIGHT's release invalidates LEFT's route observation before refresh; the code must preserve LEFT's observation across RIGHT's release, but LEFT has already released and departed, so the dependency structure is not implemented."
+    },
+    {
+      "id": "OBS_CURRENT",
+      "label": "C",
+      "source_lines": [
+        43,
+        46
+      ],
+      "reason": "LEFT inspects route at line 43 and immediately consumes the returned observation in grasp at line 46 with no intervening invalidating release, so the observation is current when used."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        52,
+        55,
+        68,
+        71
+      ],
+      "reason": "LEFT releases left_part at left_target (line 52) then immediately moves to left_depart (line 55); RIGHT releases right_part at right_target (line 68) then immediately moves to right_depart (line 71). Both releases are at declared support zones and followed by same-arm separating moves."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        49,
+        52,
+        55,
+        65,
+        68,
+        71
+      ],
+      "reason": "left_part released at left_target, right_part released at right_target, LEFT ends at left_depart, RIGHT ends at right_depart, both arms empty after release; no resources or events declared in SPEC."
+    }
+  ],
+  "object_id": "NATURAL--N-D5_FRESHNESS-LONG-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 324,
+    "prompt_tokens": 6021,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6345
+  },
+  "raw_sha256": "c9600839428ba41631e36077f3715c39a454a0e530ba15c6776ac096ec2faf86",
+  "request_sha256": "f4d735b6d2e416280440e9cef835d553329b8d1ba9f372c3650bdc7856811c2c",
+  "source_sha256": "1a980c064693cbfa15b2103021391cbed512f7713539028923b855634606682d"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[24,26,40],\"reason\":\"deposit_and_signal clears ready_event with expected_version=0 before signaling; SPEC requires clear own ready only after own deposit/clear, and initial version 0 means clear before any active signal is a protocol violation. Also consume_peer clears peer_ready after move, but deposit's premature clear corrupts the required order.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[30,36,40],\"reason\":\"consume_peer waits for peer_ready, receives receipt, passes that exact receipt to the carried move to target, and clears the event with expected_version=receipt.version after the move completes, matching the SPEC receipt dependency.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[30,36,40],\"reason\":\"The focal dependency right_ready -> LEFT carried move is implemented: LEFT's consume_peer waits on right_ready, uses the returned receipt in the move to left_target, then clears with that receipt.version, preserving the LONG producer-to-consumer receipt dependency across intervening control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[19,20,22,36,38,60,61,62],\"reason\":\"Each release is followed immediately by a same-arm separating move in the same coroutine: deposit releases on pad then moves to clear; consume_peer releases at target then the final gather moves both arms to departure poses.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[24,26,40],\"reason\":\"Terminal goal requires both ready events inactive. deposit_and_signal clears with expected_version=0 then signals (version becomes 1); consume_peer clears with receipt.version. But the premature clear at version 0 before signaling means the clear does not match an active signaled version, and the final event states cannot be guaranteed inactive due to this protocol error.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 397,
+    "prompt_tokens": 6314,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6711
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

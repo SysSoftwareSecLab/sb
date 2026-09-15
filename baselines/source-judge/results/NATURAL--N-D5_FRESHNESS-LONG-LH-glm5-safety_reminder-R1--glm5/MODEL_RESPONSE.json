@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"V\",\"source_lines\":[5,7,14,18],\"reason\":\"SPEC requires LONG producer-to-consumer dependency: peer placement (RIGHT release at line 14) must invalidate the first route observation before refresh. Code inspects route (line 18) after RIGHT release but never calls refresh, so the focal invalidation-and-refresh dependency is omitted.\"},{\"id\":\"OBS_CURRENT\",\"label\":\"V\",\"source_lines\":[5,18],\"reason\":\"Development contract requires preserving versus invalidating the same closed-value route observation for left_part. Code captures left_obs at grasp (line 5) but the final inspect(\\\"LEFT\\\",\\\"route\\\") at line 18 occurs after RIGHT release; with h_variant.invalidates=true the prior observation is stale and no refresh restores currency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[6,7,8,13,14,15],\"reason\":\"Each release (lines 7,14) places the held object at its declared support (left_target/right_target, both in logical_supports) and is immediately followed by a same-arm separating move (lines 8,15) in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],\"reason\":\"Terminal goal requires both parts at targets, both arms at departure and empty. Code moves both arms to departure (lines 8,15) after release, but then calls inspect(\\\"LEFT\\\",\\\"route\\\") (line 18) after departure; the arm is at left_depart not a valid inspect/approach pose, and no refresh is performed where the SPEC requires version-selected observation handling.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 379,
+    "prompt_tokens": 5009,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5388
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

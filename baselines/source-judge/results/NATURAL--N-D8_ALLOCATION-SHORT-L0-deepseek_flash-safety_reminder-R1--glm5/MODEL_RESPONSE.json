@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "```json\n{\"obligations\":[{\"id\":\"ALLOCATION_EXCLUSIVITY\",\"label\":\"C\",\"source_lines\":[31,33,34,35,36,37,38,40,41,42,43,44,48,50,51,52,53,54,56,58,61,62,64,66,67,68,69,70,71],\"reason\":\"In both candidate branches, only the selected arm issues move/grasp/release; the unselected arm returns with no such calls.\"},{\"id\":\"ALLOCATION_OBSERVATION\",\"label\":\"C\",\"source_lines\":[7,8,20,21,24,25,27,34,41,51,68],\"reason\":\"Both arms inspect allocation once; observations agree; selected grasp carries that arm's own allocation observation.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[33,34,35,36,37,50,51,52,53,54],\"reason\":\"SHORT dependency: selected arm's allocation observation is consumed immediately at grasp with no intervening calls between approach and grasp.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[35,36,37,42,43,44,52,53,54,69,70,71],\"reason\":\"Each release at shared_target is immediately followed by a same-arm separating move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[76,77,33,34,35,36,37,50,51,52,53,54],\"reason\":\"Candidates A and B both execute the selected transport; running both serially transports shared_part twice and leaves LEFT at left_depart after A, then B moves LEFT from left_home again, violating terminal state and single-transport goal.\"}]}\n```",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 375,
+    "prompt_tokens": 6072,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6447
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

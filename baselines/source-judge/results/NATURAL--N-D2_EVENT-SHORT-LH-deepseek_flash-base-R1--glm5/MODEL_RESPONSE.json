@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"EXCHANGE_PROTOCOL\",\"label\":\"V\",\"source_lines\":[31,32,33,41,42,43],\"reason\":\"consume_left waits right_ready then moves to left_pickup_wait and grasps right_part, but approach_sequences require LEFT grasping right_part at right_pad to start from left_pickup_wait and have interaction_pose right_pad; code never moves LEFT to right_pad before that grasp. Same for RIGHT/left_pad.\"},{\"id\":\"EXCHANGE_RECEIPT\",\"label\":\"C\",\"source_lines\":[31,34,36,41,44,46],\"reason\":\"wait_event returns the active peer receipt; the carried move to own target passes receipt=receipt; clear_event uses expected_version=receipt.version after that move, matching the receipt binding rule.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[16,24,31,34,36,41,44,46],\"reason\":\"Producer signal is published after deposit/clear, consumer waits for peer ready, carries the exact returned receipt on the target move, then clears after that move; the SHORT focal dependency right_ready->LEFT carried move is preserved in reachable control flow.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[13,14,15,21,22,23,34,35,37,44,45,47],\"reason\":\"Each release is immediately followed by a same-arm separating move in the same coroutine: left_pad->left_clear, right_pad->right_clear, left_target->left_depart, right_target->right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[32,33,42,43],\"reason\":\"Terminal goals require left_part at right_target and right_part at left_target, but consume_left grasps right_part while LEFT is at left_pickup_wait not right_pad, and consume_right grasps left_part while RIGHT is at right_pickup_wait not left_pad; these grasp positions contradict the required support locations, so the object goals are not source-supported.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 420,
+    "prompt_tokens": 6134,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6554
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

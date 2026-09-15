@@ -1,0 +1,80 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "EXCHANGE_PROTOCOL",
+      "label": "V",
+      "source_lines": [
+        22,
+        23,
+        27,
+        32,
+        36,
+        41
+      ],
+      "reason": "Both ready events are signaled before either wait_event; required_order says own deposit/clear must complete before publishing own ready, but the code also has LEFT clear right_ready (line 32) before RIGHT has even waited for left_ready (line 36), and RIGHT clears left_ready (line 41) after LEFT already consumed it. More critically, ready events are published (lines 22-23) before the peer deposit/clear+wait ordering is established for the consumer side, and the clear of right_ready occurs after LEFT's carried move but RIGHT's own deposit/clear was already done—however the protocol violation is that both signals fire unconditionally before any wait, so the 'before an arm picks up, both own deposit/clear AND wait for peer ready must have completed' is satisfied for LEFT (wait at 27 before pickup at 30) and RIGHT (wait at 36 before pickup at 39). The actual violation: clear_event calls at lines 32 and 41 are not awaited and occur after the carried move, but the required_order says 'clear that event after that move' which is satisfied. Re-examining: the protocol requires each arm's own ready be published only after own deposit/clear—LEFT deposits/clears (8-12) then signals (22) ✓; RIGHT deposits/clears (15-19) then signals (23) ✓. The clear ordering: LEFT clears right_ready after its carried move (32) ✓; RIGHT clears left_ready after its carried move (41) ✓. However, RIGHT clears left_ready at line 41 using right_peer.version from line 36, but LEFT already cleared left_ready? No—LEFT clears right_ready (32), RIGHT clears left_ready (41). No double-clear. The violation is actually that signal() returns are not awaited (sync, correct) but the code does not verify the event is still active at clear time. Given h_variant.invalidates=true and invalidation_on_release={}, the main protocol issue: LEFT's carried move (line 31, move to left_target with right_part) does not pass receipt=left_peer to the move, violating 'The carried move to its own target must carry the exact active peer-item receipt.' Line 31 omits receipt parameter."
+    },
+    {
+      "id": "EXCHANGE_RECEIPT",
+      "label": "V",
+      "source_lines": [
+        27,
+        31,
+        36,
+        40
+      ],
+      "reason": "Required_order states 'The carried move to its own target must carry the exact active peer-item receipt returned by wait.' LEFT's wait returns left_peer (line 27) but the carried move to left_target (line 31) does not pass receipt=left_peer. RIGHT's wait returns right_peer (line 36) but the carried move to right_target (line 40) does not pass receipt=right_peer. Both carried moves omit the required receipt parameter."
+    },
+    {
+      "id": "LONG_RANGE_DEPENDENCY",
+      "label": "V",
+      "source_lines": [
+        27,
+        31,
+        36,
+        40
+      ],
+      "reason": "Experimental assignment specifies focal_dependency='right_ready -> LEFT carried move' at SHORT level. The code does wait for right_ready (line 27) but fails to pass the returned receipt (left_peer) to the LEFT carried move (line 31), breaking the focal value/receipt dependency across the intervening control flow. The receipt dependency is not preserved."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        18,
+        19
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: LEFT releases left_part at left_pad (line 11) then moves to left_clear (line 12); RIGHT releases right_part at right_pad (line 18) then moves to right_clear (line 19). No intervening same-arm calls between release and departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        31,
+        40,
+        32,
+        41
+      ],
+      "reason": "Terminal goals require left_part at right_target and right_part at left_target. The code moves LEFT with right_part to left_target (line 31) and RIGHT with left_part to right_target (line 40)—this is reversed: right_part should go to left_target (LEFT carries right_part to left_target ✓) and left_part should go to right_target (RIGHT carries left_part to right_target ✓). Actually goals say left_part→right_target, right_part→left_target. Line 31: LEFT grasps right_part (30) moves to left_target (31) ✓ right_part→left_target. Line 40: RIGHT grasps left_part (39) moves to right_target (40) ✓ left_part→right_target. Goals satisfied for object placement. However, events are not properly cleared due to missing receipt on carried moves, and the clear_event calls may fail if versions are invalidated. Additionally, the code does not verify empty hands at departure or resource states, but resources are empty. The core violation is the missing receipt on carried moves which breaks the exchange contract, making terminal state uncertain."
+    }
+  ],
+  "object_id": "NATURAL--N-D2_EVENT-SHORT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 1053,
+    "prompt_tokens": 5888,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6941
+  },
+  "raw_sha256": "41bba4c847346f0b7df51673ccccfb83093c3f2bafd7b22bad0d836740941a32",
+  "request_sha256": "f6111d1cc04602fd6593c9fc4e10a9820f14ffc914229c2b06b5a651b1569f42",
+  "source_sha256": "93f704e3390d12562b7fda3795da038db48ef0b83c3a6d9a47e4da7a82fa0ef9"
+}

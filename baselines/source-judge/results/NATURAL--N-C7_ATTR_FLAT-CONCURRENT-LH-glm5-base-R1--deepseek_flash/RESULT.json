@@ -1,0 +1,121 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "ATTRIBUTE_COMBINATION",
+      "label": "C",
+      "source_lines": [
+        11,
+        125,
+        128
+      ],
+      "reason": "The source explicitly implements the CONCURRENT variant by running left_arm() and right_arm() together via asyncio.gather while preserving the LH buffer ordering, matching the declared combined attributes."
+    },
+    {
+      "id": "BUFFER_EVENT_PROTOCOL",
+      "label": "C",
+      "source_lines": [
+        28,
+        30,
+        51,
+        66,
+        82,
+        90,
+        118,
+        123
+      ],
+      "reason": "Producer signals ready after buffer departure, consumer waits ready before pickup and clears it after the carried move, and producer waits/clears empty_0 before the second buffer entry; the required ready/empty ordering is present."
+    },
+    {
+      "id": "BUFFER_OCCUPANCY_OWNER",
+      "label": "C",
+      "source_lines": [
+        40,
+        44,
+        47,
+        48,
+        76,
+        79,
+        85,
+        87
+      ],
+      "reason": "Both arms acquire buffer_lock around buffer entry/departure, the producer releases the part before departing, and the consumer acquires before pickup and releases after departing, respecting the capacity-one buffer discipline."
+    },
+    {
+      "id": "BUFFER_RECEIPT",
+      "label": "C",
+      "source_lines": [
+        66,
+        73,
+        79,
+        82
+      ],
+      "reason": "The consumer waits the corresponding ready receipt, passes it to grasp and to the carried move to target, and clears ready only after that move, satisfying the BUFFER_RECEIPT mechanism."
+    },
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        125,
+        128
+      ],
+      "reason": "The reachable program uses asyncio.gather(left_arm(), right_arm()), implementing the SPEC's CONCURRENT joined producer/consumer structure rather than a serial action multiset."
+    },
+    {
+      "id": "CONTROL_FLOW_HOLDOUT",
+      "label": "C",
+      "source_lines": [
+        26,
+        28,
+        30,
+        116,
+        118,
+        120,
+        121,
+        123
+      ],
+      "reason": "For item 1 the producer waits and clears empty_0 before entering the buffer, and the readiness inspection helper serially inspects line_clear then receiver_ready, matching the declared held-out control-flow signature."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        44,
+        47,
+        85,
+        86
+      ],
+      "reason": "Each release occurs at the declared support pose and is immediately followed by a same-arm separating move in the same coroutine (LEFT to left_wait, RIGHT to right_wait)."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        58,
+        94,
+        128
+      ],
+      "reason": "The source returns arms to homes and moves parts toward targets, but source-only evidence cannot confirm all terminal poses, empty hands, resource OFF/unowned, events cleared, and deadline satisfaction for the finite execution."
+    }
+  ],
+  "object_id": "NATURAL--N-C7_ATTR_FLAT-CONCURRENT-LH-glm5-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 8640,
+    "completion_tokens": 564,
+    "total_tokens": 9204,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 8512
+  },
+  "raw_sha256": "b3a6c1d7e901ac3df6c088ac37314f812a7938007266f91726ca7656deb9f0fa",
+  "request_sha256": "aa76d0828d9d2a7e3bf21c2b10cb263c9769ab77466ef054ef118233bc2f52a6",
+  "source_sha256": "beddd75885b913f2deee556ae1a75bd888f61ee2aada1ef860b4c4ffa475cc18"
+}

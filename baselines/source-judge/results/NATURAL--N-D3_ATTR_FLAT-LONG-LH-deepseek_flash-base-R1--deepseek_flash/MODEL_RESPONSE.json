@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"ATTRIBUTE_COMBINATION\",\"label\":\"C\",\"source_lines\":[18,24,25,26,29,32,33,35,49,52,55,56,61,62,64,75,81,82,94,95,96,99,102,103,105,119,122,125,126,131,132,134,149],\"reason\":\"Source implements LONG tool acquisition before source pickup, LH two-item buffer crossing, and D3 serial second-item checks, jointly matching declared combined attributes.\"},{\"id\":\"BUFFER_EVENT_PROTOCOL\",\"label\":\"C\",\"source_lines\":[40,49,67,70,75,76,110,119,137,140],\"reason\":\"Producer signals ready after departing, consumer waits ready before pickup, clears ready after carried move, and producer waits/clears empty_0 before second buffer entry; empty_0 published after second departure.\"},{\"id\":\"BUFFER_OCCUPANCY_OWNER\",\"label\":\"C\",\"source_lines\":[29,30,32,33,35,36,37,52,53,55,56,57,58,99,100,102,103,105,106,107,122,123,125,126,127,128],\"reason\":\"Both arms acquire buffer_lock around buffer entry/departure, and capacity-one buffer is used with producer departing before consumer entry.\"},{\"id\":\"BUFFER_RECEIPT\",\"label\":\"C\",\"source_lines\":[49,61,119,131],\"reason\":\"Consumer waits ready_0/ready_1 receipts and passes the exact active item receipt on carried moves to target_0/target_1.\"},{\"id\":\"CONTROL_FLOW_HOLDOUT\",\"label\":\"C\",\"source_lines\":[18,20,75,81,82,94,99,119,146,149],\"reason\":\"Reachable control flow keeps tool held across the second-item wait and serial checks, matching the LONG held-out dependency signature.\"},{\"id\":\"LONG_RANGE_DEPENDENCY\",\"label\":\"C\",\"source_lines\":[18,75,81,82,94,96,99,103,149],\"reason\":\"Tool is acquired before source pickup and retained across empty_0 wait, second-item checks, source_1 grasp, and buffer_1 release, preserving the LONG focal dependency.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[33,35,62,64,103,105,132,134],\"reason\":\"Each release at a declared support is immediately followed by a same-arm move in the same coroutine: buffer_0->left_wait, target_0->right_wait, buffer_1->left_home, target_1->right_home.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[61,62,64,131,132,134,137,140,143,144,149],\"reason\":\"Source places part_0/part_1 at targets, returns arms to homes, clears ready events, publishes empty_0, and releases tool; buffer_lock is released in finally blocks.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 9081,
+    "completion_tokens": 661,
+    "total_tokens": 9742,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 8825
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

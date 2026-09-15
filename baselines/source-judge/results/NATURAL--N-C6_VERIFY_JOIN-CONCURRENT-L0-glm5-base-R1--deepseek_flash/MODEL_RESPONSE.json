@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[4,12,20],\"reason\":\"run_task defines left_worker and right_worker coroutines and awaits asyncio.gather(left_worker(), right_worker()), implementing the SPEC's CONCURRENT level rather than serial execution.\"},{\"id\":\"EVENT_JOIN\",\"label\":\"C\",\"source_lines\":[10,18,22,23],\"reason\":\"Both workers signal left_ready and right_ready, and run_task awaits wait_event for both declared join events, matching the development contract join_events.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[8,9,16,17],\"reason\":\"Each release is immediately followed in the same worker coroutine by a same-arm move to the departure pose, satisfying the immediate separating departure requirement.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[5,6,7,8,9,13,14,15,16,17],\"reason\":\"Both parts are moved to their own targets and released, and both arms end at their departure poses empty-handed, matching the declared goal.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5456,
+    "completion_tokens": 250,
+    "total_tokens": 5706,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5328
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}
