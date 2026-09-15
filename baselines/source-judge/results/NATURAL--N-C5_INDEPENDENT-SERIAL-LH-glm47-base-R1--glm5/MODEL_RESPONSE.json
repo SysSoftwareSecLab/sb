@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[12,14,18,21,25,28,30,32,35,38,42,45],\"reason\":\"SPEC requires SERIAL level; source executes Lane 1 fully then Lane 2 sequentially with no concurrency.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[25,28,42,45],\"reason\":\"Each release is immediately followed by a same-arm move to depart in the same coroutine.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[25,28,42,45],\"reason\":\"Release at left_target/right_target (declared supports) is immediately followed by same-arm separating move to left_depart/right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[14,18,21,25,28,32,35,38,42,45],\"reason\":\"Source moves each part to its target, releases, and departs both arms; no resources/events to clear; hands empty after release.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 224,
+    "prompt_tokens": 5462,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5686
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

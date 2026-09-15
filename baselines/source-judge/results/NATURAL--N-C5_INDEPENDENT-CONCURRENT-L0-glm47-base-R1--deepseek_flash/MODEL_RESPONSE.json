@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[72,73,74,75,76],\"reason\":\"run_task uses asyncio.gather to run run_left_lane() and run_right_lane() concurrently, implementing the CONCURRENT fork/join structure rather than serial execution.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[50,53,67,70],\"reason\":\"Each release is immediately followed in the same coroutine by a same-arm move to the departure pose (LEFT release then move LEFT_DEPART; RIGHT release then move RIGHT_DEPART), with no intervening calls.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[50,53,67,70],\"reason\":\"Both releases use the held object at a declared logical support (left_target/right_target) and are followed immediately by a same-arm separating move in the same candidate coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[40,44,47,50,53,58,61,64,67,70],\"reason\":\"Both lanes move to source, grasp their part, move to target, release at target, and depart to the declared departure poses, matching the goal of both parts at target and both arms at departure and empty.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 6250,
+    "completion_tokens": 286,
+    "total_tokens": 6536,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 6250
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

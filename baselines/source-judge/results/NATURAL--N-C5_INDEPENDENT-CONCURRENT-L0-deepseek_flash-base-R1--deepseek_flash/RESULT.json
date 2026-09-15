@@ -1,0 +1,74 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        20,
+        21,
+        23
+      ],
+      "reason": "run_task creates two asyncio tasks for left_chain and right_chain and awaits asyncio.gather, implementing the SPEC's CONCURRENT fork/join structure rather than serial execution."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        17,
+        18
+      ],
+      "reason": "Each release is immediately followed in the same candidate coroutine by a same-arm move to the declared departure pose (left_depart/right_depart), satisfying the release-then-separating-move dependency."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        17,
+        18
+      ],
+      "reason": "Both releases use the held object at its declared support zone (left_target/right_target) and are followed immediately by the same-arm separating move to the departure pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "reason": "Source shows moves to left_depart/right_depart and releases at targets, but no execution evidence confirms terminal poses, empty hands, resource state, event clearing, or deadline compliance."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-L0-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5289,
+    "completion_tokens": 286,
+    "total_tokens": 5575,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5161
+  },
+  "raw_sha256": "bfccc87031c4d4f84bc237b924331bdec8ae497c962a48397e4130b388d3e951",
+  "request_sha256": "7b3ff98b928c2e2d905eaaec0e14ca7549f6ebbfaae9363c8a111aae6108d442",
+  "source_sha256": "aa65c64a777110d4cc62513fe0d40f100f6eee3262f5a166bd0bcd1c5c69f906"
+}

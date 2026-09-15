@@ -1,0 +1,75 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        26,
+        43
+      ],
+      "reason": "Two independent worker coroutines left_lane and right_lane are forked and joined via asyncio.gather, implementing the CONCURRENT fork/join structure rather than serial execution."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        21,
+        24,
+        37,
+        40
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: LEFT release at left_target then move to left_depart; RIGHT release at right_target then move to right_depart."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        21,
+        24,
+        34,
+        37,
+        40
+      ],
+      "reason": "Each arm transports to its target support zone, releases the held part there, and immediately departs within the same coroutine and virtual time."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        12,
+        15,
+        18,
+        21,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43
+      ],
+      "reason": "Both parts grasped at sources, transported to left_target/right_target, released, and both arms depart to left_depart/right_depart with empty hands; no resources or events to clear."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 257,
+    "prompt_tokens": 5276,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5533
+  },
+  "raw_sha256": "6b046468ffb978c32b43acddc8db6779ead784ac859e262c5ccbe8d606a131d3",
+  "request_sha256": "de4967513a9698bb72d9116777f5d80a45fa7f44f05a9a1ef905f23d9793fcc5",
+  "source_sha256": "5c1b2dcafbfa595337c1450b73425adf29436105048c3cce4b624c6a24ad8fb0"
+}

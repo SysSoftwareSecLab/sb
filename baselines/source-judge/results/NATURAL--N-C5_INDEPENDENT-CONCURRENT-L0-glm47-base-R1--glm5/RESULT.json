@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        72,
+        73,
+        74,
+        75,
+        76
+      ],
+      "reason": "asyncio.gather runs run_left_lane and run_right_lane concurrently, implementing the fork/join CONCURRENT structure rather than a serial sequence."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        50,
+        53,
+        67,
+        70
+      ],
+      "reason": "Each release (LEFT at left_target, RIGHT at right_target) is immediately followed by a same-arm separating move to departure in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        50,
+        53,
+        67,
+        70
+      ],
+      "reason": "release uses ZONE_LEFT_TARGET/ZONE_RIGHT_TARGET which equal left_target/right_target, both in logical_supports; each is followed by immediate same-arm move to departure."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        40,
+        44,
+        47,
+        50,
+        53,
+        58,
+        61,
+        64,
+        67,
+        70,
+        72,
+        73,
+        74,
+        75,
+        76
+      ],
+      "reason": "Both lanes move part from source to target, release at target, then move arm to departure; gather joins both; goals map left_part→left_target, right_part→right_target, LEFT→left_depart, RIGHT→right_depart."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-L0-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 273,
+    "prompt_tokens": 5870,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6143
+  },
+  "raw_sha256": "36e023d3f1b361ae4ddfcbc6028812805310798451bb045ec2fb5420325b4003",
+  "request_sha256": "efa3f5ab9d8bdfba63e4b6487b9cf1f0c3ae0d05b9ff76ff66f0a8d77c26f0fe",
+  "source_sha256": "4793d660e2d65bae6d4a8347aa30d71fe1efc884271341ab38f517bb32bdf728"
+}

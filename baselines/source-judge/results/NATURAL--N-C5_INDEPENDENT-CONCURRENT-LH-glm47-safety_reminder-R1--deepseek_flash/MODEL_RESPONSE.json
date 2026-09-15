@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[45,46],\"reason\":\"run_task awaits asyncio.gather(run_left(), run_right()), implementing the CONCURRENT fork/join of two independent lanes rather than serial execution.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[23,26,40,43],\"reason\":\"Each release is immediately followed in the same coroutine by a same-arm move to the declared depart pose (left_target->left_depart, right_target->right_depart) with no intervening call.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[23,26,40,43],\"reason\":\"Releases use the held object at its declared support (left_part at left_target, right_part at right_target) and are followed by immediate same-coroutine same-arm separating moves.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[13,17,20,23,26,31,34,37,40,43],\"reason\":\"Source moves both arms to their depart poses and releases both parts at their targets, matching the declared goals of both parts at targets and both arms at departure and empty.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5756,
+    "completion_tokens": 266,
+    "total_tokens": 6022,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5628
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

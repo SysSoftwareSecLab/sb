@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[14,18,21,24,27,31,34,37,40,43],\"reason\":\"SPEC requires CONCURRENCY=SERIAL, layout L0; run_task executes Lane 1 LEFT fully then Lane 2 RIGHT serially in one coroutine, matching the declared serial structure rather than concurrent joined workers.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[24,27,40,43],\"reason\":\"Each release (LEFT at left_target, RIGHT at right_target) is immediately followed in the same coroutine by a same-arm move to the declared depart pose with no intervening call.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[24,27,40,43],\"reason\":\"Both releases use the held object at its declared logical support (left_part at left_target, right_part at right_target), and each is followed by an immediate same-arm separating move in the same candidate coroutine and virtual time.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[14,18,21,24,27,31,34,37,40,43],\"reason\":\"Source moves both parts to their targets, releases them, and moves both arms to their departure poses empty-handed; no resources/events are declared, and the serial action sequence fits within the 30s deadline.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5677,
+    "completion_tokens": 306,
+    "total_tokens": 5983,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5549
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

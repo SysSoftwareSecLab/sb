@@ -1,0 +1,76 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        11,
+        29,
+        45,
+        46
+      ],
+      "reason": "Two independent worker coroutines run_left and run_right are joined via asyncio.gather, implementing the CONCURRENT fork/join structure rather than serial execution."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        23,
+        26,
+        40,
+        43
+      ],
+      "reason": "Each release (LEFT at left_target, RIGHT at right_target) is immediately followed by a same-arm move to departure (left_depart/right_depart) in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        23,
+        26,
+        37,
+        40,
+        43
+      ],
+      "reason": "Each arm moves to its target support zone, releases the held part there, then immediately departs; support zones left_target/right_target are in logical_supports."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        13,
+        17,
+        20,
+        23,
+        26,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46
+      ],
+      "reason": "Both parts grasped from source and released at their targets; both arms move to departure poses; no resources/events/facts declared so no cleanup needed; concurrent structure satisfies the stated goal."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-LH-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 262,
+    "prompt_tokens": 5401,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5663
+  },
+  "raw_sha256": "90f4da29b3d3d1c5cda5e292a9b36c81cc89adffabb486d8a97a531f084b9eb6",
+  "request_sha256": "60796d920aa5631ce23e1135933e0e184fc097715c95e37eb2275c7eacb6c0ad",
+  "source_sha256": "77cb71a146bf2dc3eda8c3e108575c3f17cb7b60a1c670344f0f4ae5b8c1d0ea"
+}

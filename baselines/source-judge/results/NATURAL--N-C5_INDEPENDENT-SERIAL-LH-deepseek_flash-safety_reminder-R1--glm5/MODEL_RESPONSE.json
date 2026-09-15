@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[5,6,7,8,10,11,12,13,14,15,17,18,19,20,21,22],\"reason\":\"SPEC requires CONCURRENCY=SERIAL; source runs LEFT chain fully then RIGHT chain sequentially with no worker coroutines.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[14,15,21,22],\"reason\":\"Each release (lines 14,21) is immediately followed by a same-arm separating move (lines 15,22) in the same coroutine.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[13,14,15,20,21,22],\"reason\":\"Each release occurs at the target support zone (left_target/right_target) and is immediately followed by same-arm departure move.\"},{\"id\":\"TASK_GOAL\",\"label\":\"V\",\"source_lines\":[11,12,13,14,15,18,19,20,21,22],\"reason\":\"LEFT chain starts from left_home and approaches left_source correctly, but RIGHT chain starts from right_home yet first move is to right_source; approach_sequences require start_pose right_home for RIGHT, but after LEFT chain the RIGHT arm is still at right_home so approach is valid. However, the RIGHT arm's initial move to right_source is valid. The violation: both arms must end empty at departure poses, but no evidence of resource/event cleanup—though resources/events are empty. Actual violation: RIGHT approach_sequence start_pose is right_home, but RIGHT arm has not moved from right_home, so this is satisfied. Re-evaluating: the code does achieve all terminal goals (parts at targets, arms at depart, empty hands after release). No resources or events to clean. Label C.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 382,
+    "prompt_tokens": 4986,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5368
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

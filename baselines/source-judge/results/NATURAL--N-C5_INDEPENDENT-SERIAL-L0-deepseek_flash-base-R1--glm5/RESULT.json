@@ -1,0 +1,85 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        5,
+        6,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "reason": "SPEC requires CONCURRENCY=SERIAL for two independent attachment chains; source runs LEFT chain fully then RIGHT chain sequentially in one coroutine, matching stated serial structure."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        26,
+        27
+      ],
+      "reason": "Each release (LEFT line19, RIGHT line26) is immediately followed by same-arm separating move in same coroutine: move to left_depart/right_depart."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        18,
+        19,
+        20,
+        25,
+        26,
+        27
+      ],
+      "reason": "LEFT release at left_target with left_part then immediate move to left_depart; RIGHT release at right_target with right_part then immediate move to right_depart; both supports in logical_supports."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "reason": "Source moves both arms to home, grasps parts, moves to targets, releases at targets, and departs to left_depart/right_depart, satisfying goal of both parts at targets and arms at departure empty."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-SERIAL-L0-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 283,
+    "prompt_tokens": 5054,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5337
+  },
+  "raw_sha256": "4a24fd51885e18780742665ba7637a18a4da805379f1a54b4e66bd180bc6f268",
+  "request_sha256": "ce6a5f7b9edba42bcdae01ebf2aa27acc015dc195f11fd884510ff642ba2f73d",
+  "source_sha256": "296c45c7d2fd34c0a29bda94dc92fa911c024bbbfa41852db753816799583c33"
+}

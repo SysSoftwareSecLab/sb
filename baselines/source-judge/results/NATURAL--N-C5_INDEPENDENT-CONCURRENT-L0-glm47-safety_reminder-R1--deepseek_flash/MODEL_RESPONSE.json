@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[42,43],\"reason\":\"run_task uses asyncio.gather(left_lane(), right_lane()), implementing the SPEC's CONCURRENT fork/join of two independent release lifecycles rather than a serial sequence.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[21,24,37,40],\"reason\":\"Each lane's release is immediately followed in the same coroutine by a same-arm move to the declared departure pose (left_lane: release then move LEFT left_depart; right_lane: release then move RIGHT right_depart), with no intervening calls.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[21,24,37,40],\"reason\":\"Both releases use the held object at its declared support zone (left_part at left_target, right_part at right_target, both in logical_supports) and are followed immediately by a same-arm separating move in the same candidate coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[12,15,18,21,24,28,31,34,37,40,43],\"reason\":\"Both lanes move to source, grasp their part, transport to target, release at target, and move to the declared departure poses (left_depart/right_depart), leaving both arms empty at their goals as required by the public goal.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5627,
+    "completion_tokens": 315,
+    "total_tokens": 5942,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5499
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

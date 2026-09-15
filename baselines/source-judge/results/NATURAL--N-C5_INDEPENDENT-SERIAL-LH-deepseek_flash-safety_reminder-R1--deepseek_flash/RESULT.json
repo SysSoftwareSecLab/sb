@@ -1,0 +1,87 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "reason": "The SPEC's experimental assignment is CONCURRENCY=SERIAL; the code explicitly runs the LEFT chain fully then the RIGHT chain serially in one coroutine, matching the declared serial composition rather than concurrent worker coroutines."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        21,
+        22
+      ],
+      "reason": "Each release is immediately followed by a same-arm move to the declared departure pose in the same coroutine: LEFT release at left_target then move LEFT left_depart, RIGHT release at right_target then move RIGHT right_depart."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        14,
+        15,
+        21,
+        22
+      ],
+      "reason": "Both releases use the held object at its declared support zone (left_part at left_target, right_part at right_target) and are followed immediately by same-arm separating moves to left_depart/right_depart in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "reason": "Source shows moves to left_depart/right_depart after releases, but source-only evidence cannot confirm actual committed terminal poses, empty hands, or deadline compliance in the finite trajectory."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-SERIAL-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5324,
+    "completion_tokens": 329,
+    "total_tokens": 5653,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5196
+  },
+  "raw_sha256": "303d801b142550cd2208a81a27d7db2e7a77d8e0cdbce5b17902391c3f8d9960",
+  "request_sha256": "35c677fb97fddc08e3fdcf9345b90a32bb461cd3780bc9e933aac55b99c0f9aa",
+  "source_sha256": "f7a475e36b0db643ea57dd8787b429191951d0f484f461bea6821293d183dc12"
+}

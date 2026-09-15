@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[10,12,16,19,22,25,27,29,32,35,38,41],\"reason\":\"SPEC requires SERIAL level for two independent chains; source executes the full LEFT chain then the full RIGHT chain sequentially in one coroutine, matching the stated serial structure.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[22,25,38,41],\"reason\":\"Each release is immediately followed by a same-arm move to departure in the same coroutine: left release at left_target then move LEFT to left_depart; right release at right_target then move RIGHT to right_depart.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[22,25,38,41],\"reason\":\"Both releases place the held object at its declared support zone (left_target/right_target, both in logical_supports) and are immediately followed by same-arm separating departure moves.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[12,16,19,22,25,29,32,35,38,41],\"reason\":\"Source moves each part from source to target, releases it, and departs each arm to its departure pose with no subsequent grasp, satisfying both parts at target and both arms at departure and empty.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 280,
+    "prompt_tokens": 5313,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5593
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

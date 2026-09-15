@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        29,
+        31,
+        32,
+        34
+      ],
+      "reason": "run_task creates two independent worker tasks and awaits them concurrently via asyncio.gather, implementing the fork/join concurrent structure required by the SPEC."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        12,
+        14,
+        24,
+        26
+      ],
+      "reason": "Each release (lines 12, 24) is immediately followed by a same-arm separating move (lines 14, 26) in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        14,
+        23,
+        24,
+        26
+      ],
+      "reason": "Each release occurs at the declared support zone (left_target/right_target) and is followed by an immediate same-arm departure move in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        11,
+        12,
+        14,
+        19,
+        20,
+        21,
+        23,
+        24,
+        26,
+        29,
+        34
+      ],
+      "reason": "Both chains move home→source→grasp→target→release→depart, achieving both parts at targets, both arms at departure poses, and empty hands after release; concurrent gather completes the task."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-LH-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 264,
+    "prompt_tokens": 5283,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5547
+  },
+  "raw_sha256": "4ad7f4131cb6f8442b7a8853bfc5ac635487041a39efafb944c5b09816bd33e4",
+  "request_sha256": "790d944dd069ecf133f3001c4aba3a8ecdb8c78fa35c03e97171fbdeb0e70480",
+  "source_sha256": "1b33b53b019cde3ba50784f8386283a0b0e24483bcd4bc526b8804b014ad62a2"
+}

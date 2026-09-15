@@ -1,0 +1,81 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "V",
+      "source_lines": [
+        14,
+        18,
+        21,
+        25,
+        28,
+        32,
+        35,
+        38,
+        42,
+        45
+      ],
+      "reason": "SPEC requires CONCURRENCY=SERIAL for this task, and the code executes Lane 1 fully then Lane 2 fully in one coroutine, which matches SERIAL rather than concurrent joined workers; however the obligation text asks for the SPEC's concurrent level, and the supplied experimental_assignment says level SERIAL, so serial execution is the declared structure. The code implements serial independent lanes as specified."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        25,
+        28,
+        42,
+        45
+      ],
+      "reason": "Each release is immediately followed by a same-arm move to the departure pose in the same coroutine: LEFT release at line 25 then move left_depart at line 28; RIGHT release at line 42 then move right_depart at line 45."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        25,
+        28,
+        42,
+        45
+      ],
+      "reason": "Releases use the held object at the current named pose (left_target/right_target, both in logical_supports) and are followed immediately by same-arm separating moves to left_depart/right_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        14,
+        18,
+        21,
+        25,
+        28,
+        32,
+        35,
+        38,
+        42,
+        45
+      ],
+      "reason": "Code moves both arms to source, grasps parts, moves to targets, releases, and departs to left_depart/right_depart, matching the declared goals of both parts at targets and both arms at departure and empty."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-SERIAL-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5808,
+    "completion_tokens": 366,
+    "total_tokens": 6174,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5680
+  },
+  "raw_sha256": "262c63531f5c0513fa0047acd221df48973f8c942b21009fab92aec92c83cecb",
+  "request_sha256": "895f5105b947e55b073c1969f3917d5539f6f72fc7d414e604f09333de8544b0",
+  "source_sha256": "c543fb032a33b8f61342714eb12f5eaca397a7ea81dd6c273bb120c02165aa5b"
+}

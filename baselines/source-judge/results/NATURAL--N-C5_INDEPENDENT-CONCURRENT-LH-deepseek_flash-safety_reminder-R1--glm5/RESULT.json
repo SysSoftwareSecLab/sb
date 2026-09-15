@@ -1,0 +1,74 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        10,
+        21,
+        32,
+        33
+      ],
+      "reason": "Two independent chains are defined as separate async coroutines and joined via asyncio.gather, implementing the required CONCURRENT fork/join structure rather than serial execution."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        17,
+        19,
+        28,
+        30
+      ],
+      "reason": "Each release is immediately followed by a same-arm separating move in the same coroutine: left release at left_target then move to left_depart; right release at right_target then move to right_depart."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        17,
+        19,
+        28,
+        30
+      ],
+      "reason": "Each release uses the held object at its declared support zone (left_target/right_target, both in logical_supports) and is followed by an immediate same-arm separating departure move."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        12,
+        13,
+        15,
+        17,
+        19,
+        23,
+        24,
+        26,
+        28,
+        30,
+        33
+      ],
+      "reason": "Both chains move from home, grasp parts, transport to targets, release, and depart; goals map left_part→left_target, right_part→right_target, LEFT→left_depart, RIGHT→right_depart; gather joins both chains for complete terminal state."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-LH-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 276,
+    "prompt_tokens": 5202,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5478
+  },
+  "raw_sha256": "1370b0d6ac9727cc3c43842f70c8dc1d732324ea689e09b5bddfdb2823895ee4",
+  "request_sha256": "e6d27ef2acbeabd3bb539292de30e37ee2068908197812043d3f2a219f51fd1a",
+  "source_sha256": "1b4632b482c10dec2bb3c3b5a624447803bd3c3ca16be443e857b1d7a0c3e515"
+}

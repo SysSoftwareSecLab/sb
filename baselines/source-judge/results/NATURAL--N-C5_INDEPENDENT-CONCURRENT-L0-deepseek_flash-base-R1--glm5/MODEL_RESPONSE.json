@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[6,13,20,21,23],\"reason\":\"Two independent chains are created as asyncio tasks and gathered, implementing concurrent fork/join structure rather than serial execution.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[10,11,17,18],\"reason\":\"Each release is immediately followed by a same-arm move to departure in the same coroutine with no intervening calls.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[9,10,16,17],\"reason\":\"Each arm moves to the target support zone then releases the held part there, matching logical_supports; immediate departure follows.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[7,8,9,10,11,14,15,16,17,18,23],\"reason\":\"Both arms grasp their parts, move to targets, release, and depart; gather ensures completion. Terminal goals for parts and arms are satisfied.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 218,
+    "prompt_tokens": 4943,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5161
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

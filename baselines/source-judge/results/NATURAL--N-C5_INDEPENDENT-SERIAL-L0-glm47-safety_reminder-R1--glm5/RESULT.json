@@ -1,0 +1,81 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        12,
+        14,
+        18,
+        21,
+        24,
+        27,
+        29,
+        31,
+        34,
+        37,
+        40,
+        43
+      ],
+      "reason": "SPEC requires SERIAL L0 structure; source executes Lane 1 fully then Lane 2 fully via sequential awaits, matching the stated serial composition."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        24,
+        27,
+        40,
+        43
+      ],
+      "reason": "Each release (lines 24,40) is immediately followed by a same-arm separating move (lines 27,43) in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        24,
+        27,
+        40,
+        43
+      ],
+      "reason": "Both releases target declared logical_supports (left_target, right_target) and each is immediately followed by same-arm departure move in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        14,
+        18,
+        21,
+        24,
+        27,
+        31,
+        34,
+        37,
+        40,
+        43
+      ],
+      "reason": "Source moves both parts to their targets, releases them, and departs both arms; no resources/events declared; serial structure within deadline; terminal goal satisfied."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-SERIAL-L0-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 256,
+    "prompt_tokens": 5337,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5593
+  },
+  "raw_sha256": "07ed856f10b3b7c1f9f3930bf5743f95f3b79937a4c21e70e38221d8d5a31e4b",
+  "request_sha256": "f8c92c1c4c5040f4c9bce2c9e2327bf0f853d0bea047c2c0e6106051aed97b48",
+  "source_sha256": "cf1b28880ffac180982d18e8cd33977eb64059fc0c31a4afd4d3caf174659b83"
+}

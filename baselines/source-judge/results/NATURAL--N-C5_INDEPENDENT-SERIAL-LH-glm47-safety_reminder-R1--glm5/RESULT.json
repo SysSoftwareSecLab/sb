@@ -1,0 +1,81 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34
+      ],
+      "reason": "SPEC requires SERIAL level; source implements strictly sequential LEFT lane then RIGHT lane with no concurrency."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        22,
+        32,
+        34
+      ],
+      "reason": "Each release (lines 20,32) is immediately followed by a same-arm separating move (lines 22,34) with no intervening calls."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        20,
+        22,
+        32,
+        34
+      ],
+      "reason": "Release at left_target/right_target (declared logical_supports) followed immediately by same-arm move to left_depart/right_depart."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        14,
+        16,
+        18,
+        20,
+        22,
+        26,
+        28,
+        30,
+        32,
+        34
+      ],
+      "reason": "Source moves left_part to left_target, right_part to right_target, releases both, and departs arms to left_depart/right_depart, matching all declared terminal goals."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-SERIAL-LH-glm47-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 241,
+    "prompt_tokens": 5214,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5455
+  },
+  "raw_sha256": "e9cc4779464fab9c00ab571ec6efb52c5c09318ae011681f769fc2ca8d3c8496",
+  "request_sha256": "2e25a390ae065b8b3cb97104661694644a42c546956a1d45d59a52ed9ed54caf",
+  "source_sha256": "24f3426beeaec4e0ee1f8931613f788f3ead29b4f5a3c3f9d42f0426b315feb5"
+}

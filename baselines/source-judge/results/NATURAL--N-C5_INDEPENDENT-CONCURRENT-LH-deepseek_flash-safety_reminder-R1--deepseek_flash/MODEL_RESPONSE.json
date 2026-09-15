@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[10,21,33],\"reason\":\"Two independent chain coroutines are defined and joined via asyncio.gather, implementing the CONCURRENT fork/join structure rather than a serial reproduction.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[17,19,28,30],\"reason\":\"Each release is immediately followed in the same coroutine by a same-arm separating move (left release then move left_depart; right release then move right_depart).\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[17,19,28,30],\"reason\":\"Each release uses the held object at its declared support zone (left_part at left_target, right_part at right_target) and is followed by an immediate same-arm separating move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[12,13,15,17,19,23,24,26,28,30],\"reason\":\"Both arms approach home, grasp their part, move to target, release, and depart to the declared departure poses, leaving both parts at their targets and arms empty at departure.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5553,
+    "completion_tokens": 267,
+    "total_tokens": 5820,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 5553
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

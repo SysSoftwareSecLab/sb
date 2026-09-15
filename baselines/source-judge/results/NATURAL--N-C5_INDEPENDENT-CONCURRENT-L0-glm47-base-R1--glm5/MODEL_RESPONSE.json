@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[72,73,74,75,76],\"reason\":\"asyncio.gather runs run_left_lane and run_right_lane concurrently, implementing the fork/join CONCURRENT structure rather than a serial sequence.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[50,53,67,70],\"reason\":\"Each release (LEFT at left_target, RIGHT at right_target) is immediately followed by a same-arm separating move to departure in the same coroutine with no intervening calls.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[50,53,67,70],\"reason\":\"release uses ZONE_LEFT_TARGET/ZONE_RIGHT_TARGET which equal left_target/right_target, both in logical_supports; each is followed by immediate same-arm move to departure.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[40,44,47,50,53,58,61,64,67,70,72,73,74,75,76],\"reason\":\"Both lanes move part from source to target, release at target, then move arm to departure; gather joins both; goals map left_part→left_target, right_part→right_target, LEFT→left_depart, RIGHT→right_depart.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 273,
+    "prompt_tokens": 5870,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 6143
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

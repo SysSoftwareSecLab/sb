@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        30,
+        31,
+        32,
+        34
+      ],
+      "reason": "run_task creates two asyncio tasks for the independent left/right chains and awaits them concurrently via asyncio.gather, implementing the SPEC's CONCURRENT fork/join structure rather than serial execution."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        12,
+        14,
+        24,
+        26
+      ],
+      "reason": "Each release is immediately followed in the same candidate coroutine by a same-arm separating move to the declared departure pose (left_target->left_depart, right_target->right_depart), with no intervening same-arm call."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        11,
+        12,
+        14,
+        23,
+        24,
+        26
+      ],
+      "reason": "Each release occurs at the declared support zone (left_target/right_target, both in logical_supports) while holding the object, and is immediately followed by the same-arm separating move to the departure pose in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        7,
+        8,
+        9,
+        11,
+        12,
+        14,
+        19,
+        20,
+        21,
+        23,
+        24,
+        26
+      ],
+      "reason": "Source shows both parts moved to their targets and both arms ending at departure poses empty-handed, but the finite execution outcome (deadline, event clearing, actual completion) cannot be confirmed from source alone."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5652,
+    "completion_tokens": 310,
+    "total_tokens": 5962,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5524
+  },
+  "raw_sha256": "e8385b841d02b876463740f6e4b896db521eb202246e293bd725b7ca95980bb9",
+  "request_sha256": "9942f8fab6b34d84ff1f214ec2208327b0c159094e9f819decd1e320f55404a9",
+  "source_sha256": "1b33b53b019cde3ba50784f8386283a0b0e24483bcd4bc526b8804b014ad62a2"
+}

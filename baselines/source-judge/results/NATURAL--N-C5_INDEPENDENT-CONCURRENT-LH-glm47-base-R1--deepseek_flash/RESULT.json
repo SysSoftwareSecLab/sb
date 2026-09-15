@@ -1,0 +1,73 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        46,
+        47,
+        48,
+        49,
+        51,
+        52,
+        53,
+        56,
+        57
+      ],
+      "reason": "The source creates two asyncio tasks for the LEFT and RIGHT arm workflows and awaits both, implementing the SPEC's CONCURRENT fork/join structure rather than a serial sequence."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        41,
+        44
+      ],
+      "reason": "Each arm_workflow releases the held part at the target support and immediately calls robot.move(arm, depart) as the next same-arm call in the same coroutine, matching the required release-then-separating-departure sequence."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        41,
+        44
+      ],
+      "reason": "Every release uses the held object at its declared support (left_target/right_target) and is followed immediately by the same arm's move to its departure pose in the same candidate coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "U",
+      "source_lines": [
+        32,
+        35,
+        38,
+        41,
+        44,
+        56,
+        57
+      ],
+      "reason": "The source implements moves to source, grasp, move to target, release, and move to departure for both arms, but source-only evidence cannot confirm actual committed terminal poses, empty hands, event clearing, or deadline satisfaction in the finite execution."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-LH-glm47-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5928,
+    "completion_tokens": 294,
+    "total_tokens": 6222,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5800
+  },
+  "raw_sha256": "60d9d4d809f43d5e7d181822e82a82de70746a723a0d94916a6159342c53e829",
+  "request_sha256": "542f1147c02320726fca1dcbaa8f0d91376e79f52c61c4c09e9a8e184ad1b899",
+  "source_sha256": "d9083a47ca2234b2215fb5932c534f754da1abb4bfe3fa680abad9f2ad2f0935"
+}

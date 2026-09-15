@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[30,31,32,34],\"reason\":\"run_task creates two asyncio tasks for the independent left/right chains and awaits them concurrently via asyncio.gather, implementing the SPEC's CONCURRENT fork/join structure rather than serial execution.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[12,14,24,26],\"reason\":\"Each release is immediately followed in the same candidate coroutine by a same-arm separating move to the declared departure pose (left_target->left_depart, right_target->right_depart), with no intervening same-arm call.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[11,12,14,23,24,26],\"reason\":\"Each release occurs at the declared support zone (left_target/right_target, both in logical_supports) while holding the object, and is immediately followed by the same-arm separating move to the departure pose in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"U\",\"source_lines\":[7,8,9,11,12,14,19,20,21,23,24,26],\"reason\":\"Source shows both parts moved to their targets and both arms ending at departure poses empty-handed, but the finite execution outcome (deadline, event clearing, actual completion) cannot be confirmed from source alone.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5652,
+    "completion_tokens": 310,
+    "total_tokens": 5962,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5524
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

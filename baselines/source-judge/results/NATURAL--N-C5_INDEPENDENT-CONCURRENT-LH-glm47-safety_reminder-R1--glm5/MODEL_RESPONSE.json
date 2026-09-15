@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[11,29,45,46],\"reason\":\"Two independent worker coroutines run_left and run_right are joined via asyncio.gather, implementing the CONCURRENT fork/join structure rather than serial execution.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[23,26,40,43],\"reason\":\"Each release (LEFT at left_target, RIGHT at right_target) is immediately followed by a same-arm move to departure (left_depart/right_depart) in the same coroutine with no intervening calls.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[20,23,26,37,40,43],\"reason\":\"Each arm moves to its target support zone, releases the held part there, then immediately departs; support zones left_target/right_target are in logical_supports.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[13,17,20,23,26,31,34,37,40,43,46],\"reason\":\"Both parts grasped from source and released at their targets; both arms move to departure poses; no resources/events/facts declared so no cleanup needed; concurrent structure satisfies the stated goal.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 262,
+    "prompt_tokens": 5401,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5663
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

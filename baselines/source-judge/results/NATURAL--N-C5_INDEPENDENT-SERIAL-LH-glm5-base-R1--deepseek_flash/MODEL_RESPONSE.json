@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[11,12,13,14,15,16,18,19,20,21,22,23],\"reason\":\"The SPEC requires CONCURRENCY=SERIAL; the source implements the LEFT chain fully then the RIGHT chain fully in one coroutine, matching serial execution rather than joined concurrent workers.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,22,23],\"reason\":\"Each release is immediately followed by a same-arm move to the departure pose in the same coroutine: LEFT release then LEFT left_depart, RIGHT release then RIGHT right_depart.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[15,16,22,23],\"reason\":\"Both releases use the held object at its declared target support (left_part/left_target, right_part/right_target) and are followed immediately by same-arm separating moves to left_depart/right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[12,13,14,15,16,19,20,21,22,23],\"reason\":\"The code moves both parts to their targets, releases them, and moves both arms to their departure poses, satisfying the declared terminal goal with no resources or events to clear.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5346,
+    "completion_tokens": 295,
+    "total_tokens": 5641,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5218
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

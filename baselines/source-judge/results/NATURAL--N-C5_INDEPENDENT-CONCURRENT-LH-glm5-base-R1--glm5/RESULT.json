@@ -1,0 +1,76 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        20,
+        21,
+        4,
+        12
+      ],
+      "reason": "run_task uses asyncio.gather to run _left_lane and _right_lane concurrently, matching the CONCURRENT level and fork/join structure."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        15,
+        16,
+        17
+      ],
+      "reason": "Each release is immediately followed by a same-arm move to departure in the same coroutine: LEFT release at left_target then move left_depart; RIGHT release at right_target then move right_depart."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        15,
+        16
+      ],
+      "reason": "Each release occurs at the declared support zone (left_target/right_target, both in logical_supports) and is followed by same-arm separating move."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        13,
+        14,
+        15,
+        16,
+        17,
+        21
+      ],
+      "reason": "Both lanes move to source, grasp part, move to target, release at target, then move to departure; arms end empty at departure poses, satisfying all terminal goals."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-LH-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 253,
+    "prompt_tokens": 4916,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5169
+  },
+  "raw_sha256": "fe0b13d15b3c3ca742ea3afccc3cbb9516114548a534a8bbc85c47afe4de19b2",
+  "request_sha256": "d5cfc19bf1fd748cb09e78baa1e4f2bbd7c5229d09b4a0a309da1f31fb21c3e6",
+  "source_sha256": "82d9f9fd74919ba73b5ce3a3400c60ec9cc98ba60539d47fb56f11ab9e7916c3"
+}

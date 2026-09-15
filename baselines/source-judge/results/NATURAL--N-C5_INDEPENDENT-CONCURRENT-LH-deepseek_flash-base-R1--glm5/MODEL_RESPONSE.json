@@ -1,0 +1,22 @@
+{
+  "model": "glm-5",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[29,31,32,34],\"reason\":\"run_task creates two independent worker tasks and awaits them concurrently via asyncio.gather, implementing the fork/join concurrent structure required by the SPEC.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[12,14,24,26],\"reason\":\"Each release (lines 12, 24) is immediately followed by a same-arm separating move (lines 14, 26) in the same coroutine with no intervening calls.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[11,12,14,23,24,26],\"reason\":\"Each release occurs at the declared support zone (left_target/right_target) and is followed by an immediate same-arm departure move in the same coroutine.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[7,8,9,11,12,14,19,20,21,23,24,26,29,34],\"reason\":\"Both chains move home→source→grasp→target→release→depart, achieving both parts at targets, both arms at departure poses, and empty hands after release; concurrent gather completes the task.\"}]}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 264,
+    "prompt_tokens": 5283,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5547
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

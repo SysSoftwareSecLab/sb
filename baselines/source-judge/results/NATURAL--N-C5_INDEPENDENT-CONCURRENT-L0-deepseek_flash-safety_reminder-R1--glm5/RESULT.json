@@ -1,0 +1,77 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        22,
+        23,
+        24
+      ],
+      "reason": "run_task creates two independent worker tasks via asyncio.create_task and gathers them concurrently, matching the CONCURRENT level requirement."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        17,
+        18
+      ],
+      "reason": "Each release (lines 9,17) is immediately followed by a same-arm separating move (lines 10,18) in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        8,
+        9,
+        10,
+        16,
+        17,
+        18
+      ],
+      "reason": "Each arm moves to the target support zone, releases the held object at that zone, then immediately departs; support zones left_target/right_target are in logical_supports."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        14,
+        15,
+        16,
+        17,
+        18,
+        22,
+        23,
+        24
+      ],
+      "reason": "Both chains move part to target, grasp, move to target support, release, and depart; arms end at departure poses empty; concurrent gather completes within deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-L0-deepseek_flash-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 250,
+    "prompt_tokens": 4975,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5225
+  },
+  "raw_sha256": "95eb2ef3b04c4124ecba92078b6639efbc755d9f0ef6911bfd3a9084ec4d40fc",
+  "request_sha256": "cf1bb82d1947980c756a36a1fcda36cae37c48aab831558c12ac31a070facf1e",
+  "source_sha256": "d6561d229419b450ef604693b245aba35334e9d4220b3b00cbe597f99443222d"
+}

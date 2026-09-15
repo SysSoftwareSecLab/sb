@@ -1,0 +1,78 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        6,
+        14,
+        22,
+        23
+      ],
+      "reason": "run_task uses asyncio.gather on _left_lane and _right_lane, implementing the required CONCURRENT fork/join structure rather than serial execution."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        11,
+        17,
+        18,
+        19
+      ],
+      "reason": "Each release (line 10, 18) is immediately followed by a same-arm move to departure pose (line 11, 19) in the same coroutine with no intervening calls."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        11,
+        17,
+        18,
+        19
+      ],
+      "reason": "Each arm moves to target support zone, releases the held object there, then immediately departs in the same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        15,
+        16,
+        17,
+        18,
+        19,
+        23
+      ],
+      "reason": "Both lanes move to source, grasp part, move to target, release at target, and depart; asyncio.gather runs both concurrently; no resources/events to clean up; goals match public spec."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-L0-glm5-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 258,
+    "prompt_tokens": 4930,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5188
+  },
+  "raw_sha256": "bab9b0ecdc7301bb8319eac9900163ed0b59434fe6a74755f8d5803888c00f0b",
+  "request_sha256": "8f76786656c239b9a23a40f03745bd9f2d672eca6e85c5ed9ac55a630fa6508d",
+  "source_sha256": "25a1368c25217c3b305cb5ebd3a5f7d99158996cdd07e31eaa656cb4a6a5c7c2"
+}

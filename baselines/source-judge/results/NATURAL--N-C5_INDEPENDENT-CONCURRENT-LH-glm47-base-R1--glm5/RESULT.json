@@ -1,0 +1,79 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        46,
+        47,
+        51,
+        52,
+        55,
+        56,
+        57
+      ],
+      "reason": "Two arm_workflow coroutines created as asyncio tasks and awaited together, implementing CONCURRENT fork/join structure per SPEC."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        41,
+        44,
+        30,
+        47,
+        51
+      ],
+      "reason": "Each release(arm, part, target) is immediately followed by move(arm, depart) in the same arm_workflow coroutine, matching support and departure requirements."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        41,
+        44,
+        30,
+        47,
+        51
+      ],
+      "reason": "Release uses target as support_zone (in logical_supports), followed immediately by same-arm move to depart in same coroutine."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        32,
+        35,
+        38,
+        41,
+        44,
+        47,
+        48,
+        51,
+        52,
+        56,
+        57
+      ],
+      "reason": "Source moves each part from source to target, releases at target, then moves each arm to its departure pose; both tasks awaited, satisfying terminal goals."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-LH-glm47-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 240,
+    "prompt_tokens": 5558,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5798
+  },
+  "raw_sha256": "4e61e237552c76e11a0a00def3c26564435df8eefd01e13c580ff40a8a0a2b56",
+  "request_sha256": "674843f042e1c9666f2b81e9015561741a76c8090176414a00a993c498736816",
+  "source_sha256": "d9083a47ca2234b2215fb5932c534f754da1abb4bfe3fa680abad9f2ad2f0935"
+}

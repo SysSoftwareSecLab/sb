@@ -1,0 +1,84 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        6,
+        10,
+        12,
+        13,
+        16,
+        19,
+        20,
+        22,
+        24,
+        25,
+        28,
+        31,
+        32
+      ],
+      "reason": "SPEC requires SERIAL level for two independent attachment chains; source executes LEFT chain fully then RIGHT chain sequentially with no concurrency."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        31,
+        32
+      ],
+      "reason": "Each release is immediately followed by a same-arm move to departure in the same coroutine: left release then left_depart, right release then right_depart."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        16,
+        19,
+        20,
+        28,
+        31,
+        32
+      ],
+      "reason": "Each arm moves to its target support zone, releases there, then immediately departs; left_target and right_target are declared logical_supports."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        12,
+        13,
+        16,
+        19,
+        20,
+        24,
+        25,
+        28,
+        31,
+        32
+      ],
+      "reason": "Both parts grasped and moved to their targets, released, both arms depart and are empty; no resources/events/facts to clear; deadline 30s with 8 moves at 1s each."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-SERIAL-LH-deepseek_flash-base-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 262,
+    "prompt_tokens": 5179,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5441
+  },
+  "raw_sha256": "68dfd064bd3a4f962d58b8ac4ae620708be8958a898ea81b37e1da89ba488d6a",
+  "request_sha256": "71b177ec04fdee9744a5ea875a704ea5f0993835691c6d6577fa71b68bda1376",
+  "source_sha256": "41682188182c6d76d7e6cf8b0436ce21ebeafa3da0fcbf6f298380ff074a6449"
+}

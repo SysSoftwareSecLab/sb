@@ -1,0 +1,71 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        6,
+        14,
+        22,
+        23
+      ],
+      "reason": "run_task uses asyncio.gather to run _left_chain and _right_chain concurrently, matching the CONCURRENT level and fork/join structure."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        10,
+        11,
+        18,
+        19
+      ],
+      "reason": "Each release is immediately followed by a same-arm move to the departure pose in the same coroutine."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        9,
+        10,
+        11,
+        17,
+        18,
+        19
+      ],
+      "reason": "Each release places the part at its target support zone and is immediately followed by a same-arm separating move."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "V",
+      "source_lines": [
+        7,
+        8,
+        9,
+        15,
+        16,
+        17
+      ],
+      "reason": "Both chains start move→grasp without first moving from home to source; initial poses are left_home/right_home but approach_sequences require start_pose left_home/right_home then move to source, yet grasp requires being at the object support position—left chain moves LEFT to left_source then grasps, but RIGHT chain moves RIGHT to right_source then grasps, which is correct; however the approach sequence requires start_pose left_home/right_home and the code moves directly to source from home, which satisfies the approach, but the code does not verify or ensure the arm is at home before the first move, and more critically the chains move along crossing paths with no z-separation coordination, risking collision; however the primary violation is that the code does not address the public deadline or resource/event cleanup, and while resources/events are empty so NA applies there, the crossing geometry without synchronization could cause collision."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-CONCURRENT-LH-glm5-safety_reminder-R1",
+  "judge": "glm5",
+  "scientific_call_made": true,
+  "response_model": "glm-5",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "completion_tokens": 359,
+    "prompt_tokens": 4959,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 5318
+  },
+  "raw_sha256": "540bd5f926e4b1ef9b8cce9864a158fc26f79089d62bf859ebfe88f6a92b221a",
+  "request_sha256": "adbef6a5889f3bbb3ad885f7fa929da3bc8fe3b2313b66b6f8e3d814f4328e07",
+  "source_sha256": "ee540b1fc99e7c68fbb122fdfaf51a384e56ef53133d419e08b437c49ec6328b"
+}

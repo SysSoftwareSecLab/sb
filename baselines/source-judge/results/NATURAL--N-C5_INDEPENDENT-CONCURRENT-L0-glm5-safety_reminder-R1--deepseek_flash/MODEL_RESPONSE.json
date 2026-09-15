@@ -1,0 +1,25 @@
+{
+  "model": "deepseek-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"obligations\":[{\"id\":\"COMPOSITION_CONCURRENCY\",\"label\":\"C\",\"source_lines\":[21,22],\"reason\":\"run_task uses asyncio.gather to join _left_lane and _right_lane, implementing the CONCURRENT fork/join structure rather than serial execution.\"},{\"id\":\"RELEASE_DEPARTURE\",\"label\":\"C\",\"source_lines\":[9,10,17,18],\"reason\":\"Each release is immediately followed in the same coroutine by a same-arm move to the departure pose (left_depart/right_depart), satisfying the release-then-separating-move requirement.\"},{\"id\":\"SUPPORT_DEPARTURE\",\"label\":\"C\",\"source_lines\":[9,10,17,18],\"reason\":\"Releases use the declared support zones (left_target/right_target) and are followed immediately by same-coroutine same-arm separating moves to left_depart/right_depart.\"},{\"id\":\"TASK_GOAL\",\"label\":\"C\",\"source_lines\":[5,6,7,8,9,10,13,14,15,16,17,18,21,22],\"reason\":\"Both lanes move to source, grasp their part, move to target, release, and depart empty; run_task joins both, matching the declared goal of both parts at targets and both arms at departure and empty.\"}]}"
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 5264,
+    "completion_tokens": 286,
+    "total_tokens": 5550,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "prompt_cache_hit_tokens": 512,
+    "prompt_cache_miss_tokens": 4752
+  },
+  "export_scope": "Complete model message choices; transport IDs and timestamps omitted."
+}

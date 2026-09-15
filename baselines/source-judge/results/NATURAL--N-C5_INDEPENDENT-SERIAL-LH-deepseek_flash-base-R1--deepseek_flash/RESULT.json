@@ -1,0 +1,85 @@
+{
+  "status": "VALID_STRUCTURED_PREDICTIONS",
+  "predictions": [
+    {
+      "id": "COMPOSITION_CONCURRENCY",
+      "label": "C",
+      "source_lines": [
+        5,
+        6,
+        10,
+        12,
+        13,
+        16,
+        19,
+        20,
+        22,
+        24,
+        25,
+        28,
+        31,
+        32
+      ],
+      "reason": "The SPEC's experimental_assignment declares CONCURRENCY=SERIAL, and run_task implements the two independent attachment chains strictly serially (LEFT chain fully completes before RIGHT chain begins), matching the declared serial level rather than a concurrent fork/join."
+    },
+    {
+      "id": "RELEASE_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        31,
+        32
+      ],
+      "reason": "Each release is immediately followed in the same coroutine by a same-arm separating move: release LEFT at left_target then move LEFT to left_depart (lines 19-20), and release RIGHT at right_target then move RIGHT to right_depart (lines 31-32), with no intervening same-arm call."
+    },
+    {
+      "id": "SUPPORT_DEPARTURE",
+      "label": "C",
+      "source_lines": [
+        19,
+        20,
+        31,
+        32
+      ],
+      "reason": "Both releases use the held object at a declared logical support (left_target/right_target are in logical_supports) and are immediately followed by a same-arm separating move in the same candidate coroutine and virtual time."
+    },
+    {
+      "id": "TASK_GOAL",
+      "label": "C",
+      "source_lines": [
+        12,
+        13,
+        16,
+        19,
+        20,
+        24,
+        25,
+        28,
+        31,
+        32
+      ],
+      "reason": "The code moves both arms to their departure poses (left_depart, right_depart), places left_part at left_target and right_part at right_target, and leaves both arms empty after release, matching the declared goal within the 30s deadline."
+    }
+  ],
+  "object_id": "NATURAL--N-C5_INDEPENDENT-SERIAL-LH-deepseek_flash-base-R1",
+  "judge": "deepseek_flash",
+  "scientific_call_made": true,
+  "response_model": "deepseek-flash",
+  "model_identity_matches": true,
+  "response_json_valid": true,
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5524,
+    "completion_tokens": 357,
+    "total_tokens": 5881,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 5396
+  },
+  "raw_sha256": "9c7172640b81edffacbe1d3389771dd801438ed09b4561565af07f9ab7dc5c1a",
+  "request_sha256": "cba148cf6a88d4b787dcb3b74032b02c1536eb44a032ea7d70296558beb78a5a",
+  "source_sha256": "41682188182c6d76d7e6cf8b0436ce21ebeafa3da0fcbf6f298380ff074a6449"
+}
